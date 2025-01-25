@@ -1,5 +1,5 @@
-import { flexBox } from "../../util/flexBox";
 import styled from "styled-components";
+import { flexBox } from "../../util/flexBox";
 
 type Styles = {
   gap: number;

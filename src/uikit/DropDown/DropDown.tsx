@@ -1,7 +1,7 @@
-import * as Styled from "./_Styles";
 import { useEffect, useRef, useState } from "react";
-import { Icon } from "../Icon/Icon";
 import { useTheme } from "styled-components";
+import { Icon } from "../Icon/Icon";
+import * as Styled from "./_Styles";
 
 export type DropDownOption = {
   label?: string;

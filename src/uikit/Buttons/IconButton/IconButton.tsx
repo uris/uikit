@@ -1,11 +1,11 @@
-import * as Styled from "./_Styles";
-import { useTheme } from "styled-components";
-import { useEffect, useRef, useState } from "react";
-import { Transition, Variants } from "framer-motion";
-import { UIIcon } from "../../UIIcon/UIIcon";
-import { Dot } from "../../Dot/Dot";
-import { Badge } from "../../Badge/Badge";
-import { ToolTip, ToolTipType } from "./_Types";
+import { useTheme } from 'styled-components';
+import React, { useEffect, useRef, useState } from 'react';
+import { Transition, Variants } from 'framer-motion';
+import { UIIcon } from '../../UIIcon/UIIcon';
+import { Dot } from '../../Dot/Dot';
+import { Badge } from '../../Badge/Badge';
+import { ToolTip, ToolTipType } from './_Types';
+import * as Styled from './_Styles';
 
 export interface IconButtonProps {
   frameSize?: number;
@@ -42,7 +42,7 @@ export function IconButton(props: IconButtonProps) {
   const {
     frameSize = 36,
     iconSize = 20,
-    icon = "more",
+    icon = 'more',
     borderRadius = 4,
     tooltip = undefined,
     color = undefined,
@@ -65,7 +65,7 @@ export function IconButton(props: IconButtonProps) {
     disabled = false,
     showDot = false,
     fill = false,
-    toolTipTimer = null,
+    toolTipTimer = useRef<any>(null),
     onClick = () => null,
     onToolTip = () => null,
   } = props;
@@ -73,13 +73,13 @@ export function IconButton(props: IconButtonProps) {
   const [on, setOn] = useState<boolean>(isToggled);
   const ref = useRef<HTMLDivElement>(null);
   const styles = {
-    bgColor: bgColor ? bgColor : "transparent",
+    bgColor: bgColor ? bgColor : 'transparent',
     bgColorOn: bgColorOn ? bgColorOn : theme.colors.bgDark,
     bgColorHover: hover
       ? theme.colors.bgDark
       : bgColorHover
-      ? bgColorHover
-      : bgColor,
+        ? bgColorHover
+        : bgColor,
     toggle,
     isToggled: toggle ? on : false,
     frameSize,
@@ -90,7 +90,7 @@ export function IconButton(props: IconButtonProps) {
   function handleClick(e: React.MouseEvent<HTMLDivElement, MouseEvent>) {
     if (disabled) return;
     if (tooltip) {
-      if (toolTipTimer.current) clearTimeout(toolTipTimer.current);
+      if (toolTipTimer?.current) clearTimeout(toolTipTimer.current);
       onToolTip(null);
     }
     setOn(!on);
@@ -150,7 +150,7 @@ export function IconButton(props: IconButtonProps) {
       <Dot show={showDot} />
       {count !== 0 && (
         <div className="count">
-          <Badge variant={"light"} count={count} hideNull />
+          <Badge variant={'light'} count={count} hideNull />
         </div>
       )}
     </Styled.IconButton>

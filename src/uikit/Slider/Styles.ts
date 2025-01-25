@@ -1,5 +1,5 @@
-import { flexBox } from "../../util/flexBox";
 import styled from "styled-components";
+import { flexBox } from "../../util/flexBox";
 
 const getWidth = (value: number | string) => {
   if (typeof value === "string") return value;

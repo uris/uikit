@@ -1,6 +1,6 @@
+import { useTheme } from "styled-components";
 import { flexBox } from "../../util/flexBox";
 import * as Styled from "./_Styles";
-import { useTheme } from "styled-components";
 
 export interface PageDivProps {
   children?: any;

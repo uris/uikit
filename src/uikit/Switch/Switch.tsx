@@ -1,7 +1,7 @@
 import { useState } from "react";
-import * as Styled from "./_Styles";
 import { Transition } from "framer-motion";
 import { useTheme } from "styled-components";
+import * as Styled from "./_Styles";
 
 export interface SwitchProps {
   state?: boolean;

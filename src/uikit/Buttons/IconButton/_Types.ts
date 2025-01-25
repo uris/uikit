@@ -1,3 +1,5 @@
+import React from 'react';
+
 export type ToolTip = {
   show?: boolean;
   type?: ToolTipType;
@@ -6,10 +8,10 @@ export type ToolTip = {
   event?: MouseEvent | React.MouseEvent<any>;
 };
 export const enum ToolTipType {
-  menu = "menu",
-  button = "button",
-  general = "general",
-  other = "other",
+  menu = 'menu',
+  button = 'button',
+  general = 'general',
+  other = 'other',
 }
 
 export type ToolTipInfo = {

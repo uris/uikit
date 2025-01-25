@@ -1,9 +1,9 @@
-import * as Styled from "./_Styles";
 import { useEffect, useState } from "react";
 import { useAnimate } from "framer-motion";
 import { useTheme } from "styled-components";
 import { UIIcon } from "../UIIcon/UIIcon";
 import { Badge } from "../Badge/Badge";
+import * as Styled from "./_Styles";
 
 export interface GrouperProps {
   title?: string;

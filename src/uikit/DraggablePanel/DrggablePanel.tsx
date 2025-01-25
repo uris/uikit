@@ -1,10 +1,10 @@
-import * as Styled from "./Styles";
-import { RefObject, useEffect, useRef, useState } from "react";
-import { useTheme } from "styled-components";
-import { Constraint } from "./_Types";
+import { RefObject, useEffect, useRef, useState } from 'react';
+import { useTheme } from 'styled-components';
+import * as Styled from './Styles';
+import { Constraint } from './_Types';
 
 type Info = {
-  div: RefObject<HTMLDivElement>;
+  div: RefObject<HTMLDivElement | null>;
   divWidth: number;
   divHeight: number;
   deltaWidth: number;
@@ -50,12 +50,12 @@ export function DraggablePanel(props: DraggablePanelProps) {
     },
     borderRight = null,
     borderLeft = null,
-    bgColor = "transparent",
+    bgColor = 'transparent',
     drags = true,
     isTouchDevice = false,
   } = props;
-  const handle: RefObject<HTMLDivElement> = useRef(null);
-  const div: RefObject<HTMLDivElement> = useRef(null);
+  const handle = useRef<HTMLDivElement>(null);
+  const div = useRef<HTMLDivElement>(null);
   const [isDragging, setIsDragging] = useState(false);
   const isOver = useRef<boolean>(false);
   const gripper = { ...resizeHandle };
@@ -83,12 +83,12 @@ export function DraggablePanel(props: DraggablePanelProps) {
       startX = e.clientX || e.targetTouches[0].pageX;
       startWidth = parseInt(
         document.defaultView.getComputedStyle(el).width,
-        10
+        10,
       );
-      document.documentElement.addEventListener("mousemove", doDrag, false);
-      document.documentElement.addEventListener("mouseup", stopDrag, false);
-      document.documentElement.addEventListener("touchmove", doDrag, false);
-      document.documentElement.addEventListener("touchend", stopDrag, false);
+      document.documentElement.addEventListener('mousemove', doDrag, false);
+      document.documentElement.addEventListener('mouseup', stopDrag, false);
+      document.documentElement.addEventListener('touchmove', doDrag, false);
+      document.documentElement.addEventListener('touchend', stopDrag, false);
       onResizeStart({ div, divWidth, divHeight, deltaWidth });
     }
   }
@@ -104,8 +104,8 @@ export function DraggablePanel(props: DraggablePanelProps) {
       if (
         constraints &&
         constraints.min &&
-        typeof constraints.min === "number" &&
-        typeof constraints.max === "number"
+        typeof constraints.min === 'number' &&
+        typeof constraints.max === 'number'
       ) {
         if (newWidth <= constraints.min) return;
         if (newWidth < constraints.min) return;
@@ -113,14 +113,14 @@ export function DraggablePanel(props: DraggablePanelProps) {
       if (
         constraints &&
         constraints.max &&
-        typeof constraints.min === "number" &&
-        typeof constraints.max === "number"
+        typeof constraints.min === 'number' &&
+        typeof constraints.max === 'number'
       ) {
         if (newWidth >= constraints.max) {
           if (clientX - startX > 0) return;
         }
       }
-      el.style.width = newWidth + "px";
+      el.style.width = newWidth + 'px';
       divWidth = newWidth;
       deltaWidth = clientX - startX;
       onResize({ div, divWidth, divHeight, deltaWidth });
@@ -129,10 +129,10 @@ export function DraggablePanel(props: DraggablePanelProps) {
 
   function stopDrag() {
     setIsDragging(false);
-    document.documentElement.removeEventListener("mousemove", doDrag, false);
-    document.documentElement.removeEventListener("mouseup", stopDrag, false);
-    document.documentElement.removeEventListener("touchmove", doDrag, false);
-    document.documentElement.removeEventListener("touchend", stopDrag, false);
+    document.documentElement.removeEventListener('mousemove', doDrag, false);
+    document.documentElement.removeEventListener('mouseup', stopDrag, false);
+    document.documentElement.removeEventListener('touchmove', doDrag, false);
+    document.documentElement.removeEventListener('touchend', stopDrag, false);
     if (div && div.current) {
       divWidth = div.current.offsetWidth;
       divHeight = div.current.offsetHeight;
@@ -146,16 +146,15 @@ export function DraggablePanel(props: DraggablePanelProps) {
   useEffect(() => {
     let hl = handle?.current;
     if (hl && drags) {
-      hl.addEventListener("mousedown", initDrag, false);
-      hl.addEventListener("touchstart", initDrag, { passive: true });
+      hl.addEventListener('mousedown', initDrag, false);
+      hl.addEventListener('touchstart', initDrag, { passive: true });
     }
     return () => {
       if (hl) {
-        hl.removeEventListener("mousedown", initDrag, false);
-        hl.removeEventListener("touchstart", initDrag);
+        hl.removeEventListener('mousedown', initDrag, false);
+        hl.removeEventListener('touchstart', initDrag);
       }
     };
-    // eslint-disable-next-line
   }, [constraints, drags]);
 
   const setHighlight = (state: boolean | null) => {
@@ -165,7 +164,7 @@ export function DraggablePanel(props: DraggablePanelProps) {
         () => {
           setHandleHighlight(state);
         },
-        isTouchDevice ? 0 : 350
+        isTouchDevice ? 0 : 350,
       );
     } else setHandleHighlight(false);
   };
@@ -178,7 +177,7 @@ export function DraggablePanel(props: DraggablePanelProps) {
   };
 
   const setWidth = () => {
-    if (!drags) return "100%";
+    if (!drags) return '100%';
     if (panelClosed) return 0;
     if (lastWidth) return lastWidth;
     return constraints.initial;
@@ -193,37 +192,45 @@ export function DraggablePanel(props: DraggablePanelProps) {
         return true;
       }}
       style={{
-        overflow: "hidden",
+        overflow: 'hidden',
         width: setWidth(),
-        height: "100%",
-        maxWidth: drags ? constraints.max : "unset",
-        transition: isDragging ? "" : "width 0.2s ease",
+        height: '100%',
+        maxWidth: drags ? constraints.max : 'unset',
+        transition: isDragging ? '' : 'width 0.2s ease',
         borderRight:
-          panelClosed || !borderRight || !drags ? "none" : borderRight,
-        borderLeft: panelClosed || !borderLeft || !drags ? "none" : borderLeft,
+          panelClosed || !borderRight || !drags ? 'none' : borderRight,
+        borderLeft: panelClosed || !borderLeft || !drags ? 'none' : borderLeft,
       }}
     >
       <div
         ref={handle}
         style={{
-          position: "absolute",
-          boxSizing: "border-box",
-          display: panelClosed || !drags ? "none" : "flex",
-          alignItems: "center",
-          justifyContent: "center",
+          position: 'absolute',
+          boxSizing: 'border-box',
+          display: panelClosed || !drags ? 'none' : 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
           zIndex: 1,
           top: 0,
           ...LeftRight(),
           bottom: 0,
           width: isTouchDevice ? 44 : gripper.width,
           backgroundColor: resizeHandle.color,
-          cursor: "col-resize",
+          cursor: 'col-resize',
         }}
         onMouseOver={() => {
           isOver.current = true;
           setHighlight(true);
         }}
         onMouseOut={() => {
+          isOver.current = false;
+          if (!isDragging) setHighlight(false);
+        }}
+        onFocus={() => {
+          isOver.current = true;
+          setHighlight(true);
+        }}
+        onBlur={() => {
           isOver.current = false;
           if (!isDragging) setHighlight(false);
         }}
@@ -243,9 +250,9 @@ export function DraggablePanel(props: DraggablePanelProps) {
               : theme.colors.transparent,
             flex: 1,
             maxWidth: 3,
-            height: "100%",
-            pointerEvents: "none",
-            transition: "background-color 0.2s ease",
+            height: '100%',
+            pointerEvents: 'none',
+            transition: 'background-color 0.2s ease',
           }}
         />
       </div>

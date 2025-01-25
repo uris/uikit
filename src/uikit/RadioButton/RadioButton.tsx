@@ -1,7 +1,7 @@
-import * as Styled from "./Styles";
-import { useEffect, useState } from "react";
-import { useTheme } from "styled-components";
-import { IconButton } from "../Buttons/IconButton/IconButton";
+import React, { useEffect, useState } from 'react';
+import { useTheme } from 'styled-components';
+import { IconButton } from '../Buttons/IconButton/IconButton';
+import * as Styled from './Styles';
 
 export type RadioButtonOption = {
   fieldName?: string;
@@ -54,7 +54,7 @@ export function RadioButton(props: RadioButtonProps) {
   }
 
   function handleKeyDown(e: React.KeyboardEvent) {
-    if (e.code === "Space") {
+    if (e.code === 'Space') {
       e.preventDefault();
       e.stopPropagation();
       handleChange();
@@ -74,14 +74,14 @@ export function RadioButton(props: RadioButtonProps) {
       onClick={() => handleChange()}
       onKeyDown={(e) => handleKeyDown(e)}
       tabIndex={tabIndex}
-      role={"radio"}
+      role={'radio'}
       aria-label={option.title}
     >
       {option.icon && (
         <div className="radio-icon">
           <IconButton
             toggle={false}
-            icon={toggleIcon && isSelected ? "checked" : "unchecked"}
+            icon={toggleIcon && isSelected ? 'checked' : 'unchecked'}
             color={
               toggleIcon && isSelected
                 ? theme.colors.primaryBlue
@@ -92,7 +92,7 @@ export function RadioButton(props: RadioButtonProps) {
       )}
       <div className="radio-content noselect">
         <div className="radio-title">{option.title}</div>
-        {option.description && option.description !== "" && (
+        {option.description && option.description !== '' && (
           <div className="radio-summary">{option.description}</div>
         )}
       </div>

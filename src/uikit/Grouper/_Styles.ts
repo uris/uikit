@@ -1,6 +1,6 @@
-import { flexBox } from "../../util/flexBox";
 import { motion } from "framer-motion";
 import styled from "styled-components";
+import { flexBox } from "../../util/flexBox";
 
 export const GroupHeader = styled.div<{
   $frameSize: number;

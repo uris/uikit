@@ -1,5 +1,5 @@
-import { flexBox } from "../../util/flexBox";
-import styled from "styled-components";
+import styled from 'styled-components';
+import { flexBox } from '../../util/flexBox';
 
 export const Label = styled.div<{
   $fill: boolean;
@@ -9,14 +9,16 @@ export const Label = styled.div<{
   div.status-label {
     ${flexBox.row};
     ${({ $button, theme }) =>
-      $button ? theme.type.desktop.textMedium : theme.type.desktop.textSmall};
+      $button
+        ? theme?.type?.desktop.textMedium
+        : theme?.type?.desktop.textSmall};
     white-space: nowrap;
     font-weight: ${({ $button }) => ($button ? 500 : 520)};
-    padding: ${({ $button }) => ($button ? "6px 12px" : "3px 6px")};
+    padding: ${({ $button }) => ($button ? '6px 12px' : '3px 6px')};
     width: min-content;
-    border-radius: ${({ $round }) => ($round ? "100" : "4")}px;
+    border-radius: ${({ $round }) => ($round ? '100' : '4')}px;
     border: 1px solid ${({ theme }) => theme.colors.lightBorder};
-    cursor: ${({ $button }) => ($button ? "pointer" : "defatult")};
+    cursor: ${({ $button }) => ($button ? 'pointer' : 'defatult')};
   }
   div.status-label.red {
     background: ${({ theme, $fill }) =>

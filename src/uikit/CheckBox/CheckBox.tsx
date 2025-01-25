@@ -1,7 +1,7 @@
-import * as Styled from "./_Styles";
 import { useEffect, useState } from "react";
 import { useTheme } from "styled-components";
 import { Icon } from "../Icon/Icon";
+import * as Styled from "./_Styles";
 
 export interface CheckBoxProps {
   size?: number;

@@ -1,7 +1,7 @@
-import { flexBox } from "../../util/flexBox";
 import { motion } from "framer-motion";
-import { setSizeStyle } from "../../util/utils";
 import styled from "styled-components";
+import { flexBox } from "../../util/flexBox";
+import { setSizeStyle } from "../../util/utils";
 
 export const Wrapper = styled(motion.div)<{
   $height: number;

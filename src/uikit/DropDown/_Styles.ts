@@ -1,6 +1,6 @@
+import styled from "styled-components";
 import { flexBox } from "../../util/flexBox";
 import { setSizeStyle } from "../../util/utils";
-import styled from "styled-components";
 
 function setSize(value: string | number) {
   if (typeof value === "string") return value;

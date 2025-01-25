@@ -1,7 +1,7 @@
-import * as Styled from "./_Styles";
-import { useTheme } from "styled-components";
-import { AvatarInfo } from "./_Types";
-import { Avatar } from "../Avatar/Avatar";
+import { useTheme } from 'styled-components';
+import { Avatar } from '../Avatar/Avatar';
+import * as Styled from './_Styles';
+import { AvatarInfo } from './_Types';
 
 export interface AvatarGroupProps {
   avatars?: AvatarInfo[] | null;
@@ -25,9 +25,9 @@ export function AvatarGroup(props: AvatarGroupProps) {
 
   return (
     <Styled.Wrapper $overlap={overlap}>
-      {avatars.map((avatar: AvatarInfo, index: number) => {
+      {avatars?.map((avatar: AvatarInfo, index: number) => {
         return (
-          <div className="avatar" key={"avatar_" + avatar.email + "_" + index}>
+          <div className="avatar" key={'avatar_' + avatar.email + '_' + index}>
             <Avatar
               first={avatar.email}
               last={avatar.last}

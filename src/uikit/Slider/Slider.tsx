@@ -1,5 +1,5 @@
-import { useEffect, useRef } from "react";
-import * as Styled from "./Styles";
+import { useEffect, useRef } from 'react';
+import * as Styled from './Styles';
 
 export interface SliderProps {
   initial?: number;
@@ -10,10 +10,10 @@ export interface SliderProps {
   touchHeight?: number | string;
   trackHeadSize?: number | null;
   trackHeadWidth?: number | null;
-  headType?: "round" | "square";
+  headType?: 'round' | 'square';
   headColor?: string;
   rounding?: number;
-  cursor?: "default" | "grab" | "grabbing" | "pointer";
+  cursor?: 'default' | 'grab' | 'grabbing' | 'pointer';
   state?: any[];
   onChange?: (value: number, percent: number) => void;
   onDragChange?: (value: number, percent: number) => void;
@@ -28,11 +28,11 @@ export function Slider(props: SliderProps) {
     height = 2,
     touchHeight = 24,
     trackHeadSize = 7,
-    headType = "round",
+    headType = 'round',
     trackHeadWidth = 4,
     rounding = 2,
-    cursor = "default",
-    headColor = "#0000ff",
+    cursor = 'default',
+    headColor = '#0000ff',
     state = [],
     onChange = () => null,
     onDragChange = () => null,
@@ -47,11 +47,11 @@ export function Slider(props: SliderProps) {
   useEffect(() => {
     const el = ref?.current;
     if (el) {
-      el?.addEventListener("mousedown", handleMouseDown, false);
+      el?.addEventListener('mousedown', handleMouseDown, false);
       initialProgress(initial);
     }
     return () => {
-      el?.removeEventListener("mousedown", handleMouseDown, false);
+      el?.removeEventListener('mousedown', handleMouseDown, false);
     };
   }, [initial]);
 
@@ -60,9 +60,9 @@ export function Slider(props: SliderProps) {
   // the current position to avoid infinte render
   useEffect(() => {
     const el = ref?.current;
-    if (el) el?.addEventListener("mousedown", handleMouseDown, false);
+    if (el) el?.addEventListener('mousedown', handleMouseDown, false);
     return () => {
-      el?.removeEventListener("mousedown", handleMouseDown, false);
+      el?.removeEventListener('mousedown', handleMouseDown, false);
     };
   }, [state]);
 
@@ -71,8 +71,8 @@ export function Slider(props: SliderProps) {
   function handleMouseDown(e: MouseEvent) {
     e.preventDefault();
     e.stopPropagation();
-    window.addEventListener("mousemove", handleMouseMove, false);
-    window.addEventListener("mouseup", handleMouseUp, false);
+    window.addEventListener('mousemove', handleMouseMove, false);
+    window.addEventListener('mouseup', handleMouseUp, false);
     const el = ref?.current;
     if (el) {
       const pos = updateSlider(e); // return new pixel pos and updates head/track
@@ -97,8 +97,8 @@ export function Slider(props: SliderProps) {
   // also cleaning up the mouse move and mouse up listnsers attached to the window
   function handleMouseUp(e: MouseEvent) {
     e.preventDefault();
-    window.removeEventListener("mousemove", handleMouseMove, false);
-    window.removeEventListener("mouseup", handleMouseUp, false);
+    window.removeEventListener('mousemove', handleMouseMove, false);
+    window.removeEventListener('mouseup', handleMouseUp, false);
     const el = ref?.current;
     if (el) {
       const pos = updateSlider(e); // return new pixel pos and updates head/track
@@ -140,8 +140,9 @@ export function Slider(props: SliderProps) {
     if (!ref || !ref.current) return;
     const sliderWidth = ref.current.getBoundingClientRect().width;
     if (current > scaleMax || current < scaleMin) {
+      // eslint-disable-next-line no-console
       console.warn(
-        "Slider value outside scale range. Auto adjusting to mid point."
+        'Slider value outside scale range. Auto adjusting to mid point.',
       );
       current = (scaleMax - scaleMin) / 2;
     }
@@ -156,13 +157,13 @@ export function Slider(props: SliderProps) {
     const tr = track.current;
     const hd = head.current;
     if (tr && hd) {
-      tr.style.width = pixelPos + "px";
-      hd.style.left = pixelPos - hd.offsetWidth / 2 + "px";
+      tr.style.width = pixelPos + 'px';
+      hd.style.left = pixelPos - hd.offsetWidth / 2 + 'px';
     }
   }
 
   function headWidth() {
-    if (headType === "round") return trackHeadSize;
+    if (headType === 'round') return trackHeadSize;
     else return trackHeadWidth;
   }
 

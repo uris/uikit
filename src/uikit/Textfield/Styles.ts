@@ -1,7 +1,7 @@
-import styled from "styled-components";
-import { motion } from "framer-motion";
-import { flexBox } from "../../util/flexBox";
-import { setSizeStyle } from "../../util/utils";
+import styled from 'styled-components';
+import { motion } from 'framer-motion';
+import { flexBox } from '../../util/flexBox';
+import { setSizeStyle } from '../../util/utils';
 
 type Styles = {
   borderColor?: { focused: string; blurred: string; error: string };
@@ -35,10 +35,10 @@ export const InputWrapper = styled(motion.div)<{
   border-radius: ${({ $props }) => setSizeStyle($props.borderRadius)};
   background: ${({ $props, $focused, $inline }) =>
     $inline
-      ? "unset"
+      ? 'unset'
       : $focused
-      ? $props.backgroundColor?.focused
-      : $props.backgroundColor?.blurred};
+        ? $props.backgroundColor?.focused
+        : $props.backgroundColor?.blurred};
   box-shadow: 0 ${({ $inline }) => ($inline ? 1 : 0)}px
     ${({ $inline }) => ($inline ? 0 : 1)}px
     ${({ $focused, $inline }) => ($inline ? 0 : $focused ? 1.5 : 1)}px
@@ -46,8 +46,8 @@ export const InputWrapper = styled(motion.div)<{
       $focused
         ? $props.borderColor?.focused
         : !$isvalid
-        ? $props.borderColor?.error
-        : $props.borderColor?.blurred};
+          ? $props.borderColor?.error
+          : $props.borderColor?.blurred};
   transition: all 0.25s ease-in-out 0s;
 `;
 
@@ -61,8 +61,8 @@ export const InputContainer = styled.div<{ $padding: string }>`
 
 export const Label = styled.div<{ $props: Styles }>`
   ${flexBox.rowStart};
-  ${({ theme }) => theme.type.desktop.textRegular};
-  font-family: "Booton";
+  ${({ theme }) => theme?.type?.desktop.textRegular};
+  font-family: 'Booton';
   color: ${({ theme }) => theme.colors.textSecondary};
   padding: ${({ $props }) => $props.padding};
   height: auto;
@@ -80,22 +80,22 @@ export const Input = styled.input<{
   $labelRight: boolean;
 }>`
   ${({ $textType }) => $textType};
-  font-family: "Booton";
+  font-family: 'Booton';
   color: ${({ $props, $focused, $isvalid }) =>
     !$isvalid
       ? $props.color?.error
       : $focused
-      ? $props.color?.focused
-      : $props.color?.blurred};
+        ? $props.color?.focused
+        : $props.color?.blurred};
   background-color: transparent;
   box-sizing: border-box;
   outline: none;
   border: 0;
   height: 100%;
   width: 100%;
-  padding-left: ${({ $label }) => ($label !== "" ? 0 : "unset")};
+  padding-left: ${({ $label }) => ($label !== '' ? 0 : 'unset')};
   text-align: ${({ $label, $labelRight, $props }) =>
-    $label && $labelRight ? "right" : $props.textAlign};
+    $label && $labelRight ? 'right' : $props.textAlign};
   &::placeholder {
     color: ${({ $props }) => $props.color?.placeholder};
   }

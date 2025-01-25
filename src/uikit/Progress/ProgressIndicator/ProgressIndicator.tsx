@@ -1,7 +1,7 @@
 import { useTheme } from "styled-components";
-import * as Styled from "./_Styles";
 import { AnimatePresence, motion } from "framer-motion";
 import { useEffect, useRef, useState } from "react";
+import * as Styled from "./_Styles";
 
 export interface ProgressIndicatorProps {
   size?: number;

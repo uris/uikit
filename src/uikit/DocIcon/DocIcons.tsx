@@ -1,20 +1,19 @@
-import { useTheme } from "styled-components";
-import { useMemo } from "react";
+import { useTheme } from 'styled-components';
+import { useMemo } from 'react';
 
 export interface DocsProps {
-  type?: "pdf" | "docx" | "text" | "not supported";
+  type?: 'pdf' | 'docx' | 'text' | 'not supported';
   height?: number;
-  onClick?: () => void;
 }
 
 export function DocIcons(props: DocsProps) {
-  const { type = "pdf", height = 36, onClick = () => null } = props;
+  const { type = 'pdf', height = 36 } = props;
   const theme = useTheme();
 
   const renderIcon = useMemo(() => {
     const images = [
       {
-        name: "not supported",
+        name: 'not supported',
         svg: (
           <svg
             viewBox="0 0 24 24"
@@ -37,7 +36,7 @@ export function DocIcons(props: DocsProps) {
         ),
       },
       {
-        name: "text",
+        name: 'text',
         svg: (
           <svg
             viewBox="0 0 1024 1024"
@@ -61,7 +60,7 @@ export function DocIcons(props: DocsProps) {
         ),
       },
       {
-        name: "docx",
+        name: 'docx',
         svg: (
           <svg
             viewBox="0 0 1024 1024"
@@ -85,7 +84,7 @@ export function DocIcons(props: DocsProps) {
         ),
       },
       {
-        name: "pdf",
+        name: 'pdf',
         svg: (
           <svg
             viewBox="0 0 1024 1024"
@@ -116,11 +115,10 @@ export function DocIcons(props: DocsProps) {
 
   return (
     <div
-      onClick={() => onClick()}
       style={{
-        display: "flex",
-        justifyContent: "center",
-        alignItems: "center",
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
       }}
     >
       {renderIcon}

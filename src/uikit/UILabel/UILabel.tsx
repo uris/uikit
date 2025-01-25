@@ -1,15 +1,16 @@
-import * as Styled from "./_Styles";
+import React from 'react';
+import * as Styled from './_Styles';
 
 export interface UILabelProps {
   label?: string;
   state?:
-    | "red"
-    | "yellow"
-    | "green"
-    | "blue"
-    | "grey"
-    | "lightgrey"
-    | "white"
+    | 'red'
+    | 'yellow'
+    | 'green'
+    | 'blue'
+    | 'grey'
+    | 'lightgrey'
+    | 'white'
     | undefined;
   noFill?: boolean;
   round?: boolean;

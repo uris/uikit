@@ -1,29 +1,28 @@
-import { useMemo } from "react";
+import { useMemo } from 'react';
 
 export enum Product {
-  Prime = "prime",
-  Contractor = "contractor",
-  Recruit = "recruit",
-  Core = "core",
-  IQ = "iq",
-  Marketplace = "marketplace",
-  Advicor = "advisor",
+  Prime = 'prime',
+  Contractor = 'contractor',
+  Recruit = 'recruit',
+  Core = 'core',
+  IQ = 'iq',
+  Marketplace = 'marketplace',
+  Advicor = 'advisor',
 }
 
 export interface ProductImageProps {
   product?: Product | string;
   alt?: string;
   size?: number;
-  onClick?: () => void;
 }
 
 export function ProductImage(props: ProductImageProps) {
-  const { product = Product.Core, size = 64, onClick = () => null } = props;
+  const { product = Product.Core, size = 64 } = props;
 
   const renderIcon = useMemo(() => {
     const icons = [
       {
-        name: "recruit",
+        name: 'recruit',
         svg: (
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -193,7 +192,7 @@ export function ProductImage(props: ProductImageProps) {
         ),
       },
       {
-        name: "advisor",
+        name: 'advisor',
         svg: (
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -396,7 +395,7 @@ export function ProductImage(props: ProductImageProps) {
         ),
       },
       {
-        name: "prime",
+        name: 'prime',
         svg: (
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -563,7 +562,7 @@ export function ProductImage(props: ProductImageProps) {
         ),
       },
       {
-        name: "iq",
+        name: 'iq',
         svg: (
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -734,7 +733,7 @@ export function ProductImage(props: ProductImageProps) {
         ),
       },
       {
-        name: "marketplace",
+        name: 'marketplace',
         svg: (
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -1013,7 +1012,7 @@ export function ProductImage(props: ProductImageProps) {
         ),
       },
       {
-        name: "contractor",
+        name: 'contractor',
         svg: (
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -1180,7 +1179,7 @@ export function ProductImage(props: ProductImageProps) {
         ),
       },
       {
-        name: "core",
+        name: 'core',
         svg: (
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -1328,18 +1327,14 @@ export function ProductImage(props: ProductImageProps) {
   }, [size, product]);
 
   const wrapperStyle = {
-    display: "inline",
-    verticalAlign: "middle",
+    display: 'inline',
+    verticalAlign: 'middle',
     width: size,
     height: size,
   };
 
   const renderImage = () => {
-    return (
-      <div style={wrapperStyle} onClick={() => onClick()}>
-        {renderIcon}
-      </div>
-    );
+    return <div style={wrapperStyle}>{renderIcon}</div>;
   };
 
   return product ? renderImage() : null;

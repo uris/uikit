@@ -1,14 +1,14 @@
-import * as Styled from "./Styles";
-import { useEffect, useRef, useState } from "react";
-import { TabOption, ToolTip, ToolTipType } from "./_Types";
-import { useTheme } from "styled-components";
-import { IconButton } from "../Buttons/IconButton/IconButton";
-import { UIIcon } from "../UIIcon/UIIcon";
-import { Badge } from "../Badge/Badge";
+import React, { useEffect, useRef, useState } from 'react';
+import { useTheme } from 'styled-components';
+import { IconButton } from '../Buttons/IconButton/IconButton';
+import { UIIcon } from '../UIIcon/UIIcon';
+import { Badge } from '../Badge/Badge';
+import { TabOption, ToolTip, ToolTipType } from './_Types';
+import * as Styled from './Styles';
 
 const placeholderOptions: TabOption[] = [
-  { name: "Option 1", value: "Option 1", icon: null },
-  { name: "Option 2", value: "Option 2", icon: "plus" },
+  { name: 'Option 1', value: 'Option 1', icon: null },
+  { name: 'Option 2', value: 'Option 2', icon: 'plus' },
 ];
 
 export interface TabBarProps {
@@ -21,12 +21,12 @@ export interface TabBarProps {
   closeWidth?: number | string;
   padding?: number | string;
   textStyle?:
-    | "textXLarge"
-    | "textLarge"
-    | "textRegular"
-    | "textMedium"
-    | "textSmall"
-    | "textXSmall"
+    | 'textXLarge'
+    | 'textLarge'
+    | 'textRegular'
+    | 'textMedium'
+    | 'textSmall'
+    | 'textXSmall'
     | null;
   iconSize?: number;
   iconGap?: number;
@@ -48,21 +48,21 @@ export function TabBar(props: TabBarProps) {
     options = placeholderOptions,
     selected = 0,
     border = true,
-    height = "100%",
-    width = "100%",
+    height = '100%',
+    width = '100%',
     padding = 8,
-    textStyle = "textRegular",
+    textStyle = 'textRegular',
     iconSize = 24,
     iconGap = 4,
     tabGap = 0,
     dragsApp = false,
     disabled = false,
     hasClose = false,
-    closeWidth = "auto",
+    closeWidth = 'auto',
     selectedValue = null,
     state = null,
     size = 1,
-    toolTipTimer = null,
+    toolTipTimer,
     onChange = () => null,
     onTabChange = () => null,
     onClose = () => null,
@@ -99,7 +99,7 @@ export function TabBar(props: TabBarProps) {
       {options.map((option: TabOption, i: number) => {
         return (
           <Option
-            key={i + "_option_" + option.name}
+            key={i + '_option_' + option.name}
             label={option.name}
             value={i}
             showToolTip={option.toolTip}
@@ -129,7 +129,7 @@ export function TabBar(props: TabBarProps) {
           onClick={() => onClose()}
           $closeWidth={closeWidth}
         >
-          <IconButton icon={"x"} onClick={() => onClose()} />
+          <IconButton icon={'x'} onClick={() => onClose()} />
         </Styled.CloseButton>
       )}
     </Styled.Wrapper>
@@ -144,12 +144,12 @@ interface TabOptionProps {
   selected?: boolean;
   padding?: number | string;
   textStyle?:
-    | "textXLarge"
-    | "textLarge"
-    | "textRegular"
-    | "textMedium"
-    | "textSmall"
-    | "textXSmall"
+    | 'textXLarge'
+    | 'textLarge'
+    | 'textRegular'
+    | 'textMedium'
+    | 'textSmall'
+    | 'textXSmall'
     | null;
   iconSize?: number;
   iconGap?: number;
@@ -166,7 +166,7 @@ interface TabOptionProps {
 function Option(props: TabOptionProps) {
   const theme = useTheme();
   const {
-    label = "Option",
+    label = 'Option',
     value = 0,
     icon = null,
     selected = false,
@@ -176,13 +176,13 @@ function Option(props: TabOptionProps) {
     iconSize = 24,
     iconGap = 6,
     dragsApp = false,
-    textStyle = "textRegular",
+    textStyle = 'textRegular',
     disabled = false,
     showToolTip = null,
     state = null,
     size = 1,
     count = 0,
-    toolTipTimer = null,
+    toolTipTimer = useRef(null),
   } = props;
   const ref = useRef<HTMLDivElement>(null);
   const doDrag = useRef<boolean | null>(null);
@@ -199,9 +199,9 @@ function Option(props: TabOptionProps) {
   // this enables the user to use the tab bar area to drag the electron app window
   useEffect(() => {
     const el = ref.current;
-    el?.addEventListener("mousedown", handleMouseDown, false);
+    el?.addEventListener('mousedown', handleMouseDown, false);
     return () => {
-      el?.removeEventListener("mousedown", handleMouseDown, false);
+      el?.removeEventListener('mousedown', handleMouseDown, false);
     };
   }, [disabled, state]);
 
@@ -210,8 +210,8 @@ function Option(props: TabOptionProps) {
     xStart.current = e.clientX;
     yStart.current = e.clientY;
     const docEl = document.documentElement;
-    docEl?.addEventListener("mousemove", handleMouseMove, false);
-    docEl?.addEventListener("mouseup", handleMouseUp, false);
+    docEl?.addEventListener('mousemove', handleMouseMove, false);
+    docEl?.addEventListener('mouseup', handleMouseUp, false);
   }
 
   function handleMouseMove(e: MouseEvent) {
@@ -231,8 +231,8 @@ function Option(props: TabOptionProps) {
     xStart.current = null;
     yStart.current = null;
     const docEl = document.documentElement;
-    docEl?.removeEventListener("mousemove", handleMouseMove, false);
-    docEl?.removeEventListener("mouseup", handleMouseUp, false);
+    docEl?.removeEventListener('mousemove', handleMouseMove, false);
+    docEl?.removeEventListener('mouseup', handleMouseUp, false);
   }
   // end of function to allow tab bar area to be dragged and drag the
   // electron app window.
@@ -276,12 +276,12 @@ function Option(props: TabOptionProps) {
       $disabled={disabled}
       $textStyle={
         textStyle
-          ? theme.type.desktop[textStyle]
-          : theme.type.desktop.textRegular
+          ? theme?.type?.desktop[textStyle] || ''
+          : theme?.type?.desktop.textRegular || ''
       }
       $gap={iconGap}
       $size={size}
-      className={"noDrag"}
+      className={'noDrag'}
       onMouseEnter={(e) => handleMouseOver(e)}
       onMouseLeave={(e) => handleMouseLeave(e)}
       onMouseDown={() => (doDrag.current = null)}
@@ -290,7 +290,7 @@ function Option(props: TabOptionProps) {
       {icon && <UIIcon name={icon} size={iconSize} strokeColor={iconColor()} />}
       {label}
       {count !== 0 && (
-        <Badge variant={"light"} hideNull={false} count={count} />
+        <Badge variant={'light'} hideNull={false} count={count} />
       )}
     </Styled.Option>
   );

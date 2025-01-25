@@ -1,6 +1,6 @@
-import { UIButton } from "../Buttons/UIButon/UIButton";
-import * as Styled from "./Styles";
-import { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from 'react';
+import { UIButton } from '../Buttons/UIButon/UIButton';
+import * as Styled from './Styles';
 
 export interface TextAreaProps {
   value?: string;
@@ -10,7 +10,7 @@ export interface TextAreaProps {
   rows?: number;
   focused?: boolean;
   placeholder?: string;
-  spacer?: "xl" | "lg" | "md" | "sm" | "custom" | "none";
+  spacer?: 'xl' | 'lg' | 'md' | 'sm' | 'custom' | 'none';
   custom?: number;
   padding?: string;
   validate?: boolean;
@@ -31,17 +31,17 @@ export interface TextAreaProps {
 
 export function TextArea(props: TextAreaProps) {
   const {
-    value = "",
-    name = "text_area",
-    width = "100%",
-    height = "auto",
+    value = '',
+    name = 'text_area',
+    width = '100%',
+    height = 'auto',
     focused = false,
-    spacer = "none",
+    spacer = 'none',
     custom = 0,
-    placeholder = "",
+    placeholder = '',
     rows = 6,
     dark = true,
-    padding = "16px 4px 16px 16px",
+    padding = '16px 4px 16px 16px',
     validate = true,
     resizable = true,
     hasSend = false,
@@ -65,7 +65,8 @@ export function TextArea(props: TextAreaProps) {
   // focus / blur field on prop change
   useEffect(() => {
     if (ref && ref.current) {
-      focused ? ref.current.focus() : ref.current.blur();
+      if (focused) ref.current.focus();
+      else ref.current.blur();
       setIsFocused(focused);
     }
   }, [focused, ref]);
@@ -77,8 +78,8 @@ export function TextArea(props: TextAreaProps) {
   }, [value]);
 
   const margin = () => {
-    if (spacer === "none") return 0;
-    if (spacer === "custom") return custom;
+    if (spacer === 'none') return 0;
+    if (spacer === 'custom') return custom;
     return 0;
   };
 
@@ -105,8 +106,8 @@ export function TextArea(props: TextAreaProps) {
     e.preventDefault();
     handleFocus();
     onSubmit(text);
-    setText("");
-    if (ref && ref.current) ref.current.value = "";
+    setText('');
+    if (ref && ref.current) ref.current.value = '';
     handleResize();
   }
 
@@ -120,7 +121,7 @@ export function TextArea(props: TextAreaProps) {
 
   function handleResize() {
     if (!ref || !ref.current) return;
-    ref.current.style.height = "auto";
+    ref.current.style.height = 'auto';
     ref.current.style.height = `${ref.current.scrollHeight}px`;
   }
 
@@ -146,9 +147,9 @@ export function TextArea(props: TextAreaProps) {
           onMouseDown={(e) => handleSubmit(e)}
         >
           <UIButton
-            iconLeft={"arrow up"}
-            size={"medium"}
-            variant={"solid"}
+            iconLeft={'arrow up'}
+            size={'medium'}
+            variant={'solid'}
             round
           />
         </Styled.Send>

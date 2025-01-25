@@ -1,3 +1,5 @@
+import React from 'react';
+
 export type TabOption = {
   name?: string;
   value?: any;
@@ -15,10 +17,10 @@ export type ToolTip = {
   event?: MouseEvent | React.MouseEvent<any>;
 };
 export const enum ToolTipType {
-  menu = "menu",
-  button = "button",
-  general = "general",
-  other = "other",
+  menu = 'menu',
+  button = 'button',
+  general = 'general',
+  other = 'other',
 }
 
 export type ToolTipInfo = {

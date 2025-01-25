@@ -1,13 +1,13 @@
-import { useTheme } from "styled-components";
-import * as Styled from "./_Styles";
-import { Variants, Transition } from "framer-motion";
+import { useTheme } from 'styled-components';
+import { Variants, Transition } from 'framer-motion';
+import * as Styled from './_Styles';
 
 export interface AvatarProps {
   size?: number;
   frame?: number;
   first?: string;
   last?: string;
-  image?: any;
+  image?: string;
   border?: number;
   borderColor?: string;
   bgColor?: string;
@@ -21,9 +21,9 @@ export interface AvatarProps {
 export function Avatar(props: AvatarProps) {
   const theme = useTheme();
   const {
-    first = "",
-    last = "",
-    image = "",
+    first = '',
+    last = '',
+    image = '',
     border = 0,
     borderColor = theme.colors.bgNormal,
     bgColor = undefined,

@@ -1,12 +1,12 @@
-import { useEffect, useRef, useState } from "react";
-import * as Styled from "./Styles";
-import { AnimatePresence, motion, Transition } from "framer-motion";
-import { useTheme } from "styled-components";
-import { UIIcon } from "../UIIcon/UIIcon";
-import { DropDownOption } from "../DropDown/DropDown";
-import { IconButton } from "../Buttons/IconButton/IconButton";
-import { UIButton } from "../Buttons/UIButon/UIButton";
-import { Flag } from "../Flags/Flag";
+import React, { useEffect, useRef, useState } from 'react';
+import { AnimatePresence, motion, Transition } from 'framer-motion';
+import { useTheme } from 'styled-components';
+import { UIIcon } from '../UIIcon/UIIcon';
+import { DropDownOption } from '../DropDown/DropDown';
+import { IconButton } from '../Buttons/IconButton/IconButton';
+import { UIButton } from '../Buttons/UIButon/UIButton';
+import { Flag } from '../Flags/Flag';
+import * as Styled from './Styles';
 
 export interface TextFieldProps {
   value?: string;
@@ -30,7 +30,7 @@ export interface TextFieldProps {
   size?: { width?: number | string; height?: number | string };
   padding?: string;
   borderRadius?: number | string;
-  textAlign?: "left" | "center";
+  textAlign?: 'left' | 'center';
   labelAlignsRight?: boolean;
   borderColor?: { focused: string; blurred: string; error: string };
   backgroundColor?: { focused: string; blurred: string };
@@ -48,7 +48,7 @@ export interface TextFieldProps {
   disabled?: boolean;
   actionButton?: boolean;
   textType?: string;
-  inputType?: "text" | "password";
+  inputType?: 'text' | 'password';
   sendButton?: boolean;
   options?: DropDownOption[];
   noShow?: boolean;
@@ -57,11 +57,11 @@ export interface TextFieldProps {
 export function TextField(props: TextFieldProps) {
   const theme = useTheme();
   const {
-    name = "input_name",
-    value = "",
-    label = "",
+    name = 'input_name',
+    value = '',
+    label = '',
     labelSize = 15,
-    placeholder = "placeholder",
+    placeholder = 'placeholder',
     focused = false,
     onSubmit = () => null,
     onChange = () => null,
@@ -73,11 +73,11 @@ export function TextField(props: TextFieldProps) {
     onClear = () => null,
     actionButton = false,
     maxLength = undefined,
-    size = { width: "100%", height: 36 },
-    padding = "8px 16px",
+    size = { width: '100%', height: 36 },
+    padding = '8px 16px',
     borderRadius = 8,
     editable = true,
-    textAlign = "left" as any,
+    textAlign = 'left' as any,
     labelAlignsRight = true,
     isValid = true,
     inline = false,
@@ -103,8 +103,8 @@ export function TextField(props: TextFieldProps) {
     clearButton = { size: 20 },
     clearBlurs = false,
     disabled = false,
-    textType = theme.type.desktop.textRegular,
-    inputType = "text",
+    textType = theme?.type?.desktop.textRegular || '',
+    inputType = 'text',
   } = props;
   const input = useRef<HTMLInputElement>(null);
   const [text, setText] = useState<string>(value);
@@ -126,10 +126,11 @@ export function TextField(props: TextFieldProps) {
     animate: { opacity: 1 },
     exit: { opacity: 0 },
   };
-  const transition: Transition = { ease: "easeInOut", duration: 0.25 };
+  const transition: Transition = { ease: 'easeInOut', duration: 0.25 };
   useEffect(() => {
     if (input && input.current) {
-      focused ? input.current.focus() : input.current.blur();
+      if (focused) input.current.focus();
+      else input.current.blur();
       setIsFocused(focused);
     }
   }, [focused]);
@@ -145,9 +146,9 @@ export function TextField(props: TextFieldProps) {
   function handleClearTextField() {
     if (input?.current) {
       if (!clearBlurs) input.current.focus();
-      setText("");
+      setText('');
     }
-    onChange("");
+    onChange('');
     onClear();
   }
 
@@ -157,10 +158,10 @@ export function TextField(props: TextFieldProps) {
   }
 
   function handleKeyDown(e: React.KeyboardEvent) {
-    if (e.key === "Enter") {
+    if (e.key === 'Enter') {
       handleBlur();
       onSubmit(text);
-      input.current ? input?.current.blur() : null;
+      if (input.current) input?.current.blur();
     }
     if (disabled) {
       e.preventDefault();
@@ -185,7 +186,7 @@ export function TextField(props: TextFieldProps) {
       $inline={inline}
     >
       {flagLeft && <Flag flag={flagLeft.flag} size={flagLeft.size} />}
-      {label !== "" && <Styled.Label $props={styles}>{label}</Styled.Label>}
+      {label !== '' && <Styled.Label $props={styles}>{label}</Styled.Label>}
       <Styled.InputContainer $padding={padding}>
         {iconLeft && (
           <div style={{ width: iconLeft.size, height: iconLeft.size }}>
@@ -206,12 +207,12 @@ export function TextField(props: TextFieldProps) {
           $label={label}
           $labelRight={labelAlignsRight}
           ref={input}
-          type={inputType === "password" && show ? "text" : inputType}
+          type={inputType === 'password' && show ? 'text' : inputType}
           name={name}
           aria-label={name}
-          autoCapitalize={"none"}
-          autoCorrect={"off"}
-          autoComplete={"off"}
+          autoCapitalize={'none'}
+          autoCorrect={'off'}
+          autoComplete={'off'}
           value={text}
           onChange={(e) => handleValueChange(e.target.value)}
           onKeyDown={(e) => handleKeyDown(e)}
@@ -224,18 +225,18 @@ export function TextField(props: TextFieldProps) {
           maxLength={maxLength}
         />
         <AnimatePresence initial={false}>
-          {clearButton && text !== "" && (
+          {clearButton && text !== '' && (
             <motion.div
               style={{ width: clearButton.size, height: clearButton.size }}
               variants={variants}
-              initial={"initial"}
-              animate={"animate"}
-              exit={"exit"}
+              initial={'initial'}
+              animate={'animate'}
+              exit={'exit'}
               transition={transition}
               onClick={() => handleClearTextField()}
             >
               <UIIcon
-                name={"x"}
+                name={'x'}
                 size={clearButton.size}
                 strokeColor={theme.colors.iconSecondary}
               />
@@ -246,33 +247,33 @@ export function TextField(props: TextFieldProps) {
           {actionButton && (
             <motion.div
               variants={variants}
-              initial={"initial"}
-              animate={"animate"}
-              exit={"exit"}
+              initial={'initial'}
+              animate={'animate'}
+              exit={'exit'}
               transition={transition}
             >
               <UIButton
-                label={"Translate"}
-                variant={"text"}
-                size={"text"}
-                state={text === "" ? "disabled" : "normal"}
+                label={'Translate'}
+                variant={'text'}
+                size={'text'}
+                state={text === '' ? 'disabled' : 'normal'}
                 labelColor={theme.colors.primaryBlue}
                 onClick={() => onAction()}
               />
             </motion.div>
           )}
         </AnimatePresence>
-        {inputType === "password" && !noShow && (
+        {inputType === 'password' && !noShow && (
           <Styled.ButtonShow $disabled={false} $on={show} $focused={focused}>
             <IconButton
-              icon={"view"}
+              icon={'view'}
               toggleIcon={true}
               toggle={false}
               isToggled={show}
               iconSize={18}
               frameSize={18}
               onClick={() => setShow(!show)}
-              tooltip={"Show / Hide"}
+              tooltip={'Show / Hide'}
               disabled={false}
             />
           </Styled.ButtonShow>

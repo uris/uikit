@@ -1,4 +1,4 @@
-import { Icon, UIIcon, IconNames } from "./Icon";
+import { Icon, IconProps, IconNames } from './Icon';
 
 export { Icon };
-export type { IconNames };
+export type { IconNames, IconProps };

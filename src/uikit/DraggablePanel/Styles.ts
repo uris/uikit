@@ -1,5 +1,5 @@
-import { flexBox } from "../../util/flexBox";
 import styled from "styled-components";
+import { flexBox } from "../../util/flexBox";
 
 export const Panel = styled.div<{ $bgColor: string }>`
   ${flexBox.columnStart};

@@ -1,5 +1,5 @@
-import { flexBox } from "../../util/flexBox";
 import styled from "styled-components";
+import { flexBox } from "../../util/flexBox";
 
 const setHeight = (height: number | string) => {
   if (typeof height === "string") return height;

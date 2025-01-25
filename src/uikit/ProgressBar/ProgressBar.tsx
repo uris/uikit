@@ -1,6 +1,6 @@
+import { useTheme } from "styled-components";
 import { UIIcon } from "../UIIcon/UIIcon";
 import * as Styled from "./_Styles";
-import { useTheme } from "styled-components";
 
 export interface ProgressBarProps {
   steps?: ProgressBarStep[];

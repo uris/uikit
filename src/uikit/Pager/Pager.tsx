@@ -1,6 +1,6 @@
-import { useEffect, useState } from "react";
-import * as Styled from "./_Styles";
-import { useTheme } from "styled-components";
+import { useEffect, useState } from 'react';
+import { useTheme } from 'styled-components';
+import * as Styled from './_Styles';
 
 export interface PagerProps {
   size?: number;
@@ -44,9 +44,18 @@ export function Pager(props: PagerProps) {
       {bullets.map((_bullet: number, i: number) => {
         return (
           <div
-            key={"pagging_" + i}
-            className={`bullet ${selected === i ? "selected" : ""}`}
+            key={'pagging_' + i}
+            className={`bullet ${selected === i ? 'selected' : ''}`}
             onClick={() => handleClick(i)}
+            onKeyDown={(e) => {
+              if (e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault(); // Prevent page scrolling on space key
+                handleClick(i);
+              }
+            }}
+            onTouchStart={() => handleClick(i)}
+            role={'button'}
+            tabIndex={i}
           />
         );
       })}

@@ -1,12 +1,12 @@
-import * as Styled from "./_Styles";
 import { useTheme } from "styled-components";
 import React, { useEffect, useRef, useState } from "react";
 import { Transition, Variants } from "framer-motion";
-import { ToolTip, ToolTipType } from "./_Types";
 import { UIIcon } from "../../../uikit/UIIcon/UIIcon";
 import { ProgressIndicator } from "../../Progress/ProgressIndicator/ProgressIndicator";
 import { Dot } from "../../../uikit/Dot/Dot";
 import { Badge } from "../../../uikit/Badge/Badge";
+import { ToolTip, ToolTipType } from "./_Types";
+import * as Styled from "./_Styles";
 
 export interface UIButtonProps {
   size?: "large" | "medium" | "text";

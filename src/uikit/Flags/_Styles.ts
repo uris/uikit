@@ -1,5 +1,5 @@
-import { flexBox } from "src/util/flexBox";
 import styled from "styled-components";
+import { flexBox } from "src/util/flexBox";
 
 export const Flag = styled.div<{ $size: number }>`
   ${flexBox.row};

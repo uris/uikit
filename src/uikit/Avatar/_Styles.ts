@@ -1,6 +1,6 @@
-import { flexBox } from "../../util/flexBox";
-import { motion } from "framer-motion";
-import styled from "styled-components";
+import { motion } from 'framer-motion';
+import styled from 'styled-components';
+import { flexBox } from '../../util/flexBox';
 
 function setFontSize(value: number) {
   let size = Math.round(value / 3);
@@ -25,7 +25,7 @@ export const Avatar = styled(motion.div)<{
   width: ${({ $frame }) => $frame}px;
   div.user {
     ${flexBox.row};
-    ${({ theme }) => theme.type.desktop.textRegular};
+    ${({ theme }) => theme?.type?.desktop.textRegular};
     font-size: ${({ $frame }) => setFontSize($frame)}px;
     font-weight: 500;
     text-transform: uppercase;
@@ -39,7 +39,7 @@ export const Avatar = styled(motion.div)<{
     background: ${({ theme, $bgColor }) =>
       $bgColor ? $bgColor : theme.colors.lightBorder};
     color: ${({ theme }) => theme.colors.textPrimary};
-    background-image: url("${({ $image }) => $image}");
+    background-image: url('${({ $image }) => $image}');
     background-size: cover;
   }
 `;

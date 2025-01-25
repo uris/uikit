@@ -1,5 +1,5 @@
-import { useTheme } from "styled-components";
-import { useMemo } from "react";
+import { useTheme } from 'styled-components';
+import React, { useMemo } from 'react';
 
 type Icon = {
   name: string;
@@ -8,84 +8,84 @@ type Icon = {
 };
 
 export enum Icons {
-  home = "home",
-  inbox = "inbox",
-  sparkle = "sparkle",
-  people = "people",
-  wallet = "wallet",
-  invoice = "invoice",
-  payment = "payment",
-  heart = "heart",
-  clock = "clock",
-  book = "book",
-  search = "search",
-  filter = "filter",
-  more = "more",
-  unchecked = "unchecked",
-  checked = "checked",
-  partial = "partial",
-  chevronDown = "chevron down",
-  chevronUp = "chevron up",
-  plus = "plus",
-  plusCircle = "plus circle",
-  x = "x",
-  gpAssist = "g-p assist",
-  upload = "upload",
-  download = "download",
-  share = "share",
-  checkCircle = "check circle",
-  person = "person",
-  ctrlKey = "ctrl key",
-  commandKey = "cmd key",
-  gKey = "g key",
-  attach = "attach",
-  menu = "menu",
-  help = "help",
-  blank = "blank",
-  check = "check",
-  message = "message",
-  info = "info",
-  alert = "alert",
-  notification = "notification",
-  arrowUp = "arrow up",
-  arrowLeft = "arrow left",
-  arrowRight = "arrow right",
-  gpMark = "gpMark",
-  navigate = "navigate",
-  document = "document",
-  refresh = "refresh",
-  recentChats = "recent chats",
-  trashBin = "trash bin",
-  dollar = "dollar",
-  apple = "apple",
-  view = "view",
-  openCircle = "open circle",
-  expanded = "expanded",
-  concise = "concise",
-  moderate = "moderate",
-  mail = "mail",
-  textDocument = "text document",
-  complianceCheck = "compliance check",
-  edit = "edit",
-  characterBeam = "character beam",
-  undo = "undo",
-  chat = "chat",
-  exclamation = "exclamation",
-  chart = "chart",
-  lightBulb = "light bulb",
-  settings = "settings",
-  documentEditor = "document editor",
-  chartArrow = "chart arrow",
-  focus = "focus",
-  briefcase = "briefcase",
-  globeLocation = "globe location",
-  barChart = "bar chart",
-  fontSmaller = "font smaller",
-  fontLarger = "font larger",
-  copy = "copy",
-  stop = "stop",
-  like = "like",
-  unlike = "unlike",
+  home = 'home',
+  inbox = 'inbox',
+  sparkle = 'sparkle',
+  people = 'people',
+  wallet = 'wallet',
+  invoice = 'invoice',
+  payment = 'payment',
+  heart = 'heart',
+  clock = 'clock',
+  book = 'book',
+  search = 'search',
+  filter = 'filter',
+  more = 'more',
+  unchecked = 'unchecked',
+  checked = 'checked',
+  partial = 'partial',
+  chevronDown = 'chevron down',
+  chevronUp = 'chevron up',
+  plus = 'plus',
+  plusCircle = 'plus circle',
+  x = 'x',
+  gpAssist = 'g-p assist',
+  upload = 'upload',
+  download = 'download',
+  share = 'share',
+  checkCircle = 'check circle',
+  person = 'person',
+  ctrlKey = 'ctrl key',
+  commandKey = 'cmd key',
+  gKey = 'g key',
+  attach = 'attach',
+  menu = 'menu',
+  help = 'help',
+  blank = 'blank',
+  check = 'check',
+  message = 'message',
+  info = 'info',
+  alert = 'alert',
+  notification = 'notification',
+  arrowUp = 'arrow up',
+  arrowLeft = 'arrow left',
+  arrowRight = 'arrow right',
+  gpMark = 'gpMark',
+  navigate = 'navigate',
+  document = 'document',
+  refresh = 'refresh',
+  recentChats = 'recent chats',
+  trashBin = 'trash bin',
+  dollar = 'dollar',
+  apple = 'apple',
+  view = 'view',
+  openCircle = 'open circle',
+  expanded = 'expanded',
+  concise = 'concise',
+  moderate = 'moderate',
+  mail = 'mail',
+  textDocument = 'text document',
+  complianceCheck = 'compliance check',
+  edit = 'edit',
+  characterBeam = 'character beam',
+  undo = 'undo',
+  chat = 'chat',
+  exclamation = 'exclamation',
+  chart = 'chart',
+  lightBulb = 'light bulb',
+  settings = 'settings',
+  documentEditor = 'document editor',
+  chartArrow = 'chart arrow',
+  focus = 'focus',
+  briefcase = 'briefcase',
+  globeLocation = 'globe location',
+  barChart = 'bar chart',
+  fontSmaller = 'font smaller',
+  fontLarger = 'font larger',
+  copy = 'copy',
+  stop = 'stop',
+  like = 'like',
+  unlike = 'unlike',
 }
 
 export interface IconProps {
@@ -95,7 +95,7 @@ export interface IconProps {
   strokeColor?: string;
   accentColor?: string;
   fillColor?: string;
-  type?: "line" | "dualtone";
+  type?: 'line' | 'dualtone';
   toggle?: boolean;
   pointer?: boolean;
   theme?: any;
@@ -106,13 +106,13 @@ export interface IconProps {
 export function UIIcon(props: IconProps) {
   const theme = useTheme();
   const {
-    name = "home",
+    name = 'home',
     size = 22,
     stroke = 1.5,
     strokeColor = theme.colors.iconPrimary,
     accentColor = theme.colors.iconPrimary,
     fillColor = theme.colors.transparent,
-    type = "line",
+    type = 'line',
     toggle = false,
     pointer = true,
     disabled = false,
@@ -124,7 +124,7 @@ export function UIIcon(props: IconProps) {
   const GPIcons: Icon[] = useMemo(() => {
     return [
       {
-        name: "like",
+        name: 'like',
         line: (
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -132,7 +132,7 @@ export function UIIcon(props: IconProps) {
             height={size}
             viewBox="0 0 20 20"
             style={{
-              cursor: disabled ? "default" : pointer ? "pointer" : "inherit",
+              cursor: disabled ? 'default' : pointer ? 'pointer' : 'inherit',
             }}
             onClick={(e) => onClick(e)}
             fill="none"
@@ -149,7 +149,7 @@ export function UIIcon(props: IconProps) {
         ),
       },
       {
-        name: "unlike",
+        name: 'unlike',
         line: (
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -157,7 +157,7 @@ export function UIIcon(props: IconProps) {
             height={size}
             viewBox="0 0 20 20"
             style={{
-              cursor: disabled ? "default" : pointer ? "pointer" : "inherit",
+              cursor: disabled ? 'default' : pointer ? 'pointer' : 'inherit',
             }}
             onClick={(e) => onClick(e)}
             fill="none"
@@ -174,7 +174,7 @@ export function UIIcon(props: IconProps) {
         ),
       },
       {
-        name: "stop",
+        name: 'stop',
         line: (
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -182,7 +182,7 @@ export function UIIcon(props: IconProps) {
             height={size}
             viewBox="0 0 20 20"
             style={{
-              cursor: disabled ? "default" : pointer ? "pointer" : "inherit",
+              cursor: disabled ? 'default' : pointer ? 'pointer' : 'inherit',
             }}
             onClick={(e) => onClick(e)}
             fill="none"
@@ -195,7 +195,7 @@ export function UIIcon(props: IconProps) {
         ),
       },
       {
-        name: "copy",
+        name: 'copy',
         line: (
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -203,7 +203,7 @@ export function UIIcon(props: IconProps) {
             height={size}
             viewBox="0 0 20 20"
             style={{
-              cursor: disabled ? "default" : pointer ? "pointer" : "inherit",
+              cursor: disabled ? 'default' : pointer ? 'pointer' : 'inherit',
             }}
             onClick={(e) => onClick(e)}
             fill="none"
@@ -215,7 +215,7 @@ export function UIIcon(props: IconProps) {
               strokeWidth={stroke}
               stroke={strokeColor}
               strokeLinejoin="round"
-              strokeMiterlimit={"10"}
+              strokeMiterlimit={'10'}
             ></path>
             <path
               d="M 5 6.5 C 5 5.672 5.672 5 6.5 5 L 16.5 5 C 17.328 5 18 5.672 18 6.5 L 18 16.5 C 18 17.328 17.328 18 16.5 18 L 6.5 18 C 5.672 18 5 17.328 5 16.5 Z"
@@ -223,13 +223,13 @@ export function UIIcon(props: IconProps) {
               strokeWidth={stroke}
               stroke={strokeColor}
               strokeLinejoin="round"
-              strokeMiterlimit={"10"}
+              strokeMiterlimit={'10'}
             ></path>
           </svg>
         ),
       },
       {
-        name: "font smaller",
+        name: 'font smaller',
         line: (
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -237,7 +237,7 @@ export function UIIcon(props: IconProps) {
             height={size}
             viewBox="0 0 20 20"
             style={{
-              cursor: disabled ? "default" : pointer ? "pointer" : "inherit",
+              cursor: disabled ? 'default' : pointer ? 'pointer' : 'inherit',
             }}
             onClick={(e) => onClick(e)}
             fill="none"
@@ -251,7 +251,7 @@ export function UIIcon(props: IconProps) {
         ),
       },
       {
-        name: "font larger",
+        name: 'font larger',
         line: (
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -259,7 +259,7 @@ export function UIIcon(props: IconProps) {
             height={size}
             viewBox="0 0 20 20"
             style={{
-              cursor: disabled ? "default" : pointer ? "pointer" : "inherit",
+              cursor: disabled ? 'default' : pointer ? 'pointer' : 'inherit',
             }}
             onClick={(e) => onClick(e)}
             fill="none"
@@ -273,7 +273,7 @@ export function UIIcon(props: IconProps) {
         ),
       },
       {
-        name: "bar chart",
+        name: 'bar chart',
         line: (
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -281,7 +281,7 @@ export function UIIcon(props: IconProps) {
             height={size}
             viewBox="0 0 20 20"
             style={{
-              cursor: disabled ? "default" : pointer ? "pointer" : "inherit",
+              cursor: disabled ? 'default' : pointer ? 'pointer' : 'inherit',
             }}
             onClick={(e) => onClick(e)}
             fill="none"
@@ -316,7 +316,7 @@ export function UIIcon(props: IconProps) {
         ),
       },
       {
-        name: "briefcase",
+        name: 'briefcase',
         line: (
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -324,7 +324,7 @@ export function UIIcon(props: IconProps) {
             height={size}
             viewBox="0 0 20 20"
             style={{
-              cursor: disabled ? "default" : pointer ? "pointer" : "inherit",
+              cursor: disabled ? 'default' : pointer ? 'pointer' : 'inherit',
             }}
             onClick={(e) => onClick(e)}
             fill="none"
@@ -341,7 +341,7 @@ export function UIIcon(props: IconProps) {
         ),
       },
       {
-        name: "globe location",
+        name: 'globe location',
         line: (
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -349,7 +349,7 @@ export function UIIcon(props: IconProps) {
             height={size}
             viewBox="0 0 20 20"
             style={{
-              cursor: disabled ? "default" : pointer ? "pointer" : "inherit",
+              cursor: disabled ? 'default' : pointer ? 'pointer' : 'inherit',
             }}
             onClick={(e) => onClick(e)}
             fill="none"
@@ -380,7 +380,7 @@ export function UIIcon(props: IconProps) {
         ),
       },
       {
-        name: "focus",
+        name: 'focus',
         line: (
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -388,7 +388,7 @@ export function UIIcon(props: IconProps) {
             height={size}
             viewBox="0 0 20 20"
             style={{
-              cursor: disabled ? "default" : pointer ? "pointer" : "inherit",
+              cursor: disabled ? 'default' : pointer ? 'pointer' : 'inherit',
             }}
             onClick={(e) => onClick(e)}
             fill="none"
@@ -426,7 +426,7 @@ export function UIIcon(props: IconProps) {
         ),
       },
       {
-        name: "chart arrow",
+        name: 'chart arrow',
         line: (
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -434,7 +434,7 @@ export function UIIcon(props: IconProps) {
             height={size}
             viewBox="0 0 20 20"
             style={{
-              cursor: disabled ? "default" : pointer ? "pointer" : "inherit",
+              cursor: disabled ? 'default' : pointer ? 'pointer' : 'inherit',
             }}
             onClick={(e) => onClick(e)}
             fill="none"
@@ -465,7 +465,7 @@ export function UIIcon(props: IconProps) {
         ),
       },
       {
-        name: "document editor",
+        name: 'document editor',
         line: (
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -473,7 +473,7 @@ export function UIIcon(props: IconProps) {
             height={size}
             viewBox="0 0 20 20"
             style={{
-              cursor: disabled ? "default" : pointer ? "pointer" : "inherit",
+              cursor: disabled ? 'default' : pointer ? 'pointer' : 'inherit',
             }}
             onClick={(e) => onClick(e)}
             fill="none"
@@ -507,7 +507,7 @@ export function UIIcon(props: IconProps) {
         ),
       },
       {
-        name: "settings",
+        name: 'settings',
         line: (
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -515,7 +515,7 @@ export function UIIcon(props: IconProps) {
             height={size}
             viewBox="0 0 20 20"
             style={{
-              cursor: disabled ? "default" : pointer ? "pointer" : "inherit",
+              cursor: disabled ? 'default' : pointer ? 'pointer' : 'inherit',
             }}
             onClick={(e) => onClick(e)}
             fill="none"
@@ -548,7 +548,7 @@ export function UIIcon(props: IconProps) {
         ),
       },
       {
-        name: "light bulb",
+        name: 'light bulb',
         line: (
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -556,7 +556,7 @@ export function UIIcon(props: IconProps) {
             height={size}
             viewBox="0 0 20 20"
             style={{
-              cursor: disabled ? "default" : pointer ? "pointer" : "inherit",
+              cursor: disabled ? 'default' : pointer ? 'pointer' : 'inherit',
             }}
             onClick={(e) => onClick(e)}
             fill="none"
@@ -587,7 +587,7 @@ export function UIIcon(props: IconProps) {
         ),
       },
       {
-        name: "issue",
+        name: 'issue',
         line: (
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -595,7 +595,7 @@ export function UIIcon(props: IconProps) {
             height={size}
             viewBox="0 0 20 20"
             style={{
-              cursor: disabled ? "default" : pointer ? "pointer" : "inherit",
+              cursor: disabled ? 'default' : pointer ? 'pointer' : 'inherit',
             }}
             onClick={(e) => onClick(e)}
             fill="none"
@@ -632,7 +632,7 @@ export function UIIcon(props: IconProps) {
         ),
       },
       {
-        name: "chart",
+        name: 'chart',
         line: (
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -640,7 +640,7 @@ export function UIIcon(props: IconProps) {
             height={size}
             viewBox="0 0 20 20"
             style={{
-              cursor: disabled ? "default" : pointer ? "pointer" : "inherit",
+              cursor: disabled ? 'default' : pointer ? 'pointer' : 'inherit',
             }}
             onClick={(e) => onClick(e)}
             fill="none"
@@ -666,7 +666,7 @@ export function UIIcon(props: IconProps) {
         ),
       },
       {
-        name: "chat",
+        name: 'chat',
         line: (
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -674,7 +674,7 @@ export function UIIcon(props: IconProps) {
             height={size}
             viewBox="0 0 20 20"
             style={{
-              cursor: disabled ? "default" : pointer ? "pointer" : "inherit",
+              cursor: disabled ? 'default' : pointer ? 'pointer' : 'inherit',
             }}
             onClick={(e) => onClick(e)}
             fill="none"
@@ -687,7 +687,7 @@ export function UIIcon(props: IconProps) {
         ),
       },
       {
-        name: "exclamation",
+        name: 'exclamation',
         line: (
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -695,7 +695,7 @@ export function UIIcon(props: IconProps) {
             height={size}
             viewBox="0 0 20 20"
             style={{
-              cursor: disabled ? "default" : pointer ? "pointer" : "inherit",
+              cursor: disabled ? 'default' : pointer ? 'pointer' : 'inherit',
             }}
             onClick={(e) => onClick(e)}
             fill="none"
@@ -715,7 +715,7 @@ export function UIIcon(props: IconProps) {
         ),
       },
       {
-        name: "undo",
+        name: 'undo',
         line: (
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -723,7 +723,7 @@ export function UIIcon(props: IconProps) {
             height={size}
             viewBox="0 0 20 20"
             style={{
-              cursor: disabled ? "default" : pointer ? "pointer" : "inherit",
+              cursor: disabled ? 'default' : pointer ? 'pointer' : 'inherit',
             }}
             onClick={(e) => onClick(e)}
             fill="none"
@@ -746,7 +746,7 @@ export function UIIcon(props: IconProps) {
         ),
       },
       {
-        name: "character beam",
+        name: 'character beam',
         line: (
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -754,7 +754,7 @@ export function UIIcon(props: IconProps) {
             height={size}
             viewBox="0 0 20 20"
             style={{
-              cursor: disabled ? "default" : pointer ? "pointer" : "inherit",
+              cursor: disabled ? 'default' : pointer ? 'pointer' : 'inherit',
             }}
             onClick={(e) => onClick(e)}
             fill="none"
@@ -776,7 +776,7 @@ export function UIIcon(props: IconProps) {
         ),
       },
       {
-        name: "edit",
+        name: 'edit',
         line: (
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -784,7 +784,7 @@ export function UIIcon(props: IconProps) {
             height={size}
             viewBox="0 0 20 20"
             style={{
-              cursor: disabled ? "default" : pointer ? "pointer" : "inherit",
+              cursor: disabled ? 'default' : pointer ? 'pointer' : 'inherit',
             }}
             onClick={(e) => onClick(e)}
             fill="none"
@@ -799,7 +799,7 @@ export function UIIcon(props: IconProps) {
         ),
       },
       {
-        name: "compliance check",
+        name: 'compliance check',
         line: (
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -807,7 +807,7 @@ export function UIIcon(props: IconProps) {
             height={size}
             viewBox="0 0 20 20"
             style={{
-              cursor: disabled ? "default" : pointer ? "pointer" : "inherit",
+              cursor: disabled ? 'default' : pointer ? 'pointer' : 'inherit',
             }}
             onClick={(e) => onClick(e)}
             fill="none"
@@ -826,7 +826,7 @@ export function UIIcon(props: IconProps) {
         ),
       },
       {
-        name: "text document",
+        name: 'text document',
         line: (
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -834,7 +834,7 @@ export function UIIcon(props: IconProps) {
             height={size}
             viewBox="0 0 20 20"
             style={{
-              cursor: disabled ? "default" : pointer ? "pointer" : "inherit",
+              cursor: disabled ? 'default' : pointer ? 'pointer' : 'inherit',
             }}
             onClick={(e) => onClick(e)}
             fill="none"
@@ -847,7 +847,7 @@ export function UIIcon(props: IconProps) {
         ),
       },
       {
-        name: "mail",
+        name: 'mail',
         line: (
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -855,7 +855,7 @@ export function UIIcon(props: IconProps) {
             height={size}
             viewBox="0 0 20 20"
             style={{
-              cursor: disabled ? "default" : pointer ? "pointer" : "inherit",
+              cursor: disabled ? 'default' : pointer ? 'pointer' : 'inherit',
             }}
             onClick={(e) => onClick(e)}
             fill="none"
@@ -886,7 +886,7 @@ export function UIIcon(props: IconProps) {
         ),
       },
       {
-        name: "concise",
+        name: 'concise',
         line: (
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -894,7 +894,7 @@ export function UIIcon(props: IconProps) {
             height={size}
             viewBox="0 0 20 20"
             style={{
-              cursor: disabled ? "default" : pointer ? "pointer" : "inherit",
+              cursor: disabled ? 'default' : pointer ? 'pointer' : 'inherit',
             }}
             onClick={(e) => onClick(e)}
             fill="none"
@@ -907,7 +907,7 @@ export function UIIcon(props: IconProps) {
         ),
       },
       {
-        name: "moderate",
+        name: 'moderate',
         line: (
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -915,7 +915,7 @@ export function UIIcon(props: IconProps) {
             height={size}
             viewBox="0 0 20 20"
             style={{
-              cursor: disabled ? "default" : pointer ? "pointer" : "inherit",
+              cursor: disabled ? 'default' : pointer ? 'pointer' : 'inherit',
             }}
             onClick={(e) => onClick(e)}
             fill="none"
@@ -928,7 +928,7 @@ export function UIIcon(props: IconProps) {
         ),
       },
       {
-        name: "expanded",
+        name: 'expanded',
         line: (
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -936,7 +936,7 @@ export function UIIcon(props: IconProps) {
             height={size}
             viewBox="0 0 20 20"
             style={{
-              cursor: disabled ? "default" : pointer ? "pointer" : "inherit",
+              cursor: disabled ? 'default' : pointer ? 'pointer' : 'inherit',
             }}
             onClick={(e) => onClick(e)}
             fill="none"
@@ -949,7 +949,7 @@ export function UIIcon(props: IconProps) {
         ),
       },
       {
-        name: "open circle",
+        name: 'open circle',
         line: (
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -957,7 +957,7 @@ export function UIIcon(props: IconProps) {
             height={size}
             viewBox="0 0 20 20"
             style={{
-              cursor: disabled ? "default" : pointer ? "pointer" : "inherit",
+              cursor: disabled ? 'default' : pointer ? 'pointer' : 'inherit',
             }}
             onClick={(e) => onClick(e)}
             fill="none"
@@ -965,14 +965,14 @@ export function UIIcon(props: IconProps) {
             <path
               d="M 17.371 6.886 C 17.776 7.843 18 8.895 18 10 C 18 14.418 14.418 18 10 18 C 5.582 18 2 14.418 2 10 C 2 5.582 5.582 2 10 2"
               fill="transparent"
-              stroke-width="1.5"
+              strokeWidth="1.5"
               stroke="rgb(0, 0, 0)"
             ></path>
           </svg>
         ),
       },
       {
-        name: "view",
+        name: 'view',
         line: (
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -980,7 +980,7 @@ export function UIIcon(props: IconProps) {
             height={size}
             viewBox="0 0 20 20"
             style={{
-              cursor: disabled ? "default" : pointer ? "pointer" : "inherit",
+              cursor: disabled ? 'default' : pointer ? 'pointer' : 'inherit',
             }}
             onClick={(e) => onClick(e)}
             fill="none"
@@ -1003,7 +1003,7 @@ export function UIIcon(props: IconProps) {
             height={size}
             viewBox="0 0 20 20"
             style={{
-              cursor: disabled ? "default" : pointer ? "pointer" : "inherit",
+              cursor: disabled ? 'default' : pointer ? 'pointer' : 'inherit',
             }}
             onClick={(e) => onClick(e)}
             fill="none"
@@ -1017,7 +1017,7 @@ export function UIIcon(props: IconProps) {
         ),
       },
       {
-        name: "apple",
+        name: 'apple',
         line: (
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -1025,7 +1025,7 @@ export function UIIcon(props: IconProps) {
             height={size}
             viewBox="0 0 20 20"
             style={{
-              cursor: disabled ? "default" : pointer ? "pointer" : "inherit",
+              cursor: disabled ? 'default' : pointer ? 'pointer' : 'inherit',
             }}
             onClick={(e) => onClick(e)}
             fill="none"
@@ -1038,7 +1038,7 @@ export function UIIcon(props: IconProps) {
         ),
       },
       {
-        name: "linkedin",
+        name: 'linkedin',
         line: (
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -1046,7 +1046,7 @@ export function UIIcon(props: IconProps) {
             height={size}
             viewBox="0 0 20 20"
             style={{
-              cursor: disabled ? "default" : pointer ? "pointer" : "inherit",
+              cursor: disabled ? 'default' : pointer ? 'pointer' : 'inherit',
             }}
             onClick={(e) => onClick(e)}
             fill="none"
@@ -1059,7 +1059,7 @@ export function UIIcon(props: IconProps) {
         ),
       },
       {
-        name: "google",
+        name: 'google',
         line: (
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -1067,7 +1067,7 @@ export function UIIcon(props: IconProps) {
             height={size}
             viewBox="0 0 20 20"
             style={{
-              cursor: disabled ? "default" : pointer ? "pointer" : "inherit",
+              cursor: disabled ? 'default' : pointer ? 'pointer' : 'inherit',
             }}
             onClick={(e) => onClick(e)}
             fill="none"
@@ -1094,7 +1094,7 @@ export function UIIcon(props: IconProps) {
         ),
       },
       {
-        name: "dollar",
+        name: 'dollar',
         line: (
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -1102,7 +1102,7 @@ export function UIIcon(props: IconProps) {
             height={size}
             viewBox="0 0 20 20"
             style={{
-              cursor: disabled ? "default" : pointer ? "pointer" : "inherit",
+              cursor: disabled ? 'default' : pointer ? 'pointer' : 'inherit',
             }}
             onClick={(e) => onClick(e)}
             fill="none"
@@ -1120,7 +1120,7 @@ export function UIIcon(props: IconProps) {
         ),
       },
       {
-        name: "trash bin",
+        name: 'trash bin',
         line: (
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -1128,7 +1128,7 @@ export function UIIcon(props: IconProps) {
             height={size}
             viewBox="0 0 20 20"
             style={{
-              cursor: disabled ? "default" : pointer ? "pointer" : "inherit",
+              cursor: disabled ? 'default' : pointer ? 'pointer' : 'inherit',
             }}
             onClick={(e) => onClick(e)}
             fill="none"
@@ -1141,7 +1141,7 @@ export function UIIcon(props: IconProps) {
         ),
       },
       {
-        name: "recent chats",
+        name: 'recent chats',
         line: (
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -1149,7 +1149,7 @@ export function UIIcon(props: IconProps) {
             height={size}
             viewBox="0 0 20 20"
             style={{
-              cursor: disabled ? "default" : pointer ? "pointer" : "inherit",
+              cursor: disabled ? 'default' : pointer ? 'pointer' : 'inherit',
             }}
             onClick={(e) => onClick(e)}
             fill="none"
@@ -1162,14 +1162,14 @@ export function UIIcon(props: IconProps) {
         ),
       },
       {
-        name: "refresh",
+        name: 'refresh',
         line: (
           <svg
             width={size}
             height={size}
             viewBox="0 0 20 20"
             style={{
-              cursor: disabled ? "default" : pointer ? "pointer" : "inherit",
+              cursor: disabled ? 'default' : pointer ? 'pointer' : 'inherit',
             }}
             onClick={(e) => onClick(e)}
             fill="none"
@@ -1182,14 +1182,14 @@ export function UIIcon(props: IconProps) {
         ),
       },
       {
-        name: "document",
+        name: 'document',
         line: (
           <svg
             width={size}
             height={size}
             viewBox="0 0 20 20"
             style={{
-              cursor: disabled ? "default" : pointer ? "pointer" : "inherit",
+              cursor: disabled ? 'default' : pointer ? 'pointer' : 'inherit',
             }}
             onClick={(e) => onClick(e)}
             fill="none"
@@ -1206,14 +1206,14 @@ export function UIIcon(props: IconProps) {
         ),
       },
       {
-        name: "navigate",
+        name: 'navigate',
         line: (
           <svg
             width={size}
             height={size}
             viewBox="0 0 20 20"
             style={{
-              cursor: disabled ? "default" : pointer ? "pointer" : "inherit",
+              cursor: disabled ? 'default' : pointer ? 'pointer' : 'inherit',
             }}
             onClick={(e) => onClick(e)}
             fill="none"
@@ -1244,14 +1244,14 @@ export function UIIcon(props: IconProps) {
         ),
       },
       {
-        name: "arrow right",
+        name: 'arrow right',
         line: (
           <svg
             width={size}
             height={size}
             viewBox="0 0 20 20"
             style={{
-              cursor: disabled ? "default" : pointer ? "pointer" : "inherit",
+              cursor: disabled ? 'default' : pointer ? 'pointer' : 'inherit',
             }}
             onClick={(e) => onClick(e)}
             fill="none"
@@ -1264,14 +1264,14 @@ export function UIIcon(props: IconProps) {
         ),
       },
       {
-        name: "arrow left",
+        name: 'arrow left',
         line: (
           <svg
             width={size}
             height={size}
             viewBox="0 0 20 20"
             style={{
-              cursor: disabled ? "default" : pointer ? "pointer" : "inherit",
+              cursor: disabled ? 'default' : pointer ? 'pointer' : 'inherit',
             }}
             onClick={(e) => onClick(e)}
             fill="none"
@@ -1284,14 +1284,14 @@ export function UIIcon(props: IconProps) {
         ),
       },
       {
-        name: "",
+        name: '',
         line: (
           <svg
             width={size}
             height={size}
             viewBox="0 0 20 20"
             style={{
-              cursor: disabled ? "default" : pointer ? "pointer" : "inherit",
+              cursor: disabled ? 'default' : pointer ? 'pointer' : 'inherit',
             }}
             onClick={(e) => onClick(e)}
             fill="none"
@@ -1304,14 +1304,14 @@ export function UIIcon(props: IconProps) {
         ),
       },
       {
-        name: "gpMark",
+        name: 'gpMark',
         line: (
           <svg
             width={size}
             height={size}
             viewBox="0 0 822 822"
             style={{
-              cursor: disabled ? "default" : pointer ? "pointer" : "inherit",
+              cursor: disabled ? 'default' : pointer ? 'pointer' : 'inherit',
             }}
             onClick={(e) => onClick(e)}
             fill="none"
@@ -1324,14 +1324,14 @@ export function UIIcon(props: IconProps) {
         ),
       },
       {
-        name: "arrow up",
+        name: 'arrow up',
         line: (
           <svg
             width={size}
             height={size}
             viewBox="0 0 20 20"
             style={{
-              cursor: disabled ? "default" : pointer ? "pointer" : "inherit",
+              cursor: disabled ? 'default' : pointer ? 'pointer' : 'inherit',
             }}
             onClick={(e) => onClick(e)}
             fill="none"
@@ -1344,14 +1344,14 @@ export function UIIcon(props: IconProps) {
         ),
       },
       {
-        name: "notification",
+        name: 'notification',
         line: (
           <svg
             width={size}
             height={size}
             viewBox="0 0 20 20"
             style={{
-              cursor: disabled ? "default" : pointer ? "pointer" : "inherit",
+              cursor: disabled ? 'default' : pointer ? 'pointer' : 'inherit',
             }}
             onClick={(e) => onClick(e)}
             fill="none"
@@ -1377,14 +1377,14 @@ export function UIIcon(props: IconProps) {
         ),
       },
       {
-        name: "alert",
+        name: 'alert',
         line: (
           <svg
             width={size}
             height={size}
             viewBox="0 0 20 20"
             style={{
-              cursor: disabled ? "default" : pointer ? "pointer" : "inherit",
+              cursor: disabled ? 'default' : pointer ? 'pointer' : 'inherit',
             }}
             onClick={(e) => onClick(e)}
             fill="none"
@@ -1398,14 +1398,14 @@ export function UIIcon(props: IconProps) {
         ),
       },
       {
-        name: "message",
+        name: 'message',
         line: (
           <svg
             width={size}
             height={size}
             viewBox="0 0 20 20"
             style={{
-              cursor: disabled ? "default" : pointer ? "pointer" : "inherit",
+              cursor: disabled ? 'default' : pointer ? 'pointer' : 'inherit',
             }}
             onClick={(e) => onClick(e)}
             fill="none"
@@ -1418,7 +1418,7 @@ export function UIIcon(props: IconProps) {
         ),
       },
       {
-        name: "blank",
+        name: 'blank',
         line: (
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -1426,7 +1426,7 @@ export function UIIcon(props: IconProps) {
             height={size}
             viewBox="0 0 20 20"
             style={{
-              cursor: disabled ? "default" : pointer ? "pointer" : "inherit",
+              cursor: disabled ? 'default' : pointer ? 'pointer' : 'inherit',
             }}
             onClick={(e) => onClick(e)}
             fill="none"
@@ -1434,7 +1434,7 @@ export function UIIcon(props: IconProps) {
         ),
       },
       {
-        name: "check",
+        name: 'check',
         line: (
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -1442,7 +1442,7 @@ export function UIIcon(props: IconProps) {
             height={size}
             viewBox="0 0 20 20"
             style={{
-              cursor: disabled ? "default" : pointer ? "pointer" : "inherit",
+              cursor: disabled ? 'default' : pointer ? 'pointer' : 'inherit',
             }}
             onClick={(e) => onClick(e)}
             fill="none"
@@ -1455,7 +1455,7 @@ export function UIIcon(props: IconProps) {
         ),
       },
       {
-        name: "help",
+        name: 'help',
         line: (
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -1463,7 +1463,7 @@ export function UIIcon(props: IconProps) {
             height={size}
             viewBox="0 0 20 20"
             style={{
-              cursor: disabled ? "default" : pointer ? "pointer" : "inherit",
+              cursor: disabled ? 'default' : pointer ? 'pointer' : 'inherit',
             }}
             onClick={(e) => onClick(e)}
             fill="none"
@@ -1484,7 +1484,7 @@ export function UIIcon(props: IconProps) {
         ),
       },
       {
-        name: "menu",
+        name: 'menu',
         line: (
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -1492,7 +1492,7 @@ export function UIIcon(props: IconProps) {
             height={size}
             viewBox="0 0 20 20"
             style={{
-              cursor: disabled ? "default" : pointer ? "pointer" : "inherit",
+              cursor: disabled ? 'default' : pointer ? 'pointer' : 'inherit',
             }}
             onClick={(e) => onClick(e)}
             fill="none"
@@ -1507,7 +1507,7 @@ export function UIIcon(props: IconProps) {
         ),
       },
       {
-        name: "attach",
+        name: 'attach',
         line: (
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -1515,7 +1515,7 @@ export function UIIcon(props: IconProps) {
             height={size}
             viewBox="0 0 20 20"
             style={{
-              cursor: disabled ? "default" : pointer ? "pointer" : "inherit",
+              cursor: disabled ? 'default' : pointer ? 'pointer' : 'inherit',
             }}
             onClick={(e) => onClick(e)}
             fill="none"
@@ -1540,14 +1540,14 @@ export function UIIcon(props: IconProps) {
         ),
       },
       {
-        name: "ctrl key",
+        name: 'ctrl key',
         line: (
           <svg
             xmlns="http://www.w3.org/2000/svg"
             height={size}
             viewBox="0 0 33 24"
             style={{
-              cursor: disabled ? "default" : pointer ? "pointer" : "inherit",
+              cursor: disabled ? 'default' : pointer ? 'pointer' : 'inherit',
             }}
             onClick={(e) => onClick(e)}
           >
@@ -1571,7 +1571,7 @@ export function UIIcon(props: IconProps) {
         ),
       },
       {
-        name: "g key",
+        name: 'g key',
         line: (
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -1579,7 +1579,7 @@ export function UIIcon(props: IconProps) {
             height={size}
             viewBox="0 0 24 24"
             style={{
-              cursor: disabled ? "default" : pointer ? "pointer" : "inherit",
+              cursor: disabled ? 'default' : pointer ? 'pointer' : 'inherit',
             }}
             onClick={(e) => onClick(e)}
           >
@@ -1600,7 +1600,7 @@ export function UIIcon(props: IconProps) {
         ),
       },
       {
-        name: "cmd key",
+        name: 'cmd key',
         line: (
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -1608,7 +1608,7 @@ export function UIIcon(props: IconProps) {
             height={size}
             viewBox="0 0 24 24"
             style={{
-              cursor: disabled ? "default" : pointer ? "pointer" : "inherit",
+              cursor: disabled ? 'default' : pointer ? 'pointer' : 'inherit',
             }}
             onClick={(e) => onClick(e)}
           >
@@ -1629,7 +1629,7 @@ export function UIIcon(props: IconProps) {
         ),
       },
       {
-        name: "person",
+        name: 'person',
         line: (
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -1637,7 +1637,7 @@ export function UIIcon(props: IconProps) {
             height={size}
             viewBox="0 0 20 20"
             style={{
-              cursor: disabled ? "default" : pointer ? "pointer" : "inherit",
+              cursor: disabled ? 'default' : pointer ? 'pointer' : 'inherit',
             }}
             onClick={(e) => onClick(e)}
             fill="none"
@@ -1652,7 +1652,7 @@ export function UIIcon(props: IconProps) {
         ),
       },
       {
-        name: "upload",
+        name: 'upload',
         line: (
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -1660,7 +1660,7 @@ export function UIIcon(props: IconProps) {
             height={size}
             viewBox="0 0 20 20"
             style={{
-              cursor: disabled ? "default" : pointer ? "pointer" : "inherit",
+              cursor: disabled ? 'default' : pointer ? 'pointer' : 'inherit',
             }}
             onClick={(e) => onClick(e)}
             fill="none"
@@ -1679,7 +1679,7 @@ export function UIIcon(props: IconProps) {
         ),
       },
       {
-        name: "download",
+        name: 'download',
         line: (
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -1687,7 +1687,7 @@ export function UIIcon(props: IconProps) {
             height={size}
             viewBox="0 0 20 20"
             style={{
-              cursor: disabled ? "default" : pointer ? "pointer" : "inherit",
+              cursor: disabled ? 'default' : pointer ? 'pointer' : 'inherit',
             }}
             onClick={(e) => onClick(e)}
             fill="none"
@@ -1702,7 +1702,7 @@ export function UIIcon(props: IconProps) {
         ),
       },
       {
-        name: "check circle",
+        name: 'check circle',
         line: (
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -1710,7 +1710,7 @@ export function UIIcon(props: IconProps) {
             height={size}
             viewBox="0 0 20 20"
             style={{
-              cursor: disabled ? "default" : pointer ? "pointer" : "inherit",
+              cursor: disabled ? 'default' : pointer ? 'pointer' : 'inherit',
             }}
             onClick={(e) => onClick(e)}
             fill="none"
@@ -1728,7 +1728,7 @@ export function UIIcon(props: IconProps) {
         ),
       },
       {
-        name: "share",
+        name: 'share',
         line: (
           <svg
             width="20"
@@ -1745,7 +1745,7 @@ export function UIIcon(props: IconProps) {
         ),
       },
       {
-        name: "g-p assist",
+        name: 'g-p assist',
         line: (
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -1753,7 +1753,7 @@ export function UIIcon(props: IconProps) {
             height={size}
             viewBox="0 0 22 22"
             style={{
-              cursor: disabled ? "default" : pointer ? "pointer" : "inherit",
+              cursor: disabled ? 'default' : pointer ? 'pointer' : 'inherit',
             }}
             onClick={(e) => onClick(e)}
             fill="none"
@@ -1770,17 +1770,17 @@ export function UIIcon(props: IconProps) {
                   <stop
                     offset="0"
                     stopColor={
-                      theme.name === "lightMode"
-                        ? "rgba(106, 245, 255,1)"
-                        : "rgba(0,200,244,1)"
+                      theme.name === 'lightMode'
+                        ? 'rgba(106, 245, 255,1)'
+                        : 'rgba(0,200,244,1)'
                     }
                     stopOpacity="1"
                   ></stop>
                   <stop
                     offset="0.50"
                     stopColor={
-                      theme.name === "lightMode"
-                        ? "rgb(0, 0, 255)"
+                      theme.name === 'lightMode'
+                        ? 'rgb(0, 0, 255)'
                         : theme.colors.primaryBlue
                     }
                     stopOpacity="1"
@@ -1788,9 +1788,9 @@ export function UIIcon(props: IconProps) {
                   <stop
                     offset="1"
                     stopColor={
-                      theme.name === "lightMode"
-                        ? "rgba(106, 245, 255,1)"
-                        : "rgba(0,200,244,1)"
+                      theme.name === 'lightMode'
+                        ? 'rgba(106, 245, 255,1)'
+                        : 'rgba(0,200,244,1)'
                     }
                     stopOpacity="1"
                   ></stop>
@@ -1805,24 +1805,24 @@ export function UIIcon(props: IconProps) {
             <path
               d="M 18.2 5 C 18.863 5 19.4 4.463 19.4 3.8 C 19.4 3.137 18.863 2.6 18.2 2.6 C 17.537 2.6 17 3.137 17 3.8 C 17 4.463 17.537 5 18.2 5 Z"
               fill={
-                theme.name === "lightMode"
+                theme.name === 'lightMode'
                   ? theme.colors.primaryBlue
-                  : "rgba(0,200,244,1)"
+                  : 'rgba(0,200,244,1)'
               }
             ></path>
             <path
               d="M 3.8 19.4 C 4.463 19.4 5 18.863 5 18.2 C 5 17.537 4.463 17 3.8 17 C 3.137 17 2.6 17.537 2.6 18.2 C 2.6 18.863 3.137 19.4 3.8 19.4 Z"
               fill={
-                theme.name === "lightMode"
+                theme.name === 'lightMode'
                   ? theme.colors.primaryBlue
-                  : "rgba(0,200,244,1)"
+                  : 'rgba(0,200,244,1)'
               }
             ></path>
           </svg>
         ),
       },
       {
-        name: "search",
+        name: 'search',
         line: (
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -1830,7 +1830,7 @@ export function UIIcon(props: IconProps) {
             height={size}
             viewBox="0 0 20 20"
             style={{
-              cursor: disabled ? "default" : pointer ? "pointer" : "inherit",
+              cursor: disabled ? 'default' : pointer ? 'pointer' : 'inherit',
             }}
             onClick={(e) => onClick(e)}
             fill="none"
@@ -1847,7 +1847,7 @@ export function UIIcon(props: IconProps) {
         ),
       },
       {
-        name: "x",
+        name: 'x',
         line: (
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -1855,7 +1855,7 @@ export function UIIcon(props: IconProps) {
             height={size}
             viewBox="0 0 20 20"
             style={{
-              cursor: disabled ? "default" : pointer ? "pointer" : "inherit",
+              cursor: disabled ? 'default' : pointer ? 'pointer' : 'inherit',
             }}
             onClick={(e) => onClick(e)}
             fill="none"
@@ -1871,7 +1871,7 @@ export function UIIcon(props: IconProps) {
         ),
       },
       {
-        name: "plus",
+        name: 'plus',
         line: (
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -1879,7 +1879,7 @@ export function UIIcon(props: IconProps) {
             height={size}
             viewBox="0 0 20 20"
             style={{
-              cursor: disabled ? "default" : pointer ? "pointer" : "inherit",
+              cursor: disabled ? 'default' : pointer ? 'pointer' : 'inherit',
             }}
             onClick={(e) => onClick(e)}
             fill="none"
@@ -1892,7 +1892,7 @@ export function UIIcon(props: IconProps) {
         ),
       },
       {
-        name: "plus circle",
+        name: 'plus circle',
         line: (
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -1900,7 +1900,7 @@ export function UIIcon(props: IconProps) {
             height={size}
             viewBox="0 0 20 20"
             style={{
-              cursor: disabled ? "default" : pointer ? "pointer" : "inherit",
+              cursor: disabled ? 'default' : pointer ? 'pointer' : 'inherit',
             }}
             onClick={(e) => onClick(e)}
             fill="none"
@@ -1917,7 +1917,7 @@ export function UIIcon(props: IconProps) {
         ),
       },
       {
-        name: "chevron down",
+        name: 'chevron down',
         line: (
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -1925,7 +1925,7 @@ export function UIIcon(props: IconProps) {
             height={size}
             viewBox="0 0 20 20"
             style={{
-              cursor: disabled ? "default" : pointer ? "pointer" : "inherit",
+              cursor: disabled ? 'default' : pointer ? 'pointer' : 'inherit',
             }}
             onClick={(e) => onClick(e)}
             fill="none"
@@ -1935,7 +1935,7 @@ export function UIIcon(props: IconProps) {
         ),
       },
       {
-        name: "chevron up",
+        name: 'chevron up',
         line: (
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -1943,7 +1943,7 @@ export function UIIcon(props: IconProps) {
             height={size}
             viewBox="0 0 20 20"
             style={{
-              cursor: disabled ? "default" : pointer ? "pointer" : "inherit",
+              cursor: disabled ? 'default' : pointer ? 'pointer' : 'inherit',
             }}
             onClick={(e) => onClick(e)}
             fill="none"
@@ -1957,7 +1957,7 @@ export function UIIcon(props: IconProps) {
         ),
       },
       {
-        name: "checked",
+        name: 'checked',
         line: (
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -1965,7 +1965,7 @@ export function UIIcon(props: IconProps) {
             height={size}
             viewBox="0 0 20 20"
             style={{
-              cursor: disabled ? "default" : pointer ? "pointer" : "inherit",
+              cursor: disabled ? 'default' : pointer ? 'pointer' : 'inherit',
             }}
             onClick={(e) => onClick(e)}
             fill="none"
@@ -1980,7 +1980,7 @@ export function UIIcon(props: IconProps) {
         ),
       },
       {
-        name: "unchecked",
+        name: 'unchecked',
         line: (
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -1988,7 +1988,7 @@ export function UIIcon(props: IconProps) {
             height={size}
             viewBox="0 0 20 20"
             style={{
-              cursor: disabled ? "default" : pointer ? "pointer" : "inherit",
+              cursor: disabled ? 'default' : pointer ? 'pointer' : 'inherit',
             }}
             onClick={(e) => onClick(e)}
             fill="none"
@@ -2006,7 +2006,7 @@ export function UIIcon(props: IconProps) {
         ),
       },
       {
-        name: "partial",
+        name: 'partial',
         line: (
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -2014,7 +2014,7 @@ export function UIIcon(props: IconProps) {
             height={size}
             viewBox="0 0 20 20"
             style={{
-              cursor: disabled ? "default" : pointer ? "pointer" : "inherit",
+              cursor: disabled ? 'default' : pointer ? 'pointer' : 'inherit',
             }}
             onClick={(e) => onClick(e)}
             fill="none"
@@ -2036,7 +2036,7 @@ export function UIIcon(props: IconProps) {
         ),
       },
       {
-        name: "search",
+        name: 'search',
         line: (
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -2044,7 +2044,7 @@ export function UIIcon(props: IconProps) {
             height={size}
             viewBox="0 0 20 20"
             style={{
-              cursor: disabled ? "default" : pointer ? "pointer" : "inherit",
+              cursor: disabled ? 'default' : pointer ? 'pointer' : 'inherit',
             }}
             onClick={(e) => onClick(e)}
             fill="none"
@@ -2059,7 +2059,7 @@ export function UIIcon(props: IconProps) {
         ),
       },
       {
-        name: "filter",
+        name: 'filter',
         line: (
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -2067,7 +2067,7 @@ export function UIIcon(props: IconProps) {
             height={size}
             viewBox="0 0 20 20"
             style={{
-              cursor: disabled ? "default" : pointer ? "pointer" : "inherit",
+              cursor: disabled ? 'default' : pointer ? 'pointer' : 'inherit',
             }}
             onClick={(e) => onClick(e)}
             fill="none"
@@ -2082,7 +2082,7 @@ export function UIIcon(props: IconProps) {
         ),
       },
       {
-        name: "more",
+        name: 'more',
         line: (
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -2090,7 +2090,7 @@ export function UIIcon(props: IconProps) {
             height={size}
             viewBox="0 0 20 20"
             style={{
-              cursor: disabled ? "default" : pointer ? "pointer" : "inherit",
+              cursor: disabled ? 'default' : pointer ? 'pointer' : 'inherit',
             }}
             onClick={(e) => onClick(e)}
             fill="none"
@@ -2103,7 +2103,7 @@ export function UIIcon(props: IconProps) {
         ),
       },
       {
-        name: "people",
+        name: 'people',
         line: (
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -2111,7 +2111,7 @@ export function UIIcon(props: IconProps) {
             height={size}
             viewBox="0 0 20 20"
             style={{
-              cursor: disabled ? "default" : pointer ? "pointer" : "inherit",
+              cursor: disabled ? 'default' : pointer ? 'pointer' : 'inherit',
             }}
             onClick={(e) => onClick(e)}
             fill="none"
@@ -2153,7 +2153,7 @@ export function UIIcon(props: IconProps) {
         ),
       },
       {
-        name: "wallet",
+        name: 'wallet',
         line: (
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -2161,7 +2161,7 @@ export function UIIcon(props: IconProps) {
             height={size}
             viewBox="0 0 18 18"
             style={{
-              cursor: disabled ? "default" : pointer ? "pointer" : "inherit",
+              cursor: disabled ? 'default' : pointer ? 'pointer' : 'inherit',
             }}
             onClick={(e) => onClick(e)}
             fill="none"
@@ -2190,7 +2190,7 @@ export function UIIcon(props: IconProps) {
         ),
       },
       {
-        name: "invoice",
+        name: 'invoice',
         line: (
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -2198,7 +2198,7 @@ export function UIIcon(props: IconProps) {
             height={size}
             viewBox="0 0 20 20"
             style={{
-              cursor: disabled ? "default" : pointer ? "pointer" : "inherit",
+              cursor: disabled ? 'default' : pointer ? 'pointer' : 'inherit',
             }}
             onClick={(e) => onClick(e)}
             fill="none"
@@ -2213,7 +2213,7 @@ export function UIIcon(props: IconProps) {
         ),
       },
       {
-        name: "payment",
+        name: 'payment',
         line: (
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -2221,7 +2221,7 @@ export function UIIcon(props: IconProps) {
             height={size}
             viewBox="0 0 20 20"
             style={{
-              cursor: disabled ? "default" : pointer ? "pointer" : "inherit",
+              cursor: disabled ? 'default' : pointer ? 'pointer' : 'inherit',
             }}
             onClick={(e) => onClick(e)}
             fill="none"
@@ -2236,7 +2236,7 @@ export function UIIcon(props: IconProps) {
         ),
       },
       {
-        name: "heart",
+        name: 'heart',
         line: (
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -2244,7 +2244,7 @@ export function UIIcon(props: IconProps) {
             height={size}
             viewBox="0 0 20 20"
             style={{
-              cursor: disabled ? "default" : pointer ? "pointer" : "inherit",
+              cursor: disabled ? 'default' : pointer ? 'pointer' : 'inherit',
             }}
             onClick={(e) => onClick(e)}
             fill="none"
@@ -2273,7 +2273,7 @@ export function UIIcon(props: IconProps) {
         ),
       },
       {
-        name: "clock",
+        name: 'clock',
         line: (
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -2281,7 +2281,7 @@ export function UIIcon(props: IconProps) {
             height={size}
             viewBox="0 0 20 20"
             style={{
-              cursor: disabled ? "default" : pointer ? "pointer" : "inherit",
+              cursor: disabled ? 'default' : pointer ? 'pointer' : 'inherit',
             }}
             onClick={(e) => onClick(e)}
             fill="none"
@@ -2299,7 +2299,7 @@ export function UIIcon(props: IconProps) {
         ),
       },
       {
-        name: "book",
+        name: 'book',
         line: (
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -2307,7 +2307,7 @@ export function UIIcon(props: IconProps) {
             height={size}
             viewBox="0 0 20 20"
             style={{
-              cursor: disabled ? "default" : pointer ? "pointer" : "inherit",
+              cursor: disabled ? 'default' : pointer ? 'pointer' : 'inherit',
             }}
             onClick={(e) => onClick(e)}
             fill="none"
@@ -2322,7 +2322,7 @@ export function UIIcon(props: IconProps) {
         ),
       },
       {
-        name: "sparkle",
+        name: 'sparkle',
         line: (
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -2330,7 +2330,7 @@ export function UIIcon(props: IconProps) {
             height={size}
             viewBox="0 0 20 20"
             style={{
-              cursor: disabled ? "default" : pointer ? "pointer" : "inherit",
+              cursor: disabled ? 'default' : pointer ? 'pointer' : 'inherit',
             }}
             onClick={(e) => onClick(e)}
             fill="none"
@@ -2345,7 +2345,7 @@ export function UIIcon(props: IconProps) {
         ),
       },
       {
-        name: "inbox",
+        name: 'inbox',
         line: (
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -2353,7 +2353,7 @@ export function UIIcon(props: IconProps) {
             height={size}
             viewBox="0 0 20 20"
             style={{
-              cursor: disabled ? "default" : pointer ? "pointer" : "inherit",
+              cursor: disabled ? 'default' : pointer ? 'pointer' : 'inherit',
             }}
             onClick={(e) => onClick(e)}
             fill="none"
@@ -2368,7 +2368,7 @@ export function UIIcon(props: IconProps) {
         ),
       },
       {
-        name: "home",
+        name: 'home',
         line: (
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -2376,7 +2376,7 @@ export function UIIcon(props: IconProps) {
             height={size}
             viewBox="0 0 20 20"
             style={{
-              cursor: disabled ? "default" : pointer ? "pointer" : "inherit",
+              cursor: disabled ? 'default' : pointer ? 'pointer' : 'inherit',
             }}
             onClick={(e) => onClick(e)}
             fill="none"
@@ -2412,7 +2412,7 @@ export function UIIcon(props: IconProps) {
   });
 
   // set the variant to return
-  const variant = toggle ? "lineOn" : "line";
+  const variant = toggle ? 'lineOn' : 'line';
 
   // return the svg element or null
   if (element.length > 0) return element[0][variant] || null;
