@@ -1,0 +1,440 @@
+import * as Styled from "./_Styles";
+import { useTheme } from "styled-components";
+import React, { useEffect, useRef, useState } from "react";
+import { Transition, Variants } from "framer-motion";
+import { ToolTip, ToolTipType } from "./_Types";
+import { UIIcon } from "../../../uikit/UIIcon/UIIcon";
+import { ProgressIndicator } from "../../Progress/ProgressIndicator/ProgressIndicator";
+import { Dot } from "../../../uikit/Dot/Dot";
+import { Badge } from "../../../uikit/Badge/Badge";
+
+export interface UIButtonProps {
+  size?: "large" | "medium" | "text";
+  variant?: "solid" | "outline" | "text";
+  state?: "normal" | "hover" | "disabled";
+  width?: "auto" | "100%" | "fill" | string;
+  fontSize?: "small" | "medium" | "regular" | "large";
+  label?: string;
+  iconRight?: string;
+  iconLeft?: string;
+  fill?: boolean;
+  count?: number;
+  showDot?: boolean;
+  round?: boolean;
+  tooltip?: string;
+  link?: boolean;
+  iconSize?: number;
+  borderRadius?: number;
+  iconColor?: string;
+  bgColor?: string;
+  bgColorDisabled?: string;
+  labelColor?: string;
+  transition?: Transition;
+  variants?: Variants;
+  initial?: string;
+  animate?: string;
+  exit?: string;
+  underline?: boolean;
+  progress?: boolean;
+  working?: boolean;
+  duration?: number;
+  trigger?: boolean;
+  destructive?: boolean;
+  toolTipTimer?: React.RefObject<any>;
+  onToolTip?: (tip: ToolTip | null) => void;
+  onClick?: (
+    e: React.MouseEvent<HTMLDivElement, MouseEvent> | undefined
+  ) => void;
+}
+
+export function UIButton(props: UIButtonProps) {
+  const theme = useTheme();
+  const {
+    size = "medium",
+    variant = "outline",
+    label = undefined,
+    iconRight = undefined,
+    iconLeft = undefined,
+    count = undefined,
+    showDot = undefined,
+    tooltip = undefined,
+    round = false,
+    state = "normal",
+    fill = false,
+    link = false,
+    iconSize = 20,
+    width = "auto",
+    underline = false,
+    borderRadius = undefined,
+    iconColor = undefined,
+    bgColor = undefined,
+    bgColorDisabled = undefined,
+    labelColor = undefined,
+    fontSize = "medium",
+    transition = undefined,
+    variants = undefined,
+    initial = undefined,
+    animate = undefined,
+    exit = undefined,
+    progress = false,
+    working = false,
+    duration = undefined,
+    trigger = false,
+    destructive = false,
+    toolTipTimer = null,
+    onClick = () => null,
+    onToolTip = () => null,
+  } = props;
+  const [btnState, setBtnState] = useState<"normal" | "hover" | "disabled">(
+    state
+  );
+  const [playing, setPlaying] = useState<boolean>(working);
+  const ref = useRef<any>(null);
+  useEffect(() => setBtnState(state), [state]);
+  useEffect(() => setPlaying(working), [working]);
+  useEffect(() => {
+    if (trigger) handleClick(undefined);
+  }, [trigger]);
+
+  const colorStyles: any = {
+    solid: {
+      border: "0px",
+      iconColor: {
+        normal: iconColor ? iconColor : theme.colors.white,
+        hover: iconColor ? iconColor : theme.colors.white,
+        disabled: iconColor ? iconColor : theme.colors.textDisabled,
+      },
+      background: {
+        normal: bgColor
+          ? bgColor
+          : destructive
+          ? theme.colors.labelRedBG
+          : theme.colors.primaryBlue,
+        hover: bgColor
+          ? bgColor
+          : destructive
+          ? theme.colors.labelRedBG
+          : theme.colors.primaryBlue,
+        disabled: bgColorDisabled
+          ? bgColorDisabled
+          : theme.name === "lightMode"
+          ? theme.colors.bgDark
+          : theme.colors.bgMedium,
+      },
+      borderColor: {
+        normal: theme.colors.transparent,
+        hover: theme.colors.transparent,
+        disabled: theme.colors.transparent,
+      },
+      color: {
+        normal: labelColor
+          ? labelColor
+          : destructive
+          ? theme.colors.labelRedText
+          : theme.colors.white,
+        hover: labelColor
+          ? labelColor
+          : destructive
+          ? theme.colors.labelRedText
+          : theme.colors.white,
+        disabled: theme.colors.textDisabled,
+      },
+    },
+    outline: {
+      border: "1px",
+      iconColor: {
+        normal: iconColor
+          ? iconColor
+          : destructive
+          ? theme.colors.labelRedText
+          : theme.colors.textPrimary,
+        hover: iconColor
+          ? iconColor
+          : destructive
+          ? theme.colors.labelRedText
+          : theme.colors.primaryBlue,
+        disabled: iconColor ? iconColor : theme.colors.textDisabled,
+      },
+      background: {
+        normal: theme.colors.transparent,
+        hover: theme.colors.transparent,
+        disabled: theme.colors.transparent,
+      },
+      borderColor: {
+        normal: bgColor
+          ? bgColor
+          : destructive
+          ? theme.colors.labelRedText
+          : theme.colors.lightBorder,
+        hover: bgColor
+          ? bgColor
+          : destructive
+          ? theme.colors.destructivePrimary
+          : theme.colors.lightBorder,
+        disabled: bgColorDisabled
+          ? bgColorDisabled
+          : bgColor
+          ? bgColor
+          : theme.colors.lightBorder,
+      },
+      color: {
+        normal: labelColor
+          ? labelColor
+          : destructive
+          ? theme.colors.destructivePrimary
+          : theme.colors.textPrimary,
+        hover: labelColor
+          ? labelColor
+          : destructive
+          ? theme.colors.destructivePrimary
+          : theme.colors.primaryBlue,
+        disabled: theme.colors.textDisabled,
+      },
+    },
+    text: {
+      border: "1px",
+      iconColor: {
+        normal: link
+          ? theme.colors.primaryBlue
+          : destructive
+          ? theme.colors.labelRedText
+          : theme.colors.textPrimary,
+        hover: theme.colors.primaryBlue,
+        disabled: theme.colors.textDisabled,
+      },
+      background: {
+        normal: theme.colors.transparent,
+        hover: theme.colors.transparent,
+        disabled: theme.colors.transparent,
+      },
+      borderColor: {
+        normal: theme.colors.transparent,
+        hover: theme.colors.transparent,
+        disabled: theme.colors.transparent,
+      },
+      color: {
+        normal: labelColor
+          ? labelColor
+          : link
+          ? theme.colors.primaryBlue
+          : destructive
+          ? theme.colors.destructivePrimary
+          : theme.colors.textPrimary,
+        hover: theme.colors.primaryBlue,
+        disabled: theme.colors.textDisabled,
+      },
+    },
+  };
+
+  const setFontSize = () => {
+    switch (fontSize) {
+      case "large":
+        return 16;
+      case "regular":
+        return 15;
+      case "medium":
+        return 14;
+      case "small":
+        return 12;
+      default:
+        return 14;
+    }
+  };
+
+  const sizingStyles: any = {
+    large: {
+      height: 44,
+      gap: 8,
+      iconSize,
+      paddingLeft: round ? 0 : iconLeft ? 10 : 16,
+      paddingRight: round ? 0 : iconRight ? 10 : 16,
+      width: round ? "44px" : width ? width : "auto",
+      fontSize: setFontSize(),
+      fontWeight: 480,
+      borderRadius: borderRadius ? borderRadius : "500px",
+    },
+    medium: {
+      height: 36,
+      gap: 8,
+      iconSize,
+      paddingLeft: round ? 0 : iconLeft ? 10 : 16,
+      paddingRight: round ? 0 : iconRight ? 10 : 16,
+      width: round ? "36px" : width ? width : "auto",
+      fontSize: setFontSize(),
+      fontWeight: 480,
+      borderRadius: borderRadius ? borderRadius : "500px",
+    },
+    text: {
+      height: 20,
+      gap: 8,
+      iconSize,
+      paddingLeft: 0,
+      paddingRight: 0,
+      width,
+      fontSize: setFontSize(),
+      fontWeight: 480,
+      borderRadius: 0,
+    },
+  };
+
+  function handleMouseEnter(e: React.MouseEvent<HTMLDivElement, MouseEvent>) {
+    if (btnState !== "disabled") setBtnState("hover");
+    if (!ref || !ref.current || !tooltip) return;
+    const rect = ref.current.getBoundingClientRect();
+    const tip: ToolTip = {
+      show: true,
+      type: ToolTipType.button,
+      payload: tooltip,
+      event: e,
+      rect,
+    };
+    if (toolTipTimer.current) clearTimeout(toolTipTimer.current);
+    toolTipTimer.current = setTimeout(() => {
+      onToolTip(tip);
+      toolTipTimer.current = setTimeout(() => {
+        onToolTip(null);
+      }, 2500);
+    }, 500);
+  }
+
+  function handleMouseLeave() {
+    if (btnState !== "disabled") setBtnState("normal");
+    if (!ref || !ref.current || !tooltip) return;
+    if (toolTipTimer.current) clearTimeout(toolTipTimer.current);
+    if (tooltip) onToolTip(null);
+  }
+
+  function handleClick(e: React.MouseEvent<any> | undefined) {
+    onToolTip(null);
+    if (state === "disabled") return;
+    if (progress && duration) {
+      setPlaying(true);
+    } else {
+      onClick(e);
+    }
+  }
+
+  function handleDidStop() {
+    setPlaying(false);
+    onClick(undefined);
+  }
+
+  function showLabel() {
+    if (playing && !iconLeft && !iconRight) return false;
+    if (!label || label === "") return false;
+    return true;
+  }
+
+  return (
+    <Styled.Button
+      ref={ref}
+      onMouseEnter={(e) => handleMouseEnter(e)}
+      onMouseLeave={() => handleMouseLeave()}
+      className="noselect"
+      $underline={underline}
+      style={{
+        color: colorStyles[variant].color[btnState],
+        background: fill
+          ? theme.colors.bgNormal
+          : colorStyles[variant].background[state],
+        paddingRight: sizingStyles[size].paddingRight,
+        paddingLeft: sizingStyles[size].paddingLeft,
+        fontSize: sizingStyles[size].fontSize,
+        fontWeight: sizingStyles[size].fontWeight,
+        borderRadius: sizingStyles[size].borderRadius,
+        width: width === "fill" ? "unset" : sizingStyles[size].width,
+        height: sizingStyles[size].height,
+        minWidth: width === "fill" ? "unset" : sizingStyles[size].width,
+        maxHeight: sizingStyles[size].height,
+        minHeight: sizingStyles[size].height,
+        flex: width === "fill" ? 1 : "unset",
+        gap: sizingStyles[size].gap,
+        borderWidth: colorStyles[variant].border,
+        borderStyle: "solid",
+        borderColor: colorStyles[variant].borderColor[btnState],
+        cursor: state === "disabled" ? "default" : "pointer",
+        transition: "all 0s ease-in-out 0s",
+      }}
+      transition={transition}
+      variants={variants}
+      initial={initial}
+      animate={animate}
+      exit={exit}
+      onClick={(e) => handleClick(e)}
+    >
+      {!playing && iconLeft && (
+        <UIIcon
+          name={iconLeft}
+          size={sizingStyles[size].iconSize}
+          strokeColor={
+            destructive
+              ? theme.colors.destructivePrimary
+              : colorStyles[variant].iconColor[btnState]
+          }
+          pointer={state === "disabled" ? false : true}
+        />
+      )}
+      {playing && iconLeft && (
+        <ProgressIndicator
+          show={playing}
+          didStop={() => handleDidStop()}
+          duration={duration}
+          size={sizingStyles[size].iconSize}
+          color={
+            destructive
+              ? theme.colors.destructivePrimary
+              : colorStyles[variant].color[btnState]
+          }
+          inline
+        />
+      )}
+      {playing && !iconLeft && !iconRight && (
+        <ProgressIndicator
+          show={playing}
+          didStop={() => handleDidStop()}
+          duration={duration}
+          size={sizingStyles[size].iconSize}
+          color={
+            destructive
+              ? theme.colors.destructivePrimary
+              : colorStyles[variant].color[btnState]
+          }
+          inline={false}
+        />
+      )}
+      {showLabel() && <div className="label">{label}</div>}
+      {playing && iconRight && (
+        <ProgressIndicator
+          show={playing}
+          didStop={() => handleDidStop()}
+          duration={duration}
+          size={sizingStyles[size].iconSize}
+          color={
+            destructive
+              ? theme.colors.destructivePrimary
+              : colorStyles[variant].color[btnState]
+          }
+          inline
+        />
+      )}
+      {!playing && iconRight && (
+        <UIIcon
+          name={iconRight}
+          size={sizingStyles[size].iconSize}
+          strokeColor={
+            destructive
+              ? theme.colors.destructivePrimary
+              : colorStyles[variant].iconColor[btnState]
+          }
+          pointer={state === "disabled" ? false : true}
+        />
+      )}
+      <Dot show={!playing && showDot} />
+      {!playing && count && (
+        <div className="count">
+          <Badge variant={"light"} count={count} />
+        </div>
+      )}
+    </Styled.Button>
+  );
+}

@@ -1,0 +1,48 @@
+{
+  "name": "gia-lyra-uikit",
+  "version": "1.0.12",
+  "main": "dist/index.js",
+  "module": "dist/index.esm.js",
+  "files": [
+    "dist/",
+    "READEME.md"
+  ],
+  "scripts": {
+    "create-index": "node scripts/generate-index.js",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "rollup -c --bundleConfigAsCjs",
+    "dev": "vite"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "types": "dist/types/index.d.ts",
+  "description": "",
+  "devDependencies": {
+    "@rollup/plugin-alias": "^5.1.1",
+    "@rollup/plugin-babel": "^6.0.4",
+    "@rollup/plugin-commonjs": "^28.0.2",
+    "@rollup/plugin-node-resolve": "^16.0.0",
+    "@rollup/plugin-typescript": "^12.1.2",
+    "@rollup/plugin-url": "^8.0.2",
+    "@svgr/rollup": "^8.1.0",
+    "@types/node": "^22.10.8",
+    "@types/react": "^19.0.7",
+    "@types/react-dom": "^19.0.3",
+    "@vitejs/plugin-react": "^4.3.4",
+    "rollup": "^4.32.0",
+    "rollup-plugin-json": "^4.0.0",
+    "rollup-plugin-peer-deps-external": "^2.2.4",
+    "rollup-plugin-postcss": "^4.0.2",
+    "typescript": "^5.7.3",
+    "vite": "^6.0.11"
+  },
+  "peerDependencies": {
+    "framer-motion": "^12.0.1",
+    "react": "^18.0.0 || ^19.0.0",
+    "react-dom": "^18.0.0 || ^19.0.0",
+    "styled-components": "^6.1.14"
+  },
+  "dependencies": {}
+}

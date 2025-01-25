@@ -1,0 +1,45 @@
+/****************/
+/*** Booton ***/
+/****************/
+@font-face {
+  font-family: "Booton";
+  src: url("./booton/Booton-Regular.woff2") format("woff2"),
+    url("./booton/Booton-Regular.woff") format("woff");
+  font-weight: 420;
+  font-style: normal;
+}
+@font-face {
+  font-family: "Booton";
+  src: url("./booton/Booton-RegularItalic.woff2") format("woff2"),
+    url("./booton/Booton-RegularItalic.woff") format("woff");
+  font-weight: 420;
+  font-style: italic;
+}
+@font-face {
+  font-family: "Booton";
+  src: url("./booton/Booton-Medium.woff2") format("woff2"),
+    url("./booton/Booton-Medium.woff") format("woff");
+  font-weight: 480;
+  font-style: normal;
+}
+@font-face {
+  font-family: "Booton";
+  src: url("./booton/Booton-MediumItalic.woff2") format("woff2"),
+    url("./booton/Booton-MediumItalic.woff") format("woff");
+  font-weight: 480;
+  font-style: italic;
+}
+@font-face {
+  font-family: "Booton";
+  src: url("./booton/Booton-Semibold.woff2") format("woff2"),
+    url("./booton/Booton-Semibold.woff") format("woff");
+  font-weight: 560;
+  font-style: normal;
+}
+@font-face {
+  font-family: "Booton";
+  src: url("./booton/Booton-SemiboldItalic.woff2") format("woff2"),
+    url("./booton/Booton-SemiboldItalic.woff") format("woff");
+  font-weight: 560;
+  font-style: italic;
+}
