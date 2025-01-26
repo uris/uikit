@@ -1,12 +1,12 @@
-import { motion } from "framer-motion";
-import styled from "styled-components";
-import { flexBox } from "../../util/flexBox";
+import { motion } from 'framer-motion';
+import styled from 'styled-components';
+import { flexBox } from '../../util/flexBox';
 
 export const GroupHeader = styled.div<{
   $frameSize: number;
   $iconSize: number;
   $border: number;
-  $variant: "group" | "facet";
+  $variant: 'group' | 'facet';
   $unframed: boolean;
 }>`
   ${flexBox.row};
@@ -17,13 +17,13 @@ export const GroupHeader = styled.div<{
     ${flexBox.rowBetween};
     width: 100%;
     height: ${({ $frameSize, $unframed }) =>
-      $unframed ? "auto" : $frameSize}px;
+      $unframed ? 'auto' : $frameSize}px;
     border-top: ${({ $border }) => $border}px solid
       ${({ theme }) => theme.colors.lightBorder};
   }
   div.title {
     ${flexBox.rowStart};
-    ${({ theme }) => theme.type.desktop.textRegular};
+    ${({ theme }) => theme?.type?.desktop.textRegular};
     font-weight: 480;
     color: ${({ theme }) => theme.colors.textSecondary};
     flex: 1;

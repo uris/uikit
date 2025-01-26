@@ -1,9 +1,9 @@
-import styled from "styled-components";
-import { flexBox } from "../../util/flexBox";
+import styled from 'styled-components';
+import { flexBox } from '../../util/flexBox';
 
 function setSize(value: string | number) {
-  if (typeof value === "string") return value;
-  return value + "px";
+  if (typeof value === 'string') return value;
+  return value + 'px';
 }
 
 export const Wrapper = styled.div<{
@@ -35,8 +35,8 @@ export const Wrapper = styled.div<{
       $focused
         ? theme.colors.primaryBlue
         : $invalid
-        ? theme.colors.lightBorder
-        : theme.colors.lightBorder};
+          ? theme.colors.lightBorder
+          : theme.colors.lightBorder};
   transition: all 0.25s ease-in-out 0s;
   textarea {
     border: 0;
@@ -45,12 +45,12 @@ export const Wrapper = styled.div<{
     width: 100%;
     height: 100%;
     color: ${({ theme }) => theme.colors.textPrimary};
-    font-family: "Booton";
-    ${({ theme }) => theme.type.desktop.textRegular};
+    font-family: 'Booton';
+    ${({ theme }) => theme?.type?.desktop.textRegular};
     font-weight: 500;
     background-color: transparent;
     box-sizing: border-box;
-    resize: ${({ $resize }) => ($resize ? "vertical" : "none")};
+    resize: ${({ $resize }) => ($resize ? 'vertical' : 'none')};
     &::placeholder {
       color: ${({ theme }) => theme.colors.textDisabled};
     }

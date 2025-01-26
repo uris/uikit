@@ -1,10 +1,10 @@
-import { motion } from "framer-motion";
-import styled from "styled-components";
-import { flexBox } from "../../util/flexBox";
+import { motion } from 'framer-motion';
+import styled from 'styled-components';
+import { flexBox } from '../../util/flexBox';
 
 export const ErrorBox = styled(motion.div)`
   ${flexBox.columnStart};
-  ${({ theme }) => theme.type.desktop.textRegular};
+  ${({ theme }) => theme?.type?.desktop.textRegular};
   font-weight: 480;
   line-height: 1.4em;
   width: 100%;
@@ -34,7 +34,7 @@ export const ErrorBox = styled(motion.div)`
       padding: 0;
     }
     ul li {
-      ${({ theme }) => theme.type.desktop.textRegular};
+      ${({ theme }) => theme?.type?.desktop.textRegular};
       margin: 3px 0 3px 0;
       line-height: 1.2em;
       padding: 0;

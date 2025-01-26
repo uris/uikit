@@ -74,11 +74,18 @@ const OpenCircle = (
   playing: boolean = false,
 ) => {
   return (
-    <svg
+    <motion.svg
       xmlns="http://www.w3.org/2000/svg"
       width={size}
       height={size}
       viewBox="0 0 20 20"
+      transition={{
+        ease: 'linear',
+        repeatType: 'loop',
+        repeat: Infinity,
+        duration: secondsPerSpin,
+      }}
+      animate={playing ? { rotate: 360 } : { rotate: 0 }}
     >
       <defs>
         <linearGradient id="strokeFill" x1="0%" y1="0%" x2="100%" y2="0%">
@@ -92,14 +99,7 @@ const OpenCircle = (
         fill="transparent"
         strokeWidth={stroke}
         stroke={'url(#strokeFill)'}
-        transition={{
-          ease: 'linear',
-          repeatType: 'loop',
-          repeat: Infinity,
-          duration: secondsPerSpin,
-        }}
-        animate={playing ? { rotate: 360 } : { rotate: 0 }}
-      ></motion.path>
-    </svg>
+      />
+    </motion.svg>
   );
 };

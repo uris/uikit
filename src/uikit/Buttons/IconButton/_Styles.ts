@@ -1,6 +1,6 @@
-import { motion } from "framer-motion";
-import styled from "styled-components";
-import { flexBox } from "../../../util/flexBox";
+import { motion } from 'framer-motion';
+import styled from 'styled-components';
+import { flexBox } from '../../../util/flexBox';
 
 type Props = {
   frameSize: number;
@@ -29,8 +29,8 @@ export const IconButton = styled(motion.div)<{ $props: Props }>`
       $props.bgColorHover
         ? $props.bgColorHover
         : $props.isToggled && $props.toggle
-        ? $props.bgColorOn
-        : $props.bgColor};
+          ? $props.bgColorOn
+          : $props.bgColor};
   }
   div.icon {
     ${flexBox.row};
@@ -41,7 +41,7 @@ export const IconButton = styled(motion.div)<{ $props: Props }>`
   }
   div.label {
     ${flexBox.rowStart};
-    ${({ theme }) => theme.type.desktop.textRegular};
+    ${({ theme }) => theme?.type?.desktop.textRegular};
     text-overflow: ellipsis;
     overflow: hidden;
     word-break: break-all;
