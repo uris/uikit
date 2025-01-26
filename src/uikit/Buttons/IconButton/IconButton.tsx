@@ -65,7 +65,7 @@ export function IconButton(props: IconButtonProps) {
     disabled = false,
     showDot = false,
     fill = false,
-    toolTipTimer = useRef<any>(null),
+    toolTipTimer,
     onClick = () => null,
     onToolTip = () => null,
   } = props;
@@ -107,17 +107,19 @@ export function IconButton(props: IconButtonProps) {
       event: e,
       rect,
     };
-    if (toolTipTimer.current) clearTimeout(toolTipTimer.current);
-    toolTipTimer.current = setTimeout(() => {
-      onToolTip(tip);
+    if (toolTipTimer?.current) {
+      clearTimeout(toolTipTimer.current);
       toolTipTimer.current = setTimeout(() => {
-        onToolTip(null);
-      }, 2500);
-    }, 500);
+        onToolTip(tip);
+        toolTipTimer.current = setTimeout(() => {
+          onToolTip(null);
+        }, 2500);
+      }, 500);
+    }
   }
 
   function handleMouseLeave() {
-    if (toolTipTimer.current) clearTimeout(toolTipTimer.current);
+    if (toolTipTimer?.current) clearTimeout(toolTipTimer.current);
     if (tooltip) onToolTip(null);
   }
 

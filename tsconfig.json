@@ -25,6 +25,6 @@
     "moduleResolution": "Node",
     "resolveJsonModule": true
   },
-  "include": ["src/**/*", "playground/**/*"],
-  "exclude": ["playground/**/*"]
+  "include": ["src/**/*", "playground/**/*", "eslint.config.mjs"],
+  "exclude": ["playground/**/*", "eslint.config.mjs"]
 }

@@ -6,6 +6,7 @@ import pluginReact from 'eslint-plugin-react';
 import prettier from 'eslint-config-prettier';
 import pluginImport from 'eslint-plugin-import';
 import pluginJsxA11y from 'eslint-plugin-jsx-a11y';
+import pluginReactHooks from 'eslint-plugin-react-hooks';
 
 /** @type {import('eslint').Linter.Config[]} */
 export default [
@@ -16,6 +17,7 @@ export default [
       'jsx-a11y': pluginJsxA11y, // Register jsx-a11y plugin
       react: pluginReact, // Register react plugin
       '@typescript-eslint': tseslint, // Register TypeScript plugin
+      'react-hooks': pluginReactHooks, // react hooks
     },
     languageOptions: {
       parser: tsParser,
@@ -23,13 +25,13 @@ export default [
         ecmaVersion: 'latest', // Use the latest ECMAScript standard
         sourceType: 'module',
         ecmaFeatures: { jsx: true }, // Enable JSX parsing
-        project: './tsconfig.json', // Ensure TypeScript type-aware linting
+        //project: './tsconfig.json', // Ensure TypeScript type-aware linting
       },
       globals: globals.browser,
     },
     settings: {
       react: { version: 'detect' }, // Automatically detect React version
-      'import/resolver': { typescript: { project: ['./tsconfig.json'] } }, // Enable TypeScript-aware import resolution
+      'import/resolver': { typescript: true }, // Enable TypeScript-aware import resolution
     },
     rules: {
       ...tseslint.configs.recommended.rules,
@@ -59,6 +61,8 @@ export default [
       ],
 
       // React-specific rules
+      'react-hooks/rules-of-hooks': 'error', // Enforce the rules of hooks
+      'react-hooks/exhaustive-deps': 'warn', // Warn about missing dependencies
       'react/react-in-jsx-scope': 'off', // Not required in modern React
       'react/prop-types': 'off', // Handled by TypeScript
       // Accessibility rules

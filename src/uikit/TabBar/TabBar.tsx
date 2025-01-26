@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { useTheme } from 'styled-components';
 import { IconButton } from '../Buttons/IconButton/IconButton';
 import { UIIcon } from '../UIIcon/UIIcon';
@@ -81,7 +81,7 @@ export function TabBar(props: TabBarProps) {
     } else {
       setIndex(selected);
     }
-  }, [selected, selectedValue]);
+  }, [selected, selectedValue, options]);
 
   const handleClick = (i: number) => {
     setIndex(i);
@@ -182,17 +182,52 @@ function Option(props: TabOptionProps) {
     state = null,
     size = 1,
     count = 0,
-    toolTipTimer = useRef(null),
+    toolTipTimer,
   } = props;
   const ref = useRef<HTMLDivElement>(null);
   const doDrag = useRef<boolean | null>(null);
   const xStart = useRef<number | null>(null);
   const yStart = useRef<number | null>(null);
 
-  // !!!!! ****
-  //need to bind events to change in state becuase for some reason
-  // it retains the previous state of what's in the context
-  //const { sidebarSelection } = useSidebar();
+  const handleMouseMove = useCallback(
+    (e: MouseEvent) => {
+      doDrag.current = true;
+      if (dragsApp && xStart.current && yStart.current) {
+        const win: any = window;
+        const x = e.clientX - xStart.current;
+        const y = e.clientY - yStart.current;
+        win.electronAPI.appDrag({ x, y }); // sends electron the x/y mouse move deltas
+      }
+    },
+    [dragsApp],
+  );
+
+  // end of function to allow tab bar area to be dragged and drag the
+  // electron app window.
+  // ****
+  const handleMouseUp = useCallback(() => {
+    if (doDrag.current !== true || !dragsApp) {
+      if (!disabled) onClick(value);
+    }
+    doDrag.current = null;
+    xStart.current = null;
+    yStart.current = null;
+    const docEl = document.documentElement;
+    docEl?.removeEventListener('mousemove', handleMouseMove, false);
+    docEl?.removeEventListener('mouseup', handleMouseUp, false);
+  }, [disabled, dragsApp, handleMouseMove, onClick, value]);
+
+  const handleMouseDown = useCallback(
+    (e: MouseEvent) => {
+      doDrag.current = null;
+      xStart.current = e.clientX;
+      yStart.current = e.clientY;
+      const docEl = document.documentElement;
+      docEl?.addEventListener('mousemove', handleMouseMove, false);
+      docEl?.addEventListener('mouseup', handleMouseUp, false);
+    },
+    [handleMouseMove, handleMouseUp],
+  );
 
   // ****
   // we use this to move the app window if electron and dragsApp set to true
@@ -203,40 +238,7 @@ function Option(props: TabOptionProps) {
     return () => {
       el?.removeEventListener('mousedown', handleMouseDown, false);
     };
-  }, [disabled, state]);
-
-  function handleMouseDown(e: MouseEvent) {
-    doDrag.current = null;
-    xStart.current = e.clientX;
-    yStart.current = e.clientY;
-    const docEl = document.documentElement;
-    docEl?.addEventListener('mousemove', handleMouseMove, false);
-    docEl?.addEventListener('mouseup', handleMouseUp, false);
-  }
-
-  function handleMouseMove(e: MouseEvent) {
-    doDrag.current = true;
-    if (dragsApp && xStart.current && yStart.current) {
-      const win: any = window;
-      const x = e.clientX - xStart.current;
-      const y = e.clientY - yStart.current;
-      win.electronAPI.appDrag({ x, y }); // sends electron the x/y mouse move deltas
-    }
-  }
-  function handleMouseUp(_e: MouseEvent) {
-    if (doDrag.current !== true || !dragsApp) {
-      if (!disabled) onClick(value);
-    }
-    doDrag.current = null;
-    xStart.current = null;
-    yStart.current = null;
-    const docEl = document.documentElement;
-    docEl?.removeEventListener('mousemove', handleMouseMove, false);
-    docEl?.removeEventListener('mouseup', handleMouseUp, false);
-  }
-  // end of function to allow tab bar area to be dragged and drag the
-  // electron app window.
-  // ****
+  }, [disabled, state, handleMouseDown]);
 
   const iconColor = () => {
     if (!disabled && selected) return theme.colors.textPrimary;
@@ -254,18 +256,20 @@ function Option(props: TabOptionProps) {
         payload: { title: showToolTip },
         event: e,
       };
-      if (toolTipTimer.current) clearTimeout(toolTipTimer.current);
-      toolTipTimer.current = setTimeout(() => {
-        onToolTip(tip);
+      if (toolTipTimer?.current) {
+        clearTimeout(toolTipTimer.current);
         toolTipTimer.current = setTimeout(() => {
-          onToolTip(null);
-        }, 2000);
-      }, 1000);
+          onToolTip(tip);
+          toolTipTimer.current = setTimeout(() => {
+            onToolTip(null);
+          }, 2000);
+        }, 1000);
+      }
     }
   }
 
   function handleMouseLeave(_e: any) {
-    if (toolTipTimer.current) clearTimeout(toolTipTimer.current);
+    if (toolTipTimer?.current) clearTimeout(toolTipTimer.current);
     onToolTip(null);
   }
   return (

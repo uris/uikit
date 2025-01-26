@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { UIButton } from '../Buttons/UIButon/UIButton';
 import * as Styled from './Styles';
 
@@ -62,6 +62,17 @@ export function TextArea(props: TextAreaProps) {
   const [initiated, setInitiated] = useState<boolean>(false);
   const ref = useRef<HTMLTextAreaElement>(null);
 
+  const runValidation = useCallback(
+    (content: string): boolean => {
+      let valid = true;
+      if (validate && content.length < 1) valid = false;
+      if (!initiated) valid = true;
+      onValidate(valid);
+      return !valid;
+    },
+    [initiated, onValidate, validate],
+  );
+
   // focus / blur field on prop change
   useEffect(() => {
     if (ref && ref.current) {
@@ -75,7 +86,7 @@ export function TextArea(props: TextAreaProps) {
   useEffect(() => {
     setText(value);
     setInvalid(runValidation(value));
-  }, [value]);
+  }, [value, runValidation]);
 
   const margin = () => {
     if (spacer === 'none') return 0;
@@ -109,14 +120,6 @@ export function TextArea(props: TextAreaProps) {
     setText('');
     if (ref && ref.current) ref.current.value = '';
     handleResize();
-  }
-
-  function runValidation(content: string): boolean {
-    let valid = true;
-    if (validate && content.length < 1) valid = false;
-    if (!initiated) valid = true;
-    onValidate(valid);
-    return !valid;
   }
 
   function handleResize() {

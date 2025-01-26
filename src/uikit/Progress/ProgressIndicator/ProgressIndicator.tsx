@@ -1,7 +1,7 @@
-import { useTheme } from "styled-components";
-import { AnimatePresence, motion } from "framer-motion";
-import { useEffect, useRef, useState } from "react";
-import * as Styled from "./_Styles";
+import { useTheme } from 'styled-components';
+import { AnimatePresence, motion } from 'framer-motion';
+import { useEffect, useRef, useState } from 'react';
+import * as Styled from './_Styles';
 
 export interface ProgressIndicatorProps {
   size?: number;
@@ -48,7 +48,7 @@ export function ProgressIndicator(props: ProgressIndicatorProps) {
     return () => {
       if (timer && timer.current) clearTimeout(timer.current);
     };
-  }, [playing]);
+  }, [playing, didStart, didStop, duration]);
 
   return (
     <AnimatePresence initial={true}>
@@ -71,7 +71,7 @@ const OpenCircle = (
   secondsPerSpin: number = 1,
   color: string,
   stroke: number = 1.5,
-  playing: boolean = false
+  playing: boolean = false,
 ) => {
   return (
     <svg
@@ -91,10 +91,10 @@ const OpenCircle = (
         d="M 17.371 6.886 C 17.776 7.843 18 8.895 18 10 C 18 14.418 14.418 18 10 18 C 5.582 18 2 14.418 2 10 C 2 5.582 5.582 2 10 2"
         fill="transparent"
         strokeWidth={stroke}
-        stroke={"url(#strokeFill)"}
+        stroke={'url(#strokeFill)'}
         transition={{
-          ease: "linear",
-          repeatType: "loop",
+          ease: 'linear',
+          repeatType: 'loop',
           repeat: Infinity,
           duration: secondsPerSpin,
         }}

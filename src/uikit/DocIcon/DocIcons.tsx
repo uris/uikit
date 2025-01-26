@@ -111,7 +111,7 @@ export function DocIcons(props: DocsProps) {
 
     let item = images.filter((data) => type === data.name);
     return item ? item[0].svg : null;
-  }, [height, type]);
+  }, [height, type, theme]);
 
   return (
     <div

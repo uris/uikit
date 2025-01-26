@@ -110,9 +110,7 @@ export function Icon(props: IconProps) {
     size = 22,
     stroke = 1.5,
     strokeColor = theme.lyraColors['core-icon-primary'],
-    accentColor = theme.lyraColors['core-icon-primary'],
     fillColor = 'transparent',
-    type = 'line',
     toggle = false,
     pointer = true,
     disabled = false,
@@ -2397,13 +2395,12 @@ export function Icon(props: IconProps) {
     stroke,
     size,
     strokeColor,
-    accentColor,
     fillColor,
     pointer,
     disabled,
     opacity,
-    toggle,
-    type,
+    onClick,
+    theme,
   ]);
 
   // get the right icon in the array

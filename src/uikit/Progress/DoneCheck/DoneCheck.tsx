@@ -1,6 +1,6 @@
-import { useTheme } from "styled-components";
-import { Transition, useAnimate, usePresence } from "framer-motion";
-import { useEffect } from "react";
+import { useTheme } from 'styled-components';
+import { Transition, useAnimate, usePresence } from 'framer-motion';
+import { useEffect } from 'react';
 
 export interface DoneCheckProps {
   size?: number;
@@ -29,11 +29,16 @@ export function DoneCheck(props: DoneCheckProps) {
   } = props;
   const [check, animateCheck] = useAnimate();
   const [isPresent, safeToRemove] = usePresence();
-  const instant: Transition = { ease: "linear", duration: 0, delay: 0 };
-  const spring: Transition = { type: "spring", time: duration, bounce, delay };
-  const variants = { initial: { scale: 0.9 }, animate: { scale: 1 } };
 
   useEffect(() => {
+    const variants = { initial: { scale: 0.9 }, animate: { scale: 1 } };
+    const spring: Transition = {
+      type: 'spring',
+      time: duration,
+      bounce,
+      delay,
+    };
+    const instant: Transition = { ease: 'linear', duration: 0, delay: 0 };
     if (isPresent && play) {
       const enterAnimation = async () => {
         didStart();
@@ -54,7 +59,18 @@ export function DoneCheck(props: DoneCheckProps) {
       };
       exitAnimation();
     }
-  }, [isPresent, play]);
+  }, [
+    isPresent,
+    play,
+    animateCheck,
+    check,
+    didEnd,
+    didStart,
+    safeToRemove,
+    bounce,
+    delay,
+    duration,
+  ]);
 
   const checkMark = () => {
     return (

@@ -1,4 +1,4 @@
-import { RefObject, useEffect, useRef, useState } from 'react';
+import { RefObject, useCallback, useEffect, useRef, useState } from 'react';
 import { useTheme } from 'styled-components';
 import * as Styled from './Styles';
 import { Constraint } from './_Types';
@@ -67,81 +67,121 @@ export function DraggablePanel(props: DraggablePanelProps) {
   useEffect(() => setPanelClosed(isClosed), [isClosed]);
   useEffect(() => setConstraints(sizeContraints), [sizeContraints]);
 
-  let startX: number,
-    startWidth: number,
-    divWidth: number,
-    divHeight: number,
-    deltaWidth: number = 0;
+  const startX = useRef<number>(0);
+  const startWidth = useRef<number>(0);
+  const divWidth = useRef<number>(0);
+  const divHeight = useRef<number>(0);
+  const deltaWidth = useRef<number>(0);
 
-  function initDrag(e: any) {
-    if (div && div.current && document.defaultView) {
-      setIsDragging(true);
-      const el = div.current;
-      divWidth = div.current.offsetWidth;
-      divHeight = div.current.offsetHeight;
-      deltaWidth = 0;
-      startX = e.clientX || e.targetTouches[0].pageX;
-      startWidth = parseInt(
-        document.defaultView.getComputedStyle(el).width,
-        10,
-      );
-      document.documentElement.addEventListener('mousemove', doDrag, false);
-      document.documentElement.addEventListener('mouseup', stopDrag, false);
-      document.documentElement.addEventListener('touchmove', doDrag, false);
-      document.documentElement.addEventListener('touchend', stopDrag, false);
-      onResizeStart({ div, divWidth, divHeight, deltaWidth });
-    }
-  }
+  const setHighlight = useCallback(
+    (state: boolean | null) => {
+      if (timer.current) clearTimeout(timer.current);
+      if (state) {
+        timer.current = setTimeout(
+          () => {
+            setHandleHighlight(state);
+          },
+          isTouchDevice ? 0 : 350,
+        );
+      } else setHandleHighlight(false);
+    },
+    [isTouchDevice],
+  );
 
-  function doDrag(e: any) {
-    if (div && div.current) {
-      e.stopPropagation(); // prevent over drag from selecting other objects
-      const el = div.current;
-      const clientX = e.clientX || e.targetTouches[0].pageX;
-      const newWidth = dragsRight
-        ? startWidth + clientX - startX
-        : startWidth - clientX + startX;
-      if (
-        constraints &&
-        constraints.min &&
-        typeof constraints.min === 'number' &&
-        typeof constraints.max === 'number'
-      ) {
-        if (newWidth <= constraints.min) return;
-        if (newWidth < constraints.min) return;
-      }
-      if (
-        constraints &&
-        constraints.max &&
-        typeof constraints.min === 'number' &&
-        typeof constraints.max === 'number'
-      ) {
-        if (newWidth >= constraints.max) {
-          if (clientX - startX > 0) return;
+  const doDrag = useCallback(
+    (e: any) => {
+      if (div && div.current) {
+        e.stopPropagation(); // prevent over drag from selecting other objects
+        const el = div.current;
+        const clientX = e.clientX || e.targetTouches[0].pageX;
+        const newWidth = dragsRight
+          ? startWidth.current + clientX - startX.current
+          : startWidth.current - clientX + startX.current;
+        if (
+          constraints &&
+          constraints.min &&
+          typeof constraints.min === 'number' &&
+          typeof constraints.max === 'number'
+        ) {
+          if (newWidth <= constraints.min) return;
+          if (newWidth < constraints.min) return;
         }
+        if (
+          constraints &&
+          constraints.max &&
+          typeof constraints.min === 'number' &&
+          typeof constraints.max === 'number'
+        ) {
+          if (newWidth >= constraints.max) {
+            if (clientX - startX.current > 0) return;
+          }
+        }
+        el.style.width = newWidth + 'px';
+        divWidth.current = newWidth;
+        deltaWidth.current = clientX - startX.current;
+        onResize({
+          div,
+          divWidth: divWidth.current,
+          divHeight: divHeight.current,
+          deltaWidth: deltaWidth.current,
+        });
       }
-      el.style.width = newWidth + 'px';
-      divWidth = newWidth;
-      deltaWidth = clientX - startX;
-      onResize({ div, divWidth, divHeight, deltaWidth });
-    }
-  }
+    },
+    [constraints, dragsRight, onResize],
+  );
 
-  function stopDrag() {
+  const stopDrag = useCallback(() => {
     setIsDragging(false);
     document.documentElement.removeEventListener('mousemove', doDrag, false);
     document.documentElement.removeEventListener('mouseup', stopDrag, false);
     document.documentElement.removeEventListener('touchmove', doDrag, false);
     document.documentElement.removeEventListener('touchend', stopDrag, false);
     if (div && div.current) {
-      divWidth = div.current.offsetWidth;
-      divHeight = div.current.offsetHeight;
-      deltaWidth = 0;
+      divWidth.current = div.current.offsetWidth;
+      divHeight.current = div.current.offsetHeight;
+      deltaWidth.current = 0;
+      const update = {
+        div,
+        divWidth: divWidth.current,
+        divHeight: divHeight.current,
+        deltaWidth: deltaWidth.current,
+      };
+      onResize(update);
+      onResizeEnd(update);
     }
-    onResizeEnd({ div, divWidth, divHeight, deltaWidth });
-    setLastWidth(divWidth);
+    setLastWidth(divWidth.current);
     if (!isOver.current) setHighlight(false);
-  }
+  }, [doDrag, onResizeEnd, onResize, setHighlight]);
+
+  const initDrag = useCallback(
+    (e: any) => {
+      if (div && div.current && document.defaultView) {
+        setIsDragging(true);
+        const el = div.current;
+        divWidth.current = div.current.offsetWidth;
+        divHeight.current = div.current.offsetHeight;
+        deltaWidth.current = 0;
+        startX.current = e.clientX || e.targetTouches[0].pageX;
+        startWidth.current = parseInt(
+          document.defaultView.getComputedStyle(el).width,
+          10,
+        );
+        document.documentElement.addEventListener('mousemove', doDrag, false);
+        document.documentElement.addEventListener('mouseup', stopDrag, false);
+        document.documentElement.addEventListener('touchmove', doDrag, false);
+        document.documentElement.addEventListener('touchend', stopDrag, false);
+        const update = {
+          div,
+          divWidth: divWidth.current,
+          divHeight: divHeight.current,
+          deltaWidth: deltaWidth.current,
+        };
+        onResize(update);
+        onResizeStart(update);
+      }
+    },
+    [doDrag, stopDrag, onResize, onResizeStart],
+  );
 
   useEffect(() => {
     let hl = handle?.current;
@@ -155,19 +195,7 @@ export function DraggablePanel(props: DraggablePanelProps) {
         hl.removeEventListener('touchstart', initDrag);
       }
     };
-  }, [constraints, drags]);
-
-  const setHighlight = (state: boolean | null) => {
-    if (timer.current) clearTimeout(timer.current);
-    if (state) {
-      timer.current = setTimeout(
-        () => {
-          setHandleHighlight(state);
-        },
-        isTouchDevice ? 0 : 350,
-      );
-    } else setHandleHighlight(false);
-  };
+  }, [constraints, drags, initDrag]);
 
   const LeftRight = () => {
     if (dragsRight) {

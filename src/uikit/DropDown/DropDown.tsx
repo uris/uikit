@@ -1,7 +1,7 @@
-import { useEffect, useRef, useState } from "react";
-import { useTheme } from "styled-components";
-import { Icon } from "../Icon/Icon";
-import * as Styled from "./_Styles";
+import { useCallback, useEffect, useRef, useState } from 'react';
+import { useTheme } from 'styled-components';
+import { Icon } from '../Icon/Icon';
+import * as Styled from './_Styles';
 
 export type DropDownOption = {
   label?: string;
@@ -39,24 +39,24 @@ export interface DropDownProps {
 export function DropDown(props: DropDownProps) {
   const theme = useTheme();
   const {
-    width = "100%",
-    height = "auto",
+    width = '100%',
+    height = 'auto',
     selectedIndex = 0,
-    selectedValue = "",
+    selectedValue = '',
     options = [],
     placeholder = true,
     validate = true,
     borderRadius = 0,
-    dark = theme.name === "lightMode" ? false : true,
-    bgColor = "transparent",
-    iconColor = theme.lyraColors["core-icon-primary"],
+    dark = theme.name === 'lightMode' ? false : true,
+    bgColor = 'transparent',
+    iconColor = theme.lyraColors['core-icon-primary'],
     fontSize = null,
     padding = 0,
     iconSize = 24,
     disabled = false,
     unframed = false,
     focused = false,
-    textType = theme.lyraType["body-l-regular"],
+    textType = theme.lyraType['body-l-regular'],
     fontWeight = 500,
     gap = 8,
     onChange = () => null,
@@ -66,11 +66,28 @@ export function DropDown(props: DropDownProps) {
   } = props;
 
   const [index, setIndex] = useState<number>(selectedIndex);
-  const [selectedText, setSelectedText] = useState<string>("Select an option");
+  const [selectedText, setSelectedText] = useState<string>('Select an option');
   const [isFocused, setIsFocused] = useState<boolean>(focused);
   const [invalid, setInvalid] = useState<boolean>(false);
   const [initiated, setInitated] = useState<boolean>(false);
   const ref = useRef<HTMLSelectElement>(null);
+
+  const handleFocus = useCallback(() => {
+    setInitated(true);
+    setIsFocused(true);
+    onFocus();
+  }, [setInitated, setIsFocused, onFocus]);
+
+  const runValidation = useCallback(
+    (selected: number) => {
+      let valid = true;
+      if (validate && selected === 0) valid = false;
+      if (!initiated) valid = true;
+      onValidate(valid);
+      return !valid;
+    },
+    [initiated, onValidate, validate],
+  );
 
   // set focus
   useEffect(() => {
@@ -78,19 +95,19 @@ export function DropDown(props: DropDownProps) {
       handleFocus();
       ref.current.click();
     }
-  }, [focused]);
+  }, [focused, handleFocus]);
 
   // set selected by index
   useEffect(() => {
     if (ref && ref.current) {
       if (!options || !options[selectedIndex]) return;
-      const label = options[selectedIndex].label || "Select an option";
+      const label = options[selectedIndex].label || 'Select an option';
       setIndex(selectedIndex);
       setSelectedText(label);
       setInvalid(runValidation(selectedIndex));
       ref.current.selectedIndex = selectedIndex;
     }
-  }, [selectedIndex, ref]);
+  }, [selectedIndex, ref, options, runValidation]);
 
   // set selected by value
   useEffect(() => {
@@ -109,37 +126,23 @@ export function DropDown(props: DropDownProps) {
         ref &&
         ref.current
       ) {
-        const label = options[i].label || "Select an option";
+        const label = options[i].label || 'Select an option';
         setSelectedText(label);
         setIndex(i);
         ref.current.selectedIndex = i;
       }
     });
-  }, [selectedValue, ref]);
-
-  function runValidation(selected: number) {
-    let valid = true;
-    if (validate && selected === 0) valid = false;
-    if (!initiated) valid = true;
-    onValidate(valid);
-    return !valid;
-  }
+  }, [selectedValue, ref, options]);
 
   function handleChange(i: number) {
     if (!options) return;
-    const label = options[i].label || "Select an option";
+    const label = options[i].label || 'Select an option';
     setIndex(i);
     setInvalid(runValidation(index));
     setSelectedText(label);
     if (index !== i) onChange(i, options[i]);
-    onBlur(options[i].label || "");
+    onBlur(options[i].label || '');
     setIsFocused(false);
-  }
-
-  function handleFocus() {
-    setInitated(true);
-    setIsFocused(true);
-    onFocus();
   }
 
   function renderOptions() {
@@ -147,7 +150,7 @@ export function DropDown(props: DropDownProps) {
     return options.map((option: DropDownOption, i: number) => {
       return (
         <option
-          key={option?.value + "_" + i}
+          key={option?.value + '_' + i}
           value={option?.value}
           onMouseUp={() => handleChange(i)}
         >
@@ -163,7 +166,7 @@ export function DropDown(props: DropDownProps) {
       $size={{ width, height }}
       $invalid={invalid}
       $dark={dark}
-      $margin={"8px"}
+      $margin={'8px'}
       $placeholder={placeholder && index === 0}
       $bgColor={bgColor}
       $borderRadius={borderRadius}
@@ -175,8 +178,8 @@ export function DropDown(props: DropDownProps) {
       $gap={gap}
       style={{ opacity: disabled ? 0.5 : 1 }}
     >
-      <div className={"face"}>{selectedText.replace("-- ", "")}</div>
-      <div className={"chevron"}>
+      <div className={'face'}>{selectedText.replace('-- ', '')}</div>
+      <div className={'chevron'}>
         <Icon name="chevron down" size={iconSize} strokeColor={iconColor} />
       </div>
       <Styled.Select
