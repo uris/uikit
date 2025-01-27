@@ -1,6 +1,7 @@
-import { useCallback, useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useTheme } from 'styled-components';
-import { Icon } from '../Icon/Icon';
+import { useGiaThemes } from '../../theme/useGiaThemes';
+import { UIIcon } from '../UIIcon/UIIcon';
 import * as Styled from './_Styles';
 
 export type DropDownOption = {
@@ -38,6 +39,7 @@ export interface DropDownProps {
 
 export function DropDown(props: DropDownProps) {
   const theme = useTheme();
+  const themes = useGiaThemes();
   const {
     width = '100%',
     height = 'auto',
@@ -46,19 +48,19 @@ export function DropDown(props: DropDownProps) {
     options = [],
     placeholder = true,
     validate = true,
-    borderRadius = 0,
+    borderRadius = 4,
     dark = theme.name === 'lightMode' ? false : true,
-    bgColor = 'transparent',
-    iconColor = theme.lyraColors['core-icon-primary'],
+    bgColor = theme.colors.transparent,
+    iconColor = theme.colors.textPrimary,
     fontSize = null,
-    padding = 0,
+    padding = '8px',
     iconSize = 24,
     disabled = false,
     unframed = false,
     focused = false,
-    textType = theme.lyraType['body-l-regular'],
+    textType = themes.dark.type?.desktop.textRegular,
     fontWeight = 500,
-    gap = 8,
+    gap = 0,
     onChange = () => null,
     onValidate = () => null,
     onFocus = () => null,
@@ -72,30 +74,24 @@ export function DropDown(props: DropDownProps) {
   const [initiated, setInitated] = useState<boolean>(false);
   const ref = useRef<HTMLSelectElement>(null);
 
-  const handleFocus = useCallback(() => {
-    setInitated(true);
-    setIsFocused(true);
-    onFocus();
-  }, [setInitated, setIsFocused, onFocus]);
-
-  const runValidation = useCallback(
-    (selected: number) => {
-      let valid = true;
-      if (validate && selected === 0) valid = false;
-      if (!initiated) valid = true;
-      onValidate(valid);
-      return !valid;
-    },
-    [initiated, onValidate, validate],
-  );
+  // validate selection and if there's a placehoder
+  // with a validate flag, set error state and event error
+  useEffect(() => {
+    let valid = true;
+    if (validate && placeholder && index === 0) valid = false;
+    if (!initiated) valid = true;
+    setInvalid(valid);
+    onValidate(valid);
+  }, [index, validate, placeholder, initiated, onValidate]);
 
   // set focus
   useEffect(() => {
     if (focused && ref && ref.current) {
-      handleFocus();
+      setIsFocused(true);
+      setInitated(true);
       ref.current.click();
     }
-  }, [focused, handleFocus]);
+  }, [focused]);
 
   // set selected by index
   useEffect(() => {
@@ -104,45 +100,48 @@ export function DropDown(props: DropDownProps) {
       const label = options[selectedIndex].label || 'Select an option';
       setIndex(selectedIndex);
       setSelectedText(label);
-      setInvalid(runValidation(selectedIndex));
       ref.current.selectedIndex = selectedIndex;
     }
-  }, [selectedIndex, ref, options, runValidation]);
+  }, [selectedIndex, options]);
 
   // set selected by value
   useEffect(() => {
-    if (!options) return;
-    options.forEach((option: DropDownOption, i: number) => {
+    if (!options || options.length === 0 || selectedValue === '') return;
+    for (let i = 0; options.length - 1; i++) {
+      const option = options[i];
       if (
-        ((option.value &&
-          option.value.toString().toLowerCase() ===
+        (option?.value &&
+          option.value.toLowerCase() ===
             selectedValue.toString().toLowerCase()) ||
-          (option.label &&
-            option.label.toLowerCase() ===
-              selectedValue.toString().toLowerCase()) ||
-          (option.alt &&
-            option.alt.toLowerCase() ===
-              selectedValue.toString().toLowerCase())) &&
-        ref &&
-        ref.current
+        (option?.label &&
+          option.label.toLowerCase() ===
+            selectedValue.toString().toLowerCase()) ||
+        (option?.alt &&
+          option.alt.toLowerCase() === selectedValue.toString().toLowerCase())
       ) {
         const label = options[i].label || 'Select an option';
         setSelectedText(label);
         setIndex(i);
-        ref.current.selectedIndex = i;
+        if (ref.current) ref.current.selectedIndex = i;
+        break;
       }
-    });
-  }, [selectedValue, ref, options]);
+    }
+  }, [selectedValue, options]);
 
   function handleChange(i: number) {
     if (!options) return;
     const label = options[i].label || 'Select an option';
     setIndex(i);
-    setInvalid(runValidation(index));
     setSelectedText(label);
     if (index !== i) onChange(i, options[i]);
     onBlur(options[i].label || '');
     setIsFocused(false);
+  }
+
+  function handleFocus() {
+    setInitated(true);
+    setIsFocused(true);
+    onFocus();
   }
 
   function renderOptions() {
@@ -180,7 +179,7 @@ export function DropDown(props: DropDownProps) {
     >
       <div className={'face'}>{selectedText.replace('-- ', '')}</div>
       <div className={'chevron'}>
-        <Icon name="chevron down" size={iconSize} strokeColor={iconColor} />
+        <UIIcon name="chevron down" size={iconSize} strokeColor={iconColor} />
       </div>
       <Styled.Select
         defaultValue={index}

@@ -3,7 +3,8 @@ import { useTheme } from 'styled-components';
 import { IconButton } from '../Buttons/IconButton/IconButton';
 import { UIIcon } from '../UIIcon/UIIcon';
 import { Badge } from '../Badge/Badge';
-import { TabOption, ToolTip, ToolTipType } from './_Types';
+import { ToolTip, ToolTipType } from '../sharedTypes';
+import { TabOption } from './_Types';
 import * as Styled from './Styles';
 
 const placeholderOptions: TabOption[] = [
@@ -36,7 +37,6 @@ export interface TabBarProps {
   hasClose?: boolean;
   state?: any;
   size?: number;
-  toolTipTimer?: React.RefObject<any>;
   onToolTip?: (tip: ToolTip | null) => void;
   onChange?: (index: number) => void;
   onTabChange?: (option: TabOption) => void;
@@ -62,7 +62,6 @@ export function TabBar(props: TabBarProps) {
     selectedValue = null,
     state = null,
     size = 1,
-    toolTipTimer,
     onChange = () => null,
     onTabChange = () => null,
     onClose = () => null,
@@ -118,7 +117,6 @@ export function TabBar(props: TabBarProps) {
             state={state}
             size={size}
             count={option.count}
-            toolTipTimer={toolTipTimer}
             onToolTip={(tip) => onToolTip(tip)}
           />
         );
@@ -182,7 +180,6 @@ function Option(props: TabOptionProps) {
     state = null,
     size = 1,
     count = 0,
-    toolTipTimer,
   } = props;
   const ref = useRef<HTMLDivElement>(null);
   const doDrag = useRef<boolean | null>(null);
@@ -248,29 +245,18 @@ function Option(props: TabOptionProps) {
   function handleMouseOver(e: any) {
     onToolTip(null);
     if (showToolTip && ref && ref.current) {
-      const rect = ref.current.getBoundingClientRect();
       const tip: ToolTip = {
-        show: true,
         type: ToolTipType.button,
-        rect,
-        payload: { title: showToolTip },
+        payload: { label: showToolTip },
         event: e,
+        ref,
       };
-      if (toolTipTimer?.current) {
-        clearTimeout(toolTipTimer.current);
-        toolTipTimer.current = setTimeout(() => {
-          onToolTip(tip);
-          toolTipTimer.current = setTimeout(() => {
-            onToolTip(null);
-          }, 2000);
-        }, 1000);
-      }
+      onToolTip(tip);
     }
   }
 
   function handleMouseLeave(_e: any) {
-    if (toolTipTimer?.current) clearTimeout(toolTipTimer.current);
-    onToolTip(null);
+    if (showToolTip) onToolTip(null);
   }
   return (
     <Styled.Option

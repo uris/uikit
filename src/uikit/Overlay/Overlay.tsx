@@ -3,7 +3,7 @@ import * as Styled from './Styles';
 
 export interface OverlayProps {
   onClick?: () => void;
-  toggleOverlay: (state: boolean) => void;
+  toggleOverlay?: (state: boolean) => void;
   opacity?: number;
   color?: string;
   type?: 'clear' | 'dark';

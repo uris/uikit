@@ -1,4 +1,4 @@
-import { Flag, FlagProps } from "./Flag";
+import { Flag, FlagProps, FlagNames } from './Flag';
 
-export { Flag };
+export { Flag, FlagNames };
 export type { FlagProps };

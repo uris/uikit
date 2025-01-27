@@ -1,7 +1,7 @@
-import { useState } from "react";
-import { Transition } from "framer-motion";
-import { useTheme } from "styled-components";
-import * as Styled from "./_Styles";
+import { useState } from 'react';
+import { Transition } from 'framer-motion';
+import { useTheme } from 'styled-components';
+import * as Styled from './_Styles';
 
 export interface SwitchProps {
   state?: boolean;
@@ -21,14 +21,14 @@ export function Switch(props: SwitchProps) {
     height = 22,
     width = 44,
     padding = 3,
-    bgColorOn = theme.lyraColors["feedback-positive"],
-    bgColorOff = theme.lyraColors["core-badge-secondary"],
-    knobColor = theme.lyraColors["core-icon-primary"],
+    bgColorOn = theme.lyraColors['feedback-positive'],
+    bgColorOff = theme.lyraColors['core-badge-secondary'],
+    knobColor = theme.lyraColors['core-text-light'],
     onChange = () => null,
   } = props;
   const [on, setOn] = useState<boolean>(state);
 
-  const transition: Transition = { ease: "easeInOut", duration: 0.3 };
+  const transition: Transition = { ease: 'easeInOut', duration: 0.3 };
 
   return (
     <Styled.Wrapper
@@ -38,7 +38,7 @@ export function Switch(props: SwitchProps) {
       transition={transition}
       initial={state ? bgColorOn : bgColorOff}
       animate={{ backgroundColor: on ? bgColorOn : bgColorOff }}
-      style={{ justifyContent: on ? "flex-end" : "flex-start" }}
+      style={{ justifyContent: on ? 'flex-end' : 'flex-start' }}
       onClick={() => {
         setOn(!on);
         onChange(!on);

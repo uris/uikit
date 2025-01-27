@@ -1,4 +1,4 @@
-import { Pager, PagerProps } from "./Pager";
+import { Pager, PagerProps } from './Pager';
 
 export { Pager };
-export { PagerProps };
+export type { PagerProps };

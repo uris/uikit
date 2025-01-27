@@ -1,4 +1,4 @@
-import { UIIcon, IconProps, Icons } from "./UIIcon";
+import { UIIcon, IconProps, Icons } from './UIIcon';
 
-export { UIIcon };
-export type { IconProps, Icons };
+export { UIIcon, Icons };
+export type { IconProps };

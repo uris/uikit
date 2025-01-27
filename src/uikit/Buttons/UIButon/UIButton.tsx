@@ -5,7 +5,7 @@ import { UIIcon } from '../../../uikit/UIIcon/UIIcon';
 import { ProgressIndicator } from '../../Progress/ProgressIndicator/ProgressIndicator';
 import { Dot } from '../../../uikit/Dot/Dot';
 import { Badge } from '../../../uikit/Badge/Badge';
-import { ToolTip, ToolTipType } from './_Types';
+import { ToolTip, ToolTipType } from '../../sharedTypes';
 import * as Styled from './_Styles';
 
 export interface UIButtonProps {
@@ -40,7 +40,6 @@ export interface UIButtonProps {
   duration?: number;
   trigger?: boolean;
   destructive?: boolean;
-  toolTipTimer?: React.RefObject<any>;
   onToolTip?: (tip: ToolTip | null) => void;
   onClick?: (
     e: React.MouseEvent<HTMLDivElement, MouseEvent> | undefined,
@@ -81,7 +80,6 @@ export function UIButton(props: UIButtonProps) {
     duration = undefined,
     trigger = false,
     destructive = false,
-    toolTipTimer,
     onClick = () => null,
     onToolTip = () => null,
   } = props;
@@ -292,29 +290,18 @@ export function UIButton(props: UIButtonProps) {
   function handleMouseEnter(e: React.MouseEvent<HTMLDivElement, MouseEvent>) {
     if (btnState !== 'disabled') setBtnState('hover');
     if (!ref || !ref.current || !tooltip) return;
-    const rect = ref.current.getBoundingClientRect();
     const tip: ToolTip = {
-      show: true,
       type: ToolTipType.button,
-      payload: tooltip,
+      payload: { label: tooltip },
       event: e,
-      rect,
+      ref,
     };
-    if (toolTipTimer?.current) {
-      clearTimeout(toolTipTimer.current);
-      toolTipTimer.current = setTimeout(() => {
-        onToolTip(tip);
-        toolTipTimer.current = setTimeout(() => {
-          onToolTip(null);
-        }, 2500);
-      }, 500);
-    }
+    onToolTip(tip);
   }
 
   function handleMouseLeave() {
     if (btnState !== 'disabled') setBtnState('normal');
     if (!ref || !ref.current || !tooltip) return;
-    if (toolTipTimer?.current) clearTimeout(toolTipTimer.current);
     if (tooltip) onToolTip(null);
   }
 

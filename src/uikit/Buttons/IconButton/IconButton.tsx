@@ -4,7 +4,7 @@ import { Transition, Variants } from 'framer-motion';
 import { UIIcon } from '../../UIIcon/UIIcon';
 import { Dot } from '../../Dot/Dot';
 import { Badge } from '../../Badge/Badge';
-import { ToolTip, ToolTipType } from './_Types';
+import { ToolTip, ToolTipType } from '../../sharedTypes';
 import * as Styled from './_Styles';
 
 export interface IconButtonProps {
@@ -33,7 +33,6 @@ export interface IconButtonProps {
   animate?: string;
   exit?: string;
   borderRadius?: number;
-  toolTipTimer?: React.RefObject<any>;
   onClick?: (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => void;
   onToolTip?: (tip: ToolTip | null) => void;
 }
@@ -65,7 +64,6 @@ export function IconButton(props: IconButtonProps) {
     disabled = false,
     showDot = false,
     fill = false,
-    toolTipTimer,
     onClick = () => null,
     onToolTip = () => null,
   } = props;
@@ -89,37 +87,23 @@ export function IconButton(props: IconButtonProps) {
   useEffect(() => setOn(isToggled), [isToggled]);
   function handleClick(e: React.MouseEvent<HTMLDivElement, MouseEvent>) {
     if (disabled) return;
-    if (tooltip) {
-      if (toolTipTimer?.current) clearTimeout(toolTipTimer.current);
-      onToolTip(null);
-    }
+    if (tooltip) onToolTip(null);
     setOn(!on);
     onClick(e);
   }
 
   function handleMouseEnter(e: React.MouseEvent<HTMLDivElement, MouseEvent>) {
     if (!ref || !ref.current || !tooltip) return;
-    const rect = ref.current.getBoundingClientRect();
     const tip: ToolTip = {
-      show: true,
       type: ToolTipType.button,
-      payload: tooltip,
+      payload: { label: tooltip },
       event: e,
-      rect,
+      ref: ref,
     };
-    if (toolTipTimer?.current) {
-      clearTimeout(toolTipTimer.current);
-      toolTipTimer.current = setTimeout(() => {
-        onToolTip(tip);
-        toolTipTimer.current = setTimeout(() => {
-          onToolTip(null);
-        }, 2500);
-      }, 500);
-    }
+    onToolTip(tip);
   }
 
   function handleMouseLeave() {
-    if (toolTipTimer?.current) clearTimeout(toolTipTimer.current);
     if (tooltip) onToolTip(null);
   }
 

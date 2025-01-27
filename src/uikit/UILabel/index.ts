@@ -1,4 +1,4 @@
-import { UILabel, UILabelProps } from "./UILabel";
+import { UILabel, UILabelProps } from './UILabel';
 
 export { UILabel };
-export { UILabelProps };
+export type { UILabelProps };

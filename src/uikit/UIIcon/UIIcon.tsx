@@ -122,6 +122,36 @@ export function UIIcon(props: IconProps) {
   const GPIcons: Icon[] = useMemo(() => {
     return [
       {
+        name: 'info',
+        line: (
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width={size}
+            height={size}
+            viewBox="0 0 20 20"
+            style={{
+              cursor: disabled ? 'default' : pointer ? 'pointer' : 'inherit',
+            }}
+            onClick={(e) => onClick(e)}
+            fill="none"
+          >
+            <path d="M 1 1 L 19 1 L 19 19 L 1 19 Z" fill="transparent"></path>
+            <path
+              d="M 1 10 C 1 5.029 5.029 1 10 1 C 14.971 1 19 5.029 19 10 C 19 14.971 14.971 19 10 19 C 5.029 19 1 14.971 1 10 Z M 10 17.5 C 14.142 17.5 17.5 14.142 17.5 10 C 17.5 5.858 14.142 2.5 10 2.5 C 5.858 2.5 2.5 5.858 2.5 10 C 2.5 14.142 5.858 17.5 10 17.5 Z"
+              fill={strokeColor}
+            ></path>
+            <path
+              d="M 10.75 14 L 10.75 8.5 L 9.25 8.5 L 9.25 14 Z"
+              fill={strokeColor}
+            ></path>
+            <path
+              d="M 11 6.5 C 11 7.052 10.552 7.5 10 7.5 C 9.448 7.5 9 7.052 9 6.5 C 9 5.948 9.448 5.5 10 5.5 C 10.552 5.5 11 5.948 11 6.5 Z"
+              fill={strokeColor}
+            ></path>
+          </svg>
+        ),
+      },
+      {
         name: 'like',
         line: (
           <svg
