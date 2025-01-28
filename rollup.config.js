@@ -51,7 +51,6 @@ export default {
       limit: 0, // Always copy images as assets
       fileName: 'assets/[name]-[hash][extname]', // File naming
       emitFiles: true,
-      publicPath: '/public/',
     }),
   ],
 };

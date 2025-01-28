@@ -19,6 +19,9 @@ export default defineConfig(({ mode }) => {
       svgr({
         svgrOptions: {
           exportType: 'named',
+          ref: true,
+          svgo: false,
+          titleProp: true,
         },
         include: '**/*.svg',
       }),

@@ -11,7 +11,7 @@ export const dark: LegacyColors = {
   bgTintHovered: 'rgba(255, 255, 255, 0.05)',
   bgTintSelected: 'rgba(255, 255, 255,0.07)',
   bgThreads: '#121416',
-  bgMessageBox: 'red',
+  bgMessageBox: '#1B1D21',
   fieldBorder: '#27292C',
   lightBorder: '#27292C',
   primaryBlue: '#3378f6',
@@ -62,8 +62,10 @@ export const dark: LegacyColors = {
   labelMagentaText: '#DF059B',
   responseSelection: 'rgba(201,138,0,0.35)',
   white: '#FFFFFF',
-  coverGradient: 'linear-gradient(0deg, rgba(27, 29, 33, 1) 75%, rgba(27, 29, 33, 0))',
-  deleteGradient: 'linear-gradient(0deg, rgba(18, 20, 22, 1) 75%, rgba(18, 20, 22, 1))',
+  coverGradient:
+    'linear-gradient(0deg, rgba(27, 29, 33, 1) 75%, rgba(27, 29, 33, 0))',
+  deleteGradient:
+    'linear-gradient(0deg, rgba(18, 20, 22, 1) 75%, rgba(18, 20, 22, 1))',
   dropShadow: 'rgba(0,0,0,0.3)',
 };
 
@@ -78,7 +80,7 @@ export const light: LegacyColors = {
   bgTintLight: 'rgba(13,18,28,0.01)',
   bgTintSelected: 'rgba(13,18,28,0.07)',
   bgThreads: '#FCFCFD',
-  bgMessageBox: 'red',
+  bgMessageBox: 'FFFFFF',
   fieldBorder: '#27292C',
   lightBorder: '#E5ECF3',
   primaryBlue: '#0000ff',
@@ -129,8 +131,10 @@ export const light: LegacyColors = {
   labelPurpleText: '#5600F1',
   labelMagentaText: '#DF059B',
   white: '#FFFFFF',
-  coverGradient: 'linear-gradient(0deg, rgba(255, 255, 255, 1) 60%, rgba(255, 255, 255, 0))',
-  deleteGradient: 'linear-gradient(0deg, rgba(255, 255, 255, 1) 45%, rgba(255, 255, 255, 0))',
+  coverGradient:
+    'linear-gradient(0deg, rgba(255, 255, 255, 1) 60%, rgba(255, 255, 255, 0))',
+  deleteGradient:
+    'linear-gradient(0deg, rgba(255, 255, 255, 1) 45%, rgba(255, 255, 255, 0))',
   dropShadow: 'rgba(13,18,28,0.07)',
 };
 

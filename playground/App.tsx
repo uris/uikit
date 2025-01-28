@@ -7,6 +7,8 @@ import {
   DropDown,
   DropDownOption,
   Dot,
+  UIImage,
+  UIImageNames,
 } from '../src/index';
 import { useApp } from './UseApp';
 import * as S from './Styles';
@@ -81,6 +83,13 @@ const App = () => {
           <Dot show={true} state={'yellow'} size={8} position={'inline'} />
           <Dot show={true} state={'red'} size={8} position={'inline'} />
           <Dot show={true} state={'grey'} size={8} position={'inline'} />
+        </S.Wrap>
+      </S.Component>
+      <S.Component $columns>
+        <S.Name>{`<UIImage />`}</S.Name>
+        <S.Wrap>
+          <UIImage name={UIImageNames.profileMan1} height={44} />
+          <UIImage name={UIImageNames.gpcolorlogo} height={44} dpr={'auto'} />
         </S.Wrap>
       </S.Component>
     </LocalThemeProvider>

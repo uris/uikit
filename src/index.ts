@@ -59,8 +59,8 @@ export type {
 export { Overlay } from './uikit/Overlay';
 export type { OverlayProps } from './uikit/Overlay';
 
-export { PageDiv } from './uikit/PageDiv';
-export type { PageDivProps } from './uikit/PageDiv';
+export { FlexDiv } from './uikit/FlexDiv';
+export type { FlexDivProps } from './uikit/FlexDiv';
 
 export { Pager } from './uikit/Pager';
 export type { PagerProps } from './uikit/Pager';
@@ -99,3 +99,6 @@ export type { IconProps } from './uikit/UIIcon';
 
 export { UILabel } from './uikit/UILabel';
 export type { UILabelProps } from './uikit/UILabel';
+
+export { UIImage, UIImageNames } from './uikit/UIImage';
+export type { UIImageProps } from './uikit/UIImage';

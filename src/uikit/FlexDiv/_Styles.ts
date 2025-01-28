@@ -1,21 +1,15 @@
-import styled from "styled-components";
+import styled from 'styled-components';
 
 export const BaseLayout = styled.div<{
   $scrollY: boolean;
   $scrollX: boolean;
   $flexBox: string;
   $background: string;
-  $height: string;
 }>`
-  position: absolute;
   ${({ $flexBox }) => $flexBox};
-  top: 0;
-  left: 0;
-  right: 0;
-  height: ${({ $height }) => ($height ? $height : "100vh")};
   overflow: hidden;
-  overflow-y: ${({ $scrollY }) => ($scrollY ? "auto" : "hidden")};
-  overflow-x: ${({ $scrollX }) => ($scrollX ? "auto" : "hidden")};
+  overflow-y: ${({ $scrollY }) => ($scrollY ? 'auto' : 'hidden')};
+  overflow-x: ${({ $scrollX }) => ($scrollX ? 'auto' : 'hidden')};
   background: ${({ $background }) => $background};
   &::-webkit-scrollbar {
     background-color: transparent;
