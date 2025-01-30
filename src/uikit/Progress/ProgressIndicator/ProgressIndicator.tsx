@@ -33,12 +33,13 @@ export function ProgressIndicator(props: ProgressIndicatorProps) {
   const timer = useRef<any>(null);
 
   useEffect(() => {
-    if (playing) {
+    if (show) {
       setPlaying(true);
       didStart();
       if (duration) {
         timer.current = setTimeout(() => {
           setPlaying(false);
+          didStop();
         }, duration * 1000);
       }
     } else {
@@ -48,7 +49,7 @@ export function ProgressIndicator(props: ProgressIndicatorProps) {
     return () => {
       if (timer && timer.current) clearTimeout(timer.current);
     };
-  }, [playing, didStart, didStop, duration]);
+  }, [show, didStart, didStop, duration]);
 
   return (
     <AnimatePresence initial={true}>
@@ -82,7 +83,7 @@ const OpenCircle = (
       transition={{
         ease: 'linear',
         repeatType: 'loop',
-        repeat: Infinity,
+        repeat: playing ? Infinity : 0,
         duration: secondsPerSpin,
       }}
       animate={playing ? { rotate: 360 } : { rotate: 0 }}

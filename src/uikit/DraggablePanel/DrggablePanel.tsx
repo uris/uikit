@@ -1,4 +1,10 @@
-import { RefObject, useCallback, useEffect, useRef, useState } from 'react';
+import React, {
+  RefObject,
+  useCallback,
+  useEffect,
+  useRef,
+  useState,
+} from 'react';
 import { useTheme } from 'styled-components';
 import * as Styled from './Styles';
 import { Constraint } from './_Types';
@@ -89,11 +95,18 @@ export function DraggablePanel(props: DraggablePanelProps) {
   );
 
   const doDrag = useCallback(
-    (e: any) => {
+    (e: MouseEvent | TouchEvent) => {
       if (div && div.current) {
-        e.stopPropagation(); // prevent over drag from selecting other objects
+        e.stopPropagation();
+        let clientX: number = 0;
         const el = div.current;
-        const clientX = e.clientX || e.targetTouches[0].pageX;
+        if (e.type.startsWith('touch')) {
+          const touchEvent = e as TouchEvent;
+          clientX = touchEvent.touches[0]?.clientX || 0;
+        } else {
+          const mouseEvent = e as MouseEvent;
+          clientX = mouseEvent.clientX;
+        }
         const newWidth = dragsRight
           ? startWidth.current + clientX - startX.current
           : startWidth.current - clientX + startX.current;
@@ -161,7 +174,13 @@ export function DraggablePanel(props: DraggablePanelProps) {
         divWidth.current = div.current.offsetWidth;
         divHeight.current = div.current.offsetHeight;
         deltaWidth.current = 0;
-        startX.current = e.clientX || e.targetTouches[0].pageX;
+        if (e.type.startsWith('touch')) {
+          const touchEvent = e as TouchEvent;
+          startX.current = touchEvent.touches[0]?.clientX || 0;
+        } else {
+          const mouseEvent = e as MouseEvent;
+          startX.current = mouseEvent.clientX;
+        }
         startWidth.current = parseInt(
           document.defaultView.getComputedStyle(el).width,
           10,

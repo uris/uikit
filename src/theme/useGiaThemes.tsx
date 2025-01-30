@@ -4,10 +4,10 @@ import {
   light as lightColors,
   lyraDark,
   lyraLight,
-} from "./colors/colors";
-import { lyraType, type } from "./type/type";
-import { Brand, LegacyColors, LyraColors } from "./colors/types";
-import { LegacyTextStyles, LyraTypeStyles } from "./type/types";
+} from './colors/colors';
+import { lyraType, type } from './type/type';
+import { Brand, LegacyColors, LyraColors } from './colors/types';
+import { LegacyTextStyles, LyraTypeStyles } from './type/types';
 
 export type GiaTheme = {
   name: string;
@@ -22,7 +22,7 @@ export type GiaTheme = {
 
 export function useGiaThemes(): { dark: GiaTheme; light: GiaTheme } {
   const dark: GiaTheme = {
-    name: "darkMode",
+    name: 'darkMode',
     colors: darkColors,
     type: { desktop: type },
     brand: brand,
@@ -31,7 +31,7 @@ export function useGiaThemes(): { dark: GiaTheme; light: GiaTheme } {
   };
 
   const light: GiaTheme = {
-    name: "lightMode",
+    name: 'lightMode',
     colors: lightColors,
     type: { desktop: type },
     brand: brand,

@@ -4,6 +4,7 @@ import { flexBox } from '../../util/flexBox';
 export const Badge = styled.div<{ $variant: 'light' | 'dark' }>`
   ${flexBox.row};
   ${({ theme }) => theme.lyraType['body-xs-medium']};
+  line-height: 1em;
   color: ${({ theme, $variant }) =>
     $variant === 'light'
       ? theme.lyraColors['core-text-primary']

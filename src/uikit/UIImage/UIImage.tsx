@@ -43,7 +43,7 @@ export function UIImage(props: UIImageProps) {
     async function setSource() {
       try {
         const pathToImage = `./images/${name}${pd ? '@' + pd + 'x' : ''}.${type}`;
-        const src = await import(pathToImage);
+        const src = await import(/* @vite-ignore */ pathToImage);
         setImageSrc(src.default);
       } catch {
         setImageSrc(null);
