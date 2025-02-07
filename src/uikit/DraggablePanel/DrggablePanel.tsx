@@ -98,6 +98,7 @@ export function DraggablePanel(props: DraggablePanelProps) {
     (e: MouseEvent | TouchEvent) => {
       if (div && div.current) {
         e.stopPropagation();
+        e.preventDefault();
         let clientX: number = 0;
         const el = div.current;
         if (e.type.startsWith('touch')) {
@@ -139,6 +140,7 @@ export function DraggablePanel(props: DraggablePanelProps) {
           deltaWidth: deltaWidth.current,
         });
       }
+      return false;
     },
     [constraints, dragsRight, onResize],
   );

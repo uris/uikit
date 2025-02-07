@@ -1,6 +1,7 @@
+import { motion } from 'framer-motion';
 import styled from 'styled-components';
 
-export const BaseLayout = styled.div<{
+export const BaseLayout = styled(motion.div)<{
   $scrollY: boolean;
   $scrollX: boolean;
   $flexBox: string;

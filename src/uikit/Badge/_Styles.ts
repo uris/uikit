@@ -13,7 +13,7 @@ export const Badge = styled.div<{ $variant: 'light' | 'dark' }>`
     $variant === 'light'
       ? theme.lyraColors['core-badge-secondary']
       : theme.lyraColors['core-badge-primary']};
-  padding: 1px 8px;
+  padding: 2px 8px;
   min-width: 24px;
   width: min-content;
   border-radius: 8px;

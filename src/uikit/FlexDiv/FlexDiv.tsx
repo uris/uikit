@@ -1,4 +1,5 @@
 import { useTheme } from 'styled-components';
+import { Transition } from 'framer-motion';
 import * as Styled from './_Styles';
 
 export interface FlexDivProps {
@@ -18,6 +19,11 @@ export interface FlexDivProps {
   padding?: number | string;
   margin?: number | string;
   className?: string;
+  enter?: any;
+  exit?: any;
+  animate?: any;
+  transition?: Transition;
+  variants?: any;
   gap?: number;
 }
 
@@ -41,6 +47,11 @@ export function FlexDiv(props: FlexDivProps) {
     flex,
     className,
     gap,
+    variants,
+    transition,
+    animate,
+    enter,
+    exit,
   } = props;
 
   function setSize(style: string | number, isHeight: boolean) {
@@ -90,6 +101,11 @@ export function FlexDiv(props: FlexDivProps) {
       $flexBox={layout()}
       $background={background}
       className={className}
+      transition={transition}
+      variants={variants}
+      initial={enter}
+      animate={animate}
+      exit={exit}
     >
       {children}
     </Styled.BaseLayout>

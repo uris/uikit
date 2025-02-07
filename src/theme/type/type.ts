@@ -109,9 +109,10 @@ export const lyraType: LyraTypeStyles = {
         font-family: 'Booton';
         font-weight: 560;
         font-size: 16px; 
-        line-height: 1600%;
+        line-height: 160%;
         text-decoration: none;
         letter-spacing: -0.2px`,
+
   'heading-s-medium': `
         font-family: 'Booton';
         font-weight: 480;
