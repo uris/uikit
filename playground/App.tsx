@@ -9,6 +9,7 @@ import {
   Dot,
   UIImage,
   UIImageNames,
+  UIButton,
 } from '../src/index';
 import { useApp } from './UseApp';
 import * as S from './Styles';
@@ -90,6 +91,7 @@ const App = () => {
         <S.Wrap>
           <UIImage name={UIImageNames.profileMan1} height={44} />
           <UIImage name={UIImageNames.gpcolorlogo} height={44} dpr={'auto'} />
+          <UIButton label={'button'} />
         </S.Wrap>
       </S.Component>
     </LocalThemeProvider>

@@ -42,7 +42,7 @@ export default [
       ...prettier.rules, // Prettier integration to turn off ESLint rules conflicting with Prettier
 
       // General JavaScript rules
-      'no-console': 'warn',
+      'no-console': 'off',
       'no-unused-vars': 'off', // Handled by TypeScript
       'import/namespace': 'off', // turn of imports non sense
       'import/order': [

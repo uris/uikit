@@ -66,14 +66,14 @@ const UIButton = forwardRef<UIButtonHandle, UIButtonProps>(
       label = undefined,
       iconRight = undefined,
       iconLeft = undefined,
-      count = undefined,
+      count = props.count !== undefined ? Number(props.count) : undefined,
       showDot = undefined,
       tooltip = undefined,
       round = false,
       state = 'normal',
       fill = false,
       link = false,
-      iconSize = 20,
+      iconSize = props.iconSize !== undefined ? Number(props.iconSize) : 20,
       width = 'auto',
       underline = false,
       borderRadius = undefined,
@@ -95,6 +95,12 @@ const UIButton = forwardRef<UIButtonHandle, UIButtonProps>(
       onClick = () => null,
       onToolTip = () => null,
     } = props;
+
+    console.log('UIButton Props:', props);
+    Object.entries(props).forEach(([key, value]) => {
+      console.log(`${key}:`, value, typeof value);
+    });
+
     const [btnState, setBtnState] = useState<'normal' | 'hover' | 'disabled'>(
       state,
     );
@@ -259,7 +265,7 @@ const UIButton = forwardRef<UIButtonHandle, UIButtonProps>(
       medium: 14,
       small: 12,
     };
-    const setFontSize = () => FONT_SIZES[fontSize] || 16;
+    const setFontSize = () => Number(FONT_SIZES[fontSize] || 16);
 
     const sizingStyles: any = {
       large: {
@@ -431,7 +437,7 @@ const UIButton = forwardRef<UIButtonHandle, UIButtonProps>(
         <Dot show={!playing && showDot} />
         {!playing && count && (
           <div className="count">
-            <Badge variant={'light'} count={count} />
+            <Badge variant={'light'} count={Number(count)} />
           </div>
         )}
       </Styled.Button>

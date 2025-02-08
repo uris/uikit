@@ -94,12 +94,19 @@ export type Brand = {
 
 export type LyraColors = {
   'array-land': string;
+  'array-land-label': string;
   'array-magenta': string;
+  'array-magenta-label': string;
   'array-orange': string;
+  'array-orange-label': string;
   'array-purple': string;
+  'array-purple-label': string;
   'array-sea': string;
+  'array-sea-label': string;
   'array-sky': string;
+  'array-sky-label': string;
   'array-yellow': string;
+  'array-yellow-label': string;
   'core-badge-primary': string;
   'core-badge-secondary': string;
   'core-button-disabled': string;
@@ -129,6 +136,7 @@ export type LyraColors = {
   'core-text-light': string;
   'core-text-primary': string;
   'core-text-secondary': string;
+  'core-text-special': string;
   'core-text-tertiary': string;
   'eor-tag-employee': string;
   'eor-tag-overdue': string;
@@ -145,6 +153,8 @@ export type LyraColors = {
   'gia-tag-risk-moderate': string;
   'gia-text-excerpt-highlight': string;
   'gia-text-selection': string;
+  'surface-shadow-soft': string;
+  'surface-shadow-strong': string;
 };
 
 export type LegacyColors = {
@@ -210,6 +220,5 @@ export type LegacyColors = {
   responseSelection: string;
   white: string;
   coverGradient: string;
-  deleteGradient: string;
   dropShadow: string;
 };

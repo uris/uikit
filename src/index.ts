@@ -6,6 +6,7 @@ export type {
   GiaTheme,
   LyraColors,
   LyraTypeStyles,
+  LyraCorners,
   LegacyColors,
   LegacyTextStyles,
 } from './theme/index';
@@ -24,6 +25,9 @@ export type { UIButtonProps, IconButtonProps } from './uikit/Buttons';
 
 export { CheckBox } from './uikit/CheckBox';
 export type { CheckBoxProps } from './uikit/CheckBox';
+
+export { DivInput } from './uikit/DivInput';
+export type { DivInputProps } from './uikit/DivInput';
 
 export { DocIcons } from './uikit/DocIcon';
 export type { DocsProps } from './uikit/DocIcon';

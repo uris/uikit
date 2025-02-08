@@ -8,6 +8,8 @@ import {
 import { lyraType, type } from './type/type';
 import { Brand, LegacyColors, LyraColors } from './colors/types';
 import { LegacyTextStyles, LyraTypeStyles } from './type/types';
+import { LyraCorners } from './corners/types';
+import { lyraCorners } from './corners/corners';
 
 export type GiaTheme = {
   name: string;
@@ -16,7 +18,7 @@ export type GiaTheme = {
   type?: { desktop: LegacyTextStyles };
   lyraType: LyraTypeStyles;
   brand: Brand;
-  lyraCorners?: { [key: string]: string };
+  lyraCorners: LyraCorners;
   lyraTransitions?: { [key: string]: string };
 };
 
@@ -28,6 +30,7 @@ export function useGiaThemes(): { dark: GiaTheme; light: GiaTheme } {
     brand: brand,
     lyraColors: lyraDark,
     lyraType: lyraType,
+    lyraCorners: lyraCorners,
   };
 
   const light: GiaTheme = {
@@ -37,6 +40,7 @@ export function useGiaThemes(): { dark: GiaTheme; light: GiaTheme } {
     brand: brand,
     lyraColors: lyraLight,
     lyraType: lyraType,
+    lyraCorners: lyraCorners,
   };
 
   return { dark, light };
