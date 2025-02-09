@@ -107,7 +107,7 @@ export function UIIcon(props: IconProps) {
   const theme = useTheme();
   const {
     name = 'home',
-    size = 22,
+    size = 20,
     stroke = 1.5,
     strokeColor = theme.colors.iconPrimary,
     fillColor = theme.colors.transparent,

@@ -20,7 +20,7 @@ export interface UIButtonProps {
   variant?: 'solid' | 'outline' | 'text';
   state?: 'normal' | 'hover' | 'disabled';
   width?: 'auto' | '100%' | 'fill' | string;
-  fontSize?: 'small' | 'medium' | 'regular' | 'large';
+  fontSize?: 'xsmall' | 'small' | 'medium' | 'large';
   label?: string;
   iconRight?: string;
   iconLeft?: string;
@@ -81,7 +81,7 @@ const UIButton = forwardRef<UIButtonHandle, UIButtonProps>(
       bgColor = undefined,
       bgColorDisabled = undefined,
       labelColor = undefined,
-      fontSize = 'medium',
+      fontSize = 'small',
       transition = undefined,
       variants = undefined,
       initial = undefined,
@@ -95,11 +95,6 @@ const UIButton = forwardRef<UIButtonHandle, UIButtonProps>(
       onClick = () => null,
       onToolTip = () => null,
     } = props;
-
-    console.log('UIButton Props:', props);
-    Object.entries(props).forEach(([key, value]) => {
-      console.log(`${key}:`, value, typeof value);
-    });
 
     const [btnState, setBtnState] = useState<'normal' | 'hover' | 'disabled'>(
       state,
@@ -261,20 +256,20 @@ const UIButton = forwardRef<UIButtonHandle, UIButtonProps>(
 
     const FONT_SIZES: Record<string, number> = {
       large: 16,
-      regular: 15,
-      medium: 14,
-      small: 12,
+      medium: 15,
+      small: 14,
+      xsmall: 12,
     };
     const setFontSize = () => Number(FONT_SIZES[fontSize] || 16);
 
     const sizingStyles: any = {
       large: {
-        height: 44,
+        height: 48,
         gap: 8,
         iconSize,
-        paddingLeft: round ? 0 : iconLeft ? 10 : 16,
-        paddingRight: round ? 0 : iconRight ? 10 : 16,
-        width: round ? '44px' : width ? width : 'auto',
+        paddingLeft: round ? 0 : iconLeft ? 20 : 24,
+        paddingRight: round ? 0 : iconRight ? 20 : 24,
+        width: round ? '48px' : width ? width : 'auto',
         fontSize: setFontSize(),
         fontWeight: 480,
         borderRadius: borderRadius ? borderRadius : '500px',
@@ -283,8 +278,8 @@ const UIButton = forwardRef<UIButtonHandle, UIButtonProps>(
         height: 36,
         gap: 8,
         iconSize,
-        paddingLeft: round ? 0 : iconLeft ? 10 : 16,
-        paddingRight: round ? 0 : iconRight ? 10 : 16,
+        paddingLeft: round ? 0 : iconLeft ? 20 : 24,
+        paddingRight: round ? 0 : iconRight ? 20 : 24,
         width: round ? '36px' : width ? width : 'auto',
         fontSize: setFontSize(),
         fontWeight: 480,
@@ -344,6 +339,7 @@ const UIButton = forwardRef<UIButtonHandle, UIButtonProps>(
             : colorStyles[variant].background[state],
           paddingRight: sizingStyles[size].paddingRight,
           paddingLeft: sizingStyles[size].paddingLeft,
+          fontFamily: 'Booton',
           fontSize: sizingStyles[size].fontSize,
           fontWeight: sizingStyles[size].fontWeight,
           borderRadius: sizingStyles[size].borderRadius,
