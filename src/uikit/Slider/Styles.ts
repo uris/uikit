@@ -1,9 +1,9 @@
-import styled from "styled-components";
-import { flexBox } from "../../util/flexBox";
+import styled from 'styled-components';
+import { flexBox } from '../../util/flexBox';
 
 const getWidth = (value: number | string) => {
-  if (typeof value === "string") return value;
-  return value + "px";
+  if (typeof value === 'string') return value;
+  return value + 'px';
 };
 
 export const Wrapper = styled.div<{
@@ -45,14 +45,14 @@ export const Track = styled.div`
 export const TrackHead = styled.div<{
   $height: number | null;
   $width: number | null;
-  $headType: "round" | "square";
+  $headType: 'round' | 'square';
   $color: string;
 }>`
   position: absolute;
-  display: ${({ $height }) => ($height ? "block" : "none")};
+  display: ${({ $height }) => ($height ? 'block' : 'none')};
   background-color: ${({ theme }) => theme.colors.sliderKnob};
   pointer-events: none;
-  border-radius: ${({ $headType }) => ($headType === "round" ? "100%" : 0)};
+  border-radius: ${({ $headType }) => ($headType === 'round' ? '100%' : 0)};
   max-width: ${({ $width }) => $width || 0}px;
   max-height: ${({ $height }) => $height || 0}px;
   min-width: ${({ $width }) => $width || 0}px;

@@ -46,28 +46,28 @@ export const lyraType: LyraTypeStyles = {
       letter-spacing: 0.0px`,
   'body-m-regular': `
       font-family: 'Booton';
-      font-weight: 420;
+      font-weight: 400;
       font-size: 15px; 
-      line-height: 160%;
+      line-height: 140%;
       text-decoration: none;
       letter-spacing: 0.0px`,
   'body-m-medium': `
       font-family: 'Booton';
       font-weight: 500;
       font-size: 15px; 
-      line-height: 160%;
+      line-height: 140%;
       text-decoration: none;
       letter-spacing: 0.0px`,
   'body-m-bold': `
       font-family: 'Booton';
       font-weight: 580;
       font-size: 15px; 
-      line-height: 160%;
+      line-height: 140%;
       text-decoration: none;
       letter-spacing: 0.0px`,
   'body-l-regular': `
       font-family: 'Booton';
-      font-weight: 420;
+      font-weight: 400;
       font-size: 16px; 
       line-height: 162.5%;
       text-decoration: none;

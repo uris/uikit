@@ -212,8 +212,8 @@ export const lyraLight: LyraColors = {
   'gia-tag-risk-moderate': brand['brand-orange-500'],
   'gia-text-excerpt-highlight': brand['brand-orange-100'],
   'gia-text-selection': brand['brand-sea-100'],
-  'surface-shadow-soft': `box-shadow: 0px 4px 24px #0339491a`,
-  'surface-shadow-strong': `box-shadow: 0px 4px 64px #0339491a`,
+  'surface-shadow-soft': `0px 4px 24px #0339491a`,
+  'surface-shadow-strong': `0px 4px 64px #0339491a`,
 };
 
 export const lyraDark: LyraColors = {
@@ -277,8 +277,8 @@ export const lyraDark: LyraColors = {
   'gia-tag-risk-moderate': brand['brand-orange-500'],
   'gia-text-excerpt-highlight': brand['brand-orange-100'],
   'gia-text-selection': brand['brand-sea-900'],
-  'surface-shadow-soft': `box-shadow: 0px 4px 24px #0000007a`,
-  'surface-shadow-strong': `box-shadow: 0px 4px 64px #0000007a`,
+  'surface-shadow-soft': `0px 4px 24px #0000007a`,
+  'surface-shadow-strong': `0px 4px 64px #0000007a`,
 };
 
 export const dark: LegacyColors = {
