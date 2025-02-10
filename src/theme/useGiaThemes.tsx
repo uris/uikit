@@ -32,7 +32,7 @@ export const light: GiaTheme = {
   lyraCorners: lyraCorners,
 };
 export const dark: GiaTheme = {
-  name: 'lightMode',
+  name: 'darkMode',
   colors: darkColors,
   type: { desktop: type },
   brand: brand,
