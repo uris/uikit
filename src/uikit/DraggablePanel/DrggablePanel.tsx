@@ -43,9 +43,6 @@ export function DraggablePanel(props: DraggablePanelProps) {
   const theme = useTheme();
   const {
     children,
-    onResize = () => null,
-    onResizeStart = () => null,
-    onResizeEnd = () => null,
     sizeContraints = { initial: 250, min: 250, max: 500 },
     dragsRight = true,
     isClosed = true,
@@ -59,6 +56,9 @@ export function DraggablePanel(props: DraggablePanelProps) {
     bgColor = 'transparent',
     drags = true,
     isTouchDevice = false,
+    onResize = () => null,
+    onResizeStart = () => null,
+    onResizeEnd = () => null,
   } = props;
   const handle = useRef<HTMLDivElement>(null);
   const div = useRef<HTMLDivElement>(null);

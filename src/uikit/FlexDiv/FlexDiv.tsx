@@ -16,6 +16,7 @@ export interface FlexDivProps {
   flex?: number;
   reverse?: boolean;
   wrap?: boolean;
+  border?: string;
   padding?: number | string;
   margin?: number | string;
   className?: string;
@@ -52,6 +53,7 @@ export function FlexDiv(props: FlexDivProps) {
     animate,
     enter,
     exit,
+    border,
   } = props;
 
   function setSize(style: string | number, isHeight: boolean) {
@@ -92,7 +94,8 @@ export function FlexDiv(props: FlexDivProps) {
     bottom:${absolute ? '0' : 'unset'};
     left:${absolute ? '0' : 'unset'};
     right:${absolute ? '0' : 'unset'};
-    gap:${gap ? gap + 'px' : 'unset'};`;
+    gap:${gap ? gap + 'px' : 'unset'};
+    border:${border ? border : 'unset'}`;
   };
   return (
     <Styled.BaseLayout
