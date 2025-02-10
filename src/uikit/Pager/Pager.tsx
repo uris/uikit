@@ -18,9 +18,9 @@ export function Pager(props: PagerProps) {
   const {
     size = 8,
     index = 0,
-    color = theme.colors.bgTintSelected,
-    colorHover = theme.colors.bgTintHovered,
-    colorOn = theme.colors.textSecondary,
+    color = theme.lyraColors['core-badge-secondary'],
+    colorHover = theme.lyraColors['core-badge-secondary'],
+    colorOn = theme.lyraColors['core-text-secondary'],
     pages = 2,
     gap = 4,
     onChange = () => null,

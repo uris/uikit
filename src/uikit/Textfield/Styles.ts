@@ -62,7 +62,7 @@ export const InputContainer = styled.div<{ $padding: string }>`
 export const Label = styled.div<{ $props: Styles }>`
   ${flexBox.rowStart};
   ${({ theme }) => theme.lyraType['body-m-regular']};
-  color: ${({ theme }) => theme.colors.textSecondary};
+  color: ${({ theme }) => theme.lyraColors['core-text-secondary']};
   padding: ${({ $props }) => $props.padding};
   height: auto;
   overflow: hidden;
@@ -108,8 +108,10 @@ export const Input = styled.input<{
   &:-webkit-autofill:hover,
   &:-webkit-autofill:focus,
   &:-webkit-autofill:active {
-    box-shadow: 0 0 0 50px ${({ theme }) => theme.colors.bgTintNormal} inset !important;
-    -webkit-text-fill-color: ${({ theme }) => theme.colors.textPrimary};
+    box-shadow: 0 0 0 50px
+      ${({ theme }) => theme.lyraColors['core-button-disabled']} inset !important;
+    -webkit-text-fill-color: ${({ theme }) =>
+      theme.lyraColors['core-text-primary']};
   }
 `;
 

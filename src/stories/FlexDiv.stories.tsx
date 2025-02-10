@@ -31,7 +31,7 @@ const meta: Meta<typeof FlexDiv> = {
     children: undefined,
     scrollY: true,
     scrollX: false,
-    background: theme.colors.bgDark,
+    background: theme.lyraColors['core-surface-secondary'],
     direction: 'column',
     alignItems: 'center',
     justify: 'start',

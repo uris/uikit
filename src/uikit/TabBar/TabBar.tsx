@@ -271,11 +271,7 @@ function Option(props: TabOptionProps) {
       $padding={padding}
       $selected={disabled ? false : selected}
       $disabled={disabled}
-      $textStyle={
-        textStyle
-          ? theme?.type?.desktop[textStyle] || ''
-          : theme?.type?.desktop.textRegular || ''
-      }
+      $textStyle={textStyle ? textStyle : theme.lyraType['body-l-regular']}
       $gap={iconGap}
       $size={size}
       $iconSize={iconSize}

@@ -25,7 +25,7 @@ export function Avatar(props: AvatarProps) {
     last = '',
     image = '',
     border = 0,
-    borderColor = theme.colors.bgNormal,
+    borderColor = theme.lyraColors['core-surface-primary'],
     bgColor = undefined,
     transition = undefined,
     animate = undefined,

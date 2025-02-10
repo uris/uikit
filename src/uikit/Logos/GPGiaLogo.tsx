@@ -17,7 +17,7 @@ export function GPGiaLogo(props: GPGiaLogoProps) {
     <Logos
       image={'gpgia'}
       height={height}
-      color={color === 'bw' ? theme.colors.textPrimary : color}
+      color={color === 'bw' ? theme.lyraColors['core-text-primary'] : color}
     />
   );
 }

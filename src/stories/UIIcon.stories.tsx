@@ -1,21 +1,21 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { light } from '../theme/useGiaThemes';
-import { UIIcon } from "../uikit/UIIcon/UIIcon";
+import { UIIcon } from '../uikit/UIIcon/UIIcon';
 
-const theme = light
+const theme = light;
 const meta: Meta<typeof UIIcon> = {
-  title: "UI Kit/UIIcon",  
+  title: 'UI Kit/UIIcon',
   component: UIIcon,
   args: {
     name: 'home',
     size: 20,
     stroke: 1.5,
-    strokeColor: theme.colors.iconPrimary,
-    fillColor: theme.colors.transparent,
+    strokeColor: theme.lyraColors['core-icon-primary'],
+    fillColor: 'transparent',
     toggle: false,
     pointer: true,
     disabled: false,
-    onClick: ()=> null
+    onClick: () => null,
   },
 };
 

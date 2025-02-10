@@ -84,20 +84,20 @@ export function TextField(props: TextFieldProps) {
     noShow = false,
     flagLeft = undefined,
     borderColor = {
-      focused: theme.colors.primaryBlue,
-      blurred: theme.colors.transparent,
-      error: theme.colors.destructivePrimary,
+      focused: theme.lyraColors['core-button-primary'],
+      blurred: 'transparent',
+      error: theme.lyraColors['feedback-warning'],
     },
     backgroundColor = {
-      focused: theme.colors.bgDark,
-      blurred: theme.colors.bgDark,
+      focused: theme.lyraColors['core-surface-secondary'],
+      blurred: theme.lyraColors['core-surface-secondary'],
     },
     color = {
-      focused: theme.colors.textPrimary,
-      blurred: theme.colors.textSecondary,
-      error: theme.colors.textPrimary,
-      placeholder: theme.colors.textDisabled,
-      disabled: theme.colors.textDisabled,
+      focused: theme.lyraColors['core-text-primary'],
+      blurred: theme.lyraColors['core-text-secondary'],
+      error: theme.lyraColors['core-text-primary'],
+      placeholder: theme.lyraColors['core-text-disabled'],
+      disabled: theme.lyraColors['core-text-disabled'],
     },
     iconLeft = null,
     clearButton = { size: 20 },
@@ -194,7 +194,9 @@ export function TextField(props: TextFieldProps) {
               name={iconLeft.name}
               size={iconLeft.size}
               strokeColor={
-                iconLeft.color ? iconLeft.color : theme.colors.iconSecondary
+                iconLeft.color
+                  ? iconLeft.color
+                  : theme.lyraColors['core-icon-secondary']
               }
             />
           </div>
@@ -238,7 +240,7 @@ export function TextField(props: TextFieldProps) {
               <UIIcon
                 name={'x'}
                 size={clearButton.size}
-                strokeColor={theme.colors.iconSecondary}
+                strokeColor={theme.lyraColors['core-icon-secondary']}
               />
             </motion.div>
           )}
@@ -257,7 +259,7 @@ export function TextField(props: TextFieldProps) {
                 variant={'text'}
                 size={'text'}
                 state={text === '' ? 'disabled' : 'normal'}
-                labelColor={theme.colors.primaryBlue}
+                labelColor={theme.lyraColors['core-button-primary']}
                 onClick={() => onAction()}
               />
             </motion.div>

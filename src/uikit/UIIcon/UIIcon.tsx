@@ -109,8 +109,8 @@ export function UIIcon(props: IconProps) {
     name = 'home',
     size = 20,
     stroke = 1.5,
-    strokeColor = theme.colors.iconPrimary,
-    fillColor = theme.colors.transparent,
+    strokeColor = theme.lyraColors['core-icon-primary'],
+    fillColor = 'transparent',
     toggle = false,
     pointer = true,
     disabled = false,
@@ -1809,7 +1809,7 @@ export function UIIcon(props: IconProps) {
                     stopColor={
                       theme.name === 'lightMode'
                         ? 'rgb(0, 0, 255)'
-                        : theme.colors.primaryBlue
+                        : theme.lyraColors['core-button-primary']
                     }
                     stopOpacity="1"
                   ></stop>
@@ -1834,7 +1834,7 @@ export function UIIcon(props: IconProps) {
               d="M 18.2 5 C 18.863 5 19.4 4.463 19.4 3.8 C 19.4 3.137 18.863 2.6 18.2 2.6 C 17.537 2.6 17 3.137 17 3.8 C 17 4.463 17.537 5 18.2 5 Z"
               fill={
                 theme.name === 'lightMode'
-                  ? theme.colors.primaryBlue
+                  ? theme.lyraColors['core-button-primary']
                   : 'rgba(0,200,244,1)'
               }
             ></path>
@@ -1842,7 +1842,7 @@ export function UIIcon(props: IconProps) {
               d="M 3.8 19.4 C 4.463 19.4 5 18.863 5 18.2 C 5 17.537 4.463 17 3.8 17 C 3.137 17 2.6 17.537 2.6 18.2 C 2.6 18.863 3.137 19.4 3.8 19.4 Z"
               fill={
                 theme.name === 'lightMode'
-                  ? theme.colors.primaryBlue
+                  ? theme.lyraColors['core-button-primary']
                   : 'rgba(0,200,244,1)'
               }
             ></path>
@@ -2057,7 +2057,7 @@ export function UIIcon(props: IconProps) {
             />
             <path
               d="M14 10H6"
-              stroke={theme.colors.bgNormal}
+              stroke={theme.lyraColors['core-surface-primary']}
               strokeWidth={stroke}
             />
           </svg>
@@ -2208,7 +2208,7 @@ export function UIIcon(props: IconProps) {
             ></path>
             <path
               d="M 17 10.6 L 17 7.4 C 17 7.179 16.821 7 16.6 7 L 13 7 C 11.895 7 11 7.895 11 9 C 11 10.105 11.895 11 13 11 L 16.6 11 C 16.821 11 17 10.821 17 10.6 Z"
-              fill={theme.colors.bgNormal}
+              fill={theme.lyraColors['core-surface-primary']}
               strokeWidth={stroke}
               stroke={strokeColor}
               strokeMiterlimit="10"

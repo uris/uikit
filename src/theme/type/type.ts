@@ -46,7 +46,7 @@ export const lyraType: LyraTypeStyles = {
       letter-spacing: 0.0px`,
   'body-m-regular': `
       font-family: 'Booton';
-      font-weight: 400;
+      font-weight: 420;
       font-size: 15px; 
       line-height: 140%;
       text-decoration: none;

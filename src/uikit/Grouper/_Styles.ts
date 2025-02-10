@@ -19,13 +19,13 @@ export const GroupHeader = styled.div<{
     height: ${({ $frameSize, $unframed }) =>
       $unframed ? 'auto' : $frameSize}px;
     border-top: ${({ $border }) => $border}px solid
-      ${({ theme }) => theme.colors.lightBorder};
+      ${({ theme }) => theme.lyraColors['core-outline-primary']};
   }
   div.title {
     ${flexBox.rowStart};
-    ${({ theme }) => theme?.type?.desktop.textRegular};
+    ${({ theme }) => theme.lyraType['body-l-regular']};
     font-weight: 480;
-    color: ${({ theme }) => theme.colors.textSecondary};
+    color: ${({ theme }) => theme.lyraColors['core-text-secondary']};
     flex: 1;
     gap: 6px;
   }

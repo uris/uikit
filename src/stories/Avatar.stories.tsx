@@ -11,7 +11,7 @@ const meta: Meta<typeof Avatar> = {
     last: 'Doe',
     image: 'public/images/profile-male-02.jpg',
     border: 0,
-    borderColor: theme.colors.bgNormal,
+    borderColor: theme.lyraColors['core-surface-primary'],
     bgColor: undefined,
     transition: undefined,
     animate: undefined,

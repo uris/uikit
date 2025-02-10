@@ -37,7 +37,9 @@ export function AvatarGroup(props: AvatarGroupProps) {
               border={border}
               bgColor={bgColor}
               borderColor={
-                selected ? theme.colors.bgDark : theme.colors.bgNormal
+                selected
+                  ? theme.lyraColors['core-surface-secondary']
+                  : theme.lyraColors['core-surface-primary']
               }
             />
           </div>

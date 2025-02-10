@@ -89,7 +89,11 @@ function ProgressStep(props: StepProps) {
         <div className="number">
           {state !== 'done' && step?.number}
           {state === 'done' && (
-            <UIIcon name={'check'} strokeColor={theme.colors.white} size={20} />
+            <UIIcon
+              name={'check'}
+              strokeColor={theme.lyraColors['core-text-light']}
+              size={20}
+            />
           )}
         </div>
         <div className="title">{step?.title}</div>

@@ -69,7 +69,7 @@ export function DocIcons(props: DocsProps) {
           >
             <path
               d="m594.944 0 335.124 341.32v563.2c0 65.996-52.5 119.48-117.294 119.48H209.546c-64.793 0-117.299-53.53-117.299-119.48V119.48C92.252 53.484 144.757 0 209.551 0h385.393z"
-              fill={theme.colors.primaryBlue}
+              fill={theme.lyraColors['core-button-primary']}
             />
             <path
               d="M930.068 341.32H718.152c-64.748 0-123.208-59.49-123.208-125.492V0l335.124 341.32z"

@@ -21,7 +21,7 @@ export const IconButton = styled(motion.div)<{ $props: Props }>`
   border-radius: ${({ $props }) =>
     $props.borderRadius ? $props.borderRadius : 8}px;
   border: ${({ $props }) => ($props.fill ? 1 : 0)}px solid
-    ${({ theme }) => theme.colors.lightBorder};
+    ${({ theme }) => theme.lyraColors['core-outline-primary']};
   gap: 6px;
   cursor: pointer;
   &:hover {
@@ -41,7 +41,7 @@ export const IconButton = styled(motion.div)<{ $props: Props }>`
   }
   div.label {
     ${flexBox.rowStart};
-    ${({ theme }) => theme?.type?.desktop.textRegular};
+    ${({ theme }) => theme.lyraType['body-l-regular']};
     text-overflow: ellipsis;
     overflow: hidden;
     word-break: break-all;

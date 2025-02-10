@@ -72,9 +72,11 @@ export function IconButton(props: IconButtonProps) {
   const ref = useRef<HTMLDivElement>(null);
   const styles = {
     bgColor: bgColor ? bgColor : 'transparent',
-    bgColorOn: bgColorOn ? bgColorOn : theme.colors.bgDark,
+    bgColorOn: bgColorOn
+      ? bgColorOn
+      : theme.lyraColors['core-surface-secondary'],
     bgColorHover: hover
-      ? theme.colors.bgDark
+      ? theme.lyraColors['core-surface-secondary']
       : bgColorHover
         ? bgColorHover
         : bgColor,
@@ -123,8 +125,10 @@ export function IconButton(props: IconButtonProps) {
       <div className="icon" style={{ opacity: disabled ? 0.3 : 1 }}>
         <UIIcon
           name={icon}
-          strokeColor={color ? color : theme.colors.iconPrimary}
-          accentColor={colorOn ? colorOn : theme.colors.iconPrimary}
+          strokeColor={color ? color : theme.lyraColors['core-icon-primary']}
+          accentColor={
+            colorOn ? colorOn : theme.lyraColors['core-icon-primary']
+          }
           fillColor={fillColor}
           disabled={disabled}
           size={iconSize}

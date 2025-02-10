@@ -46,7 +46,7 @@ export function GPLogo(props: GPLogoProps) {
         <Logos
           image={'gptype'}
           height={height * 0.5}
-          color={color === 'bw' ? theme.colors.textPrimary : color}
+          color={color === 'bw' ? theme.lyraColors['core-text-primary'] : color}
         />
       </div>
     );
@@ -55,7 +55,7 @@ export function GPLogo(props: GPLogoProps) {
       <Logos
         image={markonly ? 'gpmark' : 'gp'}
         height={height}
-        color={color === 'bw' ? theme.colors.textPrimary : color}
+        color={color === 'bw' ? theme.lyraColors['core-text-primary'] : color}
       />
     );
 }

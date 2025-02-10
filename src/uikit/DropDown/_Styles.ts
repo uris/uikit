@@ -43,7 +43,7 @@ export const Wrapper = styled.div<{
   transition: all 0.15s ease-in-out 0s;
   div.face {
     ${flexBox.rowStart};
-    ${({ theme }) => theme.lyraType['body-l-regular']};
+    ${({ theme }) => theme.lyraType['body-m-regular']};
     padding: ${({ $padding, $unframed }) =>
       $unframed ? 0 : $padding ? setSizeStyle($padding) : '8px 0px 8px 8px'};
     flex: 1;

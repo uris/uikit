@@ -20,7 +20,7 @@ export const Step = styled.div<{
     gap: 8px;
     div.number {
       ${flexBox.row};
-      ${({ theme }) => theme?.type?.desktop.textMedium};
+      ${({ theme }) => theme.lyraType['body-m-regular']};
       font-weight: 420;
       width: 20px;
       height: 20px;
@@ -28,27 +28,27 @@ export const Step = styled.div<{
       border: 1px solid
         ${({ theme, $state }) =>
           $state === 'done' || $state === 'current'
-            ? theme.colors.primaryBlue
-            : theme.colors.lightBorder};
+            ? theme.lyraColors['core-button-primary']
+            : theme.lyraColors['core-outline-primary']};
       background: ${({ theme, $state }) =>
         $state === 'done'
-          ? theme.colors.primaryBlue
+          ? theme.lyraColors['core-button-primary']
           : $state === 'current'
-            ? theme.colors.transparent
-            : theme.colors.lightBorder};
+            ? 'transparent'
+            : theme.lyraColors['core-outline-primary']};
       color: ${({ theme, $state }) =>
         $state === 'disabled'
-          ? theme.colors.textSecondary
-          : theme.colors.primaryBlue};
+          ? theme.lyraColors['core-text-secondary']
+          : theme.lyraColors['core-button-primary']};
       transition: all 0.25s ease-in-out 0s;
     }
     div.title {
-      ${({ theme }) => theme?.type?.desktop.textMedium};
+      ${({ theme }) => theme.lyraType['body-m-regular']};
       font-weight: 420;
       color: ${({ theme, $state }) =>
         $state === 'disabled'
-          ? theme.colors.textDisabled
-          : theme.colors.textPrimary};
+          ? theme.lyraColors['core-text-disabled']
+          : theme.lyraColors['core-text-primary']};
     }
   }
   div.line {
@@ -56,6 +56,6 @@ export const Step = styled.div<{
     width: 32px;
     min-height: 1px;
     min-width: 32px;
-    background: ${({ theme }) => theme.colors.lightBorder};
+    background: ${({ theme }) => theme.lyraColors['core-outline-primary']};
   }
 `;

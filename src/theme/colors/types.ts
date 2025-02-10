@@ -121,7 +121,7 @@ export type LyraColors = {
   'core-icon-primary': string;
   'core-icon-secondary': string;
   'core-icon-tertiary': string;
-  'core-outine-secondary': string;
+  'core-outline-secondary': string;
   'core-outline-primary': string;
   'core-outline-special': string;
   'core-outline-tertiary': string;
@@ -153,6 +153,8 @@ export type LyraColors = {
   'gia-tag-risk-moderate': string;
   'gia-text-excerpt-highlight': string;
   'gia-text-selection': string;
+  'scroll-bar': string;
+  'scroll-bar-hover': string;
   'surface-shadow-soft': string;
   'surface-shadow-strong': string;
 };

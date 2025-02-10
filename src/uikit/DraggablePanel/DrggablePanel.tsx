@@ -51,7 +51,7 @@ export function DraggablePanel(props: DraggablePanelProps) {
     isClosed = true,
     resizeHandle = {
       width: 10,
-      color: theme.colors.bgTransparent,
+      color: 'transparent',
       offsetX: true,
     },
     borderRight = null,
@@ -295,8 +295,8 @@ export function DraggablePanel(props: DraggablePanelProps) {
         <div
           style={{
             backgroundColor: handleHighlight
-              ? theme.colors.lightBorder
-              : theme.colors.transparent,
+              ? theme.lyraColors['core-outline-primary']
+              : 'transparent',
             flex: 1,
             maxWidth: 3,
             height: '100%',

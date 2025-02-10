@@ -33,7 +33,11 @@ export interface LogoProps {
 
 export function Logos(props: LogoProps) {
   const theme = useTheme();
-  const { image = 'gp', color = theme.colors.textPrimary, height = 36 } = props;
+  const {
+    image = 'gp',
+    color = theme.lyraColors['core-text-primary'],
+    height = 36,
+  } = props;
 
   const renderIcon = useMemo(() => {
     const images = [

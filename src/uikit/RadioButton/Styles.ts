@@ -19,9 +19,7 @@ export const Wrapper = styled.div<{
   border-radius: 8px;
   border: 1px solid ${({ theme }) => theme.lyraColors['core-outline-primary']};
   background: ${({ $selected, theme }) =>
-    $selected
-      ? theme.lyraColors['core-surface-secondary']
-      : theme.colors.transparent};
+    $selected ? theme.lyraColors['core-surface-secondary'] : 'transparent'};
   cursor: pointer;
   transition: all 0.25s ease-in-out 0s;
   div.radio-icon {

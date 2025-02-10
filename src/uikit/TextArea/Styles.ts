@@ -28,15 +28,15 @@ export const Wrapper = styled.div<{
   border-radius: 12px;
   overflow: hidden;
   background-color: ${({ theme, $bgColor }) =>
-    $bgColor ? $bgColor : theme.colors.bgDark};
+    $bgColor ? $bgColor : theme.lyraColors['core-surface-secondary']};
   box-shadow: 0 0 0px
     ${({ $focused, $border }) => ($focused ? 1.5 : $border ? 1 : 0)}px
     ${({ $focused, $invalid, theme }) =>
       $focused
-        ? theme.colors.primaryBlue
+        ? theme.lyraColors['core-button-primary']
         : $invalid
-          ? theme.colors.lightBorder
-          : theme.colors.lightBorder};
+          ? theme.lyraColors['core-outline-primary']
+          : theme.lyraColors['core-outline-primary']};
   transition: all 0.25s ease-in-out 0s;
   textarea {
     border: 0;
@@ -61,14 +61,16 @@ export const Wrapper = styled.div<{
       background-color: transparent;
     }
     &::-webkit-scrollbar-thumb {
-      background-color: ${({ theme }) => theme.colors.scrollBar};
+      background-color: ${({ theme }) => theme.lyraColors['scroll-bar']};
       border-radius: 20px;
-      border: 4px solid ${({ theme }) => theme.colors.bgNormal};
+      border: 4px solid
+        ${({ theme }) => theme.lyraColors['core-surface-primary']};
     }
     &::-webkit-scrollbar-thumb:hover {
-      background-color: ${({ theme }) => theme.colors.scrollBarHover};
+      background-color: ${({ theme }) => theme.lyraColors['scroll-bar']};
       border-radius: 20px;
-      border: 4px solid ${({ theme }) => theme.colors.bgNormal};
+      border: 4px solid
+        ${({ theme }) => theme.lyraColors['core-surface-primary']};
       cursor: default;
     }
   }

@@ -10,63 +10,91 @@ export const Label = styled.div<{
     ${flexBox.row};
     ${({ $button, theme }) =>
       $button
-        ? theme?.type?.desktop.textMedium
-        : theme?.type?.desktop.textSmall};
+        ? theme.lyraType['body-m-regular']
+        : theme.lyraType['body-s-regular']};
     white-space: nowrap;
     font-weight: ${({ $button }) => ($button ? 500 : 520)};
     padding: ${({ $button }) => ($button ? '6px 12px' : '3px 6px')};
     width: min-content;
     border-radius: ${({ $round }) => ($round ? '100' : '4')}px;
-    border: 1px solid ${({ theme }) => theme.colors.lightBorder};
+    border: 1px solid ${({ theme }) => theme.lyraColors['core-outline-primary']};
     cursor: ${({ $button }) => ($button ? 'pointer' : 'defatult')};
   }
   div.status-label.red {
     background: ${({ theme, $fill }) =>
-      $fill ? theme.colors.labelRedBG : theme.colors.bgNormal};
-    color: ${({ theme }) => theme.colors.white};
+      $fill
+        ? theme.lyraColors['feedback-warning']
+        : theme.lyraColors['core-surface-primary']};
+    color: ${({ theme }) => theme.lyraColors['core-text-light']};
     border-color: ${({ theme, $fill }) =>
-      $fill ? theme.colors.bgTintLight : theme.colors.labelRedText};
+      $fill
+        ? theme.lyraColors['core-button-disabled']
+        : theme.lyraColors['core-button-disabled']};
   }
   div.status-label.green {
     background: ${({ theme, $fill }) =>
-      $fill ? theme.colors.labelGreenBG : theme.colors.bgNormal};
-    color: ${({ theme }) => theme.colors.white};
+      $fill
+        ? theme.lyraColors['feedback-warning']
+        : theme.lyraColors['core-surface-primary']};
+    color: ${({ theme }) => theme.lyraColors['core-text-light']};
     border-color: ${({ theme, $fill }) =>
-      $fill ? theme.colors.bgTintLight : theme.colors.labelGreenText};
+      $fill
+        ? theme.lyraColors['core-button-disabled']
+        : theme.lyraColors['feedback-positive']};
   }
   div.status-label.yellow {
     background: ${({ theme, $fill }) =>
-      $fill ? theme.colors.labelYellowBG : theme.colors.bgNormal};
-    color: ${({ theme }) => theme.colors.textPrimary};
+      $fill
+        ? theme.lyraColors['array-yellow']
+        : theme.lyraColors['core-surface-primary']};
+    color: ${({ theme }) => theme.lyraColors['core-text-primary']};
     border-color: ${({ theme, $fill }) =>
-      $fill ? theme.colors.labelYellowBG : theme.colors.labelYellowText};
+      $fill
+        ? theme.lyraColors['array-yellow']
+        : theme.lyraColors['array-yellow-label']};
   }
   div.status-label.grey {
     background: ${({ theme, $fill }) =>
-      $fill ? theme.colors.bgDark : theme.colors.bgNormal};
-    color: ${({ theme }) => theme.colors.textSecondary};
+      $fill
+        ? theme.lyraColors['core-surface-secondary']
+        : theme.lyraColors['core-surface-primary']};
+    color: ${({ theme }) => theme.lyraColors['core-text-secondary']};
     border-color: ${({ theme, $fill }) =>
-      $fill ? theme.colors.bgTintLight : theme.colors.textSecondary};
+      $fill
+        ? theme.lyraColors['core-button-disabled']
+        : theme.lyraColors['core-text-secondary']};
   }
   div.status-label.lightgrey {
     background: ${({ theme, $fill }) =>
-      $fill ? theme.colors.bgTintLight : theme.colors.bgNormal};
-    color: ${({ theme }) => theme.colors.textDisabled};
+      $fill
+        ? theme.lyraColors['core-button-disabled']
+        : theme.lyraColors['core-surface-primary']};
+    color: ${({ theme }) => theme.lyraColors['core-text-disabled']};
     border-color: ${({ theme, $fill }) =>
-      $fill ? theme.colors.bgTintLight : theme.colors.lightBorder};
+      $fill
+        ? theme.lyraColors['core-button-disabled']
+        : theme.lyraColors['core-outline-primary']};
   }
   div.status-label.white {
     background: ${({ theme, $fill }) =>
-      $fill ? theme.colors.bgMedium : theme.colors.bgNormal};
-    color: ${({ theme }) => theme.colors.textPrimary};
+      $fill
+        ? theme.lyraColors['core-surface-secondary']
+        : theme.lyraColors['core-surface-secondary']};
+    color: ${({ theme }) => theme.lyraColors['core-text-primary']};
     border-color: ${({ theme, $fill }) =>
-      $fill ? theme.colors.bgTintSelected : theme.colors.textSecondary};
+      $fill
+        ? theme.lyraColors['core-badge-secondary']
+        : theme.lyraColors['core-text-secondary']};
   }
   div.status-label.blue {
     background: ${({ theme, $fill }) =>
-      $fill ? theme.colors.primaryBlue : theme.colors.bgNormal};
-    color: ${({ theme }) => theme.colors.white};
+      $fill
+        ? theme.lyraColors['core-button-primary']
+        : theme.lyraColors['core-surface-primary']};
+    color: ${({ theme }) => theme.lyraColors['core-text-light']};
     border-color: ${({ theme, $fill }) =>
-      $fill ? theme.colors.primaryBlue : theme.colors.textSecondary};
+      $fill
+        ? theme.lyraColors['core-button-primary']
+        : theme.lyraColors['core-text-secondary']};
   }
 `;

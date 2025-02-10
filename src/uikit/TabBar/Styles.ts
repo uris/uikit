@@ -25,7 +25,7 @@ export const Wrapper = styled.div<{
   ${flexBox.rowStart};
   gap: ${({ $gap }) => $gap}px;
   border-bottom: ${({ $border }) => ($border ? 1 : 0)}px solid
-    ${({ theme }) => theme.colors.lightBorder};
+    ${({ theme }) => theme.lyraColors['core-outline-primary']};
   height: ${({ $height }) => setHeight($height)};
   width: ${({ $width }) => setWidth($width)};
   cursor: pointer;
@@ -75,6 +75,7 @@ export const CloseButton = styled.div<{
   padding-bottom: 0;
   padding-top: 0;
   margin-left: ${({ $padding }) => setPadding($padding)};
-  border-left: 1px solid ${({ theme }) => theme.colors.lightBorder};
+  border-left: 1px solid
+    ${({ theme }) => theme.lyraColors['core-outline-primary']};
   width: ${({ $closeWidth }) => setWidth($closeWidth)};
 `;

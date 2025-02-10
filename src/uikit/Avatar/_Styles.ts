@@ -25,7 +25,7 @@ export const Avatar = styled(motion.div)<{
   width: ${({ $frame }) => $frame}px;
   div.user {
     ${flexBox.row};
-    ${({ theme }) => theme?.type?.desktop.textRegular};
+    ${({ theme }) => theme.lyraType['body-l-regular']};
     font-size: ${({ $frame }) => setFontSize($frame)}px;
     font-weight: 500;
     text-transform: uppercase;
@@ -37,8 +37,8 @@ export const Avatar = styled(motion.div)<{
     height: ${({ $size }) => $size}px;
     width: ${({ $size }) => $size}px;
     background: ${({ theme, $bgColor }) =>
-      $bgColor ? $bgColor : theme.colors.lightBorder};
-    color: ${({ theme }) => theme.colors.textPrimary};
+      $bgColor ? $bgColor : theme.lyraColors['core-outline-primary']};
+    color: ${({ theme }) => theme.lyraColors['core-text-primary']};
     background-image: url('${({ $image }) => $image}');
     background-size: cover;
   }

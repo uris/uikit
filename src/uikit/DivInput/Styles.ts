@@ -39,10 +39,10 @@ export const Input = styled.div<{
   &:hover {
     cursor: ${({ $isEditable }) => ($isEditable ? 'text' : 'pointer')};
     background: ${({ theme, $isEditable }) =>
-      $isEditable ? theme.colors.bgTintHovered : theme.colors.transparent};
+      $isEditable ? theme.lyraColors['core-badge-secondary'] : 'transparent'};
   }
   &:focus {
-    background: ${({ theme }) => theme.colors.bgTintHovered};
+    background: ${({ theme }) => theme.lyraColors['core-badge-secondary']};
   }
   text-overflow: ellipsis;
   overflow: hidden;

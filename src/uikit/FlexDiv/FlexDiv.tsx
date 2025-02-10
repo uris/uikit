@@ -33,7 +33,7 @@ export function FlexDiv(props: FlexDivProps) {
     children,
     scrollY = false,
     scrollX = false,
-    background = theme.colors.bgNormal,
+    background = theme.lyraColors['core-surface-primary'],
     direction = 'column',
     alignItems = 'start',
     justify = 'start',

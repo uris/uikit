@@ -84,8 +84,8 @@ export function RadioButton(props: RadioButtonProps) {
             icon={toggleIcon && isSelected ? 'checked' : 'unchecked'}
             color={
               toggleIcon && isSelected
-                ? theme.colors.primaryBlue
-                : theme.colors.iconPrimary
+                ? theme.lyraColors['core-button-primary']
+                : theme.lyraColors['core-icon-primary']
             }
           />
         </div>

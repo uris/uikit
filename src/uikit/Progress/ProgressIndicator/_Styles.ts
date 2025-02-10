@@ -1,15 +1,15 @@
-import styled from "styled-components";
-import { motion } from "framer-motion";
-import { flexBox } from "../../../util/flexBox";
+import styled from 'styled-components';
+import { motion } from 'framer-motion';
+import { flexBox } from '../../../util/flexBox';
 
 export const Container = styled(motion.div)<{ $inline: boolean }>`
   ${flexBox.column};
-  position: ${({ $inline }) => ($inline ? "relative" : "absolute")};
-  top: ${({ $inline }) => ($inline ? "unset" : 0)};
-  bottom: ${({ $inline }) => ($inline ? "unset" : 0)};
-  left: ${({ $inline }) => ($inline ? "unset" : 0)};
-  right: ${({ $inline }) => ($inline ? "unset" : 0)};
-  color: ${({ theme }) => theme.colors.textDisabled};
+  position: ${({ $inline }) => ($inline ? 'relative' : 'absolute')};
+  top: ${({ $inline }) => ($inline ? 'unset' : 0)};
+  bottom: ${({ $inline }) => ($inline ? 'unset' : 0)};
+  left: ${({ $inline }) => ($inline ? 'unset' : 0)};
+  right: ${({ $inline }) => ($inline ? 'unset' : 0)};
+  color: ${({ theme }) => theme.lyraColors['core-text-disabled']};
 `;
 
 export const IconWrapper = styled(motion.div)<{ $size: number }>`

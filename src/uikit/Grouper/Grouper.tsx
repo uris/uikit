@@ -1,9 +1,9 @@
-import { useEffect, useState } from "react";
-import { useAnimate } from "framer-motion";
-import { useTheme } from "styled-components";
-import { UIIcon } from "../UIIcon/UIIcon";
-import { Badge } from "../Badge/Badge";
-import * as Styled from "./_Styles";
+import { useEffect, useState } from 'react';
+import { useAnimate } from 'framer-motion';
+import { useTheme } from 'styled-components';
+import { UIIcon } from '../UIIcon/UIIcon';
+import { Badge } from '../Badge/Badge';
+import * as Styled from './_Styles';
 
 export interface GrouperProps {
   title?: string;
@@ -16,7 +16,7 @@ export interface GrouperProps {
   border?: number;
   count?: number | string;
   hideNull?: boolean;
-  variant?: "group" | "facet";
+  variant?: 'group' | 'facet';
   showFilterBadge?: boolean;
   unframed?: boolean;
   onChange?: (state: boolean) => void;
@@ -25,17 +25,17 @@ export interface GrouperProps {
 
 export function Grouper(props: GrouperProps) {
   const {
-    title = "Group Title",
+    title = 'Group Title',
     toggle = true,
     open = true,
     hasIcon = true,
-    iconName = "chevron down",
+    iconName = 'chevron down',
     iconSize = 18,
     frameSize = 64,
     border = 0,
     count = 0,
     unframed = false,
-    variant = "group",
+    variant = 'group',
     hideNull = true,
     showFilterBadge = false,
     onChange = () => null,
@@ -59,7 +59,7 @@ export function Grouper(props: GrouperProps) {
     animateIcon(
       icon.current,
       { ...animation },
-      { ease: "easeInOut", duration: 0.25 }
+      { ease: 'easeInOut', duration: 0.25 },
     );
   }
 
@@ -75,12 +75,12 @@ export function Grouper(props: GrouperProps) {
       <div className="content">
         <div className="title">
           {title}
-          <Badge hideNull={hideNull} count={count} variant={"light"} />
+          <Badge hideNull={hideNull} count={count} variant={'light'} />
           {showFilterBadge && (
             <UIIcon
               name="filter"
               size={16}
-              strokeColor={theme.colors.textDisabled}
+              strokeColor={theme.lyraColors['core-text-disabled']}
             />
           )}
         </div>
