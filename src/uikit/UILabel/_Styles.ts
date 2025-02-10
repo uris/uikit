@@ -23,23 +23,23 @@ export const Label = styled.div<{
   div.status-label.red {
     background: ${({ theme, $fill }) =>
       $fill ? theme.colors.labelRedBG : theme.colors.bgNormal};
-    color: ${({ theme }) => theme.colors.labelRedText};
+    color: ${({ theme }) => theme.colors.white};
     border-color: ${({ theme, $fill }) =>
       $fill ? theme.colors.bgTintLight : theme.colors.labelRedText};
   }
   div.status-label.green {
     background: ${({ theme, $fill }) =>
       $fill ? theme.colors.labelGreenBG : theme.colors.bgNormal};
-    color: ${({ theme }) => theme.colors.labelGreenText};
+    color: ${({ theme }) => theme.colors.white};
     border-color: ${({ theme, $fill }) =>
       $fill ? theme.colors.bgTintLight : theme.colors.labelGreenText};
   }
   div.status-label.yellow {
     background: ${({ theme, $fill }) =>
       $fill ? theme.colors.labelYellowBG : theme.colors.bgNormal};
-    color: ${({ theme }) => theme.colors.labelYellowText};
+    color: ${({ theme }) => theme.colors.textPrimary};
     border-color: ${({ theme, $fill }) =>
-      $fill ? theme.colors.bgTintLight : theme.colors.labelYellowText};
+      $fill ? theme.colors.labelYellowBG : theme.colors.labelYellowText};
   }
   div.status-label.grey {
     background: ${({ theme, $fill }) =>
@@ -61,5 +61,12 @@ export const Label = styled.div<{
     color: ${({ theme }) => theme.colors.textPrimary};
     border-color: ${({ theme, $fill }) =>
       $fill ? theme.colors.bgTintSelected : theme.colors.textSecondary};
+  }
+  div.status-label.blue {
+    background: ${({ theme, $fill }) =>
+      $fill ? theme.colors.primaryBlue : theme.colors.bgNormal};
+    color: ${({ theme }) => theme.colors.white};
+    border-color: ${({ theme, $fill }) =>
+      $fill ? theme.colors.primaryBlue : theme.colors.textSecondary};
   }
 `;

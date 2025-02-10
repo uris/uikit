@@ -1,15 +1,15 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { useTheme } from 'styled-components';
-import { IconButton } from '../Buttons/IconButton/IconButton';
+import { IconButton } from '../IconButton';
 import { UIIcon } from '../UIIcon/UIIcon';
 import { Badge } from '../Badge/Badge';
 import { ToolTip, ToolTipType } from '../sharedTypes';
 import { TabOption } from './_Types';
 import * as Styled from './Styles';
 
-const placeholderOptions: TabOption[] = [
+export const placeholderOptions: TabOption[] = [
   { name: 'Option 1', value: 'Option 1', icon: null },
-  { name: 'Option 2', value: 'Option 2', icon: 'plus' },
+  { name: 'Option 2', value: 'Option 2', icon: 'check' },
 ];
 
 export interface TabBarProps {
@@ -52,7 +52,7 @@ export function TabBar(props: TabBarProps) {
     width = '100%',
     padding = 8,
     textStyle = 'textRegular',
-    iconSize = 24,
+    iconSize = 20,
     iconGap = 4,
     tabGap = 0,
     dragsApp = false,
@@ -127,7 +127,14 @@ export function TabBar(props: TabBarProps) {
           onClick={() => onClose()}
           $closeWidth={closeWidth}
         >
-          <IconButton icon={'x'} onClick={() => onClose()} />
+          <IconButton
+            iconSize={iconSize - 4}
+            frameSize={iconSize}
+            toggle={false}
+            hover={true}
+            icon={'x'}
+            onClick={() => onClose()}
+          />
         </Styled.CloseButton>
       )}
     </Styled.Wrapper>
@@ -238,8 +245,8 @@ function Option(props: TabOptionProps) {
   }, [disabled, state, handleMouseDown]);
 
   const iconColor = () => {
-    if (!disabled && selected) return theme.colors.textPrimary;
-    return theme.colors.textTertiary;
+    if (!disabled && selected) return theme.lyraColors['core-button-primary'];
+    return theme.lyraColors['core-text-primary'];
   };
 
   function handleMouseOver(e: any) {
@@ -271,13 +278,19 @@ function Option(props: TabOptionProps) {
       }
       $gap={iconGap}
       $size={size}
+      $iconSize={iconSize}
       className={'noDrag'}
       onMouseEnter={(e) => handleMouseOver(e)}
       onMouseLeave={(e) => handleMouseLeave(e)}
       onMouseDown={() => (doDrag.current = null)}
       onMouseUp={() => (doDrag.current = null)}
     >
-      {icon && <UIIcon name={icon} size={iconSize} strokeColor={iconColor()} />}
+      {icon && (
+        <div className="icon">
+          <UIIcon name={icon} size={iconSize} strokeColor={iconColor()} />
+        </div>
+      )}
+
       {label}
       {count !== 0 && (
         <Badge variant={'light'} hideNull={false} count={count} />

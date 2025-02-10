@@ -1,6 +1,6 @@
 import { motion } from 'framer-motion';
 import styled from 'styled-components';
-import { flexBox } from '../../../util/flexBox';
+import { flexBox } from '../../util/flexBox';
 
 type Props = {
   frameSize: number;

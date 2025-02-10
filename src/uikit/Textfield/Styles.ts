@@ -61,8 +61,7 @@ export const InputContainer = styled.div<{ $padding: string }>`
 
 export const Label = styled.div<{ $props: Styles }>`
   ${flexBox.rowStart};
-  ${({ theme }) => theme?.type?.desktop.textRegular};
-  font-family: 'Booton';
+  ${({ theme }) => theme.lyraType['body-m-regular']};
   color: ${({ theme }) => theme.colors.textSecondary};
   padding: ${({ $props }) => $props.padding};
   height: auto;
@@ -72,15 +71,15 @@ export const Label = styled.div<{ $props: Styles }>`
 `;
 
 export const Input = styled.input<{
-  $textType: string;
+  $textType?: string;
   $props: Styles;
   $focused: boolean;
   $isvalid: boolean;
   $label: string;
   $labelRight: boolean;
 }>`
-  ${({ $textType }) => $textType};
-  font-family: 'Booton';
+  ${({ theme, $textType }) =>
+    $textType ? $textType : theme.lyraType['body-m-regular']};
   color: ${({ $props, $focused, $isvalid }) =>
     !$isvalid
       ? $props.color?.error

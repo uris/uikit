@@ -22,6 +22,16 @@ export type GiaTheme = {
   lyraTransitions?: { [key: string]: string };
 };
 
+export const light: GiaTheme = {
+  name: 'lightMode',
+  colors: lightColors,
+  type: { desktop: type },
+  brand: brand,
+  lyraColors: lyraLight,
+  lyraType: lyraType,
+  lyraCorners: lyraCorners,
+};
+
 export function useGiaThemes(): { dark: GiaTheme; light: GiaTheme } {
   const dark: GiaTheme = {
     name: 'darkMode',

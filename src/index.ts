@@ -20,8 +20,8 @@ export type { AvatarGroupProps, AvatarInfo } from './uikit/AvatarGroup';
 export { Badge } from './uikit/Badge';
 export type { BadgeProps } from './uikit/Badge';
 
-export { UIButton, IconButton } from './uikit/Buttons';
-export type { UIButtonProps, IconButtonProps } from './uikit/Buttons';
+export { IconButton } from './uikit/IconButton';
+export type { IconButtonProps } from './uikit/IconButton';
 
 export { CheckBox } from './uikit/CheckBox';
 export type { CheckBoxProps } from './uikit/CheckBox';
@@ -97,6 +97,9 @@ export type { TextAreaProps } from './uikit/TextArea';
 
 export { TextField } from './uikit/Textfield';
 export type { TextFieldProps } from './uikit/Textfield';
+
+export { UIButton } from './uikit/UIButton';
+export type { UIButtonProps, UIButtonHandle } from './uikit/UIButton';
 
 export { UIIcon, Icons } from './uikit/UIIcon';
 export type { IconProps } from './uikit/UIIcon';

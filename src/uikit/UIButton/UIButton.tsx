@@ -8,11 +8,11 @@ import React, {
   useState,
 } from 'react';
 import { Transition, Variants } from 'framer-motion';
-import { UIIcon } from '../../../uikit/UIIcon/UIIcon';
-import { ProgressIndicator } from '../../Progress/ProgressIndicator/ProgressIndicator';
-import { Dot } from '../../../uikit/Dot/Dot';
-import { Badge } from '../../../uikit/Badge/Badge';
-import { ToolTip, ToolTipType } from '../../sharedTypes';
+import { UIIcon } from '../UIIcon/UIIcon';
+import { ProgressIndicator } from '../Progress/ProgressIndicator/ProgressIndicator';
+import { Dot } from '../Dot/Dot';
+import { Badge } from '../Badge/Badge';
+import { ToolTip, ToolTipType } from '../sharedTypes';
 import * as Styled from './_Styles';
 
 export interface UIButtonProps {

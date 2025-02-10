@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useRef } from 'react';
+import { useGiaThemes } from '../../theme/useGiaThemes';
 import * as Styled from './Styles';
 
 export interface SliderProps {
@@ -12,6 +13,8 @@ export interface SliderProps {
   trackHeadWidth?: number | null;
   headType?: 'round' | 'square';
   headColor?: string;
+  trackColor?: string;
+  progressColor?: string;
   rounding?: number;
   cursor?: 'default' | 'grab' | 'grabbing' | 'pointer';
   state?: any[];
@@ -20,6 +23,7 @@ export interface SliderProps {
 }
 
 export function Slider(props: SliderProps) {
+  const themes = useGiaThemes();
   const {
     initial = 25,
     scaleMin = 0,
@@ -32,7 +36,9 @@ export function Slider(props: SliderProps) {
     trackHeadWidth = 4,
     rounding = 2,
     cursor = 'default',
-    headColor = '#0000ff',
+    headColor = themes.light.lyraColors['core-icon-primary'],
+    trackColor = themes.light.lyraColors['core-outline-primary'],
+    progressColor = themes.light.lyraColors['core-icon-primary'],
     state = [],
     onChange = () => null,
     onDragChange = () => null,
@@ -197,8 +203,8 @@ export function Slider(props: SliderProps) {
       $touchHeight={touchHeight}
       $cursor={cursor}
     >
-      <Styled.TrackBG $width={width} $height={height}>
-        <Styled.Track ref={track}>
+      <Styled.TrackBG $width={width} $height={height} $color={trackColor}>
+        <Styled.Track ref={track} $color={progressColor}>
           <Styled.TrackHead
             ref={head}
             $height={trackHeadSize}

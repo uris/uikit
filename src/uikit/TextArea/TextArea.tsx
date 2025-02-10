@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
-import { UIButton } from '../Buttons/UIButon/UIButton';
+import { UIButton } from '../UIButton';
 import * as Styled from './Styles';
 
 export interface TextAreaProps {

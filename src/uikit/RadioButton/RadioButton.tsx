@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useTheme } from 'styled-components';
-import { IconButton } from '../Buttons/IconButton/IconButton';
+import { IconButton } from '../IconButton';
 import * as Styled from './Styles';
 
 export type RadioButtonOption = {

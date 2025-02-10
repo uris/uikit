@@ -22,21 +22,24 @@ export const Wrapper = styled.div<{
 export const TrackBG = styled.div<{
   $width: number | string;
   $height: number | string;
+  $color?: string;
 }>`
   ${flexBox.rowStart};
   width: 100%;
   height: ${({ $height }) => getWidth($height)};
-  background-color: ${({ theme }) => theme.colors.sliderTrack};
+  background-color: ${({ theme, $color }) =>
+    $color ? $color : theme.lyraColors['core-outline-primary']};
   pointer-events: none;
   border-radius: 100px;
 `;
 
-export const Track = styled.div`
+export const Track = styled.div<{ $color?: string }>`
   ${flexBox.rowStart};
   position: relative;
   width: 0px;
   height: 100%;
-  background-color: ${({ theme }) => theme.colors.sliderProgress};
+  background-color: ${({ theme, $color }) =>
+    $color ? $color : theme.lyraColors['core-icon-primary']};
   overflow: visible;
   pointer-events: none;
   border-radius: 100px;
@@ -50,7 +53,8 @@ export const TrackHead = styled.div<{
 }>`
   position: absolute;
   display: ${({ $height }) => ($height ? 'block' : 'none')};
-  background-color: ${({ theme }) => theme.colors.sliderKnob};
+  background-color: ${({ theme, $color }) =>
+    $color ? $color : theme.lyraColors['core-icon-primary']};
   pointer-events: none;
   border-radius: ${({ $headType }) => ($headType === 'round' ? '100%' : 0)};
   max-width: ${({ $width }) => $width || 0}px;

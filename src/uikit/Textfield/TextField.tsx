@@ -3,9 +3,9 @@ import { AnimatePresence, motion, Transition } from 'framer-motion';
 import { useTheme } from 'styled-components';
 import { UIIcon } from '../UIIcon/UIIcon';
 import { DropDownOption } from '../DropDown/DropDown';
-import { IconButton } from '../Buttons/IconButton/IconButton';
-import { UIButton } from '../Buttons/UIButon/UIButton';
 import { Flag } from '../Flags/Flag';
+import { UIButton } from '../UIButton';
+import { IconButton } from '../IconButton';
 import * as Styled from './Styles';
 
 export interface TextFieldProps {
@@ -103,7 +103,7 @@ export function TextField(props: TextFieldProps) {
     clearButton = { size: 20 },
     clearBlurs = false,
     disabled = false,
-    textType = theme?.type?.desktop.textRegular || '',
+    textType,
     inputType = 'text',
   } = props;
   const input = useRef<HTMLInputElement>(null);

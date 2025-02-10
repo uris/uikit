@@ -8,9 +8,13 @@ export const Bar = styled.div`
   padding: 16px 0;
 `;
 
-export const Step = styled.div<{ $state: 'done' | 'current' | 'disabled' }>`
+export const Step = styled.div<{
+  $state: 'done' | 'current' | 'disabled';
+  $clickable: boolean;
+}>`
   ${flexBox.rowStart};
   gap: 10px;
+  cursor: ${({ $clickable }) => ($clickable ? 'pointer' : 'default')};
   div.step {
     ${flexBox.rowStart};
     gap: 8px;

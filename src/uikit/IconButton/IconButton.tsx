@@ -1,10 +1,10 @@
 import { useTheme } from 'styled-components';
 import React, { useEffect, useRef, useState } from 'react';
 import { Transition, Variants } from 'framer-motion';
-import { UIIcon } from '../../UIIcon/UIIcon';
-import { Dot } from '../../Dot/Dot';
-import { Badge } from '../../Badge/Badge';
-import { ToolTip, ToolTipType } from '../../sharedTypes';
+import { UIIcon } from '../UIIcon/UIIcon';
+import { Dot } from '../Dot/Dot';
+import { Badge } from '../Badge/Badge';
+import { ToolTip, ToolTipType } from '../sharedTypes';
 import * as Styled from './_Styles';
 
 export interface IconButtonProps {

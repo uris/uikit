@@ -8,6 +8,19 @@ export const BaseLayout = styled(motion.div)<{
   $background: string;
 }>`
   ${({ $flexBox }) => $flexBox};
+  font-family:
+    'Booton',
+    system-ui,
+    -apple-system,
+    BlinkMacSystemFont,
+    'Segoe UI',
+    Roboto,
+    Oxygen,
+    Ubuntu,
+    Cantarell,
+    'Open Sans',
+    'Helvetica Neue',
+    sans-serif;
   overflow: hidden;
   overflow-y: ${({ $scrollY }) => ($scrollY ? 'auto' : 'hidden')};
   overflow-x: ${({ $scrollX }) => ($scrollX ? 'auto' : 'hidden')};

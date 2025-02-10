@@ -44,15 +44,13 @@ export const Wrapper = styled.div<{
     padding: 0 16px 0 0;
     width: 100%;
     height: 100%;
-    color: ${({ theme }) => theme.colors.textPrimary};
-    font-family: 'Booton';
-    ${({ theme }) => theme?.type?.desktop.textRegular};
-    font-weight: 500;
+    color: ${({ theme }) => theme.lyraColors['core-text-primary']};
+    ${({ theme }) => theme.lyraType['body-m-regular']};
     background-color: transparent;
     box-sizing: border-box;
     resize: ${({ $resize }) => ($resize ? 'vertical' : 'none')};
     &::placeholder {
-      color: ${({ theme }) => theme.colors.textDisabled};
+      color: ${({ theme }) => theme.lyraColors['core-text-disabled']};
     }
     overflow-y: auto;
     &::-webkit-scrollbar {

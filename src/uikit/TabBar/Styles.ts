@@ -38,23 +38,31 @@ export const Option = styled.div<{
   $gap: number;
   $disabled: boolean;
   $size: number;
+  $iconSize: number;
 }>`
   ${flexBox.row};
+  ${({ theme }) => theme.lyraType['body-m-regular']};
   gap: ${({ $gap }) => $gap}px;
-  ${({ theme }) => theme?.type?.desktop.textRegular};
-  font-weight: 480;
   color: ${({ $selected, theme }) =>
-    $selected ? theme.colors.primaryBlue : theme.colors.textSecondary};
+    $selected
+      ? theme.lyraColors['core-button-primary']
+      : theme.lyraColors['core-text-primary']};
   padding: ${({ $padding }) => setPadding($padding)};
   height: 100%;
   flex: 1;
   white-space: nowrap;
   box-shadow: 0px ${({ $selected, $size }) => ($selected ? $size : 0)}px 0px 0px
-    ${({ theme }) => theme.colors.primaryBlue};
+    ${({ theme }) => theme.lyraColors['core-button-primary']};
   cursor: ${({ $disabled }) => ($disabled ? 'default' : 'pointer')};
   -webkit-app-region: no-drag;
   -webkit-user-select: none;
   user-select: none;
+  div.icon {
+    ${flexBox.row}
+    height: ${({ $size }) => ($size ? $size + 'px' : 20)}px;
+    max-height: ${({ $size }) => ($size ? $size : 20)}px;
+    min-height: ${({ $size }) => ($size ? $size : 20)}px;
+  }
 `;
 
 export const CloseButton = styled.div<{
@@ -62,8 +70,11 @@ export const CloseButton = styled.div<{
   $closeWidth: number | string;
 }>`
   ${flexBox.row};
-  padding: ${({ $padding }) => setPadding($padding)};
   height: 100%;
+  padding: ${({ $padding }) => setPadding($padding)};
+  padding-bottom: 0;
+  padding-top: 0;
+  margin-left: ${({ $padding }) => setPadding($padding)};
   border-left: 1px solid ${({ theme }) => theme.colors.lightBorder};
   width: ${({ $closeWidth }) => setWidth($closeWidth)};
 `;
