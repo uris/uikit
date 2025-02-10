@@ -12,9 +12,9 @@ export const Label = styled.div<{
       $button
         ? theme.lyraType['body-m-regular']
         : theme.lyraType['body-s-regular']};
+    line-height: 1em;
     white-space: nowrap;
-    font-weight: ${({ $button }) => ($button ? 500 : 520)};
-    padding: ${({ $button }) => ($button ? '6px 12px' : '3px 6px')};
+    padding: ${({ $button }) => ($button ? '6px 12px' : '4px 6px')};
     width: min-content;
     border-radius: ${({ $round }) => ($round ? '100' : '4')}px;
     border: 1px solid ${({ theme }) => theme.lyraColors['core-outline-primary']};

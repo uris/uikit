@@ -16,6 +16,7 @@ export const GroupHeader = styled.div<{
   div.content {
     ${flexBox.rowBetween};
     width: 100%;
+    gap: 6px;
     height: ${({ $frameSize, $unframed }) =>
       $unframed ? 'auto' : $frameSize}px;
     border-top: ${({ $border }) => $border}px solid
@@ -24,10 +25,8 @@ export const GroupHeader = styled.div<{
   div.title {
     ${flexBox.rowStart};
     ${({ theme }) => theme.lyraType['body-l-regular']};
-    font-weight: 480;
     color: ${({ theme }) => theme.lyraColors['core-text-secondary']};
     flex: 1;
-    gap: 6px;
   }
   div.icon {
     ${flexBox.row}

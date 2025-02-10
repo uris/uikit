@@ -21,7 +21,6 @@ export const Step = styled.div<{
     div.number {
       ${flexBox.row};
       ${({ theme }) => theme.lyraType['body-m-regular']};
-      font-weight: 420;
       width: 20px;
       height: 20px;
       border-radius: 100px;
@@ -44,7 +43,6 @@ export const Step = styled.div<{
     }
     div.title {
       ${({ theme }) => theme.lyraType['body-m-regular']};
-      font-weight: 420;
       color: ${({ theme, $state }) =>
         $state === 'disabled'
           ? theme.lyraColors['core-text-disabled']

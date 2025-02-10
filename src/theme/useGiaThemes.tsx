@@ -31,27 +31,16 @@ export const light: GiaTheme = {
   lyraType: lyraType,
   lyraCorners: lyraCorners,
 };
+export const dark: GiaTheme = {
+  name: 'lightMode',
+  colors: darkColors,
+  type: { desktop: type },
+  brand: brand,
+  lyraColors: lyraDark,
+  lyraType: lyraType,
+  lyraCorners: lyraCorners,
+};
 
 export function useGiaThemes(): { dark: GiaTheme; light: GiaTheme } {
-  const dark: GiaTheme = {
-    name: 'darkMode',
-    colors: darkColors,
-    type: { desktop: type },
-    brand: brand,
-    lyraColors: lyraDark,
-    lyraType: lyraType,
-    lyraCorners: lyraCorners,
-  };
-
-  const light: GiaTheme = {
-    name: 'lightMode',
-    colors: lightColors,
-    type: { desktop: type },
-    brand: brand,
-    lyraColors: lyraLight,
-    lyraType: lyraType,
-    lyraCorners: lyraCorners,
-  };
-
   return { dark, light };
 }

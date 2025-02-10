@@ -4,11 +4,9 @@ import { flexBox } from '../../util/flexBox';
 
 export const ErrorBox = styled(motion.div)`
   ${flexBox.columnStart};
-  ${({ theme }) => theme.lyraType['body-l-regular']};
-  font-weight: 480;
-  line-height: 1.4em;
+  ${({ theme }) => theme.lyraType['body-m-regular']};
   width: 100%;
-  background: ${({ theme }) => theme.lyraColors['core-outline-secondary']};
+  background: ${({ theme }) => theme.lyraColors['core-surface-secondary']};
   color: ${({ theme }) => theme.lyraColors['feedback-warning']};
   border: 1px solid ${({ theme }) => theme.lyraColors['feedback-warning']};
   border-radius: 4px;
@@ -25,7 +23,7 @@ export const ErrorBox = styled(motion.div)`
       padding-top: 16px;
     }
     p strong {
-      font-weight: 520;
+      ${({ theme }) => theme.lyraType['body-m-bold']};
     }
     ul {
       list-style-type: none;
@@ -34,7 +32,7 @@ export const ErrorBox = styled(motion.div)`
       padding: 0;
     }
     ul li {
-      ${({ theme }) => theme.lyraType['body-l-regular']};
+      ${({ theme }) => theme.lyraType['body-m-regular']};
       margin: 3px 0 3px 0;
       line-height: 1.2em;
       padding: 0;

@@ -12,7 +12,7 @@ const meta: Meta<typeof Slider> = {
     width: 100,
     height: 2,
     touchHeight: 24,
-    trackHeadSize: 7,
+    trackHeadSize: 12,
     headType: 'round',
     trackHeadWidth: 4,
     rounding: 2,

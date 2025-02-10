@@ -25,9 +25,8 @@ export const Avatar = styled(motion.div)<{
   width: ${({ $frame }) => $frame}px;
   div.user {
     ${flexBox.row};
-    ${({ theme }) => theme.lyraType['body-l-regular']};
+    ${({ theme }) => theme.lyraType['body-m-regular']};
     font-size: ${({ $frame }) => setFontSize($frame)}px;
-    font-weight: 500;
     text-transform: uppercase;
     border-radius: 100%;
     border: ${({ $border }) => $border}px solid
