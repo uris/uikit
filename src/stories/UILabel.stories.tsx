@@ -1,4 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react';
+import { fn } from '@storybook/test';
 import { UILabel } from '../uikit/UILabel/UILabel';
 import { FlexDiv } from '../uikit/FlexDiv/FlexDiv';
 
@@ -11,7 +12,7 @@ const meta: Meta<typeof UILabel> = {
     noFill: false,
     button: false,
     round: false,
-    onClick: () => null,
+    onClick: fn(),
   },
 };
 

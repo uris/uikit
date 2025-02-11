@@ -1,4 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react';
+import { fn } from '@storybook/test';
 import { UIIcon } from '../uikit/UIIcon/UIIcon';
 import { FlexDiv } from '../uikit/FlexDiv/FlexDiv';
 
@@ -14,7 +15,7 @@ const meta: Meta<typeof UIIcon> = {
     toggle: false,
     pointer: true,
     disabled: false,
-    onClick: () => null,
+    onClick: fn(),
   },
 };
 
