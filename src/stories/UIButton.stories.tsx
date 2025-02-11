@@ -1,4 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react';
+import { fn } from '@storybook/test';
 import { UIButton } from '../uikit/UIButton/UIButton';
 import { FlexDiv } from '../uikit/FlexDiv/FlexDiv';
 
@@ -37,8 +38,8 @@ const meta: Meta<typeof UIButton> = {
     duration: undefined,
     trigger: false,
     destructive: false,
-    onClick: () => null,
-    onToolTip: () => null,
+    onClick: fn(),
+    onToolTip: fn(),
   },
 };
 
