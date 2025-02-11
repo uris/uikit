@@ -1,5 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { Dot } from '../uikit/Dot/Dot';
+import { FlexDiv } from '../uikit/FlexDiv/FlexDiv';
 
 const meta: Meta<typeof Dot> = {
   title: 'UI Kit/Dot',
@@ -26,4 +27,12 @@ const meta: Meta<typeof Dot> = {
 
 export default meta;
 
-export const Default: StoryObj<typeof Dot> = {};
+export const Default: StoryObj<typeof Dot> = {
+  render: (args) => {
+    return (
+      <FlexDiv justify={'center'} alignItems={'center'} padding={64}>
+        <Dot {...args} />
+      </FlexDiv>
+    );
+  },
+};

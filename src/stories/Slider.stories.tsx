@@ -1,6 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { fn } from '@storybook/test';
 import { Slider } from '../uikit/Slider/Slider';
+import { FlexDiv } from '../uikit/FlexDiv/FlexDiv';
 
 const meta: Meta<typeof Slider> = {
   title: 'UI Kit/Slider',
@@ -28,4 +29,12 @@ const meta: Meta<typeof Slider> = {
 
 export default meta;
 
-export const Default: StoryObj<typeof Slider> = {};
+export const Default: StoryObj<typeof Slider> = {
+  render: (args) => {
+    return (
+      <FlexDiv justify={'center'} alignItems={'center'} padding={64}>
+        <Slider {...args} />
+      </FlexDiv>
+    );
+  },
+};

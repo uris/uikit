@@ -2,6 +2,7 @@ import type { Meta, StoryObj } from '@storybook/react';
 import { fn } from '@storybook/test';
 import { light } from '../theme/useGiaThemes';
 import { DropDown, DropDownOption } from '../uikit/DropDown/DropDown';
+import { FlexDiv } from '../uikit/FlexDiv/FlexDiv';
 
 const optionsWPlace: DropDownOption[] = [
   { label: 'select an option', value: 'none' },
@@ -22,7 +23,6 @@ const meta: Meta<typeof DropDown> = {
     placeholder: true,
     validate: true,
     borderRadius: 4,
-    dark: false,
     bgColor: 'transparent',
     iconColor: theme.lyraColors['core-text-primary'],
     fontSize: undefined,
@@ -43,4 +43,12 @@ const meta: Meta<typeof DropDown> = {
 
 export default meta;
 
-export const Default: StoryObj<typeof DropDown> = {};
+export const Default: StoryObj<typeof DropDown> = {
+  render: (args) => {
+    return (
+      <FlexDiv justify={'center'} alignItems={'center'} padding={64}>
+        <DropDown {...args} />
+      </FlexDiv>
+    );
+  },
+};

@@ -58,7 +58,7 @@ export interface UIButtonHandle {
 }
 
 const UIButton = forwardRef<UIButtonHandle, UIButtonProps>(
-  (props, buttonRef) => {
+  (props, buttonRef: React.Ref<UIButtonHandle>) => {
     const theme = useTheme();
     const {
       size = 'medium',
@@ -441,7 +441,9 @@ const UIButton = forwardRef<UIButtonHandle, UIButtonProps>(
       </Styled.Button>
     );
   },
-);
+) as React.ForwardRefExoticComponent<
+  UIButtonProps & React.RefAttributes<UIButtonHandle>
+>;
 
 UIButton.displayName = 'UIButton';
 

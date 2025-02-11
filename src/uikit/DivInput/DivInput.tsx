@@ -76,10 +76,10 @@ export function DivInput(props: DivInputProps) {
   }, [value, placeholder]);
 
   const handleSetValue = () => {
-    const text = ref.current?.innerText;
-    innerText.current = cleanString(innerText.current);
-    innerText.current = text || '';
+    const textString = ref.current?.innerText;
+    innerText.current = cleanString(textString || '');
     onChange(innerText.current);
+    setText(innerText.current);
   };
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLDivElement>) => {
@@ -145,6 +145,12 @@ export function DivInput(props: DivInputProps) {
     onClick();
   };
 
+  const isPlaceholder = () => {
+    console.log({ text, placeholder });
+    if (text === placeholder) return true;
+    return false;
+  };
+
   return (
     <Styled.Input
       $clamp={clamp}
@@ -155,6 +161,7 @@ export function DivInput(props: DivInputProps) {
       $isFocused={isFocused}
       $fontStyle={fontStyle}
       $padding={padding}
+      $isPlaceholder={isPlaceholder()}
       ref={ref}
       className={'editableDiv'}
       contentEditable={isEditable}
@@ -167,7 +174,7 @@ export function DivInput(props: DivInputProps) {
       onDoubleClick={() => onDblClick()}
       onClick={(e) => handleClick(e)}
     >
-      {text}
+      {value ? value : placeholder}
     </Styled.Input>
   );
 }

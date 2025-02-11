@@ -15,9 +15,14 @@ export const Input = styled.div<{
   $clamp: number;
   $fontStyle?: string;
   $padding: string;
+  $isPlaceholder: boolean;
 }>`
   ${({ theme, $fontStyle }) =>
     $fontStyle ? $fontStyle : theme.lyraType['body-m-regular']};
+  color: ${({ theme, $isPlaceholder }) =>
+    $isPlaceholder
+      ? theme.lyraColors['core-text-disabled']
+      : theme.lyraColors['core-text-primary']};
   background: transparent;
   border-radius: 4px;
   border: 0;

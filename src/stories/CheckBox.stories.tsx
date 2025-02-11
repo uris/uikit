@@ -1,6 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { fn } from '@storybook/test';
 import { CheckBox } from '../uikit/CheckBox/CheckBox';
+import { FlexDiv } from '../uikit/FlexDiv/FlexDiv';
 
 const meta: Meta<typeof CheckBox> = {
   title: 'UI Kit/CheckBox',
@@ -23,4 +24,12 @@ const meta: Meta<typeof CheckBox> = {
 
 export default meta;
 
-export const Default: StoryObj<typeof CheckBox> = {};
+export const Default: StoryObj<typeof CheckBox> = {
+  render: (args) => {
+    return (
+      <FlexDiv justify={'center'} alignItems={'center'} padding={64}>
+        <CheckBox {...args} />
+      </FlexDiv>
+    );
+  },
+};

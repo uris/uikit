@@ -1,6 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { fn } from '@storybook/test';
 import { RadioButton } from '../uikit/RadioButton/RadioButton';
+import { FlexDiv } from '../uikit/FlexDiv/FlexDiv';
 
 const meta: Meta<typeof RadioButton> = {
   title: 'UI Kit/RadioButton',
@@ -27,4 +28,12 @@ const meta: Meta<typeof RadioButton> = {
 
 export default meta;
 
-export const Default: StoryObj<typeof RadioButton> = {};
+export const Default: StoryObj<typeof RadioButton> = {
+  render: (args) => {
+    return (
+      <FlexDiv justify={'center'} alignItems={'center'} padding={64}>
+        <RadioButton {...args} />
+      </FlexDiv>
+    );
+  },
+};

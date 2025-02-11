@@ -1,6 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { fn } from '@storybook/test';
 import { DivInput, InputType } from '../uikit/DivInput/DivInput';
+import { FlexDiv } from '../uikit/FlexDiv/FlexDiv';
 
 const meta: Meta<typeof DivInput> = {
   title: 'UI Kit/DivInput',
@@ -33,4 +34,12 @@ const meta: Meta<typeof DivInput> = {
 
 export default meta;
 
-export const Default: StoryObj<typeof DivInput> = {};
+export const Default: StoryObj<typeof DivInput> = {
+  render: (args) => {
+    return (
+      <FlexDiv justify={'center'} alignItems={'center'} padding={64}>
+        <DivInput {...args} />
+      </FlexDiv>
+    );
+  },
+};

@@ -1,6 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
 import { useTheme } from 'styled-components';
-import { useGiaThemes } from '../../theme/useGiaThemes';
 import { UIIcon } from '../UIIcon/UIIcon';
 import * as Styled from './_Styles';
 
@@ -17,7 +16,6 @@ export interface DropDownProps {
   placeholder?: boolean;
   borderRadius?: number;
   validate?: boolean;
-  dark?: boolean;
   iconColor?: string;
   bgColor?: string;
   width?: string;
@@ -39,7 +37,6 @@ export interface DropDownProps {
 
 export function DropDown(props: DropDownProps) {
   const theme = useTheme();
-  const themes = useGiaThemes();
   const {
     width = '100%',
     height = 'auto',
@@ -49,16 +46,15 @@ export function DropDown(props: DropDownProps) {
     placeholder = true,
     validate = true,
     borderRadius = 4,
-    dark = theme.name === 'lightMode' ? false : true,
     bgColor = 'transparent',
-    iconColor = theme.lyraColors['core-text-primary'],
+    iconColor = theme.lyraColors['core-icon-primary'],
     fontSize = null,
     padding = '8px',
     iconSize = 24,
     disabled = false,
     unframed = false,
     focused = false,
-    textType = themes.dark.type?.desktop.textRegular,
+    textType = theme.lyraType['body-m-regular'],
     fontWeight = 500,
     gap = 0,
     onChange = () => null,
@@ -66,13 +62,15 @@ export function DropDown(props: DropDownProps) {
     onFocus = () => null,
     onBlur = () => null,
   } = props;
-
+  console.log({ theme });
   const [index, setIndex] = useState<number>(selectedIndex);
   const [selectedText, setSelectedText] = useState<string>('Select an option');
   const [isFocused, setIsFocused] = useState<boolean>(focused);
   const [invalid, setInvalid] = useState<boolean>(false);
   const [initiated, setInitated] = useState<boolean>(false);
+  const [color, setColor] = useState<string>(iconColor);
   const ref = useRef<HTMLSelectElement>(null);
+  useEffect(() => setColor(theme.lyraColors['core-icon-primary']), [theme]);
 
   // validate selection and if there's a placehoder
   // with a validate flag, set error state and event error
@@ -164,7 +162,6 @@ export function DropDown(props: DropDownProps) {
       $focused={isFocused}
       $size={{ width, height }}
       $invalid={invalid}
-      $dark={dark}
       $margin={'8px'}
       $placeholder={placeholder && index === 0}
       $bgColor={bgColor}
@@ -179,7 +176,7 @@ export function DropDown(props: DropDownProps) {
     >
       <div className={'face'}>{selectedText.replace('-- ', '')}</div>
       <div className={'chevron'}>
-        <UIIcon name="chevron down" size={iconSize} strokeColor={iconColor} />
+        <UIIcon name="chevron down" size={iconSize} strokeColor={color} />
       </div>
       <Styled.Select
         defaultValue={index}

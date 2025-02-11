@@ -1,5 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { UIButton } from '../uikit/UIButton/UIButton';
+import { FlexDiv } from '../uikit/FlexDiv/FlexDiv';
 
 const meta: Meta<typeof UIButton> = {
   title: 'UI Kit/UIButton',
@@ -43,4 +44,12 @@ const meta: Meta<typeof UIButton> = {
 
 export default meta;
 
-export const Default: StoryObj<typeof UIButton> = {};
+export const Default: StoryObj<typeof UIButton> = {
+  render: (args) => {
+    return (
+      <FlexDiv justify={'center'} alignItems={'center'} padding={64}>
+        <UIButton {...args} />
+      </FlexDiv>
+    );
+  },
+};

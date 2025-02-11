@@ -11,7 +11,6 @@ export const Wrapper = styled.div<{
   $size: { width: string; height: string };
   $focused: boolean;
   $invalid: boolean;
-  $dark: boolean;
   $margin: string;
   $placeholder: boolean;
   $bgColor: string;

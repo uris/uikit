@@ -1,18 +1,25 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import { light } from '../theme/useGiaThemes';
 import { Logos } from '../uikit/Logos/Logos';
+import { FlexDiv } from '../uikit/FlexDiv/FlexDiv';
 
-const theme = light;
 const meta: Meta<typeof Logos> = {
   title: 'UI Kit/Logos',
   component: Logos,
   args: {
     image: 'gp',
-    color: theme.lyraColors['core-text-primary'],
+    color: undefined,
     height: 36,
   },
 };
 
 export default meta;
 
-export const Default: StoryObj<typeof Logos> = {};
+export const Default: StoryObj<typeof Logos> = {
+  render: (args) => {
+    return (
+      <FlexDiv justify={'center'} alignItems={'center'} padding={64}>
+        <Logos {...args} />
+      </FlexDiv>
+    );
+  },
+};

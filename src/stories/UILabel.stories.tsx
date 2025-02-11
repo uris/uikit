@@ -1,5 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { UILabel } from '../uikit/UILabel/UILabel';
+import { FlexDiv } from '../uikit/FlexDiv/FlexDiv';
 
 const meta: Meta<typeof UILabel> = {
   title: 'UI Kit/UILabel',
@@ -16,4 +17,12 @@ const meta: Meta<typeof UILabel> = {
 
 export default meta;
 
-export const Default: StoryObj<typeof UILabel> = {};
+export const Default: StoryObj<typeof UILabel> = {
+  render: (args) => {
+    return (
+      <FlexDiv justify={'center'} alignItems={'center'} padding={64}>
+        <UILabel {...args} />
+      </FlexDiv>
+    );
+  },
+};

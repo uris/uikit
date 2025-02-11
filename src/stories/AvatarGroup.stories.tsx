@@ -1,6 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { AvatarInfo } from 'src/uikit/AvatarGroup';
 import { AvatarGroup } from '../uikit/AvatarGroup/AvatarGroup';
+import { FlexDiv } from '../uikit/FlexDiv/FlexDiv';
 
 const avatars: AvatarInfo[] = [
   {
@@ -32,4 +33,12 @@ const meta: Meta<typeof AvatarGroup> = {
 
 export default meta;
 
-export const Default: StoryObj<typeof AvatarGroup> = {};
+export const Default: StoryObj<typeof AvatarGroup> = {
+  render: (args) => {
+    return (
+      <FlexDiv justify={'center'} alignItems={'center'} padding={64}>
+        <AvatarGroup {...args} />
+      </FlexDiv>
+    );
+  },
+};

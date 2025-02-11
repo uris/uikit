@@ -2,6 +2,7 @@ import type { Meta, StoryObj } from '@storybook/react';
 import { fn } from '@storybook/test';
 import { light } from '../theme/useGiaThemes';
 import { Pager } from '../uikit/Pager/Pager';
+import { FlexDiv } from '../uikit/FlexDiv/FlexDiv';
 
 const theme = light;
 const meta: Meta<typeof Pager> = {
@@ -21,4 +22,12 @@ const meta: Meta<typeof Pager> = {
 
 export default meta;
 
-export const Default: StoryObj<typeof Pager> = {};
+export const Default: StoryObj<typeof Pager> = {
+  render: (args) => {
+    return (
+      <FlexDiv justify={'center'} alignItems={'center'} padding={64}>
+        <Pager {...args} />
+      </FlexDiv>
+    );
+  },
+};

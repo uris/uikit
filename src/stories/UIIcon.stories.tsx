@@ -1,8 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import { light } from '../theme/useGiaThemes';
 import { UIIcon } from '../uikit/UIIcon/UIIcon';
+import { FlexDiv } from '../uikit/FlexDiv/FlexDiv';
 
-const theme = light;
 const meta: Meta<typeof UIIcon> = {
   title: 'UI Kit/UIIcon',
   component: UIIcon,
@@ -10,7 +9,7 @@ const meta: Meta<typeof UIIcon> = {
     name: 'home',
     size: 20,
     stroke: 1.5,
-    strokeColor: theme.lyraColors['core-icon-primary'],
+    strokeColor: undefined,
     fillColor: 'transparent',
     toggle: false,
     pointer: true,
@@ -21,4 +20,12 @@ const meta: Meta<typeof UIIcon> = {
 
 export default meta;
 
-export const Default: StoryObj<typeof UIIcon> = {};
+export const Default: StoryObj<typeof UIIcon> = {
+  render: (args) => {
+    return (
+      <FlexDiv justify={'center'} alignItems={'center'} padding={64}>
+        <UIIcon {...args} />
+      </FlexDiv>
+    );
+  },
+};

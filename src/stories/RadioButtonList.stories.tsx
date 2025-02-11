@@ -2,6 +2,7 @@ import type { Meta, StoryObj } from '@storybook/react';
 import { fn } from '@storybook/test';
 import { RadioButtonOption } from 'src/uikit/RadioButton';
 import { RadioButtonList } from '../uikit/RadioButtonList/RadioButtonList';
+import { FlexDiv } from '../uikit/FlexDiv/FlexDiv';
 
 const options: RadioButtonOption[] = [
   {
@@ -47,4 +48,12 @@ const meta: Meta<typeof RadioButtonList> = {
 
 export default meta;
 
-export const Default: StoryObj<typeof RadioButtonList> = {};
+export const Default: StoryObj<typeof RadioButtonList> = {
+  render: (args) => {
+    return (
+      <FlexDiv justify={'center'} alignItems={'center'} padding={64}>
+        <RadioButtonList {...args} />
+      </FlexDiv>
+    );
+  },
+};

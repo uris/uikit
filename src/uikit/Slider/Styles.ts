@@ -49,7 +49,7 @@ export const TrackHead = styled.div<{
   $height: number | null;
   $width: number | null;
   $headType: 'round' | 'square';
-  $color: string;
+  $color?: string;
 }>`
   position: absolute;
   display: ${({ $height }) => ($height ? 'block' : 'none')};

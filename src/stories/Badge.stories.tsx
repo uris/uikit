@@ -1,5 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { Badge } from '../uikit/Badge/Badge';
+import { FlexDiv } from '../uikit/FlexDiv/FlexDiv';
 
 const meta: Meta<typeof Badge> = {
   title: 'UI Kit/Badge',
@@ -19,4 +20,12 @@ const meta: Meta<typeof Badge> = {
 
 export default meta;
 
-export const Default: StoryObj<typeof Badge> = {};
+export const Default: StoryObj<typeof Badge> = {
+  render: (args) => {
+    return (
+      <FlexDiv justify={'center'} alignItems={'center'} padding={64}>
+        <Badge {...args} />
+      </FlexDiv>
+    );
+  },
+};

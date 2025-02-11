@@ -1,5 +1,4 @@
 import { useCallback, useEffect, useRef } from 'react';
-import { useGiaThemes } from '../../theme/useGiaThemes';
 import * as Styled from './Styles';
 
 export interface SliderProps {
@@ -23,7 +22,6 @@ export interface SliderProps {
 }
 
 export function Slider(props: SliderProps) {
-  const themes = useGiaThemes();
   const {
     initial = 25,
     scaleMin = 0,
@@ -36,9 +34,9 @@ export function Slider(props: SliderProps) {
     trackHeadWidth = 4,
     rounding = 2,
     cursor = 'default',
-    headColor = themes.light.lyraColors['core-icon-primary'],
-    trackColor = themes.light.lyraColors['core-outline-primary'],
-    progressColor = themes.light.lyraColors['core-icon-primary'],
+    headColor = undefined,
+    trackColor = undefined,
+    progressColor = undefined,
     state = [],
     onChange = () => null,
     onDragChange = () => null,
@@ -54,7 +52,6 @@ export function Slider(props: SliderProps) {
       if (!ref || !ref.current) return;
       const sliderWidth = ref.current.getBoundingClientRect().width;
       if (current > scaleMax || current < scaleMin) {
-        // eslint-disable-next-line no-console
         console.warn(
           'Slider value outside scale range. Auto adjusting to mid point.',
         );

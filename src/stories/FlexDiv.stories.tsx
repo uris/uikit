@@ -56,14 +56,12 @@ const meta: Meta<typeof FlexDiv> = {
 export default meta;
 // type Story = StoryObj<typeof FlexDiv>;
 
-export const Default: StoryObj<typeof FlexDiv> = {};
-// export const Buttons: Story = {
-//   render: (args) => {
-//     return (
-//       <FlexDiv {...args}>
-//         <UIButton variant={'solid'} size={'large'} label="Button 1" />
-//         <UIButton variant={'solid'} size={'large'} label="Button 2" />
-//       </FlexDiv>
-//     );
-//   },
-// };
+export const Default: StoryObj<typeof FlexDiv> = {
+  render: (args) => {
+    return (
+      <FlexDiv justify={'center'} alignItems={'center'} padding={64}>
+        <FlexDiv {...args} />
+      </FlexDiv>
+    );
+  },
+};

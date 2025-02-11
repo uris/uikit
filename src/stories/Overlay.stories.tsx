@@ -1,6 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { fn } from '@storybook/test';
 import { Overlay } from '../uikit/Overlay/Overlay';
+import { FlexDiv } from '../uikit/FlexDiv/FlexDiv';
 
 const meta: Meta<typeof Overlay> = {
   title: 'UI Kit/Overlay',
@@ -18,4 +19,12 @@ const meta: Meta<typeof Overlay> = {
 
 export default meta;
 
-export const Default: StoryObj<typeof Overlay> = {};
+export const Default: StoryObj<typeof Overlay> = {
+  render: (args) => {
+    return (
+      <FlexDiv justify={'center'} alignItems={'center'} padding={64}>
+        <Overlay {...args} />
+      </FlexDiv>
+    );
+  },
+};

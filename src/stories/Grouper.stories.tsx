@@ -1,6 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { fn } from '@storybook/test';
 import { Grouper } from '../uikit/Grouper/Grouper';
+import { FlexDiv } from '../uikit/FlexDiv/FlexDiv';
 
 const meta: Meta<typeof Grouper> = {
   title: 'UI Kit/Grouper',
@@ -13,7 +14,7 @@ const meta: Meta<typeof Grouper> = {
     iconName: 'chevron down',
     iconSize: 18,
     frameSize: 64,
-    border: 0,
+    border: 1,
     count: 0,
     unframed: false,
     variant: 'group',
@@ -26,4 +27,12 @@ const meta: Meta<typeof Grouper> = {
 
 export default meta;
 
-export const Default: StoryObj<typeof Grouper> = {};
+export const Default: StoryObj<typeof Grouper> = {
+  render: (args) => {
+    return (
+      <FlexDiv justify={'center'} alignItems={'center'} padding={64}>
+        <Grouper {...args} />
+      </FlexDiv>
+    );
+  },
+};

@@ -1,6 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { fn } from '@storybook/test';
 import { TextArea } from '../uikit/TextArea/TextArea';
+import { FlexDiv } from '../uikit/FlexDiv/FlexDiv';
 
 const meta: Meta<typeof TextArea> = {
   title: 'UI Kit/TextArea',
@@ -34,4 +35,12 @@ const meta: Meta<typeof TextArea> = {
 
 export default meta;
 
-export const Default: StoryObj<typeof TextArea> = {};
+export const Default: StoryObj<typeof TextArea> = {
+  render: (args) => {
+    return (
+      <FlexDiv justify={'center'} alignItems={'center'} padding={64}>
+        <TextArea {...args} />
+      </FlexDiv>
+    );
+  },
+};

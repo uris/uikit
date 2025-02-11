@@ -1,6 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { fn } from '@storybook/test';
 import { placeholderOptions, TabBar } from '../uikit/TabBar/TabBar';
+import { FlexDiv } from '../uikit/FlexDiv/FlexDiv';
 
 const meta: Meta<typeof TabBar> = {
   title: 'UI Kit/TabBar',
@@ -9,8 +10,8 @@ const meta: Meta<typeof TabBar> = {
     options: placeholderOptions,
     selected: 0,
     border: true,
-    height: '100%',
-    width: '100%',
+    height: 44,
+    width: 200,
     padding: 8,
     textStyle: 'textRegular',
     iconSize: 24,
@@ -32,4 +33,12 @@ const meta: Meta<typeof TabBar> = {
 
 export default meta;
 
-export const Default: StoryObj<typeof TabBar> = {};
+export const Default: StoryObj<typeof TabBar> = {
+  render: (args) => {
+    return (
+      <FlexDiv justify={'center'} alignItems={'center'} padding={64}>
+        <TabBar {...args} />
+      </FlexDiv>
+    );
+  },
+};

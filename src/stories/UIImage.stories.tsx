@@ -1,5 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { UIImage, UIImageNames } from '../uikit/UIImage/UIImage';
+import { FlexDiv } from '../uikit/FlexDiv/FlexDiv';
 
 const meta: Meta<typeof UIImage> = {
   title: 'UI Kit/UIImage',
@@ -16,4 +17,12 @@ const meta: Meta<typeof UIImage> = {
 
 export default meta;
 
-export const Default: StoryObj<typeof UIImage> = {};
+export const Default: StoryObj<typeof UIImage> = {
+  render: (args) => {
+    return (
+      <FlexDiv justify={'center'} alignItems={'center'} padding={64}>
+        <UIImage {...args} />
+      </FlexDiv>
+    );
+  },
+};

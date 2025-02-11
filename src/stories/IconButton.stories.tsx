@@ -2,6 +2,7 @@ import type { Meta, StoryObj } from '@storybook/react';
 import { fn } from '@storybook/test';
 import { IconButton } from '../uikit/IconButton/IconButton';
 import { IconNames } from '../uikit/Icon/Icon';
+import { FlexDiv } from '../uikit/FlexDiv/FlexDiv';
 
 const icons = Object.values(IconNames);
 const meta: Meta<typeof IconButton> = {
@@ -46,4 +47,12 @@ const meta: Meta<typeof IconButton> = {
 
 export default meta;
 
-export const Default: StoryObj<typeof IconButton> = {};
+export const Default: StoryObj<typeof IconButton> = {
+  render: (args) => {
+    return (
+      <FlexDiv justify={'center'} alignItems={'center'} padding={64}>
+        <IconButton {...args} />
+      </FlexDiv>
+    );
+  },
+};

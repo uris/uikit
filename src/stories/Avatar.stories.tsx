@@ -1,6 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { light } from '../theme/useGiaThemes';
 import { Avatar } from '../uikit/Avatar/Avatar';
+import { FlexDiv } from '../uikit/FlexDiv/FlexDiv';
 
 const theme = light;
 const meta: Meta<typeof Avatar> = {
@@ -22,4 +23,12 @@ const meta: Meta<typeof Avatar> = {
 
 export default meta;
 
-export const Default: StoryObj<typeof Avatar> = {};
+export const Default: StoryObj<typeof Avatar> = {
+  render: (args) => {
+    return (
+      <FlexDiv justify={'center'} alignItems={'center'} padding={64}>
+        <Avatar {...args} />
+      </FlexDiv>
+    );
+  },
+};
