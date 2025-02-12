@@ -17,6 +17,7 @@ export const Input = styled.div<{
   $padding: string;
   $isPlaceholder: boolean;
 }>`
+  pointer-events: 'all';
   ${({ theme, $fontStyle }) =>
     $fontStyle ? $fontStyle : theme.lyraType['body-m-regular']};
   color: ${({ theme, $isPlaceholder }) =>

@@ -62,7 +62,6 @@ export function DropDown(props: DropDownProps) {
     onFocus = () => null,
     onBlur = () => null,
   } = props;
-  console.log({ theme });
   const [index, setIndex] = useState<number>(selectedIndex);
   const [selectedText, setSelectedText] = useState<string>('Select an option');
   const [isFocused, setIsFocused] = useState<boolean>(focused);

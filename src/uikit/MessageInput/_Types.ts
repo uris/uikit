@@ -22,10 +22,10 @@ export enum PromptType {
 }
 
 export enum Role {
-  user = 'USER',
-  assistant = 'ASSISTANT',
-  tool = 'TOOL',
-  system = 'SYSTEM',
+  USER = 'user',
+  ASSISTANT = 'assistant',
+  TOOL = 'tool',
+  SYSTEM = 'system',
 }
 
 export type UploadDocument = {

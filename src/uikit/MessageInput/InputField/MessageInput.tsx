@@ -118,7 +118,7 @@ export function MessageInput(props: MessageInputProps) {
         content: message,
         timestamp: new Date().toISOString(),
         promptType,
-        role: Role.user,
+        role: Role.USER,
         htmlContent: '',
         files: [],
         done: false,
@@ -134,7 +134,8 @@ export function MessageInput(props: MessageInputProps) {
   };
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
-    if (!e.shiftKey && e.key === 'Enter') doSubmit(e);
+    if (!e.shiftKey && e.key === 'Enter' && message !== '') doSubmit(e);
+    else return;
   };
 
   function setFocus() {

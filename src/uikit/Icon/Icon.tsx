@@ -86,6 +86,17 @@ export enum IconNames {
   stop = 'stop',
   like = 'like',
   unlike = 'unlike',
+  bold = 'bold',
+  italic = 'italic',
+  underline = 'underline',
+  strike = 'strike',
+  bulletList = 'bullet list',
+  numberedList = 'numbered list',
+  sink = 'sink',
+  lift = 'lift',
+  code = 'code',
+  taskList = 'task list',
+  highlight = 'highlight',
 }
 
 export interface IconProps {
@@ -121,6 +132,494 @@ export function Icon(props: IconProps) {
 
   const GPIcons: UIIcon[] = useMemo(() => {
     return [
+      {
+        name: 'task list',
+        line: (
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width={size}
+            height={size}
+            viewBox="0 0 24 24"
+            style={{
+              cursor: disabled ? 'default' : pointer ? 'pointer' : 'inherit',
+            }}
+            onClick={(e) => onClick(e)}
+            fill={'none'}
+          >
+            <path
+              d="M11 6L21 6"
+              stroke={strokeColor}
+              strokeWidth={stroke}
+              strokeLinecap="round"
+            />
+            <path
+              d="M11 12L21 12"
+              stroke={strokeColor}
+              strokeWidth={stroke}
+              strokeLinecap="round"
+            />
+            <path
+              d="M11 18L21 18"
+              stroke={strokeColor}
+              strokeWidth={stroke}
+              strokeLinecap="round"
+            />
+            <path
+              d="M3 7.39286C3 7.39286 4 8.04466 4.5 9C4.5 9 6 5.25 8 4"
+              stroke={strokeColor}
+              strokeWidth={stroke}
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            />
+            <path
+              d="M3 18.3929C3 18.3929 4 19.0447 4.5 20C4.5 20 6 16.25 8 15"
+              stroke={strokeColor}
+              strokeWidth={stroke}
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            />
+          </svg>
+        ),
+      },
+      {
+        name: 'highlight',
+        line: (
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width={size}
+            height={size}
+            viewBox="0 0 24 24"
+            style={{
+              cursor: disabled ? 'default' : pointer ? 'pointer' : 'inherit',
+            }}
+            onClick={(e) => onClick(e)}
+          >
+            <path d="M 0 0 L 24 0 L 24 24 L 0 24 Z" fill="transparent"></path>
+            <path
+              d="M 20.825 11.376 C 20.713 11.263 20.56 11.199 20.401 11.199 C 20.241 11.199 20.089 11.263 19.976 11.376 L 16.201 15.15 L 9.85 8.799 L 13.626 5.025 C 13.86 4.79 13.86 4.41 13.626 4.176 C 13.391 3.941 13.011 3.942 12.777 4.176 L 9.002 7.951 C 8.629 8.324 8.543 8.897 8.791 9.362 L 7.202 10.951 C 6.734 11.419 6.734 12.179 7.202 12.647 L 7.554 12.999 L 3.178 17.374 C 3.03 17.521 2.969 17.734 3.017 17.937 C 3.065 18.14 3.215 18.303 3.413 18.368 L 8.812 20.168 C 8.95 20.215 9.099 20.209 9.232 20.153 C 9.305 20.123 9.371 20.079 9.427 20.023 L 12.002 17.447 L 12.353 17.799 C 12.822 18.267 13.581 18.267 14.05 17.799 L 15.638 16.211 C 16.104 16.458 16.677 16.372 17.049 15.999 L 20.825 12.224 C 21.06 11.99 21.06 11.61 20.825 11.376 Z M 13.201 16.95 L 8.05 11.799 L 9.602 10.248 L 14.753 15.399 Z"
+              fill={strokeColor}
+            ></path>
+          </svg>
+        ),
+      },
+      {
+        name: 'bold',
+        line: (
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width={size}
+            height={size}
+            viewBox="0 0 24 24"
+            style={{
+              cursor: disabled ? 'default' : pointer ? 'pointer' : 'inherit',
+            }}
+            onClick={(e) => onClick(e)}
+            fill={'none'}
+          >
+            <path
+              fillRule="evenodd"
+              clipRule="evenodd"
+              d="M5 6C5 4.58579 5 3.87868 5.43934 3.43934C5.87868 3 6.58579 3 8 3H12.5789C15.0206 3 17 5.01472 17 7.5C17 9.98528 15.0206 12 12.5789 12H5V6Z"
+              stroke={strokeColor}
+              strokeWidth={stroke}
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            />
+            <path
+              d="M12.4286 12H13.6667C16.0599 12 18 14.0147 18 16.5C18 18.9853 16.0599 21 13.6667 21H8C6.58579 21 5.87868 21 5.43934 20.5607C5 20.1213 5 19.4142 5 18V12"
+              stroke={strokeColor}
+              strokeWidth={stroke}
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            />
+          </svg>
+        ),
+      },
+      {
+        name: 'italic',
+        line: (
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width={size}
+            height={size}
+            viewBox="0 0 24 24"
+            style={{
+              cursor: disabled ? 'default' : pointer ? 'pointer' : 'inherit',
+            }}
+            onClick={(e) => onClick(e)}
+            fill={'none'}
+          >
+            <path
+              d="M12 4H19"
+              stroke={strokeColor}
+              strokeWidth={stroke}
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            />
+            <path
+              d="M8 20L16 4"
+              stroke={strokeColor}
+              strokeWidth={stroke}
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            />
+            <path
+              d="M5 20H12"
+              stroke={strokeColor}
+              strokeWidth={stroke}
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            />
+          </svg>
+        ),
+      },
+      {
+        name: 'underline',
+        line: (
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width={size}
+            height={size}
+            viewBox="0 0 24 24"
+            style={{
+              cursor: disabled ? 'default' : pointer ? 'pointer' : 'inherit',
+            }}
+            onClick={(e) => onClick(e)}
+            fill="none"
+          >
+            <path
+              d="M5.5 3V11.5C5.5 15.0899 8.41015 18 12 18C15.5899 18 18.5 15.0899 18.5 11.5V3"
+              stroke={strokeColor}
+              strokeWidth={stroke}
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            />
+            <path
+              d="M3 21H21"
+              stroke={strokeColor}
+              strokeWidth={stroke}
+              strokeLinecap="round"
+            />
+          </svg>
+        ),
+      },
+      {
+        name: 'strike',
+        line: (
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width={size}
+            height={size}
+            viewBox="0 0 24 24"
+            style={{
+              cursor: disabled ? 'default' : pointer ? 'pointer' : 'inherit',
+            }}
+            onClick={(e) => onClick(e)}
+            fill="none"
+          >
+            <path
+              d="M4 12H20"
+              stroke={strokeColor}
+              strokeWidth={stroke}
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            />
+            <path
+              d="M17.5 7.66667C17.5 5.08934 15.0376 3 12 3C8.96243 3 6.5 5.08934 6.5 7.66667C6.5 8.15279 6.55336 8.59783 6.6668 9M6 16.3333C6 18.9107 8.68629 21 12 21C15.3137 21 18 19.6667 18 16.3333C18 13.9404 16.9693 12.5782 14.9079 12"
+              stroke={strokeColor}
+              strokeWidth={stroke}
+              strokeLinecap="round"
+            />
+          </svg>
+        ),
+      },
+      {
+        name: 'link',
+        line: (
+          <svg
+            width={size}
+            height={size}
+            viewBox="0 0 24 24"
+            style={{
+              cursor: disabled ? 'default' : pointer ? 'pointer' : 'inherit',
+            }}
+            onClick={(e) => onClick(e)}
+          >
+            <path d="M 0 0 L 24 0 L 24 24 L 0 24 Z" fill="transparent"></path>
+            <path
+              d="M 12.251 18.425 C 15.169 18.425 17.041 16.923 17.041 14.629 C 17.041 12.8 15.925 11.834 13.323 11.219 L 11.891 10.876 C 10.106 10.445 9.35 9.9 9.35 8.924 C 9.35 7.694 10.562 6.824 12.241 6.824 C 13.753 6.824 14.834 7.509 15.265 8.722 C 15.405 9.056 15.616 9.214 15.968 9.214 C 16.425 9.214 16.706 8.951 16.706 8.511 C 16.706 8.379 16.688 8.239 16.653 8.107 C 16.26 6.507 14.501 5.4 12.242 5.4 C 9.597 5.4 7.69 6.912 7.69 9.039 C 7.69 10.77 8.78 11.781 11.17 12.343 L 12.788 12.73 C 14.616 13.17 15.381 13.767 15.381 14.822 C 15.381 16.087 14.089 17.01 12.252 17.01 C 10.626 17.01 9.404 16.263 8.956 15.015 C 8.798 14.637 8.605 14.47 8.236 14.47 C 7.761 14.47 7.471 14.76 7.471 15.217 C 7.471 15.376 7.497 15.543 7.541 15.71 C 8.007 17.37 9.835 18.425 12.252 18.425 Z"
+              fill={strokeColor}
+              opacity={opacity}
+            ></path>
+            <path
+              d="M 5.36 11.75 L 19.15 11.75 C 19.352 11.75 19.51 11.592 19.51 11.39 C 19.511 11.294 19.474 11.202 19.406 11.134 C 19.338 11.066 19.246 11.029 19.15 11.03 L 5.36 11.03 C 5.264 11.029 5.172 11.066 5.104 11.134 C 5.037 11.202 4.999 11.294 5 11.39 C 5 11.592 5.158 11.75 5.36 11.75 Z"
+              fill={strokeColor}
+              opacity={opacity}
+            ></path>
+          </svg>
+        ),
+      },
+      {
+        name: 'bullet list',
+        line: (
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width={size}
+            height={size}
+            viewBox="0 0 24 24"
+            style={{
+              cursor: disabled ? 'default' : pointer ? 'pointer' : 'inherit',
+            }}
+            onClick={(e) => onClick(e)}
+            fill="none"
+          >
+            <path
+              d="M8 5L20 5"
+              stroke={strokeColor}
+              strokeWidth={stroke}
+              strokeLinecap="round"
+            />
+            <path
+              d="M4 5H4.00898"
+              stroke={strokeColor}
+              strokeWidth={stroke}
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            />
+            <path
+              d="M4 12H4.00898"
+              stroke={strokeColor}
+              strokeWidth={stroke}
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            />
+            <path
+              d="M4 19H4.00898"
+              stroke={strokeColor}
+              strokeWidth={stroke}
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            />
+            <path
+              d="M8 12L20 12"
+              stroke={strokeColor}
+              strokeWidth={stroke}
+              strokeLinecap="round"
+            />
+            <path
+              d="M8 19L20 19"
+              stroke={strokeColor}
+              strokeWidth={stroke}
+              strokeLinecap="round"
+            />
+          </svg>
+        ),
+      },
+      {
+        name: 'numbered list',
+        line: (
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width={size}
+            height={size}
+            viewBox="0 0 24 24"
+            style={{
+              cursor: disabled ? 'default' : pointer ? 'pointer' : 'inherit',
+            }}
+            onClick={(e) => onClick(e)}
+            fill="none"
+          >
+            <path
+              d="M11 6L21 6"
+              stroke={strokeColor}
+              strokeWidth={stroke}
+              strokeLinecap="round"
+            />
+            <path
+              d="M11 12L21 12"
+              stroke={strokeColor}
+              strokeWidth={stroke}
+              strokeLinecap="round"
+            />
+            <path
+              d="M11 18L21 18"
+              stroke={strokeColor}
+              strokeWidth={stroke}
+              strokeLinecap="round"
+            />
+            <path
+              d="M3 15H4.5C4.77879 15 4.91819 15 5.03411 15.0231C5.51014 15.1177 5.88225 15.4899 5.97694 15.9659C6 16.0818 6 16.2212 6 16.5C6 16.7788 6 16.9182 5.97694 17.0341C5.88225 17.5101 5.51014 17.8823 5.03411 17.9769C4.91819 18 4.77879 18 4.5 18C4.22121 18 4.08181 18 3.96589 18.0231C3.48986 18.1177 3.11775 18.4899 3.02306 18.9659C3 19.0818 3 19.2212 3 19.5V20.4C3 20.6828 3 20.8243 3.08787 20.9121C3.17574 21 3.31716 21 3.6 21H6"
+              stroke={strokeColor}
+              strokeWidth={stroke}
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            />
+            <path
+              d="M3 3H4.2C4.36569 3 4.5 3.13431 4.5 3.3V9M4.5 9H3M4.5 9H6"
+              stroke={strokeColor}
+              strokeWidth={stroke}
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            />
+          </svg>
+        ),
+      },
+      {
+        name: 'sink',
+        line: (
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width={size}
+            height={size}
+            viewBox="0 0 24 24"
+            style={{
+              cursor: disabled ? 'default' : pointer ? 'pointer' : 'inherit',
+            }}
+            onClick={(e) => onClick(e)}
+            fill="none"
+          >
+            <path
+              d="M15 4.5H20"
+              stroke={strokeColor}
+              strokeWidth={stroke}
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            />
+            <path
+              d="M15 9.5H18"
+              stroke={strokeColor}
+              strokeWidth={stroke}
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            />
+            <path
+              d="M15 14.5H20"
+              stroke={strokeColor}
+              strokeWidth={stroke}
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            />
+            <path
+              d="M15 19.5H18"
+              stroke={strokeColor}
+              strokeWidth={stroke}
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            />
+            <path
+              d="M11 3V21"
+              stroke={strokeColor}
+              strokeWidth={stroke}
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            />
+            <path
+              d="M4 8.5L5.54218 9.74227C6.84739 10.7937 7.5 11.3193 7.5 12C7.5 12.6807 6.84739 13.2063 5.54218 14.2577L4 15.5"
+              stroke={strokeColor}
+              strokeWidth={stroke}
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            />
+          </svg>
+        ),
+      },
+      {
+        name: 'lift',
+        line: (
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width={size}
+            height={size}
+            viewBox="0 0 24 24"
+            style={{
+              cursor: disabled ? 'default' : pointer ? 'pointer' : 'inherit',
+            }}
+            onClick={(e) => onClick(e)}
+            fill="none"
+          >
+            <path
+              d="M4 4.5H9"
+              stroke={strokeColor}
+              strokeWidth={stroke}
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            />
+            <path
+              d="M6 9.5H9"
+              stroke={strokeColor}
+              strokeWidth={stroke}
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            />
+            <path
+              d="M4 14.5H9"
+              stroke={strokeColor}
+              strokeWidth={stroke}
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            />
+            <path
+              d="M6 19.5H9"
+              stroke={strokeColor}
+              strokeWidth={stroke}
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            />
+            <path
+              d="M13 3V21"
+              stroke={strokeColor}
+              strokeWidth={stroke}
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            />
+            <path
+              d="M20 8.5L18.4578 9.74227C17.1526 10.7937 16.5 11.3193 16.5 12C16.5 12.6807 17.1526 13.2063 18.4578 14.2577L20 15.5"
+              stroke={strokeColor}
+              strokeWidth={stroke}
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            />
+          </svg>
+        ),
+      },
+      {
+        name: 'code',
+        line: (
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width={size}
+            height={size}
+            viewBox="0 0 24 24"
+            style={{
+              cursor: disabled ? 'default' : pointer ? 'pointer' : 'inherit',
+            }}
+            onClick={(e) => onClick(e)}
+            fill={'none'}
+          >
+            <path
+              d="M17 8L18.8398 9.85008C19.6133 10.6279 20 11.0168 20 11.5C20 11.9832 19.6133 12.3721 18.8398 13.1499L17 15"
+              stroke={strokeColor}
+              strokeWidth={stroke}
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            />
+            <path
+              d="M7 8L5.16019 9.85008C4.38673 10.6279 4 11.0168 4 11.5C4 11.9832 4.38673 12.3721 5.16019 13.1499L7 15"
+              stroke={strokeColor}
+              strokeWidth={stroke}
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            />
+            <path
+              d="M14.5 4L9.5 20"
+              stroke={strokeColor}
+              strokeWidth={stroke}
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            />
+          </svg>
+        ),
+      },
       {
         name: 'like',
         line: (

@@ -66,6 +66,15 @@ export type { OverlayProps } from './uikit/Overlay';
 export { FlexDiv } from './uikit/FlexDiv';
 export type { FlexDivProps } from './uikit/FlexDiv';
 
+export { MessageInput } from './uikit/MessageInput';
+export type {
+  MessageInputProps,
+  SendMessage,
+  PromptType,
+  Role,
+  UploadDocument,
+} from './uikit/MessageInput';
+
 export { Pager } from './uikit/Pager';
 export type { PagerProps } from './uikit/Pager';
 

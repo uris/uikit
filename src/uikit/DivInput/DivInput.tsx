@@ -55,6 +55,14 @@ export function DivInput(props: DivInputProps) {
   );
   const [isFocused, setIsFocused] = useState(focus);
   const [text, setText] = useState(innerText.current);
+  const [isPlaceholder, setIsPlaceholder] = useState<boolean>(false);
+
+  useEffect(() => {
+    if (placeholder) {
+      setIsPlaceholder(text === placeholder);
+    }
+  }, [placeholder, text]);
+
   useEffect(() => {
     if (focus && ref?.current) {
       handleSelectAll();
@@ -75,12 +83,39 @@ export function DivInput(props: DivInputProps) {
     setText(innerText.current);
   }, [value, placeholder]);
 
-  const handleSetValue = () => {
-    const textString = ref.current?.innerText;
-    innerText.current = cleanString(textString || '');
+  const handleSetValue = (e: React.FormEvent<HTMLDivElement>) => {
+    let textString = '';
+    const stripped = e.currentTarget.innerText.replace(/\s+/g, '');
+    if (stripped.length === 0 && placeholder && ref.current) {
+      ref.current.innerText = placeholder;
+      setIsPlaceholder(true);
+      setCursor('start');
+    } else if (isPlaceholder) {
+      const inputEvent = e.nativeEvent as InputEvent;
+      textString = inputEvent.data || '';
+      innerText.current = textString;
+      if (ref.current) {
+        ref.current.innerText = textString;
+        setCursor('end');
+      }
+    } else {
+      textString = e.currentTarget.innerText;
+      innerText.current = cleanString(textString || '');
+    }
     onChange(innerText.current);
     setText(innerText.current);
   };
+
+  function setCursor(to: 'start' | 'end', length = 1) {
+    if (ref.current) {
+      const range = document.createRange();
+      range.setStart(ref.current, to === 'start' ? 0 : length);
+      range.setEnd(ref.current, to === 'start' ? 0 : 1);
+      const selection = window.getSelection();
+      selection?.removeAllRanges();
+      selection?.addRange(range);
+    }
+  }
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLDivElement>) => {
     // stop propagation to avoid conflicts with listners to shorcuts while editing
@@ -142,39 +177,38 @@ export function DivInput(props: DivInputProps) {
   const handleClick = (e: React.MouseEvent<HTMLDivElement>) => {
     e.preventDefault();
     e.stopPropagation();
+    if (isPlaceholder) setTimeout(() => setCursor('start'), 50);
     onClick();
   };
-
-  const isPlaceholder = () => {
-    console.log({ text, placeholder });
-    if (text === placeholder) return true;
-    return false;
-  };
-
+  // avoid issues with safari that refocuses editable divs on blur
+  // by wrapping it with a pointer events none
   return (
-    <Styled.Input
-      $clamp={clamp}
-      $type={type}
-      $isEditable={isEditable}
-      $width={width}
-      $textAlign={textAlign}
-      $isFocused={isFocused}
-      $fontStyle={fontStyle}
-      $padding={padding}
-      $isPlaceholder={isPlaceholder()}
-      ref={ref}
-      className={'editableDiv'}
-      contentEditable={isEditable}
-      suppressContentEditableWarning={true}
-      onInput={() => handleSetValue()}
-      onKeyDown={(e) => handleKeyDown(e)}
-      onFocus={(e) => handleFocus(e)}
-      onBlur={(e) => handleBlur(e)}
-      onPaste={(e) => handlePaste(e)}
-      onDoubleClick={() => onDblClick()}
-      onClick={(e) => handleClick(e)}
-    >
-      {value ? value : placeholder}
-    </Styled.Input>
+    <div style={{ pointerEvents: 'none' }}>
+      <Styled.Input
+        $clamp={clamp}
+        $type={type}
+        $isEditable={isEditable}
+        $width={width}
+        $textAlign={textAlign}
+        $isFocused={isFocused}
+        $fontStyle={fontStyle}
+        $padding={padding}
+        $isPlaceholder={isPlaceholder}
+        ref={ref}
+        style={{ pointerEvents: 'all' }}
+        className={'editableDiv'}
+        contentEditable={isEditable}
+        suppressContentEditableWarning={true}
+        onInput={(e) => handleSetValue(e)}
+        onKeyDown={(e) => handleKeyDown(e)}
+        onFocus={(e) => handleFocus(e)}
+        onBlur={(e) => handleBlur(e)}
+        onPaste={(e) => handlePaste(e)}
+        onDoubleClick={() => onDblClick()}
+        onClick={(e) => handleClick(e)}
+      >
+        {value ? value : placeholder}
+      </Styled.Input>
+    </div>
   );
 }
