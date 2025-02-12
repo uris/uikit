@@ -45,7 +45,7 @@ export function MessageInput(props: MessageInputProps) {
     focused = false,
     error = null,
     value = '',
-    placeholder = 'Ask me anything about HR compliance',
+    placeholder = 'Ask me anytning HR compliance',
     isStreaming = false,
     isFetching = false,
     isShort = true,
