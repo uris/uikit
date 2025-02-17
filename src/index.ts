@@ -20,6 +20,9 @@ export type { AvatarGroupProps, AvatarInfo } from './uikit/AvatarGroup';
 export { Badge } from './uikit/Badge';
 export type { BadgeProps } from './uikit/Badge';
 
+export { EditorButtonBar } from './uikit/EditorButtonBar';
+export type { EditorButtonBarProps } from './uikit/EditorButtonBar';
+
 export { IconButton } from './uikit/IconButton';
 export type { IconButtonProps } from './uikit/IconButton';
 

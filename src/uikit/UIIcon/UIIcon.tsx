@@ -97,6 +97,8 @@ export enum Icons {
   code = 'code',
   taskList = 'task list',
   highlight = 'highlight',
+  chevronLeft = 'chevron left',
+  chevronRight = 'chevron right',
 }
 
 export interface IconProps {
@@ -132,6 +134,48 @@ export function UIIcon(props: IconProps) {
 
   const GPIcons: Icon[] = useMemo(() => {
     return [
+      {
+        name: 'chevron left',
+        line: (
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width={size}
+            height={size}
+            viewBox="0 0 20 20"
+            style={{
+              cursor: disabled ? 'default' : pointer ? 'pointer' : 'inherit',
+            }}
+            onClick={(e) => onClick(e)}
+            fill={'none'}
+          >
+            <path
+              d="M 11.97 3.97 L 13.03 5.03 L 8.56 9.5 L 13.03 13.97 L 11.97 15.03 L 6.44 9.5 Z"
+              fill={strokeColor}
+            ></path>
+          </svg>
+        ),
+      },
+      {
+        name: 'chevron right',
+        line: (
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width={size}
+            height={size}
+            viewBox="0 0 20 20"
+            style={{
+              cursor: disabled ? 'default' : pointer ? 'pointer' : 'inherit',
+            }}
+            onClick={(e) => onClick(e)}
+            fill={'none'}
+          >
+            <path
+              d="M 8.03 15.03 L 6.97 13.97 L 11.44 9.5 L 6.97 5.03 L 8.03 3.97 L 13.56 9.5 Z"
+              fill={strokeColor}
+            ></path>
+          </svg>
+        ),
+      },
       {
         name: 'task list',
         line: (
@@ -1242,6 +1286,45 @@ export function UIIcon(props: IconProps) {
         ),
       },
       {
+        name: 'redo',
+        line: (
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width={size}
+            height={size}
+            viewBox="0 0 20 20"
+            style={{
+              cursor: disabled ? 'default' : pointer ? 'pointer' : 'inherit',
+            }}
+            onClick={(e) => onClick(e)}
+            fill="none"
+          >
+            <g transform="translate(2 4)">
+              <path
+                d="M 0 0 L 16 0 L 16 11.207 L 0 11.207 Z"
+                fill="transparent"
+              ></path>
+              <path
+                d="M 14.113 4.78 L 6.176 4.78 C 3.227 4.78 0.838 7.28 0.838 10.369 L 0.838 11.179"
+                fill="transparent"
+                strokeWidth={stroke}
+                stroke={strokeColor}
+                strokeMiterlimit="10"
+                strokeDasharray=""
+              ></path>
+              <path
+                d="M 10.62 8.972 L 14.81 4.78 L 10.62 0.588"
+                fill="transparent"
+                strokeWidth={stroke}
+                stroke={strokeColor}
+                strokeMiterlimit="10"
+                strokeDasharray=""
+              ></path>
+            </g>
+          </svg>
+        ),
+      },
+      {
         name: 'undo',
         line: (
           <svg
@@ -1255,20 +1338,28 @@ export function UIIcon(props: IconProps) {
             onClick={(e) => onClick(e)}
             fill="none"
           >
-            <path
-              d="M 13.5 2 L 15.5 2 L 11.5 2 L 11.5 6"
-              fill="transparent"
-              strokeWidth={stroke}
-              stroke={strokeColor}
-            ></path>
-            <path
-              d="M 18 10 C 18 14.418 14.418 18 10 18 C 5.582 18 2 14.418 2 10 C 2 8.543 2.39 7.177 3.07 6 L 4.876 6 C 4.014 7.103 3.5 8.491 3.5 10 C 3.5 13.59 6.41 16.5 10 16.5 C 13.59 16.5 16.5 13.59 16.5 10 C 16.5 7.108 14.611 4.657 12 3.813 L 12 2.252 C 15.45 3.14 18 6.272 18 10 Z"
-              fill={strokeColor}
-            ></path>
-            <path
-              d="M 11 10 C 11 10.552 10.552 11 10 11 C 9.448 11 9 10.552 9 10 C 9 9.448 9.448 9 10 9 C 10.552 9 11 9.448 11 10 Z"
-              fill={strokeColor}
-            ></path>
+            <g transform="translate(2 4)">
+              <path
+                d="M 16 0 L 0 0 L 0 11.207 L 16 11.207 Z"
+                fill="transparent"
+              ></path>
+              <path
+                d="M 1.887 4.78 L 9.824 4.78 C 12.773 4.78 15.162 7.28 15.162 10.369 L 15.162 11.179"
+                fill="transparent"
+                strokeWidth={stroke}
+                stroke={strokeColor}
+                strokeMiterlimit="10"
+                strokeDasharray=""
+              ></path>
+              <path
+                d="M 5.38 8.972 L 1.19 4.78 L 5.38 0.588"
+                fill="transparent"
+                strokeWidth={stroke}
+                stroke={strokeColor}
+                strokeMiterlimit="10"
+                strokeDasharray=""
+              ></path>
+            </g>
           </svg>
         ),
       },

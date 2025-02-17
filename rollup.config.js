@@ -28,12 +28,13 @@ export default {
     resolve({ extensions: ['.js', '.ts', '.tsx'] }),
     commonjs(),
     babel({
-      exclude: 'node_modules/**',
+      exclude: ['node_modules/**', 'src/stories/**'],
       presets: ['@babel/preset-react'],
       babelHelpers: 'bundled',
     }),
     typescript({
       tsconfig: './tsconfig.json',
+      exclude: ['src/stories/**'],
     }),
     postcss(),
     svgr({
