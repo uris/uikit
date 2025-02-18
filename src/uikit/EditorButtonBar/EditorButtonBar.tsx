@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { useTheme } from 'styled-components';
 import { IconButton } from '../IconButton';
 import { DropDown, DropDownOption } from '../DropDown';
@@ -13,7 +13,7 @@ export interface EditorButtonBarProps {
   state?: 'default' | 'short' | 'auto';
   activeFormats?: string[];
   activeStyle?: 'h1' | 'h2' | 'h3' | 'p';
-  onCommand?: (command: any) => void;
+  onCommand?: (command: any, e: React.MouseEvent<any> | undefined) => void;
   onToolTip?: (tip: ToolTip | null) => void;
 }
 
@@ -37,16 +37,16 @@ export function EditorButtonBar(props: EditorButtonBarProps) {
   function handleStyleChange(option: DropDownOption) {
     switch (option.value) {
       case 'h1':
-        onCommand('h1');
+        onCommand('h1', undefined);
         break;
       case 'h2':
-        onCommand('h2');
+        onCommand('h2', undefined);
         break;
       case 'h3':
-        onCommand('h3');
+        onCommand('h3', undefined);
         break;
       case 'p':
-        onCommand('p');
+        onCommand('p', undefined);
         break;
     }
   }
@@ -69,7 +69,7 @@ export function EditorButtonBar(props: EditorButtonBarProps) {
             return (
               <RenderGroup
                 key={'button-group-' + index}
-                onCommand={(command) => onCommand(command)}
+                onCommand={(command, e) => onCommand(command, e)}
                 onToolTip={(tip) => onToolTip(tip)}
                 buttonGroup={group}
                 activeFormats={activeFormats}
@@ -87,7 +87,7 @@ export function EditorButtonBar(props: EditorButtonBarProps) {
             hover={true}
             toggle={false}
             onToolTip={(tip) => onToolTip(tip)}
-            onClick={() => onCommand(coreButtons.copy.command)}
+            onClick={(e) => onCommand(coreButtons.copy.command, e)}
           />
           <IconButton
             icon={coreButtons.download.icon}
@@ -95,7 +95,7 @@ export function EditorButtonBar(props: EditorButtonBarProps) {
             hover={true}
             toggle={false}
             onToolTip={(tip) => onToolTip(tip)}
-            onClick={() => onCommand(coreButtons.download.command)}
+            onClick={(e) => onCommand(coreButtons.download.command, e)}
           />
         </div>
       )}
@@ -104,7 +104,7 @@ export function EditorButtonBar(props: EditorButtonBarProps) {
 }
 
 interface RenderGroupProps {
-  onCommand?: (command: any) => void;
+  onCommand?: (command: any, e: React.MouseEvent<any>) => void;
   onToolTip?: (tip: ToolTip | null) => void;
   buttonGroup: ButtonBarGroup;
   activeFormats?: string[];
@@ -137,7 +137,7 @@ export function RenderGroup(props: RenderGroupProps) {
             hover={true}
             toggle={false}
             bgColor={bgColor}
-            onClick={() => onCommand(button?.command)}
+            onClick={(e) => onCommand(button?.command, e)}
             frameSize={30}
             iconSize={20}
           />
