@@ -100,6 +100,7 @@ export enum Icons {
   chevronLeft = 'chevron left',
   chevronRight = 'chevron right',
   text = 'text',
+  link = 'link',
 }
 
 export interface IconProps {
@@ -135,6 +136,41 @@ export function UIIcon(props: IconProps) {
 
   const GPIcons: Icon[] = useMemo(() => {
     return [
+      {
+        name: 'link',
+        line: (
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width={size}
+            height={size}
+            viewBox="0 0 20 20"
+            style={{
+              cursor: disabled ? 'default' : pointer ? 'pointer' : 'inherit',
+            }}
+            onClick={(e) => onClick(e)}
+            fill={'none'}
+          >
+            <path
+              fillRule="evenodd"
+              clipRule="evenodd"
+              d="M9.8232 3.37528C11.6782 1.52029 14.6857 1.52029 16.5407 3.37528C18.3957 5.23027 18.3957 8.23781 16.5407 10.0928L15.1265 11.507L14.0658 10.4464L15.4801 9.03214C16.7493 7.76293 16.7493 5.70515 15.4801 4.43594C14.2108 3.16674 12.1531 3.16674 10.8839 4.43594L9.46964 5.85016L8.40898 4.7895L9.8232 3.37528Z"
+              fill={strokeColor}
+            />
+            <path
+              fillRule="evenodd"
+              clipRule="evenodd"
+              d="M10.1767 16.4568C8.32176 18.3117 5.31423 18.3117 3.45924 16.4568C1.60425 14.6018 1.60425 11.5942 3.45924 9.73924L4.87345 8.32503L5.93411 9.38569L4.5199 10.7999C3.25069 12.0691 3.25069 14.1269 4.5199 15.3961C5.7891 16.6653 7.84689 16.6653 9.11609 15.3961L10.5303 13.9819L11.591 15.0425L10.1767 16.4568Z"
+              fill={strokeColor}
+            />
+            <path
+              fillRule="evenodd"
+              clipRule="evenodd"
+              d="M7.34832 13.6283L13.0052 7.97148L11.9445 6.91082L6.28766 12.5677L7.34832 13.6283Z"
+              fill={strokeColor}
+            />
+          </svg>
+        ),
+      },
       {
         name: 'text',
         line: (

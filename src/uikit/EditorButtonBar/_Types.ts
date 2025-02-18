@@ -39,4 +39,5 @@ export enum FormattingOption {
   download = 'download',
   more = 'more',
   copy = 'copy',
+  link = 'link',
 }

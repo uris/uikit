@@ -7,6 +7,12 @@ import {
 } from './_Types';
 
 export const coreButtons: { [key: string]: ButtonBarButton } = {
+  link: {
+    icon: 'link',
+    toolTip: 'Link',
+    command: 'link',
+    id: FormattingOption.link,
+  },
   hilight: {
     icon: 'hilight',
     toolTip: 'Highlight',
@@ -118,6 +124,7 @@ export const buttonGroups: { [key: string]: ButtonBarGroup } = {
       coreButtons.italic,
       coreButtons.underline,
       coreButtons.strikethrough,
+      coreButtons.link,
     ],
   },
   lists: {
