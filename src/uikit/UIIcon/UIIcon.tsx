@@ -96,9 +96,10 @@ export enum Icons {
   lift = 'lift',
   code = 'code',
   taskList = 'task list',
-  highlight = 'highlight',
+  hilight = 'hilight',
   chevronLeft = 'chevron left',
   chevronRight = 'chevron right',
+  text = 'text',
 }
 
 export interface IconProps {
@@ -134,6 +135,41 @@ export function UIIcon(props: IconProps) {
 
   const GPIcons: Icon[] = useMemo(() => {
     return [
+      {
+        name: 'text',
+        line: (
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width={size}
+            height={size}
+            viewBox="0 0 20 20"
+            style={{
+              cursor: disabled ? 'default' : pointer ? 'pointer' : 'inherit',
+            }}
+            onClick={(e) => onClick(e)}
+            fill={'none'}
+          >
+            <path
+              fillRule="evenodd"
+              clipRule="evenodd"
+              d="M9 15.75V3.75H10.5V15.75H9Z"
+              fill={strokeColor}
+            />
+            <path
+              fillRule="evenodd"
+              clipRule="evenodd"
+              d="M3 3H16.5V5.75H15V4.5H4.5V5.75H3V3Z"
+              fill={strokeColor}
+            />
+            <path
+              fillRule="evenodd"
+              clipRule="evenodd"
+              d="M13.75 16.5H5.75V15H13.75V16.5Z"
+              fill={strokeColor}
+            />
+          </svg>
+        ),
+      },
       {
         name: 'chevron left',
         line: (
@@ -183,7 +219,7 @@ export function UIIcon(props: IconProps) {
             xmlns="http://www.w3.org/2000/svg"
             width={size}
             height={size}
-            viewBox="0 0 24 24"
+            viewBox="0 0 20 20"
             style={{
               cursor: disabled ? 'default' : pointer ? 'pointer' : 'inherit',
             }}
@@ -191,58 +227,58 @@ export function UIIcon(props: IconProps) {
             fill={'none'}
           >
             <path
-              d="M11 6L21 6"
-              stroke={strokeColor}
-              strokeWidth={stroke}
-              strokeLinecap="round"
+              fillRule="evenodd"
+              clipRule="evenodd"
+              d="M7.53033 9.28033H19.5303V10.7803H7.53033V9.28033Z"
+              fill={strokeColor}
             />
             <path
-              d="M11 12L21 12"
-              stroke={strokeColor}
-              strokeWidth={stroke}
-              strokeLinecap="round"
+              fillRule="evenodd"
+              clipRule="evenodd"
+              d="M7.53033 3.28033H19.5303V4.78033H7.53033V3.28033Z"
+              fill={strokeColor}
             />
             <path
-              d="M11 18L21 18"
-              stroke={strokeColor}
-              strokeWidth={stroke}
-              strokeLinecap="round"
+              fillRule="evenodd"
+              clipRule="evenodd"
+              d="M7.53033 15.2803H19.5303V16.7803H7.53033V15.2803Z"
+              fill={strokeColor}
             />
             <path
-              d="M3 7.39286C3 7.39286 4 8.04466 4.5 9C4.5 9 6 5.25 8 4"
-              stroke={strokeColor}
-              strokeWidth={stroke}
-              strokeLinecap="round"
-              strokeLinejoin="round"
+              fillRule="evenodd"
+              clipRule="evenodd"
+              d="M2.53033 4.96967L5.5 2L6.56066 3.06066L2.53033 7.09099L0 4.56066L1.06066 3.5L2.53033 4.96967Z"
+              fill={strokeColor}
             />
             <path
-              d="M3 18.3929C3 18.3929 4 19.0447 4.5 20C4.5 20 6 16.25 8 15"
-              stroke={strokeColor}
-              strokeWidth={stroke}
-              strokeLinecap="round"
-              strokeLinejoin="round"
+              fillRule="evenodd"
+              clipRule="evenodd"
+              d="M2.53033 15.9697L5.5 13L6.56066 14.0607L2.53033 18.091L0 15.5607L1.06066 14.5L2.53033 15.9697Z"
+              fill={strokeColor}
             />
           </svg>
         ),
       },
       {
-        name: 'highlight',
+        name: 'hilight',
         line: (
           <svg
             xmlns="http://www.w3.org/2000/svg"
             width={size}
             height={size}
-            viewBox="0 0 24 24"
+            viewBox="0 0 20 20"
             style={{
               cursor: disabled ? 'default' : pointer ? 'pointer' : 'inherit',
             }}
             onClick={(e) => onClick(e)}
+            fill={'none'}
           >
-            <path d="M 0 0 L 24 0 L 24 24 L 0 24 Z" fill="transparent"></path>
             <path
-              d="M 20.825 11.376 C 20.713 11.263 20.56 11.199 20.401 11.199 C 20.241 11.199 20.089 11.263 19.976 11.376 L 16.201 15.15 L 9.85 8.799 L 13.626 5.025 C 13.86 4.79 13.86 4.41 13.626 4.176 C 13.391 3.941 13.011 3.942 12.777 4.176 L 9.002 7.951 C 8.629 8.324 8.543 8.897 8.791 9.362 L 7.202 10.951 C 6.734 11.419 6.734 12.179 7.202 12.647 L 7.554 12.999 L 3.178 17.374 C 3.03 17.521 2.969 17.734 3.017 17.937 C 3.065 18.14 3.215 18.303 3.413 18.368 L 8.812 20.168 C 8.95 20.215 9.099 20.209 9.232 20.153 C 9.305 20.123 9.371 20.079 9.427 20.023 L 12.002 17.447 L 12.353 17.799 C 12.822 18.267 13.581 18.267 14.05 17.799 L 15.638 16.211 C 16.104 16.458 16.677 16.372 17.049 15.999 L 20.825 12.224 C 21.06 11.99 21.06 11.61 20.825 11.376 Z M 13.201 16.95 L 8.05 11.799 L 9.602 10.248 L 14.753 15.399 Z"
+              fillRule="evenodd"
+              clipRule="evenodd"
+              d="M10.4965 3L5.94948 7.62044L7.22685 8.92086L5.0472 11.1174L5.73239 11.8136L2 15.6063L8.23696 17.9994L10.0453 16.1958L10.7194 16.8807L12.8845 14.6807L14.069 15.8864L18.9958 10.8801L17.9267 9.82796L14.07 13.7469L8.05305 7.62142L11.5656 4.05213L10.4965 3ZM11.8333 13.6104L10.7193 14.7423L7.15608 11.1217L8.27807 9.99105L11.8333 13.6104ZM7.86628 16.2505L8.99306 15.1267L6.78469 12.8828L4.67538 15.0262L7.86628 16.2505Z"
               fill={strokeColor}
-            ></path>
+            />
           </svg>
         ),
       },
@@ -253,7 +289,7 @@ export function UIIcon(props: IconProps) {
             xmlns="http://www.w3.org/2000/svg"
             width={size}
             height={size}
-            viewBox="0 0 24 24"
+            viewBox="0 0 20 20"
             style={{
               cursor: disabled ? 'default' : pointer ? 'pointer' : 'inherit',
             }}
@@ -263,18 +299,38 @@ export function UIIcon(props: IconProps) {
             <path
               fillRule="evenodd"
               clipRule="evenodd"
-              d="M5 6C5 4.58579 5 3.87868 5.43934 3.43934C5.87868 3 6.58579 3 8 3H12.5789C15.0206 3 17 5.01472 17 7.5C17 9.98528 15.0206 12 12.5789 12H5V6Z"
-              stroke={strokeColor}
-              strokeWidth={stroke}
-              strokeLinecap="round"
-              strokeLinejoin="round"
+              d="M12 10.5H5V9H12V10.5Z"
+              fill={strokeColor}
             />
             <path
-              d="M12.4286 12H13.6667C16.0599 12 18 14.0147 18 16.5C18 18.9853 16.0599 21 13.6667 21H8C6.58579 21 5.87868 21 5.43934 20.5607C5 20.1213 5 19.4142 5 18V12"
-              stroke={strokeColor}
-              strokeWidth={stroke}
-              strokeLinecap="round"
-              strokeLinejoin="round"
+              fillRule="evenodd"
+              clipRule="evenodd"
+              d="M12 17.5H3V16H12V17.5Z"
+              fill={strokeColor}
+            />
+            <path
+              fillRule="evenodd"
+              clipRule="evenodd"
+              d="M13.9642 6.75C13.9642 5.59915 12.8612 4.5 11.2856 4.5V3C13.4952 3 15.4642 4.58885 15.4642 6.75C15.4642 8.91115 13.4952 10.5 11.2856 10.5V9C12.8612 9 13.9642 7.90085 13.9642 6.75Z"
+              fill={strokeColor}
+            />
+            <path
+              fillRule="evenodd"
+              clipRule="evenodd"
+              d="M14.9644 13.25C14.9644 11.8232 13.6053 10.5 11.7144 10.5V9C14.2394 9 16.4644 10.8128 16.4644 13.25C16.4644 15.6872 14.2394 17.5 11.7144 17.5V16C13.6053 16 14.9644 14.6768 14.9644 13.25Z"
+              fill={strokeColor}
+            />
+            <path
+              fillRule="evenodd"
+              clipRule="evenodd"
+              d="M4.47607 16.75V3.75H5.97607V16.75H4.47607Z"
+              fill={strokeColor}
+            />
+            <path
+              fillRule="evenodd"
+              clipRule="evenodd"
+              d="M11.5 4.5H3V3H11.5V4.5Z"
+              fill={strokeColor}
             />
           </svg>
         ),
@@ -286,33 +342,30 @@ export function UIIcon(props: IconProps) {
             xmlns="http://www.w3.org/2000/svg"
             width={size}
             height={size}
-            viewBox="0 0 24 24"
+            viewBox="0 0 20 20"
             style={{
               cursor: disabled ? 'default' : pointer ? 'pointer' : 'inherit',
             }}
             onClick={(e) => onClick(e)}
-            fill={'none'}
+            fill="none"
           >
             <path
-              d="M12 4H19"
-              stroke={strokeColor}
-              strokeWidth={stroke}
-              strokeLinecap="round"
-              strokeLinejoin="round"
+              fillRule="evenodd"
+              clipRule="evenodd"
+              d="M7.16961 15.4475L12.1334 3.48983L13.5187 4.06492L8.555 16.0226L7.16961 15.4475Z"
+              fill={strokeColor}
             />
             <path
-              d="M8 20L16 4"
-              stroke={strokeColor}
-              strokeWidth={stroke}
-              strokeLinecap="round"
-              strokeLinejoin="round"
+              fillRule="evenodd"
+              clipRule="evenodd"
+              d="M17 4.5H8V3H17V4.5Z"
+              fill={strokeColor}
             />
             <path
-              d="M5 20H12"
-              stroke={strokeColor}
-              strokeWidth={stroke}
-              strokeLinecap="round"
-              strokeLinejoin="round"
+              fillRule="evenodd"
+              clipRule="evenodd"
+              d="M13 16.5H4V15H13V16.5Z"
+              fill={strokeColor}
             />
           </svg>
         ),
@@ -324,7 +377,7 @@ export function UIIcon(props: IconProps) {
             xmlns="http://www.w3.org/2000/svg"
             width={size}
             height={size}
-            viewBox="0 0 24 24"
+            viewBox="0 0 20 20"
             style={{
               cursor: disabled ? 'default' : pointer ? 'pointer' : 'inherit',
             }}
@@ -332,17 +385,28 @@ export function UIIcon(props: IconProps) {
             fill="none"
           >
             <path
-              d="M5.5 3V11.5C5.5 15.0899 8.41015 18 12 18C15.5899 18 18.5 15.0899 18.5 11.5V3"
-              stroke={strokeColor}
-              strokeWidth={stroke}
-              strokeLinecap="round"
-              strokeLinejoin="round"
+              fillRule="evenodd"
+              clipRule="evenodd"
+              d="M14.25 10V3H15.75V10H14.25Z"
+              fill={strokeColor}
             />
             <path
-              d="M3 21H21"
-              stroke={strokeColor}
-              strokeWidth={stroke}
-              strokeLinecap="round"
+              fillRule="evenodd"
+              clipRule="evenodd"
+              d="M4.25 10V3H5.75V10H4.25Z"
+              fill={strokeColor}
+            />
+            <path
+              fillRule="evenodd"
+              clipRule="evenodd"
+              d="M5.75 9.5C5.75 11.8525 7.64755 13.75 10 13.75C12.3525 13.75 14.25 11.8525 14.25 9.5H15.75C15.75 12.6809 13.1809 15.25 10 15.25C6.81912 15.25 4.25 12.6809 4.25 9.5H5.75Z"
+              fill={strokeColor}
+            />
+            <path
+              fillRule="evenodd"
+              clipRule="evenodd"
+              d="M16 17.7499H4V16.2499H16V17.7499Z"
+              fill={strokeColor}
             />
           </svg>
         ),
@@ -354,7 +418,7 @@ export function UIIcon(props: IconProps) {
             xmlns="http://www.w3.org/2000/svg"
             width={size}
             height={size}
-            viewBox="0 0 24 24"
+            viewBox="0 0 20 20"
             style={{
               cursor: disabled ? 'default' : pointer ? 'pointer' : 'inherit',
             }}
@@ -362,17 +426,34 @@ export function UIIcon(props: IconProps) {
             fill="none"
           >
             <path
-              d="M4 12H20"
-              stroke={strokeColor}
-              strokeWidth={stroke}
-              strokeLinecap="round"
-              strokeLinejoin="round"
+              fillRule="evenodd"
+              clipRule="evenodd"
+              d="M9 9.75V3.75H10.5V9.75H9Z"
+              fill={strokeColor}
             />
             <path
-              d="M17.5 7.66667C17.5 5.08934 15.0376 3 12 3C8.96243 3 6.5 5.08934 6.5 7.66667C6.5 8.15279 6.55336 8.59783 6.6668 9M6 16.3333C6 18.9107 8.68629 21 12 21C15.3137 21 18 19.6667 18 16.3333C18 13.9404 16.9693 12.5782 14.9079 12"
-              stroke={strokeColor}
-              strokeWidth={stroke}
-              strokeLinecap="round"
+              fillRule="evenodd"
+              clipRule="evenodd"
+              d="M9 15.75V11.75H10.5V15.75H9Z"
+              fill={strokeColor}
+            />
+            <path
+              fillRule="evenodd"
+              clipRule="evenodd"
+              d="M3 3H16.5V5.75H15V4.5H4.5V5.75H3V3Z"
+              fill={strokeColor}
+            />
+            <path
+              fillRule="evenodd"
+              clipRule="evenodd"
+              d="M13.75 16.5H5.75V15H13.75V16.5Z"
+              fill={strokeColor}
+            />
+            <path
+              fillRule="evenodd"
+              clipRule="evenodd"
+              d="M14.75 10.5H4.75V9H14.75V10.5Z"
+              fill={strokeColor}
             />
           </svg>
         ),
@@ -410,7 +491,7 @@ export function UIIcon(props: IconProps) {
             xmlns="http://www.w3.org/2000/svg"
             width={size}
             height={size}
-            viewBox="0 0 24 24"
+            viewBox="0 0 20 20"
             style={{
               cursor: disabled ? 'default' : pointer ? 'pointer' : 'inherit',
             }}
@@ -418,43 +499,34 @@ export function UIIcon(props: IconProps) {
             fill="none"
           >
             <path
-              d="M8 5L20 5"
-              stroke={strokeColor}
-              strokeWidth={stroke}
-              strokeLinecap="round"
+              fillRule="evenodd"
+              clipRule="evenodd"
+              d="M4 9.25H20V10.75H4V9.25Z"
+              fill={strokeColor}
             />
             <path
-              d="M4 5H4.00898"
-              stroke={strokeColor}
-              strokeWidth={stroke}
-              strokeLinecap="round"
-              strokeLinejoin="round"
+              fillRule="evenodd"
+              clipRule="evenodd"
+              d="M4 3.25H20V4.75H4V3.25Z"
+              fill={strokeColor}
             />
             <path
-              d="M4 12H4.00898"
-              stroke={strokeColor}
-              strokeWidth={stroke}
-              strokeLinecap="round"
-              strokeLinejoin="round"
+              d="M2 4C2 4.552 1.552 5 1 5C0.448 5 0 4.552 0 4C0 3.448 0.448 3 1 3C1.552 3 2 3.448 2 4Z"
+              fill={strokeColor}
             />
             <path
-              d="M4 19H4.00898"
-              stroke={strokeColor}
-              strokeWidth={stroke}
-              strokeLinecap="round"
-              strokeLinejoin="round"
+              d="M2 10C2 10.552 1.552 11 1 11C0.448 11 0 10.552 0 10C0 9.448 0.448 9 1 9C1.552 9 2 9.448 2 10Z"
+              fill={strokeColor}
             />
             <path
-              d="M8 12L20 12"
-              stroke={strokeColor}
-              strokeWidth={stroke}
-              strokeLinecap="round"
+              d="M2 16C2 16.552 1.552 17 1 17C0.448 17 0 16.552 0 16C0 15.448 0.448 15 1 15C1.552 15 2 15.448 2 16Z"
+              fill={strokeColor}
             />
             <path
-              d="M8 19L20 19"
-              stroke={strokeColor}
-              strokeWidth={stroke}
-              strokeLinecap="round"
+              fillRule="evenodd"
+              clipRule="evenodd"
+              d="M4 15.25H20V16.75H4V15.25Z"
+              fill={strokeColor}
             />
           </svg>
         ),
@@ -466,7 +538,7 @@ export function UIIcon(props: IconProps) {
             xmlns="http://www.w3.org/2000/svg"
             width={size}
             height={size}
-            viewBox="0 0 24 24"
+            viewBox="0 0 20 20"
             style={{
               cursor: disabled ? 'default' : pointer ? 'pointer' : 'inherit',
             }}
@@ -474,36 +546,34 @@ export function UIIcon(props: IconProps) {
             fill="none"
           >
             <path
-              d="M11 6L21 6"
-              stroke={strokeColor}
-              strokeWidth={stroke}
-              strokeLinecap="round"
+              fillRule="evenodd"
+              clipRule="evenodd"
+              d="M4.00049 8.75497H20.0005V10.255H4.00049V8.75497Z"
+              fill={strokeColor}
             />
             <path
-              d="M11 12L21 12"
-              stroke={strokeColor}
-              strokeWidth={stroke}
-              strokeLinecap="round"
+              fillRule="evenodd"
+              clipRule="evenodd"
+              d="M4.00049 2.75497H20.0005V4.25497H4.00049V2.75497Z"
+              fill={strokeColor}
             />
             <path
-              d="M11 18L21 18"
-              stroke={strokeColor}
-              strokeWidth={stroke}
-              strokeLinecap="round"
+              fillRule="evenodd"
+              clipRule="evenodd"
+              d="M4.00049 14.755H20.0005V16.255H4.00049V14.755Z"
+              fill={strokeColor}
             />
             <path
-              d="M3 15H4.5C4.77879 15 4.91819 15 5.03411 15.0231C5.51014 15.1177 5.88225 15.4899 5.97694 15.9659C6 16.0818 6 16.2212 6 16.5C6 16.7788 6 16.9182 5.97694 17.0341C5.88225 17.5101 5.51014 17.8823 5.03411 17.9769C4.91819 18 4.77879 18 4.5 18C4.22121 18 4.08181 18 3.96589 18.0231C3.48986 18.1177 3.11775 18.4899 3.02306 18.9659C3 19.0818 3 19.2212 3 19.5V20.4C3 20.6828 3 20.8243 3.08787 20.9121C3.17574 21 3.31716 21 3.6 21H6"
-              stroke={strokeColor}
-              strokeWidth={stroke}
-              strokeLinecap="round"
-              strokeLinejoin="round"
+              d="M0.10078 10.9947V10.4272L1.19539 9.51502C1.19539 9.51502 1.33728 9.39339 1.37782 9.35285C1.43863 9.29204 1.47916 9.2515 1.49943 9.19069C1.5197 9.12988 1.53995 9.06907 1.53995 9.00826C1.53995 8.92718 1.53997 8.86637 1.49943 8.80555C1.45889 8.74474 1.41834 8.7042 1.35753 8.68393C1.29672 8.66366 1.23595 8.64339 1.15487 8.64339C1.07379 8.64339 1.01297 8.64339 0.952158 8.68393C0.891348 8.72447 0.850812 8.76501 0.830542 8.80555C0.810271 8.86637 0.789961 8.92718 0.789961 9.00826H0.0196814C0.0196814 8.80556 0.0602367 8.62312 0.161588 8.48123C0.262939 8.33934 0.384586 8.21772 0.567018 8.13664C0.72918 8.05556 0.9319 8.01501 1.15487 8.01501C1.37785 8.01501 1.60079 8.05556 1.76296 8.13664C1.92512 8.21772 2.06704 8.31907 2.16839 8.46096C2.26974 8.60285 2.31023 8.76501 2.31023 8.94745C2.31023 9.06907 2.28996 9.17042 2.24942 9.29204C2.20888 9.41366 2.10754 9.53528 2.00619 9.65691C1.88457 9.7988 1.70212 9.96096 1.47914 10.1434L1.19539 10.3664H2.35081V11.015H0.0805516L0.10078 10.9947Z"
+              fill={strokeColor}
             />
             <path
-              d="M3 3H4.2C4.36569 3 4.5 3.13431 4.5 3.3V9M4.5 9H3M4.5 9H6"
-              stroke={strokeColor}
-              strokeWidth={stroke}
-              strokeLinecap="round"
-              strokeLinejoin="round"
+              d="M1.20001 16.995C0.960012 16.995 0.760017 16.955 0.580017 16.875C0.400017 16.795 0.260034 16.695 0.160034 16.555C0.0600342 16.415 0 16.255 0 16.075H0.799988C0.799988 16.075 0.799985 16.175 0.859985 16.235C0.899985 16.275 0.94 16.315 1 16.335C1.06 16.355 1.12001 16.375 1.20001 16.375C1.28001 16.375 1.34002 16.375 1.40002 16.335C1.46002 16.315 1.50002 16.275 1.52002 16.235C1.54002 16.195 1.56 16.135 1.56 16.075C1.56 16.015 1.56 15.975 1.5 15.915C1.46 15.875 1.42003 15.835 1.34003 15.815C1.28003 15.795 1.2 15.775 1.12 15.775H0.820007V15.235H1.12C1.12 15.235 1.26001 15.235 1.32001 15.195C1.38001 15.155 1.42002 15.135 1.46002 15.095C1.50002 15.055 1.52 14.995 1.5 14.935C1.5 14.875 1.50002 14.835 1.46002 14.775C1.44002 14.735 1.40003 14.695 1.34003 14.675C1.30003 14.655 1.24003 14.635 1.16003 14.635C1.08003 14.635 1.02002 14.635 0.960022 14.675C0.900022 14.715 0.860007 14.735 0.820007 14.775C0.780007 14.815 0.780029 14.875 0.780029 14.935H0.0200195C0.0200195 14.755 0.0600342 14.595 0.160034 14.455C0.260034 14.315 0.399998 14.215 0.559998 14.135C0.719998 14.055 0.920015 14.015 1.14001 14.015C1.36001 14.015 1.54003 14.055 1.72003 14.115C1.88003 14.195 2.02004 14.295 2.10004 14.415C2.18004 14.535 2.23999 14.695 2.23999 14.855C2.23999 15.015 2.18002 15.155 2.08002 15.255C1.96002 15.355 1.82003 15.415 1.66003 15.435C1.90003 15.475 2.07999 15.555 2.17999 15.675C2.27999 15.795 2.35999 15.935 2.35999 16.115C2.35999 16.295 2.32001 16.435 2.20001 16.575C2.10001 16.715 1.96003 16.815 1.78003 16.895C1.60003 16.975 1.38003 17.015 1.16003 17.015L1.20001 16.995Z"
+              fill={strokeColor}
+            />
+            <path
+              d="M1.88503 2V5H1.0781V2.74483L0.416016 3.13793V2.45517L1.16088 2H1.90567H1.88503Z"
+              fill={strokeColor}
             />
           </svg>
         ),
@@ -515,7 +585,7 @@ export function UIIcon(props: IconProps) {
             xmlns="http://www.w3.org/2000/svg"
             width={size}
             height={size}
-            viewBox="0 0 24 24"
+            viewBox="0 0 20 20"
             style={{
               cursor: disabled ? 'default' : pointer ? 'pointer' : 'inherit',
             }}
@@ -523,46 +593,40 @@ export function UIIcon(props: IconProps) {
             fill="none"
           >
             <path
-              d="M15 4.5H20"
-              stroke={strokeColor}
-              strokeWidth={stroke}
-              strokeLinecap="round"
-              strokeLinejoin="round"
+              fillRule="evenodd"
+              clipRule="evenodd"
+              d="M8.42426 7.25H13.4243V8.75H8.42426V7.25Z"
+              fill={strokeColor}
             />
             <path
-              d="M15 9.5H18"
-              stroke={strokeColor}
-              strokeWidth={stroke}
-              strokeLinecap="round"
-              strokeLinejoin="round"
+              fillRule="evenodd"
+              clipRule="evenodd"
+              d="M8.42426 11.25H17.4243V12.75H8.42426V11.25Z"
+              fill={strokeColor}
             />
             <path
-              d="M15 14.5H20"
-              stroke={strokeColor}
-              strokeWidth={stroke}
-              strokeLinecap="round"
-              strokeLinejoin="round"
+              fillRule="evenodd"
+              clipRule="evenodd"
+              d="M8.42426 3.25H18.4243V4.75H8.42426V3.25Z"
+              fill={strokeColor}
             />
             <path
-              d="M15 19.5H18"
-              stroke={strokeColor}
-              strokeWidth={stroke}
-              strokeLinecap="round"
-              strokeLinejoin="round"
+              fillRule="evenodd"
+              clipRule="evenodd"
+              d="M8.42426 15.25H12.4243V16.75H8.42426V15.25Z"
+              fill={strokeColor}
             />
             <path
-              d="M11 3V21"
-              stroke={strokeColor}
-              strokeWidth={stroke}
-              strokeLinecap="round"
-              strokeLinejoin="round"
+              fillRule="evenodd"
+              clipRule="evenodd"
+              d="M5.67426 18V2H7.17426V18H5.67426Z"
+              fill={strokeColor}
             />
             <path
-              d="M4 8.5L5.54218 9.74227C6.84739 10.7937 7.5 11.3193 7.5 12C7.5 12.6807 6.84739 13.2063 5.54218 14.2577L4 15.5"
-              stroke={strokeColor}
-              strokeWidth={stroke}
-              strokeLinecap="round"
-              strokeLinejoin="round"
+              fillRule="evenodd"
+              clipRule="evenodd"
+              d="M1.84853 7.57574L4.27279 10L1.84853 12.4243L1 11.5757L2.57574 10L1 8.42426L1.84853 7.57574Z"
+              fill={strokeColor}
             />
           </svg>
         ),
@@ -574,7 +638,7 @@ export function UIIcon(props: IconProps) {
             xmlns="http://www.w3.org/2000/svg"
             width={size}
             height={size}
-            viewBox="0 0 24 24"
+            viewBox="0 0 20 20"
             style={{
               cursor: disabled ? 'default' : pointer ? 'pointer' : 'inherit',
             }}
@@ -582,46 +646,40 @@ export function UIIcon(props: IconProps) {
             fill="none"
           >
             <path
-              d="M4 4.5H9"
-              stroke={strokeColor}
-              strokeWidth={stroke}
-              strokeLinecap="round"
-              strokeLinejoin="round"
+              fillRule="evenodd"
+              clipRule="evenodd"
+              d="M11 7.25H6V8.75H11V7.25Z"
+              fill={strokeColor}
             />
             <path
-              d="M6 9.5H9"
-              stroke={strokeColor}
-              strokeWidth={stroke}
-              strokeLinecap="round"
-              strokeLinejoin="round"
+              fillRule="evenodd"
+              clipRule="evenodd"
+              d="M11 11.25H2V12.75H11V11.25Z"
+              fill={strokeColor}
             />
             <path
-              d="M4 14.5H9"
-              stroke={strokeColor}
-              strokeWidth={stroke}
-              strokeLinecap="round"
-              strokeLinejoin="round"
+              fillRule="evenodd"
+              clipRule="evenodd"
+              d="M11 3.25H1V4.75H11V3.25Z"
+              fill={strokeColor}
             />
             <path
-              d="M6 19.5H9"
-              stroke={strokeColor}
-              strokeWidth={stroke}
-              strokeLinecap="round"
-              strokeLinejoin="round"
+              fillRule="evenodd"
+              clipRule="evenodd"
+              d="M11 15.25H7V16.75H11V15.25Z"
+              fill={strokeColor}
             />
             <path
-              d="M13 3V21"
-              stroke={strokeColor}
-              strokeWidth={stroke}
-              strokeLinecap="round"
-              strokeLinejoin="round"
+              fillRule="evenodd"
+              clipRule="evenodd"
+              d="M13.75 18V2H12.25V18H13.75Z"
+              fill={strokeColor}
             />
             <path
-              d="M20 8.5L18.4578 9.74227C17.1526 10.7937 16.5 11.3193 16.5 12C16.5 12.6807 17.1526 13.2063 18.4578 14.2577L20 15.5"
-              stroke={strokeColor}
-              strokeWidth={stroke}
-              strokeLinecap="round"
-              strokeLinejoin="round"
+              fillRule="evenodd"
+              clipRule="evenodd"
+              d="M17.5757 7.57574L15.1515 10L17.5757 12.4243L18.4243 11.5757L16.8485 10L18.4243 8.42426L17.5757 7.57574Z"
+              fill={strokeColor}
             />
           </svg>
         ),
@@ -633,33 +691,30 @@ export function UIIcon(props: IconProps) {
             xmlns="http://www.w3.org/2000/svg"
             width={size}
             height={size}
-            viewBox="0 0 24 24"
+            viewBox="0 0 20 20"
             style={{
               cursor: disabled ? 'default' : pointer ? 'pointer' : 'inherit',
             }}
             onClick={(e) => onClick(e)}
-            fill={'none'}
+            fill="none"
           >
             <path
-              d="M17 8L18.8398 9.85008C19.6133 10.6279 20 11.0168 20 11.5C20 11.9832 19.6133 12.3721 18.8398 13.1499L17 15"
-              stroke={strokeColor}
-              strokeWidth={stroke}
-              strokeLinecap="round"
-              strokeLinejoin="round"
+              fillRule="evenodd"
+              clipRule="evenodd"
+              d="M8.57152 17.8989L12.5715 3.39889L11.1255 3L7.12553 17.5L8.57152 17.8989Z"
+              fill={strokeColor}
             />
             <path
-              d="M7 8L5.16019 9.85008C4.38673 10.6279 4 11.0168 4 11.5C4 11.9832 4.38673 12.3721 5.16019 13.1499L7 15"
-              stroke={strokeColor}
-              strokeWidth={stroke}
-              strokeLinecap="round"
-              strokeLinejoin="round"
+              fillRule="evenodd"
+              clipRule="evenodd"
+              d="M4.42426 7.77518L2 10.1994L4.42426 12.6237L5.27279 11.7752L3.69706 10.1994L5.27279 8.62371L4.42426 7.77518Z"
+              fill={strokeColor}
             />
             <path
-              d="M14.5 4L9.5 20"
-              stroke={strokeColor}
-              strokeWidth={stroke}
-              strokeLinecap="round"
-              strokeLinejoin="round"
+              fillRule="evenodd"
+              clipRule="evenodd"
+              d="M15.2728 7.77518L17.6971 10.1994L15.2728 12.6237L14.4243 11.7752L16 10.1994L14.4243 8.62371L15.2728 7.77518Z"
+              fill={strokeColor}
             />
           </svg>
         ),

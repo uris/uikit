@@ -82,10 +82,19 @@ export function EditorButtonBar(props: EditorButtonBarProps) {
       {editControls?.[barState].download && (
         <div className="right">
           <IconButton
+            icon={coreButtons.copy.icon}
+            tooltip={coreButtons.copy.toolTip}
+            hover={true}
+            toggle={false}
+            onToolTip={(tip) => onToolTip(tip)}
+            onClick={() => onCommand(coreButtons.copy.command)}
+          />
+          <IconButton
             icon={coreButtons.download.icon}
             tooltip={coreButtons.download.toolTip}
             hover={true}
             toggle={false}
+            onToolTip={(tip) => onToolTip(tip)}
             onClick={() => onCommand(coreButtons.download.command)}
           />
         </div>
@@ -115,20 +124,20 @@ export function RenderGroup(props: RenderGroupProps) {
     <Styled.ButtonGroup>
       {state === 'default' && <div className="divider" />}
       {buttonGroup?.buttons?.map((button: ButtonBarButton, index: number) => {
-        const active = button.id ? activeFormats?.includes(button.id) : false;
+        const active = button?.id ? activeFormats?.includes(button.id) : false;
         const bgColor = active
           ? theme.lyraColors['core-surface-secondary']
           : 'transparent';
         return (
           <IconButton
-            key={'button-' + button.icon + '-' + index}
-            icon={button.icon}
-            tooltip={button.toolTip}
+            key={'button-' + button?.icon + '-' + index}
+            icon={button?.icon}
+            tooltip={button?.toolTip}
             onToolTip={(tip) => onToolTip(tip)}
             hover={true}
             toggle={false}
             bgColor={bgColor}
-            onClick={() => onCommand(button.command)}
+            onClick={() => onCommand(button?.command)}
             frameSize={30}
             iconSize={20}
           />

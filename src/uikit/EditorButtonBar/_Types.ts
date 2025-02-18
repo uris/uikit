@@ -38,4 +38,5 @@ export enum FormattingOption {
   redo = 'redo',
   download = 'download',
   more = 'more',
+  copy = 'copy',
 }

@@ -5,6 +5,7 @@ export const Wrapper = styled.div`
   ${flexBox.rowBetween};
   width: 100%;
   div.right {
+    ${flexBox.rowStart};
   }
   div.left {
     ${flexBox.rowStart};

@@ -8,7 +8,7 @@ import {
 
 export const coreButtons: { [key: string]: ButtonBarButton } = {
   hilight: {
-    icon: 'highlight',
+    icon: 'hilight',
     toolTip: 'Highlight',
     command: 'hilight',
     id: FormattingOption.hilight,
@@ -83,6 +83,12 @@ export const coreButtons: { [key: string]: ButtonBarButton } = {
     command: 'redo',
     id: FormattingOption.redo,
   },
+  copy: {
+    icon: 'copy',
+    toolTip: 'Copy',
+    command: 'copy',
+    id: FormattingOption.copy,
+  },
   download: {
     icon: 'download',
     toolTip: 'Download',
@@ -107,6 +113,7 @@ export const styles: DropDownOption[] = [
 export const buttonGroups: { [key: string]: ButtonBarGroup } = {
   format: {
     buttons: [
+      coreButtons.hilight,
       coreButtons.bold,
       coreButtons.italic,
       coreButtons.underline,

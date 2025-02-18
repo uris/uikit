@@ -186,26 +186,20 @@ const UIButton = forwardRef<UIButtonHandle, UIButtonProps>(
             : theme.lyraColors['core-text-disabled'],
         },
         background: {
-          normal: 'transparent',
-          hover: 'transparent',
-          disabled: 'transparent',
-        },
-        borderColor: {
-          normal: bgColor
-            ? bgColor
-            : destructive
-              ? theme.lyraColors['feedback-warning']
-              : theme.lyraColors['core-outline-primary'],
-          hover: bgColor
-            ? bgColor
-            : destructive
-              ? theme.lyraColors['feedback-warning']
-              : theme.lyraColors['core-outline-primary'],
+          normal: bgColor ? bgColor : theme.lyraColors['core-surface-primary'],
+          hover: bgColor ? bgColor : theme.lyraColors['core-surface-primary'],
           disabled: bgColorDisabled
             ? bgColorDisabled
-            : bgColor
-              ? bgColor
-              : theme.lyraColors['core-outline-primary'],
+            : theme.lyraColors['core-surface-primary'],
+        },
+        borderColor: {
+          normal: destructive
+            ? theme.lyraColors['feedback-warning']
+            : theme.lyraColors['core-outline-primary'],
+          hover: destructive
+            ? theme.lyraColors['feedback-warning']
+            : theme.lyraColors['core-outline-primary'],
+          disabled: theme.lyraColors['core-outline-primary'],
         },
         color: {
           normal: labelColor
