@@ -36,6 +36,7 @@ export interface DraggablePanelProps {
   borderLeft?: any;
   bgColor?: string;
   drags?: boolean;
+  disableOnContext?: boolean;
   isTouchDevice?: boolean;
 }
 
@@ -56,6 +57,7 @@ export function DraggablePanel(props: DraggablePanelProps) {
     bgColor = 'transparent',
     drags = true,
     isTouchDevice = false,
+    disableOnContext = true,
     onResize = () => null,
     onResizeStart = () => null,
     onResizeEnd = () => null,
@@ -237,7 +239,7 @@ export function DraggablePanel(props: DraggablePanelProps) {
       ref={div}
       $bgColor={bgColor}
       onContextMenu={(e) => {
-        e.preventDefault();
+        if (disableOnContext) e.preventDefault();
         return true;
       }}
       style={{

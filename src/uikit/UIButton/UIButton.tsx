@@ -364,9 +364,11 @@ const UIButton = forwardRef<UIButtonHandle, UIButtonProps>(
             name={iconLeft}
             size={sizingStyles[size].iconSize}
             strokeColor={
-              destructive
-                ? theme.lyraColors['feedback-warning']
-                : colorStyles[variant].iconColor[btnState]
+              state === 'disabled'
+                ? colorStyles[variant].iconColor[btnState]
+                : destructive
+                  ? theme.lyraColors['feedback-warning']
+                  : colorStyles[variant].iconColor[btnState]
             }
             pointer={state === 'disabled' ? false : true}
           />
@@ -419,9 +421,11 @@ const UIButton = forwardRef<UIButtonHandle, UIButtonProps>(
             name={iconRight}
             size={sizingStyles[size].iconSize}
             strokeColor={
-              destructive
-                ? theme.lyraColors['feedback-warning']
-                : colorStyles[variant].iconColor[btnState]
+              state === 'disabled'
+                ? colorStyles[variant].iconColor[btnState]
+                : destructive
+                  ? theme.lyraColors['feedback-warning']
+                  : colorStyles[variant].iconColor[btnState]
             }
             pointer={state === 'disabled' ? false : true}
           />
