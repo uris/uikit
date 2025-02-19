@@ -1,58 +1,55 @@
-import { useTheme } from 'styled-components';
-import { DocIcons } from '../../DocIcon/DocIcons';
+import { useEffect, useState } from 'react';
 import { IconButton } from '../../IconButton/IconButton';
-import { UploadDocument } from '../_Types';
-import * as Styled from './Styles';
+import { UIIcon } from '../../UIIcon/UIIcon';
+import { ToolTip } from '../../sharedTypes';
+import * as Styled from './_Styles';
 
-interface ClearAttachmentProps {
-  onClearAttachment?: () => void;
-  upload?: UploadDocument | null;
-  maxsize?: number;
+interface FileListProps {
+  files?: File[];
+  onChange?: (files: File[]) => void;
+  onToolTip?: (tip: ToolTip | null) => void;
 }
 
-export function FileList(props: ClearAttachmentProps) {
-  const {
-    maxsize = 4000,
-    upload = null,
-    onClearAttachment = () => null,
-  } = props;
-  const { theme } = useTheme();
+export function FileList(props: FileListProps) {
+  const { files = [], onChange = () => null, onToolTip = () => null } = props;
+  const [fileList, setFileList] = useState<File[]>(files);
+  useEffect(() => setFileList(files), [files]);
 
-  function setFileIcon(): 'text' | 'pdf' | 'docx' | 'not supported' {
-    if (!upload || (upload.size && upload.size > maxsize)) {
-      return 'not supported';
-    }
-    switch (upload.mimeType) {
-      case 'text/plain':
-      case 'application/vnd.openxmlformats-officedocument.wordprocessingml.document':
-        return 'docx';
-      case 'application/pdf':
-        return 'pdf';
-      default:
-        return 'not supported';
-    }
+  function handleRemoveFile(fileName: string) {
+    const updatedList = fileList.filter((file: File) => {
+      return file.name !== fileName;
+    });
+    onChange(updatedList);
+    setFileList(updatedList);
   }
 
   return (
-    <Styled.Upload>
-      <Styled.Document>
-        <Styled.Icon>
-          <DocIcons height={44} type={setFileIcon()} />
-        </Styled.Icon>
-        <Styled.DocumentInfo>
-          <div className="filename">{upload?.fileName}</div>
-          <div className="filetype">{upload?.mimeType}</div>
-        </Styled.DocumentInfo>
-      </Styled.Document>
-      <IconButton
-        bgColor={theme.colors.bgTintNormal}
-        bgColorHover={theme.colors.bgTintSelected}
-        toggle={false}
-        icon={'x'}
-        tooltip="Remove file"
-        onClick={() => onClearAttachment()}
-        iconSize={20}
-      />
-    </Styled.Upload>
+    <Styled.FileList>
+      {fileList.map((file: File, index: number) => {
+        return (
+          <Styled.FileButton key={file.name + '-' + index}>
+            <div className="icon">
+              <UIIcon name={'text document'} size={20} pointer={false} />
+            </div>
+            <div className="label">{file.name}</div>
+            <div className="icon">
+              <IconButton
+                icon={'x'}
+                hover={false}
+                toggle={false}
+                frameSize={20}
+                iconSize={20}
+                onClick={(e) => {
+                  e.stopPropagation();
+                  handleRemoveFile(file.name);
+                }}
+                tooltip={'remove file'}
+                onToolTip={(tip) => onToolTip(tip)}
+              />
+            </div>
+          </Styled.FileButton>
+        );
+      })}
+    </Styled.FileList>
   );
 }

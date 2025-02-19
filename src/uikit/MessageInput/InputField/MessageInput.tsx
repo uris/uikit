@@ -3,16 +3,39 @@ import { useTheme } from 'styled-components';
 import { AnimatePresence } from 'framer-motion';
 import { useObserveResize } from '../../../hooks/useObserveResize';
 import { FileList } from '../FileList/FileList';
+import { UserList } from '../UserList/UserList';
+import { PrompState, UserPresence } from '../UserList/_Types';
+import { Excerpt, ExcerptList } from '../ExcerptList/ExcerptList';
 import { UIButton } from '../../UIButton/UIButton';
-import {
-  JurisdictionFocus,
-  PromptType,
-  Role,
-  SendMessage,
-  UploadDocument,
-} from '../_Types';
+import { JurisdictionFocus, PromptType, Role, SendMessage } from '../_Types';
 import { ToolTip } from '../../../uikit/sharedTypes';
 import * as Styled from './_Styles';
+
+// const testFile: Partial<File> = {
+//   name: 'plans-to-blow-up-the-deathstar.doc',
+//   type: 'text/html',
+//   size: 425,
+//   lastModified: new Date().getSeconds(),
+// };
+
+// const testExcerpt: Excerpt = {
+//   content:
+//     'OB1, we meet again at last. When I left you I was but a learner. Now I am the master... Your powers grow weak old man.',
+//   range: { from: 0, to: 100 },
+//   docID: 'docID',
+// };
+
+// const user: UserPresence = {
+//   avatar:
+//     'https://api.typeup.app/avatars/3c7b7a91-5b68-4b0e-87ee-1c4ee0050f31.png',
+//   conversationID: '87602118-366b-486b-a627-c56277d074b1',
+//   email: 'ob1kenobi@gmail.com',
+//   first: 'OB1',
+//   last: 'Kenobi',
+//   promptContent:
+//     "Only a master of evil Darth. You can't win. If you strike me down I shall become more powerful that you could ever imagine.",
+//   promptState: PrompState.Enabled,
+// };
 
 export interface MessageInputProps {
   maxHeight?: number;
@@ -26,11 +49,18 @@ export interface MessageInputProps {
   isStreaming?: boolean;
   isShort?: boolean;
   error?: string | null;
+  files?: File[];
+  excerpts?: Excerpt[];
+  users?: UserPresence[];
+  currentUser?: string;
+  owner?: string;
   jurisdiction?: JurisdictionFocus | null;
   jurisdictionClick?: () => void;
   attachClick?: () => void;
   complianceCheckClick?: () => void;
-  onClearAttachment?: () => void;
+  onChangeFiles?: (files: File[]) => void;
+  onChangeExcerpts?: (excerpts: Excerpt[]) => void;
+  onTogglePrompt?: (presence: UserPresence) => void;
   onToolTip?: (tip: ToolTip | null) => void;
   onChange?: (prompt: string) => void;
   onBlur?: () => void;
@@ -50,9 +80,16 @@ export function MessageInput(props: MessageInputProps) {
     isFetching = false,
     isShort = true,
     jurisdiction = null,
+    files = [],
+    excerpts = [],
+    users = [],
+    currentUser,
+    owner,
     jurisdictionClick = () => null,
     attachClick = () => null,
-    onClearAttachment = () => null,
+    onChangeFiles = () => null,
+    onChangeExcerpts = () => null,
+    onTogglePrompt = () => null,
     complianceCheckClick = () => null,
     onChange = () => null,
     onBlur = () => null,
@@ -68,8 +105,8 @@ export function MessageInput(props: MessageInputProps) {
   const [message, setMessage] = useState<string>(value);
   const [isFocused, setIsFocused] = useState<boolean>(focused);
   const [promptType, setPromptType] = useState<PromptType>(PromptType.text);
-  const [upload, setUpload] = useState<UploadDocument | null>(null);
   const [invalid, setInvalid] = useState<string | null>(error);
+  const [remoteDisabled, setRemoteDisabled] = useState<boolean>(false);
 
   // reset size if the warpper size changes
   useEffect(() => {
@@ -91,6 +128,19 @@ export function MessageInput(props: MessageInputProps) {
       setIsFocused(focused);
     }
   }, [focused]);
+
+  // disabled prompt if remote owner disabled the user
+  useEffect(() => {
+    if (users.length > 0) {
+      const myPresensce = users.filter((user: UserPresence) => {
+        return user.email === currentUser;
+      });
+      if (myPresensce && myPresensce.length > 0) {
+        setRemoteDisabled(myPresensce[0].promptState === PrompState.Disabled);
+      }
+      return;
+    } else setRemoteDisabled(false);
+  }, [users, currentUser]);
 
   // update error is prop changes
   useEffect(() => setInvalid(error), [error]);
@@ -155,8 +205,9 @@ export function MessageInput(props: MessageInputProps) {
   }
 
   function setDisabled() {
+    if (remoteDisabled) return 'disabled';
     if (isStreaming) return 'normal';
-    else if (!isStreaming && upload) return 'normal';
+    else if (!isStreaming && files.length > 0) return 'normal';
     else if (invalid && invalid !== '') return 'disabled';
     else if (!isStreaming && isFetching) return 'disabled';
     else if (!isStreaming && message === '') return 'disabled';
@@ -197,11 +248,6 @@ export function MessageInput(props: MessageInputProps) {
     onStop();
   }
 
-  function handleClearAttachment() {
-    setUpload(null);
-    onClearAttachment();
-  }
-
   const working = () => {
     if (isStreaming) return false;
     if (isFetching) return true;
@@ -233,8 +279,21 @@ export function MessageInput(props: MessageInputProps) {
       ref={wrapperRef}
     >
       <AnimatePresence initial={false}>
-        {upload && (
-          <FileList onClearAttachment={() => handleClearAttachment()} />
+        {files.length > 0 && (
+          <FileList
+            files={files as File[]}
+            onChange={(files: File[]) => onChangeFiles(files)}
+            onToolTip={(tip) => onToolTip(tip)}
+          />
+        )}
+      </AnimatePresence>
+      <AnimatePresence initial={false}>
+        {excerpts.length > 0 && (
+          <ExcerptList
+            excerpts={excerpts}
+            onChange={(excerpts: Excerpt[]) => onChangeExcerpts(excerpts)}
+            onToolTip={(tip) => onToolTip(tip)}
+          />
         )}
       </AnimatePresence>
       <Styled.InputWrapper $isShort={isShort}>
@@ -253,6 +312,17 @@ export function MessageInput(props: MessageInputProps) {
           rows={1}
         />
       </Styled.InputWrapper>
+      <AnimatePresence initial={false}>
+        {users.length > 0 && (
+          <UserList
+            userPresence={users}
+            owner={owner}
+            currentUser={currentUser}
+            onTogglePrompt={(presence) => onTogglePrompt(presence)}
+            onToolTip={(tip) => onToolTip(tip)}
+          />
+        )}
+      </AnimatePresence>
       <Styled.ButtonRow>
         <Styled.ActionButtons $isShort={isShort}>
           <UIButton

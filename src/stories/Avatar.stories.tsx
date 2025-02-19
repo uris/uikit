@@ -1,4 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react';
+import { fn } from '@storybook/test';
 import { light } from '../theme/useGiaThemes';
 import { Avatar } from '../uikit/Avatar/Avatar';
 import { FlexDiv } from '../uikit/FlexDiv/FlexDiv';
@@ -18,6 +19,7 @@ const meta: Meta<typeof Avatar> = {
     animate: undefined,
     initial: undefined,
     exit: undefined,
+    onToolTip: fn(),
   },
 };
 

@@ -1,5 +1,6 @@
 import { useTheme } from 'styled-components';
 import { Avatar } from '../Avatar/Avatar';
+import { ToolTip } from '../sharedTypes';
 import * as Styled from './_Styles';
 import { AvatarInfo } from './_Types';
 
@@ -10,6 +11,8 @@ export interface AvatarGroupProps {
   bgColor?: string;
   overlap?: number;
   border?: number;
+  borderColor?: string;
+  onToolTip?: (tip: ToolTip | null) => void;
 }
 
 export function AvatarGroup(props: AvatarGroupProps) {
@@ -21,6 +24,8 @@ export function AvatarGroup(props: AvatarGroupProps) {
     overlap = 8,
     selected = false,
     bgColor = undefined,
+    borderColor = undefined,
+    onToolTip = () => null,
   } = props;
 
   return (
@@ -31,16 +36,19 @@ export function AvatarGroup(props: AvatarGroupProps) {
             <Avatar
               first={avatar.email}
               last={avatar.last}
-              image={avatar.image}
+              image={avatar.image ? avatar.image : avatar.avatar}
               size={size}
               frame={size}
               border={border}
               bgColor={bgColor}
               borderColor={
-                selected
-                  ? theme.lyraColors['core-surface-secondary']
-                  : theme.lyraColors['core-surface-primary']
+                borderColor
+                  ? borderColor
+                  : selected
+                    ? theme.lyraColors['core-surface-secondary']
+                    : theme.lyraColors['core-surface-primary']
               }
+              onToolTip={(tip) => onToolTip(tip)}
             />
           </div>
         );
