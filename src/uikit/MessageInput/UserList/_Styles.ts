@@ -17,15 +17,15 @@ const blinkAnimation = keyframes`
 export const UserPrompt = styled.div<{ $enabled: boolean }>`
   ${flexBox.rowStart};
   align-items: flex-start;
-  width: 100%;
-  padding: 16px 0;
-  border-top: 1px solid
-    ${({ theme }) => theme.lyraColors['core-outline-primary']};
+  padding: 6px 6px;
+  border-radius: 24px;
+  background: ${({ theme }) => theme.lyraColors['core-surface-primary']};
+  border: 1px solid ${({ theme }) => theme.lyraColors['core-outline-primary']};
   cursor: default;
   div.avatar {
     ${flexBox.row};
-    height: 20px;
-    width: 20px;
+    height: 24px;
+    width: 24px;
   }
   div.prompt {
     ${flexBox.rowStart};
@@ -35,6 +35,7 @@ export const UserPrompt = styled.div<{ $enabled: boolean }>`
     color: ${({ theme }) => theme.lyraColors['core-text-tertiary']};
     font-weight: 380;
     line-height: 1.5em;
+    min-height: 24px;
     strong {
       ${({ theme }) => theme.lyraType['body-s-regular']};
       color: ${({ theme }) => theme.lyraColors['core-text-primary']};

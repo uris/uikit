@@ -10,7 +10,8 @@ import { ButtonBarButton, ButtonBarGroup } from './_Types';
 
 export interface EditorButtonBarProps {
   shortSize?: number;
-  state?: 'default' | 'short' | 'auto';
+  mediumSize?: number;
+  state?: 'small' | 'medium' | 'regular' | 'auto';
   activeFormats?: string[];
   activeStyle?: 'h1' | 'h2' | 'h3' | 'p';
   onCommand?: (command: any, e: React.MouseEvent<any> | undefined) => void;
@@ -21,18 +22,23 @@ export function EditorButtonBar(props: EditorButtonBarProps) {
   const {
     onCommand = () => null,
     onToolTip = () => null,
-    shortSize = 560,
+    shortSize = 500,
+    mediumSize = 664,
     state = 'auto',
     activeStyle = 'p',
     activeFormats,
   } = props;
-  const [barState, setBarState] = useState<'default' | 'short'>('default');
+  const [barState, setBarState] = useState<'small' | 'medium' | 'regular'>(
+    'regular',
+  );
   const ref = useRef<HTMLDivElement>(null);
   const size = useObserveResize(ref);
   useEffect(() => {
     if (state !== 'auto') setBarState(state);
-    else setBarState(size.width < shortSize ? 'short' : 'default');
-  }, [size, shortSize, state]);
+    else if (size.width < shortSize) setBarState('small');
+    else if (size.width < mediumSize) setBarState('medium');
+    else setBarState('regular');
+  }, [size, shortSize, mediumSize, state]);
 
   function handleStyleChange(option: DropDownOption) {
     switch (option.value) {
@@ -108,7 +114,7 @@ interface RenderGroupProps {
   onToolTip?: (tip: ToolTip | null) => void;
   buttonGroup: ButtonBarGroup;
   activeFormats?: string[];
-  state?: 'default' | 'short';
+  state?: 'regular' | 'small' | 'medium';
 }
 
 export function RenderGroup(props: RenderGroupProps) {
@@ -122,7 +128,7 @@ export function RenderGroup(props: RenderGroupProps) {
   const theme = useTheme();
   return (
     <Styled.ButtonGroup>
-      {state === 'default' && <div className="divider" />}
+      {state !== 'small' && <div className="divider" />}
       {buttonGroup?.buttons?.map((button: ButtonBarButton, index: number) => {
         const active = button?.id ? activeFormats?.includes(button.id) : false;
         const bgColor = active

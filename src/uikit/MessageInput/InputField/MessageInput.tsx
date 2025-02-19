@@ -11,32 +11,6 @@ import { JurisdictionFocus, PromptType, Role, SendMessage } from '../_Types';
 import { ToolTip } from '../../../uikit/sharedTypes';
 import * as Styled from './_Styles';
 
-// const testFile: Partial<File> = {
-//   name: 'plans-to-blow-up-the-deathstar.doc',
-//   type: 'text/html',
-//   size: 425,
-//   lastModified: new Date().getSeconds(),
-// };
-
-// const testExcerpt: Excerpt = {
-//   content:
-//     'OB1, we meet again at last. When I left you I was but a learner. Now I am the master... Your powers grow weak old man.',
-//   range: { from: 0, to: 100 },
-//   docID: 'docID',
-// };
-
-// const user: UserPresence = {
-//   avatar:
-//     'https://api.typeup.app/avatars/3c7b7a91-5b68-4b0e-87ee-1c4ee0050f31.png',
-//   conversationID: '87602118-366b-486b-a627-c56277d074b1',
-//   email: 'ob1kenobi@gmail.com',
-//   first: 'OB1',
-//   last: 'Kenobi',
-//   promptContent:
-//     "Only a master of evil Darth. You can't win. If you strike me down I shall become more powerful that you could ever imagine.",
-//   promptState: PrompState.Enabled,
-// };
-
 export interface MessageInputProps {
   maxHeight?: number;
   focused?: boolean;

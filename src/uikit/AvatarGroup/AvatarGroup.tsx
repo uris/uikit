@@ -12,6 +12,7 @@ export interface AvatarGroupProps {
   overlap?: number;
   border?: number;
   borderColor?: string;
+  gap?: number;
   onToolTip?: (tip: ToolTip | null) => void;
 }
 
@@ -22,6 +23,7 @@ export function AvatarGroup(props: AvatarGroupProps) {
     size = 32,
     border = 3,
     overlap = 8,
+    gap = 0,
     selected = false,
     bgColor = undefined,
     borderColor = undefined,
@@ -29,7 +31,7 @@ export function AvatarGroup(props: AvatarGroupProps) {
   } = props;
 
   return (
-    <Styled.Wrapper $overlap={overlap}>
+    <Styled.Wrapper $overlap={overlap} $gap={gap}>
       {avatars?.map((avatar: AvatarInfo, index: number) => {
         return (
           <div className="avatar" key={'avatar_' + avatar.email + '_' + index}>

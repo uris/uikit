@@ -142,7 +142,7 @@ export const buttonGroups: { [key: string]: ButtonBarGroup } = {
 };
 
 export const editControls: { [key: string]: EditControls } = {
-  default: {
+  regular: {
     styles,
     buttons: [
       buttonGroups.format,
@@ -152,8 +152,13 @@ export const editControls: { [key: string]: EditControls } = {
     ],
     download: coreButtons.download,
   },
-  short: {
+  small: {
     buttons: [buttonGroups.format, buttonGroups.more],
+    download: coreButtons.download,
+  },
+  medium: {
+    styles,
+    buttons: [buttonGroups.format, buttonGroups.lists],
     download: coreButtons.download,
   },
 };

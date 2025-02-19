@@ -22,7 +22,7 @@ export const ButtonGroup = styled.div`
     width: 1px;
     min-width: 1px;
     max-width: 1px;
-    background: ${({ theme }) => theme.lyraColors['core-button-disabled']};
+    background: ${({ theme }) => theme.lyraColors['core-surface-secondary']};
     margin: 0 8px;
   }
 `;
