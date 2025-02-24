@@ -42,10 +42,17 @@ export function UIImage(props: UIImageProps) {
     } // Ensure valid DPR values
     async function setSource() {
       try {
-        const pathToImage = `./images/${name}${pd ? '@' + pd + 'x' : ''}.${type}`;
-        const src = await import(/* @vite-ignore */ pathToImage);
+        const imageName = `${name}${pd ? '@' + pd + 'x' : ''}.${type}`;
+        let src;
+        try {
+          src = await import(`./images/${imageName}`);
+        } catch {
+          src = await import(`../assets/${imageName}`);
+        }
+
         setImageSrc(src.default);
-      } catch {
+      } catch (error) {
+        console.error(`Failed to load image: ${name}`, error);
         setImageSrc(null);
       }
     }

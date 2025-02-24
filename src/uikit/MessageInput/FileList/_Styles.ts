@@ -11,7 +11,8 @@ export const FileList = styled.div`
 
 export const FileButton = styled.div`
   ${flexBox.rowStart};
-  padding: 10px 16px;
+  align-items: flex-start;
+  padding: 10px 16px 14px 12px;
   background: ${({ theme }) => theme.lyraColors['core-surface-primary']};
   border: 1px solid ${({ theme }) => theme.lyraColors['core-outline-primary']};
   border-radius: 24px;
@@ -22,20 +23,37 @@ export const FileButton = styled.div`
     height: 20px;
     width: 20px;
   }
-  div.label {
-    ${flexBox.row};
-    padding: 0px 8px 0px 8px;
-    ${({ theme }) => theme.lyraType['body-m-regular']};
-    color: ${({ theme }) => theme.lyraColors['core-text-primary']};
-    max-width: 250px;
-    line-height: 1.5em;
-    overflow: hidden;
-    word-break: normal;
-    display: -webkit-box;
-    -webkit-line-clamp: 1;
-    -webkit-box-orient: vertical;
-    user-select: none;
-    -webkit-user-select: none;
+  div.content {
+    ${flexBox.columnStart};
+    max-width: 300px;
+    padding: 0px 16px 0px 8px;
+    gap: 4px;
+    div.label {
+      ${({ theme }) => theme.lyraType['body-m-regular']};
+      color: ${({ theme }) => theme.lyraColors['core-text-primary']};
+      max-width: 300px;
+      line-height: 1.5em;
+      overflow: hidden;
+      word-break: normal;
+      display: -webkit-box;
+      -webkit-line-clamp: 3;
+      -webkit-box-orient: vertical;
+      user-select: none;
+      -webkit-user-select: none;
+    }
+    div.type {
+      ${flexBox.rowStart};
+      padding-top: 4px;
+      ${({ theme }) => theme.lyraType['body-xs-regular']};
+      color: ${({ theme }) => theme.lyraColors['core-text-disabled']};
+      gap: 4px;
+      div.icon {
+        ${flexBox.row};
+        height: 16px;
+        width: 16px;
+        overflow: hidden;
+      }
+    }
   }
   div.clear {
     ${flexBox.row};

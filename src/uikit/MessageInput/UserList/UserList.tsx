@@ -59,7 +59,7 @@ export function UserList(props: UserListProps) {
             <div className="prompt">
               <p>
                 {' '}
-                <strong>{user.first}: </strong> {user.promptContent}
+                <strong>{user.first} is typing:</strong> {user.promptContent}
               </p>
             </div>
             {currentUser === owner && user.promptContent !== '' && (

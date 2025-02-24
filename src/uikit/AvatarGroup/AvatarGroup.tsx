@@ -1,4 +1,3 @@
-import { useTheme } from 'styled-components';
 import { Avatar } from '../Avatar/Avatar';
 import { ToolTip } from '../sharedTypes';
 import * as Styled from './_Styles';
@@ -7,31 +6,30 @@ import { AvatarInfo } from './_Types';
 export interface AvatarGroupProps {
   avatars?: AvatarInfo[] | null;
   size?: number;
-  selected?: boolean;
   bgColor?: string;
   overlap?: number;
   border?: number;
   borderColor?: string;
   gap?: number;
+  margin?: number;
   onToolTip?: (tip: ToolTip | null) => void;
 }
 
 export function AvatarGroup(props: AvatarGroupProps) {
-  const theme = useTheme();
   const {
     avatars = [],
     size = 32,
     border = 3,
     overlap = 8,
     gap = 0,
-    selected = false,
     bgColor = undefined,
     borderColor = undefined,
+    margin = 0,
     onToolTip = () => null,
   } = props;
 
   return (
-    <Styled.Wrapper $overlap={overlap} $gap={gap}>
+    <Styled.Wrapper $overlap={overlap} $gap={gap} $margin={margin}>
       {avatars?.map((avatar: AvatarInfo, index: number) => {
         return (
           <div className="avatar" key={'avatar_' + avatar.email + '_' + index}>
@@ -43,13 +41,7 @@ export function AvatarGroup(props: AvatarGroupProps) {
               frame={size}
               border={border}
               bgColor={bgColor}
-              borderColor={
-                borderColor
-                  ? borderColor
-                  : selected
-                    ? theme.lyraColors['core-surface-secondary']
-                    : theme.lyraColors['core-surface-primary']
-              }
+              borderColor={borderColor}
               onToolTip={(tip) => onToolTip(tip)}
             />
           </div>

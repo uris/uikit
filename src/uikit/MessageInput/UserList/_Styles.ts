@@ -17,7 +17,7 @@ const blinkAnimation = keyframes`
 export const UserPrompt = styled.div<{ $enabled: boolean }>`
   ${flexBox.rowStart};
   align-items: flex-start;
-  padding: 6px 6px;
+  padding: 10px 12px;
   border-radius: 24px;
   background: ${({ theme }) => theme.lyraColors['core-surface-primary']};
   border: 1px solid ${({ theme }) => theme.lyraColors['core-outline-primary']};

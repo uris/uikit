@@ -30,7 +30,7 @@ export const Avatar = styled(motion.div)<{
     text-transform: uppercase;
     border-radius: 100%;
     border: ${({ $border }) => $border}px solid
-      ${({ $borderColor }) => $borderColor};
+      ${({ $borderColor }) => ($borderColor ? $borderColor : 'transparent')};
     min-height: ${({ $size }) => $size}px;
     min-width: ${({ $size }) => $size}px;
     height: ${({ $size }) => $size}px;
@@ -40,5 +40,10 @@ export const Avatar = styled(motion.div)<{
     color: ${({ theme }) => theme.lyraColors['core-text-primary']};
     background-image: url('${({ $image }) => $image}');
     background-size: cover;
+    cursor: pointer;
+    &:hover {
+      border: ${({ $border }) => $border}px solid
+        ${({ theme }) => theme.lyraColors['core-badge-primary']};
+    }
   }
 `;

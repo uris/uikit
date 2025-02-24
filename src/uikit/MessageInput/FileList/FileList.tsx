@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { useTheme } from 'styled-components';
 import { IconButton } from '../../IconButton/IconButton';
 import { UIIcon } from '../../UIIcon/UIIcon';
 import { ToolTip } from '../../sharedTypes';
@@ -12,6 +13,7 @@ interface FileListProps {
 
 export function FileList(props: FileListProps) {
   const { files = [], onChange = () => null, onToolTip = () => null } = props;
+  const theme = useTheme();
   const [fileList, setFileList] = useState<File[]>(files);
   useEffect(() => setFileList(files), [files]);
 
@@ -28,10 +30,17 @@ export function FileList(props: FileListProps) {
       {fileList.map((file: File, index: number) => {
         return (
           <Styled.FileButton key={file.name + '-' + index}>
-            <div className="icon">
-              <UIIcon name={'text document'} size={20} pointer={false} />
+            <div className="content">
+              <div className="type">
+                <UIIcon
+                  name="text document"
+                  size={16}
+                  strokeColor={theme.lyraColors['core-text-disabled']}
+                />
+                {file.type}
+              </div>
+              <div className="label">{file.name}</div>
             </div>
-            <div className="label">{file.name}</div>
             <div className="icon">
               <IconButton
                 icon={'x'}

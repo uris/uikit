@@ -1,7 +1,6 @@
 import { GPGiaLogo, GPGiaLogoProps } from './GPGiaLogo';
 import { GPLogo, GPLogoProps } from './GPLogo';
 import { Logos, LogoProps } from './Logos';
-import { ProductImage, ProductImageProps, Product } from './ProductImage';
 
-export { GPGiaLogo, GPLogo, Logos, ProductImage, Product };
-export type { GPGiaLogoProps, LogoProps, GPLogoProps, ProductImageProps };
+export { GPGiaLogo, GPLogo, Logos };
+export type { GPGiaLogoProps, LogoProps, GPLogoProps };

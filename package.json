@@ -1,6 +1,6 @@
 {
   "name": "gia-lyra-uikit",
-  "version": "1.1.99",
+  "version": "1.2.6",
   "main": "dist/index.js",
   "module": "dist/index.esm.js",
   "files": [
@@ -80,5 +80,8 @@
     "extends": [
       "plugin:storybook/recommended"
     ]
+  },
+  "dependencies": {
+    "gia-lyra-uikit": "^1.2.6"
   }
 }

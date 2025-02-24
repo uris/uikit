@@ -14,6 +14,7 @@ export interface EditorButtonBarProps {
   state?: 'small' | 'medium' | 'regular' | 'auto';
   activeFormats?: string[];
   activeStyle?: 'h1' | 'h2' | 'h3' | 'p';
+  disabledFormats?: string[];
   onCommand?: (command: any, e: React.MouseEvent<any> | undefined) => void;
   onToolTip?: (tip: ToolTip | null) => void;
 }
@@ -26,6 +27,7 @@ export function EditorButtonBar(props: EditorButtonBarProps) {
     mediumSize = 664,
     state = 'auto',
     activeStyle = 'p',
+    disabledFormats = [],
     activeFormats,
   } = props;
   const [barState, setBarState] = useState<'small' | 'medium' | 'regular'>(
@@ -79,6 +81,7 @@ export function EditorButtonBar(props: EditorButtonBarProps) {
                 onToolTip={(tip) => onToolTip(tip)}
                 buttonGroup={group}
                 activeFormats={activeFormats}
+                disabledFormats={disabledFormats}
                 state={barState}
               />
             );
@@ -90,17 +93,19 @@ export function EditorButtonBar(props: EditorButtonBarProps) {
           <IconButton
             icon={coreButtons.copy.icon}
             tooltip={coreButtons.copy.toolTip}
-            hover={true}
+            hover={disabledFormats.includes('download')}
             toggle={false}
             onToolTip={(tip) => onToolTip(tip)}
+            disabled={disabledFormats.includes('copy')}
             onClick={(e) => onCommand(coreButtons.copy.command, e)}
           />
           <IconButton
             icon={coreButtons.download.icon}
             tooltip={coreButtons.download.toolTip}
-            hover={true}
+            hover={!disabledFormats.includes('download')}
             toggle={false}
             onToolTip={(tip) => onToolTip(tip)}
+            disabled={disabledFormats.includes('download')}
             onClick={(e) => onCommand(coreButtons.download.command, e)}
           />
         </div>
@@ -114,6 +119,7 @@ interface RenderGroupProps {
   onToolTip?: (tip: ToolTip | null) => void;
   buttonGroup: ButtonBarGroup;
   activeFormats?: string[];
+  disabledFormats?: string[];
   state?: 'regular' | 'small' | 'medium';
 }
 
@@ -124,6 +130,7 @@ export function RenderGroup(props: RenderGroupProps) {
     buttonGroup,
     activeFormats,
     state = 'default',
+    disabledFormats = [],
   } = props;
   const theme = useTheme();
   return (
@@ -140,10 +147,11 @@ export function RenderGroup(props: RenderGroupProps) {
             icon={button?.icon}
             tooltip={button?.toolTip}
             onToolTip={(tip) => onToolTip(tip)}
-            hover={true}
+            hover={!disabledFormats.includes(button.id || 'none')}
             toggle={false}
             bgColor={bgColor}
             onClick={(e) => onCommand(button?.command, e)}
+            disabled={disabledFormats.includes(button.id || 'none')}
             frameSize={30}
             iconSize={20}
           />

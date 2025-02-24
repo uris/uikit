@@ -30,9 +30,22 @@ export default defineConfig(({ mode }) => {
       open: true,
       port: 3000,
     },
-    resolve: {
-      alias: {
-        '@fs': './',
+    assetsInclude: ['**/*.png', '**/*.jpg', '**/*.gif', '**/*.svg'],
+    build: {
+      lib: {
+        entry: resolve(__dirname, 'src/uikit/Logos/GPLogo.tsx'), // Adjust this to your entry point
+        name: 'gia-lyra-uikit',
+        formats: ['es', 'cjs'],
+        fileName: (format) => `index.${format}.js`,
+      },
+      rollupOptions: {
+        external: ['react', 'react-dom', 'styled-components', 'framer-motion'], // Add other external dependencies
+        output: {
+          assetFileNames: 'assets/[name][extname]',
+          // Preserve the directory structure for assets
+          preserveModules: true,
+          preserveModulesRoot: 'src',
+        },
       },
     },
   };

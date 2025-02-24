@@ -48,10 +48,11 @@ export default {
     // Export SVGs and PNgs as URLs for assets
     // include public path to make sure these get refenced ok
     url({
-      include: ['**/*.svg', '**/*.png'], // Match SVG files
+      include: ['**/*.svg', '**/*.png', '**/*.jpg', '**/*.gif'],
       limit: 0, // Always copy images as assets
-      fileName: 'assets/[name]-[hash][extname]', // File naming
+      fileName: 'uikit/UIImage/images/[name]-[hash][extname]', // File naming
       emitFiles: true,
+      publicPath: '',
     }),
   ],
 };

@@ -55,13 +55,8 @@ export type { GrouperProps } from './uikit/Grouper';
 
 export { Icon, IconNames } from './uikit/Icon';
 
-export { GPGiaLogo, GPLogo, Logos, ProductImage, Product } from './uikit/Logos';
-export type {
-  GPGiaLogoProps,
-  LogoProps,
-  GPLogoProps,
-  ProductImageProps,
-} from './uikit/Logos';
+export { GPGiaLogo, GPLogo, Logos } from './uikit/Logos';
+export type { GPGiaLogoProps, LogoProps, GPLogoProps } from './uikit/Logos';
 
 export { Overlay } from './uikit/Overlay';
 export type { OverlayProps } from './uikit/Overlay';

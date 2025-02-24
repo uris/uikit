@@ -9,8 +9,8 @@ import {
 import { Excerpt } from '../uikit/MessageInput/ExcerptList/ExcerptList';
 
 const testFile: Partial<File> = {
-  name: 'plans-to-blow-up-the-deathstar.doc',
-  type: 'text/html',
+  name: 'secret-plans-to-blow-up-the-deathstar.docx',
+  type: 'Mircrosoft word / docx',
   size: 425,
   lastModified: new Date().getSeconds(),
 };
@@ -29,7 +29,8 @@ const user: UserPresence = {
   email: 'ob1kenobi@gmail.com',
   first: 'OB1',
   last: 'Kenobi',
-  promptContent: 'Only a master of evil Darth. ',
+  promptContent:
+    'this is me typing Implement a range of health interventions that address both occupational diseases and general health concerns. This can include fatigue management, chemical management, hearing conservation, fall prevention, and chronic disease management.',
   promptState: PrompState.Enabled,
 };
 
@@ -38,7 +39,7 @@ const meta: Meta<typeof MessageInput> = {
   component: MessageInput,
   args: {
     value: '',
-    maxHeight: 300,
+    maxHeight: 1000,
     focused: false,
     error: null,
     placeholder: 'Ask me anytning HR compliance',

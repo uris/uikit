@@ -14,5 +14,15 @@ const config: StorybookConfig = {
     options: {},
   },
   staticDirs: [{ from: '../public', to: '/public' }],
+  viteFinal: (config) => {
+    // Remove @fs prefix for image paths
+    config.server = config.server || {};
+    config.server.fs = {
+      strict: false,
+      allow: ['/'],
+    };
+
+    return config;
+  },
 };
 export default config;
