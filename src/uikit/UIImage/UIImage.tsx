@@ -9,6 +9,7 @@ export enum UIImageNames {
   profileWoman2 = 'expert3',
   gpcolorlogo = 'gp-color',
   gpcolormark = 'gp-mark',
+  empty = 'empty',
 }
 
 export interface UIImageProps {
@@ -22,7 +23,7 @@ export interface UIImageProps {
 
 export function UIImage(props: UIImageProps) {
   const {
-    name = '',
+    name = 'empty',
     type = 'png',
     width = 'auto',
     height = 'auto',
@@ -31,32 +32,41 @@ export function UIImage(props: UIImageProps) {
   } = props;
   const [imageSrc, setImageSrc] = useState<string | null>(null);
   const [pd, setPd] = useState<1 | 2 | 3 | null>(null);
+
   useEffect(() => {
-    setSource();
     if (dpr === 'auto') {
       const ratio = Math.min(Math.ceil(window.devicePixelRatio), 3) as
         | 1
         | 2
         | 3;
       setPd(ratio);
-    } // Ensure valid DPR values
-    async function setSource() {
+    } else if (typeof dpr === 'number') {
+      setPd(dpr);
+    }
+  }, [dpr]);
+
+  useEffect(() => {
+    async function loadImage() {
+      if (!name) return;
       try {
         const imageName = `${name}${pd ? '@' + pd + 'x' : ''}.${type}`;
-        let src;
+        let imageModule;
         try {
-          src = await import(`./images/${imageName}`);
+          // Using dynamic import with explicit file extension
+          imageModule = await import(`./images/${imageName}`);
         } catch {
-          src = await import(`../assets/${imageName}`);
+          // Fallback to assets directory
+          imageModule = await import(`../dist/assets/${imageName}`);
         }
-
-        setImageSrc(src.default);
+        setImageSrc(imageModule.default);
       } catch (error) {
         console.error(`Failed to load image: ${name}`, error);
         setImageSrc(null);
       }
     }
-  }, [name, dpr, type, pd]);
+    loadImage();
+  }, [name, type, pd]);
+
   if (!imageSrc) return null;
   return (
     <img

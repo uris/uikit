@@ -31,5 +31,13 @@ export default defineConfig(({ mode }) => {
       port: 3000,
     },
     assetsInclude: ['**/*.png', '**/*.jpg', '**/*.gif', '**/*.svg'],
+    build: {
+      assetsDir: 'assets',
+      rollupOptions: {
+        output: {
+          assetFileNames: 'assets/[name][extname]',
+        },
+      },
+    },
   };
 });

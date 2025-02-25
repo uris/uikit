@@ -22,9 +22,7 @@ export function UserList(props: UserListProps) {
     presenceID = '',
   } = props;
   const [userList, setUserList] = useState<UserPresence[]>(userPresence);
-  useEffect(() => {
-    setUserList(userPresence);
-  }, [userPresence]);
+  useEffect(() => setUserList(userPresence), [userPresence]);
 
   function handleTogglePrompt(user: UserPresence) {
     if (currentUser !== owner) return;
