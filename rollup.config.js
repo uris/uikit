@@ -50,9 +50,9 @@ export default {
     url({
       include: ['**/*.svg', '**/*.png', '**/*.jpg', '**/*.gif'],
       limit: 0, // Always copy images as assets
-      fileName: 'assets/[name][extname]', // Keep assets in assets folder
+      fileName: 'assets/[name][extname]',
       emitFiles: true,
-      publicPath: '', // Remove the public path prefix
+      publicPath: '../', // Change to navigate from dist/index.js to dist/assets
     }),
   ],
 };

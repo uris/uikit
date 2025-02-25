@@ -1,14 +1,14 @@
-import { ReactComponent as Australia } from './Australia.svg';
-import { ReactComponent as Canada } from './Canada.svg';
-import { ReactComponent as France } from './France.svg';
-import { ReactComponent as Germany } from './Germany.svg';
-import { ReactComponent as USA } from './USA.svg';
-import { ReactComponent as India } from './India.svg';
-import { ReactComponent as Mexico } from './Mexico.svg';
-import { ReactComponent as Philippines } from './Philippines.svg';
-import { ReactComponent as Spain } from './Spain.svg';
-import { ReactComponent as UK } from './United Kingdom.svg';
-import { ReactComponent as China } from './China.svg';
+import { ReactComponent as Australia } from '../../assets/images/Australia.svg';
+import { ReactComponent as Canada } from '../../assets/images/Canada.svg';
+import { ReactComponent as France } from '../../assets/images/France.svg';
+import { ReactComponent as Germany } from '../../assets/images/Germany.svg';
+import { ReactComponent as USA } from '../../assets/images/USA.svg';
+import { ReactComponent as India } from '../../assets/images/India.svg';
+import { ReactComponent as Mexico } from '../../assets/images/Mexico.svg';
+import { ReactComponent as Philippines } from '../../assets/images/Philippines.svg';
+import { ReactComponent as Spain } from '../../assets/images/Spain.svg';
+import { ReactComponent as UK } from '../../assets/images/United Kingdom.svg';
+import { ReactComponent as China } from '../../assets/images/China.svg';
 import * as Styled from './_Styles';
 
 export enum FlagNames {

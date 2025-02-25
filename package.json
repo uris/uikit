@@ -1,22 +1,26 @@
 {
   "name": "gia-lyra-uikit",
-  "version": "1.2.12",
+  "version": "1.2.24",
   "main": "dist/index.js",
   "module": "dist/index.esm.js",
   "files": [
-    "dist/",
-    "READEME.md"
+    "dist",
+    "README.md",
+    "scripts/copy-assets.mjs"
   ],
   "scripts": {
     "lint": "eslint 'src/**/*.{ts,tsx}' --no-cache --format stylish",
     "lint:fix": "eslint 'src/**/*.{ts,tsx}' --fix",
     "create-index": "node scripts/generate-index.mjs",
     "test": "echo \"Error: no test specified\" && exit 1",
+    "prebuild": "rm -rf dist",
     "build": "rollup -c --bundleConfigAsCjs",
     "dev": "vite",
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build",
-    "generate:stories": "node scripts/generate-stories.mjs"
+    "generate:stories": "node scripts/generate-stories.mjs",
+    "postinstall": "node scripts/copy-assets.mjs",
+    "install": "node scripts/copy-assets.mjs"
   },
   "keywords": [],
   "author": "",
@@ -80,8 +84,5 @@
     "extends": [
       "plugin:storybook/recommended"
     ]
-  },
-  "dependencies": {
-    "gia-lyra-uikit": "^1.2.6"
   }
 }

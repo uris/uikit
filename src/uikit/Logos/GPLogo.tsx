@@ -1,8 +1,8 @@
 import { useTheme } from 'styled-components';
-import mark2x from '../UIImage/images/gp-mark.png';
-import logo3x from '../UIImage/images/gp-color@3x.png';
-import logo2x from '../UIImage/images/gp-color@2x.png';
-import logo1x from '../UIImage/images/gp-color@1x.png';
+import mark2x from '../../assets/images/gp-mark.png';
+import logo3x from '../../assets/images/gp-color@3x.png';
+import logo2x from '../../assets/images/gp-color@2x.png';
+import logo1x from '../../assets/images/gp-color@1x.png';
 import { Logos } from './Logos';
 
 export interface GPLogoProps {

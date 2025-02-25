@@ -1,5 +1,5 @@
 import { useTheme } from 'styled-components';
-import logoColor from '../UIImage/images/GPGiaLogoColor.png';
+import logoColor from '../../assets/images/GPGiaLogoColor.png';
 import { Logos } from './Logos';
 
 export interface GPGiaLogoProps {

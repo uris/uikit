@@ -83,6 +83,8 @@ export function MessageInput(props: MessageInputProps) {
   const [promptType, setPromptType] = useState<PromptType>(PromptType.text);
   const [invalid, setInvalid] = useState<string | null>(error);
   const [remoteDisabled, setRemoteDisabled] = useState<boolean>(false);
+  const [docExcerpts, setDocExcerpts] = useState<Excerpt[]>(excerpts);
+  const [uploadFiles, setUploadFiles] = useState<File[]>(files);
 
   // reset size if the warpper size changes
   useEffect(() => {
@@ -121,6 +123,10 @@ export function MessageInput(props: MessageInputProps) {
   // update error is prop changes
   useEffect(() => setInvalid(error), [error]);
 
+  // update files/excerpts with prop updates
+  useEffect(() => setDocExcerpts(excerpts), [excerpts]);
+  useEffect(() => setUploadFiles(files), [files]);
+
   function resetHeight() {
     if (ref && ref.current) {
       ref.current.style.height = '0px';
@@ -146,7 +152,8 @@ export function MessageInput(props: MessageInputProps) {
         promptType,
         role: Role.USER,
         htmlContent: '',
-        files: [],
+        files: uploadFiles,
+        excerpts: docExcerpts,
         done: false,
       };
       onSend(newMessage);
@@ -255,19 +262,25 @@ export function MessageInput(props: MessageInputProps) {
       ref={wrapperRef}
     >
       <AnimatePresence initial={false}>
-        {files.length > 0 && (
+        {uploadFiles.length > 0 && (
           <FileList
             files={files as File[]}
-            onChange={(files: File[]) => onChangeFiles(files)}
+            onChange={(files: File[]) => {
+              setUploadFiles(files);
+              onChangeFiles(files);
+            }}
             onToolTip={(tip) => onToolTip(tip)}
           />
         )}
       </AnimatePresence>
       <AnimatePresence initial={false}>
-        {excerpts.length > 0 && (
+        {docExcerpts.length > 0 && (
           <ExcerptList
             excerpts={excerpts}
-            onChange={(excerpts: Excerpt[]) => onChangeExcerpts(excerpts)}
+            onChange={(excerpts: Excerpt[]) => {
+              setDocExcerpts(excerpts);
+              onChangeExcerpts(excerpts);
+            }}
             onToolTip={(tip) => onToolTip(tip)}
           />
         )}

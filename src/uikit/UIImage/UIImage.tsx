@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { imageMap } from './imageImports';
 
 export enum UIImageNames {
   lightMode = 'light',
@@ -13,9 +14,8 @@ export enum UIImageNames {
 }
 
 export interface UIImageProps {
-  name?: UIImageNames | string;
+  name?: string | UIImageNames;
   dpr?: 1 | 2 | 3 | 'auto' | 'none';
-  type?: 'png' | 'jpg' | 'gif';
   width?: number | 'auto' | '100%';
   height?: number | 'auto' | '100%';
   title?: string;
@@ -24,7 +24,6 @@ export interface UIImageProps {
 export function UIImage(props: UIImageProps) {
   const {
     name = 'empty',
-    type = 'png',
     width = 'auto',
     height = 'auto',
     dpr = 'none',
@@ -46,31 +45,23 @@ export function UIImage(props: UIImageProps) {
   }, [dpr]);
 
   useEffect(() => {
-    async function loadImage() {
-      if (!name) return;
-      try {
-        const imageName = `${name}${pd ? '@' + pd + 'x' : ''}.${type}`;
-        let imageModule;
-        try {
-          // Using dynamic import with explicit file extension
-          imageModule = await import(`./images/${imageName}`);
-        } catch {
-          // Fallback to assets directory
-          imageModule = await import(`../dist/assets/${imageName}`);
-        }
-        setImageSrc(imageModule.default);
-      } catch (error) {
-        console.error(`Failed to load image: ${name}`, error);
-        setImageSrc(null);
-      }
+    if (!name) return;
+
+    const resolution = pd || 1;
+    const image = imageMap[name]?.[resolution];
+
+    if (image) {
+      setImageSrc(image);
+    } else {
+      console.error(`Image not found: ${name} at resolution ${resolution}x`);
+      setImageSrc(null);
     }
-    loadImage();
-  }, [name, type, pd]);
+  }, [name, pd]);
 
   if (!imageSrc) return null;
   return (
     <img
-      src={imageSrc || ''}
+      src={imageSrc}
       width={width}
       height={height}
       alt={title ? title : name}

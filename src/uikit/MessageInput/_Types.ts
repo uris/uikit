@@ -1,3 +1,5 @@
+import { Excerpt } from './ExcerptList/ExcerptList';
+
 export type SendMessage = {
   id: string;
   content: string;
@@ -5,7 +7,8 @@ export type SendMessage = {
   promptType: PromptType;
   role: Role;
   htmlContent: string;
-  files: UploadDocument[];
+  files: File[];
+  excerpts: Excerpt[];
   done: boolean;
 };
 
