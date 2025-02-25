@@ -1,5 +1,4 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import { GPLogo as GPLogoLyra } from 'gia-lyra-uikit';
 import { GPLogo } from '../uikit/Logos/GPLogo';
 import { FlexDiv } from '../uikit/FlexDiv/FlexDiv';
 
@@ -22,7 +21,6 @@ export const Default: StoryObj<typeof GPLogo> = {
   render: (args) => {
     return (
       <FlexDiv justify={'center'} alignItems={'center'} padding={64}>
-        <GPLogoLyra {...args} />
         <GPLogo {...args} />
       </FlexDiv>
     );

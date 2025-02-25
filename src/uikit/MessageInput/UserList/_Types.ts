@@ -1,4 +1,5 @@
 export type UserPresence = {
+  id?: string;
   first?: string;
   last?: string;
   email?: string;

@@ -28,6 +28,7 @@ export interface MessageInputProps {
   users?: UserPresence[];
   currentUser?: string;
   owner?: string;
+  presenceID?: string;
   jurisdiction?: JurisdictionFocus | null;
   jurisdictionClick?: () => void;
   attachClick?: () => void;
@@ -58,6 +59,7 @@ export function MessageInput(props: MessageInputProps) {
     excerpts = [],
     users = [],
     currentUser,
+    presenceID,
     owner,
     jurisdictionClick = () => null,
     attachClick = () => null,
@@ -292,6 +294,7 @@ export function MessageInput(props: MessageInputProps) {
             userPresence={users}
             owner={owner}
             currentUser={currentUser}
+            presenceID={presenceID}
             onTogglePrompt={(presence) => onTogglePrompt(presence)}
             onToolTip={(tip) => onToolTip(tip)}
           />

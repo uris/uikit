@@ -8,6 +8,7 @@ interface UserListProps {
   userPresence?: UserPresence[];
   owner?: string;
   currentUser?: string;
+  presenceID?: string;
   onTogglePrompt?: (userPresensce: UserPresence) => void;
   onToolTip?: (tip: ToolTip | null) => void;
 }
@@ -18,6 +19,7 @@ export function UserList(props: UserListProps) {
     onTogglePrompt = () => null,
     owner = '',
     currentUser = '',
+    presenceID = '',
   } = props;
   const [userList, setUserList] = useState<UserPresence[]>(userPresence);
   useEffect(() => {
@@ -40,7 +42,7 @@ export function UserList(props: UserListProps) {
   return (
     <Styled.PromptList>
       {userList.map((user: UserPresence, index: number) => {
-        if (user.email === currentUser) return null;
+        if (user.id === presenceID) return null;
         if (!user.promptContent || user.promptContent === '') return null;
         return (
           <Styled.UserPrompt
@@ -58,22 +60,23 @@ export function UserList(props: UserListProps) {
             </div>
             <div className="prompt">
               <p>
-                {' '}
                 <strong>{user.first} is typing:</strong> {user.promptContent}
               </p>
             </div>
-            {currentUser === owner && user.promptContent !== '' && (
-              <div
-                className="control"
-                role={'button'}
-                aria-label={'Stop/Play'}
-                onKeyDown={() => handleTogglePrompt(user)}
-                onClick={() => handleTogglePrompt(user)}
-                tabIndex={0}
-              >
-                <span className="cursor" />
-              </div>
-            )}
+            {currentUser === owner &&
+              currentUser !== user.email &&
+              user.promptContent !== '' && (
+                <div
+                  className="control"
+                  role={'button'}
+                  aria-label={'Stop/Play'}
+                  onKeyDown={() => handleTogglePrompt(user)}
+                  onClick={() => handleTogglePrompt(user)}
+                  tabIndex={0}
+                >
+                  <span className="cursor" />
+                </div>
+              )}
           </Styled.UserPrompt>
         );
       })}

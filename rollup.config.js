@@ -50,7 +50,7 @@ export default {
     url({
       include: ['**/*.svg', '**/*.png', '**/*.jpg', '**/*.gif'],
       limit: 0, // Always copy images as assets
-      fileName: 'uikit/UIImage/images/[name]-[hash][extname]', // File naming
+      fileName: 'assets/[name]-[hash][extname]', // File naming
       emitFiles: true,
       publicPath: '',
     }),
