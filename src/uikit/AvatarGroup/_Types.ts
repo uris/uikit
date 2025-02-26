@@ -4,4 +4,6 @@ export type AvatarInfo = {
   image?: any;
   avatar?: string;
   email?: string;
+  color?: string;
+  bgColor?: string;
 };

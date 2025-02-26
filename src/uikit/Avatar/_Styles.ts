@@ -16,6 +16,7 @@ export const Avatar = styled(motion.div)<{
   $border: number;
   $borderColor: string;
   $bgColor?: string;
+  $color?: string;
 }>`
   ${flexBox.row};
   position: relative;
@@ -27,6 +28,7 @@ export const Avatar = styled(motion.div)<{
     ${flexBox.row};
     ${({ theme }) => theme.lyraType['body-m-regular']};
     font-size: ${({ $frame }) => setFontSize($frame)}px;
+    line-height: 1em;
     text-transform: uppercase;
     border-radius: 100%;
     border: ${({ $border }) => $border}px solid
@@ -37,7 +39,7 @@ export const Avatar = styled(motion.div)<{
     width: ${({ $size }) => $size}px;
     background: ${({ theme, $bgColor }) =>
       $bgColor ? $bgColor : theme.lyraColors['core-outline-primary']};
-    color: ${({ theme }) => theme.lyraColors['core-text-primary']};
+    color: ${({ $color }) => $color};
     background-image: url('${({ $image }) => $image}');
     background-size: cover;
     cursor: pointer;

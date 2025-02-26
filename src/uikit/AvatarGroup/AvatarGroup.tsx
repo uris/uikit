@@ -6,7 +6,6 @@ import { AvatarInfo } from './_Types';
 export interface AvatarGroupProps {
   avatars?: AvatarInfo[] | null;
   size?: number;
-  bgColor?: string;
   overlap?: number;
   border?: number;
   borderColor?: string;
@@ -22,7 +21,6 @@ export function AvatarGroup(props: AvatarGroupProps) {
     border = 3,
     overlap = 8,
     gap = 0,
-    bgColor = undefined,
     borderColor = undefined,
     margin = 0,
     onToolTip = () => null,
@@ -40,8 +38,9 @@ export function AvatarGroup(props: AvatarGroupProps) {
               size={size}
               frame={size}
               border={border}
-              bgColor={bgColor}
               borderColor={borderColor}
+              color={avatar.color}
+              bgColor={avatar.bgColor}
               onToolTip={(tip) => onToolTip(tip)}
             />
           </div>

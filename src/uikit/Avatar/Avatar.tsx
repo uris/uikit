@@ -11,6 +11,7 @@ export interface AvatarProps {
   last?: string;
   image?: string;
   border?: number;
+  color?: string;
   borderColor?: string;
   bgColor?: string;
   variants?: Variants;
@@ -18,6 +19,7 @@ export interface AvatarProps {
   initial?: string;
   animate?: string;
   exit?: string;
+  firstOnly?: boolean;
   onToolTip?: (tip: ToolTip | null) => void;
 }
 
@@ -28,16 +30,18 @@ export function Avatar(props: AvatarProps) {
     last = '',
     image = '',
     border = 0,
+    color = theme.lyraColors['core-text-primary'],
     borderColor = theme.lyraColors['core-surface-primary'],
     bgColor = undefined,
     transition = undefined,
     animate = undefined,
     initial = undefined,
     exit = undefined,
+    firstOnly = true,
     onToolTip = () => null,
   } = props;
   const { size = 34, frame = 34 } = props;
-  const initials = `${first?.charAt(0)}${last.charAt(0)}`;
+  const initials = `${first?.charAt(0)}${firstOnly ? '' : last.charAt(0)}`;
   const ref = useRef<HTMLDivElement>(null);
   function onMouseEnter(e: React.MouseEvent<HTMLDivElement>) {
     const tip: ToolTip = {
@@ -59,6 +63,7 @@ export function Avatar(props: AvatarProps) {
       $border={border}
       $borderColor={borderColor}
       $bgColor={bgColor}
+      $color={color}
       transition={transition}
       initial={initial}
       animate={animate}

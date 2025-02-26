@@ -37,11 +37,6 @@ async function copyDir(src, dest) {
   }
 }
 
-// Only run in consuming projects
-if (isInNodeModules) {
-  fs.access(source)
-    .then(() => copyDir(source, destination))
-    .catch(() => console.log('⚠️ No assets found in dist/assets to copy.'));
-} else {
-  console.log('Skipping asset copy in development environment');
-}
+fs.access(source)
+  .then(() => copyDir(source, destination))
+  .catch(() => console.log('⚠️ No assets found in dist/assets to copy.'));
