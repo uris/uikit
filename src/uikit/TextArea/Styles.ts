@@ -17,8 +17,9 @@ export const Wrapper = styled.div<{
   $resize: boolean;
   $bgColor?: string;
   $border?: boolean;
+  $textSize?: 's' | 'm' | 'l';
 }>`
-  ${flexBox.row};
+  ${flexBox.columnStart};
   position: relative;
   padding: ${({ $padding }) => $padding};
   margin: 0;
@@ -45,7 +46,12 @@ export const Wrapper = styled.div<{
     width: 100%;
     height: 100%;
     color: ${({ theme }) => theme.lyraColors['core-text-primary']};
-    ${({ theme }) => theme.lyraType['body-m-regular']};
+    ${({ theme, $textSize }) =>
+      $textSize === 'l'
+        ? theme.lyraType['body-l-regular']
+        : $textSize === 'm'
+          ? theme.lyraType['body-m-regular']
+          : theme.lyraType['body-s-regular']};
     background-color: transparent;
     box-sizing: border-box;
     resize: ${({ $resize }) => ($resize ? 'vertical' : 'none')};
@@ -73,6 +79,34 @@ export const Wrapper = styled.div<{
         ${({ theme }) => theme.lyraColors['core-surface-primary']};
       cursor: default;
     }
+  }
+  div.actions {
+    ${flexBox.rowStart};
+    width: 100%;
+    ${({ theme }) => theme.lyraType['body-xs-regular']};
+    color: ${({ theme }) => theme.lyraColors['core-text-disabled']};
+    gap: 16px;
+  }
+  span.tip {
+    ${flexBox.rowStart};
+    gap: 4px;
+    white-space: nowrap;
+    user-select: none;
+    -webkit-user-select: none;
+    cursor: default;
+  }
+  span.key {
+    ${flexBox.row};
+    display: inline-flex;
+    ${({ theme }) => theme.lyraType['body-xs-medium']};
+    border: 1px solid ${({ theme }) => theme.lyraColors['core-outline-primary']};
+    border-radius: 4px;
+    text-transform: capitalize;
+    white-space: nowrap;
+    user-select: none;
+    -webkit-user-select: none;
+    padding: 2px 6px;
+    cursor: pointer;
   }
 `;
 

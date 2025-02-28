@@ -1,11 +1,10 @@
-import { useEffect, useState } from 'react';
 import { useTheme } from 'styled-components';
 import { UIIcon } from '../../UIIcon/UIIcon';
 import { ToolTip } from '../../sharedTypes';
 import { IconButton } from '../../IconButton/IconButton';
 import * as Styled from './_Styles';
 
-export type Excerpt = {
+export type DocExcerpt = {
   content?: string;
   docTitle?: string;
   range?: { to: number; from: number } | null;
@@ -13,8 +12,8 @@ export type Excerpt = {
 };
 
 interface ExcerptListProps {
-  excerpts?: Excerpt[];
-  onChange?: (excerpts: Excerpt[]) => void;
+  excerpts?: DocExcerpt[];
+  onChange?: (excerpts: DocExcerpt[]) => void;
   onToolTip?: (tip: ToolTip | null) => void;
 }
 
@@ -25,20 +24,17 @@ export function ExcerptList(props: ExcerptListProps) {
     onToolTip = () => null,
   } = props;
   const theme = useTheme();
-  const [excerptList, setExcerptList] = useState<Excerpt[]>(excerpts);
-  useEffect(() => setExcerptList(excerpts), [excerpts]);
 
   function handleRemoveFile(content: string | undefined) {
-    const updatedList = excerptList.filter((excerpt: Excerpt) => {
+    const updatedList = excerpts.filter((excerpt: DocExcerpt) => {
       return content !== excerpt.content;
     });
     onChange(updatedList);
-    setExcerptList(updatedList);
   }
 
   return (
     <Styled.ExcerptList onClick={(e) => e.stopPropagation()}>
-      {excerptList.map((excerpt: Excerpt, index: number) => {
+      {excerpts.map((excerpt: DocExcerpt, index: number) => {
         return (
           <Styled.ExcerptButton key={excerpt.content + '-' + index}>
             <div className="content">

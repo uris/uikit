@@ -101,6 +101,10 @@ export enum Icons {
   chevronRight = 'chevron right',
   text = 'text',
   link = 'link',
+  googleDrive = 'google drive',
+  drive = 'drive',
+  return = 'return',
+  insert = 'insert',
 }
 
 export interface IconProps {
@@ -136,6 +140,143 @@ export function UIIcon(props: IconProps) {
 
   const GPIcons: Icon[] = useMemo(() => {
     return [
+      {
+        name: 'insert',
+        line: (
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width={size}
+            height={size}
+            viewBox="0 0 20 20"
+            style={{
+              cursor: disabled ? 'default' : pointer ? 'pointer' : 'inherit',
+            }}
+            onClick={(e) => onClick(e)}
+            fill={'none'}
+          >
+            <path d="M 1 1 L 19 1 L 19 19 L 1 19 Z" fill="transparent"></path>
+            <g transform="translate(1.75 3.377)">
+              <path
+                d="M 0 3.461 C 0 6.931 2.693 9.801 6.088 9.801 L 6.088 8.301 C 3.586 8.301 1.5 6.168 1.5 3.461 L 1.5 0 L 0 0 Z M 6.088 9.051 L 6.088 8.301 L 14.91 8.301 L 14.91 9.801 L 6.09 9.801 L 6.089 9.051 Z"
+                fill={strokeColor}
+              ></path>
+              <path
+                d="M 12.062 13.773 L 16.784 9.05 L 12.062 4.328 L 11.001 5.388 L 14.663 9.05 L 11.001 12.712 L 12.061 13.772 Z"
+                fill={strokeColor}
+              ></path>
+            </g>
+          </svg>
+        ),
+      },
+      {
+        name: 'return',
+        line: (
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width={size}
+            height={size}
+            viewBox="0 0 20 20"
+            style={{
+              cursor: disabled ? 'default' : pointer ? 'pointer' : 'inherit',
+            }}
+            onClick={(e) => onClick(e)}
+            fill={'none'}
+          >
+            <path d="M 1 1 L 19 1 L 19 19 L 1 19 Z" fill="transparent"></path>
+            <path
+              d="M 18.034 6.838 C 18.034 10.308 15.341 13.178 11.946 13.178 L 11.946 11.678 C 14.448 11.678 16.534 9.545 16.534 6.838 L 16.534 3.377 L 18.034 3.377 Z M 11.946 12.428 L 11.946 11.678 L 3.124 11.678 L 3.124 13.178 L 11.944 13.178 L 11.945 12.428 Z"
+              fill={strokeColor}
+            ></path>
+            <path
+              d="M 5.972 17.15 L 1.25 12.427 L 5.972 7.705 L 7.033 8.765 L 3.371 12.427 L 7.033 16.089 L 5.973 17.149 Z"
+              fill={strokeColor}
+            ></path>
+          </svg>
+        ),
+      },
+      {
+        name: 'drive',
+        line: (
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width={size}
+            height={size}
+            viewBox="0 0 20 20"
+            style={{
+              cursor: disabled ? 'default' : pointer ? 'pointer' : 'inherit',
+            }}
+            onClick={(e) => onClick(e)}
+            fill={'none'}
+          >
+            <g transform="translate(2 3)">
+              <path
+                d="M 0 8.048 L 16 8.048"
+                fill="transparent"
+                strokeWidth={stroke}
+                stroke={strokeColor}
+                strokeLinejoin="round"
+                strokeDasharray=""
+              ></path>
+              <path
+                d="M 14.171 10.705 C 14.171 11.21 13.762 11.619 13.257 11.619 C 12.752 11.619 12.343 11.21 12.343 10.705 C 12.343 10.2 12.752 9.79 13.257 9.79 C 13.762 9.79 14.171 10.2 14.171 10.705 Z"
+                fill={strokeColor}
+              ></path>
+              <path
+                d="M 13.592 14.4 L 2.4 14.4 C 1.075 14.4 0 13.325 0 12 L 0 8 L 1.886 1.71 C 2.19 0.695 3.125 0 4.185 0 L 11.807 0 C 12.867 0 13.802 0.695 14.106 1.71 L 15.992 8 L 15.992 12 C 15.992 13.325 14.917 14.4 13.592 14.4 Z"
+                fill="transparent"
+                strokeWidth={stroke}
+                stroke={strokeColor}
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeDasharray=""
+              ></path>
+            </g>
+          </svg>
+        ),
+      },
+      {
+        name: 'google drive',
+        line: (
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width={size}
+            height={size}
+            viewBox="0 0 20 20"
+            style={{
+              cursor: disabled ? 'default' : pointer ? 'pointer' : 'inherit',
+            }}
+            onClick={(e) => onClick(e)}
+            fill={'none'}
+          >
+            <g transform="translate(1 2)">
+              <path
+                d="M 1.361 13.713 L 2.155 15.077 C 2.32 15.364 2.557 15.59 2.835 15.754 L 5.67 10.872 L 0 10.872 C 0 11.19 0.082 11.508 0.247 11.795 Z"
+                fill="rgb(0,102,218)"
+              ></path>
+              <path
+                d="M 9 5.128 L 6.165 0.246 C 5.887 0.41 5.649 0.636 5.485 0.923 L 0.247 9.949 C 0.086 10.23 0 10.548 0 10.872 L 5.67 10.872 Z"
+                fill="rgb(0,172,71)"
+              ></path>
+              <path
+                d="M 15.165 15.754 C 15.443 15.59 15.68 15.364 15.845 15.077 L 16.175 14.513 L 17.753 11.795 C 17.918 11.508 18 11.19 18 10.872 L 12.329 10.872 L 13.536 13.231 Z"
+                fill="rgb(234,67,53)"
+              ></path>
+              <path
+                d="M 9 5.128 L 11.835 0.246 C 11.557 0.082 11.237 0 10.907 0 L 7.093 0 C 6.763 0 6.443 0.092 6.165 0.246 Z"
+                fill="rgb(0,131,45)"
+              ></path>
+              <path
+                d="M 12.33 10.872 L 5.67 10.872 L 2.835 15.754 C 3.113 15.918 3.433 16 3.763 16 L 14.237 16 C 14.567 16 14.887 15.908 15.165 15.754 Z"
+                fill="rgb(38,132,252)"
+              ></path>
+              <path
+                d="M 15.134 5.436 L 12.515 0.923 C 12.351 0.636 12.113 0.41 11.835 0.246 L 9 5.128 L 12.33 10.872 L 17.99 10.872 C 17.99 10.554 17.907 10.236 17.742 9.949 Z"
+                fill="rgb(255,186,0)"
+              ></path>
+            </g>
+          </svg>
+        ),
+      },
       {
         name: 'link',
         line: (

@@ -22,12 +22,23 @@ export interface TextAreaProps {
   sendColors?: { normal?: string; active?: string; disabled?: string };
   bgColor?: string;
   border?: boolean;
+  returnSubmits?: boolean;
+  showTips?: boolean;
+  tips?: Tip[];
+  textSize?: 's' | 'm' | 'l';
   onChange?: (value: string) => void;
   onSubmit?: (vakue: string) => void;
   onFocus?: () => void;
   onBlur?: () => void;
   onValidate?: (state: boolean) => void;
+  onKeyDown?: (e: React.KeyboardEvent<HTMLTextAreaElement>) => void;
+  onAction?: (action: Tip) => void;
 }
+
+export type Tip = {
+  key: string;
+  label: string;
+};
 
 export function TextArea(props: TextAreaProps) {
   const {
@@ -47,13 +58,18 @@ export function TextArea(props: TextAreaProps) {
     hasSend = false,
     sendOffset = { bottom: 6, right: 6 },
     sendSize = 36,
+    returnSubmits = false,
     bgColor = undefined,
     border = undefined,
+    tips = [],
+    textSize = 'm',
     onChange = () => null,
     onFocus = () => null,
     onBlur = () => null,
     onValidate = () => null,
     onSubmit = () => null,
+    onKeyDown = () => null,
+    onAction = () => null,
   } = props;
 
   const [isFocused, setIsFocused] = useState<boolean>(focused);
@@ -113,13 +129,35 @@ export function TextArea(props: TextAreaProps) {
     onBlur();
   }
 
-  function handleSubmit(e: React.MouseEvent<HTMLDivElement, MouseEvent>) {
-    e.preventDefault();
+  function handleSubmit(
+    e: React.MouseEvent<HTMLDivElement, MouseEvent> | undefined,
+  ) {
+    e?.preventDefault();
     handleFocus();
     onSubmit(text);
     setText('');
     if (ref && ref.current) ref.current.value = '';
     handleResize();
+  }
+
+  function handleKeyDown(e: React.KeyboardEvent<HTMLTextAreaElement>) {
+    if (returnSubmits) {
+      e.preventDefault();
+      e.stopPropagation();
+      handleSubmit(undefined);
+    }
+    onKeyDown(e);
+  }
+
+  function handleAction(
+    e: React.MouseEvent<HTMLSpanElement> | React.KeyboardEvent<HTMLSpanElement>,
+    action: Tip,
+  ) {
+    e.preventDefault();
+    e.stopPropagation();
+    onAction(action);
+    ref.current?.focus();
+    setIsFocused(true);
   }
 
   function handleResize() {
@@ -140,6 +178,7 @@ export function TextArea(props: TextAreaProps) {
       $dark={dark}
       $bgColor={bgColor}
       $border={border}
+      $textSize={textSize}
       onBlur={() => handleBlur(text)}
       onFocus={() => handleFocus()}
     >
@@ -165,7 +204,32 @@ export function TextArea(props: TextAreaProps) {
         rows={rows}
         onChange={(e) => handleChange(e.target.value)}
         onInput={() => handleResize()}
+        onKeyDown={(e) => handleKeyDown(e)}
       />
+      {tips.length > 0 && (
+        <div className="actions">
+          {tips.map((action: Tip, index: number) => {
+            return (
+              <span
+                className="tip"
+                key={`${action.key}-${action.label}-${index}`}
+              >
+                <span
+                  className="key"
+                  onClick={(e) => handleAction(e, action)}
+                  onKeyDown={(e) => handleAction(e, action)}
+                  role={'button'}
+                  aria-label={action.label}
+                  tabIndex={0}
+                >
+                  {action.key}
+                </span>
+                {action.label}
+              </span>
+            );
+          })}
+        </div>
+      )}
     </Styled.Wrapper>
   );
 }

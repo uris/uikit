@@ -1,4 +1,4 @@
-import { Excerpt } from './ExcerptList/ExcerptList';
+import { DocExcerpt } from './ExcerptList/ExcerptList';
 
 export type SendMessage = {
   id: string;
@@ -8,7 +8,7 @@ export type SendMessage = {
   role: Role;
   htmlContent: string;
   files: File[];
-  excerpts: Excerpt[];
+  excerpts: DocExcerpt[];
   done: boolean;
 };
 

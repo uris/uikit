@@ -54,11 +54,14 @@ export function UserList(props: UserListProps) {
                 first={user.first}
                 last={user.last}
                 image={user.avatar}
+                bgColor={user.bgColor}
+                color={user.color}
+                border={0}
               />
             </div>
             <div className="prompt">
               <p>
-                <strong>{user.first} is typing:</strong> {user.promptContent}
+                <strong>{user.first}:</strong> {user.promptContent}
               </p>
             </div>
             {currentUser === owner &&

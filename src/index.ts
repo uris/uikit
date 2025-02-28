@@ -100,7 +100,7 @@ export { TabBar } from './uikit/TabBar';
 export type { TabOption, TabBarProps } from './uikit/TabBar';
 
 export { TextArea } from './uikit/TextArea';
-export type { TextAreaProps } from './uikit/TextArea';
+export type { TextAreaProps, Tip } from './uikit/TextArea';
 
 export { TextField } from './uikit/Textfield';
 export type { TextFieldProps } from './uikit/Textfield';
@@ -108,8 +108,14 @@ export type { TextFieldProps } from './uikit/Textfield';
 export { UIButton } from './uikit/UIButton';
 export type { UIButtonProps, UIButtonHandle } from './uikit/UIButton';
 
+export { UIChip } from './uikit/UIChip';
+export type { UIChipProps } from './uikit/UIChip';
+
 export { UIIcon, Icons } from './uikit/UIIcon';
 export type { IconProps } from './uikit/UIIcon';
+
+export { UIFileIcon, UIFileIcons } from './uikit/UIFileIcon';
+export type { UIFileIconProps } from './uikit/UIFileIcon';
 
 export { UILabel } from './uikit/UILabel';
 export type { UILabelProps } from './uikit/UILabel';

@@ -37,7 +37,7 @@ export function Avatar(props: AvatarProps) {
     animate = undefined,
     initial = undefined,
     exit = undefined,
-    firstOnly = true,
+    firstOnly = false,
     onToolTip = () => null,
   } = props;
   const { size = 34, frame = 34 } = props;
@@ -59,7 +59,7 @@ export function Avatar(props: AvatarProps) {
     <Styled.Avatar
       $size={size}
       $frame={frame}
-      $image={image}
+      $image={firstOnly ? '' : image}
       $border={border}
       $borderColor={borderColor}
       $bgColor={bgColor}
@@ -72,7 +72,7 @@ export function Avatar(props: AvatarProps) {
       onMouseEnter={(e) => onMouseEnter(e)}
       onMouseLeave={() => onMouseLeave()}
     >
-      <div className="user">{image ? null : initials}</div>
+      <div className="user">{firstOnly || !image ? initials : null}</div>
     </Styled.Avatar>
   );
 }

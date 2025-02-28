@@ -1,6 +1,6 @@
 import { MessageInput, MessageInputProps } from './InputField/MessageInput';
 import { SendMessage, PromptType, Role, UploadDocument } from './_Types';
-import { Excerpt } from './ExcerptList/ExcerptList';
+import { DocExcerpt } from './ExcerptList/ExcerptList';
 
 export { MessageInput };
 export type {
@@ -9,5 +9,5 @@ export type {
   PromptType,
   Role,
   UploadDocument,
-  Excerpt,
+  DocExcerpt,
 };

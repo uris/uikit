@@ -3,6 +3,7 @@ import { flexBox } from '../../../util/flexBox';
 
 export const ExcerptList = styled.div`
   ${flexBox.rowStart};
+  align-items: flex-start;
   width: 100%;
   flex-wrap: wrap;
   gap: 16px;

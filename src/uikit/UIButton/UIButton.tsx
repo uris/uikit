@@ -47,6 +47,8 @@ export interface UIButtonProps {
   duration?: number;
   trigger?: boolean;
   destructive?: boolean;
+  paddingRight?: number;
+  paddingLeft?: number;
   onToolTip?: (tip: ToolTip | null) => void;
   onClick?: (
     e: React.MouseEvent<HTMLDivElement, MouseEvent> | undefined,
@@ -87,6 +89,8 @@ const UIButton = forwardRef<UIButtonHandle, UIButtonProps>(
       initial = undefined,
       animate = undefined,
       exit = undefined,
+      paddingRight = undefined,
+      paddingLeft = undefined,
       progress = false,
       working = false,
       duration = undefined,
@@ -333,8 +337,12 @@ const UIButton = forwardRef<UIButtonHandle, UIButtonProps>(
           background: fill
             ? theme.lyraColors['core-surface-primary']
             : colorStyles[variant].background[state],
-          paddingRight: sizingStyles[size].paddingRight,
-          paddingLeft: sizingStyles[size].paddingLeft,
+          paddingRight: paddingRight
+            ? paddingRight
+            : sizingStyles[size].paddingRight,
+          paddingLeft: paddingLeft
+            ? paddingLeft
+            : sizingStyles[size].paddingLeft,
           fontFamily: 'Booton',
           fontSize: sizingStyles[size].fontSize,
           fontWeight: sizingStyles[size].fontWeight,

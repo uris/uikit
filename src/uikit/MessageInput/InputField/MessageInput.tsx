@@ -5,7 +5,7 @@ import { useObserveResize } from '../../../hooks/useObserveResize';
 import { FileList } from '../FileList/FileList';
 import { UserList } from '../UserList/UserList';
 import { PrompState, UserPresence } from '../UserList/_Types';
-import { Excerpt, ExcerptList } from '../ExcerptList/ExcerptList';
+import { DocExcerpt, ExcerptList } from '../ExcerptList/ExcerptList';
 import { UIButton } from '../../UIButton/UIButton';
 import { JurisdictionFocus, PromptType, Role, SendMessage } from '../_Types';
 import { ToolTip } from '../../../uikit/sharedTypes';
@@ -24,17 +24,16 @@ export interface MessageInputProps {
   isShort?: boolean;
   error?: string | null;
   files?: File[];
-  excerpts?: Excerpt[];
+  excerpts?: DocExcerpt[];
   users?: UserPresence[];
   currentUser?: string;
   owner?: string;
   presenceID?: string;
   jurisdiction?: JurisdictionFocus | null;
   jurisdictionClick?: () => void;
-  attachClick?: () => void;
-  complianceCheckClick?: () => void;
+  attachClick?: (e: React.MouseEvent<any> | undefined) => void;
   onChangeFiles?: (files: File[]) => void;
-  onChangeExcerpts?: (excerpts: Excerpt[]) => void;
+  onChangeExcerpts?: (excerpts: DocExcerpt[]) => void;
   onTogglePrompt?: (presence: UserPresence) => void;
   onToolTip?: (tip: ToolTip | null) => void;
   onChange?: (prompt: string) => void;
@@ -66,7 +65,6 @@ export function MessageInput(props: MessageInputProps) {
     onChangeFiles = () => null,
     onChangeExcerpts = () => null,
     onTogglePrompt = () => null,
-    complianceCheckClick = () => null,
     onChange = () => null,
     onBlur = () => null,
     onFocus = () => null,
@@ -83,8 +81,6 @@ export function MessageInput(props: MessageInputProps) {
   const [promptType, setPromptType] = useState<PromptType>(PromptType.text);
   const [invalid, setInvalid] = useState<string | null>(error);
   const [remoteDisabled, setRemoteDisabled] = useState<boolean>(false);
-  const [docExcerpts, setDocExcerpts] = useState<Excerpt[]>(excerpts);
-  const [uploadFiles, setUploadFiles] = useState<File[]>(files);
 
   // reset size if the warpper size changes
   useEffect(() => {
@@ -123,10 +119,6 @@ export function MessageInput(props: MessageInputProps) {
   // update error is prop changes
   useEffect(() => setInvalid(error), [error]);
 
-  // update files/excerpts with prop updates
-  useEffect(() => setDocExcerpts(excerpts), [excerpts]);
-  useEffect(() => setUploadFiles(files), [files]);
-
   function resetHeight() {
     if (ref && ref.current) {
       ref.current.style.height = '0px';
@@ -152,8 +144,8 @@ export function MessageInput(props: MessageInputProps) {
         promptType,
         role: Role.USER,
         htmlContent: '',
-        files: uploadFiles,
-        excerpts: docExcerpts,
+        files,
+        excerpts,
         done: false,
       };
       onSend(newMessage);
@@ -214,8 +206,7 @@ export function MessageInput(props: MessageInputProps) {
     e?.preventDefault();
     e?.stopPropagation();
     setPromptType(type);
-    if (promptType === PromptType.compliance) attachClick();
-    else complianceCheckClick();
+    attachClick(e);
   }
 
   function handleChange(input: string) {
@@ -262,25 +253,19 @@ export function MessageInput(props: MessageInputProps) {
       ref={wrapperRef}
     >
       <AnimatePresence initial={false}>
-        {uploadFiles.length > 0 && (
-          <FileList
-            files={files as File[]}
-            onChange={(files: File[]) => {
-              setUploadFiles(files);
-              onChangeFiles(files);
-            }}
+        {excerpts.length > 0 && (
+          <ExcerptList
+            excerpts={excerpts}
+            onChange={(excerpts: DocExcerpt[]) => onChangeExcerpts(excerpts)}
             onToolTip={(tip) => onToolTip(tip)}
           />
         )}
       </AnimatePresence>
       <AnimatePresence initial={false}>
-        {docExcerpts.length > 0 && (
-          <ExcerptList
-            excerpts={excerpts}
-            onChange={(excerpts: Excerpt[]) => {
-              setDocExcerpts(excerpts);
-              onChangeExcerpts(excerpts);
-            }}
+        {files.length > 0 && (
+          <FileList
+            files={files as File[]}
+            onChange={(items: File[]) => onChangeFiles(items)}
             onToolTip={(tip) => onToolTip(tip)}
           />
         )}
@@ -316,28 +301,25 @@ export function MessageInput(props: MessageInputProps) {
       <Styled.ButtonRow>
         <Styled.ActionButtons $isShort={isShort}>
           <UIButton
-            iconLeft={'attach'}
+            variant={'outline'}
+            iconLeft={'plus'}
             tooltip={'Attach file'}
             onClick={(e) => handleUpload(e, PromptType.file)}
-            variant={'text'}
-            size={'text'}
+            size={'medium'}
+            iconColor={theme.lyraColors['core-icon-primary']}
+            round
             onToolTip={(tip) => onToolTip(tip)}
           />
           <UIButton
-            iconLeft={'compliance check'}
-            tooltip={'Compliance check'}
-            onClick={(e) => handleUpload(e, PromptType.compliance)}
-            variant={'text'}
-            size={'text'}
-            onToolTip={(tip) => onToolTip(tip)}
-          />
-          <UIButton
+            paddingRight={18}
+            paddingLeft={8}
+            variant={'outline'}
             label={`Focus: ${setJurisdiction()}`}
             tooltip={'Jurisdication Focus'}
             onClick={(_e) => jurisdictionClick()}
             iconLeft={'focus'}
-            variant={'text'}
-            size={'text'}
+            size={'medium'}
+            iconColor={theme.lyraColors['core-icon-primary']}
             labelColor={theme?.lyraColors?.['core-text-secondary']}
             onToolTip={(tip) => onToolTip(tip)}
           />

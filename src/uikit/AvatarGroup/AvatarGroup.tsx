@@ -11,6 +11,7 @@ export interface AvatarGroupProps {
   borderColor?: string;
   gap?: number;
   margin?: number;
+  firstOnly?: boolean;
   onToolTip?: (tip: ToolTip | null) => void;
 }
 
@@ -23,6 +24,7 @@ export function AvatarGroup(props: AvatarGroupProps) {
     gap = 0,
     borderColor = undefined,
     margin = 0,
+    firstOnly = false,
     onToolTip = () => null,
   } = props;
 
@@ -32,7 +34,7 @@ export function AvatarGroup(props: AvatarGroupProps) {
         return (
           <div className="avatar" key={'avatar_' + avatar.email + '_' + index}>
             <Avatar
-              first={avatar.email}
+              first={avatar.first}
               last={avatar.last}
               image={avatar.image ? avatar.image : avatar.avatar}
               size={size}
@@ -41,6 +43,7 @@ export function AvatarGroup(props: AvatarGroupProps) {
               borderColor={borderColor}
               color={avatar.color}
               bgColor={avatar.bgColor}
+              firstOnly={firstOnly}
               onToolTip={(tip) => onToolTip(tip)}
             />
           </div>
