@@ -7,9 +7,11 @@ export const Chip = styled.div<{
   $background?: string;
   $variant: 'small' | 'regular';
   $unframed: boolean;
+  $padding: string;
 }>`
   ${flexBox.row};
   width: min-content;
+  min-height: 30px;
   gap: ${({ $variant }) => ($variant === 'regular' ? 8 : 4)}px;
   background: ${({ $background }) =>
     $background ? $background : 'transparent'};
@@ -24,7 +26,7 @@ export const Chip = styled.div<{
     $disabled
       ? theme.lyraColors['core-text-disabled']
       : theme.lyraColors['core-text-primary']};
-  border: ${({ $unframed }) => ($unframed ? 0 : 0)}px solid
+  border: ${({ $unframed }) => ($unframed ? 0 : 1)}px solid
     ${({ theme, $disabled }) =>
       $disabled
         ? theme.lyraColors['core-button-disabled']
@@ -35,8 +37,7 @@ export const Chip = styled.div<{
   white-space: nowrap;
   user-select: none;
   -webkit-user-select: none;
-  padding: ${({ $variant }) =>
-    $variant === 'regular' ? '9px 16px 9px 12px' : '6px 10px 6px 6px'};
+  padding: ${({ $padding }) => $padding};
   div.icon {
     ${flexBox.row};
     height: ${({ $variant }) => ($variant === 'regular' ? 20 : 16)}px;

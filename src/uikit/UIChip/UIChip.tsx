@@ -13,6 +13,7 @@ export interface UIChipProps {
   background?: string;
   variant?: 'small' | 'regular';
   unframed?: boolean;
+  iconRight?: boolean;
   onToolTip?: (tip: ToolTip | null) => void;
   onClick?: (e: React.MouseEvent<HTMLDivElement> | undefined) => void;
 }
@@ -26,6 +27,7 @@ export function UIChip(props: UIChipProps) {
     focused = false,
     variant = 'regular',
     unframed = false,
+    iconRight = false,
     tooltip,
     onToolTip = () => null,
     onClick = () => null,
@@ -36,6 +38,7 @@ export function UIChip(props: UIChipProps) {
   function handleClick(e: React.MouseEvent<HTMLDivElement>) {
     if (!disabled) onClick(e);
   }
+
   function handleMouseEnter(
     enter: boolean,
     event: React.MouseEvent<HTMLDivElement>,
@@ -52,6 +55,18 @@ export function UIChip(props: UIChipProps) {
       onToolTip(null);
     }
   }
+
+  const padding = () => {
+    const isSmall = variant === 'small';
+    if (!icon) {
+      return isSmall ? '6px' : '9px 16px 9px 16px';
+    }
+    if (icon && iconRight) {
+      return isSmall ? '6px 6px 6px 10px' : '9px 12px 9px 16px';
+    }
+    return isSmall ? '6px 10px 6px 6px' : '9px 16px 9px 12px';
+  };
+
   return (
     <Styled.Chip
       $focused={isFocused}
@@ -59,6 +74,7 @@ export function UIChip(props: UIChipProps) {
       $background={background}
       $variant={variant}
       $unframed={unframed}
+      $padding={padding()}
       onClick={(e) => handleClick(e)}
       onMouseEnter={(e) => handleMouseEnter(true, e)}
       onMouseLeave={(e) => handleMouseEnter(false, e)}
@@ -66,20 +82,37 @@ export function UIChip(props: UIChipProps) {
       onBlur={() => setIsFocused(false)}
       tabIndex={0}
     >
-      <div className="icon">
-        <UIIcon
-          name={icon}
-          size={variant === 'regular' ? 20 : 16}
-          strokeColor={
-            disabled
-              ? theme.lyraColors['core-icon-disabled']
-              : isFocused
-                ? theme.lyraColors['core-icon-tertiary']
-                : theme.lyraColors['core-icon-primary']
-          }
-        />
-      </div>
+      {icon && !iconRight && (
+        <div className="icon">
+          <UIIcon
+            name={icon}
+            size={variant === 'regular' ? 20 : 16}
+            strokeColor={
+              disabled
+                ? theme.lyraColors['core-icon-disabled']
+                : isFocused
+                  ? theme.lyraColors['core-icon-tertiary']
+                  : theme.lyraColors['core-icon-primary']
+            }
+          />
+        </div>
+      )}
       <div className="label">{label}</div>
+      {icon && iconRight && (
+        <div className="icon">
+          <UIIcon
+            name={icon}
+            size={variant === 'regular' ? 20 : 16}
+            strokeColor={
+              disabled
+                ? theme.lyraColors['core-icon-disabled']
+                : isFocused
+                  ? theme.lyraColors['core-icon-tertiary']
+                  : theme.lyraColors['core-icon-primary']
+            }
+          />
+        </div>
+      )}
     </Styled.Chip>
   );
 }

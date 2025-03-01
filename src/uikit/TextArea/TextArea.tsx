@@ -1,4 +1,6 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
+import { useTheme } from 'styled-components';
+import { UIChip } from '../UIChip';
 import { UIButton } from '../UIButton';
 import * as Styled from './Styles';
 
@@ -6,6 +8,7 @@ export interface TextAreaProps {
   value?: string;
   name?: string;
   width?: number | string;
+  minWidth?: number | string;
   height?: number | string;
   rows?: number;
   focused?: boolean;
@@ -36,8 +39,10 @@ export interface TextAreaProps {
 }
 
 export type Tip = {
+  icon?: string;
+  iconRight?: boolean;
   key: string;
-  label: string;
+  label?: string;
 };
 
 export function TextArea(props: TextAreaProps) {
@@ -61,6 +66,7 @@ export function TextArea(props: TextAreaProps) {
     returnSubmits = false,
     bgColor = undefined,
     border = undefined,
+    minWidth = undefined,
     tips = [],
     textSize = 'm',
     onChange = () => null,
@@ -71,6 +77,7 @@ export function TextArea(props: TextAreaProps) {
     onKeyDown = () => null,
     onAction = () => null,
   } = props;
+  const theme = useTheme();
 
   const [isFocused, setIsFocused] = useState<boolean>(focused);
   const [invalid, setInvalid] = useState<boolean>(false);
@@ -100,9 +107,11 @@ export function TextArea(props: TextAreaProps) {
 
   // update value on text entry or prop change
   useEffect(() => {
-    setText(value);
-    setInvalid(runValidation(value));
-  }, [value, runValidation]);
+    if (text !== value) {
+      setText(value);
+      setInvalid(runValidation(value));
+    }
+  }, [value, text, runValidation]);
 
   const margin = () => {
     if (spacer === 'none') return 0;
@@ -141,7 +150,7 @@ export function TextArea(props: TextAreaProps) {
   }
 
   function handleKeyDown(e: React.KeyboardEvent<HTMLTextAreaElement>) {
-    if (returnSubmits) {
+    if (returnSubmits && e.key === 'Enter') {
       e.preventDefault();
       e.stopPropagation();
       handleSubmit(undefined);
@@ -150,11 +159,14 @@ export function TextArea(props: TextAreaProps) {
   }
 
   function handleAction(
-    e: React.MouseEvent<HTMLSpanElement> | React.KeyboardEvent<HTMLSpanElement>,
+    e:
+      | React.MouseEvent<HTMLDivElement>
+      | React.KeyboardEvent<HTMLSpanElement>
+      | undefined,
     action: Tip,
   ) {
-    e.preventDefault();
-    e.stopPropagation();
+    e?.preventDefault();
+    e?.stopPropagation();
     onAction(action);
     ref.current?.focus();
     setIsFocused(true);
@@ -169,6 +181,7 @@ export function TextArea(props: TextAreaProps) {
   return (
     <Styled.Wrapper
       $width={width}
+      $minWidth={minWidth}
       $height={height}
       $invalid={invalid}
       $padding={padding}
@@ -210,22 +223,20 @@ export function TextArea(props: TextAreaProps) {
         <div className="actions">
           {tips.map((action: Tip, index: number) => {
             return (
-              <span
-                className="tip"
+              <div
+                className="option"
                 key={`${action.key}-${action.label}-${index}`}
               >
-                <span
-                  className="key"
+                <UIChip
+                  variant={'small'}
                   onClick={(e) => handleAction(e, action)}
-                  onKeyDown={(e) => handleAction(e, action)}
-                  role={'button'}
-                  aria-label={action.label}
-                  tabIndex={0}
-                >
-                  {action.key}
-                </span>
+                  icon={action.icon}
+                  iconRight={action.iconRight}
+                  label={action.key}
+                  background={theme.lyraColors['core-surface-primary']}
+                />
                 {action.label}
-              </span>
+              </div>
             );
           })}
         </div>

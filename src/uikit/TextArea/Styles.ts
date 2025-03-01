@@ -8,6 +8,7 @@ function setSize(value: string | number) {
 
 export const Wrapper = styled.div<{
   $width: string | number;
+  $minWidth?: string | number;
   $focused: boolean;
   $invalid: boolean;
   $margin: number;
@@ -25,6 +26,7 @@ export const Wrapper = styled.div<{
   margin: 0;
   margin-bottom: ${({ $margin }) => setSize($margin)}px;
   width: ${({ $width }) => setSize($width)};
+  min-width: ${({ $minWidth }) => ($minWidth ? setSize($minWidth) : 'unset')};
   height: ${({ $height }) => setSize($height)};
   border-radius: 12px;
   overflow: hidden;
@@ -87,26 +89,13 @@ export const Wrapper = styled.div<{
     color: ${({ theme }) => theme.lyraColors['core-text-disabled']};
     gap: 16px;
   }
-  span.tip {
+  div.option {
     ${flexBox.rowStart};
     gap: 4px;
     white-space: nowrap;
     user-select: none;
     -webkit-user-select: none;
     cursor: default;
-  }
-  span.key {
-    ${flexBox.row};
-    display: inline-flex;
-    ${({ theme }) => theme.lyraType['body-xs-medium']};
-    border: 1px solid ${({ theme }) => theme.lyraColors['core-outline-primary']};
-    border-radius: 4px;
-    text-transform: capitalize;
-    white-space: nowrap;
-    user-select: none;
-    -webkit-user-select: none;
-    padding: 2px 6px;
-    cursor: pointer;
   }
 `;
 
