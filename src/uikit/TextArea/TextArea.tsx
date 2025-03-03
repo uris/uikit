@@ -1,5 +1,6 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { useTheme } from 'styled-components';
+import { ProgressIndicator } from '../Progress';
 import { UIChip } from '../UIChip';
 import { UIButton } from '../UIButton';
 import * as Styled from './Styles';
@@ -29,6 +30,9 @@ export interface TextAreaProps {
   showTips?: boolean;
   tips?: Tip[];
   textSize?: 's' | 'm' | 'l';
+  showProgress?: boolean;
+  disabled?: boolean;
+  submitClears?: boolean;
   onChange?: (value: string) => void;
   onSubmit?: (vakue: string) => void;
   onFocus?: () => void;
@@ -69,6 +73,9 @@ export function TextArea(props: TextAreaProps) {
     minWidth = undefined,
     tips = [],
     textSize = 'm',
+    showProgress = false,
+    disabled = false,
+    submitClears = true,
     onChange = () => null,
     onFocus = () => null,
     onBlur = () => null,
@@ -144,7 +151,7 @@ export function TextArea(props: TextAreaProps) {
     e?.preventDefault();
     handleFocus();
     onSubmit(text);
-    setText('');
+    if (submitClears) setText('');
     if (ref && ref.current) ref.current.value = '';
     handleResize();
   }
@@ -165,6 +172,7 @@ export function TextArea(props: TextAreaProps) {
       | undefined,
     action: Tip,
   ) {
+    console.log('action');
     e?.preventDefault();
     e?.stopPropagation();
     onAction(action);
@@ -215,30 +223,33 @@ export function TextArea(props: TextAreaProps) {
         value={text}
         placeholder={placeholder}
         rows={rows}
+        disabled={disabled}
         onChange={(e) => handleChange(e.target.value)}
         onInput={() => handleResize()}
         onKeyDown={(e) => handleKeyDown(e)}
       />
       {tips.length > 0 && (
         <div className="actions">
-          {tips.map((action: Tip, index: number) => {
-            return (
-              <div
-                className="option"
-                key={`${action.key}-${action.label}-${index}`}
-              >
-                <UIChip
-                  variant={'small'}
-                  onClick={(e) => handleAction(e, action)}
-                  icon={action.icon}
-                  iconRight={action.iconRight}
-                  label={action.key}
-                  background={theme.lyraColors['core-surface-primary']}
-                />
-                {action.label}
-              </div>
-            );
-          })}
+          {!showProgress &&
+            tips.map((action: Tip, index: number) => {
+              return (
+                <div
+                  className="option"
+                  key={`${action.key}-${action.label}-${index}`}
+                >
+                  <UIChip
+                    variant={'small'}
+                    onMouseDown={(e) => handleAction(e, action)}
+                    icon={action.icon}
+                    iconRight={action.iconRight}
+                    label={action.key}
+                    background={theme.lyraColors['core-surface-primary']}
+                  />
+                  {action.label}
+                </div>
+              );
+            })}
+          {showProgress && <ProgressIndicator show inline />}
         </div>
       )}
     </Styled.Wrapper>

@@ -14,8 +14,10 @@ export interface UIChipProps {
   variant?: 'small' | 'regular';
   unframed?: boolean;
   iconRight?: boolean;
+  iconColor?: string;
   onToolTip?: (tip: ToolTip | null) => void;
   onClick?: (e: React.MouseEvent<HTMLDivElement> | undefined) => void;
+  onMouseDown?: (e: React.MouseEvent<HTMLDivElement> | undefined) => void;
 }
 
 export function UIChip(props: UIChipProps) {
@@ -29,8 +31,10 @@ export function UIChip(props: UIChipProps) {
     unframed = false,
     iconRight = false,
     tooltip,
+    iconColor,
     onToolTip = () => null,
     onClick = () => null,
+    onMouseDown = () => null,
   } = props;
   const theme = useTheme();
   const [isFocused, setIsFocused] = useState<boolean>(focused);
@@ -38,7 +42,9 @@ export function UIChip(props: UIChipProps) {
   function handleClick(e: React.MouseEvent<HTMLDivElement>) {
     if (!disabled) onClick(e);
   }
-
+  function handleMouseDown(e: React.MouseEvent<HTMLDivElement>) {
+    if (!disabled) onMouseDown(e);
+  }
   function handleMouseEnter(
     enter: boolean,
     event: React.MouseEvent<HTMLDivElement>,
@@ -67,6 +73,13 @@ export function UIChip(props: UIChipProps) {
     return isSmall ? '6px 10px 6px 6px' : '9px 16px 9px 12px';
   };
 
+  const setIconColor = () => {
+    if (iconColor) return iconColor;
+    if (disabled) return theme.lyraColors['core-icon-disabled'];
+    if (isFocused) return theme.lyraColors['core-icon-tertiary'];
+    return theme.lyraColors['core-icon-primary'];
+  };
+
   return (
     <Styled.Chip
       $focused={isFocused}
@@ -75,6 +88,7 @@ export function UIChip(props: UIChipProps) {
       $variant={variant}
       $unframed={unframed}
       $padding={padding()}
+      onMouseDown={(e) => handleMouseDown(e)}
       onClick={(e) => handleClick(e)}
       onMouseEnter={(e) => handleMouseEnter(true, e)}
       onMouseLeave={(e) => handleMouseEnter(false, e)}
@@ -87,13 +101,7 @@ export function UIChip(props: UIChipProps) {
           <UIIcon
             name={icon}
             size={variant === 'regular' ? 20 : 16}
-            strokeColor={
-              disabled
-                ? theme.lyraColors['core-icon-disabled']
-                : isFocused
-                  ? theme.lyraColors['core-icon-tertiary']
-                  : theme.lyraColors['core-icon-primary']
-            }
+            strokeColor={setIconColor()}
           />
         </div>
       )}
@@ -103,13 +111,7 @@ export function UIChip(props: UIChipProps) {
           <UIIcon
             name={icon}
             size={variant === 'regular' ? 20 : 16}
-            strokeColor={
-              disabled
-                ? theme.lyraColors['core-icon-disabled']
-                : isFocused
-                  ? theme.lyraColors['core-icon-tertiary']
-                  : theme.lyraColors['core-icon-primary']
-            }
+            strokeColor={setIconColor()}
           />
         </div>
       )}

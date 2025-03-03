@@ -28,6 +28,7 @@ const meta: Meta<typeof TextArea> = {
     returnSubmits: false,
     textSize: 'm',
     tips: [{ key: 'Esc', label: 'exits' }],
+    showProgress: true,
     onChange: fn(),
     onFocus: fn(),
     onBlur: fn(),

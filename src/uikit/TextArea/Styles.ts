@@ -57,6 +57,9 @@ export const Wrapper = styled.div<{
     background-color: transparent;
     box-sizing: border-box;
     resize: ${({ $resize }) => ($resize ? 'vertical' : 'none')};
+    &:disabled {
+      color: ${({ theme }) => theme.lyraColors['core-text-disabled']};
+    }
     &::placeholder {
       color: ${({ theme }) => theme.lyraColors['core-text-disabled']};
     }
@@ -85,6 +88,7 @@ export const Wrapper = styled.div<{
   div.actions {
     ${flexBox.rowStart};
     width: 100%;
+    min-height: 30px;
     ${({ theme }) => theme.lyraType['body-xs-regular']};
     color: ${({ theme }) => theme.lyraColors['core-text-disabled']};
     gap: 16px;
