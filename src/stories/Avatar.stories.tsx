@@ -1,10 +1,10 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { fn } from '@storybook/test';
-import { light } from '../theme/useGiaThemes';
+import { lightTheme } from '../theme/useGiaThemes';
 import { Avatar } from '../uikit/Avatar/Avatar';
 import { FlexDiv } from '../uikit/FlexDiv/FlexDiv';
 
-const theme = light;
+const theme = lightTheme;
 const meta: Meta<typeof Avatar> = {
   title: 'UI Kit/Avatar',
   component: Avatar,

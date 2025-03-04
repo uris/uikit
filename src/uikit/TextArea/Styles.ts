@@ -7,11 +7,11 @@ function setSize(value: string | number) {
   return value + 'px';
 }
 function setDropShadow(shadow: 'soft' | 'hard' | 'none', theme: GiaTheme) {
-  if (shadow === 'none') return ';';
+  if (shadow === 'none') return '';
   if (shadow === 'hard') {
-    return `${theme.lyraColors['surface-shadow-strong']}`;
+    return `${theme.lyraColors['surface-shadow-strong']}, `;
   } else {
-    return `${theme.lyraColors['surface-shadow-soft']}`;
+    return `${theme.lyraColors['surface-shadow-soft']}, `;
   }
 }
 
@@ -42,15 +42,12 @@ export const Wrapper = styled.div<{
   overflow: hidden;
   background-color: ${({ theme, $bgColor }) =>
     $bgColor ? $bgColor : theme.lyraColors['core-surface-secondary']};
-  box-shadow:
-    0 0 0px ${({ $focused, $border }) => ($focused ? 1.5 : $border ? 1 : 0)}px
-      ${({ $focused, $invalid, theme }) =>
-        $focused
-          ? theme.lyraColors['core-button-primary']
-          : $invalid
-            ? theme.lyraColors['core-outline-primary']
-            : theme.lyraColors['core-outline-primary']},
-    ${({ theme, $shadow }) => setDropShadow($shadow, theme)};
+  box-shadow: ${({ theme, $shadow }) => setDropShadow($shadow, theme)} 0 0 0px
+    ${({ $focused, $border }) => ($focused ? 1.5 : $border ? 1 : 0)}px
+    ${({ $focused, theme }) =>
+      $focused
+        ? theme.lyraColors['core-button-primary']
+        : theme.lyraColors['core-outline-primary']};
   transition: all 0.25s ease-in-out 0s;
   textarea {
     border: 0;
@@ -97,12 +94,25 @@ export const Wrapper = styled.div<{
     }
   }
   div.actions {
-    ${flexBox.rowStart};
+    ${flexBox.rowBetween};
     width: 100%;
     min-height: 30px;
     ${({ theme }) => theme.lyraType['body-xs-regular']};
     color: ${({ theme }) => theme.lyraColors['core-text-disabled']};
     gap: 16px;
+    div.group {
+      ${flexBox.rowStart};
+      cursor: grab;
+      gap: 8px;
+      &:-webkit-user-drag {
+        cursor: grabbing;
+      }
+    }
+    div.group.right {
+      ${flexBox.rowEnd};
+      gap: 8px;
+      flex: 1;
+    }
   }
   div.option {
     ${flexBox.rowStart};

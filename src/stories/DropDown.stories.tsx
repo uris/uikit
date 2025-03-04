@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { fn } from '@storybook/test';
-import { light } from '../theme/useGiaThemes';
+import { lightTheme } from '../theme/useGiaThemes';
 import { DropDown, DropDownOption } from '../uikit/DropDown/DropDown';
 import { FlexDiv } from '../uikit/FlexDiv/FlexDiv';
 
@@ -10,7 +10,7 @@ const optionsWPlace: DropDownOption[] = [
   { label: 'option 2', value: 'option-2' },
 ];
 
-const theme = light;
+const theme = lightTheme;
 const meta: Meta<typeof DropDown> = {
   title: 'UI Kit/DropDown',
   component: DropDown,

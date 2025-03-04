@@ -1,7 +1,7 @@
 import type { Preview } from '@storybook/react';
 import React from 'react';
 import { ThemeProvider } from 'styled-components';
-import { light, dark } from '../src/theme/useGiaThemes';
+import { lightTheme, darkTheme } from '../src/theme/useGiaThemes';
 import './fonts.css';
 
 const preview: Preview = {
@@ -26,7 +26,7 @@ const preview: Preview = {
   decorators: [
     (Story, context) => {
       const selectedTheme = context.globals.theme;
-      const theme = selectedTheme === 'light' ? light : dark;
+      const theme = selectedTheme === 'light' ? lightTheme : darkTheme;
       return (
         <ThemeProvider theme={theme}>
           <Story />

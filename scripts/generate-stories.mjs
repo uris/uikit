@@ -42,7 +42,7 @@ function storyTemplate(componentName, defaultProps) {
   const formattedArgs = formatProps(defaultProps);
 
   return `import type { Meta, StoryObj } from '@storybook/react';
-import { light } from '../theme/useGiaThemes';
+import { lightTheme } from '../theme/useGiaThemes';
 import { ${componentName} } from "../uikit/${componentName}/${componentName}";
 
 const theme = light

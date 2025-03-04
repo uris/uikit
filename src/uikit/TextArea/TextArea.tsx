@@ -1,6 +1,7 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { useTheme } from 'styled-components';
 import { ProgressIndicator } from '../Progress';
+import { UIIcon } from '../UIIcon';
 import { UIChip } from '../UIChip';
 import { UIButton } from '../UIButton';
 import * as Styled from './Styles';
@@ -232,27 +233,40 @@ export function TextArea(props: TextAreaProps) {
         onKeyDown={(e) => handleKeyDown(e)}
       />
       {tips.length > 0 && (
-        <div className="actions">
-          {!showProgress &&
-            tips.map((action: Tip, index: number) => {
-              return (
-                <div
-                  className="option"
-                  key={`${action.key}-${action.label}-${index}`}
-                >
-                  <UIChip
-                    variant={'small'}
-                    onMouseDown={(e) => handleAction(e, action)}
-                    icon={action.icon}
-                    iconRight={action.iconRight}
-                    label={action.key}
-                    background={theme.lyraColors['core-surface-primary']}
-                  />
-                  {action.label}
-                </div>
-              );
-            })}
-          {showProgress && <ProgressIndicator show inline />}
+        <div
+          className="actions"
+          onMouseDown={(e) => e.preventDefault()}
+          role={'toolbar'}
+        >
+          <div className="group">
+            <UIIcon
+              name="menu"
+              strokeColor={theme.lyraColors['core-text-disabled']}
+              pointer={false}
+            />
+          </div>
+          <div className="group right">
+            {!showProgress &&
+              tips.map((action: Tip, index: number) => {
+                return (
+                  <div
+                    className="option"
+                    key={`${action.key}-${action.label}-${index}`}
+                  >
+                    <UIChip
+                      variant={'small'}
+                      onMouseDown={(e) => handleAction(e, action)}
+                      icon={action.icon}
+                      iconRight={action.iconRight}
+                      label={action.key}
+                      background={theme.lyraColors['core-surface-primary']}
+                    />
+                    {action.label}
+                  </div>
+                );
+              })}
+            {showProgress && <ProgressIndicator show inline />}
+          </div>
         </div>
       )}
     </Styled.Wrapper>

@@ -11,7 +11,7 @@ export function StoryBookGiaTheme(props: Props) {
   const themes = useGiaThemes();
   return (
     <ThemeProvider
-      theme={theme && theme === 'light' ? themes.light : themes.dark}
+      theme={theme && theme === 'light' ? themes.lightTheme : themes.darkTheme}
     >
       {children}
     </ThemeProvider>

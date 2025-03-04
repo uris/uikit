@@ -1,10 +1,10 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { fn } from '@storybook/test';
-import { light } from '../theme/useGiaThemes';
+import { lightTheme } from '../theme/useGiaThemes';
 import { Pager } from '../uikit/Pager/Pager';
 import { FlexDiv } from '../uikit/FlexDiv/FlexDiv';
 
-const theme = light;
+const theme = lightTheme;
 const meta: Meta<typeof Pager> = {
   title: 'UI Kit/Pager',
   component: Pager,
