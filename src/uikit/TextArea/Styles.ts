@@ -1,9 +1,18 @@
 import styled from 'styled-components';
 import { flexBox } from '../../util/flexBox';
+import { GiaTheme } from '../../theme/useGiaThemes';
 
 function setSize(value: string | number) {
   if (typeof value === 'string') return value;
   return value + 'px';
+}
+function setDropShadow(shadow: 'soft' | 'hard' | 'none', theme: GiaTheme) {
+  if (shadow === 'none') return ';';
+  if (shadow === 'hard') {
+    return `${theme.lyraColors['surface-shadow-strong']}`;
+  } else {
+    return `${theme.lyraColors['surface-shadow-soft']}`;
+  }
 }
 
 export const Wrapper = styled.div<{
@@ -19,6 +28,7 @@ export const Wrapper = styled.div<{
   $bgColor?: string;
   $border?: boolean;
   $textSize?: 's' | 'm' | 'l';
+  $shadow: 'soft' | 'hard' | 'none';
 }>`
   ${flexBox.columnStart};
   position: relative;
@@ -32,14 +42,15 @@ export const Wrapper = styled.div<{
   overflow: hidden;
   background-color: ${({ theme, $bgColor }) =>
     $bgColor ? $bgColor : theme.lyraColors['core-surface-secondary']};
-  box-shadow: 0 0 0px
-    ${({ $focused, $border }) => ($focused ? 1.5 : $border ? 1 : 0)}px
-    ${({ $focused, $invalid, theme }) =>
-      $focused
-        ? theme.lyraColors['core-button-primary']
-        : $invalid
-          ? theme.lyraColors['core-outline-primary']
-          : theme.lyraColors['core-outline-primary']};
+  box-shadow:
+    0 0 0px ${({ $focused, $border }) => ($focused ? 1.5 : $border ? 1 : 0)}px
+      ${({ $focused, $invalid, theme }) =>
+        $focused
+          ? theme.lyraColors['core-button-primary']
+          : $invalid
+            ? theme.lyraColors['core-outline-primary']
+            : theme.lyraColors['core-outline-primary']},
+    ${({ theme, $shadow }) => setDropShadow($shadow, theme)};
   transition: all 0.25s ease-in-out 0s;
   textarea {
     border: 0;

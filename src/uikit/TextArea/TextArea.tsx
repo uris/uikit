@@ -33,6 +33,7 @@ export interface TextAreaProps {
   showProgress?: boolean;
   disabled?: boolean;
   submitClears?: boolean;
+  shadow?: 'soft' | 'hard' | 'none';
   onChange?: (value: string) => void;
   onSubmit?: (vakue: string) => void;
   onFocus?: () => void;
@@ -76,6 +77,7 @@ export function TextArea(props: TextAreaProps) {
     showProgress = false,
     disabled = false,
     submitClears = true,
+    shadow = 'none',
     onChange = () => null,
     onFocus = () => null,
     onBlur = () => null,
@@ -200,6 +202,7 @@ export function TextArea(props: TextAreaProps) {
       $bgColor={bgColor}
       $border={border}
       $textSize={textSize}
+      $shadow={shadow}
       onBlur={() => handleBlur(text)}
       onFocus={() => handleFocus()}
     >
