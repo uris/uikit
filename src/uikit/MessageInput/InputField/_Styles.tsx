@@ -13,8 +13,8 @@ export const Wrapper = styled.div<{ $isFocused: boolean; $isShort: boolean }>`
     $isShort ? '16px 12px 8px 16px;' : '16px 12px 16px 16px;'};
   border-radius: 16px;
   background: ${({ theme }) => theme.colors.bgDark};
-  box-shadow: 0 0 1px ${({ $isShort }) => ($isShort ? 0 : 1)}px
-    ${({ theme }) => theme.colors.transparent};
+  box-shadow: 0 0 1px ${({ $isShort }) => ($isShort ? 1 : 1)}px
+    ${({ theme }) => theme.lyraColors['core-outline-primary']};
   outline: none;
   &.focused {
     box-shadow: 0 0 1px ${({ $isShort }) => ($isShort ? 2 : 2)}px

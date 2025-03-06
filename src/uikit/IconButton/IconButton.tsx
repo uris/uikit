@@ -32,6 +32,7 @@ export interface IconButtonProps {
   initial?: string;
   animate?: string;
   exit?: string;
+  labelStyle?: string;
   borderRadius?: number;
   onClick?: (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => void;
   onToolTip?: (tip: ToolTip | null) => void;
@@ -64,6 +65,7 @@ export function IconButton(props: IconButtonProps) {
     disabled = false,
     showDot = false,
     fill = false,
+    labelStyle,
     onClick = () => null,
     onToolTip = () => null,
   } = props;
@@ -71,6 +73,7 @@ export function IconButton(props: IconButtonProps) {
   const [on, setOn] = useState<boolean>(isToggled);
   const ref = useRef<HTMLDivElement>(null);
   const styles = {
+    labelStyle,
     bgColor: bgColor ? bgColor : 'transparent',
     bgColorOn: bgColorOn
       ? bgColorOn

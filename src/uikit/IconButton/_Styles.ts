@@ -10,6 +10,7 @@ type Props = {
   isToggled?: boolean;
   toggle?: boolean;
   fill?: boolean;
+  labelStyle?: string;
   borderRadius?: number;
 };
 
@@ -22,8 +23,9 @@ export const IconButton = styled(motion.div)<{ $props: Props }>`
     $props.borderRadius ? $props.borderRadius : 8}px;
   border: ${({ $props }) => ($props.fill ? 1 : 0)}px solid
     ${({ theme }) => theme.lyraColors['core-outline-primary']};
-  gap: 6px;
+  gap: 0px;
   cursor: pointer;
+  padding: ${({ $props }) => ($props.labelStyle ? '0 10px 0 0' : '')};
   &:hover {
     background: ${({ $props }) =>
       $props.bgColorHover
@@ -41,7 +43,8 @@ export const IconButton = styled(motion.div)<{ $props: Props }>`
   }
   div.label {
     ${flexBox.rowStart};
-    ${({ theme }) => theme.lyraType['body-l-regular']};
+    ${({ theme, $props }) =>
+      $props.labelStyle ? $props.labelStyle : theme.lyraType['body-l-regular']};
     text-overflow: ellipsis;
     overflow: hidden;
     word-break: break-all;

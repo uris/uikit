@@ -105,6 +105,7 @@ export enum Icons {
   drive = 'drive',
   return = 'return',
   insert = 'insert',
+  restore = 'restore',
 }
 
 export interface IconProps {
@@ -140,6 +141,37 @@ export function UIIcon(props: IconProps) {
 
   const GPIcons: Icon[] = useMemo(() => {
     return [
+      {
+        name: 'restore',
+        line: (
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width={size}
+            height={size}
+            viewBox="0 0 20 20"
+            style={{
+              cursor: disabled ? 'default' : pointer ? 'pointer' : 'inherit',
+            }}
+            onClick={(e) => onClick(e)}
+            fill={'none'}
+          >
+            <path
+              fillRule="evenodd"
+              clipRule="evenodd"
+              d="M10.75 2H15.5V3.5H12.25V6.75H10.75V2Z"
+              fill={strokeColor}
+            />
+            <path
+              d="M18 10.75C18 15.168 14.418 18.75 10 18.75C5.582 18.75 2 15.168 2 10.75C2 8.541 2.895 6.541 4.343 5.093C4.705 4.731 5.102 4.404 5.527 4.116C5.953 3.829 6.407 3.581 6.886 3.379C7.245 3.227 7.617 3.101 8 3.002V4.563C7.82 4.622 7.643 4.688 7.47 4.761C7.081 4.925 6.712 5.126 6.366 5.36C6.02 5.594 5.698 5.86 5.404 6.154C4.228 7.33 3.5 8.955 3.5 10.75C3.5 14.34 6.41 17.25 10 17.25C13.59 17.25 16.5 14.34 16.5 10.75C16.5 7.858 14.611 5.407 12 4.563V3.002C15.45 3.89 18 7.022 18 10.75Z"
+              fill={strokeColor}
+            />
+            <path
+              d="M11 10.75C11 11.302 10.552 11.75 10 11.75C9.448 11.75 9 11.302 9 10.75C9 10.198 9.448 9.75 10 9.75C10.552 9.75 11 10.198 11 10.75Z"
+              fill={strokeColor}
+            />
+          </svg>
+        ),
+      },
       {
         name: 'insert',
         line: (

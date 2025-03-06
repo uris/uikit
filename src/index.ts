@@ -44,6 +44,9 @@ export type { DraggablePanelProps } from './uikit/DraggablePanel';
 export { DropDown } from './uikit/DropDown';
 export type { DropDownOption, DropDownProps } from './uikit/DropDown';
 
+export { EditorSummary } from './uikit/EditorSummary';
+export type { EditorSummaryProps, SuggestMark } from './uikit/EditorSummary';
+
 export { ErrorSummary } from './uikit/ErrorSummary';
 export type { ErrorMessage, ErorSummaryProps } from './uikit/ErrorSummary';
 
