@@ -111,6 +111,12 @@ export type { TextFieldProps } from './uikit/Textfield';
 export { UIButton } from './uikit/UIButton';
 export type { UIButtonProps, UIButtonHandle } from './uikit/UIButton';
 
+export { UIButtonBar } from './uikit/UIButtonBar';
+export type { UIButtonBarProps, BarButton } from './uikit/UIButtonBar';
+
+export { UICard } from './uikit/UICard';
+export type { UICardProps } from './uikit/UICard';
+
 export { UIChip } from './uikit/UIChip';
 export type { UIChipProps } from './uikit/UIChip';
 
