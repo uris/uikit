@@ -1,11 +1,11 @@
-import { useEffect, useState } from "react";
-import { useTheme } from "styled-components";
-import { Icon } from "../Icon/Icon";
-import * as Styled from "./_Styles";
+import { useEffect, useState } from 'react';
+import { useTheme } from 'styled-components';
+import { UIIcon } from '../UIIcon/UIIcon';
+import * as Styled from './_Styles';
 
 export interface CheckBoxProps {
   size?: number;
-  checked?: "partial" | boolean;
+  checked?: 'partial' | boolean;
   disabled?: boolean;
   color?: string;
   label?: string;
@@ -22,7 +22,7 @@ export function CheckBox(props: CheckBoxProps) {
     onChange = () => null,
   } = props;
   const theme = useTheme();
-  const [state, setState] = useState<"partial" | boolean>(checked);
+  const [state, setState] = useState<'partial' | boolean>(checked);
   useEffect(() => setState(checked), [checked]);
   const styles = {
     size,
@@ -31,17 +31,17 @@ export function CheckBox(props: CheckBoxProps) {
   };
 
   const setIconName = () => {
-    if (state === true) return "checked";
-    if (state === "partial") return "partial";
-    return "unchecked";
+    if (state === true) return 'checked';
+    if (state === 'partial') return 'partial';
+    return 'unchecked';
   };
 
   const setIconColor = () => {
     if (color) return color;
-    if (disabled) return theme.lyraColors["core-icon-disabled"];
-    if (state === "partial") return theme.lyraColors["core-icon-primary"];
-    if (state === false) return theme.lyraColors["core-icon-secondary"];
-    return theme.lyraColors["core-gp-logo-primary"];
+    if (disabled) return theme.lyraColors['core-icon-disabled'];
+    if (state === 'partial') return theme.lyraColors['core-icon-primary'];
+    if (state === false) return theme.lyraColors['core-icon-secondary'];
+    return theme.lyraColors['core-link-primary'];
   };
 
   function handleToggle() {
@@ -53,7 +53,7 @@ export function CheckBox(props: CheckBoxProps) {
       case false:
         newState = true;
         break;
-      case "partial":
+      case 'partial':
         newState = true;
         break;
     }
@@ -63,7 +63,9 @@ export function CheckBox(props: CheckBoxProps) {
 
   return (
     <Styled.CheckBox $props={styles} onClick={() => handleToggle()}>
-      <Icon name={setIconName()} strokeColor={setIconColor()} />
+      <div className="icon">
+        <UIIcon name={setIconName()} strokeColor={setIconColor()} />
+      </div>
       {label && <span className="label">{label}</span>}
     </Styled.CheckBox>
   );
