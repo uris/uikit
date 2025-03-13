@@ -7,12 +7,10 @@ export const Wrapper = styled.div<{ $isFocused: boolean; $isShort: boolean }>`
   align-self: center;
   width: 100%;
   min-width: 300px;
-  overflow: visible;
-  overflow-y: hidden;
-  padding: ${({ $isShort }) =>
-    $isShort ? '16px 12px 8px 16px;' : '16px 12px 16px 16px;'};
+  overflow: hidden;
+  padding: 0;
   border-radius: 16px;
-  background: ${({ theme }) => theme.colors.bgDark};
+  background: ${({ theme }) => theme.lyraColors['core-surface-secondary']};
   box-shadow: 0 0 1px ${({ $isShort }) => ($isShort ? 1 : 1)}px
     ${({ theme }) => theme.lyraColors['core-outline-primary']};
   outline: none;
@@ -23,26 +21,56 @@ export const Wrapper = styled.div<{ $isFocused: boolean; $isShort: boolean }>`
   transition: all 0.3s ease-in-out 0s;
 `;
 
-export const TextArea = styled.textarea`
+export const Content = styled.div<{ $scrolls: boolean }>`
+  ${flexBox.columnStart};
+  gap: 8px;
+  width: 100%;
+  overflow: hidden;
+  overflow-y: auto;
+  border-bottom: ${({ $scrolls }) => ($scrolls ? 1 : 0)}px solid
+    ${({ theme }) => theme.lyraColors['core-outline-primary']};
+  padding: 16px;
+  &::placeholder {
+    color: ${({ theme }) => theme.colors.textDisabled};
+  }
+  &::-webkit-scrollbar {
+    background-color: transparent;
+    width: 14px;
+  }
+  &::-webkit-scrollbar-track {
+    background-color: transparent;
+  }
+  &::-webkit-scrollbar-thumb {
+    background-color: ${({ theme }) => theme.lyraColors['scroll-bar']};
+    border-radius: 20px;
+    border: 4px solid
+      ${({ theme }) => theme.lyraColors['core-surface-secondary']};
+  }
+  &::-webkit-scrollbar-thumb:hover {
+    background-color: ${({ theme }) => theme.lyraColors['scroll-bar-hover']};
+    border-radius: 20px;
+    border: 4px solid
+      ${({ theme }) => theme.lyraColors['core-surface-secondary']};
+  }
+`;
+
+export const TextArea = styled.textarea<{ $scrolls: boolean }>`
   ${({ theme }) => theme.lyraType['body-m-regular']};
   padding: 0;
+  padding-left: 24px;
   width: 100%;
-  overflow-y: hidden;
+  overflow-y: ${({ $scrolls }) => ($scrolls ? 'auto' : 'hidden')};
   resize: none;
   border: 0;
   outline: none;
   color: ${({ theme }) => theme.lyraColors['core-text-primary']};
   background: transparent;
-  padding-bottom: 5px;
-  &::placeholder {
-    color: ${({ theme }) => theme.colors.textDisabled};
-  }
 `;
 
 export const ButtonRow = styled.div`
   ${flexBox.rowBetween};
   width: 100%;
-  padding: 0;
+  padding: 8px 16px;
 `;
 
 export const ActionButtons = styled.div<{ $isShort: boolean }>`

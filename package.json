@@ -1,6 +1,6 @@
 {
   "name": "gia-lyra-uikit",
-  "version": "1.2.43",
+  "version": "1.2.44",
   "main": "dist/index.js",
   "module": "dist/index.esm.js",
   "files": [

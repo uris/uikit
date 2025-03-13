@@ -6,8 +6,7 @@ export const FileList = styled.div`
   align-items: flex-start;
   width: 100%;
   flex-wrap: wrap;
-  gap: 16px;
-  margin-bottom: 16px;
+  gap: 8px;
 `;
 
 export const FileButton = styled.div`

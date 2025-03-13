@@ -5,7 +5,6 @@ export const PromptList = styled.div`
   ${flexBox.columnStart};
   width: 100%;
   gap: 8px;
-  margin: 8px 0 16px 0;
 `;
 
 const blinkAnimation = keyframes`

@@ -1,4 +1,4 @@
-import React, { useRef, useState, useEffect } from 'react';
+import React, { useRef, useState, useEffect, useCallback } from 'react';
 import { useTheme } from 'styled-components';
 import { AnimatePresence } from 'framer-motion';
 import { useObserveResize } from '../../../hooks/useObserveResize';
@@ -8,11 +8,12 @@ import { PrompState, UserPresence } from '../UserList/_Types';
 import { DocExcerpt, ExcerptList } from '../ExcerptList/ExcerptList';
 import { UIButton } from '../../UIButton/UIButton';
 import { JurisdictionFocus, PromptType, Role, SendMessage } from '../_Types';
-import { ToolTip } from '../../../uikit/sharedTypes';
+import { ToolTip } from '../../sharedTypes';
 import * as Styled from './_Styles';
 
 export interface MessageInputProps {
   maxHeight?: number;
+  maxLength?: number;
   focused?: boolean;
   height?: string;
   placeholder?: string;
@@ -45,7 +46,7 @@ export interface MessageInputProps {
 
 export function MessageInput(props: MessageInputProps) {
   const {
-    maxHeight = 300,
+    maxLength = 2500,
     focused = false,
     error = null,
     value = '',
@@ -75,21 +76,36 @@ export function MessageInput(props: MessageInputProps) {
   const theme = useTheme();
   const ref = useRef<HTMLTextAreaElement>(null);
   const wrapperRef = useRef<HTMLDivElement>(null);
-  const size = useObserveResize(wrapperRef);
+  const contentRef = useRef<HTMLDivElement>(null);
+  const textSize = useObserveResize(wrapperRef);
+  const contentSize = useObserveResize(contentRef);
   const [message, setMessage] = useState<string>(value);
   const [isFocused, setIsFocused] = useState<boolean>(focused);
   const [promptType, setPromptType] = useState<PromptType>(PromptType.text);
   const [invalid, setInvalid] = useState<string | null>(error);
   const [remoteDisabled, setRemoteDisabled] = useState<boolean>(false);
+  const [scrolls, setScrolls] = useState<boolean>(false);
 
-  // reset size if the warpper size changes
-  useEffect(() => {
-    if (ref && ref.current) {
-      ref.current.style.height = '0px';
-      ref.current.style.height =
-        Math.min(ref.current.scrollHeight, maxHeight) + 'px';
+  const resetHeight = useCallback(() => {
+    const textEl = ref.current;
+    const contentEl = contentRef.current;
+    if (textEl) {
+      textEl.style.height = '0px';
+      textEl.style.height = textEl.scrollHeight + 'px';
     }
-  }, [size, message, maxHeight]);
+    if (contentEl) {
+      const style = window.getComputedStyle(contentEl);
+      const paddingTop = parseInt(style.paddingTop);
+      const paddingBottom = parseInt(style.paddingBottom);
+      const height = contentSize.height + paddingTop + paddingBottom;
+      setScrolls(contentEl.scrollHeight > height);
+    }
+  }, [contentSize]);
+
+  // reset size if the text area to fit and set scroll state for content
+  useEffect(() => {
+    resetHeight();
+  }, [textSize, contentSize, message, resetHeight]);
 
   // reset the message text of the active document is changed
   useEffect(() => setMessage(value), [value]);
@@ -118,14 +134,6 @@ export function MessageInput(props: MessageInputProps) {
 
   // update error is prop changes
   useEffect(() => setInvalid(error), [error]);
-
-  function resetHeight() {
-    if (ref && ref.current) {
-      ref.current.style.height = '0px';
-      ref.current.style.height =
-        Math.min(ref.current.scrollHeight, maxHeight) + 'px';
-    }
-  }
 
   const doSubmit = (
     e:
@@ -252,52 +260,56 @@ export function MessageInput(props: MessageInputProps) {
       }}
       ref={wrapperRef}
     >
-      <AnimatePresence initial={false}>
-        {excerpts.length > 0 && (
-          <ExcerptList
-            excerpts={excerpts}
-            onChange={(excerpts: DocExcerpt[]) => onChangeExcerpts(excerpts)}
-            onToolTip={(tip) => onToolTip(tip)}
+      <Styled.Content ref={contentRef} $scrolls={scrolls}>
+        <AnimatePresence initial={false}>
+          {excerpts.length > 0 && (
+            <ExcerptList
+              excerpts={excerpts}
+              onChange={(excerpts: DocExcerpt[]) => onChangeExcerpts(excerpts)}
+              onToolTip={(tip) => onToolTip(tip)}
+            />
+          )}
+        </AnimatePresence>
+        <AnimatePresence initial={false}>
+          {files.length > 0 && (
+            <FileList
+              files={files as File[]}
+              onChange={(items: File[]) => onChangeFiles(items)}
+              onToolTip={(tip) => onToolTip(tip)}
+            />
+          )}
+        </AnimatePresence>
+        <Styled.InputWrapper $isShort={isShort}>
+          <Styled.TextArea
+            $scrolls={false}
+            id={'messageInput'}
+            name={'messageInput'}
+            ref={ref}
+            value={message}
+            onChange={({ target }) => handleChange(target.value)}
+            onInput={() => resetHeight()}
+            onKeyDown={(e) => handleKeyDown(e)}
+            placeholder={placeholder}
+            disabled={isStreaming}
+            onFocus={() => setFocus()}
+            onBlur={() => setBlur()}
+            rows={1}
+            maxLength={maxLength}
           />
-        )}
-      </AnimatePresence>
-      <AnimatePresence initial={false}>
-        {files.length > 0 && (
-          <FileList
-            files={files as File[]}
-            onChange={(items: File[]) => onChangeFiles(items)}
-            onToolTip={(tip) => onToolTip(tip)}
-          />
-        )}
-      </AnimatePresence>
-      <Styled.InputWrapper $isShort={isShort}>
-        <Styled.TextArea
-          id={'messageInput'}
-          name={'messageInput'}
-          ref={ref}
-          value={message}
-          onChange={({ target }) => handleChange(target.value)}
-          onInput={() => resetHeight()}
-          onKeyDown={(e) => handleKeyDown(e)}
-          placeholder={placeholder}
-          disabled={isStreaming}
-          onFocus={() => setFocus()}
-          onBlur={() => setBlur()}
-          rows={1}
-        />
-      </Styled.InputWrapper>
-      <AnimatePresence initial={false}>
-        {users.length > 0 && (
-          <UserList
-            userPresence={users}
-            owner={owner}
-            currentUser={currentUser}
-            presenceID={presenceID}
-            onTogglePrompt={(presence) => onTogglePrompt(presence)}
-            onToolTip={(tip) => onToolTip(tip)}
-          />
-        )}
-      </AnimatePresence>
+        </Styled.InputWrapper>
+        <AnimatePresence initial={false}>
+          {users.length > 0 && (
+            <UserList
+              userPresence={users}
+              owner={owner}
+              currentUser={currentUser}
+              presenceID={presenceID}
+              onTogglePrompt={(presence) => onTogglePrompt(presence)}
+              onToolTip={(tip) => onToolTip(tip)}
+            />
+          )}
+        </AnimatePresence>
+      </Styled.Content>
       <Styled.ButtonRow>
         <Styled.ActionButtons $isShort={isShort}>
           <UIButton

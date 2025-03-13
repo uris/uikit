@@ -6,7 +6,7 @@ import {
   PrompState,
   UserPresence,
 } from '../uikit/MessageInput/UserList/_Types';
-import { Excerpt } from '../uikit/MessageInput/ExcerptList/ExcerptList';
+import { DocExcerpt } from '../uikit/MessageInput/ExcerptList/ExcerptList';
 
 const testFile: Partial<File> = {
   name: 'secret-plans-to-blow-up-the-deathstar.docx',
@@ -15,7 +15,7 @@ const testFile: Partial<File> = {
   lastModified: new Date().getSeconds(),
 };
 
-const testExcerpt: Excerpt = {
+const testExcerpt: DocExcerpt = {
   content:
     'OB1, we meet again at last. When I left you I was but a learner. Now I am the master... Your powers grow weak old man.',
   range: { from: 0, to: 100 },
@@ -39,7 +39,7 @@ const meta: Meta<typeof MessageInput> = {
   component: MessageInput,
   args: {
     value: '',
-    maxHeight: 1000,
+    maxHeight: 300,
     focused: false,
     error: null,
     placeholder: 'Ask me anytning HR compliance',
@@ -53,7 +53,6 @@ const meta: Meta<typeof MessageInput> = {
     excerpts: [testExcerpt],
     files: [testFile as File],
     jurisdictionClick: fn(),
-    complianceCheckClick: fn(),
     attachClick: fn(),
     onChangeExcerpts: fn(),
     onChangeFiles: fn(),
@@ -71,6 +70,16 @@ export default meta;
 
 //export const Default: StoryObj<typeof MessageInput> = {};
 export const Default: StoryObj<typeof MessageInput> = {
+  render: () => {
+    return (
+      <FlexDiv justify={'center'} alignItems={'center'} padding={64}>
+        <MessageInput />
+      </FlexDiv>
+    );
+  },
+};
+
+export const Extended: StoryObj<typeof MessageInput> = {
   render: (args) => {
     return (
       <FlexDiv justify={'center'} alignItems={'center'} padding={64}>
