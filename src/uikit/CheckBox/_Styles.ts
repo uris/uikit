@@ -15,6 +15,8 @@ export const CheckBox = styled.div<{ $props: Props }>`
   gap: 6px;
   cursor: pointer;
   overflow: hidden;
+	user-select: none;
+	-webkit-user-select: none;
   div.icon {
     ${flexBox.row};
     min-width: 20px;

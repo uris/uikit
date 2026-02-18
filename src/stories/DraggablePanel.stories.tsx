@@ -13,7 +13,7 @@ const meta: Meta<typeof DraggablePanel> = {
 	},
 	args: {
 		children: undefined,
-		sizeContraints: { initial: 150, min: 100, max: 350 },
+		sizeConstraints: { initial: 150, min: 100, max: 350 },
 		dragsRight: true,
 		isClosed: false,
 		resizeHandle: {

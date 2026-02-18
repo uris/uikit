@@ -57,6 +57,15 @@ export function getIconRegistry(props: IconRegistryProps): Map<string, UIIcon> {
 		opacity,
 	} = props;
 
+	// Unified icon style removing the system highlight as this will be handled by the parent component
+	const iconStyle = {
+		cursor: disabled ? "default" : pointer ? "pointer" : "inherit",
+		userSelect: "none" as const,
+		WebkitTapHighlightColor: "transparent",
+		outline: "none",
+		border: 0,
+	};
+
 	return new Map<string, UIIcon>([
 		[
 			"task list",
@@ -67,9 +76,7 @@ export function getIconRegistry(props: IconRegistryProps): Map<string, UIIcon> {
 						width={size}
 						height={size}
 						viewBox="0 0 24 24"
-						style={{
-							cursor: disabled ? "default" : pointer ? "pointer" : "inherit",
-						}}
+						style={iconStyle}
 						onClick={(e) => onClick(e)}
 						fill={"none"}
 						role="img"
@@ -123,9 +130,7 @@ export function getIconRegistry(props: IconRegistryProps): Map<string, UIIcon> {
 						width={size}
 						height={size}
 						viewBox="0 0 24 24"
-						style={{
-							cursor: disabled ? "default" : pointer ? "pointer" : "inherit",
-						}}
+						style={iconStyle}
 						onClick={(e) => onClick(e)}
 						role="img"
 						aria-label="Highlight Icon"
@@ -151,9 +156,7 @@ export function getIconRegistry(props: IconRegistryProps): Map<string, UIIcon> {
 						width={size}
 						height={size}
 						viewBox="0 0 24 24"
-						style={{
-							cursor: disabled ? "default" : pointer ? "pointer" : "inherit",
-						}}
+						style={iconStyle}
 						onClick={(e) => onClick(e)}
 						fill={"none"}
 						role="img"
@@ -191,9 +194,7 @@ export function getIconRegistry(props: IconRegistryProps): Map<string, UIIcon> {
 						width={size}
 						height={size}
 						viewBox="0 0 24 24"
-						style={{
-							cursor: disabled ? "default" : pointer ? "pointer" : "inherit",
-						}}
+						style={iconStyle}
 						onClick={(e) => onClick(e)}
 						fill={"none"}
 						role="img"
@@ -236,9 +237,7 @@ export function getIconRegistry(props: IconRegistryProps): Map<string, UIIcon> {
 						width={size}
 						height={size}
 						viewBox="0 0 24 24"
-						style={{
-							cursor: disabled ? "default" : pointer ? "pointer" : "inherit",
-						}}
+						style={iconStyle}
 						onClick={(e) => onClick(e)}
 						fill="none"
 						role="img"
@@ -273,9 +272,7 @@ export function getIconRegistry(props: IconRegistryProps): Map<string, UIIcon> {
 						width={size}
 						height={size}
 						viewBox="0 0 24 24"
-						style={{
-							cursor: disabled ? "default" : pointer ? "pointer" : "inherit",
-						}}
+						style={iconStyle}
 						onClick={(e) => onClick(e)}
 						fill="none"
 						role="img"
@@ -309,9 +306,7 @@ export function getIconRegistry(props: IconRegistryProps): Map<string, UIIcon> {
 						width={size}
 						height={size}
 						viewBox="0 0 24 24"
-						style={{
-							cursor: disabled ? "default" : pointer ? "pointer" : "inherit",
-						}}
+						style={iconStyle}
 						onClick={(e) => onClick(e)}
 						role="img"
 						aria-label="Link Icon"
@@ -343,9 +338,7 @@ export function getIconRegistry(props: IconRegistryProps): Map<string, UIIcon> {
 						width={size}
 						height={size}
 						viewBox="0 0 24 24"
-						style={{
-							cursor: disabled ? "default" : pointer ? "pointer" : "inherit",
-						}}
+						style={iconStyle}
 						onClick={(e) => onClick(e)}
 						fill="none"
 						role="img"
@@ -406,9 +399,7 @@ export function getIconRegistry(props: IconRegistryProps): Map<string, UIIcon> {
 						width={size}
 						height={size}
 						viewBox="0 0 24 24"
-						style={{
-							cursor: disabled ? "default" : pointer ? "pointer" : "inherit",
-						}}
+						style={iconStyle}
 						onClick={(e) => onClick(e)}
 						fill="none"
 						role="img"
@@ -462,9 +453,7 @@ export function getIconRegistry(props: IconRegistryProps): Map<string, UIIcon> {
 						width={size}
 						height={size}
 						viewBox="0 0 24 24"
-						style={{
-							cursor: disabled ? "default" : pointer ? "pointer" : "inherit",
-						}}
+						style={iconStyle}
 						onClick={(e) => onClick(e)}
 						fill="none"
 						role="img"
@@ -528,9 +517,7 @@ export function getIconRegistry(props: IconRegistryProps): Map<string, UIIcon> {
 						width={size}
 						height={size}
 						viewBox="0 0 24 24"
-						style={{
-							cursor: disabled ? "default" : pointer ? "pointer" : "inherit",
-						}}
+						style={iconStyle}
 						onClick={(e) => onClick(e)}
 						fill="none"
 						role="img"
@@ -594,9 +581,7 @@ export function getIconRegistry(props: IconRegistryProps): Map<string, UIIcon> {
 						width={size}
 						height={size}
 						viewBox="0 0 24 24"
-						style={{
-							cursor: disabled ? "default" : pointer ? "pointer" : "inherit",
-						}}
+						style={iconStyle}
 						onClick={(e) => onClick(e)}
 						fill={"none"}
 						role="img"
@@ -639,9 +624,7 @@ export function getIconRegistry(props: IconRegistryProps): Map<string, UIIcon> {
 						width={size}
 						height={size}
 						viewBox="0 0 20 20"
-						style={{
-							cursor: disabled ? "default" : pointer ? "pointer" : "inherit",
-						}}
+						style={iconStyle}
 						onClick={(e) => onClick(e)}
 						fill="none"
 						role="img"
@@ -671,9 +654,7 @@ export function getIconRegistry(props: IconRegistryProps): Map<string, UIIcon> {
 						width={size}
 						height={size}
 						viewBox="0 0 20 20"
-						style={{
-							cursor: disabled ? "default" : pointer ? "pointer" : "inherit",
-						}}
+						style={iconStyle}
 						onClick={(e) => onClick(e)}
 						fill="none"
 						role="img"
@@ -703,9 +684,7 @@ export function getIconRegistry(props: IconRegistryProps): Map<string, UIIcon> {
 						width={size}
 						height={size}
 						viewBox="0 0 20 20"
-						style={{
-							cursor: disabled ? "default" : pointer ? "pointer" : "inherit",
-						}}
+						style={iconStyle}
 						onClick={(e) => onClick(e)}
 						fill="none"
 						role="img"
@@ -731,9 +710,7 @@ export function getIconRegistry(props: IconRegistryProps): Map<string, UIIcon> {
 						width={size}
 						height={size}
 						viewBox="0 0 20 20"
-						style={{
-							cursor: disabled ? "default" : pointer ? "pointer" : "inherit",
-						}}
+						style={iconStyle}
 						onClick={(e) => onClick(e)}
 						fill="none"
 						role="img"
@@ -772,9 +749,7 @@ export function getIconRegistry(props: IconRegistryProps): Map<string, UIIcon> {
 						width={size}
 						height={size}
 						viewBox="0 0 20 20"
-						style={{
-							cursor: disabled ? "default" : pointer ? "pointer" : "inherit",
-						}}
+						style={iconStyle}
 						onClick={(e) => onClick(e)}
 						fill="none"
 						role="img"
@@ -801,9 +776,7 @@ export function getIconRegistry(props: IconRegistryProps): Map<string, UIIcon> {
 						width={size}
 						height={size}
 						viewBox="0 0 20 20"
-						style={{
-							cursor: disabled ? "default" : pointer ? "pointer" : "inherit",
-						}}
+						style={iconStyle}
 						onClick={(e) => onClick(e)}
 						fill="none"
 						role="img"
@@ -830,9 +803,7 @@ export function getIconRegistry(props: IconRegistryProps): Map<string, UIIcon> {
 						width={size}
 						height={size}
 						viewBox="0 0 20 20"
-						style={{
-							cursor: disabled ? "default" : pointer ? "pointer" : "inherit",
-						}}
+						style={iconStyle}
 						onClick={(e) => onClick(e)}
 						fill="none"
 						role="img"
@@ -880,9 +851,7 @@ export function getIconRegistry(props: IconRegistryProps): Map<string, UIIcon> {
 						width={size}
 						height={size}
 						viewBox="0 0 20 20"
-						style={{
-							cursor: disabled ? "default" : pointer ? "pointer" : "inherit",
-						}}
+						style={iconStyle}
 						onClick={(e) => onClick(e)}
 						fill="none"
 						role="img"
@@ -912,9 +881,7 @@ export function getIconRegistry(props: IconRegistryProps): Map<string, UIIcon> {
 						width={size}
 						height={size}
 						viewBox="0 0 20 20"
-						style={{
-							cursor: disabled ? "default" : pointer ? "pointer" : "inherit",
-						}}
+						style={iconStyle}
 						onClick={(e) => onClick(e)}
 						fill="none"
 						role="img"
@@ -958,9 +925,7 @@ export function getIconRegistry(props: IconRegistryProps): Map<string, UIIcon> {
 						width={size}
 						height={size}
 						viewBox="0 0 20 20"
-						style={{
-							cursor: disabled ? "default" : pointer ? "pointer" : "inherit",
-						}}
+						style={iconStyle}
 						onClick={(e) => onClick(e)}
 						fill="none"
 						role="img"
@@ -1011,9 +976,7 @@ export function getIconRegistry(props: IconRegistryProps): Map<string, UIIcon> {
 						width={size}
 						height={size}
 						viewBox="0 0 20 20"
-						style={{
-							cursor: disabled ? "default" : pointer ? "pointer" : "inherit",
-						}}
+						style={iconStyle}
 						onClick={(e) => onClick(e)}
 						fill="none"
 						role="img"
@@ -1057,9 +1020,7 @@ export function getIconRegistry(props: IconRegistryProps): Map<string, UIIcon> {
 						width={size}
 						height={size}
 						viewBox="0 0 20 20"
-						style={{
-							cursor: disabled ? "default" : pointer ? "pointer" : "inherit",
-						}}
+						style={iconStyle}
 						onClick={(e) => onClick(e)}
 						fill="none"
 						role="img"
@@ -1103,9 +1064,7 @@ export function getIconRegistry(props: IconRegistryProps): Map<string, UIIcon> {
 						width={size}
 						height={size}
 						viewBox="0 0 20 20"
-						style={{
-							cursor: disabled ? "default" : pointer ? "pointer" : "inherit",
-						}}
+						style={iconStyle}
 						onClick={(e) => onClick(e)}
 						fill="none"
 						role="img"
@@ -1151,9 +1110,7 @@ export function getIconRegistry(props: IconRegistryProps): Map<string, UIIcon> {
 						width={size}
 						height={size}
 						viewBox="0 0 20 20"
-						style={{
-							cursor: disabled ? "default" : pointer ? "pointer" : "inherit",
-						}}
+						style={iconStyle}
 						onClick={(e) => onClick(e)}
 						fill="none"
 						role="img"
@@ -1197,9 +1154,7 @@ export function getIconRegistry(props: IconRegistryProps): Map<string, UIIcon> {
 						width={size}
 						height={size}
 						viewBox="0 0 20 20"
-						style={{
-							cursor: disabled ? "default" : pointer ? "pointer" : "inherit",
-						}}
+						style={iconStyle}
 						onClick={(e) => onClick(e)}
 						fill="none"
 						role="img"
@@ -1249,9 +1204,7 @@ export function getIconRegistry(props: IconRegistryProps): Map<string, UIIcon> {
 						width={size}
 						height={size}
 						viewBox="0 0 20 20"
-						style={{
-							cursor: disabled ? "default" : pointer ? "pointer" : "inherit",
-						}}
+						style={iconStyle}
 						onClick={(e) => onClick(e)}
 						fill="none"
 						role="img"
@@ -1290,9 +1243,7 @@ export function getIconRegistry(props: IconRegistryProps): Map<string, UIIcon> {
 						width={size}
 						height={size}
 						viewBox="0 0 20 20"
-						style={{
-							cursor: disabled ? "default" : pointer ? "pointer" : "inherit",
-						}}
+						style={iconStyle}
 						onClick={(e) => onClick(e)}
 						fill="none"
 						role="img"
@@ -1318,9 +1269,7 @@ export function getIconRegistry(props: IconRegistryProps): Map<string, UIIcon> {
 						width={size}
 						height={size}
 						viewBox="0 0 20 20"
-						style={{
-							cursor: disabled ? "default" : pointer ? "pointer" : "inherit",
-						}}
+						style={iconStyle}
 						onClick={(e) => onClick(e)}
 						fill="none"
 						role="img"
@@ -1353,9 +1302,7 @@ export function getIconRegistry(props: IconRegistryProps): Map<string, UIIcon> {
 						width={size}
 						height={size}
 						viewBox="0 0 20 20"
-						style={{
-							cursor: disabled ? "default" : pointer ? "pointer" : "inherit",
-						}}
+						style={iconStyle}
 						onClick={(e) => onClick(e)}
 						fill="none"
 						role="img"
@@ -1391,9 +1338,7 @@ export function getIconRegistry(props: IconRegistryProps): Map<string, UIIcon> {
 						width={size}
 						height={size}
 						viewBox="0 0 20 20"
-						style={{
-							cursor: disabled ? "default" : pointer ? "pointer" : "inherit",
-						}}
+						style={iconStyle}
 						onClick={(e) => onClick(e)}
 						fill="none"
 						role="img"
@@ -1428,9 +1373,7 @@ export function getIconRegistry(props: IconRegistryProps): Map<string, UIIcon> {
 						width={size}
 						height={size}
 						viewBox="0 0 20 20"
-						style={{
-							cursor: disabled ? "default" : pointer ? "pointer" : "inherit",
-						}}
+						style={iconStyle}
 						onClick={(e) => onClick(e)}
 						fill="none"
 						role="img"
@@ -1458,9 +1401,7 @@ export function getIconRegistry(props: IconRegistryProps): Map<string, UIIcon> {
 						width={size}
 						height={size}
 						viewBox="0 0 20 20"
-						style={{
-							cursor: disabled ? "default" : pointer ? "pointer" : "inherit",
-						}}
+						style={iconStyle}
 						onClick={(e) => onClick(e)}
 						fill="none"
 						role="img"
@@ -1492,9 +1433,7 @@ export function getIconRegistry(props: IconRegistryProps): Map<string, UIIcon> {
 						width={size}
 						height={size}
 						viewBox="0 0 20 20"
-						style={{
-							cursor: disabled ? "default" : pointer ? "pointer" : "inherit",
-						}}
+						style={iconStyle}
 						onClick={(e) => onClick(e)}
 						fill="none"
 						role="img"
@@ -1520,9 +1459,7 @@ export function getIconRegistry(props: IconRegistryProps): Map<string, UIIcon> {
 						width={size}
 						height={size}
 						viewBox="0 0 20 20"
-						style={{
-							cursor: disabled ? "default" : pointer ? "pointer" : "inherit",
-						}}
+						style={iconStyle}
 						onClick={(e) => onClick(e)}
 						fill="none"
 						role="img"
@@ -1566,9 +1503,7 @@ export function getIconRegistry(props: IconRegistryProps): Map<string, UIIcon> {
 						width={size}
 						height={size}
 						viewBox="0 0 20 20"
-						style={{
-							cursor: disabled ? "default" : pointer ? "pointer" : "inherit",
-						}}
+						style={iconStyle}
 						onClick={(e) => onClick(e)}
 						fill="none"
 						role="img"
@@ -1594,9 +1529,7 @@ export function getIconRegistry(props: IconRegistryProps): Map<string, UIIcon> {
 						width={size}
 						height={size}
 						viewBox="0 0 20 20"
-						style={{
-							cursor: disabled ? "default" : pointer ? "pointer" : "inherit",
-						}}
+						style={iconStyle}
 						onClick={(e) => onClick(e)}
 						fill="none"
 						role="img"
@@ -1622,9 +1555,7 @@ export function getIconRegistry(props: IconRegistryProps): Map<string, UIIcon> {
 						width={size}
 						height={size}
 						viewBox="0 0 20 20"
-						style={{
-							cursor: disabled ? "default" : pointer ? "pointer" : "inherit",
-						}}
+						style={iconStyle}
 						onClick={(e) => onClick(e)}
 						fill="none"
 						role="img"
@@ -1650,9 +1581,7 @@ export function getIconRegistry(props: IconRegistryProps): Map<string, UIIcon> {
 						width={size}
 						height={size}
 						viewBox="0 0 20 20"
-						style={{
-							cursor: disabled ? "default" : pointer ? "pointer" : "inherit",
-						}}
+						style={iconStyle}
 						onClick={(e) => onClick(e)}
 						fill="none"
 						role="img"
@@ -1680,9 +1609,7 @@ export function getIconRegistry(props: IconRegistryProps): Map<string, UIIcon> {
 						width={size}
 						height={size}
 						viewBox="0 0 20 20"
-						style={{
-							cursor: disabled ? "default" : pointer ? "pointer" : "inherit",
-						}}
+						style={iconStyle}
 						onClick={(e) => onClick(e)}
 						fill="none"
 						role="img"
@@ -1708,9 +1635,7 @@ export function getIconRegistry(props: IconRegistryProps): Map<string, UIIcon> {
 						width={size}
 						height={size}
 						viewBox="0 0 20 20"
-						style={{
-							cursor: disabled ? "default" : pointer ? "pointer" : "inherit",
-						}}
+						style={iconStyle}
 						onClick={(e) => onClick(e)}
 						fill="none"
 						role="img"
@@ -1737,9 +1662,7 @@ export function getIconRegistry(props: IconRegistryProps): Map<string, UIIcon> {
 						width={size}
 						height={size}
 						viewBox="0 0 20 20"
-						style={{
-							cursor: disabled ? "default" : pointer ? "pointer" : "inherit",
-						}}
+						style={iconStyle}
 						onClick={(e) => onClick(e)}
 						fill="none"
 						role="img"
@@ -1765,9 +1688,7 @@ export function getIconRegistry(props: IconRegistryProps): Map<string, UIIcon> {
 						width={size}
 						height={size}
 						viewBox="0 0 20 20"
-						style={{
-							cursor: disabled ? "default" : pointer ? "pointer" : "inherit",
-						}}
+						style={iconStyle}
 						onClick={(e) => onClick(e)}
 						fill="none"
 						role="img"
@@ -1793,9 +1714,7 @@ export function getIconRegistry(props: IconRegistryProps): Map<string, UIIcon> {
 						width={size}
 						height={size}
 						viewBox="0 0 20 20"
-						style={{
-							cursor: disabled ? "default" : pointer ? "pointer" : "inherit",
-						}}
+						style={iconStyle}
 						onClick={(e) => onClick(e)}
 						fill="none"
 						role="img"
@@ -1835,9 +1754,7 @@ export function getIconRegistry(props: IconRegistryProps): Map<string, UIIcon> {
 						width={size}
 						height={size}
 						viewBox="0 0 20 20"
-						style={{
-							cursor: disabled ? "default" : pointer ? "pointer" : "inherit",
-						}}
+						style={iconStyle}
 						onClick={(e) => onClick(e)}
 						fill="none"
 						role="img"
@@ -1868,9 +1785,7 @@ export function getIconRegistry(props: IconRegistryProps): Map<string, UIIcon> {
 						width={size}
 						height={size}
 						viewBox="0 0 20 20"
-						style={{
-							cursor: disabled ? "default" : pointer ? "pointer" : "inherit",
-						}}
+						style={iconStyle}
 						onClick={(e) => onClick(e)}
 						fill="none"
 						role="img"
@@ -1896,9 +1811,7 @@ export function getIconRegistry(props: IconRegistryProps): Map<string, UIIcon> {
 						width={size}
 						height={size}
 						viewBox="0 0 20 20"
-						style={{
-							cursor: disabled ? "default" : pointer ? "pointer" : "inherit",
-						}}
+						style={iconStyle}
 						onClick={(e) => onClick(e)}
 						fill="none"
 						role="img"
@@ -1923,9 +1836,7 @@ export function getIconRegistry(props: IconRegistryProps): Map<string, UIIcon> {
 						width={size}
 						height={size}
 						viewBox="0 0 20 20"
-						style={{
-							cursor: disabled ? "default" : pointer ? "pointer" : "inherit",
-						}}
+						style={iconStyle}
 						onClick={(e) => onClick(e)}
 						fill="none"
 						role="img"
@@ -1950,9 +1861,7 @@ export function getIconRegistry(props: IconRegistryProps): Map<string, UIIcon> {
 						width={size}
 						height={size}
 						viewBox="0 0 20 20"
-						style={{
-							cursor: disabled ? "default" : pointer ? "pointer" : "inherit",
-						}}
+						style={iconStyle}
 						onClick={(e) => onClick(e)}
 						fill="none"
 						role="img"
@@ -1981,9 +1890,7 @@ export function getIconRegistry(props: IconRegistryProps): Map<string, UIIcon> {
 						width={size}
 						height={size}
 						viewBox="0 0 20 20"
-						style={{
-							cursor: disabled ? "default" : pointer ? "pointer" : "inherit",
-						}}
+						style={iconStyle}
 						onClick={(e) => onClick(e)}
 						fill="none"
 						role="img"
@@ -2026,9 +1933,7 @@ export function getIconRegistry(props: IconRegistryProps): Map<string, UIIcon> {
 						width={size}
 						height={size}
 						viewBox="0 0 20 20"
-						style={{
-							cursor: disabled ? "default" : pointer ? "pointer" : "inherit",
-						}}
+						style={iconStyle}
 						onClick={(e) => onClick(e)}
 						fill="none"
 						role="img"
@@ -2053,9 +1958,7 @@ export function getIconRegistry(props: IconRegistryProps): Map<string, UIIcon> {
 						width={size}
 						height={size}
 						viewBox="0 0 20 20"
-						style={{
-							cursor: disabled ? "default" : pointer ? "pointer" : "inherit",
-						}}
+						style={iconStyle}
 						onClick={(e) => onClick(e)}
 						fill="none"
 						role="img"
@@ -2080,9 +1983,7 @@ export function getIconRegistry(props: IconRegistryProps): Map<string, UIIcon> {
 						width={size}
 						height={size}
 						viewBox="0 0 20 20"
-						style={{
-							cursor: disabled ? "default" : pointer ? "pointer" : "inherit",
-						}}
+						style={iconStyle}
 						onClick={(e) => onClick(e)}
 						fill="none"
 						role="img"
@@ -2107,9 +2008,7 @@ export function getIconRegistry(props: IconRegistryProps): Map<string, UIIcon> {
 						width={size}
 						height={size}
 						viewBox="0 0 822 822"
-						style={{
-							cursor: disabled ? "default" : pointer ? "pointer" : "inherit",
-						}}
+						style={iconStyle}
 						onClick={(e) => onClick(e)}
 						fill="none"
 						role="img"
@@ -2134,9 +2033,7 @@ export function getIconRegistry(props: IconRegistryProps): Map<string, UIIcon> {
 						width={size}
 						height={size}
 						viewBox="0 0 20 20"
-						style={{
-							cursor: disabled ? "default" : pointer ? "pointer" : "inherit",
-						}}
+						style={iconStyle}
 						onClick={(e) => onClick(e)}
 						fill="none"
 						role="img"
@@ -2161,9 +2058,7 @@ export function getIconRegistry(props: IconRegistryProps): Map<string, UIIcon> {
 						width={size}
 						height={size}
 						viewBox="0 0 20 20"
-						style={{
-							cursor: disabled ? "default" : pointer ? "pointer" : "inherit",
-						}}
+						style={iconStyle}
 						onClick={(e) => onClick(e)}
 						fill="none"
 						role="img"
@@ -2201,9 +2096,7 @@ export function getIconRegistry(props: IconRegistryProps): Map<string, UIIcon> {
 						width={size}
 						height={size}
 						viewBox="0 0 20 20"
-						style={{
-							cursor: disabled ? "default" : pointer ? "pointer" : "inherit",
-						}}
+						style={iconStyle}
 						onClick={(e) => onClick(e)}
 						fill="none"
 						role="img"
@@ -2229,9 +2122,7 @@ export function getIconRegistry(props: IconRegistryProps): Map<string, UIIcon> {
 						width={size}
 						height={size}
 						viewBox="0 0 20 20"
-						style={{
-							cursor: disabled ? "default" : pointer ? "pointer" : "inherit",
-						}}
+						style={iconStyle}
 						onClick={(e) => onClick(e)}
 						fill="none"
 						role="img"
@@ -2257,9 +2148,7 @@ export function getIconRegistry(props: IconRegistryProps): Map<string, UIIcon> {
 						width={size}
 						height={size}
 						viewBox="0 0 20 20"
-						style={{
-							cursor: disabled ? "default" : pointer ? "pointer" : "inherit",
-						}}
+						style={iconStyle}
 						role="img"
 						aria-label="Empty Icon"
 						fill="none"
@@ -2276,9 +2165,7 @@ export function getIconRegistry(props: IconRegistryProps): Map<string, UIIcon> {
 						width={size}
 						height={size}
 						viewBox="0 0 20 20"
-						style={{
-							cursor: disabled ? "default" : pointer ? "pointer" : "inherit",
-						}}
+						style={iconStyle}
 						onClick={(e) => onClick(e)}
 						fill="none"
 						role="img"
@@ -2304,9 +2191,7 @@ export function getIconRegistry(props: IconRegistryProps): Map<string, UIIcon> {
 						width={size}
 						height={size}
 						viewBox="0 0 20 20"
-						style={{
-							cursor: disabled ? "default" : pointer ? "pointer" : "inherit",
-						}}
+						style={iconStyle}
 						onClick={(e) => onClick(e)}
 						fill="none"
 						role="img"
@@ -2340,9 +2225,7 @@ export function getIconRegistry(props: IconRegistryProps): Map<string, UIIcon> {
 						width={size}
 						height={size}
 						viewBox="0 0 20 20"
-						style={{
-							cursor: disabled ? "default" : pointer ? "pointer" : "inherit",
-						}}
+						style={iconStyle}
 						onClick={(e) => onClick(e)}
 						fill="none"
 						role="img"
@@ -2370,9 +2253,7 @@ export function getIconRegistry(props: IconRegistryProps): Map<string, UIIcon> {
 						width={size}
 						height={size}
 						viewBox="0 0 20 20"
-						style={{
-							cursor: disabled ? "default" : pointer ? "pointer" : "inherit",
-						}}
+						style={iconStyle}
 						onClick={(e) => onClick(e)}
 						fill="none"
 						role="img"
@@ -2409,9 +2290,7 @@ export function getIconRegistry(props: IconRegistryProps): Map<string, UIIcon> {
 						xmlns="http://www.w3.org/2000/svg"
 						height={size}
 						viewBox="0 0 33 24"
-						style={{
-							cursor: disabled ? "default" : pointer ? "pointer" : "inherit",
-						}}
+						style={iconStyle}
 						onClick={(e) => onClick(e)}
 						role="img"
 						aria-label="G Key Icon"
@@ -2448,9 +2327,7 @@ export function getIconRegistry(props: IconRegistryProps): Map<string, UIIcon> {
 						width={size}
 						height={size}
 						viewBox="0 0 24 24"
-						style={{
-							cursor: disabled ? "default" : pointer ? "pointer" : "inherit",
-						}}
+						style={iconStyle}
 						onClick={(e) => onClick(e)}
 						role="img"
 						aria-label="Cmd Key Icon"
@@ -2484,9 +2361,7 @@ export function getIconRegistry(props: IconRegistryProps): Map<string, UIIcon> {
 						width={size}
 						height={size}
 						viewBox="0 0 24 24"
-						style={{
-							cursor: disabled ? "default" : pointer ? "pointer" : "inherit",
-						}}
+						style={iconStyle}
 						onClick={(e) => onClick(e)}
 						role="img"
 						aria-label="Person Icon"
@@ -2520,9 +2395,7 @@ export function getIconRegistry(props: IconRegistryProps): Map<string, UIIcon> {
 						width={size}
 						height={size}
 						viewBox="0 0 20 20"
-						style={{
-							cursor: disabled ? "default" : pointer ? "pointer" : "inherit",
-						}}
+						style={iconStyle}
 						onClick={(e) => onClick(e)}
 						fill="none"
 						role="img"
@@ -2550,9 +2423,7 @@ export function getIconRegistry(props: IconRegistryProps): Map<string, UIIcon> {
 						width={size}
 						height={size}
 						viewBox="0 0 20 20"
-						style={{
-							cursor: disabled ? "default" : pointer ? "pointer" : "inherit",
-						}}
+						style={iconStyle}
 						onClick={(e) => onClick(e)}
 						fill="none"
 						role="img"
@@ -2584,9 +2455,7 @@ export function getIconRegistry(props: IconRegistryProps): Map<string, UIIcon> {
 						width={size}
 						height={size}
 						viewBox="0 0 20 20"
-						style={{
-							cursor: disabled ? "default" : pointer ? "pointer" : "inherit",
-						}}
+						style={iconStyle}
 						onClick={(e) => onClick(e)}
 						fill="none"
 						role="img"
@@ -2614,9 +2483,7 @@ export function getIconRegistry(props: IconRegistryProps): Map<string, UIIcon> {
 						width={size}
 						height={size}
 						viewBox="0 0 20 20"
-						style={{
-							cursor: disabled ? "default" : pointer ? "pointer" : "inherit",
-						}}
+						style={iconStyle}
 						onClick={(e) => onClick(e)}
 						fill="none"
 						role="img"
@@ -2671,9 +2538,7 @@ export function getIconRegistry(props: IconRegistryProps): Map<string, UIIcon> {
 						width={size}
 						height={size}
 						viewBox="0 0 22 22"
-						style={{
-							cursor: disabled ? "default" : pointer ? "pointer" : "inherit",
-						}}
+						style={iconStyle}
 						onClick={(e) => onClick(e)}
 						fill="none"
 						role="img"
@@ -2755,9 +2620,7 @@ export function getIconRegistry(props: IconRegistryProps): Map<string, UIIcon> {
 						width={size}
 						height={size}
 						viewBox="0 0 20 20"
-						style={{
-							cursor: disabled ? "default" : pointer ? "pointer" : "inherit",
-						}}
+						style={iconStyle}
 						onClick={(e) => onClick(e)}
 						fill="none"
 						role="img"
@@ -2787,9 +2650,7 @@ export function getIconRegistry(props: IconRegistryProps): Map<string, UIIcon> {
 						width={size}
 						height={size}
 						viewBox="0 0 20 20"
-						style={{
-							cursor: disabled ? "default" : pointer ? "pointer" : "inherit",
-						}}
+						style={iconStyle}
 						onClick={(e) => onClick(e)}
 						fill="none"
 						role="img"
@@ -2818,9 +2679,7 @@ export function getIconRegistry(props: IconRegistryProps): Map<string, UIIcon> {
 						width={size}
 						height={size}
 						viewBox="0 0 20 20"
-						style={{
-							cursor: disabled ? "default" : pointer ? "pointer" : "inherit",
-						}}
+						style={iconStyle}
 						onClick={(e) => onClick(e)}
 						fill="none"
 						role="img"
@@ -2846,9 +2705,7 @@ export function getIconRegistry(props: IconRegistryProps): Map<string, UIIcon> {
 						width={size}
 						height={size}
 						viewBox="0 0 20 20"
-						style={{
-							cursor: disabled ? "default" : pointer ? "pointer" : "inherit",
-						}}
+						style={iconStyle}
 						onClick={(e) => onClick(e)}
 						fill="none"
 						role="img"
@@ -2878,9 +2735,7 @@ export function getIconRegistry(props: IconRegistryProps): Map<string, UIIcon> {
 						width={size}
 						height={size}
 						viewBox="0 0 20 20"
-						style={{
-							cursor: disabled ? "default" : pointer ? "pointer" : "inherit",
-						}}
+						style={iconStyle}
 						onClick={(e) => onClick(e)}
 						fill="none"
 						role="img"
@@ -2903,9 +2758,7 @@ export function getIconRegistry(props: IconRegistryProps): Map<string, UIIcon> {
 						width={size}
 						height={size}
 						viewBox="0 0 20 20"
-						style={{
-							cursor: disabled ? "default" : pointer ? "pointer" : "inherit",
-						}}
+						style={iconStyle}
 						onClick={(e) => onClick(e)}
 						fill="none"
 						role="img"
@@ -2932,9 +2785,7 @@ export function getIconRegistry(props: IconRegistryProps): Map<string, UIIcon> {
 						width={size}
 						height={size}
 						viewBox="0 0 20 20"
-						style={{
-							cursor: disabled ? "default" : pointer ? "pointer" : "inherit",
-						}}
+						style={iconStyle}
 						onClick={(e) => onClick(e)}
 						fill="none"
 						role="img"
@@ -2962,9 +2813,7 @@ export function getIconRegistry(props: IconRegistryProps): Map<string, UIIcon> {
 						width={size}
 						height={size}
 						viewBox="0 0 20 20"
-						style={{
-							cursor: disabled ? "default" : pointer ? "pointer" : "inherit",
-						}}
+						style={iconStyle}
 						onClick={(e) => onClick(e)}
 						fill="none"
 						role="img"
@@ -2995,9 +2844,7 @@ export function getIconRegistry(props: IconRegistryProps): Map<string, UIIcon> {
 						width={size}
 						height={size}
 						viewBox="0 0 20 20"
-						style={{
-							cursor: disabled ? "default" : pointer ? "pointer" : "inherit",
-						}}
+						style={iconStyle}
 						onClick={(e) => onClick(e)}
 						fill="none"
 						role="img"
@@ -3032,9 +2879,7 @@ export function getIconRegistry(props: IconRegistryProps): Map<string, UIIcon> {
 						width={size}
 						height={size}
 						viewBox="0 0 20 20"
-						style={{
-							cursor: disabled ? "default" : pointer ? "pointer" : "inherit",
-						}}
+						style={iconStyle}
 						onClick={(e) => onClick(e)}
 						fill="none"
 						role="img"
@@ -3062,9 +2907,7 @@ export function getIconRegistry(props: IconRegistryProps): Map<string, UIIcon> {
 						width={size}
 						height={size}
 						viewBox="0 0 20 20"
-						style={{
-							cursor: disabled ? "default" : pointer ? "pointer" : "inherit",
-						}}
+						style={iconStyle}
 						onClick={(e) => onClick(e)}
 						fill="none"
 						role="img"
@@ -3092,9 +2935,7 @@ export function getIconRegistry(props: IconRegistryProps): Map<string, UIIcon> {
 						width={size}
 						height={size}
 						viewBox="0 0 20 20"
-						style={{
-							cursor: disabled ? "default" : pointer ? "pointer" : "inherit",
-						}}
+						style={iconStyle}
 						onClick={(e) => onClick(e)}
 						fill="none"
 						role="img"
@@ -3120,9 +2961,7 @@ export function getIconRegistry(props: IconRegistryProps): Map<string, UIIcon> {
 						width={size}
 						height={size}
 						viewBox="0 0 20 20"
-						style={{
-							cursor: disabled ? "default" : pointer ? "pointer" : "inherit",
-						}}
+						style={iconStyle}
 						onClick={(e) => onClick(e)}
 						fill="none"
 						role="img"
@@ -3177,9 +3016,7 @@ export function getIconRegistry(props: IconRegistryProps): Map<string, UIIcon> {
 						width={size}
 						height={size}
 						viewBox="0 0 18 18"
-						style={{
-							cursor: disabled ? "default" : pointer ? "pointer" : "inherit",
-						}}
+						style={iconStyle}
 						onClick={(e) => onClick(e)}
 						fill="none"
 						role="img"
@@ -3221,9 +3058,7 @@ export function getIconRegistry(props: IconRegistryProps): Map<string, UIIcon> {
 						width={size}
 						height={size}
 						viewBox="0 0 20 20"
-						style={{
-							cursor: disabled ? "default" : pointer ? "pointer" : "inherit",
-						}}
+						style={iconStyle}
 						onClick={(e) => onClick(e)}
 						fill="none"
 						role="img"
@@ -3251,9 +3086,7 @@ export function getIconRegistry(props: IconRegistryProps): Map<string, UIIcon> {
 						width={size}
 						height={size}
 						viewBox="0 0 20 20"
-						style={{
-							cursor: disabled ? "default" : pointer ? "pointer" : "inherit",
-						}}
+						style={iconStyle}
 						onClick={(e) => onClick(e)}
 						fill="none"
 						role="img"
@@ -3281,9 +3114,7 @@ export function getIconRegistry(props: IconRegistryProps): Map<string, UIIcon> {
 						width={size}
 						height={size}
 						viewBox="0 0 20 20"
-						style={{
-							cursor: disabled ? "default" : pointer ? "pointer" : "inherit",
-						}}
+						style={iconStyle}
 						onClick={(e) => onClick(e)}
 						fill="none"
 						role="img"
@@ -3325,9 +3156,7 @@ export function getIconRegistry(props: IconRegistryProps): Map<string, UIIcon> {
 						width={size}
 						height={size}
 						viewBox="0 0 20 20"
-						style={{
-							cursor: disabled ? "default" : pointer ? "pointer" : "inherit",
-						}}
+						style={iconStyle}
 						onClick={(e) => onClick(e)}
 						fill="none"
 						role="img"
@@ -3358,9 +3187,7 @@ export function getIconRegistry(props: IconRegistryProps): Map<string, UIIcon> {
 						width={size}
 						height={size}
 						viewBox="0 0 20 20"
-						style={{
-							cursor: disabled ? "default" : pointer ? "pointer" : "inherit",
-						}}
+						style={iconStyle}
 						onClick={(e) => onClick(e)}
 						fill="none"
 						role="img"
@@ -3388,9 +3215,7 @@ export function getIconRegistry(props: IconRegistryProps): Map<string, UIIcon> {
 						width={size}
 						height={size}
 						viewBox="0 0 20 20"
-						style={{
-							cursor: disabled ? "default" : pointer ? "pointer" : "inherit",
-						}}
+						style={iconStyle}
 						onClick={(e) => onClick(e)}
 						fill="none"
 						role="img"
@@ -3418,9 +3243,7 @@ export function getIconRegistry(props: IconRegistryProps): Map<string, UIIcon> {
 						width={size}
 						height={size}
 						viewBox="0 0 20 20"
-						style={{
-							cursor: disabled ? "default" : pointer ? "pointer" : "inherit",
-						}}
+						style={iconStyle}
 						onClick={(e) => onClick(e)}
 						fill="none"
 						role="img"
@@ -3448,9 +3271,7 @@ export function getIconRegistry(props: IconRegistryProps): Map<string, UIIcon> {
 						width={size}
 						height={size}
 						viewBox="0 0 20 20"
-						style={{
-							cursor: disabled ? "default" : pointer ? "pointer" : "inherit",
-						}}
+						style={iconStyle}
 						onClick={(e) => onClick(e)}
 						fill="none"
 						role="img"

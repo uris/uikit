@@ -152,6 +152,8 @@ export const DraggablePanel = React.memo((props: DraggablePanelProps) => {
 		document.documentElement.removeEventListener("mouseup", stopDrag, false);
 		document.documentElement.removeEventListener("touchmove", doDrag, false);
 		document.documentElement.removeEventListener("touchend", stopDrag, false);
+		document.documentElement.style.userSelect = "auto";
+		document.documentElement.style.webkitUserSelect = "auto";
 		if (div?.current) {
 			divWidth.current = div.current.offsetWidth;
 			divHeight.current = div.current.offsetHeight;
@@ -192,6 +194,8 @@ export const DraggablePanel = React.memo((props: DraggablePanelProps) => {
 				document.documentElement.addEventListener("mouseup", stopDrag, false);
 				document.documentElement.addEventListener("touchmove", doDrag, false);
 				document.documentElement.addEventListener("touchend", stopDrag, false);
+				document.documentElement.style.userSelect = "none";
+				document.documentElement.style.webkitUserSelect = "none";
 				const update = {
 					div,
 					divWidth: divWidth.current,
