@@ -8,16 +8,12 @@
 		"lint": "biome check .",
 		"lint:fix": "biome check --write .",
 		"format": "biome format --write .",
-		"create-index": "node scripts/generate-index.mjs",
 		"test": "echo \"Error: no test specified\" && exit 1",
 		"prebuild": "rm -rf dist",
 		"build": "rollup -c --bundleConfigAsCjs",
 		"dev": "vite",
 		"storybook": "storybook dev -p 6006",
-		"build-storybook": "storybook build",
-		"generate:stories": "node scripts/generate-stories.mjs",
-		"postinstall": "node scripts/copy-assets.mjs",
-		"install": "node scripts/copy-assets.mjs"
+		"build-storybook": "storybook build"
 	},
 	"keywords": [],
 	"author": "",
