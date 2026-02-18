@@ -1,10 +1,10 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
 import { fn } from "storybook/test";
 import { FlexDiv } from "../uikit/FlexDiv/FlexDiv";
+import { IconNames } from "../uikit/Icon/Icon";
 import { UIChip } from "../uikit/UIChip/UIChip";
-import { Icons } from "../uikit/UIIcon/UIIcon";
 
-const icons = Object.values(Icons).sort();
+const icons = Object.values(IconNames).sort();
 const meta: Meta<typeof UIChip> = {
 	title: "UI Kit/UI Chip",
 	component: UIChip,

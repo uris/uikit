@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect, useMemo, useState } from "react";
 import { useTheme } from "styled-components";
-import { Icon, IconNames } from "../Icon/Icon";
+import { Icon, type IconNames } from "../Icon/Icon";
 import { type ToolTip, ToolTipType } from "../sharedTypes";
 import * as Styled from "./_Styles";
 
