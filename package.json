@@ -1,6 +1,6 @@
 {
 	"name": "maya-uikit",
-	"version": "0.0.1",
+	"version": "0.0.0",
 	"main": "dist/index.js",
 	"module": "dist/index.esm.js",
 	"files": ["dist", "README.md", "scripts/copy-assets.mjs"],
