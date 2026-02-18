@@ -25,6 +25,5 @@
 		"moduleResolution": "Bundler",
 		"resolveJsonModule": true
 	},
-	"include": ["src/**/*", "playground/**/*"],
-	"exclude": ["playground/**/*"]
+	"include": ["src/**/*"]
 }

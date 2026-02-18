@@ -7,14 +7,7 @@
 	},
 	"files": {
 		"ignoreUnknown": false,
-		"ignore": [
-			"dist",
-			"node_modules",
-			"storybook-static",
-			"build",
-			"playground",
-			"public"
-		]
+		"ignore": ["dist", "node_modules", "storybook-static", "build", "public"]
 	},
 	"formatter": {
 		"enabled": true,

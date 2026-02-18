@@ -18,8 +18,6 @@ const preview: Preview = {
 					{ value: "light", icon: "circlehollow", title: "Light theme" },
 					{ value: "dark", icon: "circle", title: "Dark theme" },
 				],
-				// Property that specifies if the name of the item will be displayed
-				showName: true,
 			},
 		},
 	},
