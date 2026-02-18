@@ -22,7 +22,7 @@ export function ProgressIndicator(props: ProgressIndicatorProps) {
 		size = 20,
 		secondsPerSpin = 1,
 		show = false,
-		color = theme.lyraColors["core-icon-primary"],
+		color = theme.colors["core-icon-primary"],
 		stroke = 1.5,
 		inline = false,
 		duration = undefined,

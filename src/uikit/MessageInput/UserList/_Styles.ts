@@ -18,8 +18,8 @@ export const UserPrompt = styled.div<{ $enabled: boolean }>`
   align-items: flex-start;
   padding: 10px 12px;
   border-radius: 24px;
-  background: ${({ theme }) => theme.lyraColors["core-surface-primary"]};
-  border: 1px solid ${({ theme }) => theme.lyraColors["core-outline-primary"]};
+  background: ${({ theme }) => theme.colors["core-surface-primary"]};
+  border: 1px solid ${({ theme }) => theme.colors["core-outline-primary"]};
   cursor: default;
   div.avatar {
     ${flexBox.row};
@@ -30,14 +30,14 @@ export const UserPrompt = styled.div<{ $enabled: boolean }>`
     ${flexBox.rowStart};
     flex: 1;
     padding: 0px 16px 0px 8px;
-    ${({ theme }) => theme.lyraType["body-s-regular"]};
-    color: ${({ theme }) => theme.lyraColors["core-text-tertiary"]};
+    ${({ theme }) => theme.type["body-s-regular"]};
+    color: ${({ theme }) => theme.colors["core-text-tertiary"]};
     font-weight: 380;
     line-height: 1.5em;
     min-height: 24px;
     strong {
-      ${({ theme }) => theme.lyraType["body-s-regular"]};
-      color: ${({ theme }) => theme.lyraColors["core-text-primary"]};
+      ${({ theme }) => theme.type["body-s-regular"]};
+      color: ${({ theme }) => theme.colors["core-text-primary"]};
     }
     p {
       margin: 0;
@@ -50,8 +50,8 @@ export const UserPrompt = styled.div<{ $enabled: boolean }>`
     border: 1px solid
       ${({ theme, $enabled }) =>
 				$enabled
-					? theme.lyraColors["core-outline-primary"]
-					: theme.lyraColors["feedback-warning"]};
+					? theme.colors["core-outline-primary"]
+					: theme.colors["feedback-warning"]};
     height: 24px;
     width: 24px;
     cursor: pointer;
@@ -59,8 +59,8 @@ export const UserPrompt = styled.div<{ $enabled: boolean }>`
       display: block;
       background: ${({ theme, $enabled }) =>
 				$enabled
-					? theme.lyraColors["core-icon-primary"]
-					: theme.lyraColors["feedback-warning"]};
+					? theme.colors["core-icon-primary"]
+					: theme.colors["feedback-warning"]};
       min-width: 0.5em;
       min-height: 0.5em;
       width: 0.5em;

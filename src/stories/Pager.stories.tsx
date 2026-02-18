@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
 import { fn } from "storybook/test";
-import { lightTheme } from "../theme/useGiaThemes";
+import { lightTheme } from "../theme/useMayaTheme";
 import { FlexDiv } from "../uikit/FlexDiv/FlexDiv";
 import { Pager } from "../uikit/Pager/Pager";
 
@@ -10,9 +10,9 @@ const meta: Meta<typeof Pager> = {
 	args: {
 		size: 8,
 		index: 0,
-		color: lightTheme.lyraColors["core-badge-secondary"],
-		colorHover: lightTheme.lyraColors["core-badge-secondary"],
-		colorOn: lightTheme.lyraColors["core-text-secondary"],
+		color: lightTheme.colors["core-badge-secondary"],
+		colorHover: lightTheme.colors["core-badge-secondary"],
+		colorOn: lightTheme.colors["core-text-secondary"],
 		pages: 2,
 		gap: 4,
 		onChange: fn(),

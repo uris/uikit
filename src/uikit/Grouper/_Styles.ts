@@ -20,12 +20,12 @@ export const GroupHeader = styled.div<{
     height: ${({ $frameSize, $unframed }) =>
 			$unframed ? "auto" : $frameSize}px;
     border-top: ${({ $border }) => $border}px solid
-      ${({ theme }) => theme.lyraColors["core-outline-primary"]};
+      ${({ theme }) => theme.colors["core-outline-primary"]};
   }
   div.title {
     ${flexBox.rowStart};
-    ${({ theme }) => theme.lyraType["body-l-regular"]};
-    color: ${({ theme }) => theme.lyraColors["core-text-secondary"]};
+    ${({ theme }) => theme.type["body-l-regular"]};
+    color: ${({ theme }) => theme.colors["core-text-secondary"]};
     flex: 1;
   }
   div.icon {

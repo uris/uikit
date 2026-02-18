@@ -46,10 +46,10 @@ export const CheckBox = React.memo((props: CheckBoxProps) => {
 	// Memoize icon color
 	const iconColor = useMemo(() => {
 		if (color) return color;
-		if (disabled) return theme.lyraColors["core-icon-disabled"];
-		if (state === "partial") return theme.lyraColors["core-icon-primary"];
-		if (!state) return theme.lyraColors["core-icon-secondary"];
-		return theme.lyraColors["core-gp-logo-primary"];
+		if (disabled) return theme.colors["core-icon-disabled"];
+		if (state === "partial") return theme.colors["core-icon-primary"];
+		if (!state) return theme.colors["core-icon-secondary"];
+		return theme.colors["core-gp-logo-primary"];
 	}, [color, disabled, state, theme]);
 
 	const handleToggle = useCallback(() => {

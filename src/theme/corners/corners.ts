@@ -1,6 +1,6 @@
-import type { LyraCorners } from "./types";
+import type { Corners } from "./types";
 
-export const lyraCorners: LyraCorners = {
+export const corners: Corners = {
 	"corner-0": 0,
 	"corner-4": 4,
 	"corner-6": 6,

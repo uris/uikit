@@ -12,30 +12,28 @@ export const Wrapper = styled.div<{ $isFocused: boolean; $isShort: boolean }>`
   padding: ${({ $isShort }) =>
 		$isShort ? "16px 12px 8px 16px;" : "16px 12px 16px 16px;"};
   border-radius: 16px;
-  background: ${({ theme }) => theme.colors.bgDark};
-  box-shadow: 0 0 1px ${({ $isShort }) => ($isShort ? 0 : 1)}px
-    ${({ theme }) => theme.colors.transparent};
+  background: ${({ theme }) => theme.colors["core-surface-primary"]};
+  box-shadow: 0 0 1px ${({ $isShort }) => ($isShort ? 0 : 1)}px transparent;
   outline: none;
   &.focused {
     box-shadow: 0 0 1px ${({ $isShort }) => ($isShort ? 2 : 2)}px
-      ${({ theme }) => theme.colors.primaryBlue};
+      ${({ theme }) => theme.colors["core-outline-special"]};
   }
   transition: all 0.3s ease-in-out 0s;
 `;
 
 export const TextArea = styled.textarea`
-  ${({ theme }) => theme.lyraType["body-m-regular"]};
-  padding: 0;
+  ${({ theme }) => theme.type["body-m-regular"]};
   width: 100%;
   overflow-y: hidden;
   resize: none;
   border: 0;
   outline: none;
-  color: ${({ theme }) => theme.lyraColors["core-text-primary"]};
+  color: ${({ theme }) => theme.colors["core-text-primary"]};
   background: transparent;
-  padding-bottom: 5px;
+  padding: 0 0 5px;
   &::placeholder {
-    color: ${({ theme }) => theme.colors.textDisabled};
+    color: ${({ theme }) => theme.colors["core-text-disabled"]};
   }
 `;
 
@@ -47,8 +45,8 @@ export const ButtonRow = styled.div`
 
 export const ActionButtons = styled.div<{ $isShort: boolean }>`
   ${flexBox.row};
-  ${({ theme }) => theme.lyraType["body-m-regular"]};
-  color: ${({ theme }) => theme.lyraColors["core-text-disabled"]};
+  ${({ theme }) => theme.type["body-m-regular"]};
+  color: ${({ theme }) => theme.colors["core-text-disabled"]};
   z-index: 1;
   gap: 12px;
 `;
@@ -65,8 +63,8 @@ export const AnimatedButton = styled(motion.div)`
 `;
 
 export const IconLabel = styled.div`
-  ${({ theme }) => theme.lyraType["body-s-regular"]};
-  color: ${({ theme }) => theme.lyraColors["core-text-disabled"]};
+  ${({ theme }) => theme.type["body-s-regular"]};
+  color: ${({ theme }) => theme.colors["core-text-disabled"]};
   ${flexBox.row};
   cursor: pointer;
 `;

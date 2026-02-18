@@ -56,7 +56,7 @@ The UIKit includes a wide range of components for common UI patterns:
 The library includes a powerful theming system with:
 
 - **Pre-built Themes:** Light and dark themes out of the box
-- **Theme Hook:** `useGiaThemes` for easy theme switching
+- **Theme Hook:** `useMayaTheme` for easy theme switching
 - **Type-safe Theme Objects:** Full TypeScript support for theme customization
 - **Comprehensive Styling:** Colors, typography, corners, and legacy style support
 

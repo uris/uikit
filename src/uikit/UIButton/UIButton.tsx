@@ -145,23 +145,22 @@ const UIButtonComponent = forwardRef<UIButtonHandle, UIButtonProps>(
 				solid: {
 					border: "0px",
 					iconColor: {
-						normal: iconColor || theme.lyraColors["core-text-light"],
-						hover: iconColor || theme.lyraColors["core-text-light"],
-						disabled: iconColor || theme.lyraColors["core-text-disabled"],
+						normal: iconColor || theme.colors["core-text-light"],
+						hover: iconColor || theme.colors["core-text-light"],
+						disabled: iconColor || theme.colors["core-text-disabled"],
 					},
 					background: {
 						normal:
 							bgColor ||
 							(destructive
-								? theme.lyraColors["feedback-warning"]
-								: theme.lyraColors["core-button-primary"]),
+								? theme.colors["feedback-warning"]
+								: theme.colors["core-button-primary"]),
 						hover:
 							bgColor ||
 							(destructive
-								? theme.lyraColors["feedback-warning"]
-								: theme.lyraColors["core-button-primary"]),
-						disabled:
-							bgColorDisabled || theme.lyraColors["core-button-disabled"],
+								? theme.colors["feedback-warning"]
+								: theme.colors["core-button-primary"]),
+						disabled: bgColorDisabled || theme.colors["core-button-disabled"],
 					},
 					borderColor: {
 						normal: "transparent",
@@ -172,14 +171,14 @@ const UIButtonComponent = forwardRef<UIButtonHandle, UIButtonProps>(
 						normal:
 							labelColor ||
 							(destructive
-								? theme.lyraColors["feedback-warning"]
-								: theme.lyraColors["core-text-light"]),
+								? theme.colors["feedback-warning"]
+								: theme.colors["core-text-light"]),
 						hover:
 							labelColor ||
 							(destructive
-								? theme.lyraColors["feedback-warning"]
-								: theme.lyraColors["core-text-light"]),
-						disabled: theme.lyraColors["core-text-disabled"],
+								? theme.colors["feedback-warning"]
+								: theme.colors["core-text-light"]),
+						disabled: theme.colors["core-text-disabled"],
 					},
 				},
 				outline: {
@@ -188,54 +187,53 @@ const UIButtonComponent = forwardRef<UIButtonHandle, UIButtonProps>(
 						normal:
 							iconColor ||
 							(destructive
-								? theme.lyraColors["feedback-warning"]
-								: theme.lyraColors["core-text-primary"]),
+								? theme.colors["feedback-warning"]
+								: theme.colors["core-text-primary"]),
 						hover:
 							iconColor ||
 							(destructive
-								? theme.lyraColors["feedback-warning"]
-								: theme.lyraColors["core-button-primary"]),
-						disabled: iconColor || theme.lyraColors["core-text-disabled"],
+								? theme.colors["feedback-warning"]
+								: theme.colors["core-button-primary"]),
+						disabled: iconColor || theme.colors["core-text-disabled"],
 					},
 					background: {
-						normal: bgColor || theme.lyraColors["core-surface-primary"],
-						hover: bgColor || theme.lyraColors["core-surface-primary"],
-						disabled:
-							bgColorDisabled || theme.lyraColors["core-surface-primary"],
+						normal: bgColor || theme.colors["core-surface-primary"],
+						hover: bgColor || theme.colors["core-surface-primary"],
+						disabled: bgColorDisabled || theme.colors["core-surface-primary"],
 					},
 					borderColor: {
 						normal: destructive
-							? theme.lyraColors["feedback-warning"]
-							: theme.lyraColors["core-outline-primary"],
+							? theme.colors["feedback-warning"]
+							: theme.colors["core-outline-primary"],
 						hover: destructive
-							? theme.lyraColors["feedback-warning"]
-							: theme.lyraColors["core-outline-primary"],
-						disabled: theme.lyraColors["core-outline-primary"],
+							? theme.colors["feedback-warning"]
+							: theme.colors["core-outline-primary"],
+						disabled: theme.colors["core-outline-primary"],
 					},
 					color: {
 						normal:
 							labelColor ||
 							(destructive
-								? theme.lyraColors["feedback-warning"]
-								: theme.lyraColors["core-text-primary"]),
+								? theme.colors["feedback-warning"]
+								: theme.colors["core-text-primary"]),
 						hover:
 							labelColor ||
 							(destructive
-								? theme.lyraColors["feedback-warning"]
-								: theme.lyraColors["core-button-primary"]),
-						disabled: theme.lyraColors["core-text-disabled"],
+								? theme.colors["feedback-warning"]
+								: theme.colors["core-button-primary"]),
+						disabled: theme.colors["core-text-disabled"],
 					},
 				},
 				text: {
 					border: "1px",
 					iconColor: {
 						normal: link
-							? theme.lyraColors["core-button-primary"]
+							? theme.colors["core-button-primary"]
 							: destructive
-								? theme.lyraColors["feedback-warning"]
-								: theme.lyraColors["core-text-primary"],
-						hover: theme.lyraColors["core-button-primary"],
-						disabled: theme.lyraColors["core-text-disabled"],
+								? theme.colors["feedback-warning"]
+								: theme.colors["core-text-primary"],
+						hover: theme.colors["core-button-primary"],
+						disabled: theme.colors["core-text-disabled"],
 					},
 					background: {
 						normal: "transparent",
@@ -251,12 +249,12 @@ const UIButtonComponent = forwardRef<UIButtonHandle, UIButtonProps>(
 						normal:
 							labelColor ||
 							(link
-								? theme.lyraColors["core-button-primary"]
+								? theme.colors["core-button-primary"]
 								: destructive
-									? theme.lyraColors["feedback-warning"]
-									: theme.lyraColors["core-text-primary"]),
-						hover: theme.lyraColors["core-button-primary"],
-						disabled: theme.lyraColors["core-text-disabled"],
+									? theme.colors["feedback-warning"]
+									: theme.colors["core-text-primary"]),
+						hover: theme.colors["core-button-primary"],
+						disabled: theme.colors["core-text-disabled"],
 					},
 				},
 			};
@@ -350,7 +348,7 @@ const UIButtonComponent = forwardRef<UIButtonHandle, UIButtonProps>(
 			() => ({
 				color: colorStyles[variant].color[btnState],
 				background: fill
-					? theme.lyraColors["core-surface-primary"]
+					? theme.colors["core-surface-primary"]
 					: colorStyles[variant].background[state],
 				paddingRight: paddingRight ?? sizingStyles[size].paddingRight,
 				paddingLeft: paddingLeft ?? sizingStyles[size].paddingLeft,
@@ -393,7 +391,7 @@ const UIButtonComponent = forwardRef<UIButtonHandle, UIButtonProps>(
 				state === "disabled"
 					? colorStyles[variant].iconColor[btnState]
 					: destructive
-						? theme.lyraColors["feedback-warning"]
+						? theme.colors["feedback-warning"]
 						: colorStyles[variant].iconColor[btnState],
 			[state, colorStyles, variant, btnState, destructive, theme],
 		);
@@ -402,7 +400,7 @@ const UIButtonComponent = forwardRef<UIButtonHandle, UIButtonProps>(
 		const progressColor = useMemo(
 			() =>
 				destructive
-					? theme.lyraColors["feedback-warning"]
+					? theme.colors["feedback-warning"]
 					: colorStyles[variant].color[btnState],
 			[destructive, theme, colorStyles, variant, btnState],
 		);

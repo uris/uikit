@@ -2705,7 +2705,7 @@ export function getIconRegistry(props: IconRegistryProps): Map<string, UIIcon> {
 										stopColor={
 											theme.name === "lightMode"
 												? "rgb(0, 0, 255)"
-												: theme.lyraColors["core-gp-logo-primary"]
+												: theme.colors["core-gp-logo-primary"]
 										}
 										stopOpacity="1"
 									/>
@@ -2730,7 +2730,7 @@ export function getIconRegistry(props: IconRegistryProps): Map<string, UIIcon> {
 							d="M 18.2 5 C 18.863 5 19.4 4.463 19.4 3.8 C 19.4 3.137 18.863 2.6 18.2 2.6 C 17.537 2.6 17 3.137 17 3.8 C 17 4.463 17.537 5 18.2 5 Z"
 							fill={
 								theme.name === "lightMode"
-									? theme.lyraColors["core-gp-logo-primary"]
+									? theme.colors["core-gp-logo-primary"]
 									: "rgba(0,200,244,1)"
 							}
 						/>
@@ -2738,7 +2738,7 @@ export function getIconRegistry(props: IconRegistryProps): Map<string, UIIcon> {
 							d="M 3.8 19.4 C 4.463 19.4 5 18.863 5 18.2 C 5 17.537 4.463 17 3.8 17 C 3.137 17 2.6 17.537 2.6 18.2 C 2.6 18.863 3.137 19.4 3.8 19.4 Z"
 							fill={
 								theme.name === "lightMode"
-									? theme.lyraColors["core-gp-logo-primary"]
+									? theme.colors["core-gp-logo-primary"]
 									: "rgba(0,200,244,1)"
 							}
 						/>
@@ -3016,7 +3016,7 @@ export function getIconRegistry(props: IconRegistryProps): Map<string, UIIcon> {
 						/>
 						<path
 							d="M14 10H6"
-							stroke={theme.lyraColors["core-surface-primary"]}
+							stroke={theme.colors["core-surface-primary"]}
 							strokeWidth={stroke}
 						/>
 					</svg>
@@ -3202,7 +3202,7 @@ export function getIconRegistry(props: IconRegistryProps): Map<string, UIIcon> {
 						/>
 						<path
 							d="M 17 10.6 L 17 7.4 C 17 7.179 16.821 7 16.6 7 L 13 7 C 11.895 7 11 7.895 11 9 C 11 10.105 11.895 11 13 11 L 16.6 11 C 16.821 11 17 10.821 17 10.6 Z"
-							fill={theme.lyraColors["core-surface-primary"]}
+							fill={theme.colors["core-surface-primary"]}
 							strokeWidth={stroke}
 							stroke={strokeColor}
 							strokeMiterlimit="10"

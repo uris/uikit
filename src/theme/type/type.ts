@@ -1,7 +1,7 @@
-import type { LegacyTextStyles, LyraTypeStyles } from "./types";
+import type { Type } from "./types";
 
 // ** new styles aligned to lyra */
-export const lyraType: LyraTypeStyles = {
+export const type: Type = {
 	"body-xs-regular": `
       font-family: 'Booton';
       font-weight: 420;
@@ -128,18 +128,4 @@ export const lyraType: LyraTypeStyles = {
       line-height: 128.57%;
       text-decoration: none;
       letter-spacing: 0.2px`,
-};
-
-export const type: LegacyTextStyles = {
-	inputLogin: lyraType["body-l-regular"],
-	textTitleLarge: lyraType["heading-l-bold"],
-	textTitleMedium: lyraType["heading-m-bold"],
-	textTitleSmall: lyraType["heading-s-bold"],
-	textXLarge: lyraType["body-l-regular"],
-	textLarge: lyraType["body-l-regular"],
-	textRegular: lyraType["body-m-regular"],
-	textMedium: lyraType["body-s-regular"],
-	textSmall: lyraType["body-xs-regular"],
-	textXSmall: lyraType["body-xs-regular"],
-	captionRegular: lyraType["body-xs-bold"],
 };

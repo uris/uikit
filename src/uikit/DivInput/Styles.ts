@@ -23,13 +23,13 @@ export const Input = styled.div<{
 	$padding: string;
 	$isPlaceholder: boolean;
 }>`
-  pointer-events: 'all';
+  pointer-events:all;
   ${({ theme, $fontStyle }) =>
-		$fontStyle ? $fontStyle : theme.lyraType["body-m-regular"]};
+		$fontStyle ? $fontStyle : theme.type["body-m-regular"]};
   color: ${({ theme, $isPlaceholder }) =>
 		$isPlaceholder
-			? theme.lyraColors["core-text-disabled"]
-			: theme.lyraColors["core-text-primary"]};
+			? theme.colors["core-text-disabled"]
+			: theme.colors["core-text-primary"]};
   background: transparent;
   border-radius: 4px;
   border: 0;
@@ -51,10 +51,10 @@ export const Input = styled.div<{
   &:hover {
     cursor: ${({ $isEditable }) => ($isEditable ? "text" : "pointer")};
     background: ${({ theme, $isEditable }) =>
-			$isEditable ? theme.lyraColors["core-badge-secondary"] : "transparent"};
+			$isEditable ? theme.colors["core-badge-secondary"] : "transparent"};
   }
   &:focus {
-    background: ${({ theme }) => theme.lyraColors["core-badge-secondary"]};
+    background: ${({ theme }) => theme.colors["core-badge-secondary"]};
   }
   text-overflow: ellipsis;
   overflow: hidden;

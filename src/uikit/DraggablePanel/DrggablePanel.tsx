@@ -296,7 +296,7 @@ export const DraggablePanel = React.memo((props: DraggablePanelProps) => {
 				<div
 					style={{
 						backgroundColor: handleHighlight
-							? theme.lyraColors["core-outline-primary"]
+							? theme.colors["core-outline-primary"]
 							: "transparent",
 						flex: 1,
 						maxWidth: 3,

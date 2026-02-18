@@ -33,18 +33,18 @@ export const BaseLayout = styled(motion.div)<{
     background-color: transparent;
   }
   &::-webkit-scrollbar-thumb {
-    background-color: ${({ theme }) => theme.lyraColors["scroll-bar"]};
+    background-color: ${({ theme }) => theme.colors["scroll-bar"]};
     border-radius: 20px;
     border: 4px solid
       ${({ theme, $background }) =>
-				$background ? $background : theme.lyraColors["core-surface-primary"]};
+				$background ? $background : theme.colors["core-surface-primary"]};
   }
   &::-webkit-scrollbar-thumb:hover {
-    background-color: ${({ theme }) => theme.lyraColors["scroll-bar-hover"]};
+    background-color: ${({ theme }) => theme.colors["scroll-bar-hover"]};
     border-radius: 20px;
     border: 4px solid
       ${({ theme, $background }) =>
-				$background ? $background : theme.lyraColors["core-surface-primary"]};
+				$background ? $background : theme.colors["core-surface-primary"]};
     cursor: default;
   }
 `;

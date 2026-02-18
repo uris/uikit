@@ -1,7 +1,7 @@
 import type { Preview } from "@storybook/react-vite";
 import React from "react";
 import { ThemeProvider } from "styled-components";
-import { darkTheme, lightTheme } from "../src/theme/useGiaThemes";
+import { darkTheme, lightTheme } from "../src/theme/useMayaTheme";
 import "./fonts.css";
 
 const preview: Preview = {

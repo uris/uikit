@@ -57,7 +57,7 @@ export const FlexDiv = React.memo((props: FlexDivProps) => {
 		children,
 		scrollY = false,
 		scrollX = false,
-		background = theme.lyraColors["core-surface-primary"],
+		background = theme.colors["core-surface-primary"],
 		direction = "column",
 		alignItems = "start",
 		justify = "start",

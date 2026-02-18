@@ -17,20 +17,20 @@ export const Chip = styled.div<{
 		$background ? $background : "transparent"};
   ${({ theme, $focused, $disabled, $variant }) =>
 		$focused || $disabled
-			? theme.lyraType[$variant === "regular" ? "body-s-bold" : "body-xs-bold"]
-			: theme.lyraType[
+			? theme.type[$variant === "regular" ? "body-s-bold" : "body-xs-bold"]
+			: theme.type[
 					$variant === "regular" ? "body-s-medium" : "body-xs-medium"
 				]};
   line-height: 1em;
   color: ${({ theme, $disabled }) =>
 		$disabled
-			? theme.lyraColors["core-text-disabled"]
-			: theme.lyraColors["core-text-primary"]};
+			? theme.colors["core-text-disabled"]
+			: theme.colors["core-text-primary"]};
   border: ${({ $unframed }) => ($unframed ? 0 : 1)}px solid
     ${({ theme, $disabled }) =>
 			$disabled
-				? theme.lyraColors["core-button-disabled"]
-				: theme.lyraColors["core-outline-primary"]};
+				? theme.colors["core-button-disabled"]
+				: theme.colors["core-outline-primary"]};
   border-radius: ${({ $variant }) => ($variant === "regular" ? 8 : 4)}px;
   transition: all 0.25s ease-in-out 0s;
   cursor: pointer;
@@ -45,14 +45,14 @@ export const Chip = styled.div<{
   }
   &:hover {
     border: ${({ $unframed }) => ($unframed ? 0 : 1)}px solid
-      ${({ theme }) => theme.lyraColors["core-outline-tertiary"]};
+      ${({ theme }) => theme.colors["core-outline-tertiary"]};
   }
   &:focus {
     border: ${({ $unframed }) => ($unframed ? 0 : 1)}px solid
-      ${({ theme }) => theme.lyraColors["core-button-primary"]};
+      ${({ theme }) => theme.colors["core-button-primary"]};
     color: ${({ theme, $disabled }) =>
 			$disabled
-				? theme.lyraColors["core-text-disabled"]
-				: theme.lyraColors["core-button-primary"]};
+				? theme.colors["core-text-disabled"]
+				: theme.colors["core-button-primary"]};
   }
 `;

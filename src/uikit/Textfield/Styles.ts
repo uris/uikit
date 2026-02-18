@@ -61,8 +61,8 @@ export const InputContainer = styled.div<{ $padding: string }>`
 
 export const Label = styled.div<{ $props: Styles }>`
   ${flexBox.rowStart};
-  ${({ theme }) => theme.lyraType["body-m-regular"]};
-  color: ${({ theme }) => theme.lyraColors["core-text-secondary"]};
+  ${({ theme }) => theme.type["body-m-regular"]};
+  color: ${({ theme }) => theme.colors["core-text-secondary"]};
   padding: ${({ $props }) => $props.padding};
   height: auto;
   overflow: hidden;
@@ -79,7 +79,7 @@ export const Input = styled.input<{
 	$labelRight: boolean;
 }>`
   ${({ theme, $textType }) =>
-		$textType ? $textType : theme.lyraType["body-m-regular"]};
+		$textType ? $textType : theme.type["body-m-regular"]};
   color: ${({ $props, $focused, $isvalid }) =>
 		!$isvalid
 			? $props.color?.error
@@ -109,9 +109,9 @@ export const Input = styled.input<{
   &:-webkit-autofill:focus,
   &:-webkit-autofill:active {
     box-shadow: 0 0 0 50px
-      ${({ theme }) => theme.lyraColors["core-button-disabled"]} inset !important;
+      ${({ theme }) => theme.colors["core-button-disabled"]} inset !important;
     -webkit-text-fill-color: ${({ theme }) =>
-			theme.lyraColors["core-text-primary"]};
+			theme.colors["core-text-primary"]};
   }
 `;
 

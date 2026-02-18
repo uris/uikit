@@ -1,4 +1,4 @@
-export type LyraTypeStyles = {
+export type Type = {
 	"body-xs-regular": string;
 	"body-xs-medium": string;
 	"body-xs-bold": string;
@@ -17,18 +17,4 @@ export type LyraTypeStyles = {
 	"heading-m-medium": string;
 	"heading-l-bold": string;
 	"heading-l-medium": string;
-};
-
-export type LegacyTextStyles = {
-	inputLogin: string;
-	textTitleLarge: string;
-	textTitleMedium: string;
-	textTitleSmall: string;
-	textXLarge: string;
-	textLarge: string;
-	textRegular: string;
-	textMedium: string;
-	textSmall: string;
-	textXSmall: string;
-	captionRegular: string;
 };

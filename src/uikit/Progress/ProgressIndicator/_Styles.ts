@@ -9,7 +9,7 @@ export const Container = styled(motion.div)<{ $inline: boolean }>`
   bottom: ${({ $inline }) => ($inline ? "unset" : 0)};
   left: ${({ $inline }) => ($inline ? "unset" : 0)};
   right: ${({ $inline }) => ($inline ? "unset" : 0)};
-  color: ${({ theme }) => theme.lyraColors["core-text-disabled"]};
+  color: ${({ theme }) => theme.colors["core-text-disabled"]};
 `;
 
 export const IconWrapper = styled(motion.div)<{ $size: number }>`

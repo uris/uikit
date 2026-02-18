@@ -84,9 +84,9 @@ export const UIChip = React.memo((props: UIChipProps) => {
 
 	const computedIconColor = useMemo(() => {
 		if (iconColor) return iconColor;
-		if (disabled) return theme.lyraColors["core-icon-disabled"];
-		if (isFocused) return theme.lyraColors["core-icon-tertiary"];
-		return theme.lyraColors["core-icon-primary"];
+		if (disabled) return theme.colors["core-icon-disabled"];
+		if (isFocused) return theme.colors["core-icon-tertiary"];
+		return theme.colors["core-icon-primary"];
 	}, [iconColor, disabled, isFocused, theme]);
 
 	return (

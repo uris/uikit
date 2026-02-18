@@ -1,4 +1,4 @@
-export type Brand = {
+export type CoreColors = {
 	"brand-grey-100": string;
 	"brand-grey-200": string;
 	"brand-grey-300": string;
@@ -92,7 +92,7 @@ export type Brand = {
 	"product-red-500": string;
 };
 
-export type LyraColors = {
+export type Colors = {
 	"array-land": string;
 	"array-land-label": string;
 	"array-magenta": string;
@@ -157,70 +157,4 @@ export type LyraColors = {
 	"scroll-bar-hover": string;
 	"surface-shadow-soft": string;
 	"surface-shadow-strong": string;
-};
-
-export type LegacyColors = {
-	bgDark: string;
-	bgMedium: string;
-	bgNormal: string;
-	bgImageOverlay: string;
-	bgTransparent: string;
-	bgTintLight: string;
-	bgTintNormal: string;
-	bgTintHovered: string;
-	bgTintSelected: string;
-	bgThreads: string;
-	bgMessageBox: string;
-	fieldBorder: string;
-	lightBorder: string;
-	primaryBlue: string;
-	secondaryBlue: string;
-	selectedThread: string;
-	contextThread: string;
-	textPrimary: string;
-	textSecondary: string;
-	textTertiary: string;
-	textResponse: string;
-	textDisabled: string;
-	textLink: string;
-	gptype: string;
-	menuTextSecondary: string;
-	iconWhite: string;
-	iconPrimary: string;
-	iconSecondary: string;
-	iconDisabled: string;
-	scrollBar: string;
-	scrollBarHover: string;
-	transparent: string;
-	destructivePrimary: string;
-	overlay: string;
-	boxShadow: string;
-	buttonPrimaryTextDisabled: string;
-	green500: string;
-	green100: string;
-	notificationBG: string;
-	notificationText: string;
-	filterBG: string;
-	sliderTrack: string;
-	sliderProgress: string;
-	sliderKnob: string;
-	warning: string;
-	labelGreenBG: string;
-	labelGreenText: string;
-	labelYellowBG: string;
-	labelYellowText: string;
-	labelRedBG: string;
-	labelRedText: string;
-	labelSkyBG: string;
-	labelSkyText: string;
-	labelSeaBG: string;
-	labelSeaText: string;
-	labelLandBG: string;
-	labelLandText: string;
-	labelPurpleText: string;
-	labelMagentaText: string;
-	responseSelection: string;
-	white: string;
-	coverGradient: string;
-	dropShadow: string;
 };

@@ -25,7 +25,7 @@ export const Wrapper = styled.div<{
   ${flexBox.rowStart};
   gap: ${({ $gap }) => $gap}px;
   border-bottom: ${({ $border }) => ($border ? 1 : 0)}px solid
-    ${({ theme }) => theme.lyraColors["core-outline-primary"]};
+    ${({ theme }) => theme.colors["core-outline-primary"]};
   height: ${({ $height }) => setHeight($height)};
   width: ${({ $width }) => setWidth($width)};
   cursor: pointer;
@@ -41,18 +41,18 @@ export const Option = styled.div<{
 	$iconSize: number;
 }>`
   ${flexBox.row};
-  ${({ theme }) => theme.lyraType["body-m-regular"]};
+  ${({ theme }) => theme.type["body-m-regular"]};
   gap: ${({ $gap }) => $gap}px;
   color: ${({ $selected, theme }) =>
 		$selected
-			? theme.lyraColors["core-button-primary"]
-			: theme.lyraColors["core-text-primary"]};
+			? theme.colors["core-button-primary"]
+			: theme.colors["core-text-primary"]};
   padding: ${({ $padding }) => setPadding($padding)};
   height: 100%;
   flex: 1;
   white-space: nowrap;
-  box-shadow: 0px ${({ $selected, $size }) => ($selected ? $size : 0)}px 0px 0px
-    ${({ theme }) => theme.lyraColors["core-button-primary"]};
+  box-shadow: 0 ${({ $selected, $size }) => ($selected ? $size : 0)}px 0px 0px
+    ${({ theme }) => theme.colors["core-button-primary"]};
   cursor: ${({ $disabled }) => ($disabled ? "default" : "pointer")};
   -webkit-app-region: no-drag;
   -webkit-user-select: none;
@@ -76,6 +76,6 @@ export const CloseButton = styled.div<{
   padding-top: 0;
   margin-left: ${({ $padding }) => setPadding($padding)};
   border-left: 1px solid
-    ${({ theme }) => theme.lyraColors["core-outline-primary"]};
+    ${({ theme }) => theme.colors["core-outline-primary"]};
   width: ${({ $closeWidth }) => setWidth($closeWidth)};
 `;

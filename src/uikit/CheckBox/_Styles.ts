@@ -11,7 +11,7 @@ export const CheckBox = styled.div<{ $props: Props }>`
   ${flexBox.row};
   min-height: ${({ $props }) => $props.size}px;
   height: ${({ $props }) => $props.size}px;
-  width: 'auto';
+  width: auto;
   gap: 6px;
   cursor: pointer;
   overflow: hidden;
@@ -23,12 +23,12 @@ export const CheckBox = styled.div<{ $props: Props }>`
     height: 20px;
   }
   span.label {
-    ${({ theme }) => theme.lyraType["body-m-regular"]};
+    ${({ theme }) => theme.type["body-m-regular"]};
     color: ${({ theme, $props }) =>
 			$props.disabled
-				? theme.lyraColors["core-text-secondary"]
+				? theme.colors["core-text-secondary"]
 				: $props.checked
-					? theme.lyraColors["core-text-secondary"]
-					: theme.lyraColors["core-text-primary"]};
+					? theme.colors["core-text-secondary"]
+					: theme.colors["core-text-primary"]};
   }
 `;

@@ -18,9 +18,9 @@ export const Pager = React.memo((props: PagerProps) => {
 	const {
 		size = 8,
 		index = 0,
-		color = theme.lyraColors["core-badge-secondary"],
-		colorHover = theme.lyraColors["core-badge-secondary"],
-		colorOn = theme.lyraColors["core-text-secondary"],
+		color = theme.colors["core-badge-secondary"],
+		colorHover = theme.colors["core-badge-secondary"],
+		colorOn = theme.colors["core-text-secondary"],
 		pages = 2,
 		gap = 4,
 		onChange = () => null,

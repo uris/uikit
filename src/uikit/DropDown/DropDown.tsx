@@ -53,14 +53,14 @@ export const DropDown = React.memo((props: DropDownProps) => {
 		validate = true,
 		borderRadius = 4,
 		bgColor = "transparent",
-		iconColor = theme.lyraColors["core-icon-primary"],
+		iconColor = theme.colors["core-icon-primary"],
 		fontSize = null,
 		padding = "8px",
 		iconSize = 24,
 		disabled = false,
 		unframed = false,
 		focused = false,
-		textType = theme.lyraType["body-m-regular"],
+		textType = theme.type["body-m-regular"],
 		fontWeight = 500,
 		gap = 0,
 		onChange = () => null,
@@ -77,7 +77,7 @@ export const DropDown = React.memo((props: DropDownProps) => {
 	const [color, setColor] = useState<string>(iconColor);
 	const ref = useRef<HTMLSelectElement>(null);
 
-	useEffect(() => setColor(theme.lyraColors["core-icon-primary"]), [theme]);
+	useEffect(() => setColor(theme.colors["core-icon-primary"]), [theme]);
 
 	// validate selection and if there's a placeholder
 	// with a validate flag, set error state and event error

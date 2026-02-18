@@ -22,7 +22,7 @@ export function DoneCheck(props: DoneCheckProps) {
 		duration = 0.35,
 		bounce = 0.7,
 		delay = 0.5,
-		color = theme.lyraColors["feedback-positive"],
+		color = theme.colors["feedback-positive"],
 		didEnd = () => null,
 		didStart = () => null,
 		play = false,

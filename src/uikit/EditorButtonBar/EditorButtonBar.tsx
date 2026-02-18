@@ -140,7 +140,7 @@ export const RenderGroup = React.memo((props: RenderGroupProps) => {
 			{buttonGroup?.buttons?.map((button: ButtonBarButton, index: number) => {
 				const active = button?.id ? activeFormats?.includes(button.id) : false;
 				const bgColor = active
-					? theme.lyraColors["core-surface-secondary"]
+					? theme.colors["core-surface-secondary"]
 					: "transparent";
 				return (
 					<IconButton

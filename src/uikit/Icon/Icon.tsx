@@ -117,7 +117,7 @@ export const Icon = React.memo((props: IconProps) => {
 		name = "home",
 		size = 22,
 		stroke = 1.5,
-		strokeColor = theme.lyraColors["core-icon-primary"],
+		strokeColor = theme.colors["core-icon-primary"],
 		fillColor = "transparent",
 		toggle = false,
 		pointer = true,

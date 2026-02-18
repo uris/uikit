@@ -196,14 +196,13 @@ export function MessageInput(props: MessageInputProps) {
 
 	const iconColor = () => {
 		if (isFetching || isStreaming) {
-			if (theme.name === "lightMode")
-				return theme?.lyraColors?.["core-text-light"];
-			return theme?.lyraColors?.["core-surface-primary"];
+			if (theme.name === "lightMode") return theme?.colors?.["core-text-light"];
+			return theme?.colors?.["core-surface-primary"];
 		}
 		if (message === "") {
-			return theme?.lyraColors?.["core-surface-secondary"];
+			return theme?.colors?.["core-surface-secondary"];
 		}
-		return theme?.lyraColors?.["core-text-light"];
+		return theme?.colors?.["core-text-light"];
 	};
 
 	function handleUpload(
@@ -313,7 +312,7 @@ export function MessageInput(props: MessageInputProps) {
 						tooltip={"Attach file"}
 						onClick={(e) => handleUpload(e, PromptType.file)}
 						size={"medium"}
-						iconColor={theme.lyraColors["core-icon-primary"]}
+						iconColor={theme.colors["core-icon-primary"]}
 						round
 						onToolTip={(tip) => onToolTip(tip)}
 					/>
@@ -326,8 +325,8 @@ export function MessageInput(props: MessageInputProps) {
 						onClick={(_e) => jurisdictionClick()}
 						iconLeft={"focus"}
 						size={"medium"}
-						iconColor={theme.lyraColors["core-icon-primary"]}
-						labelColor={theme?.lyraColors?.["core-text-secondary"]}
+						iconColor={theme.colors["core-icon-primary"]}
+						labelColor={theme?.colors?.["core-text-secondary"]}
 						onToolTip={(tip) => onToolTip(tip)}
 					/>
 				</Styled.ActionButtons>
@@ -335,11 +334,11 @@ export function MessageInput(props: MessageInputProps) {
 					<UIButton
 						variant={"solid"}
 						iconLeft={isStreaming ? "stop" : "arrow up"}
-						bgColorDisabled={theme?.lyraColors?.["core-badge-secondary"]}
+						bgColorDisabled={theme?.colors?.["core-badge-secondary"]}
 						bgColor={
 							isFetching || isStreaming
-								? theme?.lyraColors?.["core-text-primary"]
-								: theme?.lyraColors?.["core-button-primary"]
+								? theme?.colors?.["core-text-primary"]
+								: theme?.colors?.["core-button-primary"]
 						}
 						iconColor={iconColor()}
 						state={setDisabled()}

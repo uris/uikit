@@ -24,9 +24,9 @@ export const Switch = React.memo((props: SwitchProps) => {
 		height = 22,
 		width = 44,
 		padding = 3,
-		bgColorOn = theme.lyraColors["feedback-positive"],
-		bgColorOff = theme.lyraColors["core-badge-secondary"],
-		knobColor = theme.lyraColors["core-text-light"],
+		bgColorOn = theme.colors["feedback-positive"],
+		bgColorOff = theme.colors["core-badge-secondary"],
+		knobColor = theme.colors["core-text-light"],
 		onChange = () => null,
 	} = props;
 	const [on, setOn] = useState<boolean>(state);

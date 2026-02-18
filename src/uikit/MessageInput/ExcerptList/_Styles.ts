@@ -13,8 +13,8 @@ export const ExcerptButton = styled.div`
   ${flexBox.rowStart};
   align-items: flex-start;
   padding: 10px 16px 14px 12px;
-  background: ${({ theme }) => theme.lyraColors["core-surface-primary"]};
-  border: 1px solid ${({ theme }) => theme.lyraColors["core-outline-primary"]};
+  background: ${({ theme }) => theme.colors["core-surface-primary"]};
+  border: 1px solid ${({ theme }) => theme.colors["core-outline-primary"]};
   border-radius: 24px;
   min-height: 48px;
   cursor: default;
@@ -29,8 +29,8 @@ export const ExcerptButton = styled.div`
     padding: 0px 16px 0px 8px;
     gap: 4px;
     div.label {
-      ${({ theme }) => theme.lyraType["body-m-regular"]};
-      color: ${({ theme }) => theme.lyraColors["core-text-primary"]};
+      ${({ theme }) => theme.type["body-m-regular"]};
+      color: ${({ theme }) => theme.colors["core-text-primary"]};
       max-width: 300px;
       line-height: 1.5em;
       overflow: hidden;
@@ -44,8 +44,8 @@ export const ExcerptButton = styled.div`
     div.type {
       ${flexBox.rowStart};
       padding-top: 4px;
-      ${({ theme }) => theme.lyraType["body-xs-regular"]};
-      color: ${({ theme }) => theme.lyraColors["core-text-disabled"]};
+      ${({ theme }) => theme.type["body-xs-regular"]};
+      color: ${({ theme }) => theme.colors["core-text-disabled"]};
       gap: 4px;
       div.icon {
         ${flexBox.row};

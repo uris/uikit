@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
-import { lightTheme } from "../theme/useGiaThemes";
+import { lightTheme } from "../theme/useMayaTheme";
 import { FlexDiv } from "../uikit/FlexDiv/FlexDiv";
 import { UIButton } from "../uikit/UIButton/UIButton";
 
@@ -31,7 +31,7 @@ const meta: Meta<typeof FlexDiv> = {
 		children: undefined,
 		scrollY: true,
 		scrollX: false,
-		background: lightTheme.lyraColors["core-surface-secondary"],
+		background: lightTheme.colors["core-surface-secondary"],
 		direction: "column",
 		alignItems: "center",
 		justify: "start",

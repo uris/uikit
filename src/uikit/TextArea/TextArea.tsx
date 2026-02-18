@@ -256,7 +256,7 @@ export const TextArea = React.memo((props: TextAreaProps) => {
 										icon={action.icon}
 										iconRight={action.iconRight}
 										label={action.key}
-										background={theme.lyraColors["core-surface-primary"]}
+										background={theme.colors["core-surface-primary"]}
 									/>
 									{action.label}
 								</div>

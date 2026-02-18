@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
 import { fn } from "storybook/test";
-import { lyraLight } from "../theme/colors/colors";
+import { light } from "../theme/colors/colors";
 import { DraggablePanel } from "../uikit/DraggablePanel/DrggablePanel";
 import { FlexDiv } from "../uikit/FlexDiv/FlexDiv";
 import { UIButton } from "../uikit/UIButton/UIButton";
@@ -21,9 +21,9 @@ const meta: Meta<typeof DraggablePanel> = {
 			color: "transparent",
 			offsetX: true,
 		},
-		borderRight: `1px solid ${lyraLight["core-outline-primary"]}`,
+		borderRight: `1px solid ${light["core-outline-primary"]}`,
 		borderLeft: null,
-		bgColor: lyraLight["core-surface-secondary"],
+		bgColor: light["core-surface-secondary"],
 		drags: true,
 		isTouchDevice: false,
 		onResize: fn(),
@@ -40,7 +40,7 @@ export const Default: StoryObj<typeof DraggablePanel> = {
 			<FlexDiv
 				width={"100%"}
 				height={"fill"}
-				background={lyraLight["core-surface-primary"]}
+				background={light["core-surface-primary"]}
 			>
 				<DraggablePanel {...args}>
 					<FlexDiv alignItems={"center"} justify={"center"}>

@@ -42,7 +42,7 @@ export function ExcerptList(props: ExcerptListProps) {
 								<Icon
 									name="recent chats"
 									size={16}
-									strokeColor={theme.lyraColors["core-text-disabled"]}
+									strokeColor={theme.colors["core-text-disabled"]}
 								/>
 								{excerpt.docTitle ? excerpt.docTitle : "Document excerpt"}
 							</div>

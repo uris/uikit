@@ -6,10 +6,10 @@ import {
 	type GiaTheme,
 	darkTheme,
 	lightTheme,
-	useGiaThemes,
-} from "./useGiaThemes";
+	useMayaTheme,
+} from "./useMayaTheme";
 
-export { useGiaThemes, darkTheme, lightTheme, light, dark };
+export { useMayaTheme, darkTheme, lightTheme, light, dark };
 export type {
 	GiaTheme,
 	LyraCorners,

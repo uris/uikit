@@ -20,21 +20,21 @@ function setBackground(
 	if (state) {
 		switch (state) {
 			case "red":
-				return theme.lyraColors["feedback-warning"];
+				return theme.colors["feedback-warning"];
 			case "yellow":
-				return theme.lyraColors["feedback-attention"];
+				return theme.colors["feedback-attention"];
 			case "green":
-				return theme.lyraColors["feedback-positive"];
+				return theme.colors["feedback-positive"];
 			case "grey":
-				return theme.lyraColors["core-text-secondary"];
+				return theme.colors["core-text-secondary"];
 			default:
-				return theme.lyraColors["core-gp-logo-primary"];
+				return theme.colors["core-gp-logo-primary"];
 		}
 	}
 	if (color) {
 		return color;
 	}
-	return theme.lyraColors["core-gp-logo-primary"];
+	return theme.colors["core-gp-logo-primary"];
 }
 
 export const Dot = styled(motion.div)<{ $props: Props }>`
@@ -55,7 +55,7 @@ export const Dot = styled(motion.div)<{ $props: Props }>`
   height: ${({ $props }) => $props.size}px;
   width: ${({ $props }) => $props.size}px;
   border: ${({ $props }) => $props.border}px solid
-    ${({ theme }) => theme.lyraColors["core-surface-primary"]};
+    ${({ theme }) => theme.colors["core-surface-primary"]};
   background: ${({ theme, $props }) =>
 		setBackground($props.state, $props.color, theme)};
   border-radius: 100%;

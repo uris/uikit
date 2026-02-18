@@ -307,8 +307,8 @@ const Option = React.memo(
 
 		// Memoize icon color
 		const strokeColor = useMemo(() => {
-			if (!disabled && selected) return theme.lyraColors["core-button-primary"];
-			return theme.lyraColors["core-text-primary"];
+			if (!disabled && selected) return theme.colors["core-button-primary"];
+			return theme.colors["core-text-primary"];
 		}, [disabled, selected, theme]);
 
 		// Memoize handleMouseOver
@@ -335,7 +335,7 @@ const Option = React.memo(
 
 		// Memoize text style
 		const computedTextStyle = useMemo(
-			() => textStyle || theme.lyraType["body-l-regular"],
+			() => textStyle || theme.type["body-l-regular"],
 			[textStyle, theme],
 		);
 

@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
 import { fn } from "storybook/test";
-import { lightTheme } from "../theme/useGiaThemes";
+import { lightTheme } from "../theme/useMayaTheme";
 import { DropDown, type DropDownOption } from "../uikit/DropDown/DropDown";
 import { FlexDiv } from "../uikit/FlexDiv/FlexDiv";
 
@@ -23,14 +23,14 @@ const meta: Meta<typeof DropDown> = {
 		validate: true,
 		borderRadius: 4,
 		bgColor: "transparent",
-		iconColor: lightTheme.lyraColors["core-text-primary"],
+		iconColor: lightTheme.colors["core-text-primary"],
 		fontSize: undefined,
 		padding: "8px",
 		iconSize: 24,
 		disabled: false,
 		unframed: false,
 		focused: false,
-		textType: lightTheme.lyraType["body-l-regular"],
+		textType: lightTheme.type["body-l-regular"],
 		fontWeight: 500,
 		gap: 0,
 		onChange: fn(),

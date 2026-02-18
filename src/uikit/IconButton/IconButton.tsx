@@ -81,9 +81,9 @@ export const IconButton = React.memo((props: IconButtonProps) => {
 	const styles = useMemo(
 		() => ({
 			bgColor: bgColor || "transparent",
-			bgColorOn: bgColorOn || theme.lyraColors["core-surface-secondary"],
+			bgColorOn: bgColorOn || theme.colors["core-surface-secondary"],
 			bgColorHover: hover
-				? theme.lyraColors["core-surface-secondary"]
+				? theme.colors["core-surface-secondary"]
 				: bgColorHover || bgColor,
 			toggle,
 			isToggled: toggle ? on : false,
@@ -137,11 +137,11 @@ export const IconButton = React.memo((props: IconButtonProps) => {
 
 	// Memoize icon stroke color
 	const strokeColor = useMemo(
-		() => color || theme.lyraColors["core-icon-primary"],
+		() => color || theme.colors["core-icon-primary"],
 		[color, theme],
 	);
 	const accentColor = useMemo(
-		() => colorOn || theme.lyraColors["core-icon-primary"],
+		() => colorOn || theme.colors["core-icon-primary"],
 		[colorOn, theme],
 	);
 

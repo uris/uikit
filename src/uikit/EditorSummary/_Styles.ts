@@ -1,16 +1,16 @@
-import styled from 'styled-components';
-import { flexBox } from '../../util/flexBox';
+import styled from "styled-components";
+import { flexBox } from "../../util/flexBox";
 
 export const SummaryBar = styled.div`
   ${flexBox.rowStart};
   min-height: 30px;
   gap: 8px;
-  ${({ theme }) => theme.lyraType['body-s-regular']};
-  background: ${({ theme }) => theme.lyraColors['core-surface-primary']};
+  ${({ theme }) => theme.type["body-s-regular"]};
+  background: ${({ theme }) => theme.colors["core-surface-primary"]};
   line-height: 1em;
-  color: ${({ theme }) => theme.lyraColors['core-text-primary']};
-  border: 1px solid ${({ theme }) => theme.lyraColors['core-outline-primary']};
-  box-shadow: ${({ theme }) => theme.lyraColors['surface-shadow-soft']};
+  color: ${({ theme }) => theme.colors["core-text-primary"]};
+  border: 1px solid ${({ theme }) => theme.colors["core-outline-primary"]};
+  box-shadow: ${({ theme }) => theme.colors["surface-shadow-soft"]};
   border-radius: 100px;
   transition: all 0.25s ease-in-out 0s;
   white-space: nowrap;
@@ -22,10 +22,10 @@ export const SummaryBar = styled.div`
     ${flexBox.rowStart};
     gap: 4px;
     div.current span {
-      color: ${({ theme }) => theme.lyraColors['core-text-primary']};
+      color: ${({ theme }) => theme.colors["core-text-primary"]};
     }
     div.current span.resolved {
-      color: ${({ theme }) => theme.lyraColors['core-text-disabled']};
+      color: ${({ theme }) => theme.colors["core-text-disabled"]};
     }
   }
   div.actions {
@@ -35,6 +35,6 @@ export const SummaryBar = styled.div`
   div.divider {
     width: 1px;
     height: 16px;
-    background: ${({ theme }) => theme.lyraColors['core-outline-primary']};
+    background: ${({ theme }) => theme.colors["core-outline-primary"]};
   }
 `;

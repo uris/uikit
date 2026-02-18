@@ -28,7 +28,7 @@ export const TrackBG = styled.div<{
   width: 100%;
   height: ${({ $height }) => getWidth($height)};
   background-color: ${({ theme, $color }) =>
-		$color ? $color : theme.lyraColors["core-outline-primary"]};
+		$color ? $color : theme.colors["core-outline-primary"]};
   pointer-events: none;
   border-radius: 100px;
 `;
@@ -39,7 +39,7 @@ export const Track = styled.div<{ $color?: string }>`
   width: 0px;
   height: 100%;
   background-color: ${({ theme, $color }) =>
-		$color ? $color : theme.lyraColors["core-icon-primary"]};
+		$color ? $color : theme.colors["core-icon-primary"]};
   overflow: visible;
   pointer-events: none;
   border-radius: 100px;
@@ -54,7 +54,7 @@ export const TrackHead = styled.div<{
   position: absolute;
   display: ${({ $height }) => ($height ? "block" : "none")};
   background-color: ${({ theme, $color }) =>
-		$color ? $color : theme.lyraColors["core-icon-primary"]};
+		$color ? $color : theme.colors["core-icon-primary"]};
   pointer-events: none;
   border-radius: ${({ $headType }) => ($headType === "round" ? "100%" : 0)};
   max-width: ${({ $width }) => $width || 0}px;

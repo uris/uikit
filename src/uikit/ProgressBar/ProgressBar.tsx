@@ -90,7 +90,7 @@ const ProgressStep = React.memo((props: StepProps) => {
 
 	// Memoize icon color
 	const checkIconColor = useMemo(
-		() => theme.lyraColors["core-text-light"],
+		() => theme.colors["core-text-light"],
 		[theme],
 	);
 

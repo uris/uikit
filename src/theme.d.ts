@@ -2,8 +2,9 @@
 // inside styled components
 
 import {} from "styled-components";
-import type { GiaTheme } from "./theme/useGiaThemes";
+import type { GiaTheme } from "./theme/useMayaTheme";
+import type { MayaTheme } from "./theme/useMayaTheme";
 declare module "styled-components" {
 	/* eslint-disable-next-line @typescript-eslint/no-empty-object-type */
-	export interface DefaultTheme extends GiaTheme {} // extends the global DefaultTheme with GiaTheme.
+	export interface DefaultTheme extends MayaTheme {} // extends the global DefaultTheme with GiaTheme.
 }

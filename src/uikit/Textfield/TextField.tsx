@@ -98,20 +98,20 @@ export const TextField = React.memo(
 			inline = false,
 			noShow = false,
 			borderColor = {
-				focused: theme.lyraColors["core-button-primary"],
+				focused: theme.colors["core-button-primary"],
 				blurred: "transparent",
-				error: theme.lyraColors["feedback-warning"],
+				error: theme.colors["feedback-warning"],
 			},
 			backgroundColor = {
-				focused: theme.lyraColors["core-surface-secondary"],
-				blurred: theme.lyraColors["core-surface-secondary"],
+				focused: theme.colors["core-surface-secondary"],
+				blurred: theme.colors["core-surface-secondary"],
 			},
 			color = {
-				focused: theme.lyraColors["core-text-primary"],
-				blurred: theme.lyraColors["core-text-secondary"],
-				error: theme.lyraColors["core-text-primary"],
-				placeholder: theme.lyraColors["core-text-disabled"],
-				disabled: theme.lyraColors["core-text-disabled"],
+				focused: theme.colors["core-text-primary"],
+				blurred: theme.colors["core-text-secondary"],
+				error: theme.colors["core-text-primary"],
+				placeholder: theme.colors["core-text-disabled"],
+				disabled: theme.colors["core-text-disabled"],
 			},
 			iconLeft = null,
 			clearButton = { size: 20 },
@@ -232,9 +232,7 @@ export const TextField = React.memo(
 		// Memoize icon stroke color
 		const iconStrokeColor = useMemo(
 			() =>
-				iconLeft?.color
-					? iconLeft.color
-					: theme.lyraColors["core-icon-secondary"],
+				iconLeft?.color ? iconLeft.color : theme.colors["core-icon-secondary"],
 			[iconLeft, theme],
 		);
 
@@ -306,7 +304,7 @@ export const TextField = React.memo(
 								<Icon
 									name={"x"}
 									size={clearButton.size}
-									strokeColor={theme.lyraColors["core-icon-secondary"]}
+									strokeColor={theme.colors["core-icon-secondary"]}
 								/>
 							</motion.div>
 						)}
@@ -325,7 +323,7 @@ export const TextField = React.memo(
 									variant={"text"}
 									size={"text"}
 									state={text === "" ? "disabled" : "normal"}
-									labelColor={theme.lyraColors["core-button-primary"]}
+									labelColor={theme.colors["core-button-primary"]}
 									onClick={onAction}
 								/>
 							</motion.div>

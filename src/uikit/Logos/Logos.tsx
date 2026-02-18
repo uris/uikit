@@ -35,7 +35,7 @@ export function Logos(props: LogoProps) {
 	const theme = useTheme();
 	const {
 		image = "gp",
-		color = theme.lyraColors["core-text-primary"],
+		color = theme.colors["core-text-primary"],
 		height = 36,
 	} = props;
 

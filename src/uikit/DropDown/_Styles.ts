@@ -35,14 +35,14 @@ export const Wrapper = styled.div<{
     ${({ $unframed }) => ($unframed ? 0 : 1)}px
     ${({ $focused, $invalid, theme }) =>
 			$focused
-				? theme.lyraColors["core-outline-primary"]
+				? theme.colors["core-outline-primary"]
 				: $invalid
-					? theme.lyraColors["core-outline-primary"]
-					: theme.lyraColors["core-outline-primary"]};
+					? theme.colors["core-outline-primary"]
+					: theme.colors["core-outline-primary"]};
   transition: all 0.15s ease-in-out 0s;
   div.face {
     ${flexBox.rowStart};
-    ${({ theme }) => theme.lyraType["body-m-regular"]};
+    ${({ theme }) => theme.type["body-m-regular"]};
     padding: ${({ $padding, $unframed }) =>
 			$unframed ? 0 : $padding ? setSizeStyle($padding) : "8px 0px 8px 8px"};
     flex: 1;
@@ -54,10 +54,10 @@ export const Wrapper = styled.div<{
     word-break: break-all;
     color: ${({ $placeholder, $focused, theme }) =>
 			$placeholder
-				? theme.lyraColors["core-text-disabled"]
+				? theme.colors["core-text-disabled"]
 				: $focused
-					? theme.lyraColors["core-text-primary"]
-					: theme.lyraColors["core-text-primary"]};
+					? theme.colors["core-text-primary"]
+					: theme.colors["core-text-primary"]};
   }
   div.chevron {
     ${flexBox.rowStart};
@@ -72,7 +72,6 @@ export const Select = styled.select`
   height: 100%;
   font-size: 14px;
   background-color: #1f99cd;
-  background-image: url('');
   background-position: right 10px center;
   background-repeat: no-repeat;
   background-size: auto 50%;

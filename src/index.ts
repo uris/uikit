@@ -2,7 +2,7 @@ export type { ToolTip, ToolTipInfo } from "./uikit/sharedTypes";
 export { ToolTipType } from "./uikit/sharedTypes";
 
 export {
-	useGiaThemes,
+	useMayaTheme,
 	light,
 	dark,
 	lightTheme,

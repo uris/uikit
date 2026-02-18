@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
 import { fn } from "storybook/test";
-import { lightTheme } from "../theme/useGiaThemes";
+import { lightTheme } from "../theme/useMayaTheme";
 import { Avatar } from "../uikit/Avatar/Avatar";
 import { FlexDiv } from "../uikit/FlexDiv/FlexDiv";
 
@@ -12,7 +12,7 @@ const meta: Meta<typeof Avatar> = {
 		last: "Doe",
 		image: "public/images/profile-male-02.jpg",
 		border: 0,
-		borderColor: lightTheme.lyraColors["core-surface-primary"],
+		borderColor: lightTheme.colors["core-surface-primary"],
 		bgColor: undefined,
 		transition: undefined,
 		animate: undefined,
