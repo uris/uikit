@@ -1,5 +1,5 @@
-import styled from 'styled-components';
-import { flexBox } from '../../util/flexBox';
+import styled from "styled-components";
+import { flexBox } from "../../util/flexBox";
 
 export const Bar = styled.div`
   ${flexBox.row};
@@ -9,44 +9,44 @@ export const Bar = styled.div`
 `;
 
 export const Step = styled.div<{
-  $state: 'done' | 'current' | 'disabled';
-  $clickable: boolean;
+	$state: "done" | "current" | "disabled";
+	$clickable: boolean;
 }>`
   ${flexBox.rowStart};
   gap: 10px;
-  cursor: ${({ $clickable }) => ($clickable ? 'pointer' : 'default')};
+  cursor: ${({ $clickable }) => ($clickable ? "pointer" : "default")};
   div.step {
     ${flexBox.rowStart};
     gap: 8px;
     div.number {
       ${flexBox.row};
-      ${({ theme }) => theme.lyraType['body-m-regular']};
+      ${({ theme }) => theme.lyraType["body-m-regular"]};
       width: 20px;
       height: 20px;
       border-radius: 100px;
       border: 1px solid
         ${({ theme, $state }) =>
-          $state === 'done' || $state === 'current'
-            ? theme.lyraColors['core-button-primary']
-            : theme.lyraColors['core-outline-primary']};
+					$state === "done" || $state === "current"
+						? theme.lyraColors["core-button-primary"]
+						: theme.lyraColors["core-outline-primary"]};
       background: ${({ theme, $state }) =>
-        $state === 'done'
-          ? theme.lyraColors['core-button-primary']
-          : $state === 'current'
-            ? 'transparent'
-            : theme.lyraColors['core-outline-primary']};
+				$state === "done"
+					? theme.lyraColors["core-button-primary"]
+					: $state === "current"
+						? "transparent"
+						: theme.lyraColors["core-outline-primary"]};
       color: ${({ theme, $state }) =>
-        $state === 'disabled'
-          ? theme.lyraColors['core-text-secondary']
-          : theme.lyraColors['core-button-primary']};
+				$state === "disabled"
+					? theme.lyraColors["core-text-secondary"]
+					: theme.lyraColors["core-button-primary"]};
       transition: all 0.25s ease-in-out 0s;
     }
     div.title {
-      ${({ theme }) => theme.lyraType['body-m-regular']};
+      ${({ theme }) => theme.lyraType["body-m-regular"]};
       color: ${({ theme, $state }) =>
-        $state === 'disabled'
-          ? theme.lyraColors['core-text-disabled']
-          : theme.lyraColors['core-text-primary']};
+				$state === "disabled"
+					? theme.lyraColors["core-text-disabled"]
+					: theme.lyraColors["core-text-primary"]};
     }
   }
   div.line {
@@ -54,6 +54,6 @@ export const Step = styled.div<{
     width: 32px;
     min-height: 1px;
     min-width: 32px;
-    background: ${({ theme }) => theme.lyraColors['core-outline-primary']};
+    background: ${({ theme }) => theme.lyraColors["core-outline-primary"]};
   }
 `;

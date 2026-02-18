@@ -1,6 +1,6 @@
-import { motion } from 'framer-motion';
-import styled from 'styled-components';
-import { flexBox } from '../../../util/flexBox';
+import { motion } from "motion/react";
+import styled from "styled-components";
+import { flexBox } from "../../../util/flexBox";
 
 export const Wrapper = styled.div<{ $isFocused: boolean; $isShort: boolean }>`
   ${flexBox.columnEnd};
@@ -10,7 +10,7 @@ export const Wrapper = styled.div<{ $isFocused: boolean; $isShort: boolean }>`
   overflow: visible;
   overflow-y: hidden;
   padding: ${({ $isShort }) =>
-    $isShort ? '16px 12px 8px 16px;' : '16px 12px 16px 16px;'};
+		$isShort ? "16px 12px 8px 16px;" : "16px 12px 16px 16px;"};
   border-radius: 16px;
   background: ${({ theme }) => theme.colors.bgDark};
   box-shadow: 0 0 1px ${({ $isShort }) => ($isShort ? 0 : 1)}px
@@ -24,14 +24,14 @@ export const Wrapper = styled.div<{ $isFocused: boolean; $isShort: boolean }>`
 `;
 
 export const TextArea = styled.textarea`
-  ${({ theme }) => theme.lyraType['body-m-regular']};
+  ${({ theme }) => theme.lyraType["body-m-regular"]};
   padding: 0;
   width: 100%;
   overflow-y: hidden;
   resize: none;
   border: 0;
   outline: none;
-  color: ${({ theme }) => theme.lyraColors['core-text-primary']};
+  color: ${({ theme }) => theme.lyraColors["core-text-primary"]};
   background: transparent;
   padding-bottom: 5px;
   &::placeholder {
@@ -47,8 +47,8 @@ export const ButtonRow = styled.div`
 
 export const ActionButtons = styled.div<{ $isShort: boolean }>`
   ${flexBox.row};
-  ${({ theme }) => theme.lyraType['body-m-regular']};
-  color: ${({ theme }) => theme.lyraColors['core-text-disabled']};
+  ${({ theme }) => theme.lyraType["body-m-regular"]};
+  color: ${({ theme }) => theme.lyraColors["core-text-disabled"]};
   z-index: 1;
   gap: 12px;
 `;
@@ -65,8 +65,8 @@ export const AnimatedButton = styled(motion.div)`
 `;
 
 export const IconLabel = styled.div`
-  ${({ theme }) => theme.lyraType['body-s-regular']};
-  color: ${({ theme }) => theme.lyraColors['core-text-disabled']};
+  ${({ theme }) => theme.lyraType["body-s-regular"]};
+  color: ${({ theme }) => theme.lyraColors["core-text-disabled"]};
   ${flexBox.row};
   cursor: pointer;
 `;
@@ -76,5 +76,5 @@ export const InputWrapper = styled.div<{ $isShort: boolean }>`
   align-items: flex-end;
   width: 100%;
   padding: ${({ $isShort }) =>
-    $isShort ? '4px 4px 0px 4px' : '4px 4px 16px 4px'};
+		$isShort ? "4px 4px 0px 4px" : "4px 4px 16px 4px"};
 `;

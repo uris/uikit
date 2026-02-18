@@ -1,31 +1,30 @@
 {
-  "compilerOptions": {
-    //
-    "strict": true,
-    "noImplicitAny": true,
-    "strictNullChecks": true,
-    "strictFunctionTypes": true,
-    "strictBindCallApply": true,
-    "strictPropertyInitialization": true,
-    "noImplicitThis": true,
-    "alwaysStrict": true,
-    //
-    "baseUrl": "./",
-    //
-    "target": "ES6",
-    "module": "ESNext",
-    "jsx": "react-jsx",
-    "jsxImportSource": "react",
-    "esModuleInterop": true,
-    "allowSyntheticDefaultImports": true,
-    "declaration": true,
-    "emitDeclarationOnly": true,
-    "declarationDir": "dist/types",
-    "outDir": "dist",
-    "skipLibCheck": true,
-    "moduleResolution": "Node",
-    "resolveJsonModule": true
-  },
-  "include": ["src/**/*", "playground/**/*", "eslint.config.mjs"],
-  "exclude": ["playground/**/*", "eslint.config.mjs"]
+	"compilerOptions": {
+		"strict": true,
+		"noImplicitAny": true,
+		"strictNullChecks": true,
+		"strictFunctionTypes": true,
+		"strictBindCallApply": true,
+		"strictPropertyInitialization": true,
+		"noImplicitThis": true,
+		"alwaysStrict": true,
+
+		"baseUrl": "./",
+
+		"target": "ES6",
+		"module": "ESNext",
+		"jsx": "react-jsx",
+		"jsxImportSource": "react",
+		"esModuleInterop": true,
+		"allowSyntheticDefaultImports": true,
+		"declaration": true,
+		"emitDeclarationOnly": true,
+		"declarationDir": "dist/types",
+		"outDir": "dist",
+		"skipLibCheck": true,
+		"moduleResolution": "Bundler",
+		"resolveJsonModule": true
+	},
+	"include": ["src/**/*", "playground/**/*"],
+	"exclude": ["playground/**/*"]
 }

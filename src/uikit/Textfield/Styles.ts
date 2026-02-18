@@ -1,30 +1,30 @@
-import styled from 'styled-components';
-import { motion } from 'framer-motion';
-import { flexBox } from '../../util/flexBox';
-import { setSizeStyle } from '../../util/utils';
+import { motion } from "motion/react";
+import styled from "styled-components";
+import { flexBox } from "../../util/flexBox";
+import { setSizeStyle } from "../../util/utils";
 
 type Styles = {
-  borderColor?: { focused: string; blurred: string; error: string };
-  backgroundColor?: { focused: string; blurred: string };
-  color?: {
-    focused: string;
-    blurred: string;
-    error: string;
-    placeholder: string;
-    disabled: string;
-  };
-  size?: { width?: number | string; height?: number | string };
-  borderRadius?: number | string;
-  padding?: string;
-  textAlign?: string;
-  labelSize?: number;
+	borderColor?: { focused: string; blurred: string; error: string };
+	backgroundColor?: { focused: string; blurred: string };
+	color?: {
+		focused: string;
+		blurred: string;
+		error: string;
+		placeholder: string;
+		disabled: string;
+	};
+	size?: { width?: number | string; height?: number | string };
+	borderRadius?: number | string;
+	padding?: string;
+	textAlign?: string;
+	labelSize?: number;
 };
 
 export const InputWrapper = styled(motion.div)<{
-  $props: Styles;
-  $focused: boolean;
-  $isvalid: boolean;
-  $inline: boolean;
+	$props: Styles;
+	$focused: boolean;
+	$isvalid: boolean;
+	$inline: boolean;
 }>`
   ${flexBox.rowStart};
   gap: 8px;
@@ -34,20 +34,20 @@ export const InputWrapper = styled(motion.div)<{
   height: ${({ $props }) => setSizeStyle($props.size?.height)};
   border-radius: ${({ $props }) => setSizeStyle($props.borderRadius)};
   background: ${({ $props, $focused, $inline }) =>
-    $inline
-      ? 'unset'
-      : $focused
-        ? $props.backgroundColor?.focused
-        : $props.backgroundColor?.blurred};
+		$inline
+			? "unset"
+			: $focused
+				? $props.backgroundColor?.focused
+				: $props.backgroundColor?.blurred};
   box-shadow: 0 ${({ $inline }) => ($inline ? 1 : 0)}px
     ${({ $inline }) => ($inline ? 0 : 1)}px
     ${({ $focused, $inline }) => ($inline ? 0 : $focused ? 1.5 : 1)}px
     ${({ $focused, $isvalid, $props }) =>
-      $focused
-        ? $props.borderColor?.focused
-        : !$isvalid
-          ? $props.borderColor?.error
-          : $props.borderColor?.blurred};
+			$focused
+				? $props.borderColor?.focused
+				: !$isvalid
+					? $props.borderColor?.error
+					: $props.borderColor?.blurred};
   transition: all 0.25s ease-in-out 0s;
 `;
 
@@ -61,8 +61,8 @@ export const InputContainer = styled.div<{ $padding: string }>`
 
 export const Label = styled.div<{ $props: Styles }>`
   ${flexBox.rowStart};
-  ${({ theme }) => theme.lyraType['body-m-regular']};
-  color: ${({ theme }) => theme.lyraColors['core-text-secondary']};
+  ${({ theme }) => theme.lyraType["body-m-regular"]};
+  color: ${({ theme }) => theme.lyraColors["core-text-secondary"]};
   padding: ${({ $props }) => $props.padding};
   height: auto;
   overflow: hidden;
@@ -71,30 +71,30 @@ export const Label = styled.div<{ $props: Styles }>`
 `;
 
 export const Input = styled.input<{
-  $textType?: string;
-  $props: Styles;
-  $focused: boolean;
-  $isvalid: boolean;
-  $label: string;
-  $labelRight: boolean;
+	$textType?: string;
+	$props: Styles;
+	$focused: boolean;
+	$isvalid: boolean;
+	$label: string;
+	$labelRight: boolean;
 }>`
   ${({ theme, $textType }) =>
-    $textType ? $textType : theme.lyraType['body-m-regular']};
+		$textType ? $textType : theme.lyraType["body-m-regular"]};
   color: ${({ $props, $focused, $isvalid }) =>
-    !$isvalid
-      ? $props.color?.error
-      : $focused
-        ? $props.color?.focused
-        : $props.color?.blurred};
+		!$isvalid
+			? $props.color?.error
+			: $focused
+				? $props.color?.focused
+				: $props.color?.blurred};
   background-color: transparent;
   box-sizing: border-box;
   outline: none;
   border: 0;
   height: 100%;
   width: 100%;
-  padding-left: ${({ $label }) => ($label !== '' ? 0 : 'unset')};
+  padding-left: ${({ $label }) => ($label !== "" ? 0 : "unset")};
   text-align: ${({ $label, $labelRight, $props }) =>
-    $label && $labelRight ? 'right' : $props.textAlign};
+		$label && $labelRight ? "right" : $props.textAlign};
   &::placeholder {
     color: ${({ $props }) => $props.color?.placeholder};
   }
@@ -109,16 +109,16 @@ export const Input = styled.input<{
   &:-webkit-autofill:focus,
   &:-webkit-autofill:active {
     box-shadow: 0 0 0 50px
-      ${({ theme }) => theme.lyraColors['core-button-disabled']} inset !important;
+      ${({ theme }) => theme.lyraColors["core-button-disabled"]} inset !important;
     -webkit-text-fill-color: ${({ theme }) =>
-      theme.lyraColors['core-text-primary']};
+			theme.lyraColors["core-text-primary"]};
   }
 `;
 
 export const ButtonShow = styled.div<{
-  $on: boolean;
-  $disabled: boolean;
-  $focused: boolean;
+	$on: boolean;
+	$disabled: boolean;
+	$focused: boolean;
 }>`
   ${flexBox.row};
   min-height: 18px;
@@ -126,9 +126,9 @@ export const ButtonShow = styled.div<{
   max-height: 18px;
   max-width: 18px;
   opacity: ${({ $on, $disabled, $focused }) =>
-    $focused ? 1 : $disabled ? 0.5 : $on ? 1 : 0.5};
+		$focused ? 1 : $disabled ? 0.5 : $on ? 1 : 0.5};
   &:hover {
     opacity: ${({ $disabled, $focused }) =>
-      $focused ? 1 : $disabled ? 0.5 : 1};
+			$focused ? 1 : $disabled ? 0.5 : 1};
   }
 `;

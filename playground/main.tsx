@@ -7,12 +7,12 @@ const rootElement = document.getElementById("root");
 
 // Ensure 'rootElement' exists (optional null check)
 if (rootElement) {
-  const root = ReactDOM.createRoot(rootElement); // Use createRoot instead of render
-  root.render(
-    <React.StrictMode>
-      <App />
-    </React.StrictMode>
-  );
+	const root = ReactDOM.createRoot(rootElement); // Use createRoot instead of render
+	root.render(
+		<React.StrictMode>
+			<App />
+		</React.StrictMode>,
+	);
 } else {
-  console.error("Root element not found");
+	console.error("Root element not found");
 }

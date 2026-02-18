@@ -1,36 +1,36 @@
-import { motion } from 'framer-motion';
-import styled from 'styled-components';
-import { flexBox } from '../../util/flexBox';
+import { motion } from "motion/react";
+import styled from "styled-components";
+import { flexBox } from "../../util/flexBox";
 
 type Props = {
-  frameSize: number;
-  bgColor?: string;
-  bgColorOn?: string;
-  bgColorHover?: string;
-  isToggled?: boolean;
-  toggle?: boolean;
-  fill?: boolean;
-  borderRadius?: number;
+	frameSize: number;
+	bgColor?: string;
+	bgColorOn?: string;
+	bgColorHover?: string;
+	isToggled?: boolean;
+	toggle?: boolean;
+	fill?: boolean;
+	borderRadius?: number;
 };
 
 export const IconButton = styled(motion.div)<{ $props: Props }>`
   ${flexBox.row};
   position: relative;
   background: ${({ $props }) =>
-    $props.isToggled && $props.toggle ? $props.bgColorOn : $props.bgColor};
+		$props.isToggled && $props.toggle ? $props.bgColorOn : $props.bgColor};
   border-radius: ${({ $props }) =>
-    $props.borderRadius ? $props.borderRadius : 8}px;
+		$props.borderRadius ? $props.borderRadius : 8}px;
   border: ${({ $props }) => ($props.fill ? 1 : 0)}px solid
-    ${({ theme }) => theme.lyraColors['core-outline-primary']};
+    ${({ theme }) => theme.lyraColors["core-outline-primary"]};
   gap: 6px;
   cursor: pointer;
   &:hover {
     background: ${({ $props }) =>
-      $props.bgColorHover
-        ? $props.bgColorHover
-        : $props.isToggled && $props.toggle
-          ? $props.bgColorOn
-          : $props.bgColor};
+			$props.bgColorHover
+				? $props.bgColorHover
+				: $props.isToggled && $props.toggle
+					? $props.bgColorOn
+					: $props.bgColor};
   }
   div.icon {
     ${flexBox.row};
@@ -41,7 +41,7 @@ export const IconButton = styled(motion.div)<{ $props: Props }>`
   }
   div.label {
     ${flexBox.rowStart};
-    ${({ theme }) => theme.lyraType['body-l-regular']};
+    ${({ theme }) => theme.lyraType["body-l-regular"]};
     text-overflow: ellipsis;
     overflow: hidden;
     word-break: break-all;

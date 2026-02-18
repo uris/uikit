@@ -1,10 +1,10 @@
-import styled from 'styled-components';
-import { flexBox } from '../../util/flexBox';
+import styled from "styled-components";
+import { flexBox } from "../../util/flexBox";
 
 export const Wrapper = styled.div<{
-  $overlap: number;
-  $gap: number;
-  $margin: number;
+	$overlap: number;
+	$gap: number;
+	$margin: number;
 }>`
   ${flexBox.rowStart};
   gap: ${({ $gap }) => $gap}px;

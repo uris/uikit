@@ -1,8 +1,8 @@
+import { DoneCheck, type DoneCheckProps } from "./DoneCheck/DoneCheck";
 import {
-  ProgressIndicator,
-  ProgressIndicatorProps,
+	ProgressIndicator,
+	type ProgressIndicatorProps,
 } from "./ProgressIndicator/ProgressIndicator";
-import { DoneCheck, DoneCheckProps } from "./DoneCheck/DoneCheck";
 
 export { DoneCheck, ProgressIndicator };
 export type { DoneCheckProps, ProgressIndicatorProps };

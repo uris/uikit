@@ -1,26 +1,26 @@
-import styled from 'styled-components';
-import { flexBox } from '../../util/flexBox';
-import { setSizeStyle } from '../../util/utils';
+import styled from "styled-components";
+import { flexBox } from "../../util/flexBox";
+import { setSizeStyle } from "../../util/utils";
 
 function setSize(value: string | number) {
-  if (typeof value === 'string') return value;
-  else return value + 'px';
+	if (typeof value === "string") return value;
+	return `${value}px`;
 }
 
 export const Wrapper = styled.div<{
-  $size: { width: string; height: string };
-  $focused: boolean;
-  $invalid: boolean;
-  $margin: string;
-  $placeholder: boolean;
-  $bgColor: string;
-  $borderRadius: number;
-  $fontSize: number | null;
-  $padding: number | string | null;
-  $fontWeight: number | null;
-  $unframed: boolean;
-  $textType?: string;
-  $gap: number;
+	$size: { width: string; height: string };
+	$focused: boolean;
+	$invalid: boolean;
+	$margin: string;
+	$placeholder: boolean;
+	$bgColor: string;
+	$borderRadius: number;
+	$fontSize: number | null;
+	$padding: number | string | null;
+	$fontWeight: number | null;
+	$unframed: boolean;
+	$textType?: string;
+	$gap: number;
 }>`
   ${flexBox.rowStart};
   position: relative;
@@ -34,17 +34,17 @@ export const Wrapper = styled.div<{
   box-shadow: 0 ${({ $unframed }) => ($unframed ? 0 : 0)}px 0
     ${({ $unframed }) => ($unframed ? 0 : 1)}px
     ${({ $focused, $invalid, theme }) =>
-      $focused
-        ? theme.lyraColors['core-outline-primary']
-        : $invalid
-          ? theme.lyraColors['core-outline-primary']
-          : theme.lyraColors['core-outline-primary']};
+			$focused
+				? theme.lyraColors["core-outline-primary"]
+				: $invalid
+					? theme.lyraColors["core-outline-primary"]
+					: theme.lyraColors["core-outline-primary"]};
   transition: all 0.15s ease-in-out 0s;
   div.face {
     ${flexBox.rowStart};
-    ${({ theme }) => theme.lyraType['body-m-regular']};
+    ${({ theme }) => theme.lyraType["body-m-regular"]};
     padding: ${({ $padding, $unframed }) =>
-      $unframed ? 0 : $padding ? setSizeStyle($padding) : '8px 0px 8px 8px'};
+			$unframed ? 0 : $padding ? setSizeStyle($padding) : "8px 0px 8px 8px"};
     flex: 1;
     overflow: hidden;
     display: -webkit-box;
@@ -53,11 +53,11 @@ export const Wrapper = styled.div<{
     text-overflow: ellipsis;
     word-break: break-all;
     color: ${({ $placeholder, $focused, theme }) =>
-      $placeholder
-        ? theme.lyraColors['core-text-disabled']
-        : $focused
-          ? theme.lyraColors['core-text-primary']
-          : theme.lyraColors['core-text-primary']};
+			$placeholder
+				? theme.lyraColors["core-text-disabled"]
+				: $focused
+					? theme.lyraColors["core-text-primary"]
+					: theme.lyraColors["core-text-primary"]};
   }
   div.chevron {
     ${flexBox.rowStart};

@@ -1,4 +1,4 @@
-import { DivInput, DivInputProps } from './DivInput';
+import { DivInput, type DivInputProps } from "./DivInput";
 
 export { DivInput };
 export type { DivInputProps };

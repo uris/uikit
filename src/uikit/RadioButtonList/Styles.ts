@@ -2,10 +2,10 @@ import styled from "styled-components";
 import { flexBox } from "../../util/flexBox";
 
 export const Wrapper = styled.div<{
-  $margin: number;
-  $gap: number;
-  $wrap: boolean;
-  $noFrame: boolean;
+	$margin: number;
+	$gap: number;
+	$wrap: boolean;
+	$noFrame: boolean;
 }>`
   ${({ $noFrame }) => ($noFrame ? flexBox.columnStart : flexBox.rowStart)};
   align-items: flex-start;

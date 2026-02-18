@@ -1,127 +1,127 @@
-import { LegacyTextStyles, LyraTypeStyles } from './types';
+import type { LegacyTextStyles, LyraTypeStyles } from "./types";
 
 // ** new styles aligned to lyra */
 export const lyraType: LyraTypeStyles = {
-  'body-xs-regular': `
+	"body-xs-regular": `
       font-family: 'Booton';
       font-weight: 420;
       font-size: 12px; 
       line-height: 133.33%;
       text-decoration: none;
       letter-spacing: 0.0px`,
-  'body-xs-medium': `
+	"body-xs-medium": `
       font-family: 'Booton';
       font-weight: 500;
       font-size: 12px; 
       line-height: 133.33%;
       text-decoration: none;
       letter-spacing: 0.0px`,
-  'body-xs-bold': `
+	"body-xs-bold": `
       font-family: 'Booton';
       font-weight: 620;
       font-size: 12px; 
       line-height: 133.33%;
       text-decoration: none;
       letter-spacing: 0.0px`,
-  'body-s-regular': `
+	"body-s-regular": `
       font-family: 'Booton';
       font-weight: 420;
       font-size: 14px; 
       line-height: 142.86%;
       text-decoration: none;
       letter-spacing: 0.0px`,
-  'body-s-medium': `
+	"body-s-medium": `
       font-family: 'Booton';
       font-weight: 560;
       font-size: 14px; 
       line-height: 142.86%;
       text-decoration: none;
       letter-spacing: 0.0px`,
-  'body-s-bold': `
+	"body-s-bold": `
       font-family: 'Booton';
       font-weight: 650;
       font-size: 14px; 
       line-height: 142.86%;
       text-decoration: none;
       letter-spacing: 0.0px`,
-  'body-m-regular': `
+	"body-m-regular": `
       font-family: 'Booton';
       font-weight: 400;
       font-size: 15px; 
       line-height: 140%;
       text-decoration: none;
       letter-spacing: 0.0px`,
-  'body-m-medium': `
+	"body-m-medium": `
       font-family: 'Booton';
       font-weight: 500;
       font-size: 15px; 
       line-height: 140%;
       text-decoration: none;
       letter-spacing: 0.0px`,
-  'body-m-bold': `
+	"body-m-bold": `
       font-family: 'Booton';
       font-weight: 580;
       font-size: 15px; 
       line-height: 140%;
       text-decoration: none;
       letter-spacing: 0.0px`,
-  'body-l-regular': `
+	"body-l-regular": `
       font-family: 'Booton';
       font-weight: 400;
       font-size: 16px; 
       line-height: 162.5%;
       text-decoration: none;
       letter-spacing: -0.2px`,
-  'body-l-medium': `
+	"body-l-medium": `
       font-family: 'Booton';
       font-weight: 500;
       font-size: 16px; 
       line-height: 162.5%;
       text-decoration: none;
       letter-spacing: -0.2px`,
-  'body-l-bold': `
+	"body-l-bold": `
       font-family: 'Booton';
       font-weight: 580;
       font-size: 16px; 
       line-height: 162.5%;
       text-decoration: none;
       letter-spacing: -0.2px`,
-  'heading-s-bold': `
+	"heading-s-bold": `
       font-family: 'Booton';
       font-weight: 650;
       font-size: 20px; 
       line-height: 140%;
       text-decoration: none;
       letter-spacing: 0.2px`,
-  'heading-s-medium': `
+	"heading-s-medium": `
       font-family: 'Booton';
       font-weight: 560;
       font-size: 20px; 
       line-height: 140%;
       text-decoration: none;
       letter-spacing: 0.2px`,
-  'heading-m-bold': `
+	"heading-m-bold": `
       font-family: 'Booton';
       font-weight: 650;
       font-size: 24px; 
       line-height: 116.67%;
       text-decoration: none;
       letter-spacing: 0.2px`,
-  'heading-m-medium': `
+	"heading-m-medium": `
       font-family: 'Booton';
       font-weight: 560;
       font-size: 24px; 
       line-height: 116.67%;
       text-decoration: none;
       letter-spacing: 0.2px`,
-  'heading-l-medium': `
+	"heading-l-medium": `
       font-family: 'Booton';
       font-weight: 560;
       font-size: 28px; 
       line-height: 128.57%;
       text-decoration: none;
       letter-spacing: 0.2px`,
-  'heading-l-bold': `
+	"heading-l-bold": `
       font-family: 'Booton';
       font-weight: 650;
       font-size: 28px; 
@@ -131,15 +131,15 @@ export const lyraType: LyraTypeStyles = {
 };
 
 export const type: LegacyTextStyles = {
-  inputLogin: lyraType['body-l-regular'],
-  textTitleLarge: lyraType['heading-l-bold'],
-  textTitleMedium: lyraType['heading-m-bold'],
-  textTitleSmall: lyraType['heading-s-bold'],
-  textXLarge: lyraType['body-l-regular'],
-  textLarge: lyraType['body-l-regular'],
-  textRegular: lyraType['body-m-regular'],
-  textMedium: lyraType['body-s-regular'],
-  textSmall: lyraType['body-xs-regular'],
-  textXSmall: lyraType['body-xs-regular'],
-  captionRegular: lyraType['body-xs-bold'],
+	inputLogin: lyraType["body-l-regular"],
+	textTitleLarge: lyraType["heading-l-bold"],
+	textTitleMedium: lyraType["heading-m-bold"],
+	textTitleSmall: lyraType["heading-s-bold"],
+	textXLarge: lyraType["body-l-regular"],
+	textLarge: lyraType["body-l-regular"],
+	textRegular: lyraType["body-m-regular"],
+	textMedium: lyraType["body-s-regular"],
+	textSmall: lyraType["body-xs-regular"],
+	textXSmall: lyraType["body-xs-regular"],
+	captionRegular: lyraType["body-xs-bold"],
 };
