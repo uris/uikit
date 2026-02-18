@@ -1,12 +1,12 @@
-import { motion } from "framer-motion";
+import { motion } from "motion/react";
 import styled from "styled-components";
 import { flexBox } from "../../util/flexBox";
 import { setSizeStyle } from "../../util/utils";
 
 export const Wrapper = styled(motion.div)<{
-  $height: number;
-  $width: number;
-  $padding: number;
+	$height: number;
+	$width: number;
+	$padding: number;
 }>`
   ${flexBox.row};
   width: ${({ $width }) => $width}px;

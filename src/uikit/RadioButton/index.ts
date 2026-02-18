@@ -1,7 +1,7 @@
 import {
-  RadioButton,
-  RadioButtonOption,
-  RadioButtonProps,
+	RadioButton,
+	type RadioButtonOption,
+	type RadioButtonProps,
 } from "./RadioButton";
 
 export { RadioButton };

@@ -1,57 +1,57 @@
 export const flexBox = {
-  row: `display: flex;
+	row: `display: flex;
   justify-content: center;
   align-items: center;
   box-sizing: border-box;
   padding:0;
   margin:0`,
-  rowBetween: `display: flex;
+	rowBetween: `display: flex;
   justify-content: space-between;
   align-items: center;
   box-sizing: border-box;
   padding:0;
   margin:0`,
-  rowStart: `display: flex;
+	rowStart: `display: flex;
   justify-content: flex-start;
   align-items: center;
   box-sizing: border-box;
   padding:0;
   margin:0`,
-  rowEnd: `display: flex;
+	rowEnd: `display: flex;
   justify-content: flex-end;
   align-items: center;
   box-sizing: border-box;
   padding:0;
   margin:0`,
-  column: `display: flex;
+	column: `display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   box-sizing: border-box;
   padding:0;
   margin:0`,
-  columnStart: `display: flex;
+	columnStart: `display: flex;
   flex-direction: column;
   justify-content: flex-start;
   align-items: flex-start;
   box-sizing: border-box;
   padding:0;
   margin:0`,
-  columnStartCenter: `display: flex;
+	columnStartCenter: `display: flex;
   flex-direction: column;
   justify-content: flex-start;
   align-items: center;
   box-sizing: border-box;
   padding:0;
   margin:0`,
-  columnBetween: `display: flex;
+	columnBetween: `display: flex;
   flex-direction: column;
   justify-content: space-between;
   align-items: center;
   box-sizing: border-box;
   padding:0;
   margin:0`,
-  columnEnd: `display: flex;
+	columnEnd: `display: flex;
   flex-direction: column;
   justify-content: flex-end;
   align-items: flex-end;

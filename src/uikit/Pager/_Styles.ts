@@ -2,11 +2,11 @@ import styled from "styled-components";
 import { flexBox } from "../../util/flexBox";
 
 type Styles = {
-  gap: number;
-  size: number;
-  color: string;
-  colorHover: string;
-  colorOn: string;
+	gap: number;
+	size: number;
+	color: string;
+	colorHover: string;
+	colorOn: string;
 };
 
 export const Wrapper = styled.div<{ $styles: Styles }>`

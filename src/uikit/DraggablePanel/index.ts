@@ -1,4 +1,4 @@
-import { DraggablePanel, DraggablePanelProps } from "./DrggablePanel";
+import { DraggablePanel, type DraggablePanelProps } from "./DrggablePanel";
 
 export { DraggablePanel };
 export type { DraggablePanelProps };

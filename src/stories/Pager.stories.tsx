@@ -1,33 +1,32 @@
-import type { Meta, StoryObj } from '@storybook/react';
-import { fn } from '@storybook/test';
-import { lightTheme } from '../theme/useGiaThemes';
-import { Pager } from '../uikit/Pager/Pager';
-import { FlexDiv } from '../uikit/FlexDiv/FlexDiv';
+import type { Meta, StoryObj } from "@storybook/react-vite";
+import { fn } from "storybook/test";
+import { lightTheme } from "../theme/useGiaThemes";
+import { FlexDiv } from "../uikit/FlexDiv/FlexDiv";
+import { Pager } from "../uikit/Pager/Pager";
 
-const theme = lightTheme;
 const meta: Meta<typeof Pager> = {
-  title: 'UI Kit/Pager',
-  component: Pager,
-  args: {
-    size: 8,
-    index: 0,
-    color: theme.lyraColors['core-badge-secondary'],
-    colorHover: theme.lyraColors['core-badge-secondary'],
-    colorOn: theme.lyraColors['core-text-secondary'],
-    pages: 2,
-    gap: 4,
-    onChange: fn(),
-  },
+	title: "UI Kit/Pager",
+	component: Pager,
+	args: {
+		size: 8,
+		index: 0,
+		color: lightTheme.lyraColors["core-badge-secondary"],
+		colorHover: lightTheme.lyraColors["core-badge-secondary"],
+		colorOn: lightTheme.lyraColors["core-text-secondary"],
+		pages: 2,
+		gap: 4,
+		onChange: fn(),
+	},
 };
 
 export default meta;
 
 export const Default: StoryObj<typeof Pager> = {
-  render: (args) => {
-    return (
-      <FlexDiv justify={'center'} alignItems={'center'} padding={64}>
-        <Pager {...args} />
-      </FlexDiv>
-    );
-  },
+	render: (args) => {
+		return (
+			<FlexDiv justify={"center"} alignItems={"center"} padding={64}>
+				<Pager {...args} />
+			</FlexDiv>
+		);
+	},
 };

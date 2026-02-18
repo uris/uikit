@@ -1,9 +1,9 @@
 export type AvatarInfo = {
-  first?: string;
-  last?: string;
-  image?: any;
-  avatar?: string;
-  email?: string;
-  color?: string;
-  bgColor?: string;
+	first?: string;
+	last?: string;
+	image?: any;
+	avatar?: string;
+	email?: string;
+	color?: string;
+	bgColor?: string;
 };

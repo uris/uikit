@@ -1,13 +1,13 @@
-import { motion } from 'framer-motion';
-import styled from 'styled-components';
-import { flexBox } from '../../util/flexBox';
+import { motion } from "motion/react";
+import styled from "styled-components";
+import { flexBox } from "../../util/flexBox";
 
 export const GroupHeader = styled.div<{
-  $frameSize: number;
-  $iconSize: number;
-  $border: number;
-  $variant: 'group' | 'facet';
-  $unframed: boolean;
+	$frameSize: number;
+	$iconSize: number;
+	$border: number;
+	$variant: "group" | "facet";
+	$unframed: boolean;
 }>`
   ${flexBox.row};
   width: 100%;
@@ -18,14 +18,14 @@ export const GroupHeader = styled.div<{
     width: 100%;
     gap: 6px;
     height: ${({ $frameSize, $unframed }) =>
-      $unframed ? 'auto' : $frameSize}px;
+			$unframed ? "auto" : $frameSize}px;
     border-top: ${({ $border }) => $border}px solid
-      ${({ theme }) => theme.lyraColors['core-outline-primary']};
+      ${({ theme }) => theme.lyraColors["core-outline-primary"]};
   }
   div.title {
     ${flexBox.rowStart};
-    ${({ theme }) => theme.lyraType['body-l-regular']};
-    color: ${({ theme }) => theme.lyraColors['core-text-secondary']};
+    ${({ theme }) => theme.lyraType["body-l-regular"]};
+    color: ${({ theme }) => theme.lyraColors["core-text-secondary"]};
     flex: 1;
   }
   div.icon {

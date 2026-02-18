@@ -1,6 +1,6 @@
-import { motion } from 'framer-motion';
-import styled from 'styled-components';
-import { flexBox } from '../../util/flexBox';
+import { motion } from "motion/react";
+import styled from "styled-components";
+import { flexBox } from "../../util/flexBox";
 
 export const Button = styled(motion.div)<{ $underline: boolean }>`
   ${flexBox.row};
@@ -16,7 +16,7 @@ export const Button = styled(motion.div)<{ $underline: boolean }>`
     -webkit-box-orient: vertical;
     &:hover {
       text-decoration: ${({ $underline }) =>
-        $underline ? 'underline' : 'none'};
+				$underline ? "underline" : "none"};
     }
   }
   div.count {

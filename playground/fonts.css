@@ -2,21 +2,19 @@
 /*** Booton ***/
 /****************/
 @font-face {
-  font-family: 'Booton';
-  src:
-    url('./booton/BootonVF.woff2') format('woff2'),
-    url('./booton/BootonVF.woff') format('woff');
-  font-weight: 100 900; /* Full variable range */
-  font-style: normal;
-  font-variation-settings: 'ital' 0;
+	font-family: "Booton";
+	src: url("./booton/BootonVF.woff2") format("woff2"),
+		url("./booton/BootonVF.woff") format("woff");
+	font-weight: 100 900; /* Full variable range */
+	font-style: normal;
+	font-variation-settings: "ital" 0;
 }
 
 @font-face {
-  font-family: 'Booton';
-  src:
-    url('./booton/BootonItalicsVF.woff2') format('woff2'),
-    url('./booton/BootonItalicsVF.woff') format('woff');
-  font-weight: 100 900; /* Full variable range */
-  font-style: italic;
-  font-variation-settings: 'ital' 0;
+	font-family: "Booton";
+	src: url("./booton/BootonItalicsVF.woff2") format("woff2"),
+		url("./booton/BootonItalicsVF.woff") format("woff");
+	font-weight: 100 900; /* Full variable range */
+	font-style: italic;
+	font-variation-settings: "ital" 0;
 }

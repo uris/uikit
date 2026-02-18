@@ -1,25 +1,25 @@
-import styled from 'styled-components';
-import { flexBox } from '../../util/flexBox';
+import styled from "styled-components";
+import { flexBox } from "../../util/flexBox";
 
 export const Wrapper = styled.div<{
-  $offset: number;
-  $selected: boolean;
-  $noImage: boolean;
-  $wrap: boolean;
-  $sizeToFit: boolean;
-  $hideRadio: boolean;
-  $flex: any;
-  $noFrame: boolean;
+	$offset: number;
+	$selected: boolean;
+	$noImage: boolean;
+	$wrap: boolean;
+	$sizeToFit: boolean;
+	$hideRadio: boolean;
+	$flex: any;
+	$noFrame: boolean;
 }>`
   ${flexBox.rowStart};
-  max-width: ${({ $wrap }) => ($wrap ? '50%' : '100%')};
-  flex: ${({ $wrap }) => ($wrap ? '40%' : 1)};
+  max-width: ${({ $wrap }) => ($wrap ? "50%" : "100%")};
+  flex: ${({ $wrap }) => ($wrap ? "40%" : 1)};
   gap: 8px;
-  padding: ${({ $noFrame }) => ($noFrame ? '0' : '8px 16px 8px 10px')};
+  padding: ${({ $noFrame }) => ($noFrame ? "0" : "8px 16px 8px 10px")};
   border-radius: 8px;
-  border: 1px solid ${({ theme }) => theme.lyraColors['core-outline-primary']};
+  border: 1px solid ${({ theme }) => theme.lyraColors["core-outline-primary"]};
   background: ${({ $selected, theme }) =>
-    $selected ? theme.lyraColors['core-surface-secondary'] : 'transparent'};
+		$selected ? theme.lyraColors["core-surface-secondary"] : "transparent"};
   cursor: pointer;
   transition: all 0.25s ease-in-out 0s;
   div.radio-icon {
@@ -33,15 +33,15 @@ export const Wrapper = styled.div<{
   }
   div.radio-title {
     ${flexBox.rowStart};
-    ${({ theme }) => theme.lyraType['body-m-regular']};
-    color: ${({ theme }) => theme.lyraColors['core-text-primary']};
+    ${({ theme }) => theme.lyraType["body-m-regular"]};
+    color: ${({ theme }) => theme.lyraColors["core-text-primary"]};
     white-space: nowrap;
     flex: 1;
   }
   div.radio-summary {
     ${flexBox.rowStart};
-    ${({ theme }) => theme.lyraType['body-s-regular']};
-    color: ${({ theme }) => theme.lyraColors['core-text-tertiary']};
+    ${({ theme }) => theme.lyraType["body-s-regular"]};
+    color: ${({ theme }) => theme.lyraColors["core-text-tertiary"]};
     flex: 1;
   }
   div.radio-content {

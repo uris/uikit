@@ -1,5 +1,5 @@
-import styled from 'styled-components';
-import { flexBox } from '../../util/flexBox';
+import styled from "styled-components";
+import { flexBox } from "../../util/flexBox";
 
 export const Wrapper = styled.div`
   ${flexBox.rowBetween};
@@ -22,7 +22,7 @@ export const ButtonGroup = styled.div`
     width: 1px;
     min-width: 1px;
     max-width: 1px;
-    background: ${({ theme }) => theme.lyraColors['core-surface-secondary']};
+    background: ${({ theme }) => theme.lyraColors["core-surface-secondary"]};
     margin: 0 8px;
   }
 `;

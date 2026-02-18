@@ -1,22 +1,22 @@
-import { motion } from 'framer-motion';
-import styled from 'styled-components';
-import { flexBox } from '../../util/flexBox';
+import { motion } from "motion/react";
+import styled from "styled-components";
+import { flexBox } from "../../util/flexBox";
 
 function setFontSize(value: number) {
-  let size = Math.round(value / 3);
-  size = Math.min(size, 24);
-  size = Math.max(size, 14);
-  return size;
+	let size = Math.round(value / 3);
+	size = Math.min(size, 24);
+	size = Math.max(size, 14);
+	return size;
 }
 
 export const Avatar = styled(motion.div)<{
-  $size: number;
-  $frame: number;
-  $image: any;
-  $border: number;
-  $borderColor: string;
-  $bgColor?: string;
-  $color?: string;
+	$size: number;
+	$frame: number;
+	$image: any;
+	$border: number;
+	$borderColor: string;
+	$bgColor?: string;
+	$color?: string;
 }>`
   ${flexBox.row};
   position: relative;
@@ -26,26 +26,26 @@ export const Avatar = styled(motion.div)<{
   width: ${({ $frame }) => $frame}px;
   div.user {
     ${flexBox.row};
-    ${({ theme }) => theme.lyraType['body-m-regular']};
+    ${({ theme }) => theme.lyraType["body-m-regular"]};
     font-size: ${({ $frame }) => setFontSize($frame)}px;
     line-height: 1em;
     text-transform: uppercase;
     border-radius: 100%;
     border: ${({ $border }) => $border}px solid
-      ${({ $borderColor }) => ($borderColor ? $borderColor : 'transparent')};
+      ${({ $borderColor }) => ($borderColor ? $borderColor : "transparent")};
     min-height: ${({ $size }) => $size}px;
     min-width: ${({ $size }) => $size}px;
     height: ${({ $size }) => $size}px;
     width: ${({ $size }) => $size}px;
     background: ${({ theme, $bgColor }) =>
-      $bgColor ? $bgColor : theme.lyraColors['core-outline-primary']};
+			$bgColor ? $bgColor : theme.lyraColors["core-outline-primary"]};
     color: ${({ $color }) => $color};
     background-image: url('${({ $image }) => $image}');
     background-size: cover;
     cursor: pointer;
     &:hover {
       border: ${({ $border }) => $border}px solid
-        ${({ theme }) => theme.lyraColors['core-badge-primary']};
+        ${({ theme }) => theme.lyraColors["core-badge-primary"]};
     }
   }
 `;
