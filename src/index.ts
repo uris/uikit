@@ -9,12 +9,10 @@ export {
 	darkTheme,
 } from "./theme/index";
 export type {
-	GiaTheme,
-	LyraColors,
-	LyraTypeStyles,
-	LyraCorners,
-	LegacyColors,
-	LegacyTextStyles,
+	MayaTheme,
+	Colors,
+	Type,
+	Corners,
 } from "./theme/index";
 
 export { Avatar } from "./uikit/Avatar/index";
