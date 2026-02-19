@@ -1,22 +1,44 @@
-import React, { useMemo } from "react";
-import * as Styled from "./_Styles";
+import React, { useMemo } from 'react';
+import css from './Badge.module.css';
 
 export interface BadgeProps {
 	count?: number | string;
 	hideNull?: boolean;
-	variant?: "light" | "dark";
+	variant?: 'light' | 'dark';
 }
 
 export const Badge = React.memo((props: BadgeProps) => {
-	const { count = 0, variant = "dark", hideNull = true } = props;
+	const { count, variant = 'dark', hideNull = true } = props;
 
-	// Memoize display count
+	// memo display count
 	const displayCount = useMemo(() => {
-		if (typeof count === "number" && count > 99) return "99+";
-		return count.toString();
+		if (count === undefined) return '0';
+		if (typeof count === 'string') return count;
+		return count > 99 ? '99+' : count.toString();
 	}, [count]);
 
-	if (!count || (hideNull && count === 0)) return null;
+	// memo css vars
+	const cssVars = useMemo(() => {
+		return {
+			'--badge-color':
+				variant === 'light'
+					? `var(--core-text-primary)`
+					: `var(--core-text-light)`,
+			'--badge-bg':
+				variant === 'light'
+					? `var(--core-badge-secondary)`
+					: `var(--core-badge-primary)`,
+		} as React.CSSProperties;
+	}, [variant]);
 
-	return <Styled.Badge $variant={variant}>{displayCount}</Styled.Badge>;
+	console.log({ count });
+
+	if (count === undefined || count === '' || (hideNull && count === 0))
+		return null;
+
+	return (
+		<div className={css.badge} style={cssVars}>
+			{displayCount}
+		</div>
+	);
 });

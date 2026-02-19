@@ -10,7 +10,7 @@
 		"format": "biome format --write .",
 		"test": "echo \"Error: no test specified\" && exit 1",
 		"prebuild": "rm -rf dist",
-		"build": "rollup -c --bundleConfigAsCjs",
+		"build": "rollup -c --bundleConfigAsCjs && ./scripts/copy-css.sh",
 		"dev": "vite",
 		"storybook": "storybook dev -p 6006",
 		"build-storybook": "storybook build"

@@ -1,4 +1,4 @@
-import type React from "react";
+import type React from 'react';
 
 export type ToolTip = {
 	type?: ToolTipType;
@@ -8,10 +8,10 @@ export type ToolTip = {
 };
 
 export enum ToolTipType {
-	menu = "menu",
-	button = "button",
-	general = "general",
-	other = "other",
+	menu = 'menu',
+	button = 'button',
+	general = 'general',
+	other = 'other',
 }
 
 export type ToolTipInfo = {

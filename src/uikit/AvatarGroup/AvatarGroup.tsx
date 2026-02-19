@@ -1,8 +1,8 @@
-import React, { useMemo } from "react";
-import { Avatar } from "../Avatar/Avatar";
-import type { ToolTip } from "../sharedTypes";
-import * as Styled from "./_Styles";
-import type { AvatarInfo } from "./_Types";
+import React, { useMemo } from 'react';
+import { Avatar } from '../Avatar';
+import type { ToolTip } from '../sharedTypes';
+import css from './AvatarGroup.module.css';
+import type { AvatarInfo } from './_Types';
 
 export interface AvatarGroupProps {
 	avatars?: AvatarInfo[] | null;
@@ -29,11 +29,20 @@ export const AvatarGroup = React.memo((props: AvatarGroupProps) => {
 		onToolTip = () => null,
 	} = props;
 
-	// Memoize rendered avatars list
+	// memo css vars
+	const cssVars = useMemo(() => {
+		return {
+			'--ag-gap': `${gap ?? 0}px`,
+			'--ag-margin': `${margin ?? 0}px`,
+			'--ag-overlap': `${overlap > 0 ? -overlap : 0}px`,
+		} as React.CSSProperties;
+	}, [overlap, gap, margin]);
+
+	// memo rendered avatars list
 	const renderedAvatars = useMemo(() => {
 		if (!avatars) return null;
 		return avatars.map((avatar: AvatarInfo, index: number) => (
-			<div className="avatar" key={`avatar_${avatar.email}_${index}`}>
+			<div className={css.avatar} key={`avatar_${avatar.email}_${index}`}>
 				<Avatar
 					first={avatar.first}
 					last={avatar.last}
@@ -52,8 +61,8 @@ export const AvatarGroup = React.memo((props: AvatarGroupProps) => {
 	}, [avatars, size, border, borderColor, firstOnly, onToolTip]);
 
 	return (
-		<Styled.Wrapper $overlap={overlap} $gap={gap} $margin={margin}>
+		<div className={css.wrapper} style={cssVars}>
 			{renderedAvatars}
-		</Styled.Wrapper>
+		</div>
 	);
 });

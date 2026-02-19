@@ -1,5 +1,5 @@
-export type { ToolTip, ToolTipInfo } from "./uikit/sharedTypes";
-export { ToolTipType } from "./uikit/sharedTypes";
+export type { ToolTip, ToolTipInfo } from './uikit/sharedTypes';
+export { ToolTipType } from './uikit/sharedTypes';
 
 export {
 	useMayaTheme,
@@ -7,114 +7,115 @@ export {
 	dark,
 	lightTheme,
 	darkTheme,
-} from "./theme/index";
+} from './theme/index';
 export type {
 	MayaTheme,
 	Colors,
 	Type,
 	Corners,
-} from "./theme/index";
+} from './theme/index';
+export { useTheme } from './hooks/index';
 
-export { Avatar } from "./uikit/Avatar/index";
-export type { AvatarProps } from "./uikit/Avatar/index";
+export { Avatar } from './uikit/Avatar/index';
+export type { AvatarProps } from './uikit/Avatar/index';
 
-export { AvatarGroup } from "./uikit/AvatarGroup";
-export type { AvatarGroupProps, AvatarInfo } from "./uikit/AvatarGroup";
+export { AvatarGroup } from './uikit/AvatarGroup';
+export type { AvatarGroupProps, AvatarInfo } from './uikit/AvatarGroup';
 
-export { Badge } from "./uikit/Badge";
-export type { BadgeProps } from "./uikit/Badge";
+export { Badge } from './uikit/Badge';
+export type { BadgeProps } from './uikit/Badge';
 
-export { EditorButtonBar } from "./uikit/EditorButtonBar";
-export type { EditorButtonBarProps } from "./uikit/EditorButtonBar";
+export { EditorButtonBar } from './uikit/EditorButtonBar';
+export type { EditorButtonBarProps } from './uikit/EditorButtonBar';
 
-export { IconButton } from "./uikit/IconButton";
-export type { IconButtonProps } from "./uikit/IconButton";
+export { IconButton } from './uikit/IconButton';
+export type { IconButtonProps } from './uikit/IconButton';
 
-export { CheckBox } from "./uikit/CheckBox";
-export type { CheckBoxProps } from "./uikit/CheckBox";
+export { CheckBox } from './uikit/CheckBox';
+export type { CheckBoxProps } from './uikit/CheckBox';
 
-export { DivInput } from "./uikit/DivInput";
-export type { DivInputProps } from "./uikit/DivInput";
+export { DivInput } from './uikit/DivInput';
+export type { DivInputProps } from './uikit/DivInput';
 
-export { DocIcons } from "./uikit/DocIcon";
-export type { DocsProps } from "./uikit/DocIcon";
+export { DocIcons } from './uikit/DocIcon';
+export type { DocsProps } from './uikit/DocIcon';
 
-export { Dot } from "./uikit/Dot";
-export type { DotProps } from "./uikit/Dot";
+export { Dot } from './uikit/Dot';
+export type { DotProps } from './uikit/Dot';
 
-export { DraggablePanel } from "./uikit/DraggablePanel";
-export type { DraggablePanelProps } from "./uikit/DraggablePanel";
+export { DraggablePanel } from './uikit/DraggablePanel';
+export type { DraggablePanelProps } from './uikit/DraggablePanel';
 
-export { DropDown } from "./uikit/DropDown";
-export type { DropDownOption, DropDownProps } from "./uikit/DropDown";
+export { DropDown } from './uikit/DropDown';
+export type { DropDownOption, DropDownProps } from './uikit/DropDown';
 
-export { ErrorSummary } from "./uikit/ErrorSummary";
-export type { ErrorMessage, ErorSummaryProps } from "./uikit/ErrorSummary";
+export { ErrorSummary } from './uikit/ErrorSummary';
+export type { ErrorMessage, ErorSummaryProps } from './uikit/ErrorSummary';
 
-export { Grouper } from "./uikit/Grouper";
-export type { GrouperProps } from "./uikit/Grouper";
+export { Grouper } from './uikit/Grouper';
+export type { GrouperProps } from './uikit/Grouper';
 
-export { Logos } from "./uikit/Logos";
-export type { LogoProps } from "./uikit/Logos";
+export { Logos } from './uikit/Logos';
+export type { LogoProps } from './uikit/Logos';
 
-export { Overlay } from "./uikit/Overlay";
-export type { OverlayProps } from "./uikit/Overlay";
+export { Overlay } from './uikit/Overlay';
+export type { OverlayProps } from './uikit/Overlay';
 
-export { FlexDiv } from "./uikit/FlexDiv";
-export type { FlexDivProps } from "./uikit/FlexDiv";
+export { FlexDiv } from './uikit/FlexDiv';
+export type { FlexDivProps } from './uikit/FlexDiv';
 
-export { MessageInput } from "./uikit/MessageInput";
+export { MessageInput } from './uikit/MessageInput';
 export type {
 	MessageInputProps,
 	SendMessage,
 	PromptType,
 	Role,
 	UploadDocument,
-} from "./uikit/MessageInput";
+} from './uikit/MessageInput';
 
-export { Pager } from "./uikit/Pager";
-export type { PagerProps } from "./uikit/Pager";
+export { Pager } from './uikit/Pager';
+export type { PagerProps } from './uikit/Pager';
 
-export { DoneCheck, ProgressIndicator } from "./uikit/Progress";
-export type { DoneCheckProps, ProgressIndicatorProps } from "./uikit/Progress";
+export { DoneCheck, ProgressIndicator } from './uikit/Progress';
+export type { DoneCheckProps, ProgressIndicatorProps } from './uikit/Progress';
 
-export { ProgressBar } from "./uikit/ProgressBar";
-export type { ProgressBarProps, ProgressBarStep } from "./uikit/ProgressBar";
+export { ProgressBar } from './uikit/ProgressBar';
+export type { ProgressBarProps, ProgressBarStep } from './uikit/ProgressBar';
 
-export { RadioButton } from "./uikit/RadioButton";
-export type { RadioButtonProps, RadioButtonOption } from "./uikit/RadioButton";
+export { RadioButton } from './uikit/RadioButton';
+export type { RadioButtonProps, RadioButtonOption } from './uikit/RadioButton';
 
-export { RadioButtonList } from "./uikit/RadioButtonList";
-export type { RadioButtonListProps } from "./uikit/RadioButtonList";
+export { RadioButtonList } from './uikit/RadioButtonList';
+export type { RadioButtonListProps } from './uikit/RadioButtonList';
 
-export { Slider } from "./uikit/Slider";
-export type { SliderProps } from "./uikit/Slider";
+export { Slider } from './uikit/Slider';
+export type { SliderProps } from './uikit/Slider';
 
-export { Spacer } from "./uikit/Spacer";
+export { Spacer } from './uikit/Spacer';
 
-export { Switch } from "./uikit/Switch";
-export type { SwitchProps } from "./uikit/Switch";
+export { Switch } from './uikit/Switch';
+export type { SwitchProps } from './uikit/Switch';
 
-export { TabBar } from "./uikit/TabBar";
-export type { TabOption, TabBarProps } from "./uikit/TabBar";
+export { TabBar } from './uikit/TabBar';
+export type { TabOption, TabBarProps } from './uikit/TabBar';
 
-export { TextArea } from "./uikit/TextArea";
-export type { TextAreaProps, Tip } from "./uikit/TextArea";
+export { TextArea } from './uikit/TextArea';
+export type { TextAreaProps, Tip } from './uikit/TextArea';
 
-export { TextField } from "./uikit/Textfield";
-export type { TextFieldProps } from "./uikit/Textfield";
+export { TextField } from './uikit/Textfield';
+export type { TextFieldProps } from './uikit/Textfield';
 
-export { UIButton } from "./uikit/UIButton";
-export type { UIButtonProps, UIButtonHandle } from "./uikit/UIButton";
+export { UIButton } from './uikit/UIButton';
+export type { UIButtonProps, UIButtonHandle } from './uikit/UIButton';
 
-export { UIChip } from "./uikit/UIChip";
-export type { UIChipProps } from "./uikit/UIChip";
+export { UIChip } from './uikit/UIChip';
+export type { UIChipProps } from './uikit/UIChip';
 
-export { Icon, IconNames } from "./uikit/Icon";
-export type { IconProps } from "./uikit/Icon";
+export { Icon, IconNames } from './uikit/Icon';
+export type { IconProps } from './uikit/Icon';
 
-export { UIFileIcon, UIFileIcons } from "./uikit/UIFileIcon";
-export type { UIFileIconProps } from "./uikit/UIFileIcon";
+export { UIFileIcon, UIFileIcons } from './uikit/UIFileIcon';
+export type { UIFileIconProps } from './uikit/UIFileIcon';
 
-export { UILabel } from "./uikit/UILabel";
-export type { UILabelProps } from "./uikit/UILabel";
+export { UILabel } from './uikit/UILabel';
+export type { UILabelProps } from './uikit/UILabel';

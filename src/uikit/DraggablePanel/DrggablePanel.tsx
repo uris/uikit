@@ -5,10 +5,10 @@ import React, {
 	useMemo,
 	useRef,
 	useState,
-} from "react";
-import { useTheme } from "styled-components";
-import * as Styled from "./Styles";
-import type { Constraint } from "./_Types";
+} from 'react';
+import { useTheme } from 'styled-components';
+import css from './DraggablePanel.module.css';
+import type { Constraint } from './_Types';
 
 type Info = {
 	div: RefObject<HTMLDivElement | null>;
@@ -28,7 +28,6 @@ export interface DraggablePanelProps {
 	onResize?: (info: Info) => void;
 	onResizeEnd?: (info: Info) => void;
 	onResizeStart?: (info: Info) => void;
-	didClose?: () => void;
 	sizeConstraints?: Constraint;
 	dragsRight?: boolean;
 	isClosed?: boolean;
@@ -50,12 +49,12 @@ export const DraggablePanel = React.memo((props: DraggablePanelProps) => {
 		isClosed = true,
 		resizeHandle = {
 			width: 10,
-			color: "transparent",
+			color: 'transparent',
 			offsetX: true,
 		},
-		borderRight = null,
+		borderRight = `1px solid ${'var(--core-outline-primary)'}`,
 		borderLeft = null,
-		bgColor = "transparent",
+		bgColor = 'transparent',
 		drags = true,
 		isTouchDevice = false,
 		disableOnContext = true,
@@ -97,40 +96,61 @@ export const DraggablePanel = React.memo((props: DraggablePanelProps) => {
 		[isTouchDevice],
 	);
 
+	// get current mouse X position using touch or mouse event
+	const getClientX = useCallback((e: MouseEvent | TouchEvent) => {
+		if (e.type.startsWith('touch')) {
+			const touchEvent = e as TouchEvent;
+			return touchEvent.touches[0]?.clientX || 0;
+		}
+		const mouseEvent = e as MouseEvent;
+		return mouseEvent.clientX;
+	}, []);
+
+	// calculate the drag amount based on starting point and new client x point
+	const getNewWidth = useCallback(
+		(clientX: number) => {
+			return dragsRight
+				? startWidth.current + clientX - startX.current
+				: startWidth.current - clientX + startX.current;
+		},
+		[dragsRight],
+	);
+
+	// check constraints in order to prevent over dragging
+	const canDrag = useCallback(
+		(newWidth: number, clientX: number) => {
+			if (
+				constraints?.min &&
+				typeof constraints.min === 'number' &&
+				typeof constraints.max === 'number'
+			) {
+				if (newWidth <= constraints.min) return false;
+				if (newWidth < constraints.min) return false;
+			}
+			if (
+				constraints?.max &&
+				typeof constraints.min === 'number' &&
+				typeof constraints.max === 'number'
+			) {
+				if (newWidth >= constraints.max) {
+					if (clientX - startX.current > 0) return false;
+				}
+			}
+			return true;
+		},
+		[constraints],
+	);
+
+	// process drag
 	const doDrag = useCallback(
 		(e: MouseEvent | TouchEvent) => {
 			if (div?.current) {
 				e.stopPropagation();
 				e.preventDefault();
-				let clientX: number;
 				const el = div.current;
-				if (e.type.startsWith("touch")) {
-					const touchEvent = e as TouchEvent;
-					clientX = touchEvent.touches[0]?.clientX || 0;
-				} else {
-					const mouseEvent = e as MouseEvent;
-					clientX = mouseEvent.clientX;
-				}
-				const newWidth = dragsRight
-					? startWidth.current + clientX - startX.current
-					: startWidth.current - clientX + startX.current;
-				if (
-					constraints?.min &&
-					typeof constraints.min === "number" &&
-					typeof constraints.max === "number"
-				) {
-					if (newWidth <= constraints.min) return;
-					if (newWidth < constraints.min) return;
-				}
-				if (
-					constraints?.max &&
-					typeof constraints.min === "number" &&
-					typeof constraints.max === "number"
-				) {
-					if (newWidth >= constraints.max) {
-						if (clientX - startX.current > 0) return;
-					}
-				}
+				const clientX = getClientX(e);
+				const newWidth = getNewWidth(clientX);
+				if (!canDrag(newWidth, clientX)) return;
 				el.style.width = `${newWidth}px`;
 				divWidth.current = newWidth;
 				deltaWidth.current = clientX - startX.current;
@@ -143,17 +163,18 @@ export const DraggablePanel = React.memo((props: DraggablePanelProps) => {
 			}
 			return false;
 		},
-		[constraints, dragsRight, onResize],
+		[onResize, canDrag, getNewWidth, getClientX],
 	);
 
+	// handle stopping drag
 	const stopDrag = useCallback(() => {
 		setIsDragging(false);
-		document.documentElement.removeEventListener("mousemove", doDrag, false);
-		document.documentElement.removeEventListener("mouseup", stopDrag, false);
-		document.documentElement.removeEventListener("touchmove", doDrag, false);
-		document.documentElement.removeEventListener("touchend", stopDrag, false);
-		document.documentElement.style.userSelect = "auto";
-		document.documentElement.style.webkitUserSelect = "auto";
+		document.documentElement.removeEventListener('mousemove', doDrag, false);
+		document.documentElement.removeEventListener('mouseup', stopDrag, false);
+		document.documentElement.removeEventListener('touchmove', doDrag, false);
+		document.documentElement.removeEventListener('touchend', stopDrag, false);
+		document.documentElement.style.userSelect = 'auto';
+		document.documentElement.style.webkitUserSelect = 'auto';
 		if (div?.current) {
 			divWidth.current = div.current.offsetWidth;
 			divHeight.current = div.current.offsetHeight;
@@ -171,6 +192,7 @@ export const DraggablePanel = React.memo((props: DraggablePanelProps) => {
 		if (!isOver.current) setHighlight(false);
 	}, [doDrag, onResizeEnd, onResize, setHighlight]);
 
+	// handle starting drag
 	const initDrag = useCallback(
 		(e: any) => {
 			if (div?.current && document.defaultView) {
@@ -179,7 +201,7 @@ export const DraggablePanel = React.memo((props: DraggablePanelProps) => {
 				divWidth.current = div.current.offsetWidth;
 				divHeight.current = div.current.offsetHeight;
 				deltaWidth.current = 0;
-				if (e.type.startsWith("touch")) {
+				if (e.type.startsWith('touch')) {
 					const touchEvent = e as TouchEvent;
 					startX.current = touchEvent.touches[0]?.clientX || 0;
 				} else {
@@ -190,12 +212,12 @@ export const DraggablePanel = React.memo((props: DraggablePanelProps) => {
 					document.defaultView.getComputedStyle(el).width,
 					10,
 				);
-				document.documentElement.addEventListener("mousemove", doDrag, false);
-				document.documentElement.addEventListener("mouseup", stopDrag, false);
-				document.documentElement.addEventListener("touchmove", doDrag, false);
-				document.documentElement.addEventListener("touchend", stopDrag, false);
-				document.documentElement.style.userSelect = "none";
-				document.documentElement.style.webkitUserSelect = "none";
+				document.documentElement.addEventListener('mousemove', doDrag, false);
+				document.documentElement.addEventListener('mouseup', stopDrag, false);
+				document.documentElement.addEventListener('touchmove', doDrag, false);
+				document.documentElement.addEventListener('touchend', stopDrag, false);
+				document.documentElement.style.userSelect = 'none';
+				document.documentElement.style.webkitUserSelect = 'none';
 				const update = {
 					div,
 					divWidth: divWidth.current,
@@ -212,13 +234,13 @@ export const DraggablePanel = React.memo((props: DraggablePanelProps) => {
 	useEffect(() => {
 		const hl = handle?.current;
 		if (hl && drags) {
-			hl.addEventListener("mousedown", initDrag, false);
-			hl.addEventListener("touchstart", initDrag, { passive: true });
+			hl.addEventListener('mousedown', initDrag, false);
+			hl.addEventListener('touchstart', initDrag, { passive: true });
 		}
 		return () => {
 			if (hl) {
-				hl.removeEventListener("mousedown", initDrag, false);
-				hl.removeEventListener("touchstart", initDrag);
+				hl.removeEventListener('mousedown', initDrag, false);
+				hl.removeEventListener('touchstart', initDrag);
 			}
 		};
 	}, [drags, initDrag]);
@@ -231,46 +253,53 @@ export const DraggablePanel = React.memo((props: DraggablePanelProps) => {
 	}, [dragsRight, isTouchDevice, gripper.width]);
 
 	const width = useMemo(() => {
-		if (!drags) return "100%";
+		if (!drags) return '100%';
 		if (panelClosed) return 0;
 		if (lastWidth) return lastWidth;
 		return constraints.initial;
 	}, [drags, panelClosed, lastWidth, constraints.initial]);
 
+	const cssVars = useMemo(() => {
+		return {
+			'--panel-bg': bgColor ?? 'transparent',
+		} as React.CSSProperties;
+	}, [bgColor]);
+
 	return (
-		<Styled.Panel
+		<div
+			className={css.panel}
 			ref={div}
-			$bgColor={bgColor}
 			onContextMenu={(e) => {
 				if (disableOnContext) e.preventDefault();
 				return true;
 			}}
 			style={{
-				overflow: "hidden",
+				...cssVars,
+				overflow: 'hidden',
 				width: width,
-				height: "100%",
-				maxWidth: drags ? constraints.max : "unset",
-				transition: isDragging ? "" : "width 0.2s ease",
+				height: '100%',
+				maxWidth: drags ? constraints.max : 'unset',
+				transition: isDragging ? '' : 'width 0.2s ease',
 				borderRight:
-					panelClosed || !borderRight || !drags ? "none" : borderRight,
-				borderLeft: panelClosed || !borderLeft || !drags ? "none" : borderLeft,
+					panelClosed || !borderRight || !drags ? 'none' : borderRight,
+				borderLeft: panelClosed || !borderLeft || !drags ? 'none' : borderLeft,
 			}}
 		>
 			<div
 				ref={handle}
 				style={{
-					position: "absolute",
-					boxSizing: "border-box",
-					display: panelClosed || !drags ? "none" : "flex",
-					alignItems: "center",
-					justifyContent: "center",
+					position: 'absolute',
+					boxSizing: 'border-box',
+					display: panelClosed || !drags ? 'none' : 'flex',
+					alignItems: 'center',
+					justifyContent: 'center',
 					zIndex: 1,
 					top: 0,
 					...leftRightStyle,
 					bottom: 0,
 					width: isTouchDevice ? 44 : gripper.width,
 					backgroundColor: resizeHandle.color,
-					cursor: "col-resize",
+					cursor: 'col-resize',
 				}}
 				onMouseOver={() => {
 					isOver.current = true;
@@ -300,17 +329,17 @@ export const DraggablePanel = React.memo((props: DraggablePanelProps) => {
 				<div
 					style={{
 						backgroundColor: handleHighlight
-							? theme.colors["core-outline-primary"]
-							: "transparent",
+							? theme.colors['core-outline-primary']
+							: 'transparent',
 						flex: 1,
 						maxWidth: 3,
-						height: "100%",
-						pointerEvents: "none",
-						transition: "background-color 0.2s ease",
+						height: '100%',
+						pointerEvents: 'none',
+						transition: 'background-color 0.2s ease',
 					}}
 				/>
 			</div>
 			{children}
-		</Styled.Panel>
+		</div>
 	);
 });

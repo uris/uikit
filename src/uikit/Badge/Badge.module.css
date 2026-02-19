@@ -1,0 +1,12 @@
+.badge {
+	composes: row from "../../util/flexBox.module.css";
+	composes: body-xs-medium from "../../util/type.module.css";
+	line-height: 1em;
+	color: var(--badge-color);
+	background: var(--badge-bg);
+	padding: 2px 8px;
+	min-width: 24px;
+	width: min-content;
+	border-radius: 8px;
+	white-space: nowrap;
+}

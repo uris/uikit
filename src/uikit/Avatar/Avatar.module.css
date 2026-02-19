@@ -1,0 +1,33 @@
+.wrapper {
+	composes: row from "../../util/flexBox.module.css";
+	position: relative;
+	min-height: var(--avatar-size);
+	min-width: var(--avatar-size);
+	height: var(--avatar-size);
+	width: var(--avatar-size);
+}
+
+.user {
+	composes: row from "../../util/flexBox.module.css";
+	composes: body-m-regular from "../../util/type.module.css";
+	min-height: var(--avatar-size);
+	min-width: var(--avatar-size);
+	height: var(--avatar-size);
+	width: var(--avatar-size);
+	font-size: var(--avatar-font-size);
+	line-height: 1em;
+	text-transform: uppercase;
+	border-radius: 100%;
+	border: var(--avatar-border) solid var(--avatar-border-color);
+	background-color: var(--avatar-bg-color);
+	color: var(--core-text-primary);
+	background-image: var(--avatar-bg-image);
+	background-size: cover;
+	cursor: pointer;
+	user-select: none;
+	-webkit-user-select: none;
+	transition: border-color 0.2s ease-in-out 0s;
+	&:hover {
+		border-color: var(--core-badge-primary);
+	}
+}

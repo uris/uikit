@@ -1,6 +1,5 @@
-import React, { useCallback, useEffect, useMemo, useState } from "react";
-import { useTheme } from "styled-components";
-import * as Styled from "./_Styles";
+import React, { useCallback, useEffect, useMemo, useState } from 'react';
+import css from './Pager.module.css';
 
 export interface PagerProps {
 	size?: number;
@@ -14,28 +13,24 @@ export interface PagerProps {
 }
 
 export const Pager = React.memo((props: PagerProps) => {
-	const theme = useTheme();
 	const {
 		size = 8,
 		index = 0,
-		color = theme.colors["core-badge-secondary"],
-		colorHover = theme.colors["core-badge-secondary"],
-		colorOn = theme.colors["core-text-secondary"],
+		color = undefined,
+		colorHover = undefined,
+		colorOn = undefined,
 		pages = 2,
 		gap = 4,
 		onChange = () => null,
 	} = props;
 	const [selected, setSelected] = useState<number>(index);
 	const [bullets, setBullets] = useState<number[]>([]);
-	const styles = useMemo(
-		() => ({ size, color, colorOn, colorHover, gap }),
-		[size, color, colorOn, colorHover, gap],
-	);
 
 	useEffect(() => {
 		const items = Array.from({ length: pages }, (_, i) => i);
 		setBullets(items);
 	}, [pages]);
+
 	useEffect(() => setSelected(index), [index]);
 
 	const handleClick = useCallback(
@@ -46,26 +41,37 @@ export const Pager = React.memo((props: PagerProps) => {
 		[onChange],
 	);
 
+	// memo css vars
+	const cssVars = useMemo(() => {
+		return {
+			'--pager-gap': `${gap}px`,
+			'--pager-size': `${size}px`,
+			'--pager-color': color ?? 'var(--core-text-disabled)',
+			'--pager-colorOn': colorOn ?? 'var(--core-text-primary)',
+			'--pager-colorHover': colorHover ?? 'var(--core-text-disabled)',
+		} as React.CSSProperties;
+	}, [gap, size, color, colorOn, colorHover]);
+
 	return (
-		<Styled.Wrapper $styles={styles}>
+		<div style={cssVars} className={css.wrapper}>
 			{bullets.map((bulletId: number) => {
 				return (
-					<div
+					<input
+						className={`${css.bullet} ${selected === bulletId ? css.selected : ''}`}
+						type={'button'}
 						key={`paging_bullet_${bulletId}`}
-						className={`bullet ${selected === bulletId ? "selected" : ""}`}
 						onClick={() => handleClick(bulletId)}
 						onKeyDown={(e) => {
-							if (e.key === "Enter" || e.key === " ") {
+							if (e.key === 'Enter' || e.key === ' ') {
 								e.preventDefault(); // Prevent page scrolling on space key
 								handleClick(bulletId);
 							}
 						}}
 						onTouchStart={() => handleClick(bulletId)}
-						role={"button"}
 						tabIndex={bulletId}
 					/>
 				);
 			})}
-		</Styled.Wrapper>
+		</div>
 	);
 });

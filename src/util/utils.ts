@@ -1,6 +1,6 @@
 export function setSizeStyle(size: string | number | undefined): string {
-	if (!size) return "auto";
-	if (typeof size === "string") return size;
+	if (!size) return 'auto';
+	if (typeof size === 'string') return size;
 	return `${size}px`;
 }
 
@@ -12,14 +12,19 @@ export function cleanString(
 ) {
 	let clean: string = input;
 	const scriptsRegEx = /\b[^<]*(?:(?!<\/script>)<[^<]*)*<\/script>/gi;
-	clean = clean.replace(scriptsRegEx, "");
+	clean = clean.replace(scriptsRegEx, '');
 	if (removeInvisible) {
 		const invisibleRegEx = /[\r\n\t]/gi;
-		clean = clean.replace(invisibleRegEx, "");
+		clean = clean.replace(invisibleRegEx, '');
 	}
 	if (removeHtml) {
 		const htmlRegEx = /<\/?[a-z][^>]*>/gi;
-		clean = clean.replace(htmlRegEx, "");
+		clean = clean.replace(htmlRegEx, '');
 	}
 	return clean;
+}
+
+export function isDarkMode(): boolean {
+	const theme = document.documentElement.dataset.theme;
+	return theme?.includes('dark') ?? false;
 }

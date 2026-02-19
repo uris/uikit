@@ -1,15 +1,14 @@
-import type { Meta, StoryObj } from "@storybook/react-vite";
-import { fn } from "storybook/test";
-import { light } from "../theme/colors/colors";
-import { DraggablePanel } from "../uikit/DraggablePanel/DrggablePanel";
-import { FlexDiv } from "../uikit/FlexDiv/FlexDiv";
-import { UIButton } from "../uikit/UIButton/UIButton";
+import type { Meta, StoryObj } from '@storybook/react-vite';
+import { fn } from 'storybook/test';
+import { DraggablePanel } from '../uikit/DraggablePanel/DrggablePanel';
+import { FlexDiv } from '../uikit/FlexDiv/FlexDiv';
+import { UIButton } from '../uikit/UIButton/UIButton';
 
 const meta: Meta<typeof DraggablePanel> = {
-	title: "UI Kit/Draggable Panel",
+	title: 'UI Kit/Draggable Panel',
 	component: DraggablePanel,
 	parameters: {
-		layout: "fullscreen",
+		layout: 'fullscreen',
 	},
 	args: {
 		children: undefined,
@@ -18,12 +17,12 @@ const meta: Meta<typeof DraggablePanel> = {
 		isClosed: false,
 		resizeHandle: {
 			width: 10,
-			color: "transparent",
+			color: 'transparent',
 			offsetX: true,
 		},
-		borderRight: `1px solid ${light["core-outline-primary"]}`,
-		borderLeft: null,
-		bgColor: light["core-surface-secondary"],
+		borderRight: undefined,
+		borderLeft: undefined,
+		bgColor: undefined,
 		drags: true,
 		isTouchDevice: false,
 		onResize: fn(),
@@ -38,17 +37,21 @@ export const Default: StoryObj<typeof DraggablePanel> = {
 	render: (args) => {
 		return (
 			<FlexDiv
-				width={"100%"}
-				height={"fill"}
-				background={light["core-surface-primary"]}
+				width={'100%'}
+				height={'fill'}
+				background={'var(--core-surface-primary)'}
 			>
 				<DraggablePanel {...args}>
-					<FlexDiv alignItems={"center"} justify={"center"}>
+					<FlexDiv
+						alignItems={'center'}
+						justify={'center'}
+						background={'var(--core-surface-secondary)'}
+					>
 						<UIButton
-							size={"text"}
-							variant={"text"}
-							label={"drags right"}
-							iconRight={"arrow right"}
+							size={'text'}
+							variant={'text'}
+							label={'drags right'}
+							iconRight={'arrow right'}
 						/>
 					</FlexDiv>
 				</DraggablePanel>

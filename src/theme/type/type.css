@@ -1,0 +1,10 @@
+:root {
+	--font-family: "Funnel Sans";
+	--font-weight-regular: 360;
+	--font-weight-medium: 420;
+	--font-weight-bold: 480;
+	--font-size-xs: 12px;
+	--font-size-s: 14px;
+	--font-size-m: 15px;
+	--font-size-l: 16px;
+}

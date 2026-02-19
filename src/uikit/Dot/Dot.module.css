@@ -1,0 +1,17 @@
+.dot {
+	composes: row from "../../util/flexBox.module.css";
+	display: var(--dot-display);
+	box-sizing: content-box;
+	position: var(--dot-position);
+	top: var(--dot-top);
+	right: var(--dot-right);
+	vertical-align: var(--dot-vertical-align);
+	min-height: var(--dot-size);
+	min-width: var(--dot-size);
+	height: var(--dot-size);
+	width: var(--dot-size);
+	border: var(--dot-border) solid var(--core-surface-primary);
+	background: var(--dot-bg);
+	border-radius: 100%;
+	z-index: 1000;
+}

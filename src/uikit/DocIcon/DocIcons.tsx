@@ -1,26 +1,25 @@
-import React, { useMemo } from "react";
-import { useTheme } from "styled-components";
+import React, { useMemo } from 'react';
+import { useTheme } from 'styled-components';
 
 export interface DocsProps {
-	type?: "pdf" | "docx" | "text" | "not supported";
+	type?: 'pdf' | 'docx' | 'text' | 'not supported';
 	height?: number;
 }
 
 export const DocIcons = React.memo((props: DocsProps) => {
-	const { type = "pdf", height = 36 } = props;
+	const { type = 'pdf', height = 36 } = props;
 	const theme = useTheme();
 
 	const renderIcon = useMemo(() => {
 		const images = [
 			{
-				name: "not supported",
+				name: 'not supported',
 				svg: (
 					<svg
 						viewBox="0 0 24 24"
 						xmlns="http://www.w3.org/2000/svg"
 						height={height}
-						role="img"
-						aria-label={"Not supported"}
+						aria-label={'Not supported'}
 					>
 						<title>Not supported</title>
 						<path
@@ -39,13 +38,12 @@ export const DocIcons = React.memo((props: DocsProps) => {
 				),
 			},
 			{
-				name: "text",
+				name: 'text',
 				svg: (
 					<svg
 						viewBox="0 0 1024 1024"
 						xmlns="http://www.w3.org/2000/svg"
 						height={height}
-						role="img"
 						aria-label="Text document"
 					>
 						<title>Text document</title>
@@ -66,19 +64,18 @@ export const DocIcons = React.memo((props: DocsProps) => {
 				),
 			},
 			{
-				name: "docx",
+				name: 'docx',
 				svg: (
 					<svg
 						viewBox="0 0 1024 1024"
 						xmlns="http://www.w3.org/2000/svg"
 						height={height}
-						role="img"
 						aria-label="Word document"
 					>
 						<title>Word document</title>
 						<path
 							d="m594.944 0 335.124 341.32v563.2c0 65.996-52.5 119.48-117.294 119.48H209.546c-64.793 0-117.299-53.53-117.299-119.48V119.48C92.252 53.484 144.757 0 209.551 0h385.393z"
-							fill={theme.colors["core-button-primary"]}
+							fill={theme.colors['core-button-primary']}
 						/>
 						<path
 							d="M930.068 341.32H718.152c-64.748 0-123.208-59.49-123.208-125.492V0l335.124 341.32z"
@@ -93,13 +90,12 @@ export const DocIcons = React.memo((props: DocsProps) => {
 				),
 			},
 			{
-				name: "pdf",
+				name: 'pdf',
 				svg: (
 					<svg
 						viewBox="0 0 1024 1024"
 						xmlns="http://www.w3.org/2000/svg"
 						height={height}
-						role="img"
 						aria-label="PDF document"
 					>
 						<title>PDF document</title>
@@ -128,9 +124,9 @@ export const DocIcons = React.memo((props: DocsProps) => {
 	return (
 		<div
 			style={{
-				display: "flex",
-				justifyContent: "center",
-				alignItems: "center",
+				display: 'flex',
+				justifyContent: 'center',
+				alignItems: 'center',
 			}}
 		>
 			{renderIcon}

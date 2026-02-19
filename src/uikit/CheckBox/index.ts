@@ -1,4 +1,1 @@
-import { CheckBox, type CheckBoxProps } from "./CheckBox";
-
-export { CheckBox };
-export type { CheckBoxProps };
+export { CheckBox, type CheckBoxProps } from './CheckBox';

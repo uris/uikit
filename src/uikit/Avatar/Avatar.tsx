@@ -1,8 +1,7 @@
-import type { Transition, Variants } from "motion/react";
-import React, { useCallback, useMemo, useRef } from "react";
-import { useTheme } from "styled-components";
-import { type ToolTip, ToolTipType } from "../sharedTypes";
-import * as Styled from "./_Styles";
+import { type Transition, type Variants, motion } from 'motion/react';
+import React, { useCallback, useMemo, useRef } from 'react';
+import { type ToolTip, ToolTipType } from '../sharedTypes';
+import css from './Avatar.module.css';
 
 export interface AvatarProps {
 	size?: number;
@@ -24,31 +23,65 @@ export interface AvatarProps {
 }
 
 export const Avatar = React.memo((props: AvatarProps) => {
-	const theme = useTheme();
 	const {
-		first = "",
-		last = "",
-		image = "",
+		first = '',
+		last = '',
+		image = '',
 		border = 0,
-		color = theme.colors["core-text-primary"],
-		borderColor = theme.colors["core-surface-primary"],
+		color = undefined,
+		borderColor = undefined,
 		bgColor = undefined,
+		variants = undefined,
 		transition = undefined,
 		animate = undefined,
 		initial = undefined,
 		exit = undefined,
 		firstOnly = false,
 		onToolTip = () => null,
+		size = 34,
+		frame = 34,
 	} = props;
-	const { size = 34, frame = 34 } = props;
+	const ref = useRef<HTMLDivElement>(null);
 
-	// Memoize initials computation
+	// memo initials computation
 	const initials = useMemo(
-		() => `${first?.charAt(0)}${firstOnly ? "" : last.charAt(0)}`,
+		() => `${first?.charAt(0)}${firstOnly ? '' : last.charAt(0)}`,
 		[first, last, firstOnly],
 	);
 
-	const ref = useRef<HTMLDivElement>(null);
+	// memo the avatar image if there is one
+	const bgImage = useMemo(() => {
+		if (firstOnly) return '';
+		return image ? `url(${image})` : '';
+	}, [firstOnly, image]);
+
+	// calc and memo font size
+	const fontSize = useMemo(() => {
+		let fSize = Math.round(frame / 3);
+		fSize = Math.min(fSize, 24);
+		fSize = Math.max(fSize, 14);
+		return fSize;
+	}, [frame]);
+
+	// memo display content
+	const displayContent = useMemo(
+		() => (firstOnly || !image ? initials : null),
+		[firstOnly, image, initials],
+	);
+
+	// memo css vars
+	const avatarVars = useMemo(() => {
+		return {
+			'--avatar-size': `${size}px`,
+			'--avatar-frame': `${frame}px`,
+			'--avatar-border': `${border}px`,
+			'--avatar-color': color ?? `var(--core-text-primary)`,
+			'--avatar-bg-color': bgColor ?? `var(--core-surface-secondary)`,
+			'--avatar-border-color': borderColor ?? `var(--core-surface-primary)`,
+			'--avatar-bg-image': `${bgImage}`,
+			'--avatar-font-size': `${fontSize}px`,
+		} as React.CSSProperties;
+	}, [size, frame, border, color, bgColor, borderColor, bgImage]);
 
 	const onMouseEnter = useCallback(
 		(e: React.MouseEvent<HTMLDivElement>) => {
@@ -67,21 +100,11 @@ export const Avatar = React.memo((props: AvatarProps) => {
 		onToolTip(null);
 	}, [onToolTip]);
 
-	// Memoize display content
-	const displayContent = useMemo(
-		() => (firstOnly || !image ? initials : null),
-		[firstOnly, image, initials],
-	);
-
 	return (
-		<Styled.Avatar
-			$size={size}
-			$frame={frame}
-			$image={firstOnly ? "" : image}
-			$border={border}
-			$borderColor={borderColor}
-			$bgColor={bgColor}
-			$color={color}
+		<motion.div
+			className={css.wrapper}
+			style={avatarVars}
+			variants={variants}
 			transition={transition}
 			initial={initial}
 			animate={animate}
@@ -90,7 +113,7 @@ export const Avatar = React.memo((props: AvatarProps) => {
 			onMouseEnter={onMouseEnter}
 			onMouseLeave={onMouseLeave}
 		>
-			<div className="user">{displayContent}</div>
-		</Styled.Avatar>
+			<div className={css.user}>{displayContent}</div>
+		</motion.div>
 	);
 });

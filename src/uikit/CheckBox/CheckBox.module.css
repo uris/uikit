@@ -1,0 +1,24 @@
+.wrapper {
+	composes: row from "../../util/flexBox.module.css";
+	min-height: var(--cb-size);
+	height: var(--cb-size);
+	width: auto;
+	gap: 6px;
+	cursor: pointer;
+	overflow: hidden;
+	user-select: none;
+	-webkit-user-select: none;
+}
+
+.icon {
+	composes: row from "../../util/flexBox.module.css";
+	min-width: var(--cb-size);
+	max-width: var(--cb-size);
+	min-height: var(--cb-size);
+	max-height: var(--cb-size);
+}
+
+.label {
+	composes: body-m-regular from "../../util/type.module.css";
+	color: var(--core-text-primary);
+}

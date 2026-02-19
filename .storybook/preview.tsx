@@ -1,22 +1,24 @@
-import type { Preview } from "@storybook/react-vite";
-import React from "react";
-import { ThemeProvider } from "styled-components";
-import { darkTheme, lightTheme } from "../src/theme/useMayaTheme";
-import "./fonts.css";
+import type { Preview } from '@storybook/react-vite';
+import React, { useEffect } from 'react';
+import { ThemeProvider } from 'styled-components';
+import { darkTheme, lightTheme } from '../src/theme/useMayaTheme';
+import './fonts.css';
+import '../src/theme/colors/colors.css';
+import '../src/theme/type/type.css';
 
 const preview: Preview = {
 	globalTypes: {
 		theme: {
-			name: "Theme",
-			description: "Global theme for components",
-			defaultValue: "light",
+			name: 'Theme',
+			description: 'Global theme for components',
+			defaultValue: 'light',
 			toolbar: {
 				// The icon for the toolbar item
-				icon: "circlehollow",
+				icon: 'circlehollow',
 				// Array of options
 				items: [
-					{ value: "light", icon: "circlehollow", title: "Light theme" },
-					{ value: "dark", icon: "circle", title: "Dark theme" },
+					{ value: 'light', icon: 'circlehollow', title: 'Light theme' },
+					{ value: 'dark', icon: 'circle', title: 'Dark theme' },
 				],
 			},
 		},
@@ -24,7 +26,13 @@ const preview: Preview = {
 	decorators: [
 		(Story, context) => {
 			const selectedTheme = context.globals.theme;
-			const theme = selectedTheme === "light" ? lightTheme : darkTheme;
+			const theme = selectedTheme === 'light' ? lightTheme : darkTheme;
+
+			// Update data-theme attribute for CSS variables
+			useEffect(() => {
+				document.documentElement.dataset.theme = selectedTheme;
+			}, [selectedTheme]);
+
 			return (
 				<ThemeProvider theme={theme}>
 					<Story />
@@ -33,7 +41,7 @@ const preview: Preview = {
 		},
 	],
 	parameters: {
-		layout: "fullscreen",
+		layout: 'fullscreen',
 		controls: {
 			matchers: {
 				color: /(background|color)$/i,

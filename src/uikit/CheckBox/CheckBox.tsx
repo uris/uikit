@@ -1,11 +1,12 @@
-import React, { useCallback, useEffect, useMemo, useState } from "react";
-import { useTheme } from "styled-components";
-import { Icon } from "../Icon/Icon";
-import * as Styled from "./_Styles";
+import { motion } from 'motion/react';
+import React, { useCallback, useEffect, useMemo, useState } from 'react';
+import { useTheme } from '../../hooks/useTheme';
+import { Icon } from '../Icon';
+import css from './CheckBox.module.css';
 
 export interface CheckBoxProps {
 	size?: number;
-	checked?: "partial" | boolean;
+	checked?: 'partial' | boolean;
 	disabled?: boolean;
 	color?: string;
 	label?: string;
@@ -21,47 +22,43 @@ export const CheckBox = React.memo((props: CheckBoxProps) => {
 		label = undefined,
 		onChange = () => null,
 	} = props;
+	const [state, setState] = useState<'partial' | boolean>(checked);
 	const theme = useTheme();
-	const [state, setState] = useState<"partial" | boolean>(checked);
 
 	useEffect(() => setState(checked), [checked]);
 
-	// Memoize styles object
-	const styles = useMemo(
-		() => ({
-			size,
-			disabled,
-			checked,
-		}),
-		[size, disabled, checked],
-	);
-
-	// Memoize icon name
+	// memo icon name
 	const iconName = useMemo(() => {
-		if (state === true) return "checked";
-		if (state === "partial") return "partial";
-		return "unchecked";
+		if (state === true) return 'checked';
+		if (state === 'partial') return 'partial';
+		return 'unchecked';
 	}, [state]);
 
-	// Memoize icon color
+	// memo icon color
 	const iconColor = useMemo(() => {
 		if (color) return color;
-		if (disabled) return theme.colors["core-icon-disabled"];
-		if (state === "partial") return theme.colors["core-icon-primary"];
-		if (!state) return theme.colors["core-icon-secondary"];
-		return theme.colors["core-gp-logo-primary"];
+		if (disabled) return theme.colors['core-icon-disabled'];
+		if (state === 'partial') return theme.colors['core-icon-primary'];
+		if (!state) return theme.colors['core-icon-secondary'];
+		return theme.colors['core-text-special'];
 	}, [color, disabled, state, theme]);
 
+	// memo style vars
+	const cssVars = useMemo(() => {
+		return {
+			'--cb-size': `${size}px`,
+			'--cb-label-color': `${color}`,
+		} as React.CSSProperties;
+	}, []);
+
+	// handle toggle
 	const handleToggle = useCallback(() => {
 		let newState = false;
 		switch (state) {
 			case true:
-				newState = false;
 				break;
+			case 'partial':
 			case false:
-				newState = true;
-				break;
-			case "partial":
 				newState = true;
 				break;
 		}
@@ -69,10 +66,32 @@ export const CheckBox = React.memo((props: CheckBoxProps) => {
 		onChange(newState);
 	}, [state, onChange]);
 
+	// keyboard handler for accessibility
+	const handleKeyDown = useCallback(
+		(e: React.KeyboardEvent) => {
+			if (e.key === ' ' || e.key === 'Enter') {
+				e.preventDefault();
+				handleToggle();
+			}
+		},
+		[handleToggle],
+	);
+
 	return (
-		<Styled.CheckBox $props={styles} onClick={handleToggle}>
-			<Icon name={iconName} strokeColor={iconColor} />
-			{label && <span className="label">{label}</span>}
-		</Styled.CheckBox>
+		<motion.div
+			className={css.wrapper}
+			style={cssVars}
+			onClick={handleToggle}
+			onKeyDown={handleKeyDown}
+			tabIndex={disabled ? -1 : 0}
+			role="checkbox"
+			aria-checked={state === 'partial' ? 'mixed' : state}
+			aria-disabled={disabled}
+		>
+			<div className={css.icon}>
+				<Icon name={iconName} strokeColor={iconColor} size={size} />
+			</div>
+			{label && <span className={css.label}>{label}</span>}
+		</motion.div>
 	);
 });
