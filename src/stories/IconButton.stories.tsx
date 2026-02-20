@@ -39,7 +39,7 @@ const meta: Meta<typeof IconButton> = {
 		isToggled: false,
 		disabled: false,
 		showDot: false,
-		fill: false,
+		border: false,
 		onClick: fn(),
 		onToolTip: fn(),
 	},

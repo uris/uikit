@@ -1,0 +1,31 @@
+.header {
+	composes: rowBetween from "../../util/flexBox.module.css";
+	width: 100%;
+	cursor: pointer;
+}
+
+.title {
+	composes: rowBetween from "../../util/flexBox.module.css";
+	composes: body-m-regular from "../../util/type.module.css";
+	color: var(--core-text-primary);
+	flex: 1;
+}
+
+.content {
+	composes: rowBetween from "../../util/flexBox.module.css";
+	user-select: none;
+	-webkit-user-select: none;
+	padding: 0 24px !important;
+	width: 100%;
+	gap: 6px;
+	height: var(--grouper-height);
+	border-top: var(--grouper-border) solid var(--core-outline-primary);
+}
+
+.icon {
+	composes: row from "../../util/flexBox.module.css";
+	min-height: var(--grouper-icon-size);
+	height: var(--grouper-icon-size);
+	min-width: var(--grouper-icon-size);
+	width: var(--grouper-icon-size);
+}

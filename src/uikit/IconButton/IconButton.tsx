@@ -1,17 +1,16 @@
-import type { Transition, Variants } from "motion/react";
+import { type Transition, type Variants, motion } from 'motion/react';
 import React, {
 	useCallback,
 	useEffect,
 	useMemo,
 	useRef,
 	useState,
-} from "react";
-import { useTheme } from "styled-components";
-import { Badge } from "../Badge/Badge";
-import { Dot } from "../Dot/Dot";
-import { Icon } from "../Icon/Icon";
-import { type ToolTip, ToolTipType } from "../sharedTypes";
-import * as Styled from "./_Styles";
+} from 'react';
+import { Badge } from '../Badge';
+import { Dot } from '../Dot';
+import { Icon } from '../Icon';
+import { type ToolTip, ToolTipType } from '../sharedTypes';
+import css from './IconButton.module.css';
 
 export interface IconButtonProps {
 	frameSize?: number;
@@ -33,7 +32,7 @@ export interface IconButtonProps {
 	count?: number;
 	transition?: Transition;
 	label?: string;
-	fill?: boolean;
+	border?: boolean;
 	variants?: Variants;
 	initial?: string;
 	animate?: string;
@@ -47,14 +46,14 @@ export const IconButton = React.memo((props: IconButtonProps) => {
 	const {
 		frameSize = 36,
 		iconSize = 20,
-		icon = "more",
+		icon = 'more',
 		borderRadius = 4,
 		tooltip = undefined,
 		color = undefined,
 		colorOn = undefined,
-		bgColor = undefined,
-		bgColorHover = undefined,
-		bgColorOn = undefined,
+		bgColor = "var(--core-surface-secondary)",
+		bgColorHover = "var(--core-outline-primary)",
+		bgColorOn = "var(--core-outline-primary)",
 		transition = undefined,
 		variants = undefined,
 		initial = undefined,
@@ -69,41 +68,12 @@ export const IconButton = React.memo((props: IconButtonProps) => {
 		isToggled = false,
 		disabled = false,
 		showDot = false,
-		fill = false,
+		border = false,
 		onClick = () => null,
 		onToolTip = () => null,
 	} = props;
-	const theme = useTheme();
 	const [on, setOn] = useState<boolean>(isToggled);
 	const ref = useRef<HTMLDivElement>(null);
-
-	// Memoize styles object
-	const styles = useMemo(
-		() => ({
-			bgColor: bgColor || "transparent",
-			bgColorOn: bgColorOn || theme.colors["core-surface-secondary"],
-			bgColorHover: hover
-				? theme.colors["core-surface-secondary"]
-				: bgColorHover || bgColor,
-			toggle,
-			isToggled: toggle ? on : false,
-			frameSize,
-			fill,
-			borderRadius,
-		}),
-		[
-			bgColor,
-			bgColorOn,
-			theme,
-			hover,
-			bgColorHover,
-			toggle,
-			on,
-			frameSize,
-			fill,
-			borderRadius,
-		],
-	);
 
 	useEffect(() => setOn(isToggled), [isToggled]);
 
@@ -119,7 +89,7 @@ export const IconButton = React.memo((props: IconButtonProps) => {
 
 	const handleMouseEnter = useCallback(
 		(e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
-			if (!ref || !ref.current || !tooltip) return;
+			if (!ref?.current || !tooltip) return;
 			const tip: ToolTip = {
 				type: ToolTipType.button,
 				payload: { label: tooltip },
@@ -135,19 +105,53 @@ export const IconButton = React.memo((props: IconButtonProps) => {
 		if (tooltip) onToolTip(null);
 	}, [tooltip, onToolTip]);
 
-	// Memoize icon stroke color
+	// memo icon stroke color
 	const strokeColor = useMemo(
-		() => color || theme.colors["core-icon-primary"],
-		[color, theme],
+		() => color || "var(--core-icon-primary)",
+		[color],
 	);
+	
+	// memo accent color
 	const accentColor = useMemo(
-		() => colorOn || theme.colors["core-icon-primary"],
-		[colorOn, theme],
+		() => colorOn || "var(--core-icon-primary)",
+		[colorOn],
 	);
 
+	// memo bg color
+	const bgColorNormal = useMemo(() => {
+		if (on && toggle) return bgColorOn;
+		return bgColor ?? 'var(--core-surface-secondary)';
+	}, [toggle, bgColorOn, bgColor, on]);
+
+	// memo bg color on hover
+	const bgHoverColor = useMemo(() => {
+		if (hover && on) return bgColorOn;
+		if (hover) return bgColorHover;
+		return bgColor ?? 'transparent';
+	}, [hover, bgColor, bgColorHover, on]);
+
+	// memo text color selected / unselected
+	const textColor = useMemo(()=>{
+		if(toggle && on) return colorOn;
+		return color ?? 'var(--core-text-primary)';
+	},[toggle, on, colorOn, color])
+
+	// memo css vars
+	const cssVars = useMemo(() => {
+		return {
+			'--ib-bg': bgColorNormal,
+			'--ib-bg-hover': bgHoverColor,
+			'--ib-icon-size': `${frameSize ?? 0}px`,
+			'--ib-border-radius': `${borderRadius ?? 0}px`,
+			'--ib-border': border ? '1px' : 0,
+			'--ib-color': textColor,
+		} as React.CSSProperties;
+	}, [bgColorNormal, bgHoverColor, textColor, border, frameSize, borderRadius]);
+
 	return (
-		<Styled.IconButton
-			$props={styles}
+		<motion.div
+			className={css.button}
+			style={cssVars}
 			onClick={handleClick}
 			onMouseLeave={handleMouseLeave}
 			onMouseEnter={handleMouseEnter}
@@ -158,7 +162,7 @@ export const IconButton = React.memo((props: IconButtonProps) => {
 			exit={exit}
 			ref={ref}
 		>
-			<div className="icon" style={{ opacity: disabled ? 0.3 : 1 }}>
+			<div className={css.icon} style={{ opacity: disabled ? 0.3 : 1 }}>
 				<Icon
 					name={icon}
 					strokeColor={strokeColor}
@@ -170,13 +174,13 @@ export const IconButton = React.memo((props: IconButtonProps) => {
 					pointer
 				/>
 			</div>
-			{label && <div className="label">{label}</div>}
+			{label && <div className={css.label}>{label}</div>}
 			<Dot show={showDot} />
 			{count !== 0 && (
-				<div className="count">
-					<Badge variant={"light"} count={count} hideNull />
+				<div className={css.count}>
+					<Badge variant={'light'} count={count} hideNull />
 				</div>
 			)}
-		</Styled.IconButton>
+		</motion.div>
 	);
 });

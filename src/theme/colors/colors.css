@@ -141,6 +141,7 @@
   --core-text-secondary: #405261;
   --core-text-tertiary: #657d91;
   --core-text-special: #2f45ff;
+  --core-link-primary: #0000ff;
   --eor-tag-employee: #03839b;
   --eor-tag-overdue: #df0529;
   --eor-tag-paid: #2d8c00;
@@ -209,6 +210,7 @@
   --core-text-secondary: #d5e0ea;
   --core-text-tertiary: #657d91;
   --core-text-special: #6af5ff;
+  --core-link-primary: #6af5ff;
   --eor-tag-employee: #03839b;
   --eor-tag-overdue: #ff474a;
   --eor-tag-paid: #2d8c00;

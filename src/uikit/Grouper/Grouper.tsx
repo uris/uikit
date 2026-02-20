@@ -1,9 +1,9 @@
-import { useAnimate } from "motion/react";
-import React, { useCallback, useEffect, useState } from "react";
-import { useTheme } from "styled-components";
-import { Badge } from "../Badge/Badge";
-import { Icon } from "../Icon/Icon";
-import * as Styled from "./_Styles";
+import { useAnimate } from 'motion/react';
+import React, { useCallback, useEffect, useMemo, useState } from 'react';
+import { useTheme } from 'styled-components';
+import { Badge } from '../Badge/Badge';
+import { Icon } from '../Icon/Icon';
+import css from './Grouper.module.css';
 
 export interface GrouperProps {
 	title?: string;
@@ -16,7 +16,7 @@ export interface GrouperProps {
 	border?: number;
 	count?: number | string;
 	hideNull?: boolean;
-	variant?: "group" | "facet";
+	variant?: 'group' | 'facet';
 	showFilterBadge?: boolean;
 	unframed?: boolean;
 	onChange?: (state: boolean) => void;
@@ -25,17 +25,17 @@ export interface GrouperProps {
 
 export const Grouper = React.memo((props: GrouperProps) => {
 	const {
-		title = "Group Title",
+		title = 'Group Title',
 		toggle = true,
 		open = true,
 		hasIcon = true,
-		iconName = "chevron down",
+		iconName = 'chevron down',
 		iconSize = 18,
 		frameSize = 64,
 		border = 0,
 		count = 0,
 		unframed = false,
-		variant = "group",
+		variant = 'group',
 		hideNull = true,
 		showFilterBadge = false,
 		onChange = () => null,
@@ -53,7 +53,7 @@ export const Grouper = React.memo((props: GrouperProps) => {
 			animateIcon(
 				icon.current,
 				{ ...animation },
-				{ ease: "easeInOut", duration: 0.25 },
+				{ ease: 'easeInOut', duration: 0.25 },
 			);
 		},
 		[animateIcon, icon],
@@ -67,33 +67,40 @@ export const Grouper = React.memo((props: GrouperProps) => {
 		setState(!state);
 	}, [toggle, onClick, onChange, state, animate]);
 
+	// memo css vars
+	const cssVars = useMemo(() => {
+		return {
+			'--grouper-height': unframed ? 'auto' : `${frameSize}px`,
+			'--grouper-border': border ? `${border}px` : '0',
+			'--grouper-icon-size': `${iconSize}px`,
+		} as React.CSSProperties;
+	}, [frameSize, iconSize, border, unframed]);
+
 	return (
-		<Styled.GroupHeader
-			$frameSize={frameSize}
-			$iconSize={iconSize}
-			$border={border}
-			$variant={variant}
-			$unframed={unframed}
+		<div
+			className={css.header}
+			style={cssVars}
 			onClick={handleToggle}
+			onKeyDown={handleToggle}
 		>
-			<div className="content">
-				<div className="title">
+			<div className={css.content}>
+				<div className={css.title}>
 					{title}
-					<Badge hideNull={hideNull} count={count} variant={"light"} />
+					<Badge hideNull={hideNull} count={count} variant={'light'} />
 					{showFilterBadge && (
 						<Icon
 							name="filter"
 							size={16}
-							strokeColor={theme.colors["core-text-disabled"]}
+							strokeColor={theme.colors['core-text-disabled']}
 						/>
 					)}
 				</div>
 				{hasIcon && (
-					<div ref={icon} className="icon">
+					<div ref={icon} className={css.icon}>
 						<Icon name={iconName} size={iconSize} />
 					</div>
 				)}
 			</div>
-		</Styled.GroupHeader>
+		</div>
 	);
 });

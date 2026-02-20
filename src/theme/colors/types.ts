@@ -138,6 +138,7 @@ export type Colors = {
 	"core-text-secondary": string;
 	"core-text-special": string;
 	"core-text-tertiary": string;
+	"core-link-primary": string;
 	"eor-tag-employee": string;
 	"eor-tag-overdue": string;
 	"eor-tag-paid": string;

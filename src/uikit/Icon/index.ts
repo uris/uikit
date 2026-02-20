@@ -1,4 +1,1 @@
-import { Icon, IconNames, type IconProps } from "./Icon";
-
-export { Icon, IconNames };
-export type { IconProps };
+export {IconNames, type IconProps, Icon} from "./Icon";
