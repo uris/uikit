@@ -1,0 +1,3 @@
+.flexDiv {
+	composes: body-m-regular from "../../util/type.module.css";
+}

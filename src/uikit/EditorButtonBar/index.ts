@@ -1,4 +1,1 @@
-import { EditorButtonBar, type EditorButtonBarProps } from "./EditorButtonBar";
-
-export { EditorButtonBar };
-export type { EditorButtonBarProps };
+export { EditorButtonBar, type EditorButtonBarProps } from './EditorButtonBar';

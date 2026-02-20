@@ -1,9 +1,9 @@
-import { useEffect, useState } from "react";
-import { useTheme } from "styled-components";
-import { ToolTip } from "../sharedTypes";
-import { IconButton } from "../IconButton";
-import * as Styled from "./_Styles";
-import { SuggestMark } from "./_Types";
+import { useEffect, useState } from 'react';
+import { useTheme } from 'styled-components';
+import { IconButton } from '../IconButton';
+import type { ToolTip } from '../sharedTypes';
+import css from './EditorSummary.module.css';
+import type { SuggestMark } from './_Types';
 
 export interface EditorSummaryProps {
 	edits?: SuggestMark[];
@@ -21,7 +21,7 @@ export function EditorSummary(props: EditorSummaryProps) {
 	const {
 		edits = [],
 		current = -1,
-		label = "Suggested Edits",
+		label = 'Suggested Edits',
 		//onAcceptAll = () => null,
 		onRejectAll = () => null,
 		onAccept = () => null,
@@ -76,10 +76,10 @@ export function EditorSummary(props: EditorSummaryProps) {
 	}
 
 	return (
-		<Styled.SummaryBar>
-			<div className="pagging">
+		<div className={css.summaryBar}>
+			<div className={css.paging}>
 				<IconButton
-					icon={"chevron left"}
+					icon={'chevron left'}
 					borderRadius={100}
 					onClick={() => back()}
 					tooltip="Previous"
@@ -87,16 +87,16 @@ export function EditorSummary(props: EditorSummaryProps) {
 					hover
 					toggle={false}
 					frameSize={24}
-					color={theme.colors["core-icon-tertiary"]}
+					color={theme.colors['core-icon-tertiary']}
 					disabled={index <= -1}
 				/>
 				<div className="current">
-					{label} -{" "}
-					<span className={isResolved ? "resolved" : ""}>{index + 1}</span> of{" "}
+					{label} -{' '}
+					<span className={isResolved ? 'resolved' : ''}>{index + 1}</span> of{' '}
 					{pendingEdits.length}
 				</div>
 				<IconButton
-					icon={"chevron right"}
+					icon={'chevron right'}
 					borderRadius={100}
 					onClick={() => forward()}
 					tooltip="Next"
@@ -104,25 +104,25 @@ export function EditorSummary(props: EditorSummaryProps) {
 					hover
 					toggle={false}
 					frameSize={24}
-					color={theme.colors["core-icon-tertiary"]}
+					color={theme.colors['core-icon-tertiary']}
 					disabled={index >= pendingEdits.length - 1}
 				/>
 			</div>
-			<div className="actions">
+			<div className={css.actions}>
 				<IconButton
 					borderRadius={100}
-					icon={"check"}
+					icon={'check'}
 					onClick={() => handleAccept()}
 					tooltip="Accept Suggestion"
 					onToolTip={(tip) => onToolTip(tip)}
 					hover
 					frameSize={24}
-					bgColor={theme.colors["core-surface-secondary"]}
-					color={theme.colors["feedback-positive"]}
+					bgColor={theme.colors['core-surface-secondary']}
+					color={theme.colors['feedback-positive']}
 					disabled={isResolved}
 				/>
 				<IconButton
-					icon={"x"}
+					icon={'x'}
 					borderRadius={100}
 					onClick={() => handleReject()}
 					tooltip="Reject Suggestion"
@@ -130,13 +130,13 @@ export function EditorSummary(props: EditorSummaryProps) {
 					hover
 					iconSize={18}
 					frameSize={24}
-					bgColor={theme.colors["core-surface-secondary"]}
-					color={theme.colors["feedback-warning"]}
+					bgColor={theme.colors['core-surface-secondary']}
+					color={theme.colors['feedback-warning']}
 					disabled={isResolved}
 				/>
-				<div className="divider" />
+				<div className={css.divider} />
 				<IconButton
-					icon={"restore"}
+					icon={'restore'}
 					borderRadius={100}
 					onClick={() => handleRejectAll()}
 					tooltip="Restore"
@@ -144,11 +144,11 @@ export function EditorSummary(props: EditorSummaryProps) {
 					hover
 					iconSize={18}
 					frameSize={26}
-					bgColor={theme.colors["core-surface-secondary"]}
-					color={theme.colors["feedback-warning"]}
+					bgColor={theme.colors['core-surface-secondary']}
+					color={theme.colors['feedback-warning']}
 					disabled={index === -1}
 				/>
 			</div>
-		</Styled.SummaryBar>
+		</div>
 	);
 }

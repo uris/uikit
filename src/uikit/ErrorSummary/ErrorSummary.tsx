@@ -1,6 +1,6 @@
-import { AnimatePresence, type Transition } from "motion/react";
-import React, { useMemo } from "react";
-import * as Styled from "./_Styles";
+import { AnimatePresence, type Transition, motion } from 'motion/react';
+import React, { useMemo } from 'react';
+import css from './ErrorSummary.module.css';
 
 export type ErrorMessage = {
 	id?: string;
@@ -8,13 +8,15 @@ export type ErrorMessage = {
 	bullets?: string[];
 };
 
-export interface ErorSummaryProps {
+export interface ErrorSummaryProps {
 	entries?: ErrorMessage[];
 	errors?: any[];
 }
 
-export const ErrorSummary = React.memo((props: ErorSummaryProps) => {
+export const ErrorSummary = React.memo((props: ErrorSummaryProps) => {
 	const { entries, errors = [] } = props;
+
+	// memo animation variants
 	const variants = useMemo(
 		() => ({
 			enter: { opacity: 0, maxHeight: 0 },
@@ -23,32 +25,40 @@ export const ErrorSummary = React.memo((props: ErorSummaryProps) => {
 		}),
 		[],
 	);
+
+	// memo trans
 	const transition: Transition = useMemo(
-		() => ({ ease: "easeInOut", duration: 0.25 }),
+		() => ({ ease: 'easeInOut', duration: 0.25 }),
 		[],
 	);
 
 	return (
 		<AnimatePresence initial={false}>
 			{entries && errors && errors.length > 0 && (
-				<Styled.ErrorBox
-					initial={"enter"}
-					animate={"animate"}
-					exit={"exit"}
+				<motion.div
+					className={css.errorBox}
+					initial={'enter'}
+					animate={'animate'}
+					exit={'exit'}
 					variants={variants}
 					transition={transition}
 				>
 					{entries.map((error: ErrorMessage, index: number) => {
 						if (errors.includes(index) || errors.includes(error.id)) {
 							return (
-								<div className="error" key={`${error.id}_${index}`}>
-									<p>
-										<strong>{error.title}</strong>
+								<div className={css.error} key={`${error.id}_${index}`}>
+									<p className={css.p}>
+										<strong className={css.strong}>{error.title}</strong>
 									</p>
-									<ul>
+									<ul className={css.ul}>
 										{error.bullets?.map((bullet: string, index: number) => {
 											return (
-												<li key={`${error.title}_bullet_${index}`}>{bullet}</li>
+												<li
+													className={css.li}
+													key={`${error.title}_bullet_${index}`}
+												>
+													{bullet}
+												</li>
 											);
 										})}
 									</ul>
@@ -57,7 +67,7 @@ export const ErrorSummary = React.memo((props: ErorSummaryProps) => {
 						}
 						return null;
 					})}
-				</Styled.ErrorBox>
+				</motion.div>
 			)}
 		</AnimatePresence>
 	);

@@ -1,8 +1,5 @@
-import {
-	type ErorSummaryProps,
-	type ErrorMessage,
+export {
 	ErrorSummary,
-} from "./ErrorSummary";
-
-export { ErrorSummary };
-export type { ErrorMessage, ErorSummaryProps };
+	type ErrorSummaryProps,
+	type ErrorMessage,
+} from './ErrorSummary';
