@@ -1,4 +1,1 @@
-import { TextArea, type TextAreaProps, type Tip } from "./TextArea";
-
-export { TextArea };
-export type { TextAreaProps, Tip };
+export {TextArea, type TextAreaProps, type Tip} from "./TextArea";

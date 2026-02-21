@@ -15,7 +15,7 @@ import {useTheme} from "../../hooks";
 
 export const placeholderOptions: TabOption[] = [
 	{ name: "Option 1", value: "Option 1", icon: null },
-	{ name: "Option 2", value: "Option 2", icon: "check" },
+	{ name: "Option 2", value: "Option 2", icon: "wallet" },
 ];
 
 export interface TabBarProps {
@@ -60,7 +60,7 @@ export const TabBar = React.memo((props: TabBarProps) => {
 		padding = 8,
 		textStyle = "textRegular",
 		iconSize = 20,
-		iconGap = 4,
+		iconGap = 8,
 		tabGap = 0,
 		disabled = false,
 		hasClose = false,
@@ -210,7 +210,7 @@ const Option = React.memo(
 			onClick = () => null,
 			onToolTip = () => null,
 			padding = 8,
-			iconSize = 24,
+			iconSize = 20,
 			iconGap = 6,
 			disabled = false,
 			showToolTip = null,
@@ -303,7 +303,7 @@ const Option = React.memo(
 				onKeyDown={() => onClick(value)}
 			>
 				{icon && (
-					<div className="icon">
+					<div className={css.icon}>
 						<Icon name={icon} size={iconSize} strokeColor={strokeColor} />
 					</div>
 				)}
@@ -322,6 +322,7 @@ const Option = React.memo(
 			prevProps.tabWidth === nextProps.tabWidth &&
 			prevProps.disabled === nextProps.disabled &&
 			prevProps.iconGap === nextProps.iconGap &&
+			prevProps.iconSize === nextProps.iconSize &&
 			prevProps.count === nextProps.count &&
 			prevProps.label === nextProps.label &&
 			prevProps.icon === nextProps.icon

@@ -1,9 +1,6 @@
-import React, { useCallback, useEffect, useRef, useState } from "react";
-import { useTheme } from "styled-components";
-import { ProgressIndicator } from "../Progress";
+import React, {useCallback, useEffect, useMemo, useRef, useState} from "react";
 import { UIButton } from "../UIButton";
-import { UIChip } from "../UIChip";
-import * as Styled from "./Styles";
+import css from "./TextArea.module.css";
 
 export interface TextAreaProps {
 	value?: string;
@@ -14,32 +11,25 @@ export interface TextAreaProps {
 	rows?: number;
 	focused?: boolean;
 	placeholder?: string;
-	spacer?: "xl" | "lg" | "md" | "sm" | "custom" | "none";
-	custom?: number;
-	padding?: string;
+	padding?: number | string;
 	validate?: boolean;
-	dark?: boolean;
+	border?:boolean;
 	resizable?: boolean;
 	hasSend?: boolean;
 	sendOffset?: { bottom: number; right: number };
 	sendSize?: number;
-	sendColors?: { normal?: string; active?: string; disabled?: string };
 	bgColor?: string;
-	border?: boolean;
+	borderRadius?: number;
 	returnSubmits?: boolean;
-	showTips?: boolean;
-	tips?: Tip[];
 	textSize?: "s" | "m" | "l";
-	showProgress?: boolean;
 	disabled?: boolean;
 	submitClears?: boolean;
 	onChange?: (value: string) => void;
-	onSubmit?: (vakue: string) => void;
+	onSubmit?: (value: string) => void;
 	onFocus?: () => void;
 	onBlur?: () => void;
 	onValidate?: (state: boolean) => void;
 	onKeyDown?: (e: React.KeyboardEvent<HTMLTextAreaElement>) => void;
-	onAction?: (action: Tip) => void;
 }
 
 export type Tip = {
@@ -56,24 +46,20 @@ export const TextArea = React.memo((props: TextAreaProps) => {
 		width = "100%",
 		height = "auto",
 		focused = false,
-		spacer = "none",
-		custom = 0,
-		placeholder = "",
+		placeholder = "Enter text here...",
 		rows = 6,
-		dark = true,
+		border = false,
+		borderRadius = 4,
 		padding = "16px 4px 16px 16px",
-		validate = true,
+		validate = false,
 		resizable = true,
 		hasSend = false,
 		sendOffset = { bottom: 6, right: 6 },
 		sendSize = 36,
 		returnSubmits = false,
 		bgColor = undefined,
-		border = undefined,
 		minWidth = undefined,
-		tips = [],
 		textSize = "m",
-		showProgress = false,
 		disabled = false,
 		submitClears = true,
 		onChange = () => null,
@@ -82,9 +68,7 @@ export const TextArea = React.memo((props: TextAreaProps) => {
 		onValidate = () => null,
 		onSubmit = () => null,
 		onKeyDown = () => null,
-		onAction = () => null,
 	} = props;
-	const theme = useTheme();
 
 	const [isFocused, setIsFocused] = useState<boolean>(focused);
 	const [invalid, setInvalid] = useState<boolean>(false);
@@ -92,6 +76,14 @@ export const TextArea = React.memo((props: TextAreaProps) => {
 	const [initiated, setInitiated] = useState<boolean>(false);
 	const ref = useRef<HTMLTextAreaElement>(null);
 
+	// update text area height
+	const handleResize = useCallback(() => {
+		if (!ref?.current) return;
+		ref.current.style.height = "auto";
+		ref.current.style.height = `${ref.current.scrollHeight}px`;
+	}, []);
+
+	// validate content
 	const runValidation = useCallback(
 		(content: string): boolean => {
 			let valid = true;
@@ -112,26 +104,20 @@ export const TextArea = React.memo((props: TextAreaProps) => {
 		}
 	}, [focused]);
 
-	// update value on text entry or prop change
+	// update value on prop change
 	useEffect(() => {
-		if (text !== value) {
+		if (value) {
 			setText(value);
 			setInvalid(runValidation(value));
 		}
-	}, [value, text, runValidation]);
+	}, [value, runValidation]);
 
-	const margin = useCallback(() => {
-		if (spacer === "none") return 0;
-		if (spacer === "custom") return custom;
-		return 0;
-	}, [spacer, custom]);
+	// update height based on rows value
+	useEffect(() => {
+		handleResize()
+	}, [rows]);
 
-	const handleResize = useCallback(() => {
-		if (!ref || !ref.current) return;
-		ref.current.style.height = "auto";
-		ref.current.style.height = `${ref.current.scrollHeight}px`;
-	}, []);
-
+	// update value
 	const handleChange = useCallback(
 		(content: string) => {
 			onChange(content);
@@ -141,6 +127,7 @@ export const TextArea = React.memo((props: TextAreaProps) => {
 		[onChange, runValidation],
 	);
 
+	// set focus
 	const handleFocus = useCallback(() => {
 		if (ref?.current) ref.current.focus();
 		setInitiated(true);
@@ -148,6 +135,7 @@ export const TextArea = React.memo((props: TextAreaProps) => {
 		onFocus();
 	}, [onFocus]);
 
+	// set blur
 	const handleBlur = useCallback(
 		(content: any) => {
 			handleChange(content);
@@ -157,6 +145,7 @@ export const TextArea = React.memo((props: TextAreaProps) => {
 		[handleChange, onBlur],
 	);
 
+	// trigger submit as needed
 	const handleSubmit = useCallback(
 		(e: React.MouseEvent<HTMLDivElement, MouseEvent> | undefined) => {
 			e?.preventDefault();
@@ -169,6 +158,7 @@ export const TextArea = React.memo((props: TextAreaProps) => {
 		[handleFocus, onSubmit, text, submitClears, handleResize],
 	);
 
+	// handle return key
 	const handleKeyDownWrapper = useCallback(
 		(e: React.KeyboardEvent<HTMLTextAreaElement>) => {
 			if (returnSubmits && e.key === "Enter") {
@@ -180,46 +170,53 @@ export const TextArea = React.memo((props: TextAreaProps) => {
 		},
 		[returnSubmits, handleSubmit, onKeyDown],
 	);
-
-	const handleAction = useCallback(
-		(
-			e:
-				| React.MouseEvent<HTMLDivElement>
-				| React.KeyboardEvent<HTMLSpanElement>
-				| undefined,
-			action: Tip,
-		) => {
-			console.log("action");
-			e?.preventDefault();
-			e?.stopPropagation();
-			onAction(action);
-			ref.current?.focus();
-			setIsFocused(true);
-		},
-		[onAction],
-	);
+	
+	// set style value
+	const setStyleValue = useCallback((value:string|number)=>{
+		if(typeof value === "string") return value;
+		return `${value}px`;
+	},[])
+	
+	// memo border color
+	const setBorderColor = useMemo(()=>{
+		if(isFocused) return "var(--core-link-primary)"
+		if(validate && invalid) return "var(--feedback-warning)"
+		return border ? "var(--core-outline-primary)" : "transparent"
+	},[isFocused, invalid, validate, border])
+	
+	// memo text size
+	const textClassName = useMemo(()=>{
+		if(textSize==="l") return css.l
+		if(textSize==="m") return css.m
+		return css.s
+	},[textSize, css])
+	
+	// memo css vars
+	const cssVars = useMemo(()=>{
+		return {
+			"--ta-border-radius": `${borderRadius}px`,
+			"--ta-width": `${setStyleValue(width)}`,
+			"--ta-min-width": minWidth?`${minWidth}px`:"unset",
+			"--ta-bg-color": bgColor ?? "var(--core-surface-secondary)",
+			"--ta-border-color": setBorderColor,
+			"--ta-padding": `${setStyleValue(padding)}`,
+			"--ta-send-icon-offset-bottom": `${sendOffset.bottom}px`,
+			"--ta-send-icon-offset-right": `${sendOffset.right}px`,
+			"--ta-send-icon-size": `${sendSize}px`,
+			"--ta-resize": resizable ? "vertical" : "none",
+		} as React.CSSProperties
+	},[width, minWidth, height, bgColor, setBorderColor, padding, sendOffset, sendSize, setStyleValue, borderRadius, resizable])
 
 	return (
-		<Styled.Wrapper
-			$width={width}
-			$minWidth={minWidth}
-			$height={height}
-			$invalid={invalid}
-			$padding={padding}
-			$focused={isFocused}
-			$margin={margin()}
-			$resize={resizable}
-			$dark={dark}
-			$bgColor={bgColor}
-			$border={border}
-			$textSize={textSize}
+		<div
+			className={css.wrapper}
+			style={cssVars}
 			onBlur={() => handleBlur(text)}
 			onFocus={() => handleFocus()}
 		>
 			{hasSend && (
-				<Styled.Send
-					$offset={sendOffset}
-					$size={sendSize}
+				<div
+					className={css.send}
 					onMouseDown={(e) => handleSubmit(e)}
 				>
 					<UIButton
@@ -228,9 +225,10 @@ export const TextArea = React.memo((props: TextAreaProps) => {
 						variant={"solid"}
 						round
 					/>
-				</Styled.Send>
+				</div>
 			)}
 			<textarea
+				className={`${css.textarea} ${textClassName}`}
 				ref={ref}
 				name={name}
 				value={text}
@@ -241,30 +239,6 @@ export const TextArea = React.memo((props: TextAreaProps) => {
 				onInput={() => handleResize()}
 				onKeyDown={(e) => handleKeyDownWrapper(e)}
 			/>
-			{tips.length > 0 && (
-				<div className="actions">
-					{!showProgress &&
-						tips.map((action: Tip, index: number) => {
-							return (
-								<div
-									className="option"
-									key={`${action.key}-${action.label}-${index}`}
-								>
-									<UIChip
-										variant={"small"}
-										onMouseDown={(e) => handleAction(e, action)}
-										icon={action.icon}
-										iconRight={action.iconRight}
-										label={action.key}
-										background={theme.colors["core-surface-primary"]}
-									/>
-									{action.label}
-								</div>
-							);
-						})}
-					{showProgress && <ProgressIndicator show inline />}
-				</div>
-			)}
-		</Styled.Wrapper>
+		</div>
 	);
 });

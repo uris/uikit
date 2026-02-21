@@ -1,0 +1,96 @@
+.wrapper {
+    composes: columnStart from "../../util/flexBox.module.css";
+    position: relative;
+    padding: var(--ta-padding) !important;
+    width: var(--ta-width);
+    height: auto;
+    border-radius: var(--ta-border-radius);
+    background-color: var(--ta-bg-color);
+    box-shadow: 0 0 0 1px var(--ta-border-color);
+    transition: all 0.25s ease-in-out 0s;
+}
+
+.textarea {
+    border: 0;
+    outline: 0;
+    padding: 0 16px 0 0;
+    width: 100%;
+    height: 100%;
+    color: var(--core-text-primary);
+    background-color: transparent;
+    box-sizing: border-box;
+    resize: var(--ta-resize);
+
+    &:disabled {
+        color: var(--core-text-disabled);
+    }
+
+    &::placeholder {
+        color: var(--core-text-disabled);
+    }
+
+    overflow-y: auto;
+
+    &::-webkit-scrollbar {
+        background-color: transparent;
+        width: 14px;
+    }
+
+    &::-webkit-scrollbar-track {
+        background-color: transparent;
+    }
+
+    &::-webkit-scrollbar-thumb {
+        background-color: var(--scroll-bar);
+        border-radius: 20px;
+        border: 4px solid var(--core-surface-primary);
+    }
+
+    &::-webkit-scrollbar-thumb:hover {
+        background-color: var(--scroll-bar);
+        border-radius: 20px;
+        border: 4px solid var(--core-surface-primary);
+        cursor: default;
+    }
+}
+
+.actions {
+    composes: rowStart from "../../util/flexBox.module.css";
+    composes: body-xs-regular from "../../util/type.module.css";
+    width: 100%;
+    min-height: 30px;
+    color: var(--core-text-disabled);
+    gap: 16px;
+}
+
+.option {
+    composes: rowStart from "../../util/flexBox.module.css";
+    gap: 4px;
+    white-space: nowrap;
+    user-select: none;
+    -webkit-user-select: none;
+    cursor: default;
+}
+
+.send {
+    position: absolute;
+    composes: row from "../../util/flexBox.module.css";
+    min-height: var(--ta-send-icon-size);
+    min-width: var(--ta-send-icon-size);
+    width: var(--ta-send-icon-size);
+    height: var(--ta-send-icon-size);
+    bottom: var(--ta-send-icon-offset-bottom);
+    right: var(--ta-send-icon-offset-right);
+}
+
+.s {
+    composes: body-s-regular from "../../util/type.module.css";
+}
+
+.m {
+    composes: body-m-regular from "../../util/type.module.css";
+}
+
+.l {
+    composes: body-l-regular from "../../util/type.module.css";
+}
