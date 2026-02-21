@@ -1,0 +1,15 @@
+.wrapper {
+    align-items: flex-start;
+    width: 100%;
+    flex-wrap: var(--rb-list-flex-wrap);
+    margin-bottom: var(--rb-list-margin-bottom);
+    gap: var(--rb-gap);
+}
+
+.column {
+    composes: columnStart from "../../util/flexBox.module.css";
+}
+
+.row {
+    composes: rowStart from "../../util/flexBox.module.css";
+}

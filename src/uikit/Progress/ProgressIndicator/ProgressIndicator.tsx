@@ -1,7 +1,7 @@
 import { AnimatePresence, motion } from "motion/react";
-import { useEffect, useRef, useState } from "react";
+import React, {useEffect, useMemo, useRef, useState} from "react";
 import { useTheme } from "styled-components";
-import * as Styled from "./_Styles";
+import css from "./ProgressIndicator.module.css";
 
 export interface ProgressIndicatorProps {
 	size?: number;
@@ -9,7 +9,6 @@ export interface ProgressIndicatorProps {
 	show?: boolean;
 	color?: string;
 	stroke?: number;
-	displayInline?: boolean;
 	duration?: number;
 	inline?: boolean;
 	didStart?: () => void;
@@ -50,18 +49,27 @@ export function ProgressIndicator(props: ProgressIndicatorProps) {
 			if (timer?.current) clearTimeout(timer.current);
 		};
 	}, [show, didStart, didStop, duration]);
+	
+	const cssVars = useMemo(() => {
+		return {
+			"--pi-position": inline ? "relative" : "absolute",
+			"--pi-inset": inline ? "unset" : "0",
+			"--pi-icon-size": `${size ?? 0}px`,
+		} as React.CSSProperties;
+	},[inline])
 
 	return (
 		<AnimatePresence initial={true}>
 			{show && (
-				<Styled.Container
-					$inline={inline}
+				<motion.div
+					className={css.container}
+					style={cssVars}
 					initial={{ opacity: 0 }}
 					animate={{ opacity: 1 }}
 					exit={{ opacity: 0 }}
 				>
 					{OpenCircle(size, secondsPerSpin, color, stroke, playing)}
-				</Styled.Container>
+				</motion.div>
 			)}
 		</AnimatePresence>
 	);

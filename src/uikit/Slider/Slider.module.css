@@ -1,0 +1,42 @@
+.wrapper {
+	position: relative;
+	composes: rowStart from "../../util/flexBox.module.css";
+	width: var(--slider-width);
+	height: var(--slider-height);
+	min-height: var(--slider-touch-height);
+	cursor: var(--slider-cursor);
+}
+
+.track {
+	composes: rowStart from "../../util/flexBox.module.css";
+	position: relative;
+	width: 0;
+	height: 100%;
+	background-color: var(--slider-progress-color);
+	overflow: visible;
+	pointer-events: none;
+	border-radius: 100px;
+}
+
+.trackHead {
+	position: absolute;
+	display: var(--slider-head-display);
+	background-color: var(--slider-head-color);
+	pointer-events: none;
+	border-radius: var(--slider-head-radius);
+	max-width: var(--slider-head-width);
+	max-height: var(--slider-head-size);
+	min-width: var(--slider-head-width);
+	min-height: var(--slider-head-size);
+	top: 50%;
+	transform: translateY(-50%) translateX(-50%);
+}
+
+.trackBg {
+	composes: rowStart from "../../util/flexBox.module.css";
+	width: 100%;
+	height: var(--slider-height);
+	background-color: var(--slider-track-color);
+	pointer-events: none;
+	border-radius: 100px;
+}

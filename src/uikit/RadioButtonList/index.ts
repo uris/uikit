@@ -1,4 +1,1 @@
-import { RadioButtonList, type RadioButtonListProps } from "./RadioButtonList";
-
-export { RadioButtonList };
-export type { RadioButtonListProps };
+export {RadioButtonList, type RadioButtonListProps} from "./RadioButtonList";

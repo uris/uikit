@@ -1,5 +1,5 @@
-import React, { useCallback, useEffect, useMemo, useRef } from "react";
-import * as Styled from "./Styles";
+import React, { useCallback, useEffect, useMemo, useRef } from 'react';
+import css from './Slider.module.css';
 
 export interface SliderProps {
 	initial?: number;
@@ -10,12 +10,12 @@ export interface SliderProps {
 	touchHeight?: number | string;
 	trackHeadSize?: number | null;
 	trackHeadWidth?: number | null;
-	headType?: "round" | "square";
+	headType?: 'round' | 'square' | 'none';
 	headColor?: string;
 	trackColor?: string;
 	progressColor?: string;
 	rounding?: number;
-	cursor?: "default" | "grab" | "grabbing" | "pointer";
+	cursor?: 'default' | 'grab' | 'grabbing' | 'pointer';
 	state?: any[];
 	onChange?: (value: number, percent: number) => void;
 	onDragChange?: (value: number, percent: number) => void;
@@ -30,13 +30,13 @@ export const Slider = React.memo((props: SliderProps) => {
 		height = 2,
 		touchHeight = 24,
 		trackHeadSize = 7,
-		headType = "round",
+		headType = 'round',
 		trackHeadWidth = 4,
 		rounding = 2,
-		cursor = "default",
-		headColor = undefined,
-		trackColor = undefined,
-		progressColor = undefined,
+		cursor = 'default',
+		headColor = "var(--core-text-primary)",
+		trackColor =  "var(--core-surface-secondary)",
+		progressColor =  "var(--core-text-primary)",
 		state = [],
 		onChange = () => null,
 		onDragChange = () => null,
@@ -57,15 +57,15 @@ export const Slider = React.memo((props: SliderProps) => {
 		}
 	}, []);
 
-	// set the initital positon of the slider absolute value within scale
+	// set the initial position of the slider absolute value within scale
 	const initialProgress = useCallback(
 		(current: number): void => {
-			if (!ref || !ref.current) return;
+			if (!ref?.current) return;
 			const sliderWidth = ref.current.getBoundingClientRect().width;
 			let adjustedCurrent = current;
 			if (adjustedCurrent > scaleMax || adjustedCurrent < scaleMin) {
 				console.warn(
-					"Slider value outside scale range. Auto adjusting to mid point.",
+					'Slider value outside scale range. Auto adjusting to mid point.',
 				);
 				adjustedCurrent = (scaleMax - scaleMin) / 2;
 			}
@@ -110,7 +110,7 @@ export const Slider = React.memo((props: SliderProps) => {
 		[setTrackAndHead],
 	);
 
-	// on mouse move, push slider to updated mouse position and trigger the update events
+	// on mouse move, push slider to the updated mouse position and trigger the update events
 	const handleMouseMove = useCallback(
 		(e: MouseEvent) => {
 			e.preventDefault();
@@ -124,13 +124,13 @@ export const Slider = React.memo((props: SliderProps) => {
 		[onChange, progress, updateSlider],
 	);
 
-	// on mouse move, push slider to updated mouse up position and trigger the update events
-	// also cleaning up the mouse move and mouse up listnsers attached to the window
+	// on mouse up, push slider to the updated mouse up position and trigger the update events
+	// also cleaning up the mouse move and mouse up listeners attached to the window
 	const handleMouseUp = useCallback(
 		(e: MouseEvent) => {
 			e.preventDefault();
-			window.removeEventListener("mousemove", handleMouseMove, false);
-			window.removeEventListener("mouseup", handleMouseUp, false);
+			globalThis.removeEventListener('mousemove', handleMouseMove, false);
+			globalThis.removeEventListener('mouseup', handleMouseUp, false);
 			const el = ref?.current;
 			if (el) {
 				const pos = updateSlider(e); // return new pixel pos and updates head/track
@@ -141,14 +141,14 @@ export const Slider = React.memo((props: SliderProps) => {
 		[handleMouseMove, progress, onDragChange, updateSlider],
 	);
 
-	// On mouse down push the progress of slider to the mouse down point
-	// and trigger events - add the drag and mouse up window listners
+	// On mouse down push the progress of then slider to the mouse down point
+	// and trigger events - add the drag and mouse up window listeners
 	const handleMouseDown = useCallback(
 		(e: MouseEvent) => {
 			e.preventDefault();
 			e.stopPropagation();
-			window.addEventListener("mousemove", handleMouseMove, false);
-			window.addEventListener("mouseup", handleMouseUp, false);
+			globalThis.addEventListener('mousemove', handleMouseMove, false);
+			globalThis.addEventListener('mouseup', handleMouseUp, false);
 			const el = ref?.current;
 			if (el) {
 				const pos = updateSlider(e); // return new pixel pos and updates head/track
@@ -168,54 +168,82 @@ export const Slider = React.memo((props: SliderProps) => {
 	);
 
 	// set the very first state of the slider - note the empty dependency
-	// ensuring the initial state will be applied only once on compoenent load
+	// ensuring the initial state will be applied only once on the component load
 	useEffect(() => {
 		const el = ref?.current;
 		if (el) {
-			el?.addEventListener("mousedown", handleMouseDown, false);
+			el?.addEventListener('mousedown', handleMouseDown, false);
 			initialProgress(initial);
 		}
 		return () => {
-			el?.removeEventListener("mousedown", handleMouseDown, false);
+			el?.removeEventListener('mousedown', handleMouseDown, false);
 		};
 	}, [initial, handleMouseDown, initialProgress]);
 
-	// becuase we use addEventListner, need to refresh based on state updates
-	// so we use the state prop as dependency to re-apply listners without setting
-	// the current position to avoid infinte render
+	// because we use addEventListener, need to refresh based on state updates,
+	// so we use the state prop as a dependency to re-apply listeners without setting
+	// the current position to avoid infinite render
 	// biome-ignore lint/correctness/useExhaustiveDependencies: state dependency is intentional to refresh event listeners
 	useEffect(() => {
 		const el = ref?.current;
-		if (el) el?.addEventListener("mousedown", handleMouseDown, false);
+		if (el) el?.addEventListener('mousedown', handleMouseDown, false);
 		return () => {
-			el?.removeEventListener("mousedown", handleMouseDown, false);
+			el?.removeEventListener('mousedown', handleMouseDown, false);
 		};
 	}, [state, handleMouseDown]);
 
+	// memo head width
 	const headWidth = useMemo(() => {
-		if (headType === "round") return trackHeadSize;
+		if (headType === 'round') return trackHeadSize;
 		return trackHeadWidth;
 	}, [headType, trackHeadSize, trackHeadWidth]);
+	
+	// memo head color
+	const trackHeadColor = useMemo(() => {
+		if(headType === 'none') return 'transparent';
+		return headColor ?? 'var(--core-text-primary)';
+	}, [headColor, headType]);
+
+	// memo head height
+	const headSize = useMemo(() => {
+		if(headType === 'none') return height
+		return trackHeadSize
+	}, [trackHeadSize, headType, height]);
+	
+	// memo css vars
+	const cssVars = useMemo(() => {
+		return {
+			'--slider-width': `${width}px`,
+			'--slider-height': `${height}px`,
+			'--slider-touch-height': `${touchHeight}px`,
+			'--slider-cursor': cursor,
+			'--slider-head-display': height ? 'block' : 'none',
+			'--slider-head-radius': headType === 'round' ? '100%' : '0px',
+			'--slider-head-size': `${headSize}px`,
+			'--slider-head-width': `${headWidth}px`,
+			'--slider-head-color': trackHeadColor,
+			'--slider-progress-color': progressColor ?? 'var(--core-text-primary)',
+			'--slider-track-color': trackColor ?? 'var(--core-surface-secondary)',
+		} as React.CSSProperties;
+	}, [
+		width,
+		height,
+		touchHeight,
+		cursor,
+		trackHeadSize,
+		headWidth,
+		headColor,
+		progressColor,
+		trackColor,
+	]);
 
 	return (
-		<Styled.Wrapper
-			ref={ref}
-			$width={width}
-			$height={height}
-			$touchHeight={touchHeight}
-			$cursor={cursor}
-		>
-			<Styled.TrackBG $width={width} $height={height} $color={trackColor}>
-				<Styled.Track ref={track} $color={progressColor}>
-					<Styled.TrackHead
-						ref={head}
-						$height={trackHeadSize}
-						$width={headWidth}
-						$headType={headType}
-						$color={headColor}
-					/>
-				</Styled.Track>
-			</Styled.TrackBG>
-		</Styled.Wrapper>
+		<div className={css.wrapper} style={cssVars} ref={ref}>
+			<div className={css.trackBg}>
+				<div className={css.track} ref={track}>
+					<div className={css.trackHead} ref={head} />
+				</div>
+			</div>
+		</div>
 	);
 });

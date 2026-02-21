@@ -1,0 +1,15 @@
+.wrapper {
+    composes: row from "../../util/flexBox.module.css";
+    padding: var(--switch-padding) !important;
+    width: var(--switch-width);
+    height: var(--switch-height);
+    border-radius: 100px;
+    cursor: pointer;
+}
+
+.knob {
+    composes: row from "../../util/flexBox.module.css";
+    width: var(--switch-knob-size);
+    height: var(--switch-knob-size);
+    border-radius: 100%;
+}

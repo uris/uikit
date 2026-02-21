@@ -31,18 +31,15 @@ const meta: Meta<typeof RadioButtonList> = {
 		multiSelect: false,
 		wrap: false,
 		tabIndexSeed: 0,
-		sizeToFit: false,
 		spacer: "none",
 		custom: 0,
 		gap: 16,
 		hideRadio: false,
-		flex: undefined,
 		noFrame: false,
 		toggleIcon: true,
 		iconColor: undefined,
 		iconSelectedColor: undefined,
 		onChange: fn(),
-		onMore: fn(),
 	},
 };
 

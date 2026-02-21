@@ -5,13 +5,13 @@ import React, {
 	useRef,
 	useState,
 } from "react";
-import { useTheme } from "styled-components";
-import { Badge } from "../Badge/Badge";
-import { Icon } from "../Icon/Icon";
+import { Badge } from "../Badge";
+import { Icon } from "../Icon";
 import { IconButton } from "../IconButton";
 import { type ToolTip, ToolTipType } from "../sharedTypes";
-import * as Styled from "./Styles";
 import type { TabOption } from "./_Types";
+import css from "./TabBar.module.css";
+import {useTheme} from "../../hooks";
 
 export const placeholderOptions: TabOption[] = [
 	{ name: "Option 1", value: "Option 1", icon: null },
@@ -21,10 +21,12 @@ export const placeholderOptions: TabOption[] = [
 export interface TabBarProps {
 	options?: TabOption[];
 	selected?: number;
+	underline?: boolean;
 	border?: boolean;
 	selectedValue?: string;
 	height?: number | string;
 	width?: number | string;
+	tabWidth?: "min-content" | "distribute" | number
 	closeWidth?: number | string;
 	padding?: number | string;
 	textStyle?:
@@ -38,11 +40,8 @@ export interface TabBarProps {
 	iconSize?: number;
 	iconGap?: number;
 	tabGap?: number;
-	dragsApp?: boolean;
 	disabled?: boolean;
 	hasClose?: boolean;
-	state?: string;
-	size?: number;
 	onToolTip?: (tip: ToolTip | null) => void;
 	onChange?: (index: number) => void;
 	onTabChange?: (option: TabOption) => void;
@@ -54,20 +53,19 @@ export const TabBar = React.memo((props: TabBarProps) => {
 		options = placeholderOptions,
 		selected = 0,
 		border = true,
+		underline = true,
 		height = "100%",
 		width = "100%",
+		tabWidth = "distribute",
 		padding = 8,
 		textStyle = "textRegular",
 		iconSize = 20,
 		iconGap = 4,
 		tabGap = 0,
-		dragsApp = false,
 		disabled = false,
 		hasClose = false,
 		closeWidth = "auto",
 		selectedValue = null,
-		state = undefined,
-		size = 1,
 		onChange = () => null,
 		onTabChange = () => null,
 		onClose = () => null,
@@ -82,13 +80,13 @@ export const TabBar = React.memo((props: TabBarProps) => {
 			selectedIndex = options.findIndex(
 				(option) => option.value === selectedValue,
 			);
-			setIndex(selectedIndex !== -1 ? selectedIndex : selected);
+			setIndex(selectedIndex === -1 ? selected : selectedIndex);
 		} else {
 			setIndex(selected);
 		}
 	}, [selected, selectedValue, options]);
 
-	// Memoize handleClick
+	// memo handleClick
 	const handleClick = useCallback(
 		(i: number) => {
 			setIndex(i);
@@ -98,7 +96,7 @@ export const TabBar = React.memo((props: TabBarProps) => {
 		[onChange, onTabChange, options],
 	);
 
-	// Memoize handleOptionClick
+	// memo handleOptionClick
 	const handleOptionClick = useCallback(
 		(i: number) => {
 			onToolTip(null);
@@ -107,7 +105,7 @@ export const TabBar = React.memo((props: TabBarProps) => {
 		[onToolTip, handleClick],
 	);
 
-	// Memoize rendered options
+	// memo rendered options
 	const renderedOptions = useMemo(
 		() =>
 			options.map((option: TabOption, i: number) => (
@@ -117,50 +115,57 @@ export const TabBar = React.memo((props: TabBarProps) => {
 					value={i}
 					showToolTip={option.toolTip}
 					selected={i === index}
-					onClick={handleOptionClick}
 					padding={padding}
-					textStyle={textStyle}
 					icon={option.icon}
 					iconSize={iconSize}
 					iconGap={iconGap}
-					dragsApp={dragsApp}
 					disabled={disabled}
-					state={state}
-					size={size}
 					count={option.count}
+					onClick={handleOptionClick}
 					onToolTip={onToolTip}
+					underline={underline}
+					tabWidth={tabWidth}
 				/>
 			)),
 		[
 			options,
 			index,
-			handleOptionClick,
 			padding,
 			textStyle,
 			iconSize,
 			iconGap,
-			dragsApp,
 			disabled,
-			state,
-			size,
+			underline,
+			tabWidth,
 			onToolTip,
+			handleOptionClick,
 		],
 	);
+	
+	const setStyle = useCallback((value:string|number)=>{
+		if(typeof value === "string") return value
+		return `${value}px`
+	},[])
 
+	const cssVars = useMemo(()=>{
+		return {
+			"--tab-bar-gap": `${tabGap}px`,
+			"--tab-bar-height": `${setStyle(height)}px`,
+			"--tab-bar-width": setStyle(width),
+			"--tab-bar-border-bottom": `${border ? "1px" : "0"}`,
+			"--tab-bar-close-width": `${closeWidth}px`,
+			"--tab-bar-close-padding": padding ? `${padding}px` : "8px",
+		} as React.CSSProperties;
+	},[tabGap, height, width, border, setStyle])
+	
 	return (
-		<Styled.Wrapper
-			$height={height}
-			$width={width}
-			$border={border}
-			$gap={tabGap}
+		<div
+			className={css.wrapper}
+			style={cssVars}
 		>
 			{renderedOptions}
 			{hasClose && (
-				<Styled.CloseButton
-					$padding={padding}
-					onClick={onClose}
-					$closeWidth={closeWidth}
-				>
+				<div className={css.close}>
 					<IconButton
 						iconSize={iconSize - 4}
 						frameSize={iconSize}
@@ -169,9 +174,9 @@ export const TabBar = React.memo((props: TabBarProps) => {
 						icon={"x"}
 						onClick={onClose}
 					/>
-				</Styled.CloseButton>
+				</div>
 			)}
-		</Styled.Wrapper>
+		</div>
 	);
 });
 
@@ -184,79 +189,14 @@ interface TabOptionProps {
 	showToolTip?: string | null;
 	selected?: boolean;
 	padding?: number | string;
-	textStyle?:
-		| "textXLarge"
-		| "textLarge"
-		| "textRegular"
-		| "textMedium"
-		| "textSmall"
-		| "textXSmall"
-		| null;
 	iconSize?: number;
 	iconGap?: number;
-	dragsApp?: boolean;
 	disabled?: boolean;
-	size?: number;
 	count?: number;
-	state?: string;
-	toolTipTimer?: React.RefObject<any>;
+	tabWidth?: "min-content" | "distribute" | number
+	underline?: boolean;
 	onClick?: (value: number) => void;
 	onToolTip?: (tip: ToolTip | null) => void;
-}
-
-// Custom hook for drag functionality
-function useDragWindow(
-	dragsApp: boolean,
-	disabled: boolean,
-	onClick: (value: number) => void,
-	value: number,
-) {
-	const doDrag = useRef<boolean | null>(null);
-	const xStart = useRef<number | null>(null);
-	const yStart = useRef<number | null>(null);
-
-	const handleMouseMove = useCallback(
-		(e: MouseEvent) => {
-			doDrag.current = true;
-			if (dragsApp && xStart.current !== null && yStart.current !== null) {
-				const win: any = window;
-				const x = e.clientX - xStart.current;
-				const y = e.clientY - yStart.current;
-				win.electronAPI?.appDrag({ x, y });
-			}
-		},
-		[dragsApp],
-	);
-
-	const handleMouseUp = useCallback(() => {
-		if (doDrag.current !== true || !dragsApp) {
-			if (!disabled) onClick(value);
-		}
-		doDrag.current = null;
-		xStart.current = null;
-		yStart.current = null;
-		const docEl = document.documentElement;
-		docEl?.removeEventListener("mousemove", handleMouseMove, false);
-		docEl?.removeEventListener("mouseup", handleMouseUp, false);
-	}, [disabled, dragsApp, handleMouseMove, onClick, value]);
-
-	const handleMouseDown = useCallback(
-		(e: MouseEvent) => {
-			doDrag.current = null;
-			xStart.current = e.clientX;
-			yStart.current = e.clientY;
-			const docEl = document.documentElement;
-			docEl?.addEventListener("mousemove", handleMouseMove, false);
-			docEl?.addEventListener("mouseup", handleMouseUp, false);
-		},
-		[handleMouseMove, handleMouseUp],
-	);
-
-	const resetDrag = useCallback(() => {
-		doDrag.current = null;
-	}, []);
-
-	return { handleMouseDown, resetDrag };
 }
 
 const Option = React.memo(
@@ -272,46 +212,23 @@ const Option = React.memo(
 			padding = 8,
 			iconSize = 24,
 			iconGap = 6,
-			dragsApp = false,
-			textStyle = "textRegular",
 			disabled = false,
 			showToolTip = null,
-			state = null,
-			size = 1,
+			underline = true,
+			tabWidth = "distribute",
 			count = 0,
 		} = props;
 
 		const ref = useRef<HTMLDivElement>(null);
-		const { handleMouseDown, resetDrag } = useDragWindow(
-			dragsApp,
-			disabled,
-			onClick,
-			value,
-		);
 
-		// Setup event listener with proper cleanup
-		useEffect(() => {
-			const el = ref.current;
-			if (!el) return;
-
-			el.addEventListener("mousedown", handleMouseDown, false);
-
-			return () => {
-				el.removeEventListener("mousedown", handleMouseDown, false);
-				// Cleanup any pending mousemove/mouseup listeners
-				const docEl = document.documentElement;
-				docEl?.removeEventListener("mousemove", handleMouseDown, false);
-				docEl?.removeEventListener("mouseup", handleMouseDown, false);
-			};
-		}, [handleMouseDown]);
-
-		// Memoize icon color
+		// memo icon color
 		const strokeColor = useMemo(() => {
 			if (!disabled && selected) return theme.colors["core-button-primary"];
+			if(disabled) return theme.colors["core-text-disabled"];
 			return theme.colors["core-text-primary"];
 		}, [disabled, selected, theme]);
 
-		// Memoize handleMouseOver
+		// memo handleMouseOver
 		const handleMouseOver = useCallback(
 			(e: React.MouseEvent) => {
 				onToolTip(null);
@@ -328,32 +245,62 @@ const Option = React.memo(
 			[showToolTip, onToolTip],
 		);
 
-		// Memoize handleMouseLeave
+		// memo handleMouseLeave
 		const handleMouseLeave = useCallback(() => {
 			if (showToolTip) onToolTip(null);
 		}, [showToolTip, onToolTip]);
+		
+		// memo color
+		const textColor = useMemo(()=>{
+			if(disabled) return "var(--core-text-disabled)"
+			else if(selected) return "var(--core-button-primary)"
+			return "var(--core-text-primary)"
+		},[disabled, selected])
+		
+		// memo tab width
+		const setTabWidth = useMemo(()=>{
+			if(tabWidth === "min-content") return "min-content";
+			if(tabWidth === "distribute") return "unset";
+			return `${tabWidth}px`
+		},[tabWidth])
 
-		// Memoize text style
-		const computedTextStyle = useMemo(
-			() => textStyle || theme.type["body-l-regular"],
-			[textStyle, theme],
-		);
+		// memo flex tab
+		const setTabFlex = useMemo(()=>{
+			if(tabWidth === "distribute") return "1";
+			return "unset"
+		},[tabWidth])
+		
+		// memo underline
+		const setUnderline = useMemo(()=>{
+			if(selected && underline && !disabled) return "1px"
+			return "0"
+		},[underline, disabled, selected])
+		
+		const cssVars = useMemo(()=>{
+			return {
+				"--tab-bar-option-border": setUnderline,
+				"--tab-bar-option-padding": `${padding}px`,
+				"--tab-bar-option-icon-size": `${iconSize}px`,
+				"--tab-bar-option-cursor": disabled ? "default" : "pointer",
+				"--tab-bar-option-gap": `${iconGap ?? 0}px`,
+				"--tab-bar-option-color": textColor,
+				"--tab-bar-option-width": setTabWidth,
+				"--tab-bar-option-flex": setTabFlex,
+			} as React.CSSProperties;
+		},[padding, iconSize, disabled, icon, textColor, selected, underline, iconGap])
 
 		return (
-			<Styled.Option
+			<div
+				className={css.option}
+				style={cssVars}
 				ref={ref}
-				$padding={padding}
-				$selected={disabled ? false : selected}
-				$disabled={disabled}
-				$textStyle={computedTextStyle}
-				$gap={iconGap}
-				$size={size}
-				$iconSize={iconSize}
-				className={"noDrag"}
+				role={"option"}
+				aria-selected={selected}
+				tabIndex={0}
 				onMouseEnter={handleMouseOver}
 				onMouseLeave={handleMouseLeave}
-				onMouseDown={resetDrag}
-				onMouseUp={resetDrag}
+				onClick={() => onClick(value)}
+				onKeyDown={() => onClick(value)}
 			>
 				{icon && (
 					<div className="icon">
@@ -364,14 +311,17 @@ const Option = React.memo(
 				{count !== 0 && (
 					<Badge variant={"light"} hideNull={false} count={count} />
 				)}
-			</Styled.Option>
+			</div>
 		);
 	},
 	(prevProps, nextProps) => {
 		// Custom comparison for performance
 		return (
 			prevProps.selected === nextProps.selected &&
+			prevProps.underline === nextProps.underline &&
+			prevProps.tabWidth === nextProps.tabWidth &&
 			prevProps.disabled === nextProps.disabled &&
+			prevProps.iconGap === nextProps.iconGap &&
 			prevProps.count === nextProps.count &&
 			prevProps.label === nextProps.label &&
 			prevProps.icon === nextProps.icon

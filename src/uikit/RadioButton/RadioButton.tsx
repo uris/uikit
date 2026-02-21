@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect, useMemo, useState } from "react";
-import { useTheme } from "styled-components";
 import { IconButton } from "../IconButton";
-import * as Styled from "./Styles";
+import css from "./RadioButton.module.css";
+import {useTheme} from "../../hooks";
 
 export type RadioButtonOption = {
 	fieldName?: string;
@@ -14,18 +14,15 @@ export type RadioButtonOption = {
 export interface RadioButtonProps {
 	selected?: boolean;
 	option: RadioButtonOption;
-	deslect?: boolean;
+	deselect?: boolean;
 	tabIndex?: number;
-	checkBox?: boolean;
 	wrap?: boolean;
-	sizeToFit?: boolean;
+	list?: boolean;
 	hideRadio?: boolean;
-	flex?: string | number | null;
 	toggleIcon?: boolean;
 	iconColor?: string;
 	noFrame?: boolean;
 	onChange?: (option: RadioButtonOption, state: boolean) => void;
-	onMore?: (option: RadioButtonOption, state: boolean) => void;
 }
 
 export const RadioButton = React.memo((props: RadioButtonProps) => {
@@ -33,14 +30,14 @@ export const RadioButton = React.memo((props: RadioButtonProps) => {
 	const {
 		option,
 		selected = false,
-		deslect = false,
+		deselect = true,
 		tabIndex = 1,
 		wrap = false,
-		sizeToFit = false,
+		list = false,
 		hideRadio = false,
 		toggleIcon = true,
 		noFrame = false,
-		flex,
+		iconColor,
 		onChange = () => null,
 	} = props;
 	const [isSelected, setIsSelected] = useState<boolean>(selected);
@@ -48,13 +45,12 @@ export const RadioButton = React.memo((props: RadioButtonProps) => {
 	useEffect(() => setIsSelected(selected), [selected]);
 
 	const handleChange = useCallback(
-		(checked?: boolean) => {
-			if (isSelected && !deslect) return;
-			if (checked !== undefined) setIsSelected(checked);
+		() => {
+			if (isSelected && !deselect) return;
 			else setIsSelected(!isSelected);
 			onChange(option, !isSelected);
 		},
-		[isSelected, deslect, onChange, option],
+		[isSelected, deselect, onChange, option],
 	);
 
 	const handleKeyDown = useCallback(
@@ -68,49 +64,60 @@ export const RadioButton = React.memo((props: RadioButtonProps) => {
 		[handleChange],
 	);
 
-	// Memoize icon color
-	const iconColor = useMemo(
-		() =>
-			toggleIcon && isSelected
-				? theme.colors["core-button-primary"]
-				: theme.colors["core-icon-primary"],
-		[toggleIcon, isSelected, theme],
-	);
+	// memo icon color
+	const setIconColor = useMemo(()=>{
+		if(iconColor) return iconColor;
+		return toggleIcon && isSelected
+			? theme.colors["core-button-primary"]
+			: theme.colors["core-icon-primary"]
+		
+	},[iconColor, toggleIcon, isSelected, theme])
 
-	// Memoize icon name
+	// memo icon name
 	const iconName = useMemo(
 		() => (toggleIcon && isSelected ? "checked" : "unchecked"),
 		[toggleIcon, isSelected],
 	);
+	
+	// memo flex
+	const setFlex = useMemo(()=>{
+		if(list) return "unset"
+		return wrap ? "40%" : "1"
+	},[list, wrap])
+	
+	// memo css vars
+	const cssVars = useMemo(()=>{
+		return {
+			"--rb-max-width": wrap ? "50%" : "100%",
+			"--rb-flex": setFlex,
+			"--rb-padding": noFrame ? "0" : "8px 16px 8px 10px",
+			"--rb-bg": isSelected ? "var(--core-surface-secondary)" : "transparent",
+		} as React.CSSProperties
+	},[setFlex, isSelected, wrap, noFrame])
+	
 
 	return (
-		<Styled.Wrapper
-			$wrap={wrap}
-			$sizeToFit={sizeToFit}
-			$offset={3}
-			$selected={isSelected}
-			$noImage={!option.icon}
-			$hideRadio={hideRadio}
-			$flex={flex}
-			$noFrame={noFrame}
-			onClick={() => handleChange(isSelected)}
+		<div
+			className={css.wrapper}
+			style={cssVars}
+			onClick={handleChange}
 			onKeyDown={handleKeyDown}
 			tabIndex={tabIndex}
-			// biome-ignore lint/a11y/useSemanticElements: Custom radio button component with complex styling - using div with proper ARIA attributes
-			role={"radio"}
+			role={"option"}
 			aria-label={option.title}
+			aria-selected={isSelected}
 		>
-			{option.icon && (
-				<div className="radio-icon">
-					<IconButton toggle={false} icon={iconName} color={iconColor} />
+			{option.icon && !hideRadio && (
+				<div className={css.radioIcon}>
+					<IconButton toggle={false} icon={iconName} color={setIconColor} frameSize={20} iconSize={20} />
 				</div>
 			)}
-			<div className="radio-content noselect">
-				<div className="radio-title">{option.title}</div>
+			<div className={css.radioContent}>
+				<div className={css.radioTitle}>{option.title}</div>
 				{option.description && option.description !== "" && (
-					<div className="radio-summary">{option.description}</div>
+					<div className={css.radioSummary}>{option.description}</div>
 				)}
 			</div>
-		</Styled.Wrapper>
+		</div>
 	);
 });

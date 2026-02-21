@@ -14,14 +14,14 @@ const meta: Meta<typeof RadioButton> = {
 			icon: "circle",
 		},
 		selected: false,
-		deslect: true,
+		deselect: true,
 		tabIndex: 1,
 		wrap: false,
-		sizeToFit: false,
+		list: true,
 		hideRadio: false,
 		toggleIcon: true,
 		noFrame: false,
-		flex: undefined,
+		iconColor: undefined,
 		onChange: fn(),
 	},
 };
@@ -31,7 +31,7 @@ export default meta;
 export const Default: StoryObj<typeof RadioButton> = {
 	render: (args) => {
 		return (
-			<FlexDiv justify={"center"} alignItems={"center"} padding={64}>
+			<FlexDiv direction={"row"} justify={"center"} alignItems={"center"} padding={64}>
 				<RadioButton {...args} />
 			</FlexDiv>
 		);

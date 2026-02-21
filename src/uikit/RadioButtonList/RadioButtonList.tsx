@@ -1,27 +1,23 @@
-import React, { useCallback, useEffect, useMemo, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import {
 	RadioButton,
 	type RadioButtonOption,
-} from "../RadioButton/RadioButton";
-import * as Styled from "./Styles";
+} from "../RadioButton";
+import css from "./RadioButtonList.module.css";
 
 export interface RadioButtonListProps {
 	options?: RadioButtonOption[];
 	selectedIndexes?: number[] | null;
 	selectedOptions?: string[] | null;
-	showDescription?: boolean;
 	label?: string | null;
 	deselect?: boolean;
 	multiSelect?: boolean;
 	wrap?: boolean;
-	sizeToFit?: boolean;
 	spacer?: "xl" | "lg" | "md" | "sm" | "custom" | "none";
 	custom?: number;
 	gap?: number;
-	offset?: number;
 	tabIndexSeed?: number;
 	hideRadio?: boolean;
-	flex?: string | number | null;
 	toggleIcon?: boolean;
 	iconColor?: string;
 	iconSelectedColor?: string;
@@ -30,7 +26,6 @@ export interface RadioButtonListProps {
 		options: RadioButtonOption[] | null,
 		indexes: number[] | null,
 	) => void;
-	onMore?: (option: RadioButtonOption, index: number) => void;
 }
 
 export const RadioButtonList = React.memo((props: RadioButtonListProps) => {
@@ -43,21 +38,18 @@ export const RadioButtonList = React.memo((props: RadioButtonListProps) => {
 		multiSelect = false,
 		wrap = false,
 		tabIndexSeed = 0,
-		sizeToFit = false,
 		spacer = "none",
 		custom = 0,
 		gap = 16,
 		hideRadio = false,
-		flex,
 		noFrame = false,
 		toggleIcon = true,
 		iconColor = undefined,
 		iconSelectedColor = undefined,
 		onChange = () => null,
-		onMore = () => null,
 	} = props;
 
-	// internal array of sleected indexes
+	// internal array of selected indexes
 	const [selected, setSelected] = useState<number[] | null>(selectedIndexes);
 
 	// update indexes selected based on prop
@@ -79,43 +71,45 @@ export const RadioButtonList = React.memo((props: RadioButtonListProps) => {
 	// returns if a specific option index is selected
 	function isSelected(index: number): boolean {
 		if (!selected) return false;
-		const exists = selected.indexOf(index) !== -1;
-		return exists;
+		return selected.includes(index)
 	}
 
 	function handleChange(selection: number, state: boolean) {
 		// it not multiselect just pass the current selection
-		if (!multiSelect) {
-			onChange(state ? [options[selection]] : [], state ? [selection] : []);
-			setSelected(state ? [selection] : null);
+		if (multiSelect) {
+			doMultiSelection(selection, state)
 		} else {
-			// **** update the selected indexes
-			let indexesSelected: number[] = selected ? [...selected] : [];
-			// if deslecting and there are selections
-			if (!state && selected) {
-				const removeAt = indexesSelected.indexOf(selection);
-				indexesSelected.splice(removeAt, 1);
-			} else if (state) {
-				indexesSelected = selected ? [...selected] : [];
-				const exists = indexesSelected.indexOf(selection) !== -1;
-				if (!exists) indexesSelected.push(selection);
-			}
-			// **** create array of selected options
-			let updatedSelections: RadioButtonOption[] | null = [];
-			for (const index of indexesSelected || []) {
-				if (updatedSelections) updatedSelections.push(options[index]);
-			}
-			if (updatedSelections.length < 1) updatedSelections = null;
-			setSelected(indexesSelected || null);
-			onChange(updatedSelections, indexesSelected || null);
+			doSingleSelection(selection, state)
 		}
 	}
-
-	// for clicks on the more option if present
-	function handleMore(index: number) {
-		onMore(options[index], index);
+	
+	function doMultiSelection(selection: number, state: boolean) {
+		// **** update the selected indexes
+		let indexesSelected: number[] = selected ? [...selected] : [];
+		// if deselecting and there are selections
+		if (!state && selected) {
+			const removeAt = indexesSelected.indexOf(selection);
+			indexesSelected.splice(removeAt, 1);
+		} else if (state) {
+			indexesSelected = selected ? [...selected] : [];
+			const exists = indexesSelected.includes(selection);
+			if (!exists) indexesSelected.push(selection);
+		}
+		// **** create an array of selected options
+		let updatedSelections: RadioButtonOption[] | null = [];
+		for (const index of indexesSelected || []) {
+			if (updatedSelections) updatedSelections.push(options[index]);
+		}
+		if (updatedSelections.length < 1) updatedSelections = null;
+		setSelected(indexesSelected || null);
+		onChange(updatedSelections, indexesSelected || null);
 	}
-
+	
+	function doSingleSelection(selection: number, state: boolean) {
+		onChange(state ? [options[selection]] : [], state ? [selection] : []);
+		setSelected(state ? [selection] : null);
+	}
+	
 	function setOptions() {
 		return options.map((option: RadioButtonOption, i: number) => {
 			return (
@@ -123,15 +117,11 @@ export const RadioButtonList = React.memo((props: RadioButtonListProps) => {
 					option={option}
 					selected={isSelected(i)}
 					key={`${option.fieldName}_${i}`}
-					deslect={deselect}
-					checkBox={multiSelect}
+					deselect={deselect}
 					wrap={wrap}
-					flex={flex}
 					noFrame={noFrame}
-					sizeToFit={sizeToFit}
 					hideRadio={hideRadio}
 					onChange={(_option, state) => handleChange(i, state)}
-					onMore={() => handleMore(i)}
 					tabIndex={i + 1 + 100 * tabIndexSeed}
 					toggleIcon={toggleIcon}
 					iconColor={isSelected(i) ? iconSelectedColor : iconColor}
@@ -140,23 +130,31 @@ export const RadioButtonList = React.memo((props: RadioButtonListProps) => {
 		});
 	}
 
+	// memo margin
 	const margin = () => {
 		if (spacer === "none") return 0;
 		if (spacer === "custom") return custom;
 		return 0;
 	};
+	
+	// memo css vars
+	const cssVars = useMemo(()=>{
+		return {
+			"--rb-list-flex-wrap": wrap ? "wrap" : "nowrap",
+			"--rb-list-margin-bottom": noFrame ? 0 : `${margin()}px`,
+			"--rb-gap": `${gap}px`
+		} as React.CSSProperties
+	},[])
 
 	return (
-		<Styled.Wrapper
-			$wrap={wrap}
-			$margin={margin()}
-			$gap={gap}
-			$noFrame={noFrame}
-			role={"radiogroup"}
-			aria-label={label ? label : "grouped selection"}
+		<div
+			className={`${css.wrapper} ${noFrame? css.column : css.row}`}
+			style={cssVars}
+			role={"list"}
+			aria-label={"Option List"}
 		>
 			{label}
 			{setOptions()}
-		</Styled.Wrapper>
+		</div>
 	);
 });

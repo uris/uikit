@@ -82,7 +82,6 @@ export function DoneCheck(props: DoneCheckProps) {
 				scale={0.9}
 				viewBox="0 0 20 20"
 				fill="none"
-				role="img"
 				aria-label="Checkmark icon"
 			>
 				<title>Checkmark</title>

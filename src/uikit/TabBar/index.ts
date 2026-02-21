@@ -1,5 +1,2 @@
-import { TabBar, type TabBarProps } from "./TabBar";
-import type { TabOption } from "./_Types";
-
-export { TabBar };
-export type { TabOption, TabBarProps };
+export {TabBar, type TabBarProps} from "./TabBar";
+export {type TabOption} from "./_Types";

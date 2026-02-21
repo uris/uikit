@@ -1,0 +1,40 @@
+.wrapper {
+    composes: rowStart from "../../util/flexBox.module.css";
+    gap: var(--tab-bar-gap);
+    border-bottom: var(--tab-bar-border-bottom) solid var(--core-outline-primary);
+    height: var(--tab-bar-height);
+    width: var(--tab-bar-width);
+    cursor: pointer;
+}
+
+.option {
+    composes: row from "../../util/flexBox.module.css";
+    composes: body-m-regular from "../../util/type.module.css";
+    gap: var(--tab-bar-option-gap);
+    color: var(--tab-bar-option-color);
+    padding: var(--tab-bar-option-padding) !important;
+    height: 100%;
+    width: var(--tab-bar-option-width);
+    flex: var(--tab-bar-option-flex);
+    white-space: nowrap;
+    box-shadow: 0 var(--tab-bar-option-border) 0 0 var(--core-button-primary);
+    cursor: var(--tab-bar-option-cursor);
+    -webkit-user-select: none;
+    user-select: none;
+}
+
+.icon {
+    composes: row from "../../util/flexBox.module.css";
+    max-height: var(--tab-bar-icon-size);
+    min-height: var(--tab-bar-icon-size);
+    max-width: var(--tab-bar-icon-size);
+    min-width: var(--tab-bar-icon-size);
+}
+
+.close {
+    composes: row from "../../util/flexBox.module.css";
+    height: 100%;
+    padding: var(--tab-bar-close-padding) !important;
+    border-left: 1px solid var(--core-outline-primary);
+    width: min-content;
+}
