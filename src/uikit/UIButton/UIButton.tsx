@@ -1,4 +1,4 @@
-import type { Transition, Variants } from "motion/react";
+import { type Transition, type Variants, motion } from 'motion/react';
 import React, {
 	forwardRef,
 	useCallback,
@@ -7,20 +7,20 @@ import React, {
 	useMemo,
 	useRef,
 	useState,
-} from "react";
-import { useTheme } from "styled-components";
-import { Badge } from "../Badge/Badge";
-import { Dot } from "../Dot/Dot";
-import { Icon } from "../Icon/Icon";
-import { ProgressIndicator } from "../Progress/ProgressIndicator/ProgressIndicator";
-import { type ToolTip, ToolTipType } from "../sharedTypes";
-import * as Styled from "./_Styles";
+} from 'react';
+import { useTheme } from '../../hooks';
+import { Badge } from '../Badge';
+import { Dot } from '../Dot';
+import { Icon } from '../Icon';
+import { ProgressIndicator } from '../Progress';
+import { type ToolTip, ToolTipType } from '../sharedTypes';
+import css from './UIButton.module.css';
 
 export interface UIButtonProps {
-	size?: "large" | "medium" | "text";
-	variant?: "solid" | "outline" | "text";
-	state?: "normal" | "hover" | "disabled";
-	width?: "auto" | "100%" | "fill" | string;
+	size?: 'large' | 'medium' | 'text';
+	variant?: 'solid' | 'outline' | 'text';
+	state?: 'normal' | 'hover' | 'disabled';
+	width?: string;
 	label?: string;
 	iconRight?: string;
 	iconLeft?: string;
@@ -29,7 +29,6 @@ export interface UIButtonProps {
 	showDot?: boolean;
 	round?: boolean;
 	tooltip?: string;
-	link?: boolean;
 	iconSize?: number;
 	borderRadius?: number;
 	iconColor?: string;
@@ -63,20 +62,19 @@ const UIButtonComponent = forwardRef<UIButtonHandle, UIButtonProps>(
 	(props, buttonRef: React.Ref<UIButtonHandle>) => {
 		const theme = useTheme();
 		const {
-			size = "medium",
-			variant = "outline",
+			size = 'medium',
+			variant = 'outline',
 			label = undefined,
 			iconRight = undefined,
 			iconLeft = undefined,
-			count = props.count !== undefined ? Number(props.count) : undefined,
+			count = props.count === undefined ? undefined : Number(props.count),
 			showDot = undefined,
 			tooltip = undefined,
 			round = false,
-			state = "normal",
+			state = 'normal',
 			fill = false,
-			link = false,
-			iconSize = props.iconSize !== undefined ? Number(props.iconSize) : 20,
-			width = "auto",
+			iconSize = props.iconSize === undefined ? 20 : Number(props.iconSize),
+			width = 'auto',
 			underline = false,
 			borderRadius = undefined,
 			iconColor = undefined,
@@ -99,7 +97,7 @@ const UIButtonComponent = forwardRef<UIButtonHandle, UIButtonProps>(
 			onToolTip = () => null,
 		} = props;
 
-		const [btnState, setBtnState] = useState<"normal" | "hover" | "disabled">(
+		const [btnState, setBtnState] = useState<'normal' | 'hover' | 'disabled'>(
 			state,
 		);
 		const [playing, setPlaying] = useState<boolean>(working);
@@ -108,7 +106,7 @@ const UIButtonComponent = forwardRef<UIButtonHandle, UIButtonProps>(
 		const handleClick = useCallback(
 			(e: React.MouseEvent<any> | undefined) => {
 				onToolTip(null);
-				if (state === "disabled") return;
+				if (state === 'disabled') return;
 				if (progress && duration) {
 					setPlaying(true);
 				} else {
@@ -129,156 +127,174 @@ const UIButtonComponent = forwardRef<UIButtonHandle, UIButtonProps>(
 			if (trigger) handleClick(undefined);
 		}, [trigger, handleClick]);
 
-		// Memoize color styles
-		const colorStyles = useMemo(() => {
-			const styles = {
-				solid: {
-					border: "0px",
-					iconColor: {
-						normal: iconColor || theme.colors["core-text-light"],
-						hover: iconColor || theme.colors["core-text-light"],
-						disabled: iconColor || theme.colors["core-text-disabled"],
-					},
-					background: {
-						normal:
-							bgColor ||
-							(destructive
-								? theme.colors["feedback-warning"]
-								: theme.colors["core-button-primary"]),
-						hover:
-							bgColor ||
-							(destructive
-								? theme.colors["feedback-warning"]
-								: theme.colors["core-button-primary"]),
-						disabled: bgColorDisabled || theme.colors["core-button-disabled"],
-					},
-					borderColor: {
-						normal: "transparent",
-						hover: "transparent",
-						disabled: "transparent",
-					},
-					color: {
-						normal:
-							labelColor ||
-							(destructive
-								? theme.colors["feedback-warning"]
-								: theme.colors["core-text-light"]),
-						hover:
-							labelColor ||
-							(destructive
-								? theme.colors["feedback-warning"]
-								: theme.colors["core-text-light"]),
-						disabled: theme.colors["core-text-disabled"],
-					},
+		// memo destructive check
+		const destructiveColor = useCallback(
+			(icon: boolean) => {
+				if (icon && variant === 'solid') {
+					return theme.colors['core-text-light'];
+				}
+				if (destructive) return theme.colors['feedback-warning'];
+				return theme.colors['core-text-primary'];
+			},
+			[destructive, theme, variant],
+		);
+
+		// memo solid styles
+		const solid = useMemo(() => {
+			return {
+				border: '0px',
+				iconColor: {
+					normal: iconColor || destructiveColor(true),
+					hover: iconColor || destructiveColor(true),
+					disabled: iconColor || destructiveColor(true),
 				},
-				outline: {
-					border: "1px",
-					iconColor: {
-						normal:
-							iconColor ||
-							(destructive
-								? theme.colors["feedback-warning"]
-								: theme.colors["core-text-primary"]),
-						hover:
-							iconColor ||
-							(destructive
-								? theme.colors["feedback-warning"]
-								: theme.colors["core-button-primary"]),
-						disabled: iconColor || theme.colors["core-text-disabled"],
-					},
-					background: {
-						normal: bgColor || theme.colors["core-surface-primary"],
-						hover: bgColor || theme.colors["core-surface-primary"],
-						disabled: bgColorDisabled || theme.colors["core-surface-primary"],
-					},
-					borderColor: {
-						normal: destructive
-							? theme.colors["feedback-warning"]
-							: theme.colors["core-outline-primary"],
-						hover: destructive
-							? theme.colors["feedback-warning"]
-							: theme.colors["core-outline-primary"],
-						disabled: theme.colors["core-outline-primary"],
-					},
-					color: {
-						normal:
-							labelColor ||
-							(destructive
-								? theme.colors["feedback-warning"]
-								: theme.colors["core-text-primary"]),
-						hover:
-							labelColor ||
-							(destructive
-								? theme.colors["feedback-warning"]
-								: theme.colors["core-button-primary"]),
-						disabled: theme.colors["core-text-disabled"],
-					},
+				background: {
+					normal:
+						bgColor ||
+						(destructive
+							? 'var(--feedback-warning)'
+							: 'var(--core-button-primary)'),
+					hover:
+						bgColor ||
+						(destructive
+							? 'var(--feedback-warning)'
+							: 'var(--core-button-primary)'),
+					disabled: bgColorDisabled || 'var(--core-button-disabled)',
 				},
-				text: {
-					border: "1px",
-					iconColor: {
-						normal: link
-							? theme.colors["core-button-primary"]
-							: destructive
-								? theme.colors["feedback-warning"]
-								: theme.colors["core-text-primary"],
-						hover: theme.colors["core-button-primary"],
-						disabled: theme.colors["core-text-disabled"],
-					},
-					background: {
-						normal: "transparent",
-						hover: "transparent",
-						disabled: "transparent",
-					},
-					borderColor: {
-						normal: "transparent",
-						hover: "transparent",
-						disabled: "transparent",
-					},
-					color: {
-						normal:
-							labelColor ||
-							(link
-								? theme.colors["core-button-primary"]
-								: destructive
-									? theme.colors["feedback-warning"]
-									: theme.colors["core-text-primary"]),
-						hover: theme.colors["core-button-primary"],
-						disabled: theme.colors["core-text-disabled"],
-					},
+				borderColor: {
+					normal: 'transparent',
+					hover: 'transparent',
+					disabled: 'transparent',
+				},
+				color: {
+					normal:
+						labelColor || (destructive ? 'white' : 'var(--core-text-light)'),
+					hover:
+						labelColor || (destructive ? 'white' : 'var(--core-text-light)'),
+					disabled: 'var(--core-text-disabled)',
 				},
 			};
-			return styles;
 		}, [
-			theme,
+			labelColor,
+			destructive,
+			destructiveColor,
+			bgColor,
+			bgColorDisabled,
 			iconColor,
+		]);
+
+		// memo outline styles
+		const outline = useMemo(() => {
+			return {
+				border: '1px',
+				iconColor: {
+					normal: iconColor || destructiveColor(true),
+					hover: iconColor || destructiveColor(true),
+					disabled: iconColor || 'var(--core-text-disabled)',
+				},
+				background: {
+					normal: bgColor || 'var(--core-surface-primary)',
+					hover: bgColor || 'var(--core-surface-primary)',
+					disabled: bgColorDisabled || 'var(--core-surface-primary)',
+				},
+				borderColor: {
+					normal: destructive
+						? 'var(--feedback-warning)'
+						: 'var(--core-outline-primary)',
+					hover: destructive
+						? 'var(--feedback-warning)'
+						: 'var(--core-outline-primary)',
+					disabled: 'var(--core-outline-primary)',
+				},
+				color: {
+					normal:
+						labelColor ||
+						(destructive
+							? 'var(--feedback-warning)'
+							: 'var(--core-text-primary)'),
+					hover:
+						labelColor ||
+						(destructive
+							? 'var(--feedback-warning)'
+							: 'var(--core-button-primary)'),
+					disabled: 'var(--core-text-disabled)',
+				},
+			};
+		}, [
+			iconColor,
+			destructive,
 			bgColor,
 			bgColorDisabled,
 			labelColor,
-			destructive,
-			link,
+			destructiveColor,
 		]);
 
+		// memo text styles
+		const text = useMemo(() => {
+			return {
+				border: '1px',
+				iconColor: {
+					normal: destructiveColor(true),
+					hover: destructiveColor(true),
+					disabled: 'var(--core-text-disabled)',
+				},
+				background: {
+					normal: 'transparent',
+					hover: 'transparent',
+					disabled: 'transparent',
+				},
+				borderColor: {
+					normal: 'transparent',
+					hover: 'transparent',
+					disabled: 'transparent',
+				},
+				color: {
+					normal: labelColor || destructiveColor(false),
+					hover: labelColor || destructiveColor(false),
+					disabled: 'var(--core-text-disabled)',
+				},
+			};
+		}, [destructiveColor, labelColor]);
+
+		// memo color styles
+		const colorStyles = useMemo(() => {
+			return {
+				solid,
+				outline,
+				text,
+			};
+		}, [solid, outline, text]);
+
 		// Memoize sizing styles
+		const setPadding = useCallback(
+			(side: 'left' | 'right') => {
+				if (round) return 0;
+				if (side === 'left' && iconLeft) return 20;
+				if (side === 'right' && iconRight) return 20;
+				return 24;
+			},
+			[round, iconLeft, iconRight],
+		);
+
 		const sizingStyles = useMemo(() => {
 			return {
 				large: {
 					height: 48,
 					gap: 8,
 					iconSize,
-					paddingLeft: round ? 0 : iconLeft ? 20 : 24,
-					paddingRight: round ? 0 : iconRight ? 20 : 24,
-					width: round ? "48px" : width || "auto",
-					borderRadius: borderRadius ?? "500px",
+					paddingLeft: setPadding('left'),
+					paddingRight: setPadding('right'),
+					width: round ? '48px' : width || 'auto',
+					borderRadius: borderRadius ?? '500px',
 				},
 				medium: {
 					height: 36,
 					gap: 8,
 					iconSize,
-					paddingLeft: round ? 0 : iconLeft ? 20 : 24,
-					paddingRight: round ? 0 : iconRight ? 20 : 24,
-					width: round ? "36px" : width || "auto",
-					borderRadius: borderRadius ?? "500px",
+					paddingLeft: setPadding('left'),
+					paddingRight: setPadding('right'),
+					width: round ? '36px' : width || 'auto',
+					borderRadius: borderRadius ?? '500px',
 				},
 				text: {
 					height: 20,
@@ -290,12 +306,12 @@ const UIButtonComponent = forwardRef<UIButtonHandle, UIButtonProps>(
 					borderRadius: 0,
 				},
 			};
-		}, [iconSize, round, iconLeft, iconRight, width, borderRadius]);
+		}, [iconSize, width, round, borderRadius, setPadding]);
 
 		// Memoize handleMouseEnter
 		const handleMouseEnter = useCallback(
 			(e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
-				if (btnState !== "disabled") setBtnState("hover");
+				if (btnState !== 'disabled') setBtnState('hover');
 				if (!ref?.current || !tooltip) return;
 				const tip: ToolTip = {
 					type: ToolTipType.button,
@@ -310,7 +326,7 @@ const UIButtonComponent = forwardRef<UIButtonHandle, UIButtonProps>(
 
 		// Memoize handleMouseLeave
 		const handleMouseLeave = useCallback(() => {
-			if (btnState !== "disabled") setBtnState("normal");
+			if (btnState !== 'disabled') setBtnState('normal');
 			if (tooltip) onToolTip(null);
 		}, [btnState, tooltip, onToolTip]);
 
@@ -331,24 +347,24 @@ const UIButtonComponent = forwardRef<UIButtonHandle, UIButtonProps>(
 			() => ({
 				color: colorStyles[variant].color[btnState],
 				background: fill
-					? theme.colors["core-surface-primary"]
+					? theme.colors['core-surface-primary']
 					: colorStyles[variant].background[state],
 				paddingRight: paddingRight ?? sizingStyles[size].paddingRight,
 				paddingLeft: paddingLeft ?? sizingStyles[size].paddingLeft,
 				borderRadius: sizingStyles[size].borderRadius,
-				width: width === "fill" ? "unset" : sizingStyles[size].width,
+				width: width === 'fill' ? 'unset' : sizingStyles[size].width,
 				height: sizingStyles[size].height,
-				minWidth: width === "fill" ? "unset" : sizingStyles[size].width,
+				minWidth: width === 'fill' ? 'unset' : sizingStyles[size].width,
 				maxHeight: sizingStyles[size].height,
 				minHeight: sizingStyles[size].height,
-				flex: width === "fill" ? 1 : "unset",
+				flex: width === 'fill' ? 1 : 'unset',
 				gap: sizingStyles[size].gap,
 				borderWidth: colorStyles[variant].border,
-				borderStyle: "solid" as const,
+				borderStyle: 'solid' as const,
 				borderColor: colorStyles[variant].borderColor[btnState],
 				cursor:
-					state === "disabled" ? ("default" as const) : ("pointer" as const),
-				transition: "all 0s ease-in-out 0s",
+					state === 'disabled' ? ('default' as const) : ('pointer' as const),
+				transition: 'all 0s ease-in-out 0s',
 			}),
 			[
 				colorStyles,
@@ -365,48 +381,47 @@ const UIButtonComponent = forwardRef<UIButtonHandle, UIButtonProps>(
 			],
 		);
 
-		// Memoize icon stroke color
+		// memo icon stroke color
 		const iconStrokeColor = useMemo(
-			() =>
-				state === "disabled"
-					? colorStyles[variant].iconColor[btnState]
-					: destructive
-						? theme.colors["feedback-warning"]
-						: colorStyles[variant].iconColor[btnState],
-			[state, colorStyles, variant, btnState, destructive, theme],
+			() => colorStyles[variant].iconColor[state],
+			[colorStyles, variant, state],
 		);
 
-		// Memoize progress color
+		// memo progress color
 		const progressColor = useMemo(
 			() =>
 				destructive
-					? theme.colors["feedback-warning"]
+					? theme.colors['feedback-warning']
 					: colorStyles[variant].color[btnState],
 			[destructive, theme, colorStyles, variant, btnState],
 		);
 
+		const cssVars = useMemo(() => {
+			return {
+				'--ui-button-decoration': underline ? 'underline' : 'unset',
+			} as React.CSSProperties;
+		}, [underline]);
+
 		return (
-			<Styled.Button
+			<motion.div
+				className={css.button}
 				ref={ref}
 				onMouseEnter={handleMouseEnter}
 				onMouseLeave={handleMouseLeave}
-				className="noselect"
-				$underline={underline}
-				style={buttonStyle}
+				style={{ ...buttonStyle, ...cssVars }}
 				transition={transition}
 				variants={variants}
 				initial={initial}
 				animate={animate}
 				exit={exit}
 				onClick={handleClick}
-				$size={size}
 			>
 				{!playing && iconLeft && (
 					<Icon
 						name={iconLeft}
 						size={sizingStyles[size].iconSize}
 						strokeColor={iconStrokeColor}
-						pointer={state !== "disabled"}
+						pointer={state !== 'disabled'}
 					/>
 				)}
 				{playing && iconLeft && (
@@ -429,7 +444,9 @@ const UIButtonComponent = forwardRef<UIButtonHandle, UIButtonProps>(
 						inline={false}
 					/>
 				)}
-				{shouldShowLabel && <div className="label">{label}</div>}
+				{shouldShowLabel && (
+					<div className={`${css.label} ${css.m}`}>{label}</div>
+				)}
 				{playing && iconRight && (
 					<ProgressIndicator
 						show={playing}
@@ -445,22 +462,20 @@ const UIButtonComponent = forwardRef<UIButtonHandle, UIButtonProps>(
 						name={iconRight}
 						size={sizingStyles[size].iconSize}
 						strokeColor={iconStrokeColor}
-						pointer={state !== "disabled"}
+						pointer={state !== 'disabled'}
 					/>
 				)}
 				<Dot show={!playing && showDot} />
 				{!playing && count && (
-					<div className="count">
-						<Badge variant={"light"} count={Number(count)} />
+					<div className={css.count}>
+						<Badge variant={'light'} count={Number(count)} />
 					</div>
 				)}
-			</Styled.Button>
+			</motion.div>
 		);
 	},
-) as React.ForwardRefExoticComponent<
-	UIButtonProps & React.RefAttributes<UIButtonHandle>
->;
+);
 
-UIButtonComponent.displayName = "UIButton";
+UIButtonComponent.displayName = 'UIButton';
 
 export const UIButton = React.memo(UIButtonComponent);
