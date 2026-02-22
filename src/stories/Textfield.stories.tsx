@@ -1,11 +1,16 @@
-import type { Meta, StoryObj } from "@storybook/react-vite";
-import { FlexDiv } from "../uikit/FlexDiv/FlexDiv";
-import { TextField } from "../uikit/Textfield/TextField";
+import type { Meta, StoryObj } from '@storybook/react-vite';
+import { FlexDiv } from '../uikit/FlexDiv/FlexDiv';
+import { TextField } from '../uikit/Textfield/TextField';
 
 const meta: Meta<typeof TextField> = {
-	title: "UI Kit/Textfield",
+	title: 'UI Kit/Textfield',
 	component: TextField,
-	args: {},
+	args: {
+		borderType: 'box',
+		textSize: 'm',
+		labelSize: 'm',
+		inputType: 'text',
+	},
 };
 
 export default meta;
@@ -13,7 +18,7 @@ export default meta;
 export const Default: StoryObj<typeof TextField> = {
 	render: (args) => {
 		return (
-			<FlexDiv justify={"center"} alignItems={"center"} padding={64}>
+			<FlexDiv justify={'center'} alignItems={'center'} padding={64}>
 				<TextField {...args} />
 			</FlexDiv>
 		);

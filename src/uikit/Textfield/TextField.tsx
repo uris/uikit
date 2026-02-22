@@ -1,23 +1,23 @@
-import { AnimatePresence, type Transition, motion } from "motion/react";
+import { AnimatePresence, type Transition, motion } from 'motion/react';
 import React, {
 	useCallback,
 	useEffect,
 	useMemo,
 	useRef,
 	useState,
-} from "react";
-import { useTheme } from "styled-components";
-import type { DropDownOption } from "../DropDown/DropDown";
-import { Icon } from "../Icon/Icon";
-import { IconButton } from "../IconButton";
-import { UIButton } from "../UIButton";
-import * as Styled from "./Styles";
+} from 'react';
+import { useTheme } from '../../hooks';
+import { Icon } from '../Icon';
+import { IconButton } from '../IconButton';
+import { UIButton } from '../UIButton';
+import css from './TextField.module.css';
 
 export interface TextFieldProps {
 	value?: string;
 	name?: string;
 	label?: string;
-	labelSize?: number;
+	labelSize?: 's' | 'm' | 'l';
+	textSize?: 's' | 'm' | 'l';
 	placeholder?: string;
 	focused?: boolean;
 	editable?: boolean;
@@ -29,14 +29,14 @@ export interface TextFieldProps {
 	onPaste?: (value: React.ClipboardEvent<HTMLInputElement>) => void;
 	onClear?: () => void;
 	onAction?: () => void;
+	onValidate?: (state: boolean) => void;
 	isValid?: boolean;
 	inline?: boolean;
 	maxLength?: number;
 	size?: { width?: number | string; height?: number | string };
 	padding?: string;
 	borderRadius?: number | string;
-	textAlign?: "left" | "center";
-	labelAlignsRight?: boolean;
+	textAlign?: 'left' | 'center';
 	borderColor?: { focused: string; blurred: string; error: string };
 	backgroundColor?: { focused: string; blurred: string };
 	color?: {
@@ -45,16 +45,16 @@ export interface TextFieldProps {
 		error: string;
 		placeholder: string;
 		disabled: string;
+		label: string;
 	};
+	validate?: boolean;
 	iconLeft?: { name?: string; size?: number; color?: string };
 	clearButton?: { size?: number } | null;
 	clearBlurs?: boolean;
 	disabled?: boolean;
 	actionButton?: boolean;
-	textType?: string;
-	inputType?: "text" | "password";
-	sendButton?: boolean;
-	options?: DropDownOption[];
+	borderType?: 'box' | 'underline' | 'none';
+	inputType?: 'text' | 'password';
 	noShow?: boolean;
 }
 
@@ -65,18 +65,19 @@ const MOTION_CONFIG = {
 		animate: { opacity: 1 },
 		exit: { opacity: 0 },
 	},
-	transition: { ease: "easeInOut", duration: 0.25 } as Transition,
+	transition: { ease: 'easeInOut', duration: 0.25 } as Transition,
 };
 
 export const TextField = React.memo(
 	(props: TextFieldProps) => {
 		const theme = useTheme();
 		const {
-			name = "input_name",
-			value = "",
-			label = "",
-			labelSize = 15,
-			placeholder = "placeholder",
+			name = 'input_name',
+			value = '',
+			label = '',
+			labelSize = 'm',
+			textSize = "m",
+			placeholder = 'placeholder',
 			focused = false,
 			onSubmit = () => null,
 			onChange = () => null,
@@ -86,76 +87,52 @@ export const TextField = React.memo(
 			onAction = () => null,
 			onPaste = () => null,
 			onClear = () => null,
+			onValidate = () => null,
 			actionButton = false,
 			maxLength = undefined,
-			size = { width: "100%", height: 36 },
-			padding = "8px 16px",
+			size = { width: '100%', height: 'auto' },
+			padding = '8px 16px',
 			borderRadius = 8,
 			editable = true,
-			textAlign = "left",
-			labelAlignsRight = true,
+			textAlign = 'left',
 			isValid = true,
 			inline = false,
 			noShow = false,
+			borderType = 'box',
+			validate = true,
 			borderColor = {
-				focused: theme.colors["core-button-primary"],
-				blurred: "transparent",
-				error: theme.colors["feedback-warning"],
+				focused: 'var(--core-link-primary)',
+				blurred: 'var(--core-outline-primary)',
+				error: 'var(--feedback-warning)',
 			},
 			backgroundColor = {
-				focused: theme.colors["core-surface-secondary"],
-				blurred: theme.colors["core-surface-secondary"],
+				focused: 'var(--core-surface-secondary)',
+				blurred: 'var(--core-surface-secondary)',
 			},
 			color = {
-				focused: theme.colors["core-text-primary"],
-				blurred: theme.colors["core-text-secondary"],
-				error: theme.colors["core-text-primary"],
-				placeholder: theme.colors["core-text-disabled"],
-				disabled: theme.colors["core-text-disabled"],
+				focused: 'var(--core-text-primary)',
+				blurred: 'var(--core-text-primary)',
+				error: 'var(--feedback-warning)',
+				placeholder: 'var(--core-text-disabled)',
+				disabled: 'var(--core-text-disabled)',
+				label: 'var(--core-text-secondary)',
 			},
 			iconLeft = null,
 			clearButton = { size: 20 },
 			clearBlurs = false,
 			disabled = false,
-			textType,
-			inputType = "text",
+			inputType = 'text',
 		} = props;
 
 		const input = useRef<HTMLInputElement>(null);
 		const [text, setText] = useState<string>(value);
 		const [isFocused, setIsFocused] = useState<boolean>(focused);
+		const [valid, setValid] = useState<boolean>(isValid);
 		const [show, setShow] = useState<boolean>(false);
 
-		// Memoize computed styles
-		const computedStyles = useMemo(
-			() => ({
-				borderColor,
-				backgroundColor,
-				color,
-				isValid,
-				borderRadius,
-				size,
-				padding,
-				textAlign,
-				labelSize,
-			}),
-			[
-				borderColor,
-				backgroundColor,
-				color,
-				isValid,
-				borderRadius,
-				size,
-				padding,
-				textAlign,
-				labelSize,
-			],
-		);
-
-		// Combined focus effect (replaces duplicate effects)
+		// update focused and blurred state on prop updates
 		useEffect(() => {
 			if (!input.current) return;
-
 			if (focused) {
 				input.current.focus();
 			} else {
@@ -164,40 +141,56 @@ export const TextField = React.memo(
 			setIsFocused(focused);
 		}, [focused]);
 
-		// Sync value with text state
+		// update text value on prop change
 		useEffect(() => {
 			setText(value);
 		}, [value]);
 
-		// Memoize handleClearTextField
+		// update valid on prop change
+		useEffect(() => {
+			setValid(isValid);
+		}, [isValid]);
+		
+		// callback to check if the text is valid
+		const textIsValid = useCallback((entry:string)=>{
+			if(!validate) return
+			const ok = entry.length > 1 || entry === '';
+			setValid(ok);
+			if(valid !== ok) onValidate(ok)
+		},[onValidate, valid])
+
+		// memo clear text field contents
 		const handleClearTextField = useCallback(() => {
 			if (input?.current) {
 				if (!clearBlurs) input.current.focus();
-				setText("");
+				setText('');
+				textIsValid('')
 			}
-			onChange("");
+			onChange('');
 			onClear();
 		}, [clearBlurs, onChange, onClear]);
 
-		// Memoize handleValueChange
+		// memo handling value updates based on input
 		const handleValueChange = useCallback(
 			(newValue: string) => {
 				setText(newValue);
 				onChange(newValue);
+				if(!valid) textIsValid(text)
 			},
-			[onChange],
+			[onChange, textIsValid],
 		);
 
-		// Memoize handleBlur
+		// memo blur handler
 		const handleBlur = useCallback(() => {
+			textIsValid(text)
 			setIsFocused(false);
 			onBlur(text);
 		}, [text, onBlur]);
 
-		// Memoize handleKeyDown
+		// memo key stroke handling
 		const handleKeyDown = useCallback(
 			(e: React.KeyboardEvent) => {
-				if (e.key === "Enter") {
+				if (e.key === 'Enter') {
 					handleBlur();
 					onSubmit(text);
 					input.current?.blur();
@@ -211,32 +204,32 @@ export const TextField = React.memo(
 			[text, disabled, onSubmit, onKeydown, handleBlur],
 		);
 
-		// Memoize handleFocus
+		// memo handle focus
 		const handleFocus = useCallback(() => {
 			setIsFocused(true);
 			onFocus(text);
 		}, [text, onFocus]);
 
-		// Memoize toggleShow
+		// memo toggle show (for passwords)
 		const toggleShow = useCallback(() => {
 			setShow((prev) => !prev);
 		}, []);
 
-		// Memoize icon container style
+		// memo icon style
 		const iconContainerStyle = useMemo(
 			() =>
 				iconLeft ? { width: iconLeft.size, height: iconLeft.size } : undefined,
 			[iconLeft],
 		);
 
-		// Memoize icon stroke color
+		// memo icon color
 		const iconStrokeColor = useMemo(
 			() =>
-				iconLeft?.color ? iconLeft.color : theme.colors["core-icon-secondary"],
+				iconLeft?.color ? iconLeft.color : theme.colors['core-icon-secondary'],
 			[iconLeft, theme],
 		);
 
-		// Memoize clear button style
+		// memo show clear button
 		const clearButtonStyle = useMemo(
 			() =>
 				clearButton
@@ -245,17 +238,93 @@ export const TextField = React.memo(
 			[clearButton],
 		);
 
+		// process style values that are string, number or undefined
+		const setStyleValue = useCallback((value: string | number | undefined) => {
+			if (value === undefined) return 'unset';
+			if (typeof value === 'string') return value;
+			return `${value}px`;
+		}, []);
+
+		// memo background color
+		const setBackgroundColor = useMemo(() => {
+			if (inline) return 'unset';
+			if (isFocused) return backgroundColor.focused ?? 'transparent';
+			return backgroundColor.blurred ?? 'transparent';
+		}, [inline, isFocused, backgroundColor]);
+
+		// memo border color
+		const setBorderColor = useMemo(() => {
+			if (borderType === 'none') return 'transparent';
+			if (validate && !valid)
+				return borderColor.error ?? borderColor.blurred ?? 'transparent';
+			if (isFocused)
+				return borderColor.focused ?? borderColor.blurred ?? 'transparent';
+			return borderColor.blurred ?? 'transparent';
+		}, [borderType, valid, isFocused, borderColor]);
+
+		// memo box shadow (border style)
+		const setBoxShadow = useMemo(() => {
+			if (borderType === 'none') return 'unset';
+			if (borderType === 'underline') return `0 1px 0 0 ${setBorderColor}`;
+			return `0 0 0 1px ${setBorderColor}`;
+		}, [borderType, setBorderColor]);
+
+		// memo text color
+		const textColor = useMemo(() => {
+			if (validate && !valid) return color.error ?? 'var(--core-text-primary)';
+			if (isFocused) return color.focused ?? 'var(--core-text-primary)';
+			return color.blurred ?? 'var(--core-text-primary)';
+		}, [isFocused, valid, color]);
+
+		// memo text align
+		const setTextAlign = useMemo(() => {
+			return textAlign ?? 'left';
+		}, [textAlign]);
+
+		// memo opacity password show / hide
+		const setShowOpacity = useMemo(() => {
+			if (inputType !== 'password') return '0';
+			if (isFocused) return '1';
+			return '0.5';
+		}, [inputType, isFocused]);
+
+		// memo css vars
+		const cssVars = useMemo(() => {
+			return {
+				'--tf-width': setStyleValue(size.width),
+				'--tf-height': setStyleValue(size.height),
+				'--tf-padding': setStyleValue(padding),
+				'--tf-padding-label-left': label === '' ? 'unset' : '0',
+				'--tf-border-radius': setStyleValue(borderRadius),
+				'--tf-bg-color': setBackgroundColor,
+				'--tf-box-shadow': setBoxShadow,
+				'--tf-color': textColor,
+				'--tf-label-color': color.label ?? 'var(--core-text-disabled)',
+				'--tf-text-align': setTextAlign,
+				'--tf-show-opacity': setShowOpacity,
+				'--tf-placeholder-color':
+					color.placeholder ?? 'var(--core-text-disabled)',
+			} as React.CSSProperties;
+		}, [
+			size,
+			padding,
+			label,
+			borderRadius,
+			setStyleValue,
+			setBackgroundColor,
+			setBoxShadow,
+			textColor,
+			setTextAlign,
+			setShowOpacity,
+			color,
+		]);
+
 		return (
-			<Styled.InputWrapper
-				$props={computedStyles}
-				$focused={isFocused}
-				$isvalid={isValid}
-				$inline={inline}
-			>
-				{label !== "" && (
-					<Styled.Label $props={computedStyles}>{label}</Styled.Label>
+			<div className={css.wrapper} style={cssVars}>
+				{label && (
+					<div className={`${css.label} ${css[labelSize]}`}>{label}</div>
 				)}
-				<Styled.InputContainer $padding={padding}>
+				<div className={css.container}>
 					{iconLeft && (
 						<div style={iconContainerStyle}>
 							<Icon
@@ -265,20 +334,15 @@ export const TextField = React.memo(
 							/>
 						</div>
 					)}
-					<Styled.Input
-						$textType={textType}
-						$props={computedStyles}
-						$isvalid={isValid}
-						$focused={isFocused}
-						$label={label}
-						$labelRight={labelAlignsRight}
+					<input
+						className={`${css.input} ${css[textSize]}`}
 						ref={input}
-						type={inputType === "password" && show ? "text" : inputType}
+						type={inputType === 'password' && show ? 'text' : inputType}
 						name={name}
 						aria-label={name}
-						autoCapitalize={"none"}
-						autoCorrect={"off"}
-						autoComplete={"off"}
+						autoCapitalize={'none'}
+						autoCorrect={'off'}
+						autoComplete={'off'}
 						value={text}
 						onChange={(e) => handleValueChange(e.target.value)}
 						onKeyDown={handleKeyDown}
@@ -291,20 +355,21 @@ export const TextField = React.memo(
 						maxLength={maxLength}
 					/>
 					<AnimatePresence initial={false}>
-						{clearButton && text !== "" && (
+						{isFocused && clearButton && text !== '' && (
 							<motion.div
+								className={css.clearButton}
 								style={clearButtonStyle}
 								variants={MOTION_CONFIG.variants}
-								initial={"initial"}
-								animate={"animate"}
-								exit={"exit"}
+								initial={'initial'}
+								animate={'animate'}
+								exit={'exit'}
 								transition={MOTION_CONFIG.transition}
 								onClick={handleClearTextField}
 							>
 								<Icon
-									name={"x"}
+									name={'x'}
 									size={clearButton.size}
-									strokeColor={theme.colors["core-icon-secondary"]}
+									strokeColor={theme.colors['core-icon-secondary']}
 								/>
 							</motion.div>
 						)}
@@ -313,50 +378,62 @@ export const TextField = React.memo(
 						{actionButton && (
 							<motion.div
 								variants={MOTION_CONFIG.variants}
-								initial={"initial"}
-								animate={"animate"}
-								exit={"exit"}
+								initial={'initial'}
+								animate={'animate'}
+								exit={'exit'}
 								transition={MOTION_CONFIG.transition}
 							>
 								<UIButton
-									label={"Translate"}
-									variant={"text"}
-									size={"text"}
-									state={text === "" ? "disabled" : "normal"}
-									labelColor={theme.colors["core-button-primary"]}
+									label={'Translate'}
+									variant={'text'}
+									size={'text'}
+									state={text === '' ? 'disabled' : 'normal'}
+									labelColor={theme.colors['core-button-primary']}
 									onClick={onAction}
 								/>
 							</motion.div>
 						)}
 					</AnimatePresence>
-					{inputType === "password" && !noShow && (
-						<Styled.ButtonShow $disabled={false} $on={show} $focused={focused}>
+					{inputType === 'password' && !noShow && (
+						<div className={css.showPassword}>
 							<IconButton
-								icon={"view"}
+								icon={'view'}
 								toggleIcon={true}
 								toggle={false}
 								isToggled={show}
 								iconSize={18}
 								frameSize={18}
 								onClick={toggleShow}
-								tooltip={"Show / Hide"}
+								tooltip={'Show / Hide'}
 								disabled={false}
 							/>
-						</Styled.ButtonShow>
+						</div>
 					)}
-				</Styled.InputContainer>
-			</Styled.InputWrapper>
+				</div>
+			</div>
 		);
 	},
 	(prevProps, nextProps) => {
 		// Custom comparison for expensive props
 		return (
 			prevProps.value === nextProps.value &&
+			prevProps.borderType === nextProps.borderType &&
+			prevProps.borderRadius === nextProps.borderRadius &&
+			prevProps.borderColor === nextProps.borderColor &&
+			prevProps.labelSize === nextProps.labelSize &&
 			prevProps.focused === nextProps.focused &&
 			prevProps.isValid === nextProps.isValid &&
-			prevProps.disabled === nextProps.disabled
+			prevProps.validate === nextProps.validate &&
+			prevProps.disabled === nextProps.disabled &&
+			prevProps.color === nextProps.color &&
+			prevProps.label === nextProps.label &&
+			prevProps.inputType === nextProps.inputType &&
+			prevProps.textSize === nextProps.textSize &&
+			prevProps.padding === nextProps.padding &&
+			prevProps.textAlign === nextProps.textAlign &&
+			prevProps.placeholder === nextProps.placeholder
 		);
 	},
 );
 
-TextField.displayName = "TextField";
+TextField.displayName = 'TextField';
