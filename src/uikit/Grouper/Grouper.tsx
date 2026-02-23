@@ -1,8 +1,8 @@
 import { useAnimate } from 'motion/react';
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
-import { useTheme } from 'styled-components';
-import { Badge } from '../Badge/Badge';
-import { Icon } from '../Icon/Icon';
+import { useTheme } from '../../hooks';
+import { Badge } from '../Badge';
+import { Icon } from '../Icon';
 import css from './Grouper.module.css';
 
 export interface GrouperProps {
@@ -16,7 +16,6 @@ export interface GrouperProps {
 	border?: number;
 	count?: number | string;
 	hideNull?: boolean;
-	variant?: 'group' | 'facet';
 	showFilterBadge?: boolean;
 	unframed?: boolean;
 	onChange?: (state: boolean) => void;
@@ -35,7 +34,6 @@ export const Grouper = React.memo((props: GrouperProps) => {
 		border = 0,
 		count = 0,
 		unframed = false,
-		variant = 'group',
 		hideNull = true,
 		showFilterBadge = false,
 		onChange = () => null,

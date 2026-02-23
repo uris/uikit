@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { useTheme } from 'styled-components';
+import { useTheme } from '../../hooks';
 import { IconButton } from '../IconButton';
 import type { ToolTip } from '../sharedTypes';
 import css from './EditorSummary.module.css';
@@ -17,7 +17,7 @@ export interface EditorSummaryProps {
 	onToolTip?: (tip: ToolTip | null) => void;
 }
 
-export function EditorSummary(props: EditorSummaryProps) {
+export function EditorSummary(props: Readonly<EditorSummaryProps>) {
 	const {
 		edits = [],
 		current = -1,

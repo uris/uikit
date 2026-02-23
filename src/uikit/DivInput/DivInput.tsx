@@ -97,6 +97,7 @@ export const DivInput = React.memo((props: DivInputProps) => {
 		const newText =
 			value === '' ? cleanString(placeholder) : cleanString(value);
 		innerText.current = newText;
+		ref.current.innerText = newText;
 		setText(newText);
 	}, [value, placeholder, focus, isEditable, handleSelectAll]);
 

@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { useTheme } from 'styled-components';
+import { useTheme } from '../../hooks';
 import { useObserveResize } from '../../hooks/useObserveResize';
 import { DropDown, type DropDownOption } from '../DropDown';
 import { IconButton } from '../IconButton';

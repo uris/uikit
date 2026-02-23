@@ -6,7 +6,7 @@ import React, {
 	useRef,
 	useState,
 } from 'react';
-import { useTheme } from 'styled-components';
+import { useTheme } from '../../hooks';
 import css from './DraggablePanel.module.css';
 import type { Constraint } from './_Types';
 
