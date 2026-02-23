@@ -1,9 +1,9 @@
-import { coreColors, dark, light } from "./colors/colors";
-import type { Colors, CoreColors } from "./colors/types";
-import { corners } from "./corners/corners";
-import type { Corners } from "./corners/types";
-import { type } from "./type/type";
-import type { Type } from "./type/types";
+import { coreColors, dark, light } from './colors/colors';
+import type { Colors, CoreColors } from './colors/types';
+import { corners } from './corners/corners';
+import type { Corners } from './corners/types';
+import { type } from './type/type';
+import type { Type } from './type/types';
 
 export type MayaTheme = {
 	name: string;
@@ -14,7 +14,7 @@ export type MayaTheme = {
 };
 
 export const lightTheme: MayaTheme = {
-	name: "lightMode",
+	name: 'lightMode',
 	coreColors,
 	colors: light,
 	type,
@@ -22,7 +22,7 @@ export const lightTheme: MayaTheme = {
 };
 
 export const darkTheme: MayaTheme = {
-	name: "darkMode",
+	name: 'darkMode',
 	coreColors,
 	colors: dark,
 	type,

@@ -2,6 +2,7 @@
 	composes: row from "../../util/flexBox.module.css";
 	position: relative;
 	user-select: none;
+	min-width: var(--ui-button-min-width);
 	-webkit-user-select: none;
 }
 

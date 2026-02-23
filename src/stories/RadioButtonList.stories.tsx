@@ -1,26 +1,26 @@
-import type { Meta, StoryObj } from "@storybook/react-vite";
-import type { RadioButtonOption } from "src/uikit/RadioButton";
-import { fn } from "storybook/test";
-import { FlexDiv } from "../uikit/FlexDiv/FlexDiv";
-import { RadioButtonList } from "../uikit/RadioButtonList/RadioButtonList";
+import type { Meta, StoryObj } from '@storybook/react-vite';
+import type { RadioButtonOption } from 'src/uikit/RadioButton';
+import { fn } from 'storybook/test';
+import { FlexDiv } from '../uikit/FlexDiv/FlexDiv';
+import { RadioButtonList } from '../uikit/RadioButtonList/RadioButtonList';
 
 const options: RadioButtonOption[] = [
 	{
-		fieldName: "option",
-		title: "Option 1",
+		fieldName: 'option',
+		title: 'Option 1',
 		state: false,
-		icon: "circle",
+		icon: 'circle',
 	},
 	{
-		fieldName: "option",
-		title: "Option 2",
+		fieldName: 'option',
+		title: 'Option 2',
 		state: false,
-		icon: "circle",
+		icon: 'circle',
 	},
 ];
 
 const meta: Meta<typeof RadioButtonList> = {
-	title: "UI Kit/RadioButtonList",
+	title: 'UI Kit/RadioButtonList',
 	component: RadioButtonList,
 	args: {
 		options: options,
@@ -31,7 +31,7 @@ const meta: Meta<typeof RadioButtonList> = {
 		multiSelect: false,
 		wrap: false,
 		tabIndexSeed: 0,
-		spacer: "none",
+		spacer: 'none',
 		custom: 0,
 		gap: 16,
 		hideRadio: false,
@@ -48,7 +48,7 @@ export default meta;
 export const Default: StoryObj<typeof RadioButtonList> = {
 	render: (args) => {
 		return (
-			<FlexDiv justify={"center"} alignItems={"center"} padding={64}>
+			<FlexDiv justify={'center'} alignItems={'center'} padding={64}>
 				<RadioButtonList {...args} />
 			</FlexDiv>
 		);

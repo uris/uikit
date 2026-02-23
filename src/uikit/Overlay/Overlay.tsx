@@ -1,10 +1,10 @@
-import { AnimatePresence, motion } from "motion/react";
-import React, { useCallback, useMemo } from "react";
-import css from "./Overlay.module.css";
+import { AnimatePresence, motion } from 'motion/react';
+import React, { useCallback, useMemo } from 'react';
+import css from './Overlay.module.css';
 export interface OverlayProps {
 	opacity?: number;
 	color?: string;
-	type?: "clear" | "dark";
+	type?: 'clear' | 'dark';
 	global?: boolean;
 	overlay?: any;
 	onClick?: () => void;
@@ -16,8 +16,8 @@ export const Overlay = React.memo((props: OverlayProps) => {
 		onClick = () => null,
 		toggleOverlay = () => null,
 		opacity = 0,
-		color = "rgb(0,0,0)",
-		type = "clear",
+		color = 'rgb(0,0,0)',
+		type = 'clear',
 		global = false,
 		overlay,
 	} = props;
@@ -26,9 +26,9 @@ export const Overlay = React.memo((props: OverlayProps) => {
 
 	// Memoize computed opacity value
 	const computedOpacity = useMemo(() => {
-		if (type === "clear") return 0;
+		if (type === 'clear') return 0;
 		if (opacity !== undefined) return opacity;
-		if (type === "dark") return 0.8;
+		if (type === 'dark') return 0.8;
 		return 0;
 	}, [type, opacity]);
 
@@ -40,12 +40,12 @@ export const Overlay = React.memo((props: OverlayProps) => {
 	const handleContextMenu = useCallback((e: React.MouseEvent) => {
 		e.preventDefault();
 	}, []);
-	
-	const cssVars = useMemo(()=>{
+
+	const cssVars = useMemo(() => {
 		return {
-			"--overlay-color": color ?? "rgb(0,0,0)",
-		} as React.CSSProperties
-	},[color])
+			'--overlay-color': color ?? 'rgb(0,0,0)',
+		} as React.CSSProperties;
+	}, [color]);
 
 	return (
 		<AnimatePresence initial={false}>

@@ -34,9 +34,9 @@ export const Slider = React.memo((props: SliderProps) => {
 		trackHeadWidth = 4,
 		rounding = 2,
 		cursor = 'default',
-		headColor = "var(--core-text-primary)",
-		trackColor =  "var(--core-surface-secondary)",
-		progressColor =  "var(--core-text-primary)",
+		headColor = 'var(--core-text-primary)',
+		trackColor = 'var(--core-surface-secondary)',
+		progressColor = 'var(--core-text-primary)',
 		state = [],
 		onChange = () => null,
 		onDragChange = () => null,
@@ -197,19 +197,19 @@ export const Slider = React.memo((props: SliderProps) => {
 		if (headType === 'round') return trackHeadSize;
 		return trackHeadWidth;
 	}, [headType, trackHeadSize, trackHeadWidth]);
-	
+
 	// memo head color
 	const trackHeadColor = useMemo(() => {
-		if(headType === 'none') return 'transparent';
+		if (headType === 'none') return 'transparent';
 		return headColor ?? 'var(--core-text-primary)';
 	}, [headColor, headType]);
 
 	// memo head height
 	const headSize = useMemo(() => {
-		if(headType === 'none') return height
-		return trackHeadSize
+		if (headType === 'none') return height;
+		return trackHeadSize;
 	}, [trackHeadSize, headType, height]);
-	
+
 	// memo css vars
 	const cssVars = useMemo(() => {
 		return {

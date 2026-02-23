@@ -1,16 +1,16 @@
-import type { Meta, StoryObj } from "@storybook/react-vite";
-import { fn } from "storybook/test";
-import { EditorButtonBar } from "../uikit/EditorButtonBar/EditorButtonBar";
-import { FlexDiv } from "../uikit/FlexDiv/FlexDiv";
+import type { Meta, StoryObj } from '@storybook/react-vite';
+import { fn } from 'storybook/test';
+import { EditorButtonBar } from '../uikit/EditorButtonBar/EditorButtonBar';
+import { FlexDiv } from '../uikit/FlexDiv/FlexDiv';
 
 const meta: Meta<typeof EditorButtonBar> = {
-	title: "UI Kit / EditorButtonBar",
+	title: 'UI Kit / EditorButtonBar',
 	component: EditorButtonBar,
 	args: {
 		shortSize: 560,
-		state: "auto",
+		state: 'auto',
 		activeFormats: [],
-		activeStyle: "p",
+		activeStyle: 'p',
 		onCommand: fn(),
 		onToolTip: fn(),
 	},
@@ -21,7 +21,7 @@ export default meta;
 export const Default: StoryObj<typeof EditorButtonBar> = {
 	render: (args) => {
 		return (
-			<FlexDiv justify={"center"} alignItems={"center"} padding={64}>
+			<FlexDiv justify={'center'} alignItems={'center'} padding={64}>
 				<EditorButtonBar {...args} />
 			</FlexDiv>
 		);

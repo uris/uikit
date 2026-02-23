@@ -1,9 +1,9 @@
-import type { DocExcerpt } from "./ExcerptList/ExcerptList";
+import type { DocExcerpt } from './ExcerptList/ExcerptList';
 import {
 	MessageInput,
 	type MessageInputProps,
-} from "./InputField/MessageInput";
-import type { PromptType, Role, SendMessage, UploadDocument } from "./_Types";
+} from './InputField/MessageInput';
+import type { PromptType, Role, SendMessage, UploadDocument } from './_Types';
 
 export { MessageInput };
 export type {

@@ -1,7 +1,8 @@
-import { AnimatePresence, motion } from "motion/react";
-import React, {useEffect, useMemo, useRef, useState} from "react";
-import { useTheme } from "styled-components";
-import css from "./ProgressIndicator.module.css";
+import { AnimatePresence, motion } from 'motion/react';
+import type React from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
+import { useTheme } from 'styled-components';
+import css from './ProgressIndicator.module.css';
 
 export interface ProgressIndicatorProps {
 	size?: number;
@@ -21,7 +22,7 @@ export function ProgressIndicator(props: ProgressIndicatorProps) {
 		size = 20,
 		secondsPerSpin = 1,
 		show = false,
-		color = theme.colors["core-icon-primary"],
+		color = theme.colors['core-icon-primary'],
 		stroke = 1.5,
 		inline = false,
 		duration = undefined,
@@ -49,14 +50,14 @@ export function ProgressIndicator(props: ProgressIndicatorProps) {
 			if (timer?.current) clearTimeout(timer.current);
 		};
 	}, [show, didStart, didStop, duration]);
-	
+
 	const cssVars = useMemo(() => {
 		return {
-			"--pi-position": inline ? "relative" : "absolute",
-			"--pi-inset": inline ? "unset" : "0",
-			"--pi-icon-size": `${size ?? 0}px`,
+			'--pi-position': inline ? 'relative' : 'absolute',
+			'--pi-inset': inline ? 'unset' : '0',
+			'--pi-icon-size': `${size ?? 0}px`,
 		} as React.CSSProperties;
-	},[inline])
+	}, [inline]);
 
 	return (
 		<AnimatePresence initial={true}>
@@ -91,8 +92,8 @@ const OpenCircle = (
 			role="img"
 			aria-label="Loading spinner"
 			transition={{
-				ease: "linear",
-				repeatType: "loop",
+				ease: 'linear',
+				repeatType: 'loop',
 				repeat: playing ? Number.POSITIVE_INFINITY : 0,
 				duration: secondsPerSpin,
 			}}
@@ -110,7 +111,7 @@ const OpenCircle = (
 				d="M 17.371 6.886 C 17.776 7.843 18 8.895 18 10 C 18 14.418 14.418 18 10 18 C 5.582 18 2 14.418 2 10 C 2 5.582 5.582 2 10 2"
 				fill="transparent"
 				strokeWidth={stroke}
-				stroke={"url(#strokeFill)"}
+				stroke={'url(#strokeFill)'}
 			/>
 		</motion.svg>
 	);

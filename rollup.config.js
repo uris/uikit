@@ -1,40 +1,40 @@
-import babel from "@rollup/plugin-babel";
-import commonjs from "@rollup/plugin-commonjs";
-import resolve from "@rollup/plugin-node-resolve";
-import typescript from "@rollup/plugin-typescript";
-import url from "@rollup/plugin-url";
-import svgr from "@svgr/rollup";
-import peerDepsExternal from "rollup-plugin-peer-deps-external";
-import postcss from "rollup-plugin-postcss";
-import packageJson from "./package.json";
+import babel from '@rollup/plugin-babel';
+import commonjs from '@rollup/plugin-commonjs';
+import resolve from '@rollup/plugin-node-resolve';
+import typescript from '@rollup/plugin-typescript';
+import url from '@rollup/plugin-url';
+import svgr from '@svgr/rollup';
+import peerDepsExternal from 'rollup-plugin-peer-deps-external';
+import postcss from 'rollup-plugin-postcss';
+import packageJson from './package.json';
 
 export default {
-	input: "src/index.ts",
+	input: 'src/index.ts',
 	output: [
 		{
 			file: packageJson.main,
-			format: "cjs",
+			format: 'cjs',
 			sourcemap: true,
 		},
 		{
 			file: packageJson.module,
-			format: "esm",
+			format: 'esm',
 			sourcemap: true,
 		},
 	],
-	external: ["react", "react-dom", "styled-components", "motion"],
+	external: ['react', 'react-dom', 'styled-components', 'motion'],
 	plugins: [
 		peerDepsExternal(),
-		resolve({ extensions: [".js", ".ts", ".tsx"] }),
+		resolve({ extensions: ['.js', '.ts', '.tsx'] }),
 		commonjs(),
 		babel({
-			exclude: ["node_modules/**", "src/stories/**"],
-			presets: ["@babel/preset-react"],
-			babelHelpers: "bundled",
+			exclude: ['node_modules/**', 'src/stories/**'],
+			presets: ['@babel/preset-react'],
+			babelHelpers: 'bundled',
 		}),
 		typescript({
-			tsconfig: "./tsconfig.json",
-			exclude: ["src/stories/**"],
+			tsconfig: './tsconfig.json',
+			exclude: ['src/stories/**'],
 		}),
 		postcss(),
 		svgr({
@@ -42,17 +42,17 @@ export default {
 			svgo: true, // Enable SVGO for optimizing SVGs
 			svgoConfig: {
 				// Custom SVGO config (optional)
-				plugins: [{ name: "removeViewBox", active: false }],
+				plugins: [{ name: 'removeViewBox', active: false }],
 			},
 		}),
 		// Export SVGs and PNgs as URLs for assets
 		// include public path to make sure these get refenced ok
 		url({
-			include: ["**/*.svg", "**/*.png", "**/*.jpg", "**/*.gif"],
+			include: ['**/*.svg', '**/*.png', '**/*.jpg', '**/*.gif'],
 			limit: 0, // Always copy images as assets
-			fileName: "assets/[name][extname]",
+			fileName: 'assets/[name][extname]',
 			emitFiles: true,
-			publicPath: "../", // Change to navigate from dist/index.js to dist/assets
+			publicPath: '../', // Change to navigate from dist/index.js to dist/assets
 		}),
 	],
 };

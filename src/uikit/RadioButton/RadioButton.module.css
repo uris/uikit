@@ -1,44 +1,44 @@
 .wrapper {
-    composes: row from "../../util/flexBox.module.css";
-    padding: var(--rb-padding) !important;
-    max-width: var(--rb-max-width);
-    flex: var(--rb-flex);
-    border: 1px solid var(--core-outline-primary);
-    background: var(--rb-bg);
-    gap: 8px;
-    border-radius: 8px;
-    cursor: pointer;
-    transition: all 0.25s ease-in-out 0s;
-    user-select: none;
-    -webkit-user-select: none;
+	composes: row from "../../util/flexBox.module.css";
+	padding: var(--rb-padding) !important;
+	max-width: var(--rb-max-width);
+	flex: var(--rb-flex);
+	border: 1px solid var(--core-outline-primary);
+	background: var(--rb-bg);
+	gap: 8px;
+	border-radius: 8px;
+	cursor: pointer;
+	transition: all 0.25s ease-in-out 0s;
+	user-select: none;
+	-webkit-user-select: none;
 }
 
 .radioIcon {
-    composes: column from "../../util/flexBox.module.css";
-    width: 20px;
-    height: 20px;
-    max-width: 20px;
-    max-height: 20px;
-    min-height: 20px;
-    min-width: 20px;
+	composes: column from "../../util/flexBox.module.css";
+	width: 20px;
+	height: 20px;
+	max-width: 20px;
+	max-height: 20px;
+	min-height: 20px;
+	min-width: 20px;
 }
 
 .radioTitle {
-    composes: rowStart from "../../util/flexBox.module.css";
-    composes: body-m-regular from "../../util/type.module.css";
-    color: var(--core-text-primary);
-    white-space: nowrap;
-    flex: 1;
+	composes: rowStart from "../../util/flexBox.module.css";
+	composes: body-m-regular from "../../util/type.module.css";
+	color: var(--core-text-primary);
+	white-space: nowrap;
+	flex: 1;
 }
 
 .radioSummary {
-    composes: rowStart from "../../util/flexBox.module.css";
-    composes: body-s-regular from "../../util/type.module.css";
-    color: var(--core-text-primary);
-    flex: 1;
+	composes: rowStart from "../../util/flexBox.module.css";
+	composes: body-s-regular from "../../util/type.module.css";
+	color: var(--core-text-primary);
+	flex: 1;
 }
 
 .radioContent {
-    composes: columnStart from "../../util/flexBox.module.css";
-    width: 100%;
+	composes: columnStart from "../../util/flexBox.module.css";
+	width: 100%;
 }

@@ -50,7 +50,7 @@ export { DropDown } from './uikit/DropDown';
 export type { DropDownOption, DropDownProps } from './uikit/DropDown';
 
 export { ErrorSummary } from './uikit/ErrorSummary';
-export type { ErrorMessage, ErorSummaryProps } from './uikit/ErrorSummary';
+export type { ErrorMessage, ErrorSummaryProps } from './uikit/ErrorSummary';
 
 export { Grouper } from './uikit/Grouper';
 export type { GrouperProps } from './uikit/Grouper';

@@ -1,31 +1,31 @@
-import { useMemo } from "react";
-import { useTheme } from "styled-components";
+import { useMemo } from 'react';
+import { useTheme } from 'styled-components';
 
 export interface LogoProps {
 	image?:
-		| "zoom"
-		| "impossible foods"
-		| "gong"
-		| "seattle seahawks"
-		| "smile"
-		| "drift"
-		| "taylor amde"
-		| "gp"
-		| "gpmark"
-		| "envu"
-		| "pdf"
-		| "G2Leader"
-		| "reviews"
-		| "G2Logo"
-		| "apple"
-		| "yahoo"
-		| "outlook"
-		| "outlook-com"
-		| "google"
-		| "gptype"
-		| "gpgia"
-		| "linkedin"
-		| "stripe"
+		| 'zoom'
+		| 'impossible foods'
+		| 'gong'
+		| 'seattle seahawks'
+		| 'smile'
+		| 'drift'
+		| 'taylor amde'
+		| 'gp'
+		| 'gpmark'
+		| 'envu'
+		| 'pdf'
+		| 'G2Leader'
+		| 'reviews'
+		| 'G2Logo'
+		| 'apple'
+		| 'yahoo'
+		| 'outlook'
+		| 'outlook-com'
+		| 'google'
+		| 'gptype'
+		| 'gpgia'
+		| 'linkedin'
+		| 'stripe'
 		| string;
 	color?: string;
 	height?: number;
@@ -34,15 +34,15 @@ export interface LogoProps {
 export function Logos(props: LogoProps) {
 	const theme = useTheme();
 	const {
-		image = "gp",
-		color = theme.colors["core-text-primary"],
+		image = 'gp',
+		color = theme.colors['core-text-primary'],
 		height = 36,
 	} = props;
 
 	const renderIcon = useMemo(() => {
 		const images = [
 			{
-				name: "stripe",
+				name: 'stripe',
 				svg: (
 					<svg
 						xmlns="http://www.w3.org/2000/svg"
@@ -60,7 +60,7 @@ export function Logos(props: LogoProps) {
 				),
 			},
 			{
-				name: "linkedin",
+				name: 'linkedin',
 				svg: (
 					<svg
 						xmlns="http://www.w3.org/2000/svg"
@@ -78,7 +78,7 @@ export function Logos(props: LogoProps) {
 				),
 			},
 			{
-				name: "gpgia",
+				name: 'gpgia',
 				svg: (
 					<svg
 						xmlns="http://www.w3.org/2000/svg"
@@ -106,7 +106,7 @@ export function Logos(props: LogoProps) {
 				),
 			},
 			{
-				name: "apple",
+				name: 'apple',
 				svg: (
 					<svg
 						xmlns="http://www.w3.org/2000/svg"
@@ -124,7 +124,7 @@ export function Logos(props: LogoProps) {
 				),
 			},
 			{
-				name: "outlook",
+				name: 'outlook',
 				svg: (
 					<svg
 						xmlns="http://www.w3.org/2000/svg"
@@ -245,7 +245,7 @@ export function Logos(props: LogoProps) {
 				),
 			},
 			{
-				name: "outlook-com",
+				name: 'outlook-com',
 				svg: (
 					<svg
 						xmlns="http://www.w3.org/2000/svg"
@@ -277,7 +277,7 @@ export function Logos(props: LogoProps) {
 				),
 			},
 			{
-				name: "google",
+				name: 'google',
 				svg: (
 					<svg
 						xmlns="http://www.w3.org/2000/svg"
@@ -308,7 +308,7 @@ export function Logos(props: LogoProps) {
 				),
 			},
 			{
-				name: "yahoo",
+				name: 'yahoo',
 				svg: (
 					<svg
 						xmlns="http://www.w3.org/2000/svg"
@@ -332,7 +332,7 @@ export function Logos(props: LogoProps) {
 				),
 			},
 			{
-				name: "G2Logo",
+				name: 'G2Logo',
 				svg: (
 					<svg
 						xmlns="http://www.w3.org/2000/svg"
@@ -371,7 +371,7 @@ export function Logos(props: LogoProps) {
 				),
 			},
 			{
-				name: "G2Leader",
+				name: 'G2Leader',
 				svg: (
 					<svg
 						xmlns="http://www.w3.org/2000/svg"
@@ -407,7 +407,7 @@ export function Logos(props: LogoProps) {
 				),
 			},
 			{
-				name: "reviews",
+				name: 'reviews',
 				svg: (
 					<svg
 						xmlns="http://www.w3.org/2000/svg"
@@ -496,27 +496,27 @@ export function Logos(props: LogoProps) {
 				),
 			},
 			{
-				name: "pdf",
+				name: 'pdf',
 				svg: (
 					<svg
 						xmlns="http://www.w3.org/2000/svg"
 						height={height}
-						viewBox={"0,0,31,39"}
+						viewBox={'0,0,31,39'}
 						role="img"
 						aria-label="PDF logo"
 					>
 						<title>PDF</title>
 						<path
 							d="M 1 36 L 1 3 C 1 1.895 1.895 1 3 1 L 17.384 1 C 19.041 1 20.384 2.343 20.384 4 L 20.384 8.361 C 20.384 9.466 21.279 10.361 22.384 10.361 L 27 10.361 C 28.657 10.361 30 11.704 30 13.361 L 30 36 C 30 37.105 29.105 38 28 38 L 3 38 C 1.895 38 1 37.105 1 36 Z"
-							fill={"rgb(233, 233, 224)"}
-							stroke={"rgb(233, 233, 224)"}
+							fill={'rgb(233, 233, 224)'}
+							stroke={'rgb(233, 233, 224)'}
 							strokeMiterlimit="10"
 							strokeDasharray=""
 						/>
 						<path
 							d="M 20 9 L 20 2.5 L 28.5 11 L 22 11 C 20.895 11 20 10.105 20 9 Z"
-							fill={"rgb(217, 215, 202)"}
-							stroke={"rgb(217, 215, 202)"}
+							fill={'rgb(217, 215, 202)'}
+							stroke={'rgb(217, 215, 202)'}
 							strokeMiterlimit="10"
 							strokeDasharray=""
 						/>
@@ -524,7 +524,7 @@ export function Logos(props: LogoProps) {
 							d="M 14.389 11.988 C 14.389 11.988 15.632 12.075 15.712 14.204 C 15.759 15.391 15.506 17.005 13.21 22.133 C 10.906 27.26 8.966 30.347 7.794 30.845 C 6.622 31.344 6.171 30.299 6.171 30.299 C 6.171 30.299 5.482 29.405 6.828 28.02 C 7.66 27.173 9.338 25.488 14.833 24.404 C 20.328 23.328 23.17 24.024 24.255 24.697 C 25.339 25.369 24.912 26.39 24.912 26.39 C 24.912 26.39 24.5 27.522 22.782 27.063 C 21.729 26.778 20.993 26.366 17.461 22.489 C 13.392 18.018 13.004 16.024 13.059 13.753 C 13.099 11.972 14.381 11.98 14.381 11.98 Z"
 							fill="transparent"
 							strokeWidth={1.5}
-							stroke={"rgb(204, 75, 75)"}
+							stroke={'rgb(204, 75, 75)'}
 							strokeMiterlimit="10"
 							strokeDasharray=""
 						/>
@@ -532,7 +532,7 @@ export function Logos(props: LogoProps) {
 				),
 			},
 			{
-				name: "impossible foods",
+				name: 'impossible foods',
 				svg: (
 					<svg
 						xmlns="http://www.w3.org/2000/svg"
@@ -550,7 +550,7 @@ export function Logos(props: LogoProps) {
 				),
 			},
 			{
-				name: "gong",
+				name: 'gong',
 				svg: (
 					<svg
 						xmlns="http://www.w3.org/2000/svg"
@@ -568,7 +568,7 @@ export function Logos(props: LogoProps) {
 				),
 			},
 			{
-				name: "zoom",
+				name: 'zoom',
 				svg: (
 					<svg
 						xmlns="http://www.w3.org/2000/svg"
@@ -586,7 +586,7 @@ export function Logos(props: LogoProps) {
 				),
 			},
 			{
-				name: "seattle seahawks",
+				name: 'seattle seahawks',
 				svg: (
 					<svg
 						xmlns="http://www.w3.org/2000/svg"
@@ -608,7 +608,7 @@ export function Logos(props: LogoProps) {
 				),
 			},
 			{
-				name: "envu",
+				name: 'envu',
 				svg: (
 					<svg
 						xmlns="http://www.w3.org/2000/svg"
@@ -626,7 +626,7 @@ export function Logos(props: LogoProps) {
 				),
 			},
 			{
-				name: "smile",
+				name: 'smile',
 				svg: (
 					<svg
 						xmlns="http://www.w3.org/2000/svg"
@@ -644,7 +644,7 @@ export function Logos(props: LogoProps) {
 				),
 			},
 			{
-				name: "drift",
+				name: 'drift',
 				svg: (
 					<svg
 						xmlns="http://www.w3.org/2000/svg"
@@ -662,7 +662,7 @@ export function Logos(props: LogoProps) {
 				),
 			},
 			{
-				name: "taylor made",
+				name: 'taylor made',
 				svg: (
 					<svg
 						xmlns="http://www.w3.org/2000/svg"
@@ -680,7 +680,7 @@ export function Logos(props: LogoProps) {
 				),
 			},
 			{
-				name: "gp",
+				name: 'gp',
 				svg: (
 					<svg
 						height={height}
@@ -707,7 +707,7 @@ export function Logos(props: LogoProps) {
 				),
 			},
 			{
-				name: "gptype",
+				name: 'gptype',
 				svg: (
 					<svg
 						xmlns="http://www.w3.org/2000/svg"
@@ -726,7 +726,7 @@ export function Logos(props: LogoProps) {
 				),
 			},
 			{
-				name: "gpmark",
+				name: 'gpmark',
 				svg: (
 					<svg
 						xmlns="http://www.w3.org/2000/svg"
@@ -745,7 +745,7 @@ export function Logos(props: LogoProps) {
 				),
 			},
 			{
-				name: "yelp",
+				name: 'yelp',
 				svg: (
 					<svg
 						xmlns="http://www.w3.org/2000/svg"
@@ -772,5 +772,5 @@ export function Logos(props: LogoProps) {
 		return item ? item[0].svg : null;
 	}, [height, image, color]);
 
-	return <div style={{ display: "inline" }}>{renderIcon}</div>;
+	return <div style={{ display: 'inline' }}>{renderIcon}</div>;
 }

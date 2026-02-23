@@ -76,7 +76,7 @@ export const TextField = React.memo(
 			value = '',
 			label = '',
 			labelSize = 'm',
-			textSize = "m",
+			textSize = 'm',
 			placeholder = 'placeholder',
 			focused = false,
 			onSubmit = () => null,
@@ -150,21 +150,24 @@ export const TextField = React.memo(
 		useEffect(() => {
 			setValid(isValid);
 		}, [isValid]);
-		
+
 		// callback to check if the text is valid
-		const textIsValid = useCallback((entry:string)=>{
-			if(!validate) return
-			const ok = entry.length > 1 || entry === '';
-			setValid(ok);
-			if(valid !== ok) onValidate(ok)
-		},[onValidate, valid])
+		const textIsValid = useCallback(
+			(entry: string) => {
+				if (!validate) return;
+				const ok = entry.length > 1 || entry === '';
+				setValid(ok);
+				if (valid !== ok) onValidate(ok);
+			},
+			[onValidate, valid],
+		);
 
 		// memo clear text field contents
 		const handleClearTextField = useCallback(() => {
 			if (input?.current) {
 				if (!clearBlurs) input.current.focus();
 				setText('');
-				textIsValid('')
+				textIsValid('');
 			}
 			onChange('');
 			onClear();
@@ -175,14 +178,14 @@ export const TextField = React.memo(
 			(newValue: string) => {
 				setText(newValue);
 				onChange(newValue);
-				if(!valid) textIsValid(text)
+				if (!valid) textIsValid(text);
 			},
 			[onChange, textIsValid],
 		);
 
 		// memo blur handler
 		const handleBlur = useCallback(() => {
-			textIsValid(text)
+			textIsValid(text);
 			setIsFocused(false);
 			onBlur(text);
 		}, [text, onBlur]);

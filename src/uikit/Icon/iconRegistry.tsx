@@ -1,5 +1,5 @@
-import type React from "react";
-import type { JSX } from "react";
+import type React from 'react';
+import type { JSX } from 'react';
 
 export type UIIcon = {
 	line?: () => JSX.Element;
@@ -26,7 +26,7 @@ const handleKeyDown = (
 	e: React.KeyboardEvent<SVGElement>,
 	onClick: (e: React.MouseEvent<SVGElement, MouseEvent>) => void,
 ) => {
-	if (e.key === "Enter" || e.key === " ") {
+	if (e.key === 'Enter' || e.key === ' ') {
 		e.preventDefault();
 		// Cast the keyboard event to mouse event for the onClick handler
 		onClick(e as unknown as React.MouseEvent<SVGElement, MouseEvent>);
@@ -59,16 +59,16 @@ export function getIconRegistry(props: IconRegistryProps): Map<string, UIIcon> {
 
 	// Unified icon style removing the system highlight as this will be handled by the parent component
 	const iconStyle = {
-		cursor: disabled ? "default" : pointer ? "pointer" : "inherit",
-		userSelect: "none" as const,
-		WebkitTapHighlightColor: "transparent",
-		outline: "none",
+		cursor: disabled ? 'default' : pointer ? 'pointer' : 'inherit',
+		userSelect: 'none' as const,
+		WebkitTapHighlightColor: 'transparent',
+		outline: 'none',
 		border: 0,
 	};
 
 	return new Map<string, UIIcon>([
 		[
-			"task list",
+			'task list',
 			{
 				line: () => (
 					<svg
@@ -78,7 +78,7 @@ export function getIconRegistry(props: IconRegistryProps): Map<string, UIIcon> {
 						viewBox="0 0 24 24"
 						style={iconStyle}
 						onClick={(e) => onClick(e)}
-						fill={"none"}
+						fill={'none'}
 						role="img"
 						aria-label="Task List Icon"
 						tabIndex={pointer && !disabled ? 0 : -1}
@@ -122,7 +122,7 @@ export function getIconRegistry(props: IconRegistryProps): Map<string, UIIcon> {
 			},
 		],
 		[
-			"highlight",
+			'highlight',
 			{
 				line: () => (
 					<svg
@@ -148,7 +148,7 @@ export function getIconRegistry(props: IconRegistryProps): Map<string, UIIcon> {
 			},
 		],
 		[
-			"bold",
+			'bold',
 			{
 				line: () => (
 					<svg
@@ -158,7 +158,7 @@ export function getIconRegistry(props: IconRegistryProps): Map<string, UIIcon> {
 						viewBox="0 0 24 24"
 						style={iconStyle}
 						onClick={(e) => onClick(e)}
-						fill={"none"}
+						fill={'none'}
 						role="img"
 						aria-label="Bold Icon"
 						tabIndex={pointer && !disabled ? 0 : -1}
@@ -186,7 +186,7 @@ export function getIconRegistry(props: IconRegistryProps): Map<string, UIIcon> {
 			},
 		],
 		[
-			"italic",
+			'italic',
 			{
 				line: () => (
 					<svg
@@ -196,7 +196,7 @@ export function getIconRegistry(props: IconRegistryProps): Map<string, UIIcon> {
 						viewBox="0 0 24 24"
 						style={iconStyle}
 						onClick={(e) => onClick(e)}
-						fill={"none"}
+						fill={'none'}
 						role="img"
 						aria-label="Italic Icon"
 						tabIndex={pointer && !disabled ? 0 : -1}
@@ -229,7 +229,7 @@ export function getIconRegistry(props: IconRegistryProps): Map<string, UIIcon> {
 			},
 		],
 		[
-			"underline",
+			'underline',
 			{
 				line: () => (
 					<svg
@@ -264,7 +264,7 @@ export function getIconRegistry(props: IconRegistryProps): Map<string, UIIcon> {
 			},
 		],
 		[
-			"strike",
+			'strike',
 			{
 				line: () => (
 					<svg
@@ -299,7 +299,7 @@ export function getIconRegistry(props: IconRegistryProps): Map<string, UIIcon> {
 			},
 		],
 		[
-			"link",
+			'link',
 			{
 				line: () => (
 					<svg
@@ -330,7 +330,7 @@ export function getIconRegistry(props: IconRegistryProps): Map<string, UIIcon> {
 			},
 		],
 		[
-			"bullet list",
+			'bullet list',
 			{
 				line: () => (
 					<svg
@@ -391,7 +391,7 @@ export function getIconRegistry(props: IconRegistryProps): Map<string, UIIcon> {
 			},
 		],
 		[
-			"numbered list",
+			'numbered list',
 			{
 				line: () => (
 					<svg
@@ -445,7 +445,7 @@ export function getIconRegistry(props: IconRegistryProps): Map<string, UIIcon> {
 			},
 		],
 		[
-			"sink",
+			'sink',
 			{
 				line: () => (
 					<svg
@@ -509,7 +509,7 @@ export function getIconRegistry(props: IconRegistryProps): Map<string, UIIcon> {
 			},
 		],
 		[
-			"lift",
+			'lift',
 			{
 				line: () => (
 					<svg
@@ -573,7 +573,7 @@ export function getIconRegistry(props: IconRegistryProps): Map<string, UIIcon> {
 			},
 		],
 		[
-			"code",
+			'code',
 			{
 				line: () => (
 					<svg
@@ -583,7 +583,7 @@ export function getIconRegistry(props: IconRegistryProps): Map<string, UIIcon> {
 						viewBox="0 0 24 24"
 						style={iconStyle}
 						onClick={(e) => onClick(e)}
-						fill={"none"}
+						fill={'none'}
 						role="img"
 						aria-label="Code Icon"
 						tabIndex={pointer && !disabled ? 0 : -1}
@@ -616,7 +616,7 @@ export function getIconRegistry(props: IconRegistryProps): Map<string, UIIcon> {
 			},
 		],
 		[
-			"like",
+			'like',
 			{
 				line: () => (
 					<svg
@@ -646,7 +646,7 @@ export function getIconRegistry(props: IconRegistryProps): Map<string, UIIcon> {
 			},
 		],
 		[
-			"unlike",
+			'unlike',
 			{
 				line: () => (
 					<svg
@@ -676,7 +676,7 @@ export function getIconRegistry(props: IconRegistryProps): Map<string, UIIcon> {
 			},
 		],
 		[
-			"stop",
+			'stop',
 			{
 				line: () => (
 					<svg
@@ -702,7 +702,7 @@ export function getIconRegistry(props: IconRegistryProps): Map<string, UIIcon> {
 			},
 		],
 		[
-			"copy",
+			'copy',
 			{
 				line: () => (
 					<svg
@@ -726,7 +726,7 @@ export function getIconRegistry(props: IconRegistryProps): Map<string, UIIcon> {
 							strokeWidth={stroke}
 							stroke={strokeColor}
 							strokeLinejoin="round"
-							strokeMiterlimit={"10"}
+							strokeMiterlimit={'10'}
 						/>
 						<path
 							d="M 5 6.5 C 5 5.672 5.672 5 6.5 5 L 16.5 5 C 17.328 5 18 5.672 18 6.5 L 18 16.5 C 18 17.328 17.328 18 16.5 18 L 6.5 18 C 5.672 18 5 17.328 5 16.5 Z"
@@ -734,14 +734,14 @@ export function getIconRegistry(props: IconRegistryProps): Map<string, UIIcon> {
 							strokeWidth={stroke}
 							stroke={strokeColor}
 							strokeLinejoin="round"
-							strokeMiterlimit={"10"}
+							strokeMiterlimit={'10'}
 						/>
 					</svg>
 				),
 			},
 		],
 		[
-			"font smaller",
+			'font smaller',
 			{
 				line: () => (
 					<svg
@@ -768,7 +768,7 @@ export function getIconRegistry(props: IconRegistryProps): Map<string, UIIcon> {
 			},
 		],
 		[
-			"font larger",
+			'font larger',
 			{
 				line: () => (
 					<svg
@@ -795,7 +795,7 @@ export function getIconRegistry(props: IconRegistryProps): Map<string, UIIcon> {
 			},
 		],
 		[
-			"bar chart",
+			'bar chart',
 			{
 				line: () => (
 					<svg
@@ -843,7 +843,7 @@ export function getIconRegistry(props: IconRegistryProps): Map<string, UIIcon> {
 			},
 		],
 		[
-			"briefcase",
+			'briefcase',
 			{
 				line: () => (
 					<svg
@@ -873,7 +873,7 @@ export function getIconRegistry(props: IconRegistryProps): Map<string, UIIcon> {
 			},
 		],
 		[
-			"globe location",
+			'globe location',
 			{
 				line: () => (
 					<svg
@@ -917,7 +917,7 @@ export function getIconRegistry(props: IconRegistryProps): Map<string, UIIcon> {
 			},
 		],
 		[
-			"focus",
+			'focus',
 			{
 				line: () => (
 					<svg
@@ -968,7 +968,7 @@ export function getIconRegistry(props: IconRegistryProps): Map<string, UIIcon> {
 			},
 		],
 		[
-			"chart arrow",
+			'chart arrow',
 			{
 				line: () => (
 					<svg
@@ -1012,7 +1012,7 @@ export function getIconRegistry(props: IconRegistryProps): Map<string, UIIcon> {
 			},
 		],
 		[
-			"document editor",
+			'document editor',
 			{
 				line: () => (
 					<svg
@@ -1056,7 +1056,7 @@ export function getIconRegistry(props: IconRegistryProps): Map<string, UIIcon> {
 			},
 		],
 		[
-			"settings",
+			'settings',
 			{
 				line: () => (
 					<svg
@@ -1102,7 +1102,7 @@ export function getIconRegistry(props: IconRegistryProps): Map<string, UIIcon> {
 			},
 		],
 		[
-			"light bulb",
+			'light bulb',
 			{
 				line: () => (
 					<svg
@@ -1146,7 +1146,7 @@ export function getIconRegistry(props: IconRegistryProps): Map<string, UIIcon> {
 			},
 		],
 		[
-			"issue",
+			'issue',
 			{
 				line: () => (
 					<svg
@@ -1196,7 +1196,7 @@ export function getIconRegistry(props: IconRegistryProps): Map<string, UIIcon> {
 			},
 		],
 		[
-			"chart",
+			'chart',
 			{
 				line: () => (
 					<svg
@@ -1235,7 +1235,7 @@ export function getIconRegistry(props: IconRegistryProps): Map<string, UIIcon> {
 			},
 		],
 		[
-			"chat",
+			'chat',
 			{
 				line: () => (
 					<svg
@@ -1261,7 +1261,7 @@ export function getIconRegistry(props: IconRegistryProps): Map<string, UIIcon> {
 			},
 		],
 		[
-			"exclamation",
+			'exclamation',
 			{
 				line: () => (
 					<svg
@@ -1294,7 +1294,7 @@ export function getIconRegistry(props: IconRegistryProps): Map<string, UIIcon> {
 			},
 		],
 		[
-			"undo",
+			'undo',
 			{
 				line: () => (
 					<svg
@@ -1330,7 +1330,7 @@ export function getIconRegistry(props: IconRegistryProps): Map<string, UIIcon> {
 			},
 		],
 		[
-			"character beam",
+			'character beam',
 			{
 				line: () => (
 					<svg
@@ -1365,7 +1365,7 @@ export function getIconRegistry(props: IconRegistryProps): Map<string, UIIcon> {
 			},
 		],
 		[
-			"edit",
+			'edit',
 			{
 				line: () => (
 					<svg
@@ -1393,7 +1393,7 @@ export function getIconRegistry(props: IconRegistryProps): Map<string, UIIcon> {
 			},
 		],
 		[
-			"compliance check",
+			'compliance check',
 			{
 				line: () => (
 					<svg
@@ -1425,7 +1425,7 @@ export function getIconRegistry(props: IconRegistryProps): Map<string, UIIcon> {
 			},
 		],
 		[
-			"text document",
+			'text document',
 			{
 				line: () => (
 					<svg
@@ -1451,7 +1451,7 @@ export function getIconRegistry(props: IconRegistryProps): Map<string, UIIcon> {
 			},
 		],
 		[
-			"mail",
+			'mail',
 			{
 				line: () => (
 					<svg
@@ -1495,7 +1495,7 @@ export function getIconRegistry(props: IconRegistryProps): Map<string, UIIcon> {
 			},
 		],
 		[
-			"concise",
+			'concise',
 			{
 				line: () => (
 					<svg
@@ -1521,7 +1521,7 @@ export function getIconRegistry(props: IconRegistryProps): Map<string, UIIcon> {
 			},
 		],
 		[
-			"moderate",
+			'moderate',
 			{
 				line: () => (
 					<svg
@@ -1547,7 +1547,7 @@ export function getIconRegistry(props: IconRegistryProps): Map<string, UIIcon> {
 			},
 		],
 		[
-			"expanded",
+			'expanded',
 			{
 				line: () => (
 					<svg
@@ -1573,7 +1573,7 @@ export function getIconRegistry(props: IconRegistryProps): Map<string, UIIcon> {
 			},
 		],
 		[
-			"open circle",
+			'open circle',
 			{
 				line: () => (
 					<svg
@@ -1601,7 +1601,7 @@ export function getIconRegistry(props: IconRegistryProps): Map<string, UIIcon> {
 			},
 		],
 		[
-			"view",
+			'view',
 			{
 				line: () => (
 					<svg
@@ -1654,7 +1654,7 @@ export function getIconRegistry(props: IconRegistryProps): Map<string, UIIcon> {
 			},
 		],
 		[
-			"apple",
+			'apple',
 			{
 				line: () => (
 					<svg
@@ -1680,7 +1680,7 @@ export function getIconRegistry(props: IconRegistryProps): Map<string, UIIcon> {
 			},
 		],
 		[
-			"linkedin",
+			'linkedin',
 			{
 				line: () => (
 					<svg
@@ -1706,7 +1706,7 @@ export function getIconRegistry(props: IconRegistryProps): Map<string, UIIcon> {
 			},
 		],
 		[
-			"google",
+			'google',
 			{
 				line: () => (
 					<svg
@@ -1746,7 +1746,7 @@ export function getIconRegistry(props: IconRegistryProps): Map<string, UIIcon> {
 			},
 		],
 		[
-			"dollar",
+			'dollar',
 			{
 				line: () => (
 					<svg
@@ -1777,7 +1777,7 @@ export function getIconRegistry(props: IconRegistryProps): Map<string, UIIcon> {
 			},
 		],
 		[
-			"trash bin",
+			'trash bin',
 			{
 				line: () => (
 					<svg
@@ -1803,7 +1803,7 @@ export function getIconRegistry(props: IconRegistryProps): Map<string, UIIcon> {
 			},
 		],
 		[
-			"recent chats",
+			'recent chats',
 			{
 				line: () => (
 					<svg
@@ -1829,7 +1829,7 @@ export function getIconRegistry(props: IconRegistryProps): Map<string, UIIcon> {
 			},
 		],
 		[
-			"refresh",
+			'refresh',
 			{
 				line: () => (
 					<svg
@@ -1854,7 +1854,7 @@ export function getIconRegistry(props: IconRegistryProps): Map<string, UIIcon> {
 			},
 		],
 		[
-			"document",
+			'document',
 			{
 				line: () => (
 					<svg
@@ -1883,7 +1883,7 @@ export function getIconRegistry(props: IconRegistryProps): Map<string, UIIcon> {
 			},
 		],
 		[
-			"navigate",
+			'navigate',
 			{
 				line: () => (
 					<svg
@@ -1926,7 +1926,7 @@ export function getIconRegistry(props: IconRegistryProps): Map<string, UIIcon> {
 			},
 		],
 		[
-			"arrow right",
+			'arrow right',
 			{
 				line: () => (
 					<svg
@@ -1951,7 +1951,7 @@ export function getIconRegistry(props: IconRegistryProps): Map<string, UIIcon> {
 			},
 		],
 		[
-			"arrow left",
+			'arrow left',
 			{
 				line: () => (
 					<svg
@@ -1976,7 +1976,7 @@ export function getIconRegistry(props: IconRegistryProps): Map<string, UIIcon> {
 			},
 		],
 		[
-			"",
+			'',
 			{
 				line: () => (
 					<svg
@@ -2001,7 +2001,7 @@ export function getIconRegistry(props: IconRegistryProps): Map<string, UIIcon> {
 			},
 		],
 		[
-			"gpMark",
+			'gpMark',
 			{
 				line: () => (
 					<svg
@@ -2026,7 +2026,7 @@ export function getIconRegistry(props: IconRegistryProps): Map<string, UIIcon> {
 			},
 		],
 		[
-			"arrow up",
+			'arrow up',
 			{
 				line: () => (
 					<svg
@@ -2051,7 +2051,7 @@ export function getIconRegistry(props: IconRegistryProps): Map<string, UIIcon> {
 			},
 		],
 		[
-			"notification",
+			'notification',
 			{
 				line: () => (
 					<svg
@@ -2089,7 +2089,7 @@ export function getIconRegistry(props: IconRegistryProps): Map<string, UIIcon> {
 			},
 		],
 		[
-			"alert",
+			'alert',
 			{
 				line: () => (
 					<svg
@@ -2115,7 +2115,7 @@ export function getIconRegistry(props: IconRegistryProps): Map<string, UIIcon> {
 			},
 		],
 		[
-			"message",
+			'message',
 			{
 				line: () => (
 					<svg
@@ -2140,7 +2140,7 @@ export function getIconRegistry(props: IconRegistryProps): Map<string, UIIcon> {
 			},
 		],
 		[
-			"blank",
+			'blank',
 			{
 				line: () => (
 					<svg
@@ -2157,7 +2157,7 @@ export function getIconRegistry(props: IconRegistryProps): Map<string, UIIcon> {
 			},
 		],
 		[
-			"check",
+			'check',
 			{
 				line: () => (
 					<svg
@@ -2183,7 +2183,7 @@ export function getIconRegistry(props: IconRegistryProps): Map<string, UIIcon> {
 			},
 		],
 		[
-			"help",
+			'help',
 			{
 				line: () => (
 					<svg
@@ -2217,7 +2217,7 @@ export function getIconRegistry(props: IconRegistryProps): Map<string, UIIcon> {
 			},
 		],
 		[
-			"menu",
+			'menu',
 			{
 				line: () => (
 					<svg
@@ -2245,7 +2245,7 @@ export function getIconRegistry(props: IconRegistryProps): Map<string, UIIcon> {
 			},
 		],
 		[
-			"attach",
+			'attach',
 			{
 				line: () => (
 					<svg
@@ -2283,7 +2283,7 @@ export function getIconRegistry(props: IconRegistryProps): Map<string, UIIcon> {
 			},
 		],
 		[
-			"ctrl key",
+			'ctrl key',
 			{
 				line: () => (
 					<svg
@@ -2319,7 +2319,7 @@ export function getIconRegistry(props: IconRegistryProps): Map<string, UIIcon> {
 			},
 		],
 		[
-			"g key",
+			'g key',
 			{
 				line: () => (
 					<svg
@@ -2353,7 +2353,7 @@ export function getIconRegistry(props: IconRegistryProps): Map<string, UIIcon> {
 			},
 		],
 		[
-			"cmd key",
+			'cmd key',
 			{
 				line: () => (
 					<svg
@@ -2387,7 +2387,7 @@ export function getIconRegistry(props: IconRegistryProps): Map<string, UIIcon> {
 			},
 		],
 		[
-			"person",
+			'person',
 			{
 				line: () => (
 					<svg
@@ -2415,7 +2415,7 @@ export function getIconRegistry(props: IconRegistryProps): Map<string, UIIcon> {
 			},
 		],
 		[
-			"upload",
+			'upload',
 			{
 				line: () => (
 					<svg
@@ -2447,7 +2447,7 @@ export function getIconRegistry(props: IconRegistryProps): Map<string, UIIcon> {
 			},
 		],
 		[
-			"download",
+			'download',
 			{
 				line: () => (
 					<svg
@@ -2475,7 +2475,7 @@ export function getIconRegistry(props: IconRegistryProps): Map<string, UIIcon> {
 			},
 		],
 		[
-			"check circle",
+			'check circle',
 			{
 				line: () => (
 					<svg
@@ -2506,7 +2506,7 @@ export function getIconRegistry(props: IconRegistryProps): Map<string, UIIcon> {
 			},
 		],
 		[
-			"share",
+			'share',
 			{
 				line: () => (
 					<svg
@@ -2530,7 +2530,7 @@ export function getIconRegistry(props: IconRegistryProps): Map<string, UIIcon> {
 			},
 		],
 		[
-			"g-p assist",
+			'g-p assist',
 			{
 				line: () => (
 					<svg
@@ -2559,27 +2559,27 @@ export function getIconRegistry(props: IconRegistryProps): Map<string, UIIcon> {
 									<stop
 										offset="0"
 										stopColor={
-											theme.name === "lightMode"
-												? "rgba(106, 245, 255,1)"
-												: "rgba(0,200,244,1)"
+											theme.name === 'lightMode'
+												? 'rgba(106, 245, 255,1)'
+												: 'rgba(0,200,244,1)'
 										}
 										stopOpacity="1"
 									/>
 									<stop
 										offset="0.50"
 										stopColor={
-											theme.name === "lightMode"
-												? "rgb(0, 0, 255)"
-												: theme.colors["core-gp-logo-primary"]
+											theme.name === 'lightMode'
+												? 'rgb(0, 0, 255)'
+												: theme.colors['core-gp-logo-primary']
 										}
 										stopOpacity="1"
 									/>
 									<stop
 										offset="1"
 										stopColor={
-											theme.name === "lightMode"
-												? "rgba(106, 245, 255,1)"
-												: "rgba(0,200,244,1)"
+											theme.name === 'lightMode'
+												? 'rgba(106, 245, 255,1)'
+												: 'rgba(0,200,244,1)'
 										}
 										stopOpacity="1"
 									/>
@@ -2594,17 +2594,17 @@ export function getIconRegistry(props: IconRegistryProps): Map<string, UIIcon> {
 						<path
 							d="M 18.2 5 C 18.863 5 19.4 4.463 19.4 3.8 C 19.4 3.137 18.863 2.6 18.2 2.6 C 17.537 2.6 17 3.137 17 3.8 C 17 4.463 17.537 5 18.2 5 Z"
 							fill={
-								theme.name === "lightMode"
-									? theme.colors["core-gp-logo-primary"]
-									: "rgba(0,200,244,1)"
+								theme.name === 'lightMode'
+									? theme.colors['core-gp-logo-primary']
+									: 'rgba(0,200,244,1)'
 							}
 						/>
 						<path
 							d="M 3.8 19.4 C 4.463 19.4 5 18.863 5 18.2 C 5 17.537 4.463 17 3.8 17 C 3.137 17 2.6 17.537 2.6 18.2 C 2.6 18.863 3.137 19.4 3.8 19.4 Z"
 							fill={
-								theme.name === "lightMode"
-									? theme.colors["core-gp-logo-primary"]
-									: "rgba(0,200,244,1)"
+								theme.name === 'lightMode'
+									? theme.colors['core-gp-logo-primary']
+									: 'rgba(0,200,244,1)'
 							}
 						/>
 					</svg>
@@ -2612,7 +2612,7 @@ export function getIconRegistry(props: IconRegistryProps): Map<string, UIIcon> {
 			},
 		],
 		[
-			"search",
+			'search',
 			{
 				line: () => (
 					<svg
@@ -2642,7 +2642,7 @@ export function getIconRegistry(props: IconRegistryProps): Map<string, UIIcon> {
 			},
 		],
 		[
-			"x",
+			'x',
 			{
 				line: () => (
 					<svg
@@ -2671,7 +2671,7 @@ export function getIconRegistry(props: IconRegistryProps): Map<string, UIIcon> {
 			},
 		],
 		[
-			"plus",
+			'plus',
 			{
 				line: () => (
 					<svg
@@ -2697,7 +2697,7 @@ export function getIconRegistry(props: IconRegistryProps): Map<string, UIIcon> {
 			},
 		],
 		[
-			"plus circle",
+			'plus circle',
 			{
 				line: () => (
 					<svg
@@ -2727,7 +2727,7 @@ export function getIconRegistry(props: IconRegistryProps): Map<string, UIIcon> {
 			},
 		],
 		[
-			"chevron down",
+			'chevron down',
 			{
 				line: () => (
 					<svg
@@ -2750,7 +2750,7 @@ export function getIconRegistry(props: IconRegistryProps): Map<string, UIIcon> {
 			},
 		],
 		[
-			"chevron up",
+			'chevron up',
 			{
 				line: () => (
 					<svg
@@ -2777,7 +2777,7 @@ export function getIconRegistry(props: IconRegistryProps): Map<string, UIIcon> {
 			},
 		],
 		[
-			"checked",
+			'checked',
 			{
 				line: () => (
 					<svg
@@ -2805,7 +2805,7 @@ export function getIconRegistry(props: IconRegistryProps): Map<string, UIIcon> {
 			},
 		],
 		[
-			"unchecked",
+			'unchecked',
 			{
 				line: () => (
 					<svg
@@ -2836,7 +2836,7 @@ export function getIconRegistry(props: IconRegistryProps): Map<string, UIIcon> {
 			},
 		],
 		[
-			"partial",
+			'partial',
 			{
 				line: () => (
 					<svg
@@ -2863,7 +2863,7 @@ export function getIconRegistry(props: IconRegistryProps): Map<string, UIIcon> {
 						/>
 						<path
 							d="M14 10H6"
-							stroke={theme.colors["core-surface-primary"]}
+							stroke={theme.colors['core-surface-primary']}
 							strokeWidth={stroke}
 						/>
 					</svg>
@@ -2871,7 +2871,7 @@ export function getIconRegistry(props: IconRegistryProps): Map<string, UIIcon> {
 			},
 		],
 		[
-			"search",
+			'search',
 			{
 				line: () => (
 					<svg
@@ -2899,7 +2899,7 @@ export function getIconRegistry(props: IconRegistryProps): Map<string, UIIcon> {
 			},
 		],
 		[
-			"filter",
+			'filter',
 			{
 				line: () => (
 					<svg
@@ -2927,7 +2927,7 @@ export function getIconRegistry(props: IconRegistryProps): Map<string, UIIcon> {
 			},
 		],
 		[
-			"more",
+			'more',
 			{
 				line: () => (
 					<svg
@@ -2953,7 +2953,7 @@ export function getIconRegistry(props: IconRegistryProps): Map<string, UIIcon> {
 			},
 		],
 		[
-			"people",
+			'people',
 			{
 				line: () => (
 					<svg
@@ -3008,7 +3008,7 @@ export function getIconRegistry(props: IconRegistryProps): Map<string, UIIcon> {
 			},
 		],
 		[
-			"wallet",
+			'wallet',
 			{
 				line: () => (
 					<svg
@@ -3039,7 +3039,7 @@ export function getIconRegistry(props: IconRegistryProps): Map<string, UIIcon> {
 						/>
 						<path
 							d="M 17 10.6 L 17 7.4 C 17 7.179 16.821 7 16.6 7 L 13 7 C 11.895 7 11 7.895 11 9 C 11 10.105 11.895 11 13 11 L 16.6 11 C 16.821 11 17 10.821 17 10.6 Z"
-							fill={theme.colors["core-surface-primary"]}
+							fill={theme.colors['core-surface-primary']}
 							strokeWidth={stroke}
 							stroke={strokeColor}
 							strokeMiterlimit="10"
@@ -3050,7 +3050,7 @@ export function getIconRegistry(props: IconRegistryProps): Map<string, UIIcon> {
 			},
 		],
 		[
-			"invoice",
+			'invoice',
 			{
 				line: () => (
 					<svg
@@ -3078,7 +3078,7 @@ export function getIconRegistry(props: IconRegistryProps): Map<string, UIIcon> {
 			},
 		],
 		[
-			"payment",
+			'payment',
 			{
 				line: () => (
 					<svg
@@ -3106,7 +3106,7 @@ export function getIconRegistry(props: IconRegistryProps): Map<string, UIIcon> {
 			},
 		],
 		[
-			"heart",
+			'heart',
 			{
 				line: () => (
 					<svg
@@ -3148,7 +3148,7 @@ export function getIconRegistry(props: IconRegistryProps): Map<string, UIIcon> {
 			},
 		],
 		[
-			"clock",
+			'clock',
 			{
 				line: () => (
 					<svg
@@ -3179,7 +3179,7 @@ export function getIconRegistry(props: IconRegistryProps): Map<string, UIIcon> {
 			},
 		],
 		[
-			"book",
+			'book',
 			{
 				line: () => (
 					<svg
@@ -3207,7 +3207,7 @@ export function getIconRegistry(props: IconRegistryProps): Map<string, UIIcon> {
 			},
 		],
 		[
-			"sparkle",
+			'sparkle',
 			{
 				line: () => (
 					<svg
@@ -3235,7 +3235,7 @@ export function getIconRegistry(props: IconRegistryProps): Map<string, UIIcon> {
 			},
 		],
 		[
-			"inbox",
+			'inbox',
 			{
 				line: () => (
 					<svg
@@ -3263,7 +3263,7 @@ export function getIconRegistry(props: IconRegistryProps): Map<string, UIIcon> {
 			},
 		],
 		[
-			"home",
+			'home',
 			{
 				line: () => (
 					<svg

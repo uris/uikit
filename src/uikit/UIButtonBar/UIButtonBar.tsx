@@ -1,9 +1,9 @@
-import { useEffect, useState } from "react";
-import { useTheme } from "styled-components";
-import { IconButton } from "../IconButton";
-import { ToolTip } from "../sharedTypes";
-import * as Styled from "./_Styles.js";
-import { BarButton } from "./_Types";
+import { useCallback, useEffect, useState } from 'react';
+import { useTheme } from '../../hooks';
+import { IconButton } from '../IconButton';
+import type { ToolTip } from '../sharedTypes';
+import css from './UIButtonBar.module.css';
+import type { BarButton } from './_Types';
 
 export interface UIButtonBarProps {
 	options?: BarButton[];
@@ -13,7 +13,7 @@ export interface UIButtonBarProps {
 	onToolTip?: (tip: ToolTip | null) => void;
 }
 
-export function UIButtonBar(props: UIButtonBarProps) {
+export function UIButtonBar(props: Readonly<UIButtonBarProps>) {
 	const {
 		options = [],
 		current = 0,
@@ -24,6 +24,7 @@ export function UIButtonBar(props: UIButtonBarProps) {
 	const theme = useTheme();
 	const [hovered, setHovered] = useState<number>(-1);
 	const [currentPage, setCurrentPage] = useState<number>(current);
+
 	useEffect(() => setCurrentPage(current), [current]);
 
 	function handleMouseEnter(index: number) {
@@ -38,33 +39,54 @@ export function UIButtonBar(props: UIButtonBarProps) {
 		setCurrentPage(index);
 		onChange(button);
 	}
+
+	// memo display
+	const display = useCallback(
+		(index: number) => {
+			return index === options.length - 1 ? css.last : '';
+		},
+		[options.length],
+	);
+
+	// memo selected
+	const selected = useCallback(
+		(index: number) => {
+			return currentPage === index ? css.selected : '';
+		},
+		[currentPage],
+	);
+
+	// memo icon stroke color
+	const iconColor = useCallback(
+		(index: number) => {
+			const isSelected = currentPage === index;
+			const isHovered = hovered === index;
+			if (isSelected) return theme.colors['core-icon-primary'];
+			if (isHovered) return theme.colors['core-button-primary'];
+			return theme.colors['core-text-disabled'];
+		},
+		[currentPage, hovered, theme],
+	);
+
 	return (
-		<Styled.ButtonBar>
-			{label && <div className="label">{label}</div>}
+		<div className={css.wrapper}>
+			{label && <div className={css.label}>{label}</div>}
 			{options?.map((button: BarButton, index: number) => {
 				return (
-					<Styled.Button
+					<div
+						className={css.button}
 						key={`button-bar-${button.icon}-${index}`}
-						$last={index === options.length - 1}
 						onMouseEnter={() => handleMouseEnter(index)}
 						onMouseLeave={() => handleMouseLeave()}
 					>
 						<div
-							className={`button${currentPage === index ? " selected" : ""}`}
+							className={selected(index)}
 							onClick={() => handleClick(button, index)}
 							onKeyDown={() => handleClick(button, index)}
-							role={"button"}
-							tabIndex={0}
 						>
 							<IconButton
 								icon={button.icon}
-								color={
-									currentPage === index
-										? theme.colors["core-icon-primary"]
-										: hovered === index
-											? theme.colors["core-button-primary"]
-											: theme.colors["core-text-disabled"]
-								}
+								color={iconColor(index)}
 								label={button.label}
 								tooltip={button.tip}
 								onToolTip={(tip) => onToolTip(tip)}
@@ -72,10 +94,10 @@ export function UIButtonBar(props: UIButtonBarProps) {
 								toggle={false}
 							/>
 						</div>
-						<div className="divider" />
-					</Styled.Button>
+						<div className={`${css.divider} ${display(index)}`} />
+					</div>
 				);
 			})}
-		</Styled.ButtonBar>
+		</div>
 	);
 }

@@ -1,0 +1,76 @@
+.promptList {
+	composes: columnStart from "../../../util/flexBox.module.css";
+	width: 100%;
+	gap: 8px;
+}
+
+@keyframes blink {
+	0% {
+		opacity: 1;
+	}
+	50% {
+		opacity: 0;
+	}
+	100% {
+		opacity: 1;
+	}
+}
+
+.userPrompt {
+	composes: rowStart from "../../../util/flexBox.module.css";
+	align-items: flex-start;
+	padding: 10px 12px;
+	border-radius: 24px;
+	background: var(--core-surface-primary);
+	border: 1px solid var(--core-outline-primary);
+	cursor: default;
+}
+
+.avatar {
+	composes: row from "../../../util/flexBox.module.css";
+	height: 24px;
+	width: 24px;
+}
+
+.prompt {
+	composes: rowStart from "../../../util/flexBox.module.css";
+	composes: body-s-regular from "../../../util/type.module.css";
+	flex: 1;
+	padding: 0px 16px 0px 8px;
+	color: var(--core-text-tertiary);
+	font-weight: 380;
+	line-height: 1.5em;
+	min-height: 24px;
+}
+
+.promptStrong {
+	font-size: inherit;
+	font-weight: inherit;
+	line-height: inherit;
+	color: var(--core-text-primary);
+}
+
+.promptParagraph {
+	margin: 0;
+	padding: 0;
+}
+
+.control {
+	composes: row from "../../../util/flexBox.module.css";
+	border-radius: 100%;
+	border: 1px solid var(--control-border-color);
+	height: 24px;
+	width: 24px;
+	cursor: pointer;
+}
+
+.cursor {
+	display: block;
+	background: var(--cursor-background);
+	min-width: 0.5em;
+	min-height: 0.5em;
+	width: 0.5em;
+	height: 0.5em;
+	border-radius: var(--cursor-border-radius);
+	animation: var(--cursor-animation);
+}

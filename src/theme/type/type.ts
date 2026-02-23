@@ -1,4 +1,4 @@
-import type { Type } from "./types";
+import type { Type } from './types';
 
 // base family
 const fontFamily = `"Funnel Sans"`;
@@ -20,126 +20,126 @@ const fontSizes = {
 
 // ** new styles aligned to lyra */
 export const type: Type = {
-	"body-xs-regular": `
+	'body-xs-regular': `
       font-family: ${fontFamily};
       font-weight: ${fontWeights.regular};
       font-size: ${fontSizes.xs}px;
       line-height: 133.33%;
       text-decoration: none;
       letter-spacing: 0.2px`,
-	"body-xs-medium": `
+	'body-xs-medium': `
       font-family: ${fontFamily};
       font-weight: ${fontWeights.medium};
       font-size: ${fontSizes.xs}px;
       line-height: 133.33%;
       text-decoration: none;
       letter-spacing: 0.2px`,
-	"body-xs-bold": `
+	'body-xs-bold': `
       font-family: ${fontFamily};
       font-weight: ${fontWeights.bold};
       font-size: ${fontSizes.xs}px;
       line-height: 133.33%;
       text-decoration: none;
       letter-spacing: 0.250px`,
-	"body-s-regular": `
+	'body-s-regular': `
       font-family: ${fontFamily};
       font-weight: ${fontWeights.regular};
       font-size: ${fontSizes.s}px;
       line-height: 142.86%;
       text-decoration: none;
       letter-spacing: 0.15px`,
-	"body-s-medium": `
+	'body-s-medium': `
       font-family: ${fontFamily};
       font-weight: ${fontWeights.medium};
       font-size: ${fontSizes.s}px;
       line-height: 142.86%;
       text-decoration: none;
       letter-spacing: 0.15px`,
-	"body-s-bold": `
+	'body-s-bold': `
       font-family: ${fontFamily};
       font-weight: ${fontWeights.bold};
       font-size: ${fontSizes.s}px;
       line-height: 142.86%;
       text-decoration: none;
       letter-spacing: 0.2px`,
-	"body-m-regular": `
+	'body-m-regular': `
       font-family: ${fontFamily};
       font-weight: ${fontWeights.regular};
       font-size: ${fontSizes.m}px;
       line-height: 140%;
       text-decoration: none;
       letter-spacing: 0.15px`,
-	"body-m-medium": `
+	'body-m-medium': `
       font-family: ${fontFamily};
       font-weight: ${fontWeights.medium};
       font-size: ${fontSizes.m}px;
       line-height: 140%;
       text-decoration: none;
       letter-spacing: 0.15px`,
-	"body-m-bold": `
+	'body-m-bold': `
       font-family: ${fontFamily};
       font-weight: ${fontWeights.bold};
       font-size: ${fontSizes.m}px;
       line-height: 140%;
       text-decoration: none;
       letter-spacing: 0.2px`,
-	"body-l-regular": `
+	'body-l-regular': `
       font-family: ${fontFamily};
       font-weight: ${fontWeights.regular};
       font-size: ${fontSizes.l}px;
       line-height: 162.5%;
       text-decoration: none;
       letter-spacing: 0.1px`,
-	"body-l-medium": `
+	'body-l-medium': `
       font-family: ${fontFamily};
       font-weight: ${fontWeights.medium};
       font-size: ${fontSizes.l}px;
       line-height: 162.5%;
       text-decoration: none;
       letter-spacing: 0.1px`,
-	"body-l-bold": `
+	'body-l-bold': `
       font-family: ${fontFamily};
       font-weight: ${fontWeights.bold};
       font-size: ${fontSizes.l}px;
       line-height: 162.5%;
       text-decoration: none;
       letter-spacing: 0.15px`,
-	"heading-s-bold": `
+	'heading-s-bold': `
       font-family: ${fontFamily};
       font-weight: 650;
       font-size: 20px; 
       line-height: 140%;
       text-decoration: none;
       letter-spacing: 0.2px`,
-	"heading-s-medium": `
+	'heading-s-medium': `
       font-family: ${fontFamily};
       font-weight: 560;
       font-size: 20px; 
       line-height: 140%;
       text-decoration: none;
       letter-spacing: 0.2px`,
-	"heading-m-bold": `
+	'heading-m-bold': `
       font-family: ${fontFamily};
       font-weight: 650;
       font-size: 24px; 
       line-height: 116.67%;
       text-decoration: none;
       letter-spacing: 0.2px`,
-	"heading-m-medium": `
+	'heading-m-medium': `
       font-family: ${fontFamily};
       font-weight: 560;
       font-size: 24px; 
       line-height: 116.67%;
       text-decoration: none;
       letter-spacing: 0.2px`,
-	"heading-l-medium": `
+	'heading-l-medium': `
       font-family: ${fontFamily};
       font-weight: 560;
       font-size: 28px; 
       line-height: 128.57%;
       text-decoration: none;
       letter-spacing: 0.2px`,
-	"heading-l-bold": `
+	'heading-l-bold': `
       font-family: ${fontFamily};
       font-weight: 650;
       font-size: 28px; 

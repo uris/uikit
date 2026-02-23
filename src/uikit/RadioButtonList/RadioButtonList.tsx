@@ -1,9 +1,6 @@
-import React, { useEffect, useMemo, useState } from "react";
-import {
-	RadioButton,
-	type RadioButtonOption,
-} from "../RadioButton";
-import css from "./RadioButtonList.module.css";
+import React, { useEffect, useMemo, useState } from 'react';
+import { RadioButton, type RadioButtonOption } from '../RadioButton';
+import css from './RadioButtonList.module.css';
 
 export interface RadioButtonListProps {
 	options?: RadioButtonOption[];
@@ -13,7 +10,7 @@ export interface RadioButtonListProps {
 	deselect?: boolean;
 	multiSelect?: boolean;
 	wrap?: boolean;
-	spacer?: "xl" | "lg" | "md" | "sm" | "custom" | "none";
+	spacer?: 'xl' | 'lg' | 'md' | 'sm' | 'custom' | 'none';
 	custom?: number;
 	gap?: number;
 	tabIndexSeed?: number;
@@ -38,7 +35,7 @@ export const RadioButtonList = React.memo((props: RadioButtonListProps) => {
 		multiSelect = false,
 		wrap = false,
 		tabIndexSeed = 0,
-		spacer = "none",
+		spacer = 'none',
 		custom = 0,
 		gap = 16,
 		hideRadio = false,
@@ -71,18 +68,18 @@ export const RadioButtonList = React.memo((props: RadioButtonListProps) => {
 	// returns if a specific option index is selected
 	function isSelected(index: number): boolean {
 		if (!selected) return false;
-		return selected.includes(index)
+		return selected.includes(index);
 	}
 
 	function handleChange(selection: number, state: boolean) {
 		// it not multiselect just pass the current selection
 		if (multiSelect) {
-			doMultiSelection(selection, state)
+			doMultiSelection(selection, state);
 		} else {
-			doSingleSelection(selection, state)
+			doSingleSelection(selection, state);
 		}
 	}
-	
+
 	function doMultiSelection(selection: number, state: boolean) {
 		// **** update the selected indexes
 		let indexesSelected: number[] = selected ? [...selected] : [];
@@ -104,12 +101,12 @@ export const RadioButtonList = React.memo((props: RadioButtonListProps) => {
 		setSelected(indexesSelected || null);
 		onChange(updatedSelections, indexesSelected || null);
 	}
-	
+
 	function doSingleSelection(selection: number, state: boolean) {
 		onChange(state ? [options[selection]] : [], state ? [selection] : []);
 		setSelected(state ? [selection] : null);
 	}
-	
+
 	function setOptions() {
 		return options.map((option: RadioButtonOption, i: number) => {
 			return (
@@ -132,26 +129,26 @@ export const RadioButtonList = React.memo((props: RadioButtonListProps) => {
 
 	// memo margin
 	const margin = () => {
-		if (spacer === "none") return 0;
-		if (spacer === "custom") return custom;
+		if (spacer === 'none') return 0;
+		if (spacer === 'custom') return custom;
 		return 0;
 	};
-	
+
 	// memo css vars
-	const cssVars = useMemo(()=>{
+	const cssVars = useMemo(() => {
 		return {
-			"--rb-list-flex-wrap": wrap ? "wrap" : "nowrap",
-			"--rb-list-margin-bottom": noFrame ? 0 : `${margin()}px`,
-			"--rb-gap": `${gap}px`
-		} as React.CSSProperties
-	},[])
+			'--rb-list-flex-wrap': wrap ? 'wrap' : 'nowrap',
+			'--rb-list-margin-bottom': noFrame ? 0 : `${margin()}px`,
+			'--rb-gap': `${gap}px`,
+		} as React.CSSProperties;
+	}, []);
 
 	return (
 		<div
-			className={`${css.wrapper} ${noFrame? css.column : css.row}`}
+			className={`${css.wrapper} ${noFrame ? css.column : css.row}`}
 			style={cssVars}
-			role={"list"}
-			aria-label={"Option List"}
+			role={'list'}
+			aria-label={'Option List'}
 		>
 			{label}
 			{setOptions()}

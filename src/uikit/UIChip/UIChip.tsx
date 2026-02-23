@@ -1,8 +1,8 @@
-import React, { useCallback, useEffect, useMemo, useState } from "react";
-import { useTheme } from "styled-components";
-import { Icon, type IconNames } from "../Icon/Icon";
-import { type ToolTip, ToolTipType } from "../sharedTypes";
-import * as Styled from "./_Styles";
+import React, { useCallback, useEffect, useMemo, useState } from 'react';
+import { useTheme } from '../../hooks';
+import { Icon, type IconNames } from '../Icon';
+import { type ToolTip, ToolTipType } from '../sharedTypes';
+import css from './UIChip.module.css';
 
 export interface UIChipProps {
 	label?: string;
@@ -11,7 +11,8 @@ export interface UIChipProps {
 	focused?: boolean;
 	tooltip?: string;
 	background?: string;
-	variant?: "small" | "regular";
+	variant?: 'small' | 'regular';
+	labelSize?: 's' | 'm' | 'l';
 	unframed?: boolean;
 	iconRight?: boolean;
 	iconColor?: string;
@@ -27,9 +28,10 @@ export const UIChip = React.memo((props: UIChipProps) => {
 		background,
 		disabled = false,
 		focused = false,
-		variant = "regular",
+		variant = 'regular',
 		unframed = false,
 		iconRight = false,
+		labelSize = 'm',
 		tooltip,
 		iconColor,
 		onToolTip = () => null,
@@ -38,8 +40,10 @@ export const UIChip = React.memo((props: UIChipProps) => {
 	} = props;
 	const theme = useTheme();
 	const [isFocused, setIsFocused] = useState<boolean>(focused);
+	const [isHovered, setIsHovered] = useState<boolean>(false);
 	useEffect(() => setIsFocused(focused), [focused]);
 
+	// click handler
 	const handleClick = useCallback(
 		(e: React.MouseEvent<HTMLDivElement>) => {
 			if (!disabled) onClick(e);
@@ -47,6 +51,7 @@ export const UIChip = React.memo((props: UIChipProps) => {
 		[disabled, onClick],
 	);
 
+	// handle mouse down
 	const handleMouseDown = useCallback(
 		(e: React.MouseEvent<HTMLDivElement>) => {
 			if (!disabled) onMouseDown(e);
@@ -54,76 +59,93 @@ export const UIChip = React.memo((props: UIChipProps) => {
 		[disabled, onMouseDown],
 	);
 
+	// handle mouse enter / leave
 	const handleMouseEnter = useCallback(
 		(enter: boolean, event: React.MouseEvent<HTMLDivElement>) => {
-			if (enter && tooltip) {
-				const tip: ToolTip = {
-					type: ToolTipType.button,
-					payload: { label: tooltip },
-					ref: null,
-					event,
-				};
-				onToolTip(tip);
+			if (enter) {
+				if (tooltip) {
+					const tip: ToolTip = {
+						type: ToolTipType.button,
+						payload: { label: tooltip },
+						ref: null,
+						event,
+					};
+					onToolTip(tip);
+				}
+				setIsHovered(true);
 			} else {
 				onToolTip(null);
+				setIsHovered(false);
 			}
 		},
 		[tooltip, onToolTip],
 	);
 
+	// memo padding
 	const padding = useMemo(() => {
-		const isSmall = variant === "small";
+		const isSmall = variant === 'small';
 		if (!icon) {
-			return isSmall ? "6px" : "9px 16px 9px 16px";
+			return isSmall ? '6px' : '9px 16px 9px 16px';
 		}
 		if (icon && iconRight) {
-			return isSmall ? "6px 6px 6px 10px" : "9px 12px 9px 16px";
+			return isSmall ? '6px 6px 6px 10px' : '9px 12px 9px 16px';
 		}
-		return isSmall ? "6px 10px 6px 6px" : "9px 16px 9px 12px";
+		return isSmall ? '6px 10px 6px 6px' : '9px 16px 9px 12px';
 	}, [variant, icon, iconRight]);
 
+	// memo icon color
 	const computedIconColor = useMemo(() => {
 		if (iconColor) return iconColor;
-		if (disabled) return theme.colors["core-icon-disabled"];
-		if (isFocused) return theme.colors["core-icon-tertiary"];
-		return theme.colors["core-icon-primary"];
-	}, [iconColor, disabled, isFocused, theme]);
+		if (disabled) return theme.colors['core-icon-disabled'];
+		if (isHovered) return theme.colors['core-link-primary'];
+		if (isFocused) return theme.colors['core-link-primary'];
+		return theme.colors['core-text-primary'];
+	}, [iconColor, disabled, isFocused, isHovered, theme]);
+
+	// memo css vars
+	const cssVars = useMemo(() => {
+		return {
+			'--ui-chip-padding': padding,
+			'--ui-chip-background': background || 'transparent',
+			'--ui-chip-gap': variant === 'small' ? '4px' : '8px',
+			'--ui-chip-color': computedIconColor,
+			'--ui-chip-border-radius': variant === 'small' ? '4px' : '8px',
+			'--ui-chip-border': unframed ? '0' : '1px',
+			'--ui-chip-border-color': unframed ? 'transparent' : computedIconColor,
+		} as React.CSSProperties;
+	}, [padding, background, variant, unframed, computedIconColor]);
 
 	return (
-		<Styled.Chip
-			$focused={isFocused}
-			$disabled={disabled}
-			$background={background}
-			$variant={variant}
-			$unframed={unframed}
-			$padding={padding}
+		<div
+			className={css.chip}
+			style={cssVars}
 			onMouseDown={handleMouseDown}
+			onKeyDown={() => null}
 			onClick={handleClick}
 			onMouseEnter={(e) => handleMouseEnter(true, e)}
 			onMouseLeave={(e) => handleMouseEnter(false, e)}
 			onFocus={() => setIsFocused(true)}
 			onBlur={() => setIsFocused(false)}
-			tabIndex={0}
 		>
 			{icon && !iconRight && (
-				<div className="icon">
+				<div className={css.icon}>
 					<Icon
 						name={icon}
-						size={variant === "regular" ? 20 : 16}
+						size={variant === 'regular' ? 20 : 16}
 						strokeColor={computedIconColor}
 					/>
 				</div>
 			)}
-			<div className="label">{label}</div>
+			<div className={css[labelSize]}>{label}</div>
 			{icon && iconRight && (
-				<div className="icon">
+				<div className={css.icon}>
 					<Icon
 						name={icon}
-						size={variant === "regular" ? 20 : 16}
+						size={variant === 'regular' ? 20 : 16}
 						strokeColor={computedIconColor}
 					/>
 				</div>
 			)}
-		</Styled.Chip>
+		</div>
 	);
 });

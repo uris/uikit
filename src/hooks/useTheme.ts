@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { MayaTheme, useMayaTheme } from '../theme/useMayaTheme';
+import { type MayaTheme, useMayaTheme } from '../theme/useMayaTheme';
 
 export function useTheme() {
 	const themes = useMayaTheme();

@@ -1,23 +1,23 @@
-import type { Meta, StoryObj } from "@storybook/react-vite";
-import { fn } from "storybook/test";
-import { FlexDiv } from "../uikit/FlexDiv/FlexDiv";
-import { IconNames } from "../uikit/Icon/Icon";
-import { IconButton } from "../uikit/IconButton/IconButton";
+import type { Meta, StoryObj } from '@storybook/react-vite';
+import { fn } from 'storybook/test';
+import { FlexDiv } from '../uikit/FlexDiv/FlexDiv';
+import { IconNames } from '../uikit/Icon/Icon';
+import { IconButton } from '../uikit/IconButton/IconButton';
 
 const icons = Object.values(IconNames);
 const meta: Meta<typeof IconButton> = {
-	title: "UI Kit/IconButton",
+	title: 'UI Kit/IconButton',
 	component: IconButton,
 	argTypes: {
 		icon: {
-			control: { type: "select" }, // Dropdown selection
+			control: { type: 'select' }, // Dropdown selection
 			options: icons, // Enum values as options
 		},
 	},
 	args: {
 		frameSize: 36,
 		iconSize: 20,
-		icon: "plus",
+		icon: 'plus',
 		borderRadius: 4,
 		tooltip: undefined,
 		color: undefined,
@@ -50,7 +50,7 @@ export default meta;
 export const Default: StoryObj<typeof IconButton> = {
 	render: (args) => {
 		return (
-			<FlexDiv justify={"center"} alignItems={"center"} padding={64}>
+			<FlexDiv justify={'center'} alignItems={'center'} padding={64}>
 				<IconButton {...args} />
 			</FlexDiv>
 		);

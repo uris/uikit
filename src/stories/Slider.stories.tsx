@@ -1,10 +1,10 @@
-import type { Meta, StoryObj } from "@storybook/react-vite";
-import { fn } from "storybook/test";
-import { FlexDiv } from "../uikit/FlexDiv/FlexDiv";
-import { Slider } from "../uikit/Slider/Slider";
+import type { Meta, StoryObj } from '@storybook/react-vite';
+import { fn } from 'storybook/test';
+import { FlexDiv } from '../uikit/FlexDiv/FlexDiv';
+import { Slider } from '../uikit/Slider/Slider';
 
 const meta: Meta<typeof Slider> = {
-	title: "UI Kit/Slider",
+	title: 'UI Kit/Slider',
 	component: Slider,
 	args: {
 		initial: 25,
@@ -14,10 +14,10 @@ const meta: Meta<typeof Slider> = {
 		height: 2,
 		touchHeight: 24,
 		trackHeadSize: 12,
-		headType: "round",
+		headType: 'round',
 		trackHeadWidth: 4,
 		rounding: 2,
-		cursor: "default",
+		cursor: 'default',
 		headColor: undefined,
 		progressColor: undefined,
 		trackColor: undefined,
@@ -32,7 +32,7 @@ export default meta;
 export const Default: StoryObj<typeof Slider> = {
 	render: (args) => {
 		return (
-			<FlexDiv justify={"center"} alignItems={"center"} padding={64}>
+			<FlexDiv justify={'center'} alignItems={'center'} padding={64}>
 				<Slider {...args} />
 			</FlexDiv>
 		);

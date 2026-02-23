@@ -1,7 +1,7 @@
-import { IconButton } from "../../IconButton/IconButton";
-import { UIFileIcon, UIFileIcons } from "../../UIFileIcon/UIFileIcon";
-import type { ToolTip } from "../../sharedTypes";
-import * as Styled from "./_Styles";
+import { IconButton } from '../../IconButton';
+import { UIFileIcon, UIFileIcons } from '../../UIFileIcon';
+import type { ToolTip } from '../../sharedTypes';
+import css from './FileList.module.css';
 
 interface FileListProps {
 	files?: File[];
@@ -9,7 +9,7 @@ interface FileListProps {
 	onToolTip?: (tip: ToolTip | null) => void;
 }
 
-export function FileList(props: FileListProps) {
+export function FileList(props: Readonly<FileListProps>) {
 	const { files = [], onChange = () => null, onToolTip = () => null } = props;
 	function handleRemoveFile(fileName: string) {
 		const updatedList = files.filter((file: File) => {
@@ -20,31 +20,31 @@ export function FileList(props: FileListProps) {
 
 	const fileType = (file: File) => {
 		switch (file.type) {
-			case "text/plain":
-				return "Text file";
-			case "text/html":
-				return "Web HTML file";
-			case "text/csv":
-				return "CSV spread shseet";
-			case "application/pdf":
-				return "PDF document";
-			case "application/vnd.openxmlformats-officedocument.wordprocessingml.document":
-			case "application/docx":
-				return "Word document";
+			case 'text/plain':
+				return 'Text file';
+			case 'text/html':
+				return 'Web HTML file';
+			case 'text/csv':
+				return 'CSV spread shseet';
+			case 'application/pdf':
+				return 'PDF document';
+			case 'application/vnd.openxmlformats-officedocument.wordprocessingml.document':
+			case 'application/docx':
+				return 'Word document';
 			default:
-				return "Unknown file type";
+				return 'Unknown file type';
 		}
 	};
 
 	const fileIcon = (file: File) => {
 		switch (file.type) {
-			case "text/plain":
-			case "text/html":
-			case "application/vnd.openxmlformats-officedocument.wordprocessingml.document":
+			case 'text/plain':
+			case 'text/html':
+			case 'application/vnd.openxmlformats-officedocument.wordprocessingml.document':
 				return UIFileIcons.Document;
-			case "text/csv":
+			case 'text/csv':
 				return UIFileIcons.Spreadhseet;
-			case "application/pdf":
+			case 'application/pdf':
 				return UIFileIcons.Pdf;
 			default:
 				return UIFileIcons.Document;
@@ -52,20 +52,20 @@ export function FileList(props: FileListProps) {
 	};
 
 	return (
-		<Styled.FileList>
+		<div className={css.fileList}>
 			{files.map((file: File, index: number) => {
 				return (
-					<Styled.FileButton key={`${file.name}-${index}`}>
-						<div className="content">
-							<div className="type">
+					<div className={css.fileButton} key={`${file.name}-${index}`}>
+						<div className={css.content}>
+							<div className={css.type}>
 								<UIFileIcon name={fileIcon(file)} size={18} />
 								{fileType(file)}
 							</div>
-							<div className="label">{file.name}</div>
+							<div className={css.label}>{file.name}</div>
 						</div>
-						<div className="icon">
+						<div className={css.icon}>
 							<IconButton
-								icon={"x"}
+								icon={'x'}
 								hover={false}
 								toggle={false}
 								frameSize={20}
@@ -74,13 +74,13 @@ export function FileList(props: FileListProps) {
 									e.stopPropagation();
 									handleRemoveFile(file.name);
 								}}
-								tooltip={"remove file"}
+								tooltip={'remove file'}
 								onToolTip={(tip) => onToolTip(tip)}
 							/>
 						</div>
-					</Styled.FileButton>
+					</div>
 				);
 			})}
-		</Styled.FileList>
+		</div>
 	);
 }

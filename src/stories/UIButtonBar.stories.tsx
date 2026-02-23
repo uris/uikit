@@ -1,16 +1,16 @@
-import type { Meta, StoryObj } from "@storybook/react";
-import type { BarButton } from "src/uikit/UIButtonBar";
-import { fn } from "storybook/test";
-import { FlexDiv } from "../uikit/FlexDiv/FlexDiv";
-import { UIButtonBar } from "../uikit/UIButtonBar/UIButtonBar";
+import type { Meta, StoryObj } from '@storybook/react';
+import type { BarButton } from 'src/uikit/UIButtonBar';
+import { fn } from 'storybook/test';
+import { FlexDiv } from '../uikit/FlexDiv/FlexDiv';
+import { UIButtonBar } from '../uikit/UIButtonBar/UIButtonBar';
 
 const listView: BarButton[] = [
-	{ icon: "list", command: "list", tip: "List View" },
-	{ icon: "gallery", command: "gallery", tip: "Gallery View" },
+	{ icon: 'arrow right', command: 'list', tip: 'List View' },
+	{ icon: 'home', command: 'gallery', tip: 'Gallery View' },
 ];
 
 const meta: Meta<typeof UIButtonBar> = {
-	title: "UI Kit/UI Button Bar",
+	title: 'UI Kit/UI Button Bar',
 	component: UIButtonBar,
 	args: {
 		options: listView,
@@ -25,7 +25,7 @@ export default meta;
 export const Default: StoryObj<typeof UIButtonBar> = {
 	render: (args) => {
 		return (
-			<FlexDiv justify={"center"} alignItems={"center"} padding={64}>
+			<FlexDiv justify={'center'} alignItems={'center'} padding={64}>
 				<UIButtonBar {...args} />
 			</FlexDiv>
 		);

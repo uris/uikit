@@ -1,21 +1,21 @@
-import { AnimatePresence } from "motion/react";
-import type React from "react";
-import { useEffect, useRef, useState } from "react";
-import { useTheme } from "styled-components";
-import { useObserveResize } from "../../../hooks/useObserveResize";
-import type { ToolTip } from "../../../uikit/sharedTypes";
-import { UIButton } from "../../UIButton/UIButton";
-import { type DocExcerpt, ExcerptList } from "../ExcerptList/ExcerptList";
-import { FileList } from "../FileList/FileList";
-import { UserList } from "../UserList/UserList";
-import { PrompState, type UserPresence } from "../UserList/_Types";
+import { AnimatePresence } from 'motion/react';
+import type React from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
+import { useTheme } from '../../../hooks';
+import { useObserveResize } from '../../../hooks/useObserveResize';
+import { UIButton } from '../../UIButton';
+import type { ToolTip } from '../../sharedTypes';
+import { type DocExcerpt, ExcerptList } from '../ExcerptList/ExcerptList';
+import { FileList } from '../FileList/FileList';
+import { UserList } from '../UserList/UserList';
+import { PrompState, type UserPresence } from '../UserList/_Types';
 import {
 	type JurisdictionFocus,
 	PromptType,
 	Role,
 	type SendMessage,
-} from "../_Types";
-import * as Styled from "./_Styles";
+} from '../_Types';
+import css from './MessageInput.module.css';
 
 export interface MessageInputProps {
 	maxHeight?: number;
@@ -49,13 +49,13 @@ export interface MessageInputProps {
 	onStop?: () => void;
 }
 
-export function MessageInput(props: MessageInputProps) {
+export function MessageInput(props: Readonly<MessageInputProps>) {
 	const {
 		maxHeight = 300,
 		focused = false,
 		error = null,
-		value = "",
-		placeholder = "Ask me anytning HR compliance",
+		value = '',
+		placeholder = 'Ask me anytning HR compliance',
 		isStreaming = false,
 		isFetching = false,
 		isShort = true,
@@ -91,7 +91,7 @@ export function MessageInput(props: MessageInputProps) {
 	// reset size if the warpper size changes
 	useEffect(() => {
 		if (ref?.current) {
-			ref.current.style.height = "0px";
+			ref.current.style.height = '0px';
 			ref.current.style.height = `${Math.min(ref.current.scrollHeight, maxHeight)}px`;
 		}
 	}, [maxHeight]);
@@ -127,7 +127,7 @@ export function MessageInput(props: MessageInputProps) {
 
 	function resetHeight() {
 		if (ref?.current) {
-			ref.current.style.height = "0px";
+			ref.current.style.height = '0px';
 			ref.current.style.height = `${Math.min(ref.current.scrollHeight, maxHeight)}px`;
 		}
 	}
@@ -141,30 +141,30 @@ export function MessageInput(props: MessageInputProps) {
 		e?.preventDefault();
 		e?.stopPropagation();
 		onToolTip(null);
-		if (message !== "" && ref.current) {
+		if (message !== '' && ref.current) {
 			const newMessage: SendMessage = {
 				id: crypto.randomUUID(),
 				content: message,
 				timestamp: new Date().toISOString(),
 				promptType,
 				role: Role.USER,
-				htmlContent: "",
+				htmlContent: '',
 				files,
 				excerpts,
 				done: false,
 			};
 			onSend(newMessage);
-			setMessage("");
-			onChange("");
+			setMessage('');
+			onChange('');
 			resetHeight();
 			setIsFocused(false);
 			ref.current.blur();
-			ref.current.value = "";
+			ref.current.value = '';
 		}
 	};
 
 	const handleKeyDown = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
-		if (!e.shiftKey && e.key === "Enter" && message !== "") doSubmit(e);
+		if (!e.shiftKey && e.key === 'Enter' && message !== '') doSubmit(e);
 		else return;
 	};
 
@@ -185,24 +185,24 @@ export function MessageInput(props: MessageInputProps) {
 	}
 
 	function setDisabled() {
-		if (remoteDisabled) return "disabled";
-		if (isStreaming) return "normal";
-		if (!isStreaming && files.length > 0) return "normal";
-		if (invalid && invalid !== "") return "disabled";
-		if (!isStreaming && isFetching) return "disabled";
-		if (!isStreaming && message === "") return "disabled";
-		return "normal";
+		if (remoteDisabled) return 'disabled';
+		if (isStreaming) return 'normal';
+		if (!isStreaming && files.length > 0) return 'normal';
+		if (invalid && invalid !== '') return 'disabled';
+		if (!isStreaming && isFetching) return 'disabled';
+		if (!isStreaming && message === '') return 'disabled';
+		return 'normal';
 	}
 
 	const iconColor = () => {
 		if (isFetching || isStreaming) {
-			if (theme.name === "lightMode") return theme?.colors?.["core-text-light"];
-			return theme?.colors?.["core-surface-primary"];
+			if (theme.name === 'lightMode') return theme?.colors?.['core-text-light'];
+			return theme?.colors?.['core-surface-primary'];
 		}
-		if (message === "") {
-			return theme?.colors?.["core-surface-secondary"];
+		if (message === '') {
+			return theme?.colors?.['core-surface-secondary'];
 		}
-		return theme?.colors?.["core-text-light"];
+		return theme?.colors?.['core-text-light'];
 	};
 
 	function handleUpload(
@@ -235,24 +235,44 @@ export function MessageInput(props: MessageInputProps) {
 	};
 
 	const toolTip = () => {
-		if (isStreaming) return "Stop";
-		if (isFetching) return "Working ...";
-		return "Send";
+		if (isStreaming) return 'Stop';
+		if (isFetching) return 'Working ...';
+		return 'Send';
 	};
 
 	const setJurisdiction = () => {
 		const country = jurisdiction?.country;
 		const state = jurisdiction?.state;
-		if (!country || country === "None") return "None";
-		if (state !== "None") return state;
+		if (!country || country === 'None') return 'None';
+		if (state !== 'None') return state;
 		return country;
 	};
 
+	// memo css vars
+	const cssVars = useMemo(() => {
+		const shadowValue = isShort ? 0 : 1;
+		return {
+			'--wrapper-padding': isShort
+				? '16px 12px 8px 16px'
+				: '16px 12px 16px 16px',
+			'--wrapper-shadow': `0 0 1px ${shadowValue}px transparent`,
+			// biome-ignore lint/style/noUnusedTemplateLiteral: <explanation>
+			'--wrapper-shadow-focused': `0 0 1px 2px var(--core-outline-special)`,
+			'--input-wrapper-padding': isShort
+				? '4px 4px 0px 4px'
+				: '4px 4px 16px 4px',
+		} as React.CSSProperties;
+	}, [isShort]);
+
+	const wrapperClassName = [css.wrapper, isFocused ? 'focused' : '']
+		.filter(Boolean)
+		.join(' ');
+
 	return (
-		<Styled.Wrapper
-			className={isFocused ? "focused" : ""}
-			$isFocused={isFocused}
-			$isShort={isShort}
+		<div
+			className={wrapperClassName}
+			style={cssVars}
+			onKeyDown={(e) => null}
 			onClick={() => {
 				if (!isFocused) setFocus();
 			}}
@@ -270,16 +290,17 @@ export function MessageInput(props: MessageInputProps) {
 			<AnimatePresence initial={false}>
 				{files.length > 0 && (
 					<FileList
-						files={files as File[]}
+						files={files}
 						onChange={(items: File[]) => onChangeFiles(items)}
 						onToolTip={(tip) => onToolTip(tip)}
 					/>
 				)}
 			</AnimatePresence>
-			<Styled.InputWrapper $isShort={isShort}>
-				<Styled.TextArea
-					id={"messageInput"}
-					name={"messageInput"}
+			<div className={css.inputWrapper} style={cssVars}>
+				<textarea
+					id={'messageInput'}
+					name={'messageInput'}
+					className={css.textarea}
 					ref={ref}
 					value={message}
 					onChange={({ target }) => handleChange(target.value)}
@@ -291,7 +312,7 @@ export function MessageInput(props: MessageInputProps) {
 					onBlur={() => setBlur()}
 					rows={1}
 				/>
-			</Styled.InputWrapper>
+			</div>
 			<AnimatePresence initial={false}>
 				{users.length > 0 && (
 					<UserList
@@ -304,45 +325,45 @@ export function MessageInput(props: MessageInputProps) {
 					/>
 				)}
 			</AnimatePresence>
-			<Styled.ButtonRow>
-				<Styled.ActionButtons $isShort={isShort}>
+			<div className={css.buttonRow}>
+				<div className={css.actionButtons}>
 					<UIButton
-						variant={"outline"}
-						iconLeft={"plus"}
-						tooltip={"Attach file"}
+						variant={'outline'}
+						iconLeft={'plus'}
+						tooltip={'Attach file'}
 						onClick={(e) => handleUpload(e, PromptType.file)}
-						size={"medium"}
-						iconColor={theme.colors["core-icon-primary"]}
+						size={'medium'}
+						iconColor={theme.colors['core-icon-primary']}
 						round
 						onToolTip={(tip) => onToolTip(tip)}
 					/>
 					<UIButton
 						paddingRight={18}
 						paddingLeft={8}
-						variant={"outline"}
+						variant={'outline'}
 						label={`Focus: ${setJurisdiction()}`}
-						tooltip={"Jurisdication Focus"}
+						tooltip={'Jurisdication Focus'}
 						onClick={(_e) => jurisdictionClick()}
-						iconLeft={"focus"}
-						size={"medium"}
-						iconColor={theme.colors["core-icon-primary"]}
-						labelColor={theme?.colors?.["core-text-secondary"]}
+						iconLeft={'focus'}
+						size={'medium'}
+						iconColor={theme.colors['core-icon-primary']}
+						labelColor={theme?.colors?.['core-text-secondary']}
 						onToolTip={(tip) => onToolTip(tip)}
 					/>
-				</Styled.ActionButtons>
-				<Styled.Send>
+				</div>
+				<div className={css.send}>
 					<UIButton
-						variant={"solid"}
-						iconLeft={isStreaming ? "stop" : "arrow up"}
-						bgColorDisabled={theme?.colors?.["core-badge-secondary"]}
+						variant={'solid'}
+						iconLeft={isStreaming ? 'stop' : 'arrow up'}
+						bgColorDisabled={theme?.colors?.['core-badge-secondary']}
 						bgColor={
 							isFetching || isStreaming
-								? theme?.colors?.["core-text-primary"]
-								: theme?.colors?.["core-button-primary"]
+								? theme?.colors?.['core-text-primary']
+								: theme?.colors?.['core-button-primary']
 						}
 						iconColor={iconColor()}
 						state={setDisabled()}
-						size={"medium"}
+						size={'medium'}
 						progress={true}
 						working={working()}
 						round
@@ -354,8 +375,8 @@ export function MessageInput(props: MessageInputProps) {
 						tooltip={toolTip()}
 						onToolTip={(tip) => onToolTip(tip)}
 					/>
-				</Styled.Send>
-			</Styled.ButtonRow>
-		</Styled.Wrapper>
+				</div>
+			</div>
+		</div>
 	);
 }

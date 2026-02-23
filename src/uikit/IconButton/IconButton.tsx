@@ -51,9 +51,9 @@ export const IconButton = React.memo((props: IconButtonProps) => {
 		tooltip = undefined,
 		color = undefined,
 		colorOn = undefined,
-		bgColor = "var(--core-surface-secondary)",
-		bgColorHover = "var(--core-outline-primary)",
-		bgColorOn = "var(--core-outline-primary)",
+		bgColor = 'var(--core-surface-secondary)',
+		bgColorHover = 'var(--core-outline-primary)',
+		bgColorOn = 'var(--core-outline-primary)',
 		transition = undefined,
 		variants = undefined,
 		initial = undefined,
@@ -107,13 +107,13 @@ export const IconButton = React.memo((props: IconButtonProps) => {
 
 	// memo icon stroke color
 	const strokeColor = useMemo(
-		() => color || "var(--core-icon-primary)",
+		() => color || 'var(--core-icon-primary)',
 		[color],
 	);
-	
+
 	// memo accent color
 	const accentColor = useMemo(
-		() => colorOn || "var(--core-icon-primary)",
+		() => colorOn || 'var(--core-icon-primary)',
 		[colorOn],
 	);
 
@@ -131,10 +131,10 @@ export const IconButton = React.memo((props: IconButtonProps) => {
 	}, [hover, bgColor, bgColorHover, on]);
 
 	// memo text color selected / unselected
-	const textColor = useMemo(()=>{
-		if(toggle && on) return colorOn;
+	const textColor = useMemo(() => {
+		if (toggle && on) return colorOn;
 		return color ?? 'var(--core-text-primary)';
-	},[toggle, on, colorOn, color])
+	}, [toggle, on, colorOn, color]);
 
 	// memo css vars
 	const cssVars = useMemo(() => {

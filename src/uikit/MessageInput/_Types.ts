@@ -1,4 +1,4 @@
-import type { DocExcerpt } from "./ExcerptList/ExcerptList";
+import type { DocExcerpt } from './ExcerptList/ExcerptList';
 
 export type SendMessage = {
 	id: string;
@@ -25,10 +25,10 @@ export enum PromptType {
 }
 
 export enum Role {
-	USER = "user",
-	ASSISTANT = "assistant",
-	TOOL = "tool",
-	SYSTEM = "system",
+	USER = 'user',
+	ASSISTANT = 'assistant',
+	TOOL = 'tool',
+	SYSTEM = 'system',
 }
 
 export type UploadDocument = {

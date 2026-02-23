@@ -4,18 +4,18 @@ import React, {
 	useMemo,
 	useRef,
 	useState,
-} from "react";
-import { Badge } from "../Badge";
-import { Icon } from "../Icon";
-import { IconButton } from "../IconButton";
-import { type ToolTip, ToolTipType } from "../sharedTypes";
-import type { TabOption } from "./_Types";
-import css from "./TabBar.module.css";
-import {useTheme} from "../../hooks";
+} from 'react';
+import { useTheme } from '../../hooks';
+import { Badge } from '../Badge';
+import { Icon } from '../Icon';
+import { IconButton } from '../IconButton';
+import { type ToolTip, ToolTipType } from '../sharedTypes';
+import css from './TabBar.module.css';
+import type { TabOption } from './_Types';
 
 export const placeholderOptions: TabOption[] = [
-	{ name: "Option 1", value: "Option 1", icon: null },
-	{ name: "Option 2", value: "Option 2", icon: "wallet" },
+	{ name: 'Option 1', value: 'Option 1', icon: null },
+	{ name: 'Option 2', value: 'Option 2', icon: 'wallet' },
 ];
 
 export interface TabBarProps {
@@ -26,16 +26,16 @@ export interface TabBarProps {
 	selectedValue?: string;
 	height?: number | string;
 	width?: number | string;
-	tabWidth?: "min-content" | "distribute" | number
+	tabWidth?: 'min-content' | 'distribute' | number;
 	closeWidth?: number | string;
 	padding?: number | string;
 	textStyle?:
-		| "textXLarge"
-		| "textLarge"
-		| "textRegular"
-		| "textMedium"
-		| "textSmall"
-		| "textXSmall"
+		| 'textXLarge'
+		| 'textLarge'
+		| 'textRegular'
+		| 'textMedium'
+		| 'textSmall'
+		| 'textXSmall'
 		| null;
 	iconSize?: number;
 	iconGap?: number;
@@ -54,17 +54,17 @@ export const TabBar = React.memo((props: TabBarProps) => {
 		selected = 0,
 		border = true,
 		underline = true,
-		height = "100%",
-		width = "100%",
-		tabWidth = "distribute",
+		height = '100%',
+		width = '100%',
+		tabWidth = 'distribute',
 		padding = 8,
-		textStyle = "textRegular",
+		textStyle = 'textRegular',
 		iconSize = 20,
 		iconGap = 8,
 		tabGap = 0,
 		disabled = false,
 		hasClose = false,
-		closeWidth = "auto",
+		closeWidth = 'auto',
 		selectedValue = null,
 		onChange = () => null,
 		onTabChange = () => null,
@@ -141,28 +141,25 @@ export const TabBar = React.memo((props: TabBarProps) => {
 			handleOptionClick,
 		],
 	);
-	
-	const setStyle = useCallback((value:string|number)=>{
-		if(typeof value === "string") return value
-		return `${value}px`
-	},[])
 
-	const cssVars = useMemo(()=>{
+	const setStyle = useCallback((value: string | number) => {
+		if (typeof value === 'string') return value;
+		return `${value}px`;
+	}, []);
+
+	const cssVars = useMemo(() => {
 		return {
-			"--tab-bar-gap": `${tabGap}px`,
-			"--tab-bar-height": `${setStyle(height)}px`,
-			"--tab-bar-width": setStyle(width),
-			"--tab-bar-border-bottom": `${border ? "1px" : "0"}`,
-			"--tab-bar-close-width": `${closeWidth}px`,
-			"--tab-bar-close-padding": padding ? `${padding}px` : "8px",
+			'--tab-bar-gap': `${tabGap}px`,
+			'--tab-bar-height': `${setStyle(height)}px`,
+			'--tab-bar-width': setStyle(width),
+			'--tab-bar-border-bottom': `${border ? '1px' : '0'}`,
+			'--tab-bar-close-width': `${closeWidth}px`,
+			'--tab-bar-close-padding': padding ? `${padding}px` : '8px',
 		} as React.CSSProperties;
-	},[tabGap, height, width, border, setStyle])
-	
+	}, [tabGap, height, width, border, setStyle]);
+
 	return (
-		<div
-			className={css.wrapper}
-			style={cssVars}
-		>
+		<div className={css.wrapper} style={cssVars}>
 			{renderedOptions}
 			{hasClose && (
 				<div className={css.close}>
@@ -171,7 +168,7 @@ export const TabBar = React.memo((props: TabBarProps) => {
 						frameSize={iconSize}
 						toggle={false}
 						hover={true}
-						icon={"x"}
+						icon={'x'}
 						onClick={onClose}
 					/>
 				</div>
@@ -180,7 +177,7 @@ export const TabBar = React.memo((props: TabBarProps) => {
 	);
 });
 
-TabBar.displayName = "TabBar";
+TabBar.displayName = 'TabBar';
 
 interface TabOptionProps {
 	label?: string;
@@ -193,7 +190,7 @@ interface TabOptionProps {
 	iconGap?: number;
 	disabled?: boolean;
 	count?: number;
-	tabWidth?: "min-content" | "distribute" | number
+	tabWidth?: 'min-content' | 'distribute' | number;
 	underline?: boolean;
 	onClick?: (value: number) => void;
 	onToolTip?: (tip: ToolTip | null) => void;
@@ -203,7 +200,7 @@ const Option = React.memo(
 	(props: TabOptionProps) => {
 		const theme = useTheme();
 		const {
-			label = "Option",
+			label = 'Option',
 			value = 0,
 			icon = null,
 			selected = false,
@@ -215,7 +212,7 @@ const Option = React.memo(
 			disabled = false,
 			showToolTip = null,
 			underline = true,
-			tabWidth = "distribute",
+			tabWidth = 'distribute',
 			count = 0,
 		} = props;
 
@@ -223,9 +220,9 @@ const Option = React.memo(
 
 		// memo icon color
 		const strokeColor = useMemo(() => {
-			if (!disabled && selected) return theme.colors["core-button-primary"];
-			if(disabled) return theme.colors["core-text-disabled"];
-			return theme.colors["core-text-primary"];
+			if (!disabled && selected) return theme.colors['core-button-primary'];
+			if (disabled) return theme.colors['core-text-disabled'];
+			return theme.colors['core-text-primary'];
 		}, [disabled, selected, theme]);
 
 		// memo handleMouseOver
@@ -249,52 +246,61 @@ const Option = React.memo(
 		const handleMouseLeave = useCallback(() => {
 			if (showToolTip) onToolTip(null);
 		}, [showToolTip, onToolTip]);
-		
+
 		// memo color
-		const textColor = useMemo(()=>{
-			if(disabled) return "var(--core-text-disabled)"
-			else if(selected) return "var(--core-button-primary)"
-			return "var(--core-text-primary)"
-		},[disabled, selected])
-		
+		const textColor = useMemo(() => {
+			if (disabled) return 'var(--core-text-disabled)';
+			if (selected) return 'var(--core-button-primary)';
+			return 'var(--core-text-primary)';
+		}, [disabled, selected]);
+
 		// memo tab width
-		const setTabWidth = useMemo(()=>{
-			if(tabWidth === "min-content") return "min-content";
-			if(tabWidth === "distribute") return "unset";
-			return `${tabWidth}px`
-		},[tabWidth])
+		const setTabWidth = useMemo(() => {
+			if (tabWidth === 'min-content') return 'min-content';
+			if (tabWidth === 'distribute') return 'unset';
+			return `${tabWidth}px`;
+		}, [tabWidth]);
 
 		// memo flex tab
-		const setTabFlex = useMemo(()=>{
-			if(tabWidth === "distribute") return "1";
-			return "unset"
-		},[tabWidth])
-		
+		const setTabFlex = useMemo(() => {
+			if (tabWidth === 'distribute') return '1';
+			return 'unset';
+		}, [tabWidth]);
+
 		// memo underline
-		const setUnderline = useMemo(()=>{
-			if(selected && underline && !disabled) return "1px"
-			return "0"
-		},[underline, disabled, selected])
-		
-		const cssVars = useMemo(()=>{
+		const setUnderline = useMemo(() => {
+			if (selected && underline && !disabled) return '1px';
+			return '0';
+		}, [underline, disabled, selected]);
+
+		const cssVars = useMemo(() => {
 			return {
-				"--tab-bar-option-border": setUnderline,
-				"--tab-bar-option-padding": `${padding}px`,
-				"--tab-bar-option-icon-size": `${iconSize}px`,
-				"--tab-bar-option-cursor": disabled ? "default" : "pointer",
-				"--tab-bar-option-gap": `${iconGap ?? 0}px`,
-				"--tab-bar-option-color": textColor,
-				"--tab-bar-option-width": setTabWidth,
-				"--tab-bar-option-flex": setTabFlex,
+				'--tab-bar-option-border': setUnderline,
+				'--tab-bar-option-padding': `${padding}px`,
+				'--tab-bar-option-icon-size': `${iconSize}px`,
+				'--tab-bar-option-cursor': disabled ? 'default' : 'pointer',
+				'--tab-bar-option-gap': `${iconGap ?? 0}px`,
+				'--tab-bar-option-color': textColor,
+				'--tab-bar-option-width': setTabWidth,
+				'--tab-bar-option-flex': setTabFlex,
 			} as React.CSSProperties;
-		},[padding, iconSize, disabled, icon, textColor, selected, underline, iconGap])
+		}, [
+			padding,
+			iconSize,
+			disabled,
+			icon,
+			textColor,
+			selected,
+			underline,
+			iconGap,
+		]);
 
 		return (
 			<div
 				className={css.option}
 				style={cssVars}
 				ref={ref}
-				role={"option"}
+				role={'option'}
 				aria-selected={selected}
 				tabIndex={0}
 				onMouseEnter={handleMouseOver}
@@ -309,7 +315,7 @@ const Option = React.memo(
 				)}
 				{label}
 				{count !== 0 && (
-					<Badge variant={"light"} hideNull={false} count={count} />
+					<Badge variant={'light'} hideNull={false} count={count} />
 				)}
 			</div>
 		);
@@ -330,4 +336,4 @@ const Option = React.memo(
 	},
 );
 
-Option.displayName = "TabOption";
+Option.displayName = 'TabOption';

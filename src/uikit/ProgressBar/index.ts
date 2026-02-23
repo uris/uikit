@@ -2,7 +2,7 @@ import {
 	ProgressBar,
 	type ProgressBarProps,
 	type ProgressBarStep,
-} from "./ProgressBar";
+} from './ProgressBar';
 
 export { ProgressBar };
 export type { ProgressBarProps, ProgressBarStep };

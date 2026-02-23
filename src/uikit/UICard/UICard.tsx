@@ -1,5 +1,7 @@
-import { Icon } from "../Icon/Icon";
-import * as Styled from "./_Styles";
+import type React from 'react';
+import { useCallback, useMemo } from 'react';
+import { Icon } from '../Icon';
+import css from './UICard.module.css';
 
 export interface UICardProps {
 	id?: string;
@@ -10,16 +12,37 @@ export interface UICardProps {
 	onCommand?: (command: { id?: string; command?: string }) => void;
 }
 
-export function UICard(props: UICardProps) {
+export function UICard(props: Readonly<UICardProps>) {
 	const { id, icon, label, command, width, onCommand = () => null } = props;
+
+	// set style value callback
+	const setStyle = useCallback((value: string | number | undefined) => {
+		if (value === undefined || value === 'fill') return 'unset';
+		if (typeof value === 'string') return value;
+		return `${value}px`;
+	}, []);
+
+	// memo css vars
+	const cssVars = useMemo(() => {
+		return {
+			'--card-width': setStyle(width),
+			'--card-flex': width === 'fill' ? '1' : 'unset',
+		} as React.CSSProperties;
+	}, [setStyle, width]);
+
 	return (
-		<Styled.Card $width={width} onClick={() => onCommand({ id, command })}>
+		<div
+			className={css.card}
+			style={cssVars}
+			onClick={() => onCommand({ id, command })}
+			onKeyDown={() => onCommand({ id, command })}
+		>
 			{icon && (
-				<div className="icon">
+				<div className={css.icon}>
 					<Icon name={icon} />
 				</div>
 			)}
-			{label && <div className="label">{label}</div>}
-		</Styled.Card>
+			{label && <div className={css.label}>{label}</div>}
+		</div>
 	);
 }

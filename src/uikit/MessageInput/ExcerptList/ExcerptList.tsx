@@ -1,8 +1,8 @@
-import { useTheme } from "styled-components";
-import { IconButton } from "../../IconButton/IconButton";
-import { Icon } from "../../Icon/Icon";
-import type { ToolTip } from "../../sharedTypes";
-import * as Styled from "./_Styles";
+import { useTheme } from '../../../hooks';
+import { Icon } from '../../Icon';
+import { IconButton } from '../../IconButton';
+import type { ToolTip } from '../../sharedTypes';
+import css from './ExcerptList.module.css';
 
 export type DocExcerpt = {
 	content?: string;
@@ -17,7 +17,7 @@ interface ExcerptListProps {
 	onToolTip?: (tip: ToolTip | null) => void;
 }
 
-export function ExcerptList(props: ExcerptListProps) {
+export function ExcerptList(props: Readonly<ExcerptListProps>) {
 	const {
 		excerpts = [],
 		onChange = () => null,
@@ -33,24 +33,31 @@ export function ExcerptList(props: ExcerptListProps) {
 	}
 
 	return (
-		<Styled.ExcerptList onClick={(e) => e.stopPropagation()}>
+		<div
+			className={css.excerptList}
+			onKeyDown={(e) => e.stopPropagation()}
+			onClick={(e) => e.stopPropagation()}
+		>
 			{excerpts.map((excerpt: DocExcerpt, index: number) => {
 				return (
-					<Styled.ExcerptButton key={`${excerpt.content}-${index}`}>
-						<div className="content">
-							<div className="type">
+					<div
+						className={css.excerptButton}
+						key={`${excerpt.content}-${index}`}
+					>
+						<div className={css.content}>
+							<div className={css.type}>
 								<Icon
 									name="recent chats"
 									size={16}
-									strokeColor={theme.colors["core-text-disabled"]}
+									strokeColor={theme.colors['core-text-disabled']}
 								/>
-								{excerpt.docTitle ? excerpt.docTitle : "Document excerpt"}
+								{excerpt.docTitle ? excerpt.docTitle : 'Document excerpt'}
 							</div>
-							<div className="label">{excerpt.content}</div>
+							<div className={css.label}>{excerpt.content}</div>
 						</div>
-						<div className="icon">
+						<div className={css.icon}>
 							<IconButton
-								icon={"x"}
+								icon={'x'}
 								hover={false}
 								toggle={false}
 								frameSize={20}
@@ -59,13 +66,13 @@ export function ExcerptList(props: ExcerptListProps) {
 									e.stopPropagation();
 									handleRemoveFile(excerpt.content);
 								}}
-								tooltip={"remove excerpt"}
+								tooltip={'remove excerpt'}
 								onToolTip={(tip) => onToolTip(tip)}
 							/>
 						</div>
-					</Styled.ExcerptButton>
+					</div>
 				);
 			})}
-		</Styled.ExcerptList>
+		</div>
 	);
 }

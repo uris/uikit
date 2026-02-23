@@ -5,7 +5,7 @@ export type Edits = {
 
 export type SuggestMark = {
 	id: string;
-	action: "add" | "remove";
+	action: 'add' | 'remove';
 	from: number;
 	to: number;
 };

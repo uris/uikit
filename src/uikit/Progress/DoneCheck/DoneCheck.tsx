@@ -1,6 +1,6 @@
-import { type Transition, useAnimate, usePresence } from "motion/react";
-import { useEffect } from "react";
-import { useTheme } from "styled-components";
+import { type Transition, useAnimate, usePresence } from 'motion/react';
+import { useEffect } from 'react';
+import { useTheme } from 'styled-components';
 
 export interface DoneCheckProps {
 	size?: number;
@@ -22,7 +22,7 @@ export function DoneCheck(props: DoneCheckProps) {
 		duration = 0.35,
 		bounce = 0.7,
 		delay = 0.5,
-		color = theme.colors["feedback-positive"],
+		color = theme.colors['feedback-positive'],
 		didEnd = () => null,
 		didStart = () => null,
 		play = false,
@@ -33,12 +33,12 @@ export function DoneCheck(props: DoneCheckProps) {
 	useEffect(() => {
 		const variants = { initial: { scale: 0.9 }, animate: { scale: 1 } };
 		const spring: Transition = {
-			type: "spring",
+			type: 'spring',
 			time: duration,
 			bounce,
 			delay,
 		};
-		const instant: Transition = { ease: "linear", duration: 0, delay: 0 };
+		const instant: Transition = { ease: 'linear', duration: 0, delay: 0 };
 		if (isPresent && play) {
 			const enterAnimation = async () => {
 				didStart();

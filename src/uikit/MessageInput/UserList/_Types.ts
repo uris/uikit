@@ -14,15 +14,15 @@ export type UserPresence = {
 };
 
 export enum PrompState {
-	Idle = "idle",
-	Disabled = "disabled",
-	Enabled = "enabled",
+	Idle = 'idle',
+	Disabled = 'disabled',
+	Enabled = 'enabled',
 }
 
 export enum Role {
-	Owner = "owner",
-	Editor = "editor",
-	Viewer = "viewer",
+	Owner = 'owner',
+	Editor = 'editor',
+	Viewer = 'viewer',
 }
 
 export type PresensceColor = {

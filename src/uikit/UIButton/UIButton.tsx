@@ -35,6 +35,7 @@ export interface UIButtonProps {
 	bgColor?: string;
 	bgColorDisabled?: string;
 	labelColor?: string;
+	labelSize?: 's' | 'm' | 'l';
 	transition?: Transition;
 	variants?: Variants;
 	initial?: string;
@@ -65,6 +66,7 @@ const UIButtonComponent = forwardRef<UIButtonHandle, UIButtonProps>(
 			size = 'medium',
 			variant = 'outline',
 			label = undefined,
+			labelSize = 'm',
 			iconRight = undefined,
 			iconLeft = undefined,
 			count = props.count === undefined ? undefined : Number(props.count),
@@ -100,6 +102,9 @@ const UIButtonComponent = forwardRef<UIButtonHandle, UIButtonProps>(
 		const [btnState, setBtnState] = useState<'normal' | 'hover' | 'disabled'>(
 			state,
 		);
+		const [btnWidth, setBtnWidth] = useState<number | string | undefined>(
+			undefined,
+		);
 		const [playing, setPlaying] = useState<boolean>(working);
 		const ref = useRef<HTMLDivElement | null>(null);
 
@@ -118,6 +123,14 @@ const UIButtonComponent = forwardRef<UIButtonHandle, UIButtonProps>(
 
 		useEffect(() => setBtnState(state), [state]);
 		useEffect(() => setPlaying(working), [working]);
+
+		// memo button width - note the inclusion of unnecessary dependencies for story book purposes
+		// biome-ignore lint/correctness/useExhaustiveDependencies: avoid expensive observers
+		useEffect(() => {
+			if (!variant || !size || !labelSize) return;
+			if (ref?.current) setBtnWidth(ref.current.offsetWidth);
+			else setBtnWidth(width);
+		}, [width, variant, labelSize, size, iconLeft, iconRight]);
 
 		useImperativeHandle(buttonRef, () => ({
 			triggerClick: () => handleClick(undefined),
@@ -284,7 +297,7 @@ const UIButtonComponent = forwardRef<UIButtonHandle, UIButtonProps>(
 					iconSize,
 					paddingLeft: setPadding('left'),
 					paddingRight: setPadding('right'),
-					width: round ? '48px' : width || 'auto',
+					width: round ? '48px' : btnWidth || 'auto',
 					borderRadius: borderRadius ?? '500px',
 				},
 				medium: {
@@ -293,7 +306,7 @@ const UIButtonComponent = forwardRef<UIButtonHandle, UIButtonProps>(
 					iconSize,
 					paddingLeft: setPadding('left'),
 					paddingRight: setPadding('right'),
-					width: round ? '36px' : width || 'auto',
+					width: round ? '36px' : btnWidth || 'auto',
 					borderRadius: borderRadius ?? '500px',
 				},
 				text: {
@@ -302,11 +315,11 @@ const UIButtonComponent = forwardRef<UIButtonHandle, UIButtonProps>(
 					iconSize,
 					paddingLeft: 0,
 					paddingRight: 0,
-					width,
+					btnWidth,
 					borderRadius: 0,
 				},
 			};
-		}, [iconSize, width, round, borderRadius, setPadding]);
+		}, [iconSize, btnWidth, round, borderRadius, setPadding]);
 
 		// Memoize handleMouseEnter
 		const handleMouseEnter = useCallback(
@@ -352,9 +365,7 @@ const UIButtonComponent = forwardRef<UIButtonHandle, UIButtonProps>(
 				paddingRight: paddingRight ?? sizingStyles[size].paddingRight,
 				paddingLeft: paddingLeft ?? sizingStyles[size].paddingLeft,
 				borderRadius: sizingStyles[size].borderRadius,
-				width: width === 'fill' ? 'unset' : sizingStyles[size].width,
 				height: sizingStyles[size].height,
-				minWidth: width === 'fill' ? 'unset' : sizingStyles[size].width,
 				maxHeight: sizingStyles[size].height,
 				minHeight: sizingStyles[size].height,
 				flex: width === 'fill' ? 1 : 'unset',
@@ -396,11 +407,20 @@ const UIButtonComponent = forwardRef<UIButtonHandle, UIButtonProps>(
 			[destructive, theme, colorStyles, variant, btnState],
 		);
 
+		const setStyle = useCallback((value: string | number | undefined) => {
+			if (value === undefined) return 'unset';
+			if (typeof value === 'number') return `${value}px`;
+			return value;
+		}, []);
+
 		const cssVars = useMemo(() => {
 			return {
 				'--ui-button-decoration': underline ? 'underline' : 'unset',
+				'--ui-button-min-width': btnWidth ? setStyle(btnWidth) : 'unset',
 			} as React.CSSProperties;
-		}, [underline]);
+		}, [underline, btnWidth, setStyle]);
+
+		console.log({ cssVars });
 
 		return (
 			<motion.div
@@ -445,7 +465,7 @@ const UIButtonComponent = forwardRef<UIButtonHandle, UIButtonProps>(
 					/>
 				)}
 				{shouldShowLabel && (
-					<div className={`${css.label} ${css.m}`}>{label}</div>
+					<div className={`${css.label} ${css[labelSize]}`}>{label}</div>
 				)}
 				{playing && iconRight && (
 					<ProgressIndicator

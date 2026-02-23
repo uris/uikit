@@ -1,6 +1,6 @@
-import {motion, type Transition } from "motion/react";
-import React, { useCallback, useEffect, useMemo, useState } from "react";
-import css from "./Switch.module.css";
+import { type Transition, motion } from 'motion/react';
+import React, { useCallback, useEffect, useMemo, useState } from 'react';
+import css from './Switch.module.css';
 
 export interface SwitchProps {
 	state?: boolean;
@@ -14,7 +14,7 @@ export interface SwitchProps {
 }
 
 // Extract static transition config
-const TRANSITION: Transition = { ease: "easeInOut", duration: 0.3 };
+const TRANSITION: Transition = { ease: 'easeInOut', duration: 0.3 };
 
 export const Switch = React.memo((props: SwitchProps) => {
 	const {
@@ -22,9 +22,9 @@ export const Switch = React.memo((props: SwitchProps) => {
 		height = 22,
 		width = 44,
 		padding = 3,
-		bgColorOn = "var(--feedback-positive)",
-		bgColorOff = "var(--core-badge-secondary)",
-		knobColor = "var(--core-text-light)",
+		bgColorOn = 'var(--feedback-positive)',
+		bgColorOff = 'var(--core-badge-secondary)',
+		knobColor = 'var(--core-text-light)',
 		onChange = () => null,
 	} = props;
 	const [on, setOn] = useState<boolean>(state);
@@ -38,7 +38,7 @@ export const Switch = React.memo((props: SwitchProps) => {
 		setOn(!on);
 		onChange(!on);
 	}, [on, onChange]);
-	
+
 	// memo animation values
 	const animateValue = useMemo(
 		() => ({ backgroundColor: on ? bgColorOn : bgColorOff }),
@@ -47,7 +47,7 @@ export const Switch = React.memo((props: SwitchProps) => {
 
 	// Memoize style object
 	const justify = useMemo(
-		() => ({ justifyContent: on ? "flex-end" : "flex-start" }),
+		() => ({ justifyContent: on ? 'flex-end' : 'flex-start' }),
 		[on],
 	);
 
@@ -56,27 +56,27 @@ export const Switch = React.memo((props: SwitchProps) => {
 		() => ({ backgroundColor: knobColor }),
 		[knobColor],
 	);
-	
+
 	// memo css vars
 	const cssVars = useMemo(() => {
 		return {
-			"--switch-width": `${width}px`,
-			"--switch-height": `${height}px`,
-			"--switch-padding": `${padding}px`,
-			"--switch-knob-size": `${height-(padding*2)}px`,
-		} as React.CSSProperties
-	},[bgColorOn, bgColorOff, knobColor]);
+			'--switch-width': `${width}px`,
+			'--switch-height': `${height}px`,
+			'--switch-padding': `${padding}px`,
+			'--switch-knob-size': `${height - padding * 2}px`,
+		} as React.CSSProperties;
+	}, [bgColorOn, bgColorOff, knobColor]);
 
 	return (
 		<motion.div
 			className={css.wrapper}
-			style={{...cssVars, ...justify}}
+			style={{ ...cssVars, ...justify }}
 			transition={TRANSITION}
 			initial={state ? bgColorOn : bgColorOff}
 			animate={animateValue}
 			onClick={handleClick}
 		>
-			<motion.div 
+			<motion.div
 				className={css.knob}
 				layout={true}
 				transition={TRANSITION}

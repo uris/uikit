@@ -1,6 +1,12 @@
-import React, {useCallback, useEffect, useMemo, useRef, useState} from "react";
-import { UIButton } from "../UIButton";
-import css from "./TextArea.module.css";
+import React, {
+	useCallback,
+	useEffect,
+	useMemo,
+	useRef,
+	useState,
+} from 'react';
+import { UIButton } from '../UIButton';
+import css from './TextArea.module.css';
 
 export interface TextAreaProps {
 	value?: string;
@@ -13,7 +19,7 @@ export interface TextAreaProps {
 	placeholder?: string;
 	padding?: number | string;
 	validate?: boolean;
-	border?:boolean;
+	border?: boolean;
 	resizable?: boolean;
 	hasSend?: boolean;
 	sendOffset?: { bottom: number; right: number };
@@ -21,7 +27,7 @@ export interface TextAreaProps {
 	bgColor?: string;
 	borderRadius?: number;
 	returnSubmits?: boolean;
-	textSize?: "s" | "m" | "l";
+	textSize?: 's' | 'm' | 'l';
 	disabled?: boolean;
 	submitClears?: boolean;
 	onChange?: (value: string) => void;
@@ -41,16 +47,16 @@ export type Tip = {
 
 export const TextArea = React.memo((props: TextAreaProps) => {
 	const {
-		value = "",
-		name = "text_area",
-		width = "100%",
-		height = "auto",
+		value = '',
+		name = 'text_area',
+		width = '100%',
+		height = 'auto',
 		focused = false,
-		placeholder = "Enter text here...",
+		placeholder = 'Enter text here...',
 		rows = 6,
 		border = false,
 		borderRadius = 4,
-		padding = "16px 4px 16px 16px",
+		padding = '16px 4px 16px 16px',
 		validate = false,
 		resizable = true,
 		hasSend = false,
@@ -59,7 +65,7 @@ export const TextArea = React.memo((props: TextAreaProps) => {
 		returnSubmits = false,
 		bgColor = undefined,
 		minWidth = undefined,
-		textSize = "m",
+		textSize = 'm',
 		disabled = false,
 		submitClears = true,
 		onChange = () => null,
@@ -79,7 +85,7 @@ export const TextArea = React.memo((props: TextAreaProps) => {
 	// update text area height
 	const handleResize = useCallback(() => {
 		if (!ref?.current) return;
-		ref.current.style.height = "auto";
+		ref.current.style.height = 'auto';
 		ref.current.style.height = `${ref.current.scrollHeight}px`;
 	}, []);
 
@@ -114,7 +120,7 @@ export const TextArea = React.memo((props: TextAreaProps) => {
 
 	// update height based on rows value
 	useEffect(() => {
-		handleResize()
+		handleResize();
 	}, [rows]);
 
 	// update value
@@ -151,8 +157,8 @@ export const TextArea = React.memo((props: TextAreaProps) => {
 			e?.preventDefault();
 			handleFocus();
 			onSubmit(text);
-			if (submitClears) setText("");
-			if (ref?.current) ref.current.value = "";
+			if (submitClears) setText('');
+			if (ref?.current) ref.current.value = '';
 			handleResize();
 		},
 		[handleFocus, onSubmit, text, submitClears, handleResize],
@@ -161,7 +167,7 @@ export const TextArea = React.memo((props: TextAreaProps) => {
 	// handle return key
 	const handleKeyDownWrapper = useCallback(
 		(e: React.KeyboardEvent<HTMLTextAreaElement>) => {
-			if (returnSubmits && e.key === "Enter") {
+			if (returnSubmits && e.key === 'Enter') {
 				e.preventDefault();
 				e.stopPropagation();
 				handleSubmit(undefined);
@@ -170,42 +176,54 @@ export const TextArea = React.memo((props: TextAreaProps) => {
 		},
 		[returnSubmits, handleSubmit, onKeyDown],
 	);
-	
+
 	// set style value
-	const setStyleValue = useCallback((value:string|number)=>{
-		if(typeof value === "string") return value;
+	const setStyleValue = useCallback((value: string | number) => {
+		if (typeof value === 'string') return value;
 		return `${value}px`;
-	},[])
-	
+	}, []);
+
 	// memo border color
-	const setBorderColor = useMemo(()=>{
-		if(isFocused) return "var(--core-link-primary)"
-		if(validate && invalid) return "var(--feedback-warning)"
-		return border ? "var(--core-outline-primary)" : "transparent"
-	},[isFocused, invalid, validate, border])
-	
+	const setBorderColor = useMemo(() => {
+		if (isFocused) return 'var(--core-link-primary)';
+		if (validate && invalid) return 'var(--feedback-warning)';
+		return border ? 'var(--core-outline-primary)' : 'transparent';
+	}, [isFocused, invalid, validate, border]);
+
 	// memo text size
-	const textClassName = useMemo(()=>{
-		if(textSize==="l") return css.l
-		if(textSize==="m") return css.m
-		return css.s
-	},[textSize, css])
-	
+	const textClassName = useMemo(() => {
+		if (textSize === 'l') return css.l;
+		if (textSize === 'm') return css.m;
+		return css.s;
+	}, [textSize, css]);
+
 	// memo css vars
-	const cssVars = useMemo(()=>{
+	const cssVars = useMemo(() => {
 		return {
-			"--ta-border-radius": `${borderRadius}px`,
-			"--ta-width": `${setStyleValue(width)}`,
-			"--ta-min-width": minWidth?`${minWidth}px`:"unset",
-			"--ta-bg-color": bgColor ?? "var(--core-surface-secondary)",
-			"--ta-border-color": setBorderColor,
-			"--ta-padding": `${setStyleValue(padding)}`,
-			"--ta-send-icon-offset-bottom": `${sendOffset.bottom}px`,
-			"--ta-send-icon-offset-right": `${sendOffset.right}px`,
-			"--ta-send-icon-size": `${sendSize}px`,
-			"--ta-resize": resizable ? "vertical" : "none",
-		} as React.CSSProperties
-	},[width, minWidth, height, bgColor, setBorderColor, padding, sendOffset, sendSize, setStyleValue, borderRadius, resizable])
+			'--ta-border-radius': `${borderRadius}px`,
+			'--ta-width': `${setStyleValue(width)}`,
+			'--ta-min-width': minWidth ? `${minWidth}px` : 'unset',
+			'--ta-bg-color': bgColor ?? 'var(--core-surface-secondary)',
+			'--ta-border-color': setBorderColor,
+			'--ta-padding': `${setStyleValue(padding)}`,
+			'--ta-send-icon-offset-bottom': `${sendOffset.bottom}px`,
+			'--ta-send-icon-offset-right': `${sendOffset.right}px`,
+			'--ta-send-icon-size': `${sendSize}px`,
+			'--ta-resize': resizable ? 'vertical' : 'none',
+		} as React.CSSProperties;
+	}, [
+		width,
+		minWidth,
+		height,
+		bgColor,
+		setBorderColor,
+		padding,
+		sendOffset,
+		sendSize,
+		setStyleValue,
+		borderRadius,
+		resizable,
+	]);
 
 	return (
 		<div
@@ -215,14 +233,11 @@ export const TextArea = React.memo((props: TextAreaProps) => {
 			onFocus={() => handleFocus()}
 		>
 			{hasSend && (
-				<div
-					className={css.send}
-					onMouseDown={(e) => handleSubmit(e)}
-				>
+				<div className={css.send} onMouseDown={(e) => handleSubmit(e)}>
 					<UIButton
-						iconLeft={"arrow up"}
-						size={"medium"}
-						variant={"solid"}
+						iconLeft={'arrow up'}
+						size={'medium'}
+						variant={'solid'}
 						round
 					/>
 				</div>

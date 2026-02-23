@@ -22,12 +22,12 @@ export const Badge = React.memo((props: BadgeProps) => {
 		return {
 			'--badge-color':
 				variant === 'light'
-					? `var(--core-text-primary)`
-					: `var(--core-text-light)`,
+					? 'var(--core-text-primary)'
+					: 'var(--core-text-light)',
 			'--badge-bg':
 				variant === 'light'
-					? `var(--core-badge-secondary)`
-					: `var(--core-badge-primary)`,
+					? 'var(--core-badge-secondary)'
+					: 'var(--core-badge-primary)',
 		} as React.CSSProperties;
 	}, [variant]);
 

@@ -75,9 +75,9 @@ export const Avatar = React.memo((props: AvatarProps) => {
 			'--avatar-size': `${size}px`,
 			'--avatar-frame': `${frame}px`,
 			'--avatar-border': `${border}px`,
-			'--avatar-color': color ?? `var(--core-text-primary)`,
-			'--avatar-bg-color': bgColor ?? `var(--core-surface-secondary)`,
-			'--avatar-border-color': borderColor ?? `var(--core-surface-primary)`,
+			'--avatar-color': color ?? 'var(--core-text-primary)',
+			'--avatar-bg-color': bgColor ?? 'var(--core-surface-secondary)',
+			'--avatar-border-color': borderColor ?? 'var(--core-surface-primary)',
 			'--avatar-bg-image': `${bgImage}`,
 			'--avatar-font-size': `${fontSize}px`,
 		} as React.CSSProperties;

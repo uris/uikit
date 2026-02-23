@@ -49,7 +49,7 @@ export const DivInput = React.memo((props: DivInputProps) => {
 		onDblClick = () => null,
 		onClick = () => null,
 		radius = 4,
-		bgColor = `var(--core-surface-secondary)`,
+		bgColor = 'var(--core-surface-secondary)',
 	} = props;
 
 	const ref = useRef<HTMLDivElement>(null);
@@ -221,8 +221,8 @@ export const DivInput = React.memo((props: DivInputProps) => {
 	const cssVars = useMemo(() => {
 		return {
 			'--div-input-color': isPlaceholder
-				? `var(--core-text-disabled)`
-				: `var(--core-text-primary)`,
+				? 'var(--core-text-disabled)'
+				: 'var(--core-text-primary)',
 			'--div-input-width': `${setWidth(width)}`,
 			'--div-input-user-select': isEditable ? 'text' : 'none',
 			'--div-input-padding': padding ?? '0',
@@ -232,11 +232,11 @@ export const DivInput = React.memo((props: DivInputProps) => {
 				isEditable && isFocused ? 'none' : (clamp ?? 'none'),
 			'--div-input-cursor': isEditable ? 'text' : 'default',
 			'--div-input-bg': isEditable
-				? (bgColor ?? `var(--core-surface-secondary)`)
+				? (bgColor ?? 'var(--core-surface-secondary)')
 				: 'transparent',
 			'--div-input-wrapper-bg':
 				isEditable && isFocused
-					? (bgColor ?? `var(--core-surface-secondary)`)
+					? (bgColor ?? 'var(--core-surface-secondary)')
 					: 'transparent',
 			'--div-input-border-radius': `${radius}px`,
 		} as React.CSSProperties;
