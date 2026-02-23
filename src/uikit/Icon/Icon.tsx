@@ -1,5 +1,5 @@
 import React, { useMemo } from 'react';
-import { useTheme } from 'styled-components';
+import { useTheme } from '../../hooks';
 import { type UIIcon, getIconRegistry } from './iconRegistry';
 
 export type { UIIcon };

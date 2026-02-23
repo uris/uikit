@@ -1,6 +1,5 @@
 import type { Preview } from '@storybook/react-vite';
 import React, { useEffect } from 'react';
-import { ThemeProvider } from 'styled-components';
 import { darkTheme, lightTheme } from '../src/theme/useMayaTheme';
 import './fonts.css';
 import '../src/theme/colors/colors.css';
@@ -33,11 +32,7 @@ const preview: Preview = {
 				document.documentElement.dataset.theme = selectedTheme;
 			}, [selectedTheme]);
 
-			return (
-				<ThemeProvider theme={theme}>
-					<Story />
-				</ThemeProvider>
-			);
+			return <Story />;
 		},
 	],
 	parameters: {

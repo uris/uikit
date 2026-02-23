@@ -1,5 +1,5 @@
 import { useMemo } from 'react';
-import { useTheme } from 'styled-components';
+import { useTheme } from '../../hooks';
 
 export interface LogoProps {
 	image?:
@@ -31,7 +31,7 @@ export interface LogoProps {
 	height?: number;
 }
 
-export function Logos(props: LogoProps) {
+export function Logos(props: Readonly<LogoProps>) {
 	const theme = useTheme();
 	const {
 		image = 'gp',

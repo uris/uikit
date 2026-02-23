@@ -1,6 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { fn } from 'storybook/test';
-import { lightTheme } from '../theme/useMayaTheme';
 import { Avatar } from '../uikit/Avatar/Avatar';
 import { FlexDiv } from '../uikit/FlexDiv/FlexDiv';
 

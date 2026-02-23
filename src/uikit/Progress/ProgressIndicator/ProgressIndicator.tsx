@@ -1,7 +1,7 @@
 import { AnimatePresence, motion } from 'motion/react';
 import type React from 'react';
 import { useEffect, useMemo, useRef, useState } from 'react';
-import { useTheme } from 'styled-components';
+import { useTheme } from '../../../hooks';
 import css from './ProgressIndicator.module.css';
 
 export interface ProgressIndicatorProps {
@@ -16,7 +16,7 @@ export interface ProgressIndicatorProps {
 	didStop?: () => void;
 }
 
-export function ProgressIndicator(props: ProgressIndicatorProps) {
+export function ProgressIndicator(props: Readonly<ProgressIndicatorProps>) {
 	const theme = useTheme();
 	const {
 		size = 20,

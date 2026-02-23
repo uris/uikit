@@ -1,6 +1,6 @@
 import { type Transition, useAnimate, usePresence } from 'motion/react';
 import { useEffect } from 'react';
-import { useTheme } from 'styled-components';
+import { useTheme } from '../../../hooks';
 
 export interface DoneCheckProps {
 	size?: number;

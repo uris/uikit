@@ -1,6 +1,6 @@
 import { type Transition, motion } from 'motion/react';
 import React, { useMemo } from 'react';
-import { useTheme } from 'styled-components';
+import { useTheme } from '../../hooks';
 import css from './FlexDiv.module.css';
 
 export interface FlexDivProps {
