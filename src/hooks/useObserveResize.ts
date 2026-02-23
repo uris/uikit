@@ -5,7 +5,9 @@ type Size = {
 	width: number;
 };
 
-export function useObserveResize(element: RefObject<HTMLDivElement | null>) {
+export function useObserveResize(
+	element: RefObject<HTMLDivElement | null> | undefined,
+) {
 	const [size, setSize] = useState<Size>({ width: 0, height: 0 });
 
 	const handleResize = useCallback((entries: ResizeObserverEntry[]) => {
@@ -18,6 +20,7 @@ export function useObserveResize(element: RefObject<HTMLDivElement | null>) {
 	}, []);
 
 	useEffect(() => {
+		if (element === undefined) return;
 		const el = element.current;
 		if (!el) return;
 

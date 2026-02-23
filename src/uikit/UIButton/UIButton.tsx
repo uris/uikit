@@ -420,8 +420,6 @@ const UIButtonComponent = forwardRef<UIButtonHandle, UIButtonProps>(
 			} as React.CSSProperties;
 		}, [underline, btnWidth, setStyle]);
 
-		console.log({ cssVars });
-
 		return (
 			<motion.div
 				className={css.button}

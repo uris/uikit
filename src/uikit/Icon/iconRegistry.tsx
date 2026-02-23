@@ -61,6 +61,7 @@ export function getIconRegistry(props: IconRegistryProps): Map<string, UIIcon> {
 	const iconStyle = {
 		cursor: disabled ? 'default' : pointer ? 'pointer' : 'inherit',
 		userSelect: 'none' as const,
+		WebkitUserSelect: 'none' as const,
 		WebkitTapHighlightColor: 'transparent',
 		outline: 'none',
 		border: 0,
