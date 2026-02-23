@@ -5,9 +5,10 @@ export function useTheme() {
 	const themes = useMayaTheme();
 	const [theme, setTheme] = useState<MayaTheme>(themes.lightTheme);
 
+	// biome-ignore lint/correctness/useExhaustiveDependencies: set once on mount
 	useEffect(() => {
 		const observer = new MutationObserver((mutations) => {
-			mutations.forEach((mutation) => {
+			for (const mutation of mutations) {
 				if (
 					mutation.type === 'attributes' &&
 					mutation.attributeName === 'data-theme'
@@ -17,7 +18,7 @@ export function useTheme() {
 					else if (newTheme.includes('light')) setTheme(themes.lightTheme);
 					else setTheme(themes.darkTheme);
 				}
-			});
+			}
 		});
 
 		observer.observe(document.documentElement, {

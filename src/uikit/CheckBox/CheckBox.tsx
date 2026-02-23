@@ -1,6 +1,6 @@
 import { motion } from 'motion/react';
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
-import { useTheme } from '../../hooks/useTheme';
+import { useTheme } from '../../hooks';
 import { Icon } from '../Icon';
 import css from './CheckBox.module.css';
 
@@ -49,7 +49,7 @@ export const CheckBox = React.memo((props: CheckBoxProps) => {
 			'--cb-size': `${size}px`,
 			'--cb-label-color': `${color}`,
 		} as React.CSSProperties;
-	}, []);
+	}, [size, color]);
 
 	// handle toggle
 	const handleToggle = useCallback(() => {
@@ -84,7 +84,6 @@ export const CheckBox = React.memo((props: CheckBoxProps) => {
 			onClick={handleToggle}
 			onKeyDown={handleKeyDown}
 			tabIndex={disabled ? -1 : 0}
-			role="checkbox"
 			aria-checked={state === 'partial' ? 'mixed' : state}
 			aria-disabled={disabled}
 		>

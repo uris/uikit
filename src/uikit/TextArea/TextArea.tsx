@@ -13,7 +13,6 @@ export interface TextAreaProps {
 	name?: string;
 	width?: number | string;
 	minWidth?: number | string;
-	height?: number | string;
 	rows?: number;
 	focused?: boolean;
 	placeholder?: string;
@@ -50,7 +49,6 @@ export const TextArea = React.memo((props: TextAreaProps) => {
 		value = '',
 		name = 'text_area',
 		width = '100%',
-		height = 'auto',
 		focused = false,
 		placeholder = 'Enter text here...',
 		rows = 6,
@@ -119,6 +117,7 @@ export const TextArea = React.memo((props: TextAreaProps) => {
 	}, [value, runValidation]);
 
 	// update height based on rows value
+	// biome-ignore lint/correctness/useExhaustiveDependencies: update heigt on rows change
 	useEffect(() => {
 		handleResize();
 	}, [rows]);
@@ -195,7 +194,7 @@ export const TextArea = React.memo((props: TextAreaProps) => {
 		if (textSize === 'l') return css.l;
 		if (textSize === 'm') return css.m;
 		return css.s;
-	}, [textSize, css]);
+	}, [textSize]);
 
 	// memo css vars
 	const cssVars = useMemo(() => {
@@ -214,7 +213,6 @@ export const TextArea = React.memo((props: TextAreaProps) => {
 	}, [
 		width,
 		minWidth,
-		height,
 		bgColor,
 		setBorderColor,
 		padding,

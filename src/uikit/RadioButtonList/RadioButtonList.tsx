@@ -128,27 +128,25 @@ export const RadioButtonList = React.memo((props: RadioButtonListProps) => {
 	}
 
 	// memo margin
-	const margin = () => {
+	const margin = useMemo(() => {
 		if (spacer === 'none') return 0;
 		if (spacer === 'custom') return custom;
 		return 0;
-	};
+	}, [spacer, custom]);
 
 	// memo css vars
 	const cssVars = useMemo(() => {
 		return {
 			'--rb-list-flex-wrap': wrap ? 'wrap' : 'nowrap',
-			'--rb-list-margin-bottom': noFrame ? 0 : `${margin()}px`,
+			'--rb-list-margin-bottom': noFrame ? 0 : `${margin}px`,
 			'--rb-gap': `${gap}px`,
 		} as React.CSSProperties;
-	}, []);
+	}, [wrap, margin, gap, noFrame]);
 
 	return (
 		<div
 			className={`${css.wrapper} ${noFrame ? css.column : css.row}`}
 			style={cssVars}
-			role={'list'}
-			aria-label={'Option List'}
 		>
 			{label}
 			{setOptions()}

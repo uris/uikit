@@ -81,7 +81,7 @@ export const Avatar = React.memo((props: AvatarProps) => {
 			'--avatar-bg-image': `${bgImage}`,
 			'--avatar-font-size': `${fontSize}px`,
 		} as React.CSSProperties;
-	}, [size, frame, border, color, bgColor, borderColor, bgImage]);
+	}, [size, frame, border, color, bgColor, borderColor, bgImage, fontSize]);
 
 	const onMouseEnter = useCallback(
 		(e: React.MouseEvent<HTMLDivElement>) => {

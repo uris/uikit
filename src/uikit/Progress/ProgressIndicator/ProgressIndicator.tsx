@@ -57,7 +57,7 @@ export function ProgressIndicator(props: Readonly<ProgressIndicatorProps>) {
 			'--pi-inset': inline ? 'unset' : '0',
 			'--pi-icon-size': `${size ?? 0}px`,
 		} as React.CSSProperties;
-	}, [inline]);
+	}, [inline, size]);
 
 	return (
 		<AnimatePresence initial={true}>

@@ -29,14 +29,6 @@ export interface TabBarProps {
 	tabWidth?: 'min-content' | 'distribute' | number;
 	closeWidth?: number | string;
 	padding?: number | string;
-	textStyle?:
-		| 'textXLarge'
-		| 'textLarge'
-		| 'textRegular'
-		| 'textMedium'
-		| 'textSmall'
-		| 'textXSmall'
-		| null;
 	iconSize?: number;
 	iconGap?: number;
 	tabGap?: number;
@@ -58,7 +50,6 @@ export const TabBar = React.memo((props: TabBarProps) => {
 		width = '100%',
 		tabWidth = 'distribute',
 		padding = 8,
-		textStyle = 'textRegular',
 		iconSize = 20,
 		iconGap = 8,
 		tabGap = 0,
@@ -131,7 +122,6 @@ export const TabBar = React.memo((props: TabBarProps) => {
 			options,
 			index,
 			padding,
-			textStyle,
 			iconSize,
 			iconGap,
 			disabled,
@@ -156,7 +146,7 @@ export const TabBar = React.memo((props: TabBarProps) => {
 			'--tab-bar-close-width': `${closeWidth}px`,
 			'--tab-bar-close-padding': padding ? `${padding}px` : '8px',
 		} as React.CSSProperties;
-	}, [tabGap, height, width, border, setStyle]);
+	}, [tabGap, height, width, border, setStyle, closeWidth, padding]);
 
 	return (
 		<div className={css.wrapper} style={cssVars}>
@@ -288,11 +278,11 @@ const Option = React.memo(
 			padding,
 			iconSize,
 			disabled,
-			icon,
 			textColor,
-			selected,
-			underline,
 			iconGap,
+			setTabFlex,
+			setTabWidth,
+			setUnderline,
 		]);
 
 		return (
@@ -300,9 +290,7 @@ const Option = React.memo(
 				className={css.option}
 				style={cssVars}
 				ref={ref}
-				role={'option'}
 				aria-selected={selected}
-				tabIndex={0}
 				onMouseEnter={handleMouseOver}
 				onMouseLeave={handleMouseLeave}
 				onClick={() => onClick(value)}

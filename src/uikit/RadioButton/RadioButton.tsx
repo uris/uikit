@@ -98,7 +98,6 @@ export const RadioButton = React.memo((props: RadioButtonProps) => {
 			onClick={handleChange}
 			onKeyDown={handleKeyDown}
 			tabIndex={tabIndex}
-			role={'option'}
 			aria-label={option.title}
 			aria-selected={isSelected}
 		>

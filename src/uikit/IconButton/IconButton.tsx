@@ -128,7 +128,7 @@ export const IconButton = React.memo((props: IconButtonProps) => {
 		if (hover && on) return bgColorOn;
 		if (hover) return bgColorHover;
 		return bgColor ?? 'transparent';
-	}, [hover, bgColor, bgColorHover, on]);
+	}, [hover, bgColor, bgColorOn, bgColorHover, on]);
 
 	// memo text color selected / unselected
 	const textColor = useMemo(() => {

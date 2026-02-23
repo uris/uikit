@@ -126,7 +126,12 @@ export function UILabel(props: Readonly<UILabelProps>) {
 		.join(' ');
 
 	return (
-		<div className={classNames} style={cssVars} onClick={handleClick}>
+		<div
+			className={classNames}
+			onKeyDown={() => null}
+			style={cssVars}
+			onClick={handleClick}
+		>
 			{label}
 		</div>
 	);

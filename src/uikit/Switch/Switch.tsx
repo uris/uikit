@@ -65,7 +65,7 @@ export const Switch = React.memo((props: SwitchProps) => {
 			'--switch-padding': `${padding}px`,
 			'--switch-knob-size': `${height - padding * 2}px`,
 		} as React.CSSProperties;
-	}, [bgColorOn, bgColorOff, knobColor]);
+	}, [width, height, padding]);
 
 	return (
 		<motion.div

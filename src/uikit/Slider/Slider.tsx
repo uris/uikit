@@ -230,11 +230,12 @@ export const Slider = React.memo((props: SliderProps) => {
 		height,
 		touchHeight,
 		cursor,
-		trackHeadSize,
 		headWidth,
-		headColor,
 		progressColor,
 		trackColor,
+		headSize,
+		trackHeadColor,
+		headType,
 	]);
 
 	return (

@@ -159,7 +159,7 @@ export const TextField = React.memo(
 				setValid(ok);
 				if (valid !== ok) onValidate(ok);
 			},
-			[onValidate, valid],
+			[onValidate, valid, validate],
 		);
 
 		// memo clear text field contents
@@ -171,7 +171,7 @@ export const TextField = React.memo(
 			}
 			onChange('');
 			onClear();
-		}, [clearBlurs, onChange, onClear]);
+		}, [clearBlurs, onChange, onClear, textIsValid]);
 
 		// memo handling value updates based on input
 		const handleValueChange = useCallback(
@@ -180,7 +180,7 @@ export const TextField = React.memo(
 				onChange(newValue);
 				if (!valid) textIsValid(text);
 			},
-			[onChange, textIsValid],
+			[onChange, textIsValid, text, valid],
 		);
 
 		// memo blur handler
@@ -188,7 +188,7 @@ export const TextField = React.memo(
 			textIsValid(text);
 			setIsFocused(false);
 			onBlur(text);
-		}, [text, onBlur]);
+		}, [text, onBlur, textIsValid]);
 
 		// memo key stroke handling
 		const handleKeyDown = useCallback(
@@ -263,7 +263,7 @@ export const TextField = React.memo(
 			if (isFocused)
 				return borderColor.focused ?? borderColor.blurred ?? 'transparent';
 			return borderColor.blurred ?? 'transparent';
-		}, [borderType, valid, isFocused, borderColor]);
+		}, [borderType, valid, isFocused, borderColor, validate]);
 
 		// memo box shadow (border style)
 		const setBoxShadow = useMemo(() => {
@@ -277,7 +277,7 @@ export const TextField = React.memo(
 			if (validate && !valid) return color.error ?? 'var(--core-text-primary)';
 			if (isFocused) return color.focused ?? 'var(--core-text-primary)';
 			return color.blurred ?? 'var(--core-text-primary)';
-		}, [isFocused, valid, color]);
+		}, [isFocused, valid, color, validate]);
 
 		// memo text align
 		const setTextAlign = useMemo(() => {

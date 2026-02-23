@@ -24,7 +24,6 @@ export interface DivInputProps {
 	width?: number | string;
 	textAlign?: 'left' | 'center' | 'right';
 	clamp?: number;
-	fontStyle?: string;
 	padding?: string;
 	radius?: number;
 	bgColor?: string;
@@ -40,7 +39,6 @@ export const DivInput = React.memo((props: DivInputProps) => {
 		width = 'auto',
 		textAlign = 'left',
 		clamp = 3,
-		fontStyle = undefined,
 		padding = '0px',
 		onChange = () => null,
 		onSubmit = () => null,
@@ -212,10 +210,10 @@ export const DivInput = React.memo((props: DivInputProps) => {
 	);
 
 	// calc css values as number / string
-	const setWidth = (width: number | string) => {
+	const setWidth = useCallback((width: number | string) => {
 		if (typeof width === 'string') return width;
 		return `${width}px`;
-	};
+	}, []);
 
 	// memo cssVars
 	const cssVars = useMemo(() => {
@@ -247,10 +245,11 @@ export const DivInput = React.memo((props: DivInputProps) => {
 		width,
 		textAlign,
 		isFocused,
-		fontStyle,
 		padding,
 		isPlaceholder,
-		ref,
+		setWidth,
+		bgColor,
+		radius,
 	]);
 
 	// avoid issues with safari that refocuses editable divs on blur
