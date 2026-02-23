@@ -1,33 +1,8 @@
-import { type Transition, motion } from 'motion/react';
+import { motion } from 'motion/react';
 import React, { useMemo } from 'react';
 import { useTheme } from '../../hooks';
 import css from './FlexDiv.module.css';
-
-export interface FlexDivProps {
-	className?: string;
-	children?: any;
-	scrollY?: boolean;
-	scrollX?: boolean;
-	absolute?: boolean;
-	background?: string;
-	direction?: 'row' | 'column';
-	alignItems?: 'start' | 'center' | 'end' | 'between';
-	justify?: 'start' | 'top' | 'center' | 'end' | 'bottom' | 'between';
-	width?: number | 'grow' | 'fill' | 'fit' | 'viewport' | 'auto';
-	height?: number | 'grow' | 'fill' | 'fit' | 'viewport' | 'auto';
-	flex?: number;
-	reverse?: boolean;
-	wrap?: boolean;
-	border?: string;
-	padding?: number | string;
-	margin?: number | string;
-	enter?: any;
-	exit?: any;
-	animate?: any;
-	transition?: Transition;
-	variants?: any;
-	gap?: number;
-}
+import type { FlexDivProps } from './_Types';
 
 // Extract helper functions outside component
 function setSize(style: string | number, isHeight: boolean) {
@@ -51,89 +26,92 @@ function setFlex(style: string) {
 	return style;
 }
 
-export const FlexDiv = React.memo((props: FlexDivProps) => {
-	const theme = useTheme();
-	const {
-		children,
-		scrollY = false,
-		scrollX = false,
-		background = theme.colors['core-surface-primary'],
-		direction = 'column',
-		alignItems = 'start',
-		justify = 'start',
-		height = 'viewport',
-		width = 'fill',
-		wrap = false,
-		reverse = false,
-		padding = 0,
-		margin = 0,
-		absolute = false,
-		flex,
-		gap,
-		variants,
-		transition,
-		animate,
-		enter,
-		exit,
-		border,
-		className,
-	} = props;
+export const FlexDiv = React.memo(
+	React.forwardRef<HTMLDivElement, FlexDivProps>((props, ref) => {
+		const theme = useTheme();
+		const {
+			children,
+			scrollY = false,
+			scrollX = false,
+			background = theme.colors['core-surface-primary'],
+			direction = 'column',
+			alignItems = 'start',
+			justify = 'start',
+			height = 'viewport',
+			width = 'fill',
+			wrap = false,
+			reverse = false,
+			padding = 0,
+			margin = 0,
+			absolute = false,
+			flex,
+			gap,
+			variants,
+			transition,
+			animate,
+			enter,
+			exit,
+			border,
+			className,
+		} = props;
 
-	// Memoize layout
-	const style = useMemo(() => {
-		return {
-			display: 'flex',
-			position: `${absolute ? 'absolute' : 'relative'}`,
-			flexDirection: `${direction}${reverse ? '-reverse' : ''}`,
-			flexWrap: `${wrap ? 'wrap' : 'nowrap'}`,
-			justifyContent: `${setFlex(justify)}`,
-			alignItems: `${setFlex(alignItems)}`,
-			boxSizing: 'border-box',
-			padding: `${setBox(padding)}`,
-			margin: `${setBox(margin)}`,
-			width: `${absolute ? 'unset' : setSize(width, false)}`,
-			height: `${absolute ? 'unset' : setSize(height, true)}`,
-			flex: `${absolute ? 'unset' : (flex ?? 'unset')}`,
-			top: `${absolute ? '0' : 'unset'}`,
-			bottom: `${absolute ? '0' : 'unset'}`,
-			left: `${absolute ? '0' : 'unset'}`,
-			right: `${absolute ? '0' : 'unset'}`,
-			gap: gap ? `${gap}px` : 'unset',
-			border: `${border ?? 'unset'}`,
-			background: `${background ?? 'transparent'}`,
-			overflowY: `${scrollY ? 'auto' : 'unset'}`,
-			overflowX: `${scrollX ? 'auto' : 'unset'}`,
-		} as React.CSSProperties;
-	}, [
-		absolute,
-		direction,
-		reverse,
-		wrap,
-		justify,
-		alignItems,
-		padding,
-		margin,
-		width,
-		height,
-		flex,
-		gap,
-		border,
-		background,
-		scrollY,
-		scrollX,
-	]);
+		// Memoize layout
+		const style = useMemo(() => {
+			return {
+				display: 'flex',
+				position: `${absolute ? 'absolute' : 'relative'}`,
+				flexDirection: `${direction}${reverse ? '-reverse' : ''}`,
+				flexWrap: `${wrap ? 'wrap' : 'nowrap'}`,
+				justifyContent: `${setFlex(justify)}`,
+				alignItems: `${setFlex(alignItems)}`,
+				boxSizing: 'border-box',
+				padding: `${setBox(padding)}`,
+				margin: `${setBox(margin)}`,
+				width: `${absolute ? 'unset' : setSize(width, false)}`,
+				height: `${absolute ? 'unset' : setSize(height, true)}`,
+				flex: `${absolute ? 'unset' : (flex ?? 'unset')}`,
+				top: `${absolute ? '0' : 'unset'}`,
+				bottom: `${absolute ? '0' : 'unset'}`,
+				left: `${absolute ? '0' : 'unset'}`,
+				right: `${absolute ? '0' : 'unset'}`,
+				gap: gap ? `${gap}px` : 'unset',
+				border: `${border ?? 'unset'}`,
+				background: `${background ?? 'transparent'}`,
+				overflowY: `${scrollY ? 'auto' : 'unset'}`,
+				overflowX: `${scrollX ? 'auto' : 'unset'}`,
+			} as React.CSSProperties;
+		}, [
+			absolute,
+			direction,
+			reverse,
+			wrap,
+			justify,
+			alignItems,
+			padding,
+			margin,
+			width,
+			height,
+			flex,
+			gap,
+			border,
+			background,
+			scrollY,
+			scrollX,
+		]);
 
-	return (
-		<motion.div
-			className={`${css.flexDiv} ${className ?? ''}`}
-			style={style}
-			transition={transition}
-			variants={variants}
-			initial={enter}
-			animate={animate}
-			exit={exit}
-		>
-			{children}
-		</motion.div>
-	);
-});
+		return (
+			<motion.div
+				ref={ref}
+				className={`${css.flexDiv} ${className ?? ''}`}
+				style={style}
+				transition={transition}
+				variants={variants}
+				initial={enter}
+				animate={animate}
+				exit={exit}
+			>
+				{children}
+			</motion.div>
+		);
+	}),
+);

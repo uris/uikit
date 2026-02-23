@@ -27,18 +27,21 @@ export function UIButtonBar(props: Readonly<UIButtonBarProps>) {
 
 	useEffect(() => setCurrentPage(current), [current]);
 
-	function handleMouseEnter(index: number) {
+	const handleMouseEnter = useCallback((index: number) => {
 		setHovered(index);
-	}
+	}, []);
 
-	function handleMouseLeave() {
+	const handleMouseLeave = useCallback(() => {
 		setHovered(-1);
-	}
+	}, []);
 
-	function handleClick(button: BarButton, index: number) {
-		setCurrentPage(index);
-		onChange(button);
-	}
+	const handleClick = useCallback(
+		(button: BarButton, index: number) => {
+			setCurrentPage(index);
+			onChange(button);
+		},
+		[onChange],
+	);
 
 	// memo display
 	const display = useCallback(
@@ -89,7 +92,7 @@ export function UIButtonBar(props: Readonly<UIButtonBarProps>) {
 								color={iconColor(index)}
 								label={button.label}
 								tooltip={button.tip}
-								onToolTip={(tip) => onToolTip(tip)}
+								onToolTip={onToolTip}
 								hover
 								toggle={false}
 							/>

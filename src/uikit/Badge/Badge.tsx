@@ -31,8 +31,6 @@ export const Badge = React.memo((props: BadgeProps) => {
 		} as React.CSSProperties;
 	}, [variant]);
 
-	console.log({ count });
-
 	if (count === undefined || count === '' || (hideNull && count === 0))
 		return null;
 

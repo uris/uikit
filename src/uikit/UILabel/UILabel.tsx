@@ -5,15 +5,7 @@ import css from './UILabel.module.css';
 
 export interface UILabelProps {
 	label?: string;
-	state?:
-		| 'red'
-		| 'yellow'
-		| 'green'
-		| 'blue'
-		| 'grey'
-		| 'lightgrey'
-		| 'white'
-		| undefined;
+	state?: 'red' | 'yellow' | 'green' | 'blue' | 'grey' | 'lightgrey' | 'white';
 	noFill?: boolean;
 	round?: boolean;
 	button?: boolean;
@@ -38,39 +30,35 @@ export function UILabel(props: Readonly<UILabelProps>) {
 		[button, onClick],
 	);
 
-	// memo color styles by state
-	const getBackgroundColor = useCallback(
-		(colorState: string | undefined) => {
-			if (noFill) return 'var(--core-surface-primary)';
-			switch (colorState) {
-				case 'red':
-					return theme.colors['feedback-warning'];
-				case 'green':
-					return theme.colors['feedback-warning'];
-				case 'yellow':
-					return theme.colors['array-yellow'];
-				case 'grey':
-					return theme.colors['core-surface-secondary'];
-				case 'lightgrey':
-					return theme.colors['core-button-disabled'];
-				case 'white':
-					return theme.colors['core-surface-secondary'];
-				case 'blue':
-					return theme.colors['core-button-primary'];
-				default:
-					return 'var(--core-surface-primary)';
-			}
-		},
-		[noFill, theme],
-	);
+	// memo background color
+	const backgroundColor = useMemo(() => {
+		if (noFill) return 'var(--core-surface-primary)';
+		switch (state) {
+			case 'red':
+				return theme.colors['feedback-warning'];
+			case 'green':
+				return theme.colors['feedback-warning'];
+			case 'yellow':
+				return theme.colors['array-yellow'];
+			case 'grey':
+				return theme.colors['core-surface-secondary'];
+			case 'lightgrey':
+				return theme.colors['core-button-disabled'];
+			case 'white':
+				return theme.colors['core-surface-secondary'];
+			case 'blue':
+				return theme.colors['core-button-primary'];
+			default:
+				return 'var(--core-surface-primary)';
+		}
+	}, [noFill, state, theme]);
 
-	const getBorderColor = useCallback(
-		(colorState: string | undefined) => {
+	// memo border colors
+	const borderColors = useMemo(() => {
+		const getBorderColor = (colorState: string) => {
 			switch (colorState) {
 				case 'red':
-					return noFill
-						? theme.colors['core-button-disabled']
-						: theme.colors['core-button-disabled'];
+					return theme.colors['core-button-disabled'];
 				case 'green':
 					return noFill
 						? theme.colors['feedback-positive']
@@ -96,9 +84,18 @@ export function UILabel(props: Readonly<UILabelProps>) {
 				default:
 					return 'var(--core-outline-primary)';
 			}
-		},
-		[noFill, theme],
-	);
+		};
+
+		return {
+			red: getBorderColor('red'),
+			green: getBorderColor('green'),
+			yellow: getBorderColor('yellow'),
+			grey: getBorderColor('grey'),
+			lightgrey: getBorderColor('lightgrey'),
+			white: getBorderColor('white'),
+			blue: getBorderColor('blue'),
+		};
+	}, [noFill, theme]);
 
 	// memo css vars
 	const cssVars = useMemo(() => {
@@ -106,16 +103,16 @@ export function UILabel(props: Readonly<UILabelProps>) {
 			'--label-padding': button ? '6px 12px' : '4px 6px',
 			'--label-border-radius': round ? '100px' : '4px',
 			'--label-cursor': button ? 'pointer' : 'default',
-			'--label-background': getBackgroundColor(state),
-			'--label-border-color-red': getBorderColor('red'),
-			'--label-border-color-green': getBorderColor('green'),
-			'--label-border-color-yellow': getBorderColor('yellow'),
-			'--label-border-color-grey': getBorderColor('grey'),
-			'--label-border-color-lightgrey': getBorderColor('lightgrey'),
-			'--label-border-color-white': getBorderColor('white'),
-			'--label-border-color-blue': getBorderColor('blue'),
+			'--label-background': backgroundColor,
+			'--label-border-color-red': borderColors.red,
+			'--label-border-color-green': borderColors.green,
+			'--label-border-color-yellow': borderColors.yellow,
+			'--label-border-color-grey': borderColors.grey,
+			'--label-border-color-lightgrey': borderColors.lightgrey,
+			'--label-border-color-white': borderColors.white,
+			'--label-border-color-blue': borderColors.blue,
 		} as React.CSSProperties;
-	}, [button, round, state, getBackgroundColor, getBorderColor]);
+	}, [button, round, backgroundColor, borderColors]);
 
 	const classNames = [
 		css.label,

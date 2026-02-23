@@ -58,7 +58,7 @@ export const DraggablePanel = React.memo((props: DraggablePanelProps) => {
 			color: 'transparent',
 			offsetX: true,
 		},
-		borderRight = `1px solid ${'var(--core-outline-primary)'}`,
+		borderRight = '1px solid var(--core-outline-primary)',
 		borderLeft = null,
 		bgColor = 'transparent',
 		drags = true,
@@ -101,7 +101,7 @@ export const DraggablePanel = React.memo((props: DraggablePanelProps) => {
 		if (containerSize.width > 0) setContWidth(containerSize.width);
 	}, [containerSize, containerRef]);
 
-	// listen to window resize
+	// listen to then window resize event
 	// biome-ignore lint/correctness/useExhaustiveDependencies: on mount only
 	useEffect(() => {
 		if (!contWidth) setContWidth(window.innerWidth);
@@ -136,7 +136,7 @@ export const DraggablePanel = React.memo((props: DraggablePanelProps) => {
 			relativeConstraints[key as keyof Constraint] = calc;
 		}
 		if (relativeConstraints.min < relativeConstraints.initial) {
-			relativeConstraints.initial = relativeConstraints.min; // ensure initial is not smaller than min
+			relativeConstraints.initial = relativeConstraints.min; // ensure "initial" is not smaller than "min"
 		}
 		setConstraints(relativeConstraints);
 		adjustCurrentWidth(relativeConstraints);
@@ -228,6 +228,7 @@ export const DraggablePanel = React.memo((props: DraggablePanelProps) => {
 		document.documentElement.removeEventListener('touchmove', doDrag, false);
 		document.documentElement.removeEventListener('touchend', stopDrag, false);
 		document.documentElement.style.userSelect = 'auto';
+		// noinspection JSDeprecatedSymbols
 		document.documentElement.style.webkitUserSelect = 'auto'; // reuqired for safari / iOS
 		if (div?.current) {
 			divWidth.current = div.current.offsetWidth;
@@ -271,6 +272,7 @@ export const DraggablePanel = React.memo((props: DraggablePanelProps) => {
 				document.documentElement.addEventListener('touchmove', doDrag, false);
 				document.documentElement.addEventListener('touchend', stopDrag, false);
 				document.documentElement.style.userSelect = 'none';
+				// noinspection JSDeprecatedSymbols
 				document.documentElement.style.webkitUserSelect = 'none'; // reuqired for safari / iOS
 				const update = {
 					div,
@@ -402,6 +404,7 @@ export const DraggablePanel = React.memo((props: DraggablePanelProps) => {
 	);
 });
 
+// customizable drag handle for "can drag" affordance
 export type DragHandleProps = {
 	width?: number;
 	height?: number;
@@ -410,7 +413,7 @@ export type DragHandleProps = {
 	strokeColor?: string;
 	color?: string;
 };
-export function DragHandle(props: Readonly<DragHandleProps>) {
+export const DragHandle = React.memo((props: Readonly<DragHandleProps>) => {
 	const {
 		width = 6,
 		height = 6,
@@ -430,4 +433,4 @@ export function DragHandle(props: Readonly<DragHandleProps>) {
 		} as React.CSSProperties;
 	}, [width, height, radius, stroke, color, strokeColor]);
 	return <div className={css.handle} style={cssVars} />;
-}
+});

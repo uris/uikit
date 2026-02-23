@@ -1,5 +1,4 @@
-import type React from 'react';
-import { useCallback, useMemo } from 'react';
+import React, { useCallback, useMemo } from 'react';
 import { Icon } from '../Icon';
 import css from './UICard.module.css';
 
@@ -12,7 +11,7 @@ export interface UICardProps {
 	onCommand?: (command: { id?: string; command?: string }) => void;
 }
 
-export function UICard(props: Readonly<UICardProps>) {
+export const UICard = React.memo(function UICard(props: Readonly<UICardProps>) {
 	const { id, icon, label, command, width, onCommand = () => null } = props;
 
 	// set style value callback
@@ -45,4 +44,4 @@ export function UICard(props: Readonly<UICardProps>) {
 			{label && <div className={css.label}>{label}</div>}
 		</div>
 	);
-}
+});

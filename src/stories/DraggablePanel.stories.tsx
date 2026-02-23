@@ -59,29 +59,25 @@ function DraggablePanelWithChildren(args: Readonly<DraggablePanelProps>) {
 	const [closed, setClosed] = useState(args.isClosed);
 	useEffect(() => setClosed(args.isClosed), [args.isClosed]);
 	return (
-		<div ref={containerRef}>
-			<FlexDiv
-				width={'fill'}
-				height={'fill'}
-				direction={'row'}
-				background={'var(--core-surface-primary)'}
-			>
-				<DraggablePanel {...args} containerRef={containerRef} isClosed={closed}>
-					<FlexDiv
-						alignItems={'end'}
-						justify={'center'}
-						background={'var(--core-surface-secondary)'}
-						padding={8}
-					></FlexDiv>
-				</DraggablePanel>
-				<FlexDiv width={'auto'} height={'fill'} justify={'start'} padding={24}>
-					<IconButton
-						icon={closed ? 'arrow right' : 'arrow left'}
-						iconSize={20}
-						onClick={() => setClosed(!closed)}
-					/>
-				</FlexDiv>
+		<FlexDiv
+			width={'viewport'}
+			height={'viewport'}
+			direction={'row'}
+			ref={containerRef}
+		>
+			<DraggablePanel
+				{...args}
+				containerRef={containerRef}
+				isClosed={closed}
+				bgColor={'var(--core-surface-secondary)'}
+			/>
+			<FlexDiv width={'auto'} height={'fill'} justify={'start'} padding={24}>
+				<IconButton
+					icon={closed ? 'arrow right' : 'arrow left'}
+					iconSize={20}
+					onClick={() => setClosed(!closed)}
+				/>
 			</FlexDiv>
-		</div>
+		</FlexDiv>
 	);
 }

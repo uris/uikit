@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { RadioButton, type RadioButtonOption } from '../RadioButton';
 import css from './RadioButtonList.module.css';
 
@@ -66,48 +66,60 @@ export const RadioButtonList = React.memo((props: RadioButtonListProps) => {
 	}, [selectedOptions, options]);
 
 	// returns if a specific option index is selected
-	function isSelected(index: number): boolean {
-		if (!selected) return false;
-		return selected.includes(index);
-	}
+	const isSelected = useCallback(
+		(index: number): boolean => {
+			if (!selected) return false;
+			return selected.includes(index);
+		},
+		[selected],
+	);
 
-	function handleChange(selection: number, state: boolean) {
-		// it not multiselect just pass the current selection
-		if (multiSelect) {
-			doMultiSelection(selection, state);
-		} else {
-			doSingleSelection(selection, state);
-		}
-	}
+	const doMultiSelection = useCallback(
+		(selection: number, state: boolean) => {
+			// **** update the selected indexes
+			let indexesSelected: number[] = selected ? [...selected] : [];
+			// if deselecting and there are selections
+			if (!state && selected) {
+				const removeAt = indexesSelected.indexOf(selection);
+				indexesSelected.splice(removeAt, 1);
+			} else if (state) {
+				indexesSelected = selected ? [...selected] : [];
+				const exists = indexesSelected.includes(selection);
+				if (!exists) indexesSelected.push(selection);
+			}
+			// **** create an array of selected options
+			let updatedSelections: RadioButtonOption[] | null = [];
+			for (const index of indexesSelected || []) {
+				if (updatedSelections) updatedSelections.push(options[index]);
+			}
+			if (updatedSelections.length < 1) updatedSelections = null;
+			setSelected(indexesSelected || null);
+			onChange(updatedSelections, indexesSelected || null);
+		},
+		[selected, options, onChange],
+	);
 
-	function doMultiSelection(selection: number, state: boolean) {
-		// **** update the selected indexes
-		let indexesSelected: number[] = selected ? [...selected] : [];
-		// if deselecting and there are selections
-		if (!state && selected) {
-			const removeAt = indexesSelected.indexOf(selection);
-			indexesSelected.splice(removeAt, 1);
-		} else if (state) {
-			indexesSelected = selected ? [...selected] : [];
-			const exists = indexesSelected.includes(selection);
-			if (!exists) indexesSelected.push(selection);
-		}
-		// **** create an array of selected options
-		let updatedSelections: RadioButtonOption[] | null = [];
-		for (const index of indexesSelected || []) {
-			if (updatedSelections) updatedSelections.push(options[index]);
-		}
-		if (updatedSelections.length < 1) updatedSelections = null;
-		setSelected(indexesSelected || null);
-		onChange(updatedSelections, indexesSelected || null);
-	}
+	const doSingleSelection = useCallback(
+		(selection: number, state: boolean) => {
+			onChange(state ? [options[selection]] : [], state ? [selection] : []);
+			setSelected(state ? [selection] : null);
+		},
+		[options, onChange],
+	);
 
-	function doSingleSelection(selection: number, state: boolean) {
-		onChange(state ? [options[selection]] : [], state ? [selection] : []);
-		setSelected(state ? [selection] : null);
-	}
+	const handleChange = useCallback(
+		(selection: number, state: boolean) => {
+			// it not multiselect just pass the current selection
+			if (multiSelect) {
+				doMultiSelection(selection, state);
+			} else {
+				doSingleSelection(selection, state);
+			}
+		},
+		[multiSelect, doMultiSelection, doSingleSelection],
+	);
 
-	function setOptions() {
+	const renderedOptions = useMemo(() => {
 		return options.map((option: RadioButtonOption, i: number) => {
 			return (
 				<RadioButton
@@ -125,7 +137,19 @@ export const RadioButtonList = React.memo((props: RadioButtonListProps) => {
 				/>
 			);
 		});
-	}
+	}, [
+		options,
+		isSelected,
+		deselect,
+		wrap,
+		noFrame,
+		hideRadio,
+		handleChange,
+		tabIndexSeed,
+		toggleIcon,
+		iconColor,
+		iconSelectedColor,
+	]);
 
 	// memo margin
 	const margin = useMemo(() => {
@@ -149,7 +173,7 @@ export const RadioButtonList = React.memo((props: RadioButtonListProps) => {
 			style={cssVars}
 		>
 			{label}
-			{setOptions()}
+			{renderedOptions}
 		</div>
 	);
 });

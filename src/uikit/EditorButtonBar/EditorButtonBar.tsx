@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { useTheme } from '../../hooks';
 import { useObserveResize } from '../../hooks/useObserveResize';
 import { DropDown, type DropDownOption } from '../DropDown';
@@ -42,22 +42,25 @@ export const EditorButtonBar = React.memo((props: EditorButtonBarProps) => {
 		else setBarState('regular');
 	}, [size, shortSize, mediumSize, state]);
 
-	function handleStyleChange(option: DropDownOption) {
-		switch (option.value) {
-			case 'h1':
-				onCommand('h1', undefined);
-				break;
-			case 'h2':
-				onCommand('h2', undefined);
-				break;
-			case 'h3':
-				onCommand('h3', undefined);
-				break;
-			case 'p':
-				onCommand('p', undefined);
-				break;
-		}
-	}
+	const handleStyleChange = useCallback(
+		(option: DropDownOption) => {
+			switch (option.value) {
+				case 'h1':
+					onCommand('h1', undefined);
+					break;
+				case 'h2':
+					onCommand('h2', undefined);
+					break;
+				case 'h3':
+					onCommand('h3', undefined);
+					break;
+				case 'p':
+					onCommand('p', undefined);
+					break;
+			}
+		},
+		[onCommand],
+	);
 
 	return (
 		<div className={css.wrapper} ref={ref}>
@@ -77,8 +80,8 @@ export const EditorButtonBar = React.memo((props: EditorButtonBarProps) => {
 						return (
 							<RenderGroup
 								key={`button-group-${group.name}${index}`}
-								onCommand={(command, e) => onCommand(command, e)}
-								onToolTip={(tip) => onToolTip(tip)}
+								onCommand={onCommand}
+								onToolTip={onToolTip}
 								buttonGroup={group}
 								activeFormats={activeFormats}
 								disabledFormats={disabledFormats}
@@ -95,7 +98,7 @@ export const EditorButtonBar = React.memo((props: EditorButtonBarProps) => {
 						tooltip={coreButtons.copy.toolTip}
 						hover={disabledFormats.includes('download')}
 						toggle={false}
-						onToolTip={(tip) => onToolTip(tip)}
+						onToolTip={onToolTip}
 						disabled={disabledFormats.includes('copy')}
 						onClick={(e) => onCommand(coreButtons.copy.command, e)}
 					/>
@@ -104,7 +107,7 @@ export const EditorButtonBar = React.memo((props: EditorButtonBarProps) => {
 						tooltip={coreButtons.download.toolTip}
 						hover={!disabledFormats.includes('download')}
 						toggle={false}
-						onToolTip={(tip) => onToolTip(tip)}
+						onToolTip={onToolTip}
 						disabled={disabledFormats.includes('download')}
 						onClick={(e) => onCommand(coreButtons.download.command, e)}
 					/>
@@ -146,7 +149,7 @@ export const RenderGroup = React.memo((props: RenderGroupProps) => {
 						key={`button-${button?.icon}-${index}`}
 						icon={button?.icon}
 						tooltip={button?.toolTip}
-						onToolTip={(tip) => onToolTip(tip)}
+						onToolTip={onToolTip}
 						hover={!disabledFormats.includes(button.id || 'none')}
 						toggle={false}
 						bgColor={bgColor}
