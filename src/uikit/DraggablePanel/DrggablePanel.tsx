@@ -381,7 +381,9 @@ export const DraggablePanel = React.memo((props: DraggablePanelProps) => {
 					if (!isDragging) setHighlight(false);
 				}}
 			>
-				{dragHandle && !panelClosed && <DragHandle {...(dragHandleStyle ?? {})} />}
+				{dragHandle && !panelClosed && (
+					<DragHandle {...(dragHandleStyle ?? {})} />
+				)}
 				<div
 					style={{
 						backgroundColor: handleHighlight

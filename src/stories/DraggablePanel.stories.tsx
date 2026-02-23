@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
-import {useEffect, useRef, useState} from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { fn } from 'storybook/test';
 import {
 	DraggablePanel,
@@ -54,9 +54,7 @@ export const Default: StoryObj<typeof DraggablePanel> = {
 };
 
 // create a component to pass in ref from a use ref hook
-function DraggablePanelWithChildren(
-	args: Readonly<DraggablePanelProps>,
-) {
+function DraggablePanelWithChildren(args: Readonly<DraggablePanelProps>) {
 	const containerRef = useRef<HTMLDivElement>(null);
 	const [closed, setClosed] = useState(args.isClosed);
 	useEffect(() => setClosed(args.isClosed), [args.isClosed]);
@@ -74,8 +72,7 @@ function DraggablePanelWithChildren(
 						justify={'center'}
 						background={'var(--core-surface-secondary)'}
 						padding={8}
-					>
-					</FlexDiv>
+					></FlexDiv>
 				</DraggablePanel>
 				<FlexDiv width={'auto'} height={'fill'} justify={'start'} padding={24}>
 					<IconButton
