@@ -7,7 +7,6 @@ import {
 } from '../uikit/DraggablePanel/DrggablePanel';
 import { FlexDiv } from '../uikit/FlexDiv/FlexDiv';
 import { IconButton } from '../uikit/IconButton';
-import { UIButton } from '../uikit/UIButton/UIButton';
 
 const meta: Meta<typeof DraggablePanel> = {
 	title: 'UI Kit/Draggable Panel',
