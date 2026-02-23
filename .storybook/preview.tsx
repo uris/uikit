@@ -1,6 +1,5 @@
 import type { Preview } from '@storybook/react-vite';
 import React, { useEffect } from 'react';
-import { darkTheme, lightTheme } from '../src/theme/useMayaTheme';
 import './fonts.css';
 import '../src/theme/colors/colors.css';
 import '../src/theme/type/type.css';
@@ -25,7 +24,6 @@ const preview: Preview = {
 	decorators: [
 		(Story, context) => {
 			const selectedTheme = context.globals.theme;
-			const theme = selectedTheme === 'light' ? lightTheme : darkTheme;
 
 			// Update data-theme attribute for CSS variables
 			useEffect(() => {
