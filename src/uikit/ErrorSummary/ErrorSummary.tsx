@@ -32,6 +32,31 @@ export const ErrorSummary = React.memo((props: ErrorSummaryProps) => {
 		[],
 	);
 
+	const renderedErrors = useMemo(() => {
+		if (!entries) return null;
+		return entries.map((error: ErrorMessage, index: number) => {
+			if (errors.includes(index) || errors.includes(error.id)) {
+				return (
+					<div className={css.error} key={`${error.id}_${index}`}>
+						<p className={css.p}>
+							<strong className={css.strong}>{error.title}</strong>
+						</p>
+						<ul className={css.ul}>
+							{error.bullets?.map((bullet: string, index: number) => {
+								return (
+									<li className={css.li} key={`${error.title}_bullet_${index}`}>
+										{bullet}
+									</li>
+								);
+							})}
+						</ul>
+					</div>
+				);
+			}
+			return null;
+		});
+	}, [entries, errors]);
+
 	return (
 		<AnimatePresence initial={false}>
 			{entries && errors && errors.length > 0 && (
@@ -43,30 +68,7 @@ export const ErrorSummary = React.memo((props: ErrorSummaryProps) => {
 					variants={variants}
 					transition={transition}
 				>
-					{entries.map((error: ErrorMessage, index: number) => {
-						if (errors.includes(index) || errors.includes(error.id)) {
-							return (
-								<div className={css.error} key={`${error.id}_${index}`}>
-									<p className={css.p}>
-										<strong className={css.strong}>{error.title}</strong>
-									</p>
-									<ul className={css.ul}>
-										{error.bullets?.map((bullet: string, index: number) => {
-											return (
-												<li
-													className={css.li}
-													key={`${error.title}_bullet_${index}`}
-												>
-													{bullet}
-												</li>
-											);
-										})}
-									</ul>
-								</div>
-							);
-						}
-						return null;
-					})}
+					{renderedErrors}
 				</motion.div>
 			)}
 		</AnimatePresence>

@@ -95,6 +95,36 @@ export const DraggablePanel = React.memo((props: DraggablePanelProps) => {
 		if (!containerRef?.current) setContWidth(window.innerWidth);
 	}, [containerRef]);
 
+	const handleMouseOver = useCallback(() => {
+		isOver.current = true;
+		setHighlight(true);
+	}, []);
+
+	const handleMouseOut = useCallback(() => {
+		isOver.current = false;
+		if (!isDragging) setHighlight(false);
+	}, [isDragging]);
+
+	const handleFocus = useCallback(() => {
+		isOver.current = true;
+		setHighlight(true);
+	}, []);
+
+	const handleBlur = useCallback(() => {
+		isOver.current = false;
+		if (!isDragging) setHighlight(false);
+	}, [isDragging]);
+
+	const handleTouchStart = useCallback(() => {
+		isOver.current = true;
+		setHighlight(true);
+	}, []);
+
+	const handleTouchEnd = useCallback(() => {
+		isOver.current = false;
+		if (!isDragging) setHighlight(false);
+	}, [isDragging]);
+
 	// handle container resize - if continerRef and width more than 0 use this to set container size
 	useEffect(() => {
 		if (!containerRef) return;
@@ -358,30 +388,12 @@ export const DraggablePanel = React.memo((props: DraggablePanelProps) => {
 					cursor: 'col-resize',
 					overflow: 'visible',
 				}}
-				onMouseOver={() => {
-					isOver.current = true;
-					setHighlight(true);
-				}}
-				onMouseOut={() => {
-					isOver.current = false;
-					if (!isDragging) setHighlight(false);
-				}}
-				onFocus={() => {
-					isOver.current = true;
-					setHighlight(true);
-				}}
-				onBlur={() => {
-					isOver.current = false;
-					if (!isDragging) setHighlight(false);
-				}}
-				onTouchStart={() => {
-					isOver.current = true;
-					setHighlight(true);
-				}}
-				onTouchEnd={() => {
-					isOver.current = false;
-					if (!isDragging) setHighlight(false);
-				}}
+				onMouseOver={handleMouseOver}
+				onMouseOut={handleMouseOut}
+				onFocus={handleFocus}
+				onBlur={handleBlur}
+				onTouchStart={handleTouchStart}
+				onTouchEnd={handleTouchEnd}
 			>
 				{dragHandle && !panelClosed && (
 					<DragHandle {...(dragHandleStyle ?? {})} />

@@ -24,11 +24,9 @@ export const Pager = React.memo((props: PagerProps) => {
 		onChange = () => null,
 	} = props;
 	const [selected, setSelected] = useState<number>(index);
-	const [bullets, setBullets] = useState<number[]>([]);
 
-	useEffect(() => {
-		const items = Array.from({ length: pages }, (_, i) => i);
-		setBullets(items);
+	const bullets = useMemo(() => {
+		return Array.from({ length: pages }, (_, i) => i);
 	}, [pages]);
 
 	useEffect(() => setSelected(index), [index]);

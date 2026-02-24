@@ -1,5 +1,5 @@
 import type React from 'react';
-import { useEffect, useState } from 'react';
+import { memo, useCallback, useEffect, useMemo, useState } from 'react';
 import { useTheme } from '../../../hooks';
 import { Avatar } from '../../Avatar';
 import type { ToolTip } from '../../sharedTypes';
@@ -11,11 +11,11 @@ interface UserListProps {
 	owner?: string;
 	currentUser?: string;
 	presenceID?: string;
-	onTogglePrompt?: (userPresensce: UserPresence) => void;
+	onTogglePrompt?: (userPresence: UserPresence) => void;
 	onToolTip?: (tip: ToolTip | null) => void;
 }
 
-export function UserList(props: Readonly<UserListProps>) {
+function UserListComponent(props: Readonly<UserListProps>) {
 	const theme = useTheme();
 	const {
 		userPresence = [],
@@ -27,36 +27,45 @@ export function UserList(props: Readonly<UserListProps>) {
 	const [userList, setUserList] = useState<UserPresence[]>(userPresence);
 	useEffect(() => setUserList(userPresence), [userPresence]);
 
-	function handleTogglePrompt(user: UserPresence) {
-		if (currentUser !== owner) return;
-		let promptState: PrompState = PrompState.Disabled;
-		if (user.promptState) {
-			promptState =
-				user.promptState === PrompState.Disabled
-					? PrompState.Enabled
-					: PrompState.Disabled;
-		}
-		const presenceUpdate: UserPresence = { ...user, promptState };
-		onTogglePrompt(presenceUpdate);
-	}
+	const handleTogglePrompt = useCallback(
+		(user: UserPresence) => {
+			if (currentUser !== owner) return;
+			let promptState: PrompState = PrompState.Disabled;
+			if (user.promptState) {
+				promptState =
+					user.promptState === PrompState.Disabled
+						? PrompState.Enabled
+						: PrompState.Disabled;
+			}
+			const presenceUpdate: UserPresence = { ...user, promptState };
+			onTogglePrompt(presenceUpdate);
+		},
+		[currentUser, owner, onTogglePrompt],
+	);
 
-	return (
-		<div className={css.promptList}>
-			{userList.map((user: UserPresence, index: number) => {
+	const getCssVars = useCallback(
+		(enabled: boolean) =>
+			({
+				'--control-border-color': enabled
+					? theme.colors['core-outline-primary']
+					: theme.colors['feedback-warning'],
+				'--cursor-background': enabled
+					? theme.colors['core-icon-primary']
+					: theme.colors['feedback-warning'],
+				'--cursor-border-radius': enabled ? '100px' : '2px',
+				'--cursor-animation': enabled ? 'blink 2s infinite' : 'none',
+			}) as React.CSSProperties,
+		[theme.colors],
+	);
+
+	const renderedUserList = useMemo(
+		() =>
+			userList.map((user: UserPresence, index: number) => {
 				if (user.id === presenceID) return null;
 				if (!user.promptContent || user.promptContent === '') return null;
 
 				const enabled = user.promptState !== PrompState.Disabled;
-				const cssVars = {
-					'--control-border-color': enabled
-						? theme.colors['core-outline-primary']
-						: theme.colors['feedback-warning'],
-					'--cursor-background': enabled
-						? theme.colors['core-icon-primary']
-						: theme.colors['feedback-warning'],
-					'--cursor-border-radius': enabled ? '100px' : '2px',
-					'--cursor-animation': enabled ? 'blink 2s infinite' : 'none',
-				} as React.CSSProperties;
+				const cssVars = getCssVars(enabled);
 
 				return (
 					<div
@@ -100,7 +109,11 @@ export function UserList(props: Readonly<UserListProps>) {
 							)}
 					</div>
 				);
-			})}
-		</div>
+			}),
+		[userList, presenceID, currentUser, owner, getCssVars, handleTogglePrompt],
 	);
+
+	return <div className={css.promptList}>{renderedUserList}</div>;
 }
+
+export const UserList = memo(UserListComponent);

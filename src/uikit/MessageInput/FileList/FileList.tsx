@@ -1,3 +1,4 @@
+import { memo, useCallback } from 'react';
 import { IconButton } from '../../IconButton';
 import { UIFileIcon, UIFileIcons } from '../../UIFileIcon';
 import type { ToolTip } from '../../sharedTypes';
@@ -9,16 +10,20 @@ interface FileListProps {
 	onToolTip?: (tip: ToolTip | null) => void;
 }
 
-export function FileList(props: Readonly<FileListProps>) {
+export const FileList = memo(function FileList(props: Readonly<FileListProps>) {
 	const { files = [], onChange = () => null, onToolTip = () => null } = props;
-	function handleRemoveFile(fileName: string) {
-		const updatedList = files.filter((file: File) => {
-			return file.name !== fileName;
-		});
-		onChange(updatedList);
-	}
 
-	const fileType = (file: File) => {
+	const handleRemoveFile = useCallback(
+		(fileName: string) => {
+			const updatedList = files.filter((file: File) => {
+				return file.name !== fileName;
+			});
+			onChange(updatedList);
+		},
+		[files, onChange],
+	);
+
+	const fileType = useCallback((file: File) => {
 		switch (file.type) {
 			case 'text/plain':
 				return 'Text file';
@@ -34,9 +39,9 @@ export function FileList(props: Readonly<FileListProps>) {
 			default:
 				return 'Unknown file type';
 		}
-	};
+	}, []);
 
-	const fileIcon = (file: File) => {
+	const fileIcon = useCallback((file: File) => {
 		switch (file.type) {
 			case 'text/plain':
 			case 'text/html':
@@ -49,7 +54,15 @@ export function FileList(props: Readonly<FileListProps>) {
 			default:
 				return UIFileIcons.Document;
 		}
-	};
+	}, []);
+
+	const handleRemoveClick = useCallback(
+		(e: React.MouseEvent, fileName: string) => {
+			e.stopPropagation();
+			handleRemoveFile(fileName);
+		},
+		[handleRemoveFile],
+	);
 
 	return (
 		<div className={css.fileList}>
@@ -70,10 +83,7 @@ export function FileList(props: Readonly<FileListProps>) {
 								toggle={false}
 								frameSize={20}
 								iconSize={20}
-								onClick={(e) => {
-									e.stopPropagation();
-									handleRemoveFile(file.name);
-								}}
+								onClick={(e) => handleRemoveClick(e, file.name)}
 								tooltip={'remove file'}
 								onToolTip={(tip) => onToolTip(tip)}
 							/>
@@ -83,4 +93,4 @@ export function FileList(props: Readonly<FileListProps>) {
 			})}
 		</div>
 	);
-}
+});

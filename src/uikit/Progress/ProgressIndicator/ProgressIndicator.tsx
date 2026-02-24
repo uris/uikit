@@ -59,6 +59,10 @@ export function ProgressIndicator(props: Readonly<ProgressIndicatorProps>) {
 		} as React.CSSProperties;
 	}, [inline, size]);
 
+	const openCircle = useMemo(() => {
+		return OpenCircle(size, secondsPerSpin, color, stroke, playing);
+	}, [size, secondsPerSpin, color, stroke, playing]);
+
 	return (
 		<AnimatePresence initial={true}>
 			{show && (
@@ -69,7 +73,7 @@ export function ProgressIndicator(props: Readonly<ProgressIndicatorProps>) {
 					animate={{ opacity: 1 }}
 					exit={{ opacity: 0 }}
 				>
-					{OpenCircle(size, secondsPerSpin, color, stroke, playing)}
+					{openCircle}
 				</motion.div>
 			)}
 		</AnimatePresence>

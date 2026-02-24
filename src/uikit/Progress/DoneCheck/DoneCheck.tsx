@@ -1,5 +1,5 @@
 import { type Transition, useAnimate, usePresence } from 'motion/react';
-import { useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { useTheme } from '../../../hooks';
 
 export interface DoneCheckProps {
@@ -14,7 +14,7 @@ export interface DoneCheckProps {
 	didEnd?: () => void;
 }
 
-export function DoneCheck(props: DoneCheckProps) {
+export const DoneCheck = React.memo((props: DoneCheckProps) => {
 	const theme = useTheme();
 	const {
 		size = 88,
@@ -103,4 +103,4 @@ export function DoneCheck(props: DoneCheckProps) {
 	};
 
 	return checkMark();
-}
+});

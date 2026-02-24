@@ -1,8 +1,7 @@
 import { AnimatePresence } from 'motion/react';
 import type React from 'react';
-import { useEffect, useMemo, useRef, useState } from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { useTheme } from '../../../hooks';
-import { useObserveResize } from '../../../hooks/useObserveResize';
 import { UIButton } from '../../UIButton';
 import type { ToolTip } from '../../sharedTypes';
 import { type DocExcerpt, ExcerptList } from '../ExcerptList/ExcerptList';
@@ -81,14 +80,13 @@ export function MessageInput(props: Readonly<MessageInputProps>) {
 	const theme = useTheme();
 	const ref = useRef<HTMLTextAreaElement>(null);
 	const wrapperRef = useRef<HTMLDivElement>(null);
-	const size = useObserveResize(wrapperRef);
 	const [message, setMessage] = useState<string>(value);
 	const [isFocused, setIsFocused] = useState<boolean>(focused);
 	const [promptType, setPromptType] = useState<PromptType>(PromptType.text);
 	const [invalid, setInvalid] = useState<string | null>(error);
 	const [remoteDisabled, setRemoteDisabled] = useState<boolean>(false);
 
-	// reset size if the warpper size changes
+	// reset size if the wrapper size changes
 	useEffect(() => {
 		if (ref?.current) {
 			ref.current.style.height = '0px';
@@ -125,66 +123,81 @@ export function MessageInput(props: Readonly<MessageInputProps>) {
 	// update error is prop changes
 	useEffect(() => setInvalid(error), [error]);
 
-	function resetHeight() {
+	const resetHeight = useCallback(() => {
 		if (ref?.current) {
 			ref.current.style.height = '0px';
 			ref.current.style.height = `${Math.min(ref.current.scrollHeight, maxHeight)}px`;
 		}
-	}
+	}, [maxHeight]);
 
-	const doSubmit = (
-		e:
-			| React.MouseEvent<HTMLDivElement>
-			| React.KeyboardEvent<HTMLTextAreaElement>
-			| undefined,
-	) => {
-		e?.preventDefault();
-		e?.stopPropagation();
-		onToolTip(null);
-		if (message !== '' && ref.current) {
-			const newMessage: SendMessage = {
-				id: crypto.randomUUID(),
-				content: message,
-				timestamp: new Date().toISOString(),
-				promptType,
-				role: Role.USER,
-				htmlContent: '',
-				files,
-				excerpts,
-				done: false,
-			};
-			onSend(newMessage);
-			setMessage('');
-			onChange('');
-			resetHeight();
-			setIsFocused(false);
-			ref.current.blur();
-			ref.current.value = '';
-		}
-	};
+	const doSubmit = useCallback(
+		(
+			e:
+				| React.MouseEvent<HTMLDivElement>
+				| React.KeyboardEvent<HTMLTextAreaElement>
+				| undefined,
+		) => {
+			e?.preventDefault();
+			e?.stopPropagation();
+			onToolTip(null);
+			if (message !== '' && ref.current) {
+				const newMessage: SendMessage = {
+					id: crypto.randomUUID(),
+					content: message,
+					timestamp: new Date().toISOString(),
+					promptType,
+					role: Role.USER,
+					htmlContent: '',
+					files,
+					excerpts,
+					done: false,
+				};
+				onSend(newMessage);
+				setMessage('');
+				onChange('');
+				resetHeight();
+				setIsFocused(false);
+				ref.current.blur();
+				ref.current.value = '';
+			}
+		},
+		[
+			message,
+			promptType,
+			files,
+			excerpts,
+			onSend,
+			onChange,
+			resetHeight,
+			onToolTip,
+		],
+	);
 
-	const handleKeyDown = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
-		if (!e.shiftKey && e.key === 'Enter' && message !== '') doSubmit(e);
-		else return;
-	};
+	const handleKeyDown = useCallback(
+		(e: React.KeyboardEvent<HTMLTextAreaElement>) => {
+			if (!e.shiftKey && e.key === 'Enter' && message !== '') doSubmit(e);
+			else return;
+		},
+		[message, doSubmit],
+	);
 
-	function setFocus() {
+	const setFocus = useCallback(() => {
 		if (ref?.current) {
 			ref.current.focus();
 			setIsFocused(true);
 			onFocus();
 		}
-	}
+	}, [onFocus]);
 
-	function setBlur() {
+	const setBlur = useCallback(() => {
 		if (ref?.current) {
 			ref.current.blur();
 			setIsFocused(false);
 			onBlur();
 		}
-	}
+	}, [onBlur]);
 
-	function setDisabled() {
+	const setDisabled = useCallback(() => {
 		if (remoteDisabled) return 'disabled';
 		if (isStreaming) return 'normal';
 		if (!isStreaming && files.length > 0) return 'normal';
@@ -192,9 +205,9 @@ export function MessageInput(props: Readonly<MessageInputProps>) {
 		if (!isStreaming && isFetching) return 'disabled';
 		if (!isStreaming && message === '') return 'disabled';
 		return 'normal';
-	}
+	}, [remoteDisabled, isStreaming, files.length, invalid, isFetching, message]);
 
-	const iconColor = () => {
+	const iconColor = useCallback(() => {
 		if (isFetching || isStreaming) {
 			if (theme.name === 'lightMode') return theme?.colors?.['core-text-light'];
 			return theme?.colors?.['core-surface-primary'];
@@ -203,50 +216,56 @@ export function MessageInput(props: Readonly<MessageInputProps>) {
 			return theme?.colors?.['core-surface-secondary'];
 		}
 		return theme?.colors?.['core-text-light'];
-	};
+	}, [isFetching, isStreaming, theme.name, theme?.colors, message]);
 
-	function handleUpload(
-		e: React.MouseEvent<any> | undefined,
-		type: PromptType,
-	) {
-		e?.preventDefault();
-		e?.stopPropagation();
-		setPromptType(type);
-		attachClick(e);
-	}
+	const handleUpload = useCallback(
+		(e: React.MouseEvent<any> | undefined, type: PromptType) => {
+			e?.preventDefault();
+			e?.stopPropagation();
+			setPromptType(type);
+			attachClick(e);
+		},
+		[attachClick],
+	);
 
-	function handleChange(input: string) {
-		if (message !== input) onChange(input);
-		setMessage(input);
-	}
+	const handleChange = useCallback(
+		(input: string) => {
+			if (message !== input) onChange(input);
+			setMessage(input);
+		},
+		[message, onChange],
+	);
 
-	function handleStop(e: React.MouseEvent<any> | undefined) {
-		e?.preventDefault();
-		e?.stopPropagation();
-		onToolTip(null);
-		setBlur();
-		onStop();
-	}
+	const handleStop = useCallback(
+		(e: React.MouseEvent<any> | undefined) => {
+			e?.preventDefault();
+			e?.stopPropagation();
+			onToolTip(null);
+			setBlur();
+			onStop();
+		},
+		[onToolTip, setBlur, onStop],
+	);
 
-	const working = () => {
+	const working = useCallback(() => {
 		if (isStreaming) return false;
 		if (isFetching) return true;
 		return false;
-	};
+	}, [isStreaming, isFetching]);
 
-	const toolTip = () => {
+	const toolTip = useCallback(() => {
 		if (isStreaming) return 'Stop';
 		if (isFetching) return 'Working ...';
 		return 'Send';
-	};
+	}, [isStreaming, isFetching]);
 
-	const setJurisdiction = () => {
+	const setJurisdiction = useCallback(() => {
 		const country = jurisdiction?.country;
 		const state = jurisdiction?.state;
 		if (!country || country === 'None') return 'None';
 		if (state !== 'None') return state;
 		return country;
-	};
+	}, [jurisdiction?.country, jurisdiction?.state]);
 
 	// memo css vars
 	const cssVars = useMemo(() => {
@@ -272,7 +291,7 @@ export function MessageInput(props: Readonly<MessageInputProps>) {
 		<div
 			className={wrapperClassName}
 			style={cssVars}
-			onKeyDown={(e) => null}
+			onKeyDown={() => null}
 			onClick={() => {
 				if (!isFocused) setFocus();
 			}}
