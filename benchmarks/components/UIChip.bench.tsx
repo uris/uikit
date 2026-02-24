@@ -66,3 +66,44 @@ describe('UIChip Component Benchmarks', () => {
 		{ iterations: 3 },
 	);
 });
+
+export const uiChipBenchmarkConfig = {
+	componentName: 'UIChip',
+	tests: [
+		{
+			name: 'Mount Time',
+			type: 'mount' as const,
+			fn: () => measureMountTime(<UIChip label="Chip" />, 50),
+		},
+		{
+			name: 'Re-render',
+			type: 'rerender' as const,
+			fn: () =>
+				measureRerenderTime(
+					<UIChip label="Initial" />,
+					(container) => {
+						container.rerender(<UIChip label="Updated" />);
+					},
+					50,
+				),
+		},
+		{
+			name: 'Event Response',
+			type: 'event' as const,
+			fn: () =>
+				measureEventResponseTime(
+					<UIChip label="Chip" onClick={() => {}} />,
+					(container) => {
+						const chip = container.container.querySelector('[class*="chip"]');
+						if (chip) fireEvent.click(chip);
+					},
+					50,
+				),
+		},
+		{
+			name: 'Memory',
+			type: 'memory' as const,
+			fn: () => measureMemoryDelta(<UIChip label="Chip" icon="check" />, 10),
+		},
+	],
+};

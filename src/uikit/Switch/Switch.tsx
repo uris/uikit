@@ -78,7 +78,7 @@ export const Switch = React.memo((props: SwitchProps) => {
 		>
 			<motion.div
 				className={css.knob}
-				layout={true}
+				layout={'preserve-aspect'}
 				transition={TRANSITION}
 				style={knobStyle}
 			/>

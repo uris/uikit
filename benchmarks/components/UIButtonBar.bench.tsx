@@ -73,3 +73,51 @@ describe('UIButtonBar Component Benchmarks', () => {
 		{ iterations: 3 },
 	);
 });
+
+const mockButtons = [
+	{ label: 'Save', icon: 'check' },
+	{ label: 'Cancel', icon: 'close' },
+	{ label: 'Delete', icon: 'trash' },
+];
+
+export const uiButtonBarBenchmarkConfig = {
+	componentName: 'UIButtonBar',
+	tests: [
+		{
+			name: 'Mount Time',
+			type: 'mount' as const,
+			fn: () => measureMountTime(<UIButtonBar buttons={mockButtons} />, 50),
+		},
+		{
+			name: 'Re-render',
+			type: 'rerender' as const,
+			fn: () =>
+				measureRerenderTime(
+					<UIButtonBar buttons={mockButtons} />,
+					(container) => {
+						const updatedButtons = [...mockButtons, { label: 'New', icon: 'plus' }];
+						container.rerender(<UIButtonBar buttons={updatedButtons} />);
+					},
+					50,
+				),
+		},
+		{
+			name: 'Event Response',
+			type: 'event' as const,
+			fn: () =>
+				measureEventResponseTime(
+					<UIButtonBar buttons={mockButtons} onClick={() => {}} />,
+					(container) => {
+						const button = container.container.querySelector('button');
+						if (button) fireEvent.click(button);
+					},
+					50,
+				),
+		},
+		{
+			name: 'Memory',
+			type: 'memory' as const,
+			fn: () => measureMemoryDelta(<UIButtonBar buttons={mockButtons} />, 10),
+		},
+	],
+};

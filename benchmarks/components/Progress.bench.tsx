@@ -1,15 +1,15 @@
 import { describe, bench } from 'vitest';
 import React from 'react';
-import { Progress } from '../../src/uikit/Progress/Progress';
+import { ProgressIndicator } from '../../src/uikit/Progress/ProgressIndicator/ProgressIndicator';
 import {
 	measureMountTime,
 	measureRerenderTime,
 	measureMemoryDelta,
 } from '../utils/benchmark';
 
-describe('Progress Component Benchmarks', () => {
+describe('ProgressIndicator Component Benchmarks', () => {
 	bench(
-		'Progress - Basic Mount',
+		'ProgressIndicator - Basic Mount',
 		async () => {
 			await measureMountTime(<Progress value={50} />, 50);
 		},
@@ -20,7 +20,7 @@ describe('Progress Component Benchmarks', () => {
 		'Progress - With Custom Colors',
 		async () => {
 			await measureMountTime(
-				<Progress value={75} color="#00ff00" bgColor="#cccccc" />,
+				<ProgressIndicator size={20} color="#00ff00" />,
 				50,
 			);
 		},
@@ -31,9 +31,9 @@ describe('Progress Component Benchmarks', () => {
 		'Progress - State Change (Value Update)',
 		async () => {
 			await measureRerenderTime(
-				<Progress value={25} />,
+				<ProgressIndicator size={20} />,
 				(container) => {
-					container.rerender(<Progress value={75} />);
+					container.rerender(<ProgressIndicator size={64} />);
 				},
 				50,
 			);
@@ -44,8 +44,36 @@ describe('Progress Component Benchmarks', () => {
 	bench(
 		'Progress - Memory Usage',
 		async () => {
-			await measureMemoryDelta(<Progress value={50} />, 10);
+			await measureMemoryDelta(<ProgressIndicator size={20} />, 10);
 		},
 		{ iterations: 3 },
 	);
 });
+
+export const progressBenchmarkConfig = {
+	componentName: 'Progress',
+	tests: [
+		{
+			name: 'Mount Time',
+			type: 'mount' as const,
+			fn: () => measureMountTime(<ProgressIndicator size={20} />, 50),
+		},
+		{
+			name: 'Re-render',
+			type: 'rerender' as const,
+			fn: () =>
+				measureRerenderTime(
+					<ProgressIndicator value={20} />,
+					(container) => {
+						container.rerender(<ProgressIndicator size={64} />);
+					},
+					50,
+				),
+		},
+		{
+			name: 'Memory',
+			type: 'memory' as const,
+			fn: () => measureMemoryDelta(<ProgressIndicator size={20} />, 10),
+		},
+	],
+};

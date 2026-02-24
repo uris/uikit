@@ -368,3 +368,46 @@ ${rating} Memory Usage${simulatedNote}:
   Leak Suspected: ${result.leakSuspected ? '❌ YES' : '✓ NO'}
   `.trim();
 }
+
+/**
+ * Benchmark configuration for a component
+ */
+export interface ComponentBenchmarkConfig {
+	componentName: string;
+	tests: Array<{
+		name: string;
+		type: 'mount' | 'rerender' | 'event' | 'memory';
+		fn: () => Promise<BenchmarkResult | {
+			averageDelta: number;
+			maxDelta: number;
+			minDelta: number;
+			leakSuspected: boolean;
+			simulated?: boolean;
+		}>;
+	}>;
+}
+
+/**
+ * Run a component benchmark configuration and return aggregated results
+ */
+export async function runBenchmarkConfig(config: ComponentBenchmarkConfig) {
+	const results: Record<string, any> = {
+		componentName: config.componentName,
+	};
+
+	for (const test of config.tests) {
+		const result = await test.fn();
+
+		if (test.type === 'mount') {
+			results.mountTime = result;
+		} else if (test.type === 'rerender') {
+			results.rerenderTime = result;
+		} else if (test.type === 'event') {
+			results.eventResponseTime = result;
+		} else if (test.type === 'memory') {
+			results.memory = result;
+		}
+	}
+
+	return results;
+}

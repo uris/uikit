@@ -66,3 +66,44 @@ describe('TextArea Component Benchmarks', () => {
 		{ iterations: 3 },
 	);
 });
+
+export const textAreaBenchmarkConfig = {
+	componentName: 'TextArea',
+	tests: [
+		{
+			name: 'Mount Time',
+			type: 'mount' as const,
+			fn: () => measureMountTime(<TextArea />, 50),
+		},
+		{
+			name: 'Re-render',
+			type: 'rerender' as const,
+			fn: () =>
+				measureRerenderTime(
+					<TextArea value="Initial text" />,
+					(container) => {
+						container.rerender(<TextArea value="Updated text content" />);
+					},
+					50,
+				),
+		},
+		{
+			name: 'Event Response',
+			type: 'event' as const,
+			fn: () =>
+				measureEventResponseTime(
+					<TextArea onFocus={() => {}} />,
+					(container) => {
+						const textarea = container.container.querySelector('textarea');
+						if (textarea) fireEvent.focus(textarea);
+					},
+					50,
+				),
+		},
+		{
+			name: 'Memory',
+			type: 'memory' as const,
+			fn: () => measureMemoryDelta(<TextArea value="Test content" />, 10),
+		},
+	],
+};

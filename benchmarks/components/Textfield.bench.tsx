@@ -66,3 +66,44 @@ describe('Textfield Component Benchmarks', () => {
 		{ iterations: 3 },
 	);
 });
+
+export const textfieldBenchmarkConfig = {
+	componentName: 'Textfield',
+	tests: [
+		{
+			name: 'Mount Time',
+			type: 'mount' as const,
+			fn: () => measureMountTime(<Textfield />, 50),
+		},
+		{
+			name: 'Re-render',
+			type: 'rerender' as const,
+			fn: () =>
+				measureRerenderTime(
+					<Textfield value="Initial" />,
+					(container) => {
+						container.rerender(<Textfield value="Updated text" />);
+					},
+					50,
+				),
+		},
+		{
+			name: 'Event Response',
+			type: 'event' as const,
+			fn: () =>
+				measureEventResponseTime(
+					<Textfield onFocus={() => {}} />,
+					(container) => {
+						const input = container.container.querySelector('input');
+						if (input) fireEvent.focus(input);
+					},
+					50,
+				),
+		},
+		{
+			name: 'Memory',
+			type: 'memory' as const,
+			fn: () => measureMemoryDelta(<Textfield value="Test" />, 10),
+		},
+	],
+};

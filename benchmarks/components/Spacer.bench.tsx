@@ -46,3 +46,31 @@ describe('Spacer Component Benchmarks', () => {
 		{ iterations: 3 },
 	);
 });
+
+export const spacerBenchmarkConfig = {
+	componentName: 'Spacer',
+	tests: [
+		{
+			name: 'Mount Time',
+			type: 'mount' as const,
+			fn: () => measureMountTime(<Spacer />, 50),
+		},
+		{
+			name: 'Re-render',
+			type: 'rerender' as const,
+			fn: () =>
+				measureRerenderTime(
+					<Spacer size={10} />,
+					(container) => {
+						container.rerender(<Spacer size={30} />);
+					},
+					50,
+				),
+		},
+		{
+			name: 'Memory',
+			type: 'memory' as const,
+			fn: () => measureMemoryDelta(<Spacer size={20} />, 10),
+		},
+	],
+};

@@ -65,3 +65,31 @@ describe('Avatar Component Benchmarks', () => {
 		{ iterations: 3 },
 	);
 });
+
+export const avatarBenchmarkConfig = {
+	componentName: 'Avatar',
+	tests: [
+		{
+			name: 'Mount Time',
+			type: 'mount' as const,
+			fn: () => measureMountTime(<Avatar first="John" last="Doe" size={34} />, 50),
+		},
+		{
+			name: 'Re-render',
+			type: 'rerender' as const,
+			fn: () =>
+				measureRerenderTime(
+					<Avatar first="John" last="Doe" size={34} />,
+					(container) => {
+						container.rerender(<Avatar first="Jane" last="Smith" size={34} />);
+					},
+					50,
+				),
+		},
+		{
+			name: 'Memory',
+			type: 'memory' as const,
+			fn: () => measureMemoryDelta(<Avatar first="John" last="Doe" />, 10),
+		},
+	],
+};

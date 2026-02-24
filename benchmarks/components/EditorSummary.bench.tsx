@@ -47,3 +47,31 @@ describe('EditorSummary Component Benchmarks', () => {
 		{ iterations: 3 },
 	);
 });
+
+export const editorSummaryBenchmarkConfig = {
+	componentName: 'EditorSummary',
+	tests: [
+		{
+			name: 'Mount Time',
+			type: 'mount' as const,
+			fn: () => measureMountTime(<EditorSummary content="Summary text" />, 50),
+		},
+		{
+			name: 'Re-render',
+			type: 'rerender' as const,
+			fn: () =>
+				measureRerenderTime(
+					<EditorSummary content="Initial content" />,
+					(container) => {
+						container.rerender(<EditorSummary content="Updated content" />);
+					},
+					50,
+				),
+		},
+		{
+			name: 'Memory',
+			type: 'memory' as const,
+			fn: () => measureMemoryDelta(<EditorSummary content="Summary text" />, 10),
+		},
+	],
+};

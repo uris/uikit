@@ -73,3 +73,50 @@ describe('TabBar Component Benchmarks', () => {
 		{ iterations: 3 },
 	);
 });
+
+const mockTabsConfig = [
+	{ label: 'Tab 1', value: '1' },
+	{ label: 'Tab 2', value: '2' },
+	{ label: 'Tab 3', value: '3' },
+];
+
+export const tabBarBenchmarkConfig = {
+	componentName: 'TabBar',
+	tests: [
+		{
+			name: 'Mount Time',
+			type: 'mount' as const,
+			fn: () => measureMountTime(<TabBar tabs={mockTabsConfig} />, 50),
+		},
+		{
+			name: 'Re-render',
+			type: 'rerender' as const,
+			fn: () =>
+				measureRerenderTime(
+					<TabBar tabs={mockTabsConfig} active="1" />,
+					(container) => {
+						container.rerender(<TabBar tabs={mockTabsConfig} active="2" />);
+					},
+					50,
+				),
+		},
+		{
+			name: 'Event Response',
+			type: 'event' as const,
+			fn: () =>
+				measureEventResponseTime(
+					<TabBar tabs={mockTabsConfig} onChange={() => {}} />,
+					(container) => {
+						const tab = container.container.querySelector('[role="tab"]');
+						if (tab) fireEvent.click(tab);
+					},
+					50,
+				),
+		},
+		{
+			name: 'Memory',
+			type: 'memory' as const,
+			fn: () => measureMemoryDelta(<TabBar tabs={mockTabsConfig} />, 10),
+		},
+	],
+};

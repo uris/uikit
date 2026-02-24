@@ -67,3 +67,49 @@ describe('UICard Component Benchmarks', () => {
 		{ iterations: 3 },
 	);
 });
+
+export const uiCardBenchmarkConfig = {
+	componentName: 'UICard',
+	tests: [
+		{
+			name: 'Mount Time',
+			type: 'mount' as const,
+			fn: () =>
+				measureMountTime(
+					<UICard>
+						<div>Card Content</div>
+					</UICard>,
+					50,
+				),
+		},
+		{
+			name: 'Re-render',
+			type: 'rerender' as const,
+			fn: () =>
+				measureRerenderTime(
+					<UICard>
+						<div>Initial Content</div>
+					</UICard>,
+					(container) => {
+						container.rerender(
+							<UICard>
+								<div>Updated Content</div>
+							</UICard>,
+						);
+					},
+					50,
+				),
+		},
+		{
+			name: 'Memory',
+			type: 'memory' as const,
+			fn: () =>
+				measureMemoryDelta(
+					<UICard title="Test">
+						<div>Content</div>
+					</UICard>,
+					10,
+				),
+		},
+	],
+};

@@ -1,6 +1,6 @@
 import { describe, bench } from 'vitest';
 import React from 'react';
-import { DraggablePanel } from '../../src/uikit/DraggablePanel/DraggablePanel';
+import { DraggablePanel } from '../../src/uikit/DraggablePanel/DrggablePanel';
 import {
 	measureMountTime,
 	measureRerenderTime,
@@ -67,3 +67,49 @@ describe('DraggablePanel Component Benchmarks', () => {
 		{ iterations: 3 },
 	);
 });
+
+export const draggablePanelBenchmarkConfig = {
+	componentName: 'DraggablePanel',
+	tests: [
+		{
+			name: 'Mount Time',
+			type: 'mount' as const,
+			fn: () =>
+				measureMountTime(
+					<DraggablePanel>
+						<div>Panel Content</div>
+					</DraggablePanel>,
+					50,
+				),
+		},
+		{
+			name: 'Re-render',
+			type: 'rerender' as const,
+			fn: () =>
+				measureRerenderTime(
+					<DraggablePanel x={0} y={0}>
+						<div>Content</div>
+					</DraggablePanel>,
+					(container) => {
+						container.rerender(
+							<DraggablePanel x={100} y={100}>
+								<div>Content</div>
+							</DraggablePanel>,
+						);
+					},
+					50,
+				),
+		},
+		{
+			name: 'Memory',
+			type: 'memory' as const,
+			fn: () =>
+				measureMemoryDelta(
+					<DraggablePanel>
+						<div>Panel Content</div>
+					</DraggablePanel>,
+					10,
+				),
+		},
+	],
+};

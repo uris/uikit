@@ -1,5 +1,6 @@
 import { type Transition, type Variants, motion } from 'motion/react';
 import React, { useCallback, useMemo, useRef } from 'react';
+import { useTrackReRenders } from '../../hooks/useTrackReRenders';
 import { type ToolTip, ToolTipType } from '../sharedTypes';
 import css from './Avatar.module.css';
 
@@ -41,6 +42,7 @@ export const Avatar = React.memo((props: AvatarProps) => {
 		size = 34,
 		frame = 34,
 	} = props;
+
 	const ref = useRef<HTMLDivElement>(null);
 
 	// memo initials computation
@@ -99,6 +101,9 @@ export const Avatar = React.memo((props: AvatarProps) => {
 	const onMouseLeave = useCallback(() => {
 		onToolTip(null);
 	}, [onToolTip]);
+
+	// debug renders - place before render function
+	useTrackReRenders(props, 'Avatar');
 
 	return (
 		<motion.div

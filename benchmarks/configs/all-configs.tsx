@@ -1,0 +1,1399 @@
+/**
+ * Centralized benchmark configurations
+ * Import configs directly without executing bench() calls
+ */
+
+import React from 'react';
+import { Avatar } from '../../src/uikit/Avatar/Avatar';
+import { AvatarGroup } from '../../src/uikit/AvatarGroup/AvatarGroup';
+import { Badge } from '../../src/uikit/Badge/Badge';
+import { CheckBox } from '../../src/uikit/CheckBox/CheckBox';
+import { DivInput } from '../../src/uikit/DivInput/DivInput';
+import { DocIcons } from '../../src/uikit/DocIcon/DocIcons';
+import { Dot } from '../../src/uikit/Dot/Dot';
+import { DraggablePanel } from '../../src/uikit/DraggablePanel/DrggablePanel';
+import { DropDown } from '../../src/uikit/DropDown/DropDown';
+import { EditorButtonBar } from '../../src/uikit/EditorButtonBar/EditorButtonBar';
+import { EditorSummary } from '../../src/uikit/EditorSummary/EditorSummary';
+import { ErrorSummary } from '../../src/uikit/ErrorSummary/ErrorSummary';
+import { FlexDiv } from '../../src/uikit/FlexDiv/FlexDiv';
+import { Grouper } from '../../src/uikit/Grouper/Grouper';
+import { Icon } from '../../src/uikit/Icon/Icon';
+import { IconButton } from '../../src/uikit/IconButton/IconButton';
+import { Logos } from '../../src/uikit/Logos/Logos';
+import { MessageInput } from '../../src/uikit/MessageInput/InputField/MessageInput';
+import { Overlay } from '../../src/uikit/Overlay/Overlay';
+import { Pager } from '../../src/uikit/Pager/Pager';
+import { ProgressIndicator } from '../../src/uikit/Progress/ProgressIndicator/ProgressIndicator';
+import { RadioButton } from '../../src/uikit/RadioButton/RadioButton';
+import { RadioButtonList } from '../../src/uikit/RadioButtonList/RadioButtonList';
+import { Slider } from '../../src/uikit/Slider/Slider';
+import { Spacer } from '../../src/uikit/Spacer/Spacer';
+import { Switch } from '../../src/uikit/Switch/Switch';
+import { TabBar } from '../../src/uikit/TabBar/TabBar';
+import { TextArea } from '../../src/uikit/TextArea/TextArea';
+import { TextField } from '../../src/uikit/Textfield/TextField';
+import { UIButton } from '../../src/uikit/UIButton/UIButton';
+import { UIButtonBar } from '../../src/uikit/UIButtonBar/UIButtonBar';
+import { UICard } from '../../src/uikit/UICard/UICard';
+import { UIChip } from '../../src/uikit/UIChip/UIChip';
+import { UIFileIcon } from '../../src/uikit/UIFileIcon/UIFileIcon';
+import { UILabel } from '../../src/uikit/UILabel/UILabel';
+import { fireEvent } from '@testing-library/react';
+import {
+	measureMountTime,
+	measureRerenderTime,
+	measureMemoryDelta,
+	measureEventResponseTime,
+	type ComponentBenchmarkConfig,
+} from '../utils/benchmark';
+
+export const avatarConfig: ComponentBenchmarkConfig = {
+	componentName: 'Avatar',
+	tests: [
+		{
+			name: 'Mount Time',
+			type: 'mount',
+			fn: () => measureMountTime(<Avatar first="John" last="Doe" size={34} />, 50),
+		},
+		{
+			name: 'Re-render',
+			type: 'rerender',
+			fn: () =>
+				measureRerenderTime(
+					<Avatar first="John" last="Doe" size={34} />,
+					(container) => {
+						container.rerender(<Avatar first="Jane" last="Smith" size={34} />);
+					},
+					50,
+				),
+		},
+		{
+			name: 'Memory',
+			type: 'memory',
+			fn: () => measureMemoryDelta(<Avatar first="John" last="Doe" />, 10),
+		},
+	],
+};
+
+const mockAvatars = [
+	{ first: 'John', last: 'Doe', email: 'john@example.com' },
+	{ first: 'Jane', last: 'Smith', email: 'jane@example.com' },
+	{ first: 'Bob', last: 'Johnson', email: 'bob@example.com' },
+];
+
+export const avatarGroupConfig: ComponentBenchmarkConfig = {
+	componentName: 'AvatarGroup',
+	tests: [
+		{
+			name: 'Mount Time',
+			type: 'mount',
+			fn: () => measureMountTime(<AvatarGroup avatars={mockAvatars} />, 50),
+		},
+		{
+			name: 'Re-render',
+			type: 'rerender',
+			fn: () =>
+				measureRerenderTime(
+					<AvatarGroup avatars={mockAvatars} />,
+					(container) => {
+						const updatedAvatars = [
+							...mockAvatars,
+							{ first: 'New', last: 'User', email: 'new@example.com' },
+						];
+						container.rerender(<AvatarGroup avatars={updatedAvatars} />);
+					},
+					50,
+				),
+		},
+		{
+			name: 'Memory',
+			type: 'memory',
+			fn: () => measureMemoryDelta(<AvatarGroup avatars={mockAvatars} />, 10),
+		},
+	],
+};
+
+export const badgeConfig: ComponentBenchmarkConfig = {
+	componentName: 'Badge',
+	tests: [
+		{
+			name: 'Mount Time',
+			type: 'mount',
+			fn: () => measureMountTime(<Badge count={5} />, 50),
+		},
+		{
+			name: 'Re-render',
+			type: 'rerender',
+			fn: () =>
+				measureRerenderTime(
+					<Badge count={5} />,
+					(container) => {
+						container.rerender(<Badge count={99} />);
+					},
+					50,
+				),
+		},
+		{
+			name: 'Memory',
+			type: 'memory',
+			fn: () => measureMemoryDelta(<Badge count={42} />, 10),
+		},
+	],
+};
+
+export const checkBoxConfig: ComponentBenchmarkConfig = {
+	componentName: 'CheckBox',
+	tests: [
+		{
+			name: 'Mount Time',
+			type: 'mount',
+			fn: () => measureMountTime(<CheckBox />, 50),
+		},
+		{
+			name: 'Re-render',
+			type: 'rerender',
+			fn: () =>
+				measureRerenderTime(
+					<CheckBox checked={false} />,
+					(container) => {
+						container.rerender(<CheckBox checked={true} />);
+					},
+					50,
+				),
+		},
+		{
+			name: 'Event Response',
+			type: 'event',
+			fn: () =>
+				measureEventResponseTime(
+					<CheckBox onChange={() => {}} />,
+					(container) => {
+						const checkbox = container.container.querySelector('[class*="wrapper"]');
+						if (checkbox) fireEvent.click(checkbox);
+					},
+					50,
+				),
+		},
+		{
+			name: 'Memory',
+			type: 'memory',
+			fn: () => measureMemoryDelta(<CheckBox label="Test" checked />, 10),
+		},
+	],
+};
+
+export const flexDivConfig: ComponentBenchmarkConfig = {
+	componentName: 'FlexDiv',
+	tests: [
+		{
+			name: 'Mount Time',
+			type: 'mount',
+			fn: () =>
+				measureMountTime(
+					<FlexDiv>
+						<div>Child 1</div>
+						<div>Child 2</div>
+					</FlexDiv>,
+					50,
+				),
+		},
+		{
+			name: 'Re-render',
+			type: 'rerender',
+			fn: () =>
+				measureRerenderTime(
+					<FlexDiv direction="column">
+						<div>Child 1</div>
+						<div>Child 2</div>
+					</FlexDiv>,
+					(container) => {
+						container.rerender(
+							<FlexDiv direction="row">
+								<div>Child 1</div>
+								<div>Child 2</div>
+							</FlexDiv>,
+						);
+					},
+					50,
+				),
+		},
+	],
+};
+
+export const iconConfig: ComponentBenchmarkConfig = {
+	componentName: 'Icon',
+	tests: [
+		{
+			name: 'Mount Time',
+			type: 'mount',
+			fn: () => measureMountTime(<Icon name="home" size={22} />, 50),
+		},
+		{
+			name: 'Re-render',
+			type: 'rerender',
+			fn: () =>
+				measureRerenderTime(
+					<Icon name="home" size={22} />,
+					(container) => {
+						container.rerender(<Icon name="search" size={22} />);
+					},
+					50,
+				),
+		},
+		{
+			name: 'Memory',
+			type: 'memory',
+			fn: () => measureMemoryDelta(<Icon name="home" />, 10),
+		},
+	],
+};
+
+export const switchConfig: ComponentBenchmarkConfig = {
+	componentName: 'Switch',
+	tests: [
+		{
+			name: 'Mount Time',
+			type: 'mount',
+			fn: () => measureMountTime(<Switch />, 50),
+		},
+		{
+			name: 'Re-render',
+			type: 'rerender',
+			fn: () =>
+				measureRerenderTime(
+					<Switch state={false} />,
+					(container) => {
+						container.rerender(<Switch state={true} />);
+					},
+					50,
+				),
+		},
+		{
+			name: 'Event Response',
+			type: 'event',
+			fn: () =>
+				measureEventResponseTime(
+					<Switch onChange={() => {}} />,
+					(container) => {
+						const switchEl = container.container.querySelector('[class*="wrapper"]');
+						if (switchEl) fireEvent.click(switchEl);
+					},
+					50,
+				),
+		},
+		{
+			name: 'Memory',
+			type: 'memory',
+			fn: () => measureMemoryDelta(<Switch state />, 10),
+		},
+	],
+};
+
+export const textFieldConfig: ComponentBenchmarkConfig = {
+	componentName: 'TextField',
+	tests: [
+		{
+			name: 'Mount Time',
+			type: 'mount',
+			fn: () => measureMountTime(<TextField />, 50),
+		},
+		{
+			name: 'Re-render',
+			type: 'rerender',
+			fn: () =>
+				measureRerenderTime(
+					<TextField value="Initial" />,
+					(container) => {
+						container.rerender(<TextField value="Updated text" />);
+					},
+					50,
+				),
+		},
+		{
+			name: 'Event Response',
+			type: 'event',
+			fn: () =>
+				measureEventResponseTime(
+					<TextField onFocus={() => {}} />,
+					(container) => {
+						const input = container.container.querySelector('input');
+						if (input) fireEvent.focus(input);
+					},
+					50,
+				),
+		},
+		{
+			name: 'Memory',
+			type: 'memory',
+			fn: () => measureMemoryDelta(<TextField value="Test" />, 10),
+		},
+	],
+};
+
+export const uiButtonConfig: ComponentBenchmarkConfig = {
+	componentName: 'UIButton',
+	tests: [
+		{
+			name: 'Mount Time',
+			type: 'mount',
+			fn: () => measureMountTime(<UIButton label="Click Me" />, 50),
+		},
+		{
+			name: 'State Change Re-render',
+			type: 'rerender',
+			fn: () =>
+				measureRerenderTime(
+					<UIButton label="Button" state="normal" />,
+					(container) => {
+						container.rerender(<UIButton label="Button" state="disabled" />);
+					},
+					50,
+				),
+		},
+		{
+			name: 'Click Event',
+			type: 'event',
+			fn: () =>
+				measureEventResponseTime(
+					<UIButton label="Click" onClick={() => {}} />,
+					(container) => {
+						const button = container.container.querySelector('[class*="button"]');
+						if (button) fireEvent.click(button);
+					},
+					50,
+				),
+		},
+		{
+			name: 'Memory',
+			type: 'memory',
+			fn: () =>
+				measureMemoryDelta(<UIButton label="Test" iconLeft="check" count={5} />, 10),
+		},
+	],
+};
+
+const mockButtons = [
+	{ label: 'Save', icon: 'check' },
+	{ label: 'Cancel', icon: 'close' },
+	{ label: 'Delete', icon: 'trash' },
+];
+
+export const uiButtonBarConfig: ComponentBenchmarkConfig = {
+	componentName: 'UIButtonBar',
+	tests: [
+		{
+			name: 'Mount Time',
+			type: 'mount',
+			fn: () => measureMountTime(<UIButtonBar buttons={mockButtons} />, 50),
+		},
+		{
+			name: 'Re-render',
+			type: 'rerender',
+			fn: () =>
+				measureRerenderTime(
+					<UIButtonBar buttons={mockButtons} />,
+					(container) => {
+						const updatedButtons = [...mockButtons, { label: 'New', icon: 'plus' }];
+						container.rerender(<UIButtonBar buttons={updatedButtons} />);
+					},
+					50,
+				),
+		},
+		{
+			name: 'Event Response',
+			type: 'event',
+			fn: () =>
+				measureEventResponseTime(
+					<UIButtonBar buttons={mockButtons} onClick={() => {}} />,
+					(container) => {
+						const button = container.container.querySelector('button');
+						if (button) fireEvent.click(button);
+					},
+					50,
+				),
+		},
+		{
+			name: 'Memory',
+			type: 'memory',
+			fn: () => measureMemoryDelta(<UIButtonBar buttons={mockButtons} />, 10),
+		},
+	],
+};
+
+export const uiCardConfig: ComponentBenchmarkConfig = {
+	componentName: 'UICard',
+	tests: [
+		{
+			name: 'Mount Time',
+			type: 'mount',
+			fn: () =>
+				measureMountTime(
+					<UICard>
+						<div>Card Content</div>
+					</UICard>,
+					50,
+				),
+		},
+		{
+			name: 'Re-render',
+			type: 'rerender',
+			fn: () =>
+				measureRerenderTime(
+					<UICard>
+						<div>Initial Content</div>
+					</UICard>,
+					(container) => {
+						container.rerender(
+							<UICard>
+								<div>Updated Content</div>
+							</UICard>,
+						);
+					},
+					50,
+				),
+		},
+		{
+			name: 'Memory',
+			type: 'memory',
+			fn: () =>
+				measureMemoryDelta(
+					<UICard title="Test">
+						<div>Content</div>
+					</UICard>,
+					10,
+				),
+		},
+	],
+};
+
+export const uiChipConfig: ComponentBenchmarkConfig = {
+	componentName: 'UIChip',
+	tests: [
+		{
+			name: 'Mount Time',
+			type: 'mount',
+			fn: () => measureMountTime(<UIChip label="Chip" />, 50),
+		},
+		{
+			name: 'Re-render',
+			type: 'rerender',
+			fn: () =>
+				measureRerenderTime(
+					<UIChip label="Initial" />,
+					(container) => {
+						container.rerender(<UIChip label="Updated" />);
+					},
+					50,
+				),
+		},
+		{
+			name: 'Event Response',
+			type: 'event',
+			fn: () =>
+				measureEventResponseTime(
+					<UIChip label="Chip" onClick={() => {}} />,
+					(container) => {
+						const chip = container.container.querySelector('[class*="chip"]');
+						if (chip) fireEvent.click(chip);
+					},
+					50,
+				),
+		},
+		{
+			name: 'Memory',
+			type: 'memory',
+			fn: () => measureMemoryDelta(<UIChip label="Chip" icon="check" />, 10),
+		},
+	],
+};
+
+export const uiFileIconConfig: ComponentBenchmarkConfig = {
+	componentName: 'UIFileIcon',
+	tests: [
+		{
+			name: 'Mount Time',
+			type: 'mount',
+			fn: () => measureMountTime(<UIFileIcon filename="test.txt" />, 50),
+		},
+		{
+			name: 'Re-render',
+			type: 'rerender',
+			fn: () =>
+				measureRerenderTime(
+					<UIFileIcon filename="test.txt" />,
+					(container) => {
+						container.rerender(<UIFileIcon filename="document.pdf" />);
+					},
+					50,
+				),
+		},
+		{
+			name: 'Memory',
+			type: 'memory',
+			fn: () => measureMemoryDelta(<UIFileIcon filename="test.pdf" />, 10),
+		},
+	],
+};
+
+export const uiLabelConfig: ComponentBenchmarkConfig = {
+	componentName: 'UILabel',
+	tests: [
+		{
+			name: 'Mount Time',
+			type: 'mount',
+			fn: () => measureMountTime(<UILabel text="Label" />, 50),
+		},
+		{
+			name: 'Re-render',
+			type: 'rerender',
+			fn: () =>
+				measureRerenderTime(
+					<UILabel text="Initial" />,
+					(container) => {
+						container.rerender(<UILabel text="Updated Label Text" />);
+					},
+					50,
+				),
+		},
+		{
+			name: 'Memory',
+			type: 'memory',
+			fn: () => measureMemoryDelta(<UILabel text="Test Label" />, 10),
+		},
+	],
+};
+
+export const divInputConfig: ComponentBenchmarkConfig = {
+	componentName: 'DivInput',
+	tests: [
+		{
+			name: 'Mount Time',
+			type: 'mount',
+			fn: () => measureMountTime(<DivInput isEditable value="Test" />, 50),
+		},
+		{
+			name: 'Re-render',
+			type: 'rerender',
+			fn: () =>
+				measureRerenderTime(
+					<DivInput isEditable value="Initial" />,
+					(container) => {
+						container.rerender(<DivInput isEditable value="Updated" />);
+					},
+					50,
+				),
+		},
+		{
+			name: 'Event Response',
+			type: 'event',
+			fn: () =>
+				measureEventResponseTime(
+					<DivInput isEditable value="Test" onFocus={() => {}} />,
+					(container) => {
+						const input = container.container.querySelector('[class*="input"]');
+						if (input) fireEvent.focus(input);
+					},
+					50,
+				),
+		},
+		{
+			name: 'Memory',
+			type: 'memory',
+			fn: () => measureMemoryDelta(<DivInput value="Test Input" isEditable />, 10),
+		},
+	],
+};
+
+export const docIconConfig: ComponentBenchmarkConfig = {
+	componentName: 'DocIcon',
+	tests: [
+		{
+			name: 'Mount Time',
+			type: 'mount',
+			fn: () => measureMountTime(<DocIcons type="pdf" />, 50),
+		},
+		{
+			name: 'Re-render',
+			type: 'rerender',
+			fn: () =>
+				measureRerenderTime(
+					<DocIcons type="pdf" />,
+					(container) => {
+						container.rerender(<DocIcons type="docx" />);
+					},
+					50,
+				),
+		},
+		{
+			name: 'Memory',
+			type: 'memory',
+			fn: () => measureMemoryDelta(<DocIcons type="pdf" />, 10),
+		},
+	],
+};
+
+export const dotConfig: ComponentBenchmarkConfig = {
+	componentName: 'Dot',
+	tests: [
+		{
+			name: 'Mount Time',
+			type: 'mount',
+			fn: () => measureMountTime(<Dot state={"green"} />, 50),
+		},
+		{
+			name: 'Re-render',
+			type: 'rerender',
+			fn: () =>
+				measureRerenderTime(
+					<Dot state={"green"} />,
+					(container) => {
+						container.rerender(<Dot state={"blue"} />);
+					},
+					50,
+				),
+		},
+		{
+			name: 'Memory',
+			type: 'memory',
+			fn: () => measureMemoryDelta(<Dot size={10} state={"green"} />, 10),
+		},
+	],
+};
+
+export const draggablePanelConfig: ComponentBenchmarkConfig = {
+	componentName: 'DraggablePanel',
+	tests: [
+		{
+			name: 'Mount Time',
+			type: 'mount',
+			fn: () =>
+				measureMountTime(
+					<DraggablePanel>
+						<div>Panel Content</div>
+					</DraggablePanel>,
+					50,
+				),
+		},
+		{
+			name: 'Re-render',
+			type: 'rerender',
+			fn: () =>
+				measureRerenderTime(
+					<DraggablePanel x={0} y={0}>
+						<div>Content</div>
+					</DraggablePanel>,
+					(container) => {
+						container.rerender(
+							<DraggablePanel x={100} y={100}>
+								<div>Content</div>
+							</DraggablePanel>,
+						);
+					},
+					50,
+				),
+		},
+		{
+			name: 'Memory',
+			type: 'memory',
+			fn: () =>
+				measureMemoryDelta(
+					<DraggablePanel>
+						<div>Panel Content</div>
+					</DraggablePanel>,
+					10,
+				),
+		},
+	],
+};
+
+const mockDropDownOptions = [
+	{ label: 'Option 1', value: '1' },
+	{ label: 'Option 2', value: '2' },
+	{ label: 'Option 3', value: '3' },
+];
+
+export const dropDownConfig: ComponentBenchmarkConfig = {
+	componentName: 'DropDown',
+	tests: [
+		{
+			name: 'Mount Time',
+			type: 'mount',
+			fn: () => measureMountTime(<DropDown options={mockDropDownOptions} />, 50),
+		},
+		{
+			name: 'Re-render',
+			type: 'rerender',
+			fn: () =>
+				measureRerenderTime(
+					<DropDown options={mockDropDownOptions} selected="1" />,
+					(container) => {
+						container.rerender(<DropDown options={mockDropDownOptions} selected="2" />);
+					},
+					50,
+				),
+		},
+		{
+			name: 'Event Response',
+			type: 'event',
+			fn: () =>
+				measureEventResponseTime(
+					<DropDown options={mockDropDownOptions} onChange={() => {}} />,
+					(container) => {
+						const dropdown = container.container.querySelector('[class*="wrapper"]');
+						if (dropdown) fireEvent.click(dropdown);
+					},
+					50,
+				),
+		},
+		{
+			name: 'Memory',
+			type: 'memory',
+			fn: () => measureMemoryDelta(<DropDown options={mockDropDownOptions} />, 10),
+		},
+	],
+};
+
+export const editorButtonBarConfig: ComponentBenchmarkConfig = {
+	componentName: 'EditorButtonBar',
+	tests: [
+		{
+			name: 'Mount Time',
+			type: 'mount',
+			fn: () => measureMountTime(<EditorButtonBar />, 50),
+		},
+		{
+			name: 'Re-render',
+			type: 'rerender',
+			fn: () =>
+				measureRerenderTime(
+					<EditorButtonBar buttons={['bold']} />,
+					(container) => {
+						container.rerender(
+							<EditorButtonBar buttons={['bold', 'italic', 'underline']} />,
+						);
+					},
+					50,
+				),
+		},
+		{
+			name: 'Memory',
+			type: 'memory',
+			fn: () => measureMemoryDelta(<EditorButtonBar buttons={['bold', 'italic']} />, 10),
+		},
+	],
+};
+
+export const editorSummaryConfig: ComponentBenchmarkConfig = {
+	componentName: 'EditorSummary',
+	tests: [
+		{
+			name: 'Mount Time',
+			type: 'mount',
+			fn: () => measureMountTime(<EditorSummary content="Summary text" />, 50),
+		},
+		{
+			name: 'Re-render',
+			type: 'rerender',
+			fn: () =>
+				measureRerenderTime(
+					<EditorSummary content="Initial content" />,
+					(container) => {
+						container.rerender(<EditorSummary content="Updated content" />);
+					},
+					50,
+				),
+		},
+		{
+			name: 'Memory',
+			type: 'memory',
+			fn: () => measureMemoryDelta(<EditorSummary content="Summary text" />, 10),
+		},
+	],
+};
+
+export const errorSummaryConfig: ComponentBenchmarkConfig = {
+	componentName: 'ErrorSummary',
+	tests: [
+		{
+			name: 'Mount Time',
+			type: 'mount',
+			fn: () => measureMountTime(<ErrorSummary message="Error message" />, 50),
+		},
+		{
+			name: 'Re-render',
+			type: 'rerender',
+			fn: () =>
+				measureRerenderTime(
+					<ErrorSummary message="Initial error" />,
+					(container) => {
+						container.rerender(<ErrorSummary message="Updated error" />);
+					},
+					50,
+				),
+		},
+		{
+			name: 'Memory',
+			type: 'memory',
+			fn: () => measureMemoryDelta(<ErrorSummary message="Error message" />, 10),
+		},
+	],
+};
+
+export const grouperConfig: ComponentBenchmarkConfig = {
+	componentName: 'Grouper',
+	tests: [
+		{
+			name: 'Mount Time',
+			type: 'mount',
+			fn: () =>
+				measureMountTime(
+					<Grouper>
+						<div>Child 1</div>
+						<div>Child 2</div>
+					</Grouper>,
+					50,
+				),
+		},
+		{
+			name: 'Re-render',
+			type: 'rerender',
+			fn: () =>
+				measureRerenderTime(
+					<Grouper>
+						<div>Child 1</div>
+					</Grouper>,
+					(container) => {
+						container.rerender(
+							<Grouper>
+								<div>Child 1</div>
+								<div>Child 2</div>
+							</Grouper>,
+						);
+					},
+					50,
+				),
+		},
+		{
+			name: 'Memory',
+			type: 'memory',
+			fn: () =>
+				measureMemoryDelta(
+					<Grouper>
+						<div>Child 1</div>
+						<div>Child 2</div>
+					</Grouper>,
+					10,
+				),
+		},
+	],
+};
+
+export const iconButtonConfig: ComponentBenchmarkConfig = {
+	componentName: 'IconButton',
+	tests: [
+		{
+			name: 'Mount Time',
+			type: 'mount',
+			fn: () => measureMountTime(<IconButton icon="check" />, 50),
+		},
+		{
+			name: 'Re-render',
+			type: 'rerender',
+			fn: () =>
+				measureRerenderTime(
+					<IconButton icon="check" />,
+					(container) => {
+						container.rerender(<IconButton icon="close" />);
+					},
+					50,
+				),
+		},
+		{
+			name: 'Event Response',
+			type: 'event',
+			fn: () =>
+				measureEventResponseTime(
+					<IconButton icon="save" onClick={() => {}} />,
+					(container) => {
+						const button = container.container.querySelector('[class*="wrapper"]');
+						if (button) fireEvent.click(button);
+					},
+					50,
+				),
+		},
+		{
+			name: 'Memory',
+			type: 'memory',
+			fn: () => measureMemoryDelta(<IconButton icon="check" />, 10),
+		},
+	],
+};
+
+export const logosConfig: ComponentBenchmarkConfig = {
+	componentName: 'Logos',
+	tests: [
+		{
+			name: 'Mount Time',
+			type: 'mount',
+			fn: () => measureMountTime(<Logos type="default" />, 50),
+		},
+		{
+			name: 'Re-render',
+			type: 'rerender',
+			fn: () =>
+				measureRerenderTime(
+					<Logos type="default" />,
+					(container) => {
+						container.rerender(<Logos type="alternate" />);
+					},
+					50,
+				),
+		},
+		{
+			name: 'Memory',
+			type: 'memory',
+			fn: () => measureMemoryDelta(<Logos type="default" />, 10),
+		},
+	],
+};
+
+export const messageInputConfig: ComponentBenchmarkConfig = {
+	componentName: 'MessageInput',
+	tests: [
+		{
+			name: 'Mount Time',
+			type: 'mount',
+			fn: () => measureMountTime(<MessageInput />, 50),
+		},
+		{
+			name: 'Re-render',
+			type: 'rerender',
+			fn: () =>
+				measureRerenderTime(
+					<MessageInput value="Initial" />,
+					(container) => {
+						container.rerender(<MessageInput value="Updated message" />);
+					},
+					50,
+				),
+		},
+		{
+			name: 'Event Response',
+			type: 'event',
+			fn: () =>
+				measureEventResponseTime(
+					<MessageInput onFocus={() => {}} />,
+					(container) => {
+						const input = container.container.querySelector('textarea, input');
+						if (input) fireEvent.focus(input);
+					},
+					50,
+				),
+		},
+		{
+			name: 'Memory',
+			type: 'memory',
+			fn: () => measureMemoryDelta(<MessageInput />, 10),
+		},
+	],
+};
+
+export const overlayConfig: ComponentBenchmarkConfig = {
+	componentName: 'Overlay',
+	tests: [
+		{
+			name: 'Mount Time',
+			type: 'mount',
+			fn: () =>
+				measureMountTime(
+					<Overlay show>
+						<div>Overlay Content</div>
+					</Overlay>,
+					50,
+				),
+		},
+		{
+			name: 'Re-render',
+			type: 'rerender',
+			fn: () =>
+				measureRerenderTime(
+					<Overlay show={false}>
+						<div>Content</div>
+					</Overlay>,
+					(container) => {
+						container.rerender(
+							<Overlay show={true}>
+								<div>Content</div>
+							</Overlay>,
+						);
+					},
+					50,
+				),
+		},
+		{
+			name: 'Memory',
+			type: 'memory',
+			fn: () =>
+				measureMemoryDelta(
+					<Overlay show>
+						<div>Overlay Content</div>
+					</Overlay>,
+					10,
+				),
+		},
+	],
+};
+
+export const pagerConfig: ComponentBenchmarkConfig = {
+	componentName: 'Pager',
+	tests: [
+		{
+			name: 'Mount Time',
+			type: 'mount',
+			fn: () => measureMountTime(<Pager total={100} current={1} />, 50),
+		},
+		{
+			name: 'Re-render',
+			type: 'rerender',
+			fn: () =>
+				measureRerenderTime(
+					<Pager total={100} current={1} />,
+					(container) => {
+						container.rerender(<Pager total={100} current={5} />);
+					},
+					50,
+				),
+		},
+		{
+			name: 'Event Response',
+			type: 'event',
+			fn: () =>
+				measureEventResponseTime(
+					<Pager total={100} current={1} onChange={() => {}} />,
+					(container) => {
+						const nextButton = container.container.querySelector('[aria-label*="next"], [class*="next"]');
+						if (nextButton) fireEvent.click(nextButton);
+					},
+					50,
+				),
+		},
+		{
+			name: 'Memory',
+			type: 'memory',
+			fn: () => measureMemoryDelta(<Pager total={100} current={1} />, 10),
+		},
+	],
+};
+
+export const progressConfig: ComponentBenchmarkConfig = {
+	componentName: 'Progress',
+	tests: [
+		{
+			name: 'Mount Time',
+			type: 'mount',
+			fn: () => measureMountTime(<Progress size={20} />, 50),
+		},
+		{
+			name: 'Re-render',
+			type: 'rerender',
+			fn: () =>
+				measureRerenderTime(
+					<ProgressIndicator size={20} />,
+					(container) => {
+						container.rerender(<ProgressIndicator size={64} />);
+					},
+					50,
+				),
+		},
+		{
+			name: 'Memory',
+			type: 'memory',
+			fn: () => measureMemoryDelta(<ProgressIndicator size={20} />, 10),
+		},
+	],
+};
+
+export const radioButtonConfig: ComponentBenchmarkConfig = {
+	componentName: 'RadioButton',
+	tests: [
+		{
+			name: 'Mount Time',
+			type: 'mount',
+			fn: () => measureMountTime(<RadioButton label="Option 1" />, 50),
+		},
+		{
+			name: 'Re-render',
+			type: 'rerender',
+			fn: () =>
+				measureRerenderTime(
+					<RadioButton label="Option" selected={false} />,
+					(container) => {
+						container.rerender(<RadioButton label="Option" selected={true} />);
+					},
+					50,
+				),
+		},
+		{
+			name: 'Event Response',
+			type: 'event',
+			fn: () =>
+				measureEventResponseTime(
+					<RadioButton label="Option" onChange={() => {}} />,
+					(container) => {
+						const radio = container.container.querySelector('[class*="wrapper"]');
+						if (radio) fireEvent.click(radio);
+					},
+					50,
+				),
+		},
+		{
+			name: 'Memory',
+			type: 'memory',
+			fn: () => measureMemoryDelta(<RadioButton label="Option 1" />, 10),
+		},
+	],
+};
+
+const mockRadioButtonListOptions = [
+	{ label: 'Option 1', value: '1' },
+	{ label: 'Option 2', value: '2' },
+	{ label: 'Option 3', value: '3' },
+];
+
+export const radioButtonListConfig: ComponentBenchmarkConfig = {
+	componentName: 'RadioButtonList',
+	tests: [
+		{
+			name: 'Mount Time',
+			type: 'mount',
+			fn: () => measureMountTime(<RadioButtonList options={mockRadioButtonListOptions} />, 50),
+		},
+		{
+			name: 'Re-render',
+			type: 'rerender',
+			fn: () =>
+				measureRerenderTime(
+					<RadioButtonList options={mockRadioButtonListOptions} selected="1" />,
+					(container) => {
+						container.rerender(<RadioButtonList options={mockRadioButtonListOptions} selected="2" />);
+					},
+					50,
+				),
+		},
+		{
+			name: 'Event Response',
+			type: 'event',
+			fn: () =>
+				measureEventResponseTime(
+					<RadioButtonList options={mockRadioButtonListOptions} onChange={() => {}} />,
+					(container) => {
+						const firstRadio = container.container.querySelector('[class*="wrapper"]');
+						if (firstRadio) fireEvent.click(firstRadio);
+					},
+					50,
+				),
+		},
+		{
+			name: 'Memory',
+			type: 'memory',
+			fn: () => measureMemoryDelta(<RadioButtonList options={mockRadioButtonListOptions} />, 10),
+		},
+	],
+};
+
+export const sliderConfig: ComponentBenchmarkConfig = {
+	componentName: 'Slider',
+	tests: [
+		{
+			name: 'Mount Time',
+			type: 'mount',
+			fn: () => measureMountTime(<Slider initial={50} />, 50),
+		},
+		{
+			name: 'Re-render',
+			type: 'rerender',
+			fn: () =>
+				measureRerenderTime(
+					<Slider initial={25} />,
+					(container) => {
+						container.rerender(<Slider initial={75} />);
+					},
+					50,
+				),
+		},
+		{
+			name: 'Event Response',
+			type: 'event',
+			fn: () =>
+				measureEventResponseTime(
+					<Slider onChange={() => {}} />,
+					(container) => {
+						const slider = container.container.querySelector('[class*="wrapper"]');
+						if (slider) fireEvent.mouseDown(slider, { clientX: 50 });
+					},
+					50,
+				),
+		},
+		{
+			name: 'Memory',
+			type: 'memory',
+			fn: () => measureMemoryDelta(<Slider initial={50} />, 10),
+		},
+	],
+};
+
+export const spacerConfig: ComponentBenchmarkConfig = {
+	componentName: 'Spacer',
+	tests: [
+		{
+			name: 'Mount Time',
+			type: 'mount',
+			fn: () => measureMountTime(<Spacer />, 50),
+		},
+		{
+			name: 'Re-render',
+			type: 'rerender',
+			fn: () =>
+				measureRerenderTime(
+					<Spacer size={10} />,
+					(container) => {
+						container.rerender(<Spacer size={30} />);
+					},
+					50,
+				),
+		},
+		{
+			name: 'Memory',
+			type: 'memory',
+			fn: () => measureMemoryDelta(<Spacer size={20} />, 10),
+		},
+	],
+};
+
+const mockTabBarTabs = [
+	{ label: 'Tab 1', value: '1' },
+	{ label: 'Tab 2', value: '2' },
+	{ label: 'Tab 3', value: '3' },
+];
+
+export const tabBarConfig: ComponentBenchmarkConfig = {
+	componentName: 'TabBar',
+	tests: [
+		{
+			name: 'Mount Time',
+			type: 'mount',
+			fn: () => measureMountTime(<TabBar tabs={mockTabBarTabs} />, 50),
+		},
+		{
+			name: 'Re-render',
+			type: 'rerender',
+			fn: () =>
+				measureRerenderTime(
+					<TabBar tabs={mockTabBarTabs} active="1" />,
+					(container) => {
+						container.rerender(<TabBar tabs={mockTabBarTabs} active="2" />);
+					},
+					50,
+				),
+		},
+		{
+			name: 'Event Response',
+			type: 'event',
+			fn: () =>
+				measureEventResponseTime(
+					<TabBar tabs={mockTabBarTabs} onChange={() => {}} />,
+					(container) => {
+						const tab = container.container.querySelector('[role="tab"]');
+						if (tab) fireEvent.click(tab);
+					},
+					50,
+				),
+		},
+		{
+			name: 'Memory',
+			type: 'memory',
+			fn: () => measureMemoryDelta(<TabBar tabs={mockTabBarTabs} />, 10),
+		},
+	],
+};
+
+export const textAreaConfig: ComponentBenchmarkConfig = {
+	componentName: 'TextArea',
+	tests: [
+		{
+			name: 'Mount Time',
+			type: 'mount',
+			fn: () => measureMountTime(<TextArea />, 50),
+		},
+		{
+			name: 'Re-render',
+			type: 'rerender',
+			fn: () =>
+				measureRerenderTime(
+					<TextArea value="Initial text" />,
+					(container) => {
+						container.rerender(<TextArea value="Updated text content" />);
+					},
+					50,
+				),
+		},
+		{
+			name: 'Event Response',
+			type: 'event',
+			fn: () =>
+				measureEventResponseTime(
+					<TextArea onFocus={() => {}} />,
+					(container) => {
+						const textarea = container.container.querySelector('textarea');
+						if (textarea) fireEvent.focus(textarea);
+					},
+					50,
+				),
+		},
+		{
+			name: 'Memory',
+			type: 'memory',
+			fn: () => measureMemoryDelta(<TextArea value="Test content" />, 10),
+		},
+	],
+};
+
+// Export all configs as an array
+export const allBenchmarkConfigs = [
+	avatarConfig,
+	avatarGroupConfig,
+	badgeConfig,
+	checkBoxConfig,
+	divInputConfig,
+	docIconConfig,
+	dotConfig,
+	// draggablePanelConfig,
+	// dropDownConfig,
+	// editorButtonBarConfig,
+	// editorSummaryConfig,
+	// errorSummaryConfig,
+	flexDivConfig,
+	// grouperConfig,
+	iconConfig,
+	// iconButtonConfig,
+	// logosConfig,
+	// messageInputConfig,
+	// overlayConfig,
+	// pagerConfig,
+	// progressConfig,
+	// radioButtonConfig,
+	// radioButtonListConfig,
+	// sliderConfig,
+	// spacerConfig,
+	switchConfig,
+	// tabBarConfig,
+	// textAreaConfig,
+	textFieldConfig,
+	uiButtonConfig,
+	uiButtonBarConfig,
+	uiCardConfig,
+	uiChipConfig,
+	uiFileIconConfig,
+	uiLabelConfig,
+];

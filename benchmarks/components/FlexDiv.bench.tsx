@@ -96,3 +96,41 @@ describe('FlexDiv Component Benchmarks', () => {
 		{ iterations: 5 },
 	);
 });
+
+export const flexDivBenchmarkConfig = {
+	componentName: 'FlexDiv',
+	tests: [
+		{
+			name: 'Mount Time',
+			type: 'mount' as const,
+			fn: () =>
+				measureMountTime(
+					<FlexDiv>
+						<div>Child 1</div>
+						<div>Child 2</div>
+					</FlexDiv>,
+					50,
+				),
+		},
+		{
+			name: 'Re-render',
+			type: 'rerender' as const,
+			fn: () =>
+				measureRerenderTime(
+					<FlexDiv direction="column">
+						<div>Child 1</div>
+						<div>Child 2</div>
+					</FlexDiv>,
+					(container) => {
+						container.rerender(
+							<FlexDiv direction="row">
+								<div>Child 1</div>
+								<div>Child 2</div>
+							</FlexDiv>,
+						);
+					},
+					50,
+				),
+		},
+	],
+};

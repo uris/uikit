@@ -71,3 +71,44 @@ describe('CheckBox Component Benchmarks', () => {
 		{ iterations: 3 },
 	);
 });
+
+export const checkBoxBenchmarkConfig = {
+	componentName: 'CheckBox',
+	tests: [
+		{
+			name: 'Mount Time',
+			type: 'mount' as const,
+			fn: () => measureMountTime(<CheckBox />, 50),
+		},
+		{
+			name: 'Re-render',
+			type: 'rerender' as const,
+			fn: () =>
+				measureRerenderTime(
+					<CheckBox checked={false} />,
+					(container) => {
+						container.rerender(<CheckBox checked={true} />);
+					},
+					50,
+				),
+		},
+		{
+			name: 'Event Response',
+			type: 'event' as const,
+			fn: () =>
+				measureEventResponseTime(
+					<CheckBox onChange={() => {}} />,
+					(container) => {
+						const checkbox = container.container.querySelector('[class*="wrapper"]');
+						if (checkbox) fireEvent.click(checkbox);
+					},
+					50,
+				),
+		},
+		{
+			name: 'Memory',
+			type: 'memory' as const,
+			fn: () => measureMemoryDelta(<CheckBox label="Test" checked />, 10),
+		},
+	],
+};

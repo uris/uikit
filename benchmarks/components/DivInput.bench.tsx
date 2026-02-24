@@ -69,3 +69,44 @@ describe('DivInput Component Benchmarks', () => {
 		{ iterations: 3 },
 	);
 });
+
+export const divInputBenchmarkConfig = {
+	componentName: 'DivInput',
+	tests: [
+		{
+			name: 'Mount Time',
+			type: 'mount' as const,
+			fn: () => measureMountTime(<DivInput value="Test" />, 50),
+		},
+		{
+			name: 'Re-render',
+			type: 'rerender' as const,
+			fn: () =>
+				measureRerenderTime(
+					<DivInput value="Initial" />,
+					(container) => {
+						container.rerender(<DivInput value="Updated" />);
+					},
+					50,
+				),
+		},
+		{
+			name: 'Event Response',
+			type: 'event' as const,
+			fn: () =>
+				measureEventResponseTime(
+					<DivInput value="Test" onFocus={() => {}} />,
+					(container) => {
+						const input = container.container.querySelector('[class*="input"]');
+						if (input) fireEvent.focus(input);
+					},
+					50,
+				),
+		},
+		{
+			name: 'Memory',
+			type: 'memory' as const,
+			fn: () => measureMemoryDelta(<DivInput value="Test Input" isEditable />, 10),
+		},
+	],
+};

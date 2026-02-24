@@ -75,3 +75,50 @@ describe('RadioButtonList Component Benchmarks', () => {
 		{ iterations: 3 },
 	);
 });
+
+const mockOptionsConfig = [
+	{ label: 'Option 1', value: '1' },
+	{ label: 'Option 2', value: '2' },
+	{ label: 'Option 3', value: '3' },
+];
+
+export const radioButtonListBenchmarkConfig = {
+	componentName: 'RadioButtonList',
+	tests: [
+		{
+			name: 'Mount Time',
+			type: 'mount' as const,
+			fn: () => measureMountTime(<RadioButtonList options={mockOptionsConfig} />, 50),
+		},
+		{
+			name: 'Re-render',
+			type: 'rerender' as const,
+			fn: () =>
+				measureRerenderTime(
+					<RadioButtonList options={mockOptionsConfig} selected="1" />,
+					(container) => {
+						container.rerender(<RadioButtonList options={mockOptionsConfig} selected="2" />);
+					},
+					50,
+				),
+		},
+		{
+			name: 'Event Response',
+			type: 'event' as const,
+			fn: () =>
+				measureEventResponseTime(
+					<RadioButtonList options={mockOptionsConfig} onChange={() => {}} />,
+					(container) => {
+						const firstRadio = container.container.querySelector('[class*="wrapper"]');
+						if (firstRadio) fireEvent.click(firstRadio);
+					},
+					50,
+				),
+		},
+		{
+			name: 'Memory',
+			type: 'memory' as const,
+			fn: () => measureMemoryDelta(<RadioButtonList options={mockOptionsConfig} />, 10),
+		},
+	],
+};

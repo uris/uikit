@@ -1,5 +1,5 @@
 import React, { useMemo } from 'react';
-import { useTheme } from 'styled-components';
+import { useTheme } from '../../hooks';
 
 export interface DocsProps {
 	type?: 'pdf' | 'docx' | 'text' | 'not supported';

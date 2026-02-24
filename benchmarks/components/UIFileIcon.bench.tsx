@@ -46,3 +46,31 @@ describe('UIFileIcon Component Benchmarks', () => {
 		{ iterations: 3 },
 	);
 });
+
+export const uiFileIconBenchmarkConfig = {
+	componentName: 'UIFileIcon',
+	tests: [
+		{
+			name: 'Mount Time',
+			type: 'mount' as const,
+			fn: () => measureMountTime(<UIFileIcon filename="test.txt" />, 50),
+		},
+		{
+			name: 'Re-render',
+			type: 'rerender' as const,
+			fn: () =>
+				measureRerenderTime(
+					<UIFileIcon filename="test.txt" />,
+					(container) => {
+						container.rerender(<UIFileIcon filename="document.pdf" />);
+					},
+					50,
+				),
+		},
+		{
+			name: 'Memory',
+			type: 'memory' as const,
+			fn: () => measureMemoryDelta(<UIFileIcon filename="test.pdf" />, 10),
+		},
+	],
+};

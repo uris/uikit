@@ -46,3 +46,31 @@ describe('Logos Component Benchmarks', () => {
 		{ iterations: 3 },
 	);
 });
+
+export const logosBenchmarkConfig = {
+	componentName: 'Logos',
+	tests: [
+		{
+			name: 'Mount Time',
+			type: 'mount' as const,
+			fn: () => measureMountTime(<Logos type="default" />, 50),
+		},
+		{
+			name: 'Re-render',
+			type: 'rerender' as const,
+			fn: () =>
+				measureRerenderTime(
+					<Logos type="default" />,
+					(container) => {
+						container.rerender(<Logos type="alternate" />);
+					},
+					50,
+				),
+		},
+		{
+			name: 'Memory',
+			type: 'memory' as const,
+			fn: () => measureMemoryDelta(<Logos type="default" />, 10),
+		},
+	],
+};

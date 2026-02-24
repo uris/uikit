@@ -91,3 +91,48 @@ describe('UIButton Component Benchmarks', () => {
 		{ iterations: 3 },
 	);
 });
+
+export const uiButtonBenchmarkConfig = {
+	componentName: 'UIButton',
+	tests: [
+		{
+			name: 'Mount Time',
+			type: 'mount' as const,
+			fn: () => measureMountTime(<UIButton label="Click Me" />, 50),
+		},
+		{
+			name: 'State Change Re-render',
+			type: 'rerender' as const,
+			fn: () =>
+				measureRerenderTime(
+					<UIButton label="Button" state="normal" />,
+					(container) => {
+						container.rerender(<UIButton label="Button" state="disabled" />);
+					},
+					50,
+				),
+		},
+		{
+			name: 'Click Event',
+			type: 'event' as const,
+			fn: () =>
+				measureEventResponseTime(
+					<UIButton label="Click" onClick={() => {}} />,
+					(container) => {
+						const button = container.container.querySelector('[class*="button"]');
+						if (button) fireEvent.click(button);
+					},
+					50,
+				),
+		},
+		{
+			name: 'Memory',
+			type: 'memory' as const,
+			fn: () =>
+				measureMemoryDelta(
+					<UIButton label="Test" iconLeft="check" count={5} />,
+					10,
+				),
+		},
+	],
+};

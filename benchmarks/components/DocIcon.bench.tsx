@@ -46,3 +46,31 @@ describe('DocIcon Component Benchmarks', () => {
 		{ iterations: 3 },
 	);
 });
+
+export const docIconBenchmarkConfig = {
+	componentName: 'DocIcon',
+	tests: [
+		{
+			name: 'Mount Time',
+			type: 'mount' as const,
+			fn: () => measureMountTime(<DocIcon type="pdf" />, 50),
+		},
+		{
+			name: 'Re-render',
+			type: 'rerender' as const,
+			fn: () =>
+				measureRerenderTime(
+					<DocIcon type="pdf" />,
+					(container) => {
+						container.rerender(<DocIcon type="xls" />);
+					},
+					50,
+				),
+		},
+		{
+			name: 'Memory',
+			type: 'memory' as const,
+			fn: () => measureMemoryDelta(<DocIcon type="pdf" />, 10),
+		},
+	],
+};

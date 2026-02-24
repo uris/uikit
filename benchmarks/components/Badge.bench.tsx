@@ -62,3 +62,31 @@ describe('Badge Component Benchmarks', () => {
 		{ iterations: 3 },
 	);
 });
+
+export const badgeBenchmarkConfig = {
+	componentName: 'Badge',
+	tests: [
+		{
+			name: 'Mount Time',
+			type: 'mount' as const,
+			fn: () => measureMountTime(<Badge count={5} />, 50),
+		},
+		{
+			name: 'Re-render',
+			type: 'rerender' as const,
+			fn: () =>
+				measureRerenderTime(
+					<Badge count={5} />,
+					(container) => {
+						container.rerender(<Badge count={99} />);
+					},
+					50,
+				),
+		},
+		{
+			name: 'Memory',
+			type: 'memory' as const,
+			fn: () => measureMemoryDelta(<Badge count={42} />, 10),
+		},
+	],
+};

@@ -55,3 +55,31 @@ describe('Icon Performance Benchmarks', () => {
 		{ iterations: 3 },
 	);
 });
+
+export const iconBenchmarkConfig = {
+	componentName: 'Icon',
+	tests: [
+		{
+			name: 'Mount Time',
+			type: 'mount' as const,
+			fn: () => measureMountTime(<Icon name="home" size={22} />, 50),
+		},
+		{
+			name: 'Re-render',
+			type: 'rerender' as const,
+			fn: () =>
+				measureRerenderTime(
+					<Icon name="home" size={22} />,
+					(container) => {
+						container.rerender(<Icon name="search" size={22} />);
+					},
+					50,
+				),
+		},
+		{
+			name: 'Memory',
+			type: 'memory' as const,
+			fn: () => measureMemoryDelta(<Icon name="home" />, 10),
+		},
+	],
+};

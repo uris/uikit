@@ -49,3 +49,31 @@ describe('UILabel Component Benchmarks', () => {
 		{ iterations: 3 },
 	);
 });
+
+export const uiLabelBenchmarkConfig = {
+	componentName: 'UILabel',
+	tests: [
+		{
+			name: 'Mount Time',
+			type: 'mount' as const,
+			fn: () => measureMountTime(<UILabel text="Label" />, 50),
+		},
+		{
+			name: 'Re-render',
+			type: 'rerender' as const,
+			fn: () =>
+				measureRerenderTime(
+					<UILabel text="Initial" />,
+					(container) => {
+						container.rerender(<UILabel text="Updated Label Text" />);
+					},
+					50,
+				),
+		},
+		{
+			name: 'Memory',
+			type: 'memory' as const,
+			fn: () => measureMemoryDelta(<UILabel text="Test Label" />, 10),
+		},
+	],
+};

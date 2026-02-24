@@ -57,3 +57,33 @@ describe('EditorButtonBar Component Benchmarks', () => {
 		{ iterations: 3 },
 	);
 });
+
+export const editorButtonBarBenchmarkConfig = {
+	componentName: 'EditorButtonBar',
+	tests: [
+		{
+			name: 'Mount Time',
+			type: 'mount' as const,
+			fn: () => measureMountTime(<EditorButtonBar />, 50),
+		},
+		{
+			name: 'Re-render',
+			type: 'rerender' as const,
+			fn: () =>
+				measureRerenderTime(
+					<EditorButtonBar buttons={['bold']} />,
+					(container) => {
+						container.rerender(
+							<EditorButtonBar buttons={['bold', 'italic', 'underline']} />,
+						);
+					},
+					50,
+				),
+		},
+		{
+			name: 'Memory',
+			type: 'memory' as const,
+			fn: () => measureMemoryDelta(<EditorButtonBar buttons={['bold', 'italic']} />, 10),
+		},
+	],
+};

@@ -73,3 +73,50 @@ describe('DropDown Component Benchmarks', () => {
 		{ iterations: 3 },
 	);
 });
+
+const mockOptionsConfig = [
+	{ label: 'Option 1', value: '1' },
+	{ label: 'Option 2', value: '2' },
+	{ label: 'Option 3', value: '3' },
+];
+
+export const dropDownBenchmarkConfig = {
+	componentName: 'DropDown',
+	tests: [
+		{
+			name: 'Mount Time',
+			type: 'mount' as const,
+			fn: () => measureMountTime(<DropDown options={mockOptionsConfig} />, 50),
+		},
+		{
+			name: 'Re-render',
+			type: 'rerender' as const,
+			fn: () =>
+				measureRerenderTime(
+					<DropDown options={mockOptionsConfig} selected="1" />,
+					(container) => {
+						container.rerender(<DropDown options={mockOptionsConfig} selected="2" />);
+					},
+					50,
+				),
+		},
+		{
+			name: 'Event Response',
+			type: 'event' as const,
+			fn: () =>
+				measureEventResponseTime(
+					<DropDown options={mockOptionsConfig} onChange={() => {}} />,
+					(container) => {
+						const dropdown = container.container.querySelector('[class*="wrapper"]');
+						if (dropdown) fireEvent.click(dropdown);
+					},
+					50,
+				),
+		},
+		{
+			name: 'Memory',
+			type: 'memory' as const,
+			fn: () => measureMemoryDelta(<DropDown options={mockOptionsConfig} />, 10),
+		},
+	],
+};

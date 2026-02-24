@@ -70,3 +70,44 @@ describe('Switch Component Benchmarks', () => {
 		{ iterations: 3 },
 	);
 });
+
+export const switchBenchmarkConfig = {
+	componentName: 'Switch',
+	tests: [
+		{
+			name: 'Mount Time',
+			type: 'mount' as const,
+			fn: () => measureMountTime(<Switch />, 50),
+		},
+		{
+			name: 'Re-render',
+			type: 'rerender' as const,
+			fn: () =>
+				measureRerenderTime(
+					<Switch state={false} />,
+					(container) => {
+						container.rerender(<Switch state={true} />);
+					},
+					50,
+				),
+		},
+		{
+			name: 'Event Response',
+			type: 'event' as const,
+			fn: () =>
+				measureEventResponseTime(
+					<Switch onChange={() => {}} />,
+					(container) => {
+						const switchEl = container.container.querySelector('[class*="wrapper"]');
+						if (switchEl) fireEvent.click(switchEl);
+					},
+					50,
+				),
+		},
+		{
+			name: 'Memory',
+			type: 'memory' as const,
+			fn: () => measureMemoryDelta(<Switch state />, 10),
+		},
+	],
+};

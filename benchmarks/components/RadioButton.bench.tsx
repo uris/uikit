@@ -66,3 +66,44 @@ describe('RadioButton Component Benchmarks', () => {
 		{ iterations: 3 },
 	);
 });
+
+export const radioButtonBenchmarkConfig = {
+	componentName: 'RadioButton',
+	tests: [
+		{
+			name: 'Mount Time',
+			type: 'mount' as const,
+			fn: () => measureMountTime(<RadioButton label="Option 1" />, 50),
+		},
+		{
+			name: 'Re-render',
+			type: 'rerender' as const,
+			fn: () =>
+				measureRerenderTime(
+					<RadioButton label="Option" selected={false} />,
+					(container) => {
+						container.rerender(<RadioButton label="Option" selected={true} />);
+					},
+					50,
+				),
+		},
+		{
+			name: 'Event Response',
+			type: 'event' as const,
+			fn: () =>
+				measureEventResponseTime(
+					<RadioButton label="Option" onChange={() => {}} />,
+					(container) => {
+						const radio = container.container.querySelector('[class*="wrapper"]');
+						if (radio) fireEvent.click(radio);
+					},
+					50,
+				),
+		},
+		{
+			name: 'Memory',
+			type: 'memory' as const,
+			fn: () => measureMemoryDelta(<RadioButton label="Option 1" />, 10),
+		},
+	],
+};

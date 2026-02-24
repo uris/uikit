@@ -67,3 +67,49 @@ describe('Overlay Component Benchmarks', () => {
 		{ iterations: 3 },
 	);
 });
+
+export const overlayBenchmarkConfig = {
+	componentName: 'Overlay',
+	tests: [
+		{
+			name: 'Mount Time',
+			type: 'mount' as const,
+			fn: () =>
+				measureMountTime(
+					<Overlay show>
+						<div>Overlay Content</div>
+					</Overlay>,
+					50,
+				),
+		},
+		{
+			name: 'Re-render',
+			type: 'rerender' as const,
+			fn: () =>
+				measureRerenderTime(
+					<Overlay show={false}>
+						<div>Content</div>
+					</Overlay>,
+					(container) => {
+						container.rerender(
+							<Overlay show={true}>
+								<div>Content</div>
+							</Overlay>,
+						);
+					},
+					50,
+				),
+		},
+		{
+			name: 'Memory',
+			type: 'memory' as const,
+			fn: () =>
+				measureMemoryDelta(
+					<Overlay show>
+						<div>Overlay Content</div>
+					</Overlay>,
+					10,
+				),
+		},
+	],
+};

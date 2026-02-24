@@ -49,3 +49,31 @@ describe('ErrorSummary Component Benchmarks', () => {
 		{ iterations: 3 },
 	);
 });
+
+export const errorSummaryBenchmarkConfig = {
+	componentName: 'ErrorSummary',
+	tests: [
+		{
+			name: 'Mount Time',
+			type: 'mount' as const,
+			fn: () => measureMountTime(<ErrorSummary message="Error message" />, 50),
+		},
+		{
+			name: 'Re-render',
+			type: 'rerender' as const,
+			fn: () =>
+				measureRerenderTime(
+					<ErrorSummary message="Initial error" />,
+					(container) => {
+						container.rerender(<ErrorSummary message="Updated error" />);
+					},
+					50,
+				),
+		},
+		{
+			name: 'Memory',
+			type: 'memory' as const,
+			fn: () => measureMemoryDelta(<ErrorSummary message="Error message" />, 10),
+		},
+	],
+};

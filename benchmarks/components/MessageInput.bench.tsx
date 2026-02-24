@@ -1,7 +1,7 @@
 import { describe, bench } from 'vitest';
 import React from 'react';
 import { fireEvent } from '@testing-library/react';
-import { MessageInput } from '../../src/uikit/MessageInput/MessageInput';
+import { MessageInput } from '../../src/uikit/MessageInput/InputField/MessageInput';
 import {
 	measureMountTime,
 	measureRerenderTime,
@@ -66,3 +66,44 @@ describe('MessageInput Component Benchmarks', () => {
 		{ iterations: 3 },
 	);
 });
+
+export const messageInputBenchmarkConfig = {
+	componentName: 'MessageInput',
+	tests: [
+		{
+			name: 'Mount Time',
+			type: 'mount' as const,
+			fn: () => measureMountTime(<MessageInput />, 50),
+		},
+		{
+			name: 'Re-render',
+			type: 'rerender' as const,
+			fn: () =>
+				measureRerenderTime(
+					<MessageInput value="Initial" />,
+					(container) => {
+						container.rerender(<MessageInput value="Updated message" />);
+					},
+					50,
+				),
+		},
+		{
+			name: 'Event Response',
+			type: 'event' as const,
+			fn: () =>
+				measureEventResponseTime(
+					<MessageInput onFocus={() => {}} />,
+					(container) => {
+						const input = container.container.querySelector('textarea, input');
+						if (input) fireEvent.focus(input);
+					},
+					50,
+				),
+		},
+		{
+			name: 'Memory',
+			type: 'memory' as const,
+			fn: () => measureMemoryDelta(<MessageInput />, 10),
+		},
+	],
+};

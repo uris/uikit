@@ -72,3 +72,41 @@ describe('AvatarGroup Component Benchmarks', () => {
 		{ iterations: 3 },
 	);
 });
+
+const mockAvatars = [
+	{ first: 'John', last: 'Doe', email: 'john@example.com' },
+	{ first: 'Jane', last: 'Smith', email: 'jane@example.com' },
+	{ first: 'Bob', last: 'Johnson', email: 'bob@example.com' },
+];
+
+export const avatarGroupBenchmarkConfig = {
+	componentName: 'AvatarGroup',
+	tests: [
+		{
+			name: 'Mount Time',
+			type: 'mount' as const,
+			fn: () => measureMountTime(<AvatarGroup avatars={mockAvatars} />, 50),
+		},
+		{
+			name: 'Re-render',
+			type: 'rerender' as const,
+			fn: () =>
+				measureRerenderTime(
+					<AvatarGroup avatars={mockAvatars} />,
+					(container) => {
+						const updatedAvatars = [
+							...mockAvatars,
+							{ first: 'New', last: 'User', email: 'new@example.com' },
+						];
+						container.rerender(<AvatarGroup avatars={updatedAvatars} />);
+					},
+					50,
+				),
+		},
+		{
+			name: 'Memory',
+			type: 'memory' as const,
+			fn: () => measureMemoryDelta(<AvatarGroup avatars={mockAvatars} />, 10),
+		},
+	],
+};

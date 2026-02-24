@@ -63,3 +63,44 @@ describe('Pager Component Benchmarks', () => {
 		{ iterations: 3 },
 	);
 });
+
+export const pagerBenchmarkConfig = {
+	componentName: 'Pager',
+	tests: [
+		{
+			name: 'Mount Time',
+			type: 'mount' as const,
+			fn: () => measureMountTime(<Pager total={100} current={1} />, 50),
+		},
+		{
+			name: 'Re-render',
+			type: 'rerender' as const,
+			fn: () =>
+				measureRerenderTime(
+					<Pager total={100} current={1} />,
+					(container) => {
+						container.rerender(<Pager total={100} current={5} />);
+					},
+					50,
+				),
+		},
+		{
+			name: 'Event Response',
+			type: 'event' as const,
+			fn: () =>
+				measureEventResponseTime(
+					<Pager total={100} current={1} onChange={() => {}} />,
+					(container) => {
+						const nextButton = container.container.querySelector('[aria-label*="next"], [class*="next"]');
+						if (nextButton) fireEvent.click(nextButton);
+					},
+					50,
+				),
+		},
+		{
+			name: 'Memory',
+			type: 'memory' as const,
+			fn: () => measureMemoryDelta(<Pager total={100} current={1} />, 10),
+		},
+	],
+};
