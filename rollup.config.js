@@ -1,12 +1,12 @@
 import babel from '@rollup/plugin-babel';
 import commonjs from '@rollup/plugin-commonjs';
 import resolve from '@rollup/plugin-node-resolve';
-import replace from '@rollup/plugin-replace';
 import typescript from '@rollup/plugin-typescript';
 import url from '@rollup/plugin-url';
 import svgr from '@svgr/rollup';
 import peerDepsExternal from 'rollup-plugin-peer-deps-external';
 import postcss from 'rollup-plugin-postcss';
+import stripCode from 'rollup-plugin-strip-code';
 import packageJson from './package.json';
 
 export default {
@@ -25,12 +25,12 @@ export default {
 	],
 	external: ['react', 'react-dom', 'styled-components', 'motion'],
 	plugins: [
+		stripCode({
+			start_comment: 'START.DEBUG',
+			end_comment: 'END.DEBUG',
+		}),
 		peerDepsExternal(),
 		resolve({ extensions: ['.js', '.ts', '.tsx'] }),
-		replace({
-			'process.env.NODE_ENV': JSON.stringify('production'),
-			preventAssignment: true,
-		}),
 		commonjs(),
 		babel({
 			exclude: ['node_modules/**', 'src/stories/**'],

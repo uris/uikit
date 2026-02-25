@@ -1,7 +1,7 @@
 import { useEffect, useRef } from 'react';
 import { debug } from '../util/utils';
 
-export function useTrackReRenders(props: any, componentName = 'Component') {
+export function useTrackRenders(props: any, componentName = 'Component') {
 	const prev = useRef<
 		{ props: any; mount: boolean; unmount: boolean } | undefined
 	>({

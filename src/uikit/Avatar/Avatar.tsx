@@ -1,6 +1,6 @@
 import { type Transition, type Variants, motion } from 'motion/react';
 import React, { useCallback, useMemo, useRef } from 'react';
-import { useTrackReRenders } from '../../hooks/useTrackReRenders';
+import { useTrackRenders } from '../../hooks/useTrackRenders';
 import { type ToolTip, ToolTipType } from '../sharedTypes';
 import css from './Avatar.module.css';
 
@@ -102,8 +102,9 @@ export const Avatar = React.memo((props: AvatarProps) => {
 		onToolTip(null);
 	}, [onToolTip]);
 
-	// debug renders - place before render function
-	useTrackReRenders(props, 'Avatar');
+	/* START.DEBUG */
+	useTrackRenders(props, 'Avatar');
+	/* END.DEBUG */
 
 	return (
 		<motion.div
