@@ -1,7 +1,7 @@
 import { type Transition, type Variants, motion } from 'motion/react';
 import React, { useCallback, useMemo, useRef } from 'react';
 import { useTrackRenders } from '../../hooks/useTrackRenders';
-import { type ToolTip, ToolTipType } from '../sharedTypes';
+import type { ToolTip } from '../sharedTypes';
 import css from './Avatar.module.css';
 
 export interface AvatarProps {
@@ -71,6 +71,20 @@ export const Avatar = React.memo((props: AvatarProps) => {
 		[firstOnly, image, initials],
 	);
 
+	// handle mouse enter
+	const onMouseEnter = useCallback(
+		(event: React.MouseEvent<HTMLDivElement>) => {
+			const payload = { label: first };
+			onToolTip({ payload, event });
+		},
+		[first, onToolTip],
+	);
+
+	// handle mouse leave
+	const onMouseLeave = useCallback(() => {
+		onToolTip(null);
+	}, [onToolTip]);
+
 	// memo css vars
 	const avatarVars = useMemo(() => {
 		return {
@@ -84,23 +98,6 @@ export const Avatar = React.memo((props: AvatarProps) => {
 			'--avatar-font-size': `${fontSize}px`,
 		} as React.CSSProperties;
 	}, [size, frame, border, color, bgColor, borderColor, bgImage, fontSize]);
-
-	const onMouseEnter = useCallback(
-		(e: React.MouseEvent<HTMLDivElement>) => {
-			const tip: ToolTip = {
-				type: ToolTipType.button,
-				payload: { label: first },
-				event: e,
-				ref,
-			};
-			onToolTip(tip);
-		},
-		[first, onToolTip],
-	);
-
-	const onMouseLeave = useCallback(() => {
-		onToolTip(null);
-	}, [onToolTip]);
 
 	/* START.DEBUG */
 	useTrackRenders(props, 'Avatar');

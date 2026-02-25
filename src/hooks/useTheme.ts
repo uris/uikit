@@ -1,11 +1,9 @@
 import { useEffect, useState } from 'react';
-import { type MayaTheme, useMayaTheme } from '../theme/useMayaTheme';
+import { type MayaTheme, darkTheme, lightTheme } from '../theme/themes';
 
 export function useTheme() {
-	const themes = useMayaTheme();
-	const [theme, setTheme] = useState<MayaTheme>(themes.lightTheme);
+	const [theme, setTheme] = useState<MayaTheme>(lightTheme);
 
-	// biome-ignore lint/correctness/useExhaustiveDependencies: set once on mount
 	useEffect(() => {
 		const observer = new MutationObserver((mutations) => {
 			for (const mutation of mutations) {
@@ -14,9 +12,15 @@ export function useTheme() {
 					mutation.attributeName === 'data-theme'
 				) {
 					const newTheme = document.documentElement.dataset.theme;
-					if (!newTheme || newTheme === '') setTheme(themes.lightTheme);
-					else if (newTheme.includes('light')) setTheme(themes.lightTheme);
-					else setTheme(themes.darkTheme);
+					if (
+						!newTheme ||
+						newTheme === '' ||
+						newTheme.includes(lightTheme.name)
+					)
+						setTheme(lightTheme);
+					else {
+						setTheme(darkTheme);
+					}
 				}
 			}
 		});

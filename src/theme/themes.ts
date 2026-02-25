@@ -28,10 +28,3 @@ export const darkTheme: MayaTheme = {
 	type,
 	corners,
 };
-
-export function useMayaTheme(): {
-	darkTheme: MayaTheme;
-	lightTheme: MayaTheme;
-} {
-	return { darkTheme, lightTheme };
-}

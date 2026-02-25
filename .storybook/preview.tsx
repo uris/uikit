@@ -3,6 +3,7 @@ import React, { useEffect } from 'react';
 import './fonts.css';
 import '../src/theme/colors/colors.css';
 import '../src/theme/type/type.css';
+import { darkTheme, lightTheme, useMayaTheme } from '../src';
 
 const preview: Preview = {
 	globalTypes: {
@@ -15,8 +16,12 @@ const preview: Preview = {
 				icon: 'circlehollow',
 				// Array of options
 				items: [
-					{ value: 'light', icon: 'circlehollow', title: 'Light theme' },
-					{ value: 'dark', icon: 'circle', title: 'Dark theme' },
+					{
+						value: lightTheme.name,
+						icon: 'circlehollow',
+						title: 'Light theme',
+					},
+					{ value: darkTheme.name, icon: 'circle', title: 'Dark theme' },
 				],
 			},
 		},
@@ -24,11 +29,10 @@ const preview: Preview = {
 	decorators: [
 		(Story, context) => {
 			const selectedTheme = context.globals.theme;
+			const { setTheme } = useMayaTheme();
 
 			// Update data-theme attribute for CSS variables
-			useEffect(() => {
-				document.documentElement.dataset.theme = selectedTheme;
-			}, [selectedTheme]);
+			useEffect(() => setTheme(selectedTheme), [selectedTheme, setTheme]);
 
 			return <Story />;
 		},

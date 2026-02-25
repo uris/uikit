@@ -2,7 +2,6 @@ export type { ToolTip, ToolTipInfo } from './uikit/sharedTypes';
 export { ToolTipType } from './uikit/sharedTypes';
 
 export {
-	useMayaTheme,
 	light,
 	dark,
 	lightTheme,
@@ -14,7 +13,7 @@ export type {
 	Type,
 	Corners,
 } from './theme/index';
-export { useTheme } from './hooks/index';
+export { useTheme, useMayaTheme } from './hooks/index';
 
 export { Avatar } from './uikit/Avatar/index';
 export type { AvatarProps } from './uikit/Avatar/index';

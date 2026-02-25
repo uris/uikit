@@ -95,7 +95,7 @@
 
 /* Light theme colors */
 :root,
-[data-theme="light"] {
+[data-theme="lightMode"] {
 	--array-land: #e0ffb7;
 	--array-land-label: #56c900;
 	--array-magenta: #ffdcef;
@@ -164,7 +164,7 @@
 }
 
 /* Dark theme colors */
-[data-theme="dark"] {
+[data-theme="darkMode"] {
 	--array-land: #e0ffb7;
 	--array-land-label: #56c900;
 	--array-magenta: #ffdcef;

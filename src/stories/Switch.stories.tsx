@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { fn } from 'storybook/test';
-import { lightTheme } from '../theme/useMayaTheme';
+import { lightTheme } from '../theme/themes';
 import { FlexDiv } from '../uikit/FlexDiv/FlexDiv';
 import { Switch } from '../uikit/Switch/Switch';
 

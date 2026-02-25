@@ -1,9 +1,8 @@
 export {
-	useMayaTheme,
 	type MayaTheme,
 	darkTheme,
 	lightTheme,
-} from './useMayaTheme';
+} from './themes';
 export type { Colors } from './colors/types';
 export type { Type } from './type/types';
 export type { Corners } from './corners/types';
