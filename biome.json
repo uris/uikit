@@ -38,6 +38,10 @@
 			},
 			"style": {
 				"useImportType": "error"
+			},
+			"a11y": {
+				"useSemanticElements": "off",
+				"useValidAriaRole": "error"
 			}
 		}
 	},

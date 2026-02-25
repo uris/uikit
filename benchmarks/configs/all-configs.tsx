@@ -1384,7 +1384,7 @@ export const allBenchmarkConfigs = [
 	// progressConfig,
 	// radioButtonConfig,
 	// radioButtonListConfig,
-	// sliderConfig,
+	sliderConfig,
 	// spacerConfig,
 	switchConfig,
 	// tabBarConfig,

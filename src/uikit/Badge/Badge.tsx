@@ -35,7 +35,12 @@ export const Badge = React.memo((props: BadgeProps) => {
 		return null;
 
 	return (
-		<div className={css.badge} style={cssVars}>
+		<div
+			className={css.badge}
+			style={cssVars}
+			role={'status'}
+			aria-live={'polite'}
+		>
 			{displayCount}
 		</div>
 	);

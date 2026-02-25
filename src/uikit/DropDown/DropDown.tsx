@@ -16,6 +16,7 @@ export type DropDownOption = {
 };
 
 export interface DropDownProps {
+	name?:string;
 	options?: DropDownOption[];
 	selectedIndex?: number;
 	selectedValue?: string;
@@ -44,6 +45,7 @@ export interface DropDownProps {
 export const DropDown = React.memo((props: DropDownProps) => {
 	const theme = useTheme();
 	const {
+		name = "Select",
 		width = '100%',
 		height = 'auto',
 		selectedIndex = 0,
@@ -205,7 +207,7 @@ export const DropDown = React.memo((props: DropDownProps) => {
 			'--dd-icon-size': `${iconSize}px`,
 			'--dd-color':
 				placeholder && index === 0
-					? 'var(--core-text-disabled)'
+					? 'var(--core-text-tertiary)'
 					: 'var(--core-text-primary)',
 		} as React.CSSProperties;
 	}, [
@@ -237,6 +239,7 @@ export const DropDown = React.memo((props: DropDownProps) => {
 				onFocus={handleFocus}
 				onMouseDown={handleMouseDown}
 				onChange={handleSelectChange}
+				aria-label={name}
 			>
 				{renderedOptions}
 			</select>
