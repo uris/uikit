@@ -84,6 +84,7 @@ export const CheckBox = React.memo((props: CheckBoxProps) => {
 			onClick={handleToggle}
 			onKeyDown={handleKeyDown}
 			tabIndex={disabled ? -1 : 0}
+			role={'checkbox'}
 			aria-checked={state === 'partial' ? 'mixed' : state}
 			aria-disabled={disabled}
 		>

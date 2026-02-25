@@ -79,9 +79,6 @@ export type { PagerProps } from './uikit/Pager';
 export { DoneCheck, ProgressIndicator } from './uikit/Progress';
 export type { DoneCheckProps, ProgressIndicatorProps } from './uikit/Progress';
 
-export { ProgressBar } from './uikit/ProgressBar';
-export type { ProgressBarProps, ProgressBarStep } from './uikit/ProgressBar';
-
 export { RadioButton } from './uikit/RadioButton';
 export type { RadioButtonProps, RadioButtonOption } from './uikit/RadioButton';
 

@@ -118,6 +118,8 @@ export const Avatar = React.memo((props: AvatarProps) => {
 			ref={ref}
 			onMouseEnter={onMouseEnter}
 			onMouseLeave={onMouseLeave}
+			role={'img'}
+			aria-label={`User Avatar - ${first} ${last}`}
 		>
 			<div className={css.user}>{displayContent}</div>
 		</motion.div>

@@ -110,6 +110,9 @@ export const Dot = React.memo((props: DotProps) => {
 					exit={'exit'}
 					transition={trans}
 					variants={variants}
+					role={"status"}
+					aria-live={"polite"}
+					aria-label={"Blue dot indicating active or new"}
 				>
 					<div className="dot" />
 				</motion.div>
