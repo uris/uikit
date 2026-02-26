@@ -1,5 +1,4 @@
-import { type Transition, type Variants, motion } from 'motion/react';
-import React, { useCallback, useMemo, useRef } from 'react';
+import React, { useCallback, useMemo } from 'react';
 import { useTrackRenders } from '../../hooks/useTrackRenders';
 import type { ToolTip } from '../sharedTypes';
 import css from './Avatar.module.css';
@@ -14,13 +13,12 @@ export interface AvatarProps {
 	color?: string;
 	borderColor?: string;
 	bgColor?: string;
-	variants?: Variants;
-	transition?: Transition;
-	initial?: string;
-	animate?: string;
-	exit?: string;
 	firstOnly?: boolean;
+	fontSize?: number | 'auto';
 	onToolTip?: (tip: ToolTip | null) => void;
+	onClick?: (e: React.MouseEvent<HTMLDivElement>) => void;
+	onKeyDown?: (e: React.KeyboardEvent<HTMLDivElement>) => void;
+	tabIndex?: number;
 }
 
 export const Avatar = React.memo((props: AvatarProps) => {
@@ -32,18 +30,15 @@ export const Avatar = React.memo((props: AvatarProps) => {
 		color = undefined,
 		borderColor = undefined,
 		bgColor = undefined,
-		variants = undefined,
-		transition = undefined,
-		animate = undefined,
-		initial = undefined,
-		exit = undefined,
 		firstOnly = false,
+		onClick = undefined,
+		onKeyDown = undefined,
+		fontSize = undefined,
 		onToolTip = () => null,
 		size = 34,
 		frame = 34,
+		tabIndex = 0,
 	} = props;
-
-	const ref = useRef<HTMLDivElement>(null);
 
 	// memo initials computation
 	const initials = useMemo(
@@ -58,12 +53,16 @@ export const Avatar = React.memo((props: AvatarProps) => {
 	}, [firstOnly, image]);
 
 	// calc and memo font size
-	const fontSize = useMemo(() => {
-		let fSize = Math.round(frame / 3);
-		fSize = Math.min(fSize, 24);
-		fSize = Math.max(fSize, 14);
-		return fSize;
-	}, [frame]);
+	const setFontSize = useMemo(() => {
+		if (fontSize === undefined) return 'inherit';
+		if (fontSize === 'auto') {
+			let fSize = Math.round(frame / 3);
+			fSize = Math.min(fSize, 24);
+			fSize = Math.max(fSize, 14);
+			return `${fSize}px`;
+		}
+		return `${fontSize}px`;
+	}, [frame, fontSize]);
 
 	// memo display content
 	const displayContent = useMemo(
@@ -95,30 +94,29 @@ export const Avatar = React.memo((props: AvatarProps) => {
 			'--avatar-bg-color': bgColor ?? 'var(--core-surface-secondary)',
 			'--avatar-border-color': borderColor ?? 'var(--core-surface-primary)',
 			'--avatar-bg-image': `${bgImage}`,
-			'--avatar-font-size': `${fontSize}px`,
+			'--avatar-font-size': setFontSize,
 		} as React.CSSProperties;
-	}, [size, frame, border, color, bgColor, borderColor, bgImage, fontSize]);
+	}, [size, frame, border, color, bgColor, borderColor, bgImage, setFontSize]);
 
 	/* START.DEBUG */
 	useTrackRenders(props, 'Avatar');
 	/* END.DEBUG */
 
 	return (
-		<motion.div
+		<div
 			className={css.wrapper}
 			style={avatarVars}
-			variants={variants}
-			transition={transition}
-			initial={initial}
-			animate={animate}
-			exit={exit}
-			ref={ref}
 			onMouseEnter={onMouseEnter}
 			onMouseLeave={onMouseLeave}
-			role={'img'}
-			aria-label={`User Avatar - ${first} ${last}`}
+			onClick={onClick}
+			onKeyDown={onKeyDown}
+			role={onClick ? 'button' : 'img'}
+			tabIndex={onClick ? tabIndex : undefined}
+			aria-label={`User Avatar - ${first}`}
 		>
-			<div className={css.user}>{displayContent}</div>
-		</motion.div>
+			<div aria-hidden={true} className={css.user}>
+				{displayContent}
+			</div>
+		</div>
 	);
 });

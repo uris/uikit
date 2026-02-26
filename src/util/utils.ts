@@ -80,3 +80,14 @@ export function setProps(props: any, mount = false, unmount = false) {
 	if (process.env.NODE_ENV === 'test') return; // exit if running tests
 	return { props, mount, unmount };
 }
+
+/**
+ * convert hex to rgb
+ */
+export const hexToRgb = (hex: string | undefined) => {
+	if (!hex) return undefined;
+	const r = Number.parseInt(hex.slice(1, 3), 16);
+	const g = Number.parseInt(hex.slice(3, 5), 16);
+	const b = Number.parseInt(hex.slice(5, 7), 16);
+	return `"rgb(${r}, ${g}, ${b})"`;
+};
