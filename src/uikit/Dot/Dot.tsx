@@ -1,34 +1,7 @@
-import {
-	AnimatePresence,
-	type Transition,
-	type Variants,
-	motion,
-} from 'motion/react';
+import { AnimatePresence, motion } from 'motion/react';
 import React, { useMemo } from 'react';
 import css from './Dot.module.css';
-
-export interface DotProps {
-	size?: number;
-	topOffset?: number;
-	rightOffset?: number;
-	border?: number;
-	position?: 'inline' | 'corner';
-	state?: 'red' | 'yellow' | 'green' | 'blue' | 'grey';
-	color?: string;
-	transition?: Transition;
-	motionValues?: Variants;
-	show?: boolean;
-}
-
-// Extract default variants
-const DEFAULT_VARIANTS: Variants = {
-	initial: { opacity: 0 },
-	animate: { opacity: 1 },
-	exit: { opacity: 0 },
-};
-
-// Extract default transition
-const DEFAULT_TRANSITION: Transition = { ease: 'easeInOut', duration: 0.5 };
+import { DEFAULT_TRANSITION, DEFAULT_VARIANTS, type DotProps } from './_types';
 
 export const Dot = React.memo((props: DotProps) => {
 	const {

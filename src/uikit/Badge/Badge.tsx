@@ -1,11 +1,6 @@
 import React, { useMemo } from 'react';
 import css from './Badge.module.css';
-
-export interface BadgeProps {
-	count?: number | string;
-	hideNull?: boolean;
-	variant?: 'light' | 'dark';
-}
+import type { BadgeProps } from './_types';
 
 export const Badge = React.memo((props: BadgeProps) => {
 	const { count, variant = 'dark', hideNull = true } = props;

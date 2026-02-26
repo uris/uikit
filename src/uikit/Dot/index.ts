@@ -1,1 +1,2 @@
-export { Dot, type DotProps } from './Dot';
+export { Dot } from './Dot';
+export type { DotProps } from './_types';

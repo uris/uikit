@@ -1,8 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
-import { fn } from 'storybook/test';
-import { expect, userEvent, within } from 'storybook/test';
-import { Avatar } from '../uikit/Avatar/Avatar';
-import { FlexDiv } from '../uikit/FlexDiv/FlexDiv';
+import { expect, fn, userEvent, within } from 'storybook/test';
+import { Avatar } from '../uikit/Avatar';
+import { FlexDiv } from '../uikit/FlexDiv';
 import { hexToRgb } from '../util/utils';
 
 const meta: Meta<typeof Avatar> = {

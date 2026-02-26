@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import type { AvatarInfo } from 'src/uikit/AvatarGroup';
-import { AvatarGroup } from '../uikit/AvatarGroup/AvatarGroup';
-import { FlexDiv } from '../uikit/FlexDiv/FlexDiv';
+import { AvatarGroup } from '../uikit/AvatarGroup';
+import { FlexDiv } from '../uikit/FlexDiv';
 
 const avatars: AvatarInfo[] = [
 	{
