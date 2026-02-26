@@ -1,26 +1,29 @@
 .wrapper {
 	composes: row from "../../util/flexBox.module.css";
+	composes: body-m-regular from "../../util/type.module.css";
 	position: relative;
 	min-height: var(--avatar-size);
 	min-width: var(--avatar-size);
 	height: var(--avatar-size);
 	width: var(--avatar-size);
+	border: 0;
+	outline: 0;
 }
 
 .user {
 	composes: row from "../../util/flexBox.module.css";
 	composes: body-m-regular from "../../util/type.module.css";
+	font-size: var(--avatar-font-size) !important;
 	min-height: var(--avatar-size);
 	min-width: var(--avatar-size);
 	height: var(--avatar-size);
 	width: var(--avatar-size);
-	font-size: var(--avatar-font-size);
 	line-height: 1em;
 	text-transform: uppercase;
 	border-radius: 100%;
 	border: var(--avatar-border) solid var(--avatar-border-color);
 	background-color: var(--avatar-bg-color);
-	color: var(--core-text-primary);
+	color: var(--avatar-color);
 	background-image: var(--avatar-bg-image);
 	background-size: cover;
 	cursor: pointer;
