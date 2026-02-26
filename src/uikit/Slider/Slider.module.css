@@ -1,6 +1,11 @@
 .wrapper {
 	position: relative;
-	composes: rowStart from "../../util/flexBox.module.css";
+	display: flex;
+	justify-content: flex-start;
+	align-items: center;
+	box-sizing: border-box;
+	padding: var(--slider-padding);
+	margin: 0;
 	width: var(--slider-width);
 	height: var(--slider-height);
 	min-height: var(--slider-touch-height);

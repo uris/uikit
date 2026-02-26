@@ -1,8 +1,11 @@
 import React, { useCallback, useEffect, useMemo, useRef } from 'react';
+import { useObserveResize } from '../../hooks/useObserveResize';
+import { useTrackRenders } from '../../hooks/useTrackRenders';
+import { debounce } from '../../util/debounce';
 import css from './Slider.module.css';
 
 export interface SliderProps {
-	initial?: number;
+	value?: number;
 	scaleMin?: number;
 	scaleMax?: number;
 	width?: number | string;
@@ -14,48 +17,71 @@ export interface SliderProps {
 	headColor?: string;
 	trackColor?: string;
 	progressColor?: string;
-	rounding?: number;
 	cursor?: 'default' | 'grab' | 'grabbing' | 'pointer';
-	state?: any[];
 	onChange?: (value: number, percent: number) => void;
 	onDragChange?: (value: number, percent: number) => void;
 }
 
 export const Slider = React.memo((props: SliderProps) => {
 	const {
-		initial = 25,
+		value = 25,
 		scaleMin = 0,
 		scaleMax = 100,
-		width = 100,
+		width,
 		height = 2,
 		touchHeight = 24,
 		trackHeadSize = 7,
 		headType = 'round',
 		trackHeadWidth = 4,
-		rounding = 2,
 		cursor = 'default',
 		headColor = 'var(--core-text-primary)',
 		trackColor = 'var(--core-surface-secondary)',
 		progressColor = 'var(--core-text-primary)',
-		state = [],
 		onChange = () => null,
 		onDragChange = () => null,
 	} = props;
 
+	// hook into the relevant on screen elements
 	const ref = useRef<HTMLDivElement>(null);
 	const track = useRef<HTMLDivElement>(null);
 	const head = useRef<HTMLDivElement>(null);
 
+	// tracking slider values via ref to avoid state issues from direct listeners
+	const absProgressRef = useRef<number>(value);
+	const relativeProgressRef = useRef<number>(value / scaleMax);
+	const didMount = useRef<boolean>(false);
+
+	// use resize observer to track changes to container size for responsive behavior
+	const size = useObserveResize(ref, { ignore: 'height' });
+
+	// use debounce to limit onChange calls
+	const debouncedOnChange = debounce((value: number, percent: number) => {
+		onChange(value, percent);
+	}, 0);
+
+	// set padding based on head size since dragging the head all the way to the edge will move it
+	// such that half the head would be outside the track constraints
+	const padding = useMemo(() => {
+		if (headType === 'none' || !trackHeadSize) return 0;
+		return trackHeadSize / 2;
+	}, [headType, trackHeadSize]);
+
 	// set the position of the track progress and track head
-	// based on the pixel position
-	const setTrackAndHead = useCallback((pixelPos: number) => {
-		const tr = track.current;
-		const hd = head.current;
-		if (tr && hd) {
-			tr.style.width = `${pixelPos}px`;
-			hd.style.left = `${pixelPos - hd.offsetWidth / 2}px`;
-		}
-	}, []);
+	// based on the pixel position / adjust for half size of the head = padding
+	const setTrackAndHead = useCallback(
+		(pixelPos: number, max = false) => {
+			const tr = track.current;
+			const hd = head.current;
+			let adjustment = 0;
+			if (pixelPos === 0) adjustment = padding;
+			if (max) adjustment = -padding;
+			if (tr && hd) {
+				tr.style.width = `${pixelPos}px`;
+				hd.style.left = `${pixelPos - padding + adjustment}px`;
+			}
+		},
+		[padding],
+	);
 
 	// set the initial position of the slider absolute value within scale
 	const initialProgress = useCallback(
@@ -64,33 +90,31 @@ export const Slider = React.memo((props: SliderProps) => {
 			const sliderWidth = ref.current.getBoundingClientRect().width;
 			let adjustedCurrent = current;
 			if (adjustedCurrent > scaleMax || adjustedCurrent < scaleMin) {
-				console.warn(
-					'Slider value outside scale range. Auto adjusting to mid point.',
-				);
+				console.warn('Slider outside range. Adjusted to mid point.');
 				adjustedCurrent = (scaleMax - scaleMin) / 2;
 			}
 			const normalized = (adjustedCurrent - scaleMin) / (scaleMax - scaleMin);
 			const pixelPos = normalized * sliderWidth;
-			setTrackAndHead(pixelPos);
+			absProgressRef.current = adjustedCurrent; // updated the progress value
+			relativeProgressRef.current = normalized; // updated the relative value
+			const max = relativeProgressRef.current === 1; // flag if at max value
+			setTrackAndHead(pixelPos, max);
 		},
 		[scaleMax, scaleMin, setTrackAndHead],
 	);
 
-	// based on x pos of a mouse drag/click, get the percent and normalized value of the slider
+	// based on x pos of a mouse drag/click, update the percent and normalized value of the slider
 	const progress = useCallback(
-		(posX: number): { value: number; percent: number } => {
+		(posX: number) => {
 			const el = ref?.current;
 			if (!el) return { value: 0, percent: 0 };
 			const rect = el.getBoundingClientRect();
 			const sliderWidth = rect.width;
-			const percent: number = posX / sliderWidth;
-			const value: number = scaleMin + percent * (scaleMax - scaleMin);
-			return {
-				value: Number.parseFloat(value.toFixed(rounding)),
-				percent: Number.parseFloat(percent.toFixed(rounding)),
-			};
+			relativeProgressRef.current = posX / sliderWidth;
+			absProgressRef.current =
+				scaleMin + relativeProgressRef.current * (scaleMax - scaleMin);
 		},
-		[rounding, scaleMax, scaleMin],
+		[scaleMax, scaleMin],
 	);
 
 	// take a mouse pos and sets the slider position accordingly
@@ -102,26 +126,28 @@ export const Slider = React.memo((props: SliderProps) => {
 			const rect = el.getBoundingClientRect();
 			const sliderWidth = rect.width;
 			let pos: number = e.clientX - rect.x;
-			if (pos > sliderWidth) pos = sliderWidth;
-			else if (pos < 0) pos = 0;
-			setTrackAndHead(pos);
+			if (pos > sliderWidth - padding) pos = sliderWidth;
+			else if (pos < padding) pos = 0;
+			const max = pos === sliderWidth;
+			setTrackAndHead(pos, max);
 			return pos;
 		},
-		[setTrackAndHead],
+		[setTrackAndHead, padding],
 	);
 
 	// on mouse move, push slider to the updated mouse position and trigger the update events
+	// use ref values in call back to avoid state issues
 	const handleMouseMove = useCallback(
 		(e: MouseEvent) => {
 			e.preventDefault();
 			const el = ref?.current;
 			if (el) {
 				const pos = updateSlider(e); // return new pixel pos and updates head/track
-				const sliderValues = progress(pos);
-				onChange(sliderValues.value, sliderValues.percent);
+				progress(pos); // update the slider progress
+				debouncedOnChange(absProgressRef.current, relativeProgressRef.current); // debounce updates
 			}
 		},
-		[onChange, progress, updateSlider],
+		[progress, updateSlider, debouncedOnChange],
 	);
 
 	// on mouse up, push slider to the updated mouse up position and trigger the update events
@@ -134,11 +160,20 @@ export const Slider = React.memo((props: SliderProps) => {
 			const el = ref?.current;
 			if (el) {
 				const pos = updateSlider(e); // return new pixel pos and updates head/track
-				const sliderValues = progress(pos);
-				onDragChange(sliderValues.value, sliderValues.percent);
+				progress(pos);
+				debouncedOnChange.cancel(); // cancel current debounce if any
+				onDragChange(absProgressRef.current, relativeProgressRef.current); // immediate update
+				onChange(absProgressRef.current, relativeProgressRef.current);
 			}
 		},
-		[handleMouseMove, progress, onDragChange, updateSlider],
+		[
+			handleMouseMove,
+			progress,
+			updateSlider,
+			debouncedOnChange,
+			onDragChange,
+			onChange,
+		],
 	);
 
 	// On mouse down push the progress of then slider to the mouse down point
@@ -152,9 +187,10 @@ export const Slider = React.memo((props: SliderProps) => {
 			const el = ref?.current;
 			if (el) {
 				const pos = updateSlider(e); // return new pixel pos and updates head/track
-				const sliderValues = progress(pos);
-				onChange(sliderValues.value, sliderValues.percent);
-				onDragChange(sliderValues.value, sliderValues.percent);
+				progress(pos);
+				debouncedOnChange.cancel(); // cancel current debounce if any
+				onChange(absProgressRef.current, relativeProgressRef.current); // immediate update
+				onDragChange(absProgressRef.current, relativeProgressRef.current);
 			}
 		},
 		[
@@ -164,39 +200,32 @@ export const Slider = React.memo((props: SliderProps) => {
 			onDragChange,
 			progress,
 			updateSlider,
+			debouncedOnChange,
 		],
 	);
 
-	// set the very first state of the slider - note the empty dependency
-	// ensuring the initial state will be applied only once on the component load
+	// on mount, set the initial position of the slider
+	useEffect(() => {
+		if (didMount.current && value === absProgressRef.current) return;
+		initialProgress(value);
+	}, [value, initialProgress]);
+
+	// set up slider
 	useEffect(() => {
 		const el = ref?.current;
-		if (el) {
-			el?.addEventListener('mousedown', handleMouseDown, false);
-			initialProgress(initial);
-		}
+		el?.addEventListener('mousedown', handleMouseDown, false);
 		return () => {
 			el?.removeEventListener('mousedown', handleMouseDown, false);
 		};
-	}, [initial, handleMouseDown, initialProgress]);
+	}, [handleMouseDown]);
 
-	// because we use addEventListener, need to refresh based on state updates,
-	// so we use the state prop as a dependency to re-apply listeners without setting
-	// the current position to avoid infinite render
-	// biome-ignore lint/correctness/useExhaustiveDependencies: state dependency is intentional to refresh event listeners
+	// update visual positions when size changes and is different to current
 	useEffect(() => {
-		const el = ref?.current;
-		if (el) el?.addEventListener('mousedown', handleMouseDown, false);
-		return () => {
-			el?.removeEventListener('mousedown', handleMouseDown, false);
-		};
-	}, [state, handleMouseDown]);
-
-	// memo head width
-	const headWidth = useMemo(() => {
-		if (headType === 'round') return trackHeadSize;
-		return trackHeadWidth;
-	}, [headType, trackHeadSize, trackHeadWidth]);
+		const sliderWidth = ref?.current?.offsetWidth;
+		if (!sliderWidth || size.width === 0) return;
+		const max = relativeProgressRef.current === 1;
+		setTrackAndHead(relativeProgressRef.current * sliderWidth, max);
+	}, [size.width, setTrackAndHead]);
 
 	// memo head color
 	const trackHeadColor = useMemo(() => {
@@ -210,10 +239,26 @@ export const Slider = React.memo((props: SliderProps) => {
 		return trackHeadSize;
 	}, [trackHeadSize, headType, height]);
 
+	// memo head width
+	const headWidth = useMemo(() => {
+		if (headType === 'round') return trackHeadSize;
+		return trackHeadWidth;
+	}, [headType, trackHeadSize, trackHeadWidth]);
+
+	// set container width
+	const setWidth = useMemo(() => {
+		if (width && typeof width === 'string') {
+			if (width === 'auto') return '100%';
+			return width;
+		}
+		return `${width ?? 100}px`;
+	}, [width]);
+
 	// memo css vars
 	const cssVars = useMemo(() => {
 		return {
-			'--slider-width': `${width}px`,
+			'--slider-padding': `${padding}px`,
+			'--slider-width': setWidth,
 			'--slider-height': `${height}px`,
 			'--slider-touch-height': `${touchHeight}px`,
 			'--slider-cursor': cursor,
@@ -226,7 +271,7 @@ export const Slider = React.memo((props: SliderProps) => {
 			'--slider-track-color': trackColor ?? 'var(--core-surface-secondary)',
 		} as React.CSSProperties;
 	}, [
-		width,
+		padding,
 		height,
 		touchHeight,
 		cursor,
@@ -236,7 +281,12 @@ export const Slider = React.memo((props: SliderProps) => {
 		headSize,
 		trackHeadColor,
 		headType,
+		setWidth,
 	]);
+
+	/* START.DEBUG */
+	useTrackRenders({ ...props, sizeObserver: size }, 'Slider');
+	/* END.DEBUG */
 
 	return (
 		<div className={css.wrapper} style={cssVars} ref={ref}>

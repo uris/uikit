@@ -63,7 +63,9 @@ export function debug(previous: any, updated: any, name = 'component') {
 		for (const key of Object.keys(updated)) {
 			if (updated[key] !== props[key]) {
 				const propName = `${key}:`;
-				const valueChanged = `${props[key]} > ${updated[key]}`;
+				const prev = JSON.stringify(props[key]);
+				const next = JSON.stringify(updated[key]);
+				const valueChanged = `${prev} > ${next}`;
 				reasons.push(`${propName} ${valueChanged}`);
 			}
 		}
