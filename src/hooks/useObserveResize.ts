@@ -7,7 +7,7 @@ type Size = {
 
 export function useObserveResize(
 	element: RefObject<HTMLDivElement | null> | undefined,
-	options: { ignore?: 'width' | 'height' },
+	options?: { ignore?: 'width' | 'height' },
 ) {
 	const [size, setSize] = useState<Size>({ width: 0, height: 0 });
 
@@ -18,8 +18,8 @@ export function useObserveResize(
 				const height = element?.current?.offsetHeight || 0;
 				const widthChange = width !== size.width;
 				const heightChange = height !== size.height;
-				if (options.ignore === 'width' && !heightChange) return;
-				if (options.ignore === 'height' && !widthChange) return;
+				if (options?.ignore === 'width' && !heightChange) return;
+				if (options?.ignore === 'height' && !widthChange) return;
 				if (size.width !== width || size.height !== height) {
 					setSize({ width, height });
 				}
