@@ -97,7 +97,6 @@ function UserListComponent(props: Readonly<UserListProps>) {
 								<div
 									className={css.control}
 									style={cssVars}
-									// biome-ignore lint/a11y/useSemanticElements: Custom control with specific styling - div with proper ARIA attributes
 									role={'button'}
 									aria-label={'Stop/Play'}
 									onKeyDown={() => handleTogglePrompt(user)}

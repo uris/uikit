@@ -16,7 +16,7 @@ export type DropDownOption = {
 };
 
 export interface DropDownProps {
-	name?:string;
+	name?: string;
 	options?: DropDownOption[];
 	selectedIndex?: number;
 	selectedValue?: string;
@@ -45,7 +45,7 @@ export interface DropDownProps {
 export const DropDown = React.memo((props: DropDownProps) => {
 	const theme = useTheme();
 	const {
-		name = "Select",
+		name = 'Select',
 		width = '100%',
 		height = 'auto',
 		selectedIndex = 0,

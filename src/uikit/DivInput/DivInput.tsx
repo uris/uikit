@@ -10,7 +10,7 @@ import { cleanString } from '../../util/utils';
 import css from './DivInput.module.css';
 
 export interface DivInputProps {
-	name?:string;
+	name?: string;
 	onClick?: () => void;
 	onDblClick?: () => void;
 	onChange?: (value: string | null) => void;
@@ -33,7 +33,7 @@ export interface DivInputProps {
 export const DivInput = React.memo((props: DivInputProps) => {
 	const {
 		value = '',
-		name = "Input Field",
+		name = 'Input Field',
 		placeholder = 'Placeholder',
 		isEditable = true,
 		wrap = false,
@@ -258,12 +258,7 @@ export const DivInput = React.memo((props: DivInputProps) => {
 	// avoid issues with safari that refocuses editable divs on blur
 	// by wrapping it with a pointer events none
 	return (
-		<div
-			className={css.wrapper}
-			style={cssVars}
-			role={'textbox'}
-			aria-label={name}
-		>
+		<div className={css.wrapper} style={cssVars}>
 			<motion.div
 				className={css.input}
 				ref={ref}
@@ -276,6 +271,8 @@ export const DivInput = React.memo((props: DivInputProps) => {
 				onPaste={handlePaste}
 				onDoubleClick={onDblClick}
 				onClick={handleClick}
+				role={'textbox'}
+				aria-label={name}
 			>
 				{value ?? placeholder}
 			</motion.div>
