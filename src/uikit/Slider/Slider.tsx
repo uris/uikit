@@ -54,7 +54,7 @@ export const Slider = React.memo((props: SliderProps) => {
 	// use resize observer to track changes to container size for responsive behavior
 	const size = useObserveResize(ref, { ignore: 'height' });
 
-	// use debounce to limit onChange calls
+	// use a "debounce" to limit the number of onChange calls
 	const debouncedOnChange = debounce((value: number, percent: number) => {
 		onChange(value, percent);
 	}, 0);
@@ -67,7 +67,7 @@ export const Slider = React.memo((props: SliderProps) => {
 	}, [headType, trackHeadSize]);
 
 	// set the position of the track progress and track head
-	// based on the pixel position / adjust for half size of the head = padding
+	// based on the pixel position / adjust for half the size of the head (= padding)
 	const setTrackAndHead = useCallback(
 		(pixelPos: number, max = false) => {
 			const tr = track.current;
@@ -136,7 +136,7 @@ export const Slider = React.memo((props: SliderProps) => {
 	);
 
 	// on mouse move, push slider to the updated mouse position and trigger the update events
-	// use ref values in call back to avoid state issues
+	// use ref values in the call back to avoid state issues
 	const handleMouseMove = useCallback(
 		(e: MouseEvent) => {
 			e.preventDefault();
@@ -219,7 +219,8 @@ export const Slider = React.memo((props: SliderProps) => {
 		};
 	}, [handleMouseDown]);
 
-	// update visual positions when size changes and is different to current
+	// respond to size changes triggered by browser resizing as opposed to props
+	// note: this causes an extra render with every width prop change
 	useEffect(() => {
 		const sliderWidth = ref?.current?.offsetWidth;
 		if (!sliderWidth || size.width === 0) return;
