@@ -1,17 +1,7 @@
 import { AnimatePresence, type Transition, motion } from 'motion/react';
 import React, { useMemo } from 'react';
 import css from './ErrorSummary.module.css';
-
-export type ErrorMessage = {
-	id?: string;
-	title?: string;
-	bullets?: string[];
-};
-
-export interface ErrorSummaryProps {
-	entries?: ErrorMessage[];
-	errors?: any[];
-}
+import type { ErrorMessage, ErrorSummaryProps } from './_types';
 
 export const ErrorSummary = React.memo((props: ErrorSummaryProps) => {
 	const { entries, errors = [] } = props;

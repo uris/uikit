@@ -1,9 +1,7 @@
 import React, { useMemo } from 'react';
+import type { SpacerProps } from './_types';
 
-interface Props {
-	size?: number;
-}
-export const Spacer = React.memo((props: Props) => {
+export const Spacer = React.memo((props: SpacerProps) => {
 	const { size = 8 } = props;
 
 	const style = useMemo(

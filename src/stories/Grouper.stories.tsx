@@ -2,6 +2,7 @@ import type { Meta, StoryObj } from '@storybook/react-vite';
 import { fn } from 'storybook/test';
 import { FlexDiv } from '../uikit/FlexDiv/FlexDiv';
 import { Grouper } from '../uikit/Grouper/Grouper';
+import { runGrouperPlay } from './playHelpers';
 
 const meta: Meta<typeof Grouper> = {
 	title: 'UI Kit/Grouper',
@@ -34,5 +35,8 @@ export const Default: StoryObj<typeof Grouper> = {
 				<Grouper {...args} />
 			</FlexDiv>
 		);
+	},
+	play: async ({ canvasElement, args }) => {
+		await runGrouperPlay({ canvasElement, args });
 	},
 };

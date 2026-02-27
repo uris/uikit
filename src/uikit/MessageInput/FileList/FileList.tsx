@@ -1,14 +1,9 @@
 import { memo, useCallback } from 'react';
 import { IconButton } from '../../IconButton';
-import { UIFileIcon, UIFileIcons } from '../../UIFileIcon';
-import type { ToolTip } from '../../sharedTypes';
+import { UIFileIcon } from '../../UIFileIcon';
+import { UIFileIcons } from '../../UIFileIcon/_types';
 import css from './FileList.module.css';
-
-interface FileListProps {
-	files?: File[];
-	onChange?: (files: File[]) => void;
-	onToolTip?: (tip: ToolTip | null) => void;
-}
+import type { FileListProps } from './_types';
 
 export const FileList = memo(function FileList(props: Readonly<FileListProps>) {
 	const { files = [], onChange = () => null, onToolTip = () => null } = props;

@@ -1,0 +1,46 @@
+import type { Transition, Variants } from 'motion/react';
+import type React from 'react';
+import type { ToolTip } from '../sharedTypes';
+
+export interface UIButtonProps {
+	size?: 'large' | 'medium' | 'text';
+	variant?: 'solid' | 'outline' | 'text';
+	state?: 'normal' | 'hover' | 'disabled';
+	width?: string;
+	label?: string;
+	iconRight?: string;
+	iconLeft?: string;
+	fill?: boolean;
+	count?: number;
+	showDot?: boolean;
+	round?: boolean;
+	tooltip?: string;
+	iconSize?: number;
+	borderRadius?: number;
+	iconColor?: string;
+	bgColor?: string;
+	bgColorDisabled?: string;
+	labelColor?: string;
+	labelSize?: 's' | 'm' | 'l';
+	transition?: Transition;
+	variants?: Variants;
+	initial?: string;
+	animate?: string;
+	exit?: string;
+	underline?: boolean;
+	progress?: boolean;
+	working?: boolean;
+	duration?: number;
+	trigger?: boolean;
+	destructive?: boolean;
+	paddingRight?: number;
+	paddingLeft?: number;
+	onToolTip?: (tip: ToolTip | null) => void;
+	onClick?: (
+		e: React.MouseEvent<HTMLDivElement, MouseEvent> | undefined,
+	) => void;
+}
+
+export interface UIButtonHandle {
+	triggerClick: () => void;
+}

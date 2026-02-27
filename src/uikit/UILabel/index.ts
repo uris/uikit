@@ -1,1 +1,2 @@
-export { UILabel, type UILabelProps } from './UILabel';
+export { UILabel } from './UILabel';
+export type { UILabelProps } from './_types';

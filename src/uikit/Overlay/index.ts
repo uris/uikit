@@ -1,1 +1,2 @@
-export { Overlay, type OverlayProps } from './Overlay';
+export { Overlay } from './Overlay';
+export type { OverlayProps } from './_types';

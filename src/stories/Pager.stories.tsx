@@ -2,6 +2,7 @@ import type { Meta, StoryObj } from '@storybook/react-vite';
 import { fn } from 'storybook/test';
 import { FlexDiv } from '../uikit/FlexDiv/FlexDiv';
 import { Pager } from '../uikit/Pager/Pager';
+import { runPagerPlay } from './playHelpers';
 
 const meta: Meta<typeof Pager> = {
 	title: 'UI Kit/Pager',
@@ -27,5 +28,8 @@ export const Default: StoryObj<typeof Pager> = {
 				<Pager {...args} />
 			</FlexDiv>
 		);
+	},
+	play: async ({ canvasElement, args }) => {
+		await runPagerPlay({ canvasElement, args });
 	},
 };

@@ -1,7 +1,9 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
-import { fn } from 'storybook/test';
-import { FlexDiv } from '../uikit/FlexDiv/FlexDiv';
-import { Icon, IconNames } from '../uikit/Icon/Icon';
+import { expect, fn, userEvent, within } from 'storybook/test';
+import { FlexDiv } from '../uikit/FlexDiv';
+import { Icon } from '../uikit/Icon';
+import { IconNames } from '../uikit/Icon/_types';
+import { runIconPlay } from './playHelpers';
 
 const icons = Object.values(IconNames);
 const meta: Meta<typeof Icon> = {
@@ -35,5 +37,36 @@ export const Default: StoryObj<typeof Icon> = {
 				<Icon {...args} />
 			</FlexDiv>
 		);
+	},
+	play: async ({ canvasElement, args }) => {
+		await runIconPlay({ canvasElement, args });
+	},
+};
+
+export const Gallery: StoryObj<typeof Icon> = {
+	render: (args) => {
+		return (
+			<FlexDiv
+				justify={'start'}
+				alignItems={'start'}
+				padding={24}
+				wrap
+				gap={16}
+				width={860}
+			>
+				{icons.map((name) => (
+					<Icon key={name} {...args} name={name} />
+				))}
+			</FlexDiv>
+		);
+	},
+	play: async ({ canvasElement, args }) => {
+		const canvas = within(canvasElement);
+		const rendered = canvas.getAllByRole('img');
+		await expect(rendered.length).toBeGreaterThan(20);
+		for (const icon of rendered.slice(0, 12)) {
+			await userEvent.click(icon);
+		}
+		await expect(args.onClick).toHaveBeenCalled();
 	},
 };

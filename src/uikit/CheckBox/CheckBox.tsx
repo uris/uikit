@@ -3,15 +3,7 @@ import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { useTheme } from '../../hooks';
 import { Icon } from '../Icon';
 import css from './CheckBox.module.css';
-
-export interface CheckBoxProps {
-	size?: number;
-	checked?: 'partial' | boolean;
-	disabled?: boolean;
-	color?: string;
-	label?: string;
-	onChange?: (state: boolean) => void;
-}
+import type { CheckBoxProps } from './_types';
 
 export const CheckBox = React.memo((props: CheckBoxProps) => {
 	const {

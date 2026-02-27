@@ -3,50 +3,19 @@ import type React from 'react';
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { useTheme } from '../../../hooks';
 import { UIButton } from '../../UIButton';
-import type { ToolTip } from '../../sharedTypes';
-import { type DocExcerpt, ExcerptList } from '../ExcerptList/ExcerptList';
+import { ExcerptList } from '../ExcerptList/ExcerptList';
+import type { DocExcerpt } from '../ExcerptList/_types';
 import { FileList } from '../FileList/FileList';
 import { UserList } from '../UserList/UserList';
-import { PrompState, type UserPresence } from '../UserList/_Types';
+import { PrompState, type UserPresence } from '../UserList/_types';
 import {
 	type JurisdictionFocus,
 	PromptType,
 	Role,
 	type SendMessage,
-} from '../_Types';
+} from '../_types';
 import css from './MessageInput.module.css';
-
-export interface MessageInputProps {
-	maxHeight?: number;
-	focused?: boolean;
-	height?: string;
-	placeholder?: string;
-	value?: string;
-	role?: string;
-	showFilters?: boolean;
-	isFetching?: boolean;
-	isStreaming?: boolean;
-	isShort?: boolean;
-	error?: string | null;
-	files?: File[];
-	excerpts?: DocExcerpt[];
-	users?: UserPresence[];
-	currentUser?: string;
-	owner?: string;
-	presenceID?: string;
-	jurisdiction?: JurisdictionFocus | null;
-	jurisdictionClick?: () => void;
-	attachClick?: (e: React.MouseEvent<any> | undefined) => void;
-	onChangeFiles?: (files: File[]) => void;
-	onChangeExcerpts?: (excerpts: DocExcerpt[]) => void;
-	onTogglePrompt?: (presence: UserPresence) => void;
-	onToolTip?: (tip: ToolTip | null) => void;
-	onChange?: (prompt: string) => void;
-	onBlur?: () => void;
-	onFocus?: () => void;
-	onSend?: (message: SendMessage) => void;
-	onStop?: () => void;
-}
+import type { MessageInputProps } from './_types';
 
 export function MessageInput(props: Readonly<MessageInputProps>) {
 	const {

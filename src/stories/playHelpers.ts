@@ -1,0 +1,591 @@
+import { expect, fireEvent, userEvent, within } from 'storybook/test';
+
+type PlayContext<TArgs = unknown> = {
+	args: TArgs;
+	canvasElement: HTMLElement;
+};
+
+function asArgs(args: unknown): Record<string, unknown> {
+	return (args ?? {}) as Record<string, unknown>;
+}
+
+function isFn(value: unknown): value is (...args: unknown[]) => unknown {
+	return typeof value === 'function';
+}
+
+function getOverlay(canvasElement: HTMLElement): HTMLElement | null {
+	return canvasElement.querySelector(
+		'[class*="overlay"]',
+	) as HTMLElement | null;
+}
+
+async function expectCanvas(canvasElement: HTMLElement) {
+	await expect(canvasElement).toBeInTheDocument();
+	await expect(canvasElement.childElementCount).toBeGreaterThan(0);
+}
+
+export async function runAvatarGroupPlay<TArgs>({
+	args,
+	canvasElement,
+}: PlayContext<TArgs>) {
+	await expectCanvas(canvasElement);
+	const canvas = within(canvasElement);
+	const avatars = canvas.getAllByLabelText(/User Avatar -/i);
+	const storyArgs = asArgs(args);
+	const expected = Array.isArray(storyArgs.avatars)
+		? storyArgs.avatars.length
+		: avatars.length;
+	await expect(avatars).toHaveLength(expected);
+}
+
+export async function runBadgePlay<TArgs>({
+	canvasElement,
+	args,
+}: PlayContext<TArgs>) {
+	await expectCanvas(canvasElement);
+	const canvas = within(canvasElement);
+	const badge = canvas.getByRole('status');
+	await expect(badge).toBeInTheDocument();
+	const count = asArgs(args).count;
+	if (typeof count === 'number') {
+		await expect(badge).toHaveTextContent(String(count));
+	}
+}
+
+export async function runCheckBoxPlay<TArgs>({
+	args,
+	canvasElement,
+}: PlayContext<TArgs>) {
+	await expectCanvas(canvasElement);
+	const canvas = within(canvasElement);
+	const storyArgs = asArgs(args);
+	const checkbox = canvas.getByRole('checkbox');
+	await expect(checkbox).toHaveAttribute(
+		'aria-checked',
+		String(storyArgs.checked ?? false),
+	);
+	await userEvent.click(checkbox);
+	await userEvent.keyboard('{Space}');
+	if (isFn(storyArgs.onChange)) {
+		await expect(storyArgs.onChange).toHaveBeenCalled();
+	}
+}
+
+export async function runDivInputPlay<TArgs>({
+	args,
+	canvasElement,
+}: PlayContext<TArgs>) {
+	await expectCanvas(canvasElement);
+	const canvas = within(canvasElement);
+	const storyArgs = asArgs(args);
+	const textbox = canvas.getByRole('textbox');
+	await userEvent.click(textbox);
+	await userEvent.type(textbox, 'abc');
+	fireEvent.paste(textbox, {
+		clipboardData: {
+			getData: () => ' pasted ',
+		},
+	});
+	await userEvent.keyboard('{Enter}');
+	if (isFn(storyArgs.onClick)) {
+		await expect(storyArgs.onClick).toHaveBeenCalled();
+	}
+	if (isFn(storyArgs.onChange)) {
+		await expect(storyArgs.onChange).toHaveBeenCalled();
+	}
+	if (isFn(storyArgs.onSubmit)) {
+		await expect(storyArgs.onSubmit).toHaveBeenCalled();
+	}
+}
+
+export async function runDotPlay<TArgs>({ canvasElement }: PlayContext<TArgs>) {
+	await expectCanvas(canvasElement);
+	const canvas = within(canvasElement);
+	const dot = canvas.getByRole('status');
+	await expect(dot).toHaveAttribute(
+		'aria-label',
+		expect.stringContaining('dot'),
+	);
+}
+
+export async function runDraggablePanelPlay<TArgs>({
+	canvasElement,
+	args,
+}: PlayContext<TArgs>) {
+	await expectCanvas(canvasElement);
+	const storyArgs = asArgs(args);
+	const handle = Array.from(canvasElement.querySelectorAll('div')).find(
+		(node) => {
+			const el = node as HTMLElement;
+			return el.style.cursor === 'col-resize';
+		},
+	) as HTMLElement | undefined;
+	if (handle) {
+		fireEvent.mouseDown(handle, { clientX: 120 });
+		fireEvent.mouseMove(document.documentElement, { clientX: 180 });
+		fireEvent.mouseUp(document.documentElement, { clientX: 180 });
+	}
+	if (isFn(storyArgs.onResizeStart)) {
+		await expect(storyArgs.onResizeStart).toHaveBeenCalled();
+	}
+	if (isFn(storyArgs.onResize)) {
+		await expect(storyArgs.onResize).toHaveBeenCalled();
+	}
+	if (isFn(storyArgs.onResizeEnd)) {
+		await expect(storyArgs.onResizeEnd).toHaveBeenCalled();
+	}
+}
+
+export async function runDropDownPlay<TArgs>({
+	args,
+	canvasElement,
+}: PlayContext<TArgs>) {
+	await expectCanvas(canvasElement);
+	const canvas = within(canvasElement);
+	const storyArgs = asArgs(args);
+	const select = canvas.getByRole('combobox');
+	const options = select.querySelectorAll('option');
+	if (options.length > 1) {
+		await userEvent.selectOptions(select, options[1]);
+	}
+	if (isFn(storyArgs.onFocus)) {
+		await expect(storyArgs.onFocus).toHaveBeenCalled();
+	}
+	if (isFn(storyArgs.onChange)) {
+		await expect(storyArgs.onChange).toHaveBeenCalled();
+	}
+	if (isFn(storyArgs.onValidate)) {
+		await expect(storyArgs.onValidate).toHaveBeenCalled();
+	}
+}
+
+export async function runEditorButtonBarPlay<TArgs>({
+	args,
+	canvasElement,
+}: PlayContext<TArgs>) {
+	await expectCanvas(canvasElement);
+	const canvas = within(canvasElement);
+	const storyArgs = asArgs(args);
+	const select = canvas.queryByRole('combobox');
+	if (select) {
+		const options = select.querySelectorAll('option');
+		if (options.length > 1) {
+			await userEvent.selectOptions(select, options[1]);
+		}
+	}
+	const icons = canvas.getAllByRole('img');
+	if (icons.length > 0) {
+		await userEvent.click(icons[0]);
+	}
+	if (isFn(storyArgs.onCommand)) {
+		await expect(storyArgs.onCommand).toHaveBeenCalled();
+	}
+}
+
+export async function runEditorSummaryPlay<TArgs>({
+	args,
+	canvasElement,
+}: PlayContext<TArgs>) {
+	await expectCanvas(canvasElement);
+	const canvas = within(canvasElement);
+	const storyArgs = asArgs(args);
+	await expect(canvas.getByText(/Suggested Edits/i)).toBeInTheDocument();
+	const icons = canvas.getAllByRole('img');
+	for (const icon of icons.slice(0, 5)) {
+		await userEvent.click(icon);
+	}
+	if (isFn(storyArgs.onChange)) {
+		await expect(storyArgs.onChange).toHaveBeenCalled();
+	}
+	if (isFn(storyArgs.onAccept)) {
+		await expect(storyArgs.onAccept).toHaveBeenCalled();
+	}
+	if (isFn(storyArgs.onReject)) {
+		await expect(storyArgs.onReject).toHaveBeenCalled();
+	}
+	if (isFn(storyArgs.onRejectAll)) {
+		await expect(storyArgs.onRejectAll).toHaveBeenCalled();
+	}
+}
+
+export async function runErrorSummaryPlay<TArgs>({
+	canvasElement,
+}: PlayContext<TArgs>) {
+	await expectCanvas(canvasElement);
+	const canvas = within(canvasElement);
+	await expect(canvas.getByText('Error type 1')).toBeInTheDocument();
+	await expect(canvas.getByText('Error type 2')).toBeInTheDocument();
+}
+
+export async function runFlexDivPlay<TArgs>({
+	canvasElement,
+}: PlayContext<TArgs>) {
+	await expectCanvas(canvasElement);
+	await expect(canvasElement.querySelector('div')).toBeInTheDocument();
+}
+
+export async function runGrouperPlay<TArgs>({
+	args,
+	canvasElement,
+}: PlayContext<TArgs>) {
+	await expectCanvas(canvasElement);
+	const canvas = within(canvasElement);
+	const storyArgs = asArgs(args);
+	const title = storyArgs.title;
+	if (typeof title === 'string') {
+		const group = canvas.getByText(title);
+		await userEvent.click(group);
+		await userEvent.keyboard('{Enter}');
+	}
+	if (isFn(storyArgs.onClick)) {
+		await expect(storyArgs.onClick).toHaveBeenCalled();
+	}
+	if (isFn(storyArgs.onChange)) {
+		await expect(storyArgs.onChange).toHaveBeenCalled();
+	}
+}
+
+export async function runIconPlay<TArgs>({
+	args,
+	canvasElement,
+}: PlayContext<TArgs>) {
+	await expectCanvas(canvasElement);
+	const canvas = within(canvasElement);
+	const storyArgs = asArgs(args);
+	const icon = canvas.getByRole('img');
+	await userEvent.click(icon);
+	if (isFn(storyArgs.onClick)) {
+		await expect(storyArgs.onClick).toHaveBeenCalled();
+	}
+}
+
+export async function runIconButtonPlay<TArgs>({
+	args,
+	canvasElement,
+}: PlayContext<TArgs>) {
+	await expectCanvas(canvasElement);
+	const canvas = within(canvasElement);
+	const storyArgs = asArgs(args);
+	const icon = canvas.getByRole('img');
+	await userEvent.click(icon);
+	if (isFn(storyArgs.onClick)) {
+		await expect(storyArgs.onClick).toHaveBeenCalled();
+	}
+}
+
+export async function runLogosPlay<TArgs>({
+	canvasElement,
+}: PlayContext<TArgs>) {
+	await expectCanvas(canvasElement);
+	const canvas = within(canvasElement);
+	await expect(canvas.getByRole('img')).toBeInTheDocument();
+}
+
+export async function runMessageInputPlay<TArgs>({
+	args,
+	canvasElement,
+}: PlayContext<TArgs>) {
+	await expectCanvas(canvasElement);
+	const canvas = within(canvasElement);
+	const storyArgs = asArgs(args);
+	const input = canvas.getByRole('textbox');
+	await userEvent.type(input, 'hello');
+	if (isFn(storyArgs.onChange)) {
+		await expect(storyArgs.onChange).toHaveBeenCalled();
+	}
+	await userEvent.type(input, '{enter}');
+	if (isFn(storyArgs.onSend)) {
+		await expect(storyArgs.onSend).toHaveBeenCalled();
+	}
+}
+
+export async function runOverlayPlay<TArgs>({
+	args,
+	canvasElement,
+}: PlayContext<TArgs>) {
+	await expectCanvas(canvasElement);
+	const storyArgs = asArgs(args);
+	const overlay = getOverlay(canvasElement);
+	if (overlay) {
+		await userEvent.click(overlay);
+		fireEvent.contextMenu(overlay);
+	}
+	if (isFn(storyArgs.onClick)) {
+		await expect(storyArgs.onClick).toHaveBeenCalled();
+	}
+	if (storyArgs.global === true && isFn(storyArgs.toggleOverlay)) {
+		await expect(storyArgs.toggleOverlay).toHaveBeenCalledWith(false);
+	}
+}
+
+export async function runPagerPlay<TArgs>({
+	args,
+	canvasElement,
+}: PlayContext<TArgs>) {
+	await expectCanvas(canvasElement);
+	const storyArgs = asArgs(args);
+	const bullets = canvasElement.querySelectorAll('input[type="button"]');
+	await expect(bullets.length).toBeGreaterThan(0);
+	const target = bullets.length > 1 ? bullets[1] : bullets[0];
+	await userEvent.click(target as HTMLElement);
+	fireEvent.keyDown(target, { key: 'Enter' });
+	if (isFn(storyArgs.onChange)) {
+		await expect(storyArgs.onChange).toHaveBeenCalled();
+	}
+}
+
+export async function runProgressIndicatorPlay<TArgs>({
+	canvasElement,
+}: PlayContext<TArgs>) {
+	await expectCanvas(canvasElement);
+	const canvas = within(canvasElement);
+	await expect(
+		canvas.getByRole('img', { name: /Loading spinner/i }),
+	).toBeInTheDocument();
+}
+
+export async function runRadioButtonPlay<TArgs>({
+	args,
+	canvasElement,
+}: PlayContext<TArgs>) {
+	await expectCanvas(canvasElement);
+	const canvas = within(canvasElement);
+	const storyArgs = asArgs(args);
+	const optionTitle = (storyArgs.option as { title?: string } | undefined)
+		?.title;
+	if (typeof optionTitle === 'string') {
+		await userEvent.click(canvas.getByText(optionTitle));
+	}
+	if (isFn(storyArgs.onChange)) {
+		await expect(storyArgs.onChange).toHaveBeenCalled();
+	}
+}
+
+export async function runRadioButtonListPlay<TArgs>({
+	args,
+	canvasElement,
+}: PlayContext<TArgs>) {
+	await expectCanvas(canvasElement);
+	const canvas = within(canvasElement);
+	const storyArgs = asArgs(args);
+	await userEvent.click(canvas.getByText('Option 1'));
+	await userEvent.click(canvas.getByText('Option 2'));
+	if (isFn(storyArgs.onChange)) {
+		await expect(storyArgs.onChange).toHaveBeenCalled();
+	}
+}
+
+export async function runSliderPlay<TArgs>({
+	args,
+	canvasElement,
+}: PlayContext<TArgs>) {
+	await expectCanvas(canvasElement);
+	const storyArgs = asArgs(args);
+	const slider = canvasElement.querySelector(
+		'[style*="--slider-width"]',
+	) as HTMLElement | null;
+	if (slider) {
+		fireEvent.mouseDown(slider, { clientX: 20 });
+		fireEvent.mouseMove(document.documentElement, { clientX: 60 });
+		fireEvent.mouseUp(document.documentElement, { clientX: 60 });
+	}
+	if (isFn(storyArgs.onChange)) {
+		await expect(storyArgs.onChange).toHaveBeenCalled();
+	}
+	if (isFn(storyArgs.onDragChange)) {
+		await expect(storyArgs.onDragChange).toHaveBeenCalled();
+	}
+}
+
+export async function runSpacerPlay<TArgs>({
+	args,
+	canvasElement,
+}: PlayContext<TArgs>) {
+	await expectCanvas(canvasElement);
+	const storyArgs = asArgs(args);
+	const spacer = canvasElement.querySelector(
+		'[style*="min-height"]',
+	) as HTMLElement | null;
+	await expect(spacer).toBeInTheDocument();
+	if (spacer && typeof storyArgs.size === 'number') {
+		await expect(spacer).toHaveStyle({ minHeight: `${storyArgs.size}px` });
+	}
+}
+
+export async function runSwitchPlay<TArgs>({
+	args,
+	canvasElement,
+}: PlayContext<TArgs>) {
+	await expectCanvas(canvasElement);
+	const storyArgs = asArgs(args);
+	const el = canvasElement.querySelector(
+		'[style*="--switch-width"]',
+	) as HTMLElement | null;
+	if (el) {
+		await userEvent.click(el);
+		await userEvent.click(el);
+	}
+	if (isFn(storyArgs.onChange)) {
+		await expect(storyArgs.onChange).toHaveBeenCalled();
+	}
+}
+
+export async function runTabBarPlay<TArgs>({
+	args,
+	canvasElement,
+}: PlayContext<TArgs>) {
+	await expectCanvas(canvasElement);
+	const canvas = within(canvasElement);
+	const storyArgs = asArgs(args);
+	await userEvent.click(canvas.getByText('Option 2'));
+	if (isFn(storyArgs.onChange)) {
+		await expect(storyArgs.onChange).toHaveBeenCalled();
+	}
+	if (isFn(storyArgs.onTabChange)) {
+		await expect(storyArgs.onTabChange).toHaveBeenCalled();
+	}
+	if (storyArgs.hasClose && isFn(storyArgs.onClose)) {
+		const icons = canvas.getAllByRole('img');
+		await userEvent.click(icons[icons.length - 1]);
+		await expect(storyArgs.onClose).toHaveBeenCalled();
+	}
+}
+
+export async function runTextAreaPlay<TArgs>({
+	args,
+	canvasElement,
+}: PlayContext<TArgs>) {
+	await expectCanvas(canvasElement);
+	const canvas = within(canvasElement);
+	const storyArgs = asArgs(args);
+	const input = canvas.getByRole('textbox');
+	await userEvent.click(input);
+	await userEvent.type(input, 'abc');
+	await userEvent.tab();
+	if (isFn(storyArgs.onFocus)) {
+		await expect(storyArgs.onFocus).toHaveBeenCalled();
+	}
+	if (isFn(storyArgs.onBlur)) {
+		await expect(storyArgs.onBlur).toHaveBeenCalled();
+	}
+	if (isFn(storyArgs.onChange)) {
+		await expect(storyArgs.onChange).toHaveBeenCalled();
+	}
+	if (storyArgs.returnSubmits === true) {
+		await userEvent.type(input, '{enter}');
+		if (isFn(storyArgs.onSubmit)) {
+			await expect(storyArgs.onSubmit).toHaveBeenCalled();
+		}
+	}
+}
+
+export async function runTextFieldPlay<TArgs>({
+	args,
+	canvasElement,
+}: PlayContext<TArgs>) {
+	await expectCanvas(canvasElement);
+	const canvas = within(canvasElement);
+	const storyArgs = asArgs(args);
+	const input = canvas.getByRole('textbox');
+	await userEvent.click(input);
+	await userEvent.type(input, 'abc');
+	await userEvent.keyboard('{Enter}');
+	if (isFn(storyArgs.onChange)) {
+		await expect(storyArgs.onChange).toHaveBeenCalled();
+	}
+	if (isFn(storyArgs.onSubmit)) {
+		await expect(storyArgs.onSubmit).toHaveBeenCalled();
+	}
+}
+
+export async function runUIButtonPlay<TArgs>({
+	args,
+	canvasElement,
+}: PlayContext<TArgs>) {
+	await expectCanvas(canvasElement);
+	const canvas = within(canvasElement);
+	const storyArgs = asArgs(args);
+	await userEvent.click(canvas.getByText('Button Label'));
+	if (isFn(storyArgs.onClick)) {
+		await expect(storyArgs.onClick).toHaveBeenCalled();
+	}
+}
+
+export async function runUIButtonBarPlay<TArgs>({
+	args,
+	canvasElement,
+}: PlayContext<TArgs>) {
+	await expectCanvas(canvasElement);
+	const storyArgs = asArgs(args);
+	const icons = canvasElement.querySelectorAll('svg[role="img"]');
+	if (icons.length > 0) {
+		await userEvent.click(icons[0] as HTMLElement);
+	}
+	if (isFn(storyArgs.onChange)) {
+		await expect(storyArgs.onChange).toHaveBeenCalled();
+	}
+}
+
+export async function runUICardPlay<TArgs>({
+	args,
+	canvasElement,
+}: PlayContext<TArgs>) {
+	await expectCanvas(canvasElement);
+	const canvas = within(canvasElement);
+	const storyArgs = asArgs(args);
+	await userEvent.click(canvas.getByText('Upload or drop'));
+	if (isFn(storyArgs.onCommand)) {
+		await expect(storyArgs.onCommand).toHaveBeenCalled();
+	}
+}
+
+export async function runUIChipPlay<TArgs>({
+	args,
+	canvasElement,
+}: PlayContext<TArgs>) {
+	await expectCanvas(canvasElement);
+	const canvas = within(canvasElement);
+	const storyArgs = asArgs(args);
+	const chip = canvas.getByText('Chip Label');
+	await userEvent.hover(chip);
+	await userEvent.click(chip);
+	if (isFn(storyArgs.onClick)) {
+		await expect(storyArgs.onClick).toHaveBeenCalled();
+	}
+	if (isFn(storyArgs.onToolTip)) {
+		await expect(storyArgs.onToolTip).toHaveBeenCalled();
+	}
+}
+
+export async function runUIFileIconPlay<TArgs>({
+	args,
+	canvasElement,
+}: PlayContext<TArgs>) {
+	await expectCanvas(canvasElement);
+	const canvas = within(canvasElement);
+	const storyArgs = asArgs(args);
+	const icon = canvas.getByRole('img');
+	await userEvent.click(icon);
+	if (isFn(storyArgs.onClick)) {
+		await expect(storyArgs.onClick).toHaveBeenCalled();
+	}
+}
+
+export async function runUILabelPlay<TArgs>({
+	args,
+	canvasElement,
+}: PlayContext<TArgs>) {
+	await expectCanvas(canvasElement);
+	const canvas = within(canvasElement);
+	const storyArgs = asArgs(args);
+	if (typeof storyArgs.label === 'string') {
+		const label = canvas.getByText(storyArgs.label);
+		await expect(label).toBeInTheDocument();
+		if (storyArgs.button === true) {
+			await userEvent.click(label);
+			if (isFn(storyArgs.onClick)) {
+				await expect(storyArgs.onClick).toHaveBeenCalled();
+			}
+		}
+	}
+}

@@ -1,1 +1,2 @@
-export { DocIcons, type DocsProps } from './DocIcons';
+export { DocIcons } from './DocIcons';
+export type { DocsProps } from './_types';

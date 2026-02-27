@@ -3,6 +3,7 @@ import type { RadioButtonOption } from 'src/uikit/RadioButton';
 import { fn } from 'storybook/test';
 import { FlexDiv } from '../uikit/FlexDiv/FlexDiv';
 import { RadioButtonList } from '../uikit/RadioButtonList/RadioButtonList';
+import { runRadioButtonListPlay } from './playHelpers';
 
 const options: RadioButtonOption[] = [
 	{
@@ -52,5 +53,19 @@ export const Default: StoryObj<typeof RadioButtonList> = {
 				<RadioButtonList {...args} />
 			</FlexDiv>
 		);
+	},
+	play: async ({ canvasElement, args }) => {
+		await runRadioButtonListPlay({ canvasElement, args });
+	},
+};
+
+export const MultiSelect: StoryObj<typeof RadioButtonList> = {
+	args: {
+		...meta.args,
+		multiSelect: true,
+	},
+	render: Default.render,
+	play: async ({ canvasElement, args }) => {
+		await runRadioButtonListPlay({ canvasElement, args });
 	},
 };

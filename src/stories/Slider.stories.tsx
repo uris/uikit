@@ -2,6 +2,7 @@ import type { Meta, StoryObj } from '@storybook/react-vite';
 import { fn } from 'storybook/test';
 import { FlexDiv } from '../uikit/FlexDiv/FlexDiv';
 import { Slider } from '../uikit/Slider/Slider';
+import { runSliderPlay } from './playHelpers';
 
 const meta: Meta<typeof Slider> = {
 	title: 'UI Kit/Slider',
@@ -34,5 +35,8 @@ export const Default: StoryObj<typeof Slider> = {
 				<Slider {...args} />
 			</FlexDiv>
 		);
+	},
+	play: async ({ canvasElement, args }) => {
+		await runSliderPlay({ canvasElement, args });
 	},
 };

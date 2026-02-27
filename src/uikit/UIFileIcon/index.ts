@@ -1,1 +1,2 @@
-export { type UIFileIconProps, UIFileIcons, UIFileIcon } from './UIFileIcon';
+export { UIFileIcon } from './UIFileIcon';
+export type { UIFileIconProps } from './_types';

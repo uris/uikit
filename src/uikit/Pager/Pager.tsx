@@ -1,16 +1,6 @@
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import css from './Pager.module.css';
-
-export interface PagerProps {
-	size?: number;
-	index?: number;
-	color?: string;
-	colorOn?: string;
-	colorHover?: string;
-	pages?: number;
-	gap?: number;
-	onChange?: (index: number) => void;
-}
+import type { PagerProps } from './_types';
 
 export const Pager = React.memo((props: PagerProps) => {
 	const {

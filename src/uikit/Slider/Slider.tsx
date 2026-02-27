@@ -3,24 +3,7 @@ import { useObserveResize } from '../../hooks/useObserveResize';
 import { useTrackRenders } from '../../hooks/useTrackRenders';
 import { debounce } from '../../util/debounce';
 import css from './Slider.module.css';
-
-export interface SliderProps {
-	value?: number;
-	scaleMin?: number;
-	scaleMax?: number;
-	width?: number | string;
-	height?: number | string;
-	touchHeight?: number | string;
-	trackHeadSize?: number | null;
-	trackHeadWidth?: number | null;
-	headType?: 'round' | 'square' | 'none';
-	headColor?: string;
-	trackColor?: string;
-	progressColor?: string;
-	cursor?: 'default' | 'grab' | 'grabbing' | 'pointer';
-	onChange?: (value: number, percent: number) => void;
-	onDragChange?: (value: number, percent: number) => void;
-}
+import type { SliderProps } from './_types';
 
 export const Slider = React.memo((props: SliderProps) => {
 	const {

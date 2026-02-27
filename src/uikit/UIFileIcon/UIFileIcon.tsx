@@ -1,24 +1,7 @@
 import React, { useCallback, useMemo } from 'react';
 import { useTheme } from '../../hooks';
-
-type Icon = {
-	name: string;
-	icon?: any;
-};
-
-export enum UIFileIcons {
-	Pdf = 'pdf',
-	Document = 'document',
-	Spreadhseet = 'spreadsheet',
-}
-
-export interface UIFileIconProps {
-	name?: UIFileIcons | string;
-	size?: number;
-	pointer?: boolean;
-	disabled?: boolean;
-	onClick?: (e: React.MouseEvent<SVGElement, MouseEvent>) => void;
-}
+import type { FileIconDefinition, UIFileIconProps } from './_types';
+import { UIFileIcons } from './_types';
 
 export const UIFileIcon = React.memo((props: UIFileIconProps) => {
 	const {
@@ -40,7 +23,7 @@ export const UIFileIcon = React.memo((props: UIFileIconProps) => {
 		[onClick],
 	);
 
-	const FileIcon: Icon[] = useMemo(() => {
+	const FileIcon: FileIconDefinition[] = useMemo(() => {
 		return [
 			{
 				name: 'pdf',

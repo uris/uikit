@@ -3,6 +3,7 @@ import type { BarButton } from 'src/uikit/UIButtonBar';
 import { fn } from 'storybook/test';
 import { FlexDiv } from '../uikit/FlexDiv/FlexDiv';
 import { UIButtonBar } from '../uikit/UIButtonBar/UIButtonBar';
+import { runUIButtonBarPlay } from './playHelpers';
 
 const listView: BarButton[] = [
 	{ icon: 'arrow right', command: 'list', tip: 'List View' },
@@ -29,5 +30,8 @@ export const Default: StoryObj<typeof UIButtonBar> = {
 				<UIButtonBar {...args} />
 			</FlexDiv>
 		);
+	},
+	play: async ({ canvasElement, args }) => {
+		await runUIButtonBarPlay({ canvasElement, args });
 	},
 };

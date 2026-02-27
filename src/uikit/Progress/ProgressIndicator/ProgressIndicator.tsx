@@ -3,18 +3,7 @@ import type React from 'react';
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { useTheme } from '../../../hooks';
 import css from './ProgressIndicator.module.css';
-
-export interface ProgressIndicatorProps {
-	size?: number;
-	secondsPerSpin?: number;
-	show?: boolean;
-	color?: string;
-	stroke?: number;
-	duration?: number;
-	inline?: boolean;
-	didStart?: () => void;
-	didStop?: () => void;
-}
+import type { ProgressIndicatorProps } from './_types';
 
 export function ProgressIndicator(props: Readonly<ProgressIndicatorProps>) {
 	const theme = useTheme();
@@ -80,7 +69,7 @@ export function ProgressIndicator(props: Readonly<ProgressIndicatorProps>) {
 	);
 }
 
-const OpenCircle = (
+export const OpenCircle = (
 	size: number,
 	secondsPerSpin: number,
 	color: string,

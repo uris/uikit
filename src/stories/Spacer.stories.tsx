@@ -1,6 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { FlexDiv } from '../uikit/FlexDiv/FlexDiv';
 import { Spacer } from '../uikit/Spacer/Spacer';
+import { runSpacerPlay } from './playHelpers';
 
 const meta: Meta<typeof Spacer> = {
 	title: 'UI Kit/Spacer',
@@ -19,5 +20,8 @@ export const Default: StoryObj<typeof Spacer> = {
 				<Spacer {...args} />
 			</FlexDiv>
 		);
+	},
+	play: async ({ canvasElement, args }) => {
+		await runSpacerPlay({ canvasElement, args });
 	},
 };

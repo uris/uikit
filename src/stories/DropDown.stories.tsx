@@ -3,6 +3,7 @@ import { fn } from 'storybook/test';
 import { lightTheme } from '../theme/themes';
 import { DropDown, type DropDownOption } from '../uikit/DropDown/DropDown';
 import { FlexDiv } from '../uikit/FlexDiv/FlexDiv';
+import { runDropDownPlay } from './playHelpers';
 
 const optionsWPlace: DropDownOption[] = [
 	{ label: 'select an option', value: 'none' },
@@ -49,5 +50,8 @@ export const Default: StoryObj<typeof DropDown> = {
 				<DropDown {...args} />
 			</FlexDiv>
 		);
+	},
+	play: async ({ canvasElement, args }) => {
+		await runDropDownPlay({ canvasElement, args });
 	},
 };

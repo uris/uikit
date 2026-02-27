@@ -1,2 +1,2 @@
-export { UIButtonBar, type UIButtonBarProps } from './UIButtonBar';
-export type { BarButton } from './_Types';
+export { UIButtonBar } from './UIButtonBar';
+export type { BarButton, UIButtonBarProps } from './_types';

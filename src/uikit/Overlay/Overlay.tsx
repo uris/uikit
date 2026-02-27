@@ -1,15 +1,7 @@
 import { AnimatePresence, motion } from 'motion/react';
 import React, { useCallback, useMemo } from 'react';
 import css from './Overlay.module.css';
-export interface OverlayProps {
-	opacity?: number;
-	color?: string;
-	type?: 'clear' | 'dark';
-	global?: boolean;
-	overlay?: any;
-	onClick?: () => void;
-	toggleOverlay?: (state: boolean) => void;
-}
+import type { OverlayProps } from './_types';
 
 export const Overlay = React.memo((props: OverlayProps) => {
 	const {

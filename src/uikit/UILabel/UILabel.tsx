@@ -2,15 +2,7 @@ import type React from 'react';
 import { useCallback, useMemo } from 'react';
 import { useTheme } from '../../hooks';
 import css from './UILabel.module.css';
-
-export interface UILabelProps {
-	label?: string;
-	state?: 'red' | 'yellow' | 'green' | 'blue' | 'grey' | 'lightgrey' | 'white';
-	noFill?: boolean;
-	round?: boolean;
-	button?: boolean;
-	onClick?: (e: React.MouseEvent<any>) => void;
-}
+import type { UILabelProps } from './_types';
 
 export function UILabel(props: Readonly<UILabelProps>) {
 	const theme = useTheme();

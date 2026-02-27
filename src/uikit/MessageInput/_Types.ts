@@ -1,4 +1,4 @@
-import type { DocExcerpt } from './ExcerptList/ExcerptList';
+import type { DocExcerpt } from './ExcerptList/_types';
 
 export type SendMessage = {
 	id: string;

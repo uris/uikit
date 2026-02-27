@@ -1,3 +1,5 @@
+import type { ToolTip } from '../../sharedTypes';
+
 export type UserPresence = {
 	id?: string;
 	first?: string;
@@ -29,3 +31,12 @@ export type PresensceColor = {
 	background?: string;
 	color?: string;
 };
+
+export interface UserListProps {
+	userPresence?: UserPresence[];
+	owner?: string;
+	currentUser?: string;
+	presenceID?: string;
+	onTogglePrompt?: (userPresence: UserPresence) => void;
+	onToolTip?: (tip: ToolTip | null) => void;
+}

@@ -1,17 +1,8 @@
 import { useCallback, useEffect, useState } from 'react';
 import { useTheme } from '../../hooks';
 import { IconButton } from '../IconButton';
-import type { ToolTip } from '../sharedTypes';
 import css from './UIButtonBar.module.css';
-import type { BarButton } from './_Types';
-
-export interface UIButtonBarProps {
-	options?: BarButton[];
-	label?: string;
-	current?: number;
-	onChange?: (option: BarButton) => void;
-	onToolTip?: (tip: ToolTip | null) => void;
-}
+import type { BarButton, UIButtonBarProps } from './_types';
 
 export function UIButtonBar(props: Readonly<UIButtonBarProps>) {
 	const {

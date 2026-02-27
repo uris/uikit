@@ -1,1 +1,2 @@
-export { IconNames, type IconProps, Icon } from './Icon';
+export { Icon } from './Icon';
+export type { IconProps } from './_types';

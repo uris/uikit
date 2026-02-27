@@ -1,6 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { Dot } from '../uikit/Dot/Dot';
 import { FlexDiv } from '../uikit/FlexDiv/FlexDiv';
+import { runDotPlay } from './playHelpers';
 
 const meta: Meta<typeof Dot> = {
 	title: 'UI Kit/Dot',
@@ -34,5 +35,8 @@ export const Default: StoryObj<typeof Dot> = {
 				<Dot {...args} />
 			</FlexDiv>
 		);
+	},
+	play: async ({ canvasElement, args }) => {
+		await runDotPlay({ canvasElement, args });
 	},
 };

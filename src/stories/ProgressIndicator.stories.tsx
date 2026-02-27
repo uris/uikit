@@ -2,6 +2,7 @@ import type { Meta, StoryObj } from '@storybook/react-vite';
 import { fn } from 'storybook/test';
 import { FlexDiv } from '../uikit/FlexDiv/FlexDiv';
 import { ProgressIndicator } from '../uikit/Progress/ProgressIndicator/ProgressIndicator';
+import { runProgressIndicatorPlay } from './playHelpers';
 
 const meta: Meta<typeof ProgressIndicator> = {
 	title: 'UI Kit/ProgressIndicator',
@@ -28,5 +29,8 @@ export const Default: StoryObj<typeof ProgressIndicator> = {
 				<ProgressIndicator {...args} />
 			</FlexDiv>
 		);
+	},
+	play: async ({ canvasElement, args }) => {
+		await runProgressIndicatorPlay({ canvasElement, args });
 	},
 };

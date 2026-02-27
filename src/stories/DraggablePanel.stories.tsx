@@ -1,12 +1,13 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { useEffect, useRef, useState } from 'react';
-import { fn } from 'storybook/test';
+import { expect, fn } from 'storybook/test';
 import {
 	DraggablePanel,
 	type DraggablePanelProps,
 } from '../uikit/DraggablePanel/DrggablePanel';
 import { FlexDiv } from '../uikit/FlexDiv/FlexDiv';
 import { IconButton } from '../uikit/IconButton';
+import { runDraggablePanelPlay } from './playHelpers';
 
 const meta: Meta<typeof DraggablePanel> = {
 	title: 'UI Kit/Draggable Panel',
@@ -50,6 +51,34 @@ export default meta;
 export const Default: StoryObj<typeof DraggablePanel> = {
 	render: (args) => {
 		return <DraggablePanelWithChildren {...args} />;
+	},
+	play: async ({ canvasElement, args }) => {
+		await runDraggablePanelPlay({ canvasElement, args });
+	},
+};
+
+export const NoDrag: StoryObj<typeof DraggablePanel> = {
+	args: {
+		...meta.args,
+		drags: false,
+	},
+	render: Default.render,
+	play: async ({ canvasElement }) => {
+		const handle = Array.from(canvasElement.querySelectorAll('div')).find(
+			(node) => (node as HTMLElement).style.cursor === 'col-resize',
+		);
+		await expect(handle).toBeUndefined();
+	},
+};
+
+export const InitiallyClosed: StoryObj<typeof DraggablePanel> = {
+	args: {
+		...meta.args,
+		isClosed: true,
+	},
+	render: Default.render,
+	play: async ({ canvasElement, args }) => {
+		await runDraggablePanelPlay({ canvasElement, args });
 	},
 };
 

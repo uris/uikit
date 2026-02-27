@@ -11,34 +11,8 @@ import { Icon } from '../Icon';
 import { IconButton } from '../IconButton';
 import { type ToolTip, ToolTipType } from '../sharedTypes';
 import css from './TabBar.module.css';
-import type { TabOption } from './_Types';
-
-export const placeholderOptions: TabOption[] = [
-	{ name: 'Option 1', value: 'Option 1', icon: null },
-	{ name: 'Option 2', value: 'Option 2', icon: 'wallet' },
-];
-
-export interface TabBarProps {
-	options?: TabOption[];
-	selected?: number;
-	underline?: boolean;
-	border?: boolean;
-	selectedValue?: string;
-	height?: number | string;
-	width?: number | string;
-	tabWidth?: 'min-content' | 'distribute' | number;
-	closeWidth?: number | string;
-	padding?: number | string;
-	iconSize?: number;
-	iconGap?: number;
-	tabGap?: number;
-	disabled?: boolean;
-	hasClose?: boolean;
-	onToolTip?: (tip: ToolTip | null) => void;
-	onChange?: (index: number) => void;
-	onTabChange?: (option: TabOption) => void;
-	onClose?: () => void;
-}
+import type { TabBarProps, TabOption, TabOptionProps } from './_types';
+import { placeholderOptions } from './_types';
 
 export const TabBar = React.memo((props: TabBarProps) => {
 	const {
@@ -168,23 +142,6 @@ export const TabBar = React.memo((props: TabBarProps) => {
 });
 
 TabBar.displayName = 'TabBar';
-
-interface TabOptionProps {
-	label?: string;
-	value?: number;
-	icon?: string | null;
-	showToolTip?: string | null;
-	selected?: boolean;
-	padding?: number | string;
-	iconSize?: number;
-	iconGap?: number;
-	disabled?: boolean;
-	count?: number;
-	tabWidth?: 'min-content' | 'distribute' | number;
-	underline?: boolean;
-	onClick?: (value: number) => void;
-	onToolTip?: (tip: ToolTip | null) => void;
-}
 
 const Option = React.memo(
 	(props: TabOptionProps) => {

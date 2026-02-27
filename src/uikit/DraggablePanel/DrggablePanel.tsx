@@ -9,7 +9,7 @@ import React, {
 import { useTheme } from '../../hooks';
 import { useObserveResize } from '../../hooks/useObserveResize';
 import css from './DraggablePanel.module.css';
-import type { Constraint } from './_Types';
+import type { Constraint } from './_types';
 
 type Info = {
 	div: RefObject<HTMLDivElement | null>;

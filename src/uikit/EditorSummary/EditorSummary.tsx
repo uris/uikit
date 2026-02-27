@@ -1,21 +1,8 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { useTheme } from '../../hooks';
 import { IconButton } from '../IconButton';
-import type { ToolTip } from '../sharedTypes';
 import css from './EditorSummary.module.css';
-import type { SuggestMark } from './_Types';
-
-export interface EditorSummaryProps {
-	edits?: SuggestMark[];
-	current?: number;
-	label?: string;
-	onAcceptAll?: () => void;
-	onRejectAll?: () => void;
-	onAccept?: (edit: SuggestMark) => void;
-	onReject?: (edit: SuggestMark) => void;
-	onChange?: (index: number, edit: SuggestMark) => void;
-	onToolTip?: (tip: ToolTip | null) => void;
-}
+import type { EditorSummaryProps, SuggestMark } from './_types';
 
 export const EditorSummary = React.memo(function EditorSummary(
 	props: Readonly<EditorSummaryProps>,

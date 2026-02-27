@@ -1,6 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { Badge } from '../uikit/Badge/Badge';
 import { FlexDiv } from '../uikit/FlexDiv/FlexDiv';
+import { runBadgePlay } from './playHelpers';
 
 const meta: Meta<typeof Badge> = {
 	title: 'UI Kit/Badge',
@@ -27,5 +28,8 @@ export const Default: StoryObj<typeof Badge> = {
 				<Badge {...args} />
 			</FlexDiv>
 		);
+	},
+	play: async ({ canvasElement, args }) => {
+		await runBadgePlay({ canvasElement, args });
 	},
 };

@@ -2,6 +2,7 @@ import type { Meta, StoryObj } from '@storybook/react-vite';
 import { fn } from 'storybook/test';
 import { FlexDiv } from '../uikit/FlexDiv/FlexDiv';
 import { UILabel } from '../uikit/UILabel/UILabel';
+import { runUILabelPlay } from './playHelpers';
 
 const meta: Meta<typeof UILabel> = {
 	title: 'UI Kit/UILabel',
@@ -25,5 +26,20 @@ export const Default: StoryObj<typeof UILabel> = {
 				<UILabel {...args} />
 			</FlexDiv>
 		);
+	},
+	play: async ({ canvasElement, args }) => {
+		await runUILabelPlay({ canvasElement, args });
+	},
+};
+
+export const ButtonLabel: StoryObj<typeof UILabel> = {
+	args: {
+		...meta.args,
+		button: true,
+		round: true,
+	},
+	render: Default.render,
+	play: async ({ canvasElement, args }) => {
+		await runUILabelPlay({ canvasElement, args });
 	},
 };

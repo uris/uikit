@@ -2,6 +2,7 @@ import type { Meta, StoryObj } from '@storybook/react-vite';
 import { fn } from 'storybook/test';
 import { FlexDiv } from '../uikit/FlexDiv/FlexDiv';
 import { RadioButton } from '../uikit/RadioButton/RadioButton';
+import { runRadioButtonPlay } from './playHelpers';
 
 const meta: Meta<typeof RadioButton> = {
 	title: 'UI Kit/RadioButton',
@@ -40,5 +41,8 @@ export const Default: StoryObj<typeof RadioButton> = {
 				<RadioButton {...args} />
 			</FlexDiv>
 		);
+	},
+	play: async ({ canvasElement, args }) => {
+		await runRadioButtonPlay({ canvasElement, args });
 	},
 };

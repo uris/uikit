@@ -67,10 +67,12 @@ export { MessageInput } from './uikit/MessageInput';
 export type {
 	MessageInputProps,
 	SendMessage,
-	PromptType,
-	Role,
 	UploadDocument,
 } from './uikit/MessageInput';
+export type {
+	PromptType,
+	Role,
+} from './uikit/MessageInput/_types';
 
 export { Pager } from './uikit/Pager';
 export type { PagerProps } from './uikit/Pager';
@@ -107,11 +109,13 @@ export type { UIButtonProps, UIButtonHandle } from './uikit/UIButton';
 export { UIChip } from './uikit/UIChip';
 export type { UIChipProps } from './uikit/UIChip';
 
-export { Icon, IconNames } from './uikit/Icon';
+export { Icon } from './uikit/Icon';
 export type { IconProps } from './uikit/Icon';
+export type { IconNames } from './uikit/Icon/_types';
 
-export { UIFileIcon, UIFileIcons } from './uikit/UIFileIcon';
+export { UIFileIcon } from './uikit/UIFileIcon';
 export type { UIFileIconProps } from './uikit/UIFileIcon';
+export type { UIFileIcons } from './uikit/UIFileIcon/_types';
 
 export { UILabel } from './uikit/UILabel';
 export type { UILabelProps } from './uikit/UILabel';

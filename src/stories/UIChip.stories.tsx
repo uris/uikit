@@ -1,8 +1,9 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { fn } from 'storybook/test';
-import { FlexDiv } from '../uikit/FlexDiv/FlexDiv';
-import { IconNames } from '../uikit/Icon/Icon';
-import { UIChip } from '../uikit/UIChip/UIChip';
+import { FlexDiv } from '../uikit/FlexDiv';
+import { IconNames } from '../uikit/Icon/_types';
+import { UIChip } from '../uikit/UIChip';
+import { runUIChipPlay } from './playHelpers';
 
 const icons = Object.values(IconNames).sort();
 const meta: Meta<typeof UIChip> = {
@@ -21,6 +22,7 @@ const meta: Meta<typeof UIChip> = {
 		focused: false,
 		variant: 'regular',
 		unframed: false,
+		tooltip: "UI Chip's tooltip",
 		onClick: fn(),
 		onToolTip: fn(),
 	},
@@ -35,5 +37,8 @@ export const Default: StoryObj<typeof UIChip> = {
 				<UIChip {...args} />
 			</FlexDiv>
 		);
+	},
+	play: async ({ canvasElement, args }) => {
+		await runUIChipPlay({ canvasElement, args });
 	},
 };

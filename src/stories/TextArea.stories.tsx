@@ -2,6 +2,7 @@ import type { Meta, StoryObj } from '@storybook/react-vite';
 import { fn } from 'storybook/test';
 import { FlexDiv } from '../uikit/FlexDiv/FlexDiv';
 import { TextArea } from '../uikit/TextArea/TextArea';
+import { runTextAreaPlay } from './playHelpers';
 
 const meta: Meta<typeof TextArea> = {
 	title: 'UI Kit/TextArea',
@@ -42,5 +43,31 @@ export const Default: StoryObj<typeof TextArea> = {
 				<TextArea {...args} />
 			</FlexDiv>
 		);
+	},
+	play: async ({ canvasElement, args }) => {
+		await runTextAreaPlay({ canvasElement, args });
+	},
+};
+
+export const ReturnSubmits: StoryObj<typeof TextArea> = {
+	args: {
+		...meta.args,
+		returnSubmits: true,
+	},
+	render: Default.render,
+	play: async ({ canvasElement, args }) => {
+		await runTextAreaPlay({ canvasElement, args });
+	},
+};
+
+export const WithSendButton: StoryObj<typeof TextArea> = {
+	args: {
+		...meta.args,
+		hasSend: true,
+		value: 'Send this',
+	},
+	render: Default.render,
+	play: async ({ canvasElement, args }) => {
+		await runTextAreaPlay({ canvasElement, args });
 	},
 };

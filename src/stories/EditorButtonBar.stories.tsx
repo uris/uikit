@@ -2,6 +2,7 @@ import type { Meta, StoryObj } from '@storybook/react-vite';
 import { fn } from 'storybook/test';
 import { EditorButtonBar } from '../uikit/EditorButtonBar/EditorButtonBar';
 import { FlexDiv } from '../uikit/FlexDiv/FlexDiv';
+import { runEditorButtonBarPlay } from './playHelpers';
 
 const meta: Meta<typeof EditorButtonBar> = {
 	title: 'UI Kit / EditorButtonBar',
@@ -25,5 +26,8 @@ export const Default: StoryObj<typeof EditorButtonBar> = {
 				<EditorButtonBar {...args} />
 			</FlexDiv>
 		);
+	},
+	play: async ({ canvasElement, args }) => {
+		await runEditorButtonBarPlay({ canvasElement, args });
 	},
 };

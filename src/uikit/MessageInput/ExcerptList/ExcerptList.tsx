@@ -2,21 +2,8 @@ import { memo, useCallback, useMemo } from 'react';
 import { useTheme } from '../../../hooks';
 import { Icon } from '../../Icon';
 import { IconButton } from '../../IconButton';
-import type { ToolTip } from '../../sharedTypes';
 import css from './ExcerptList.module.css';
-
-export type DocExcerpt = {
-	content?: string;
-	docTitle?: string;
-	range?: { to: number; from: number } | null;
-	docID?: string;
-};
-
-interface ExcerptListProps {
-	excerpts?: DocExcerpt[];
-	onChange?: (excerpts: DocExcerpt[]) => void;
-	onToolTip?: (tip: ToolTip | null) => void;
-}
+import type { DocExcerpt, ExcerptListProps } from './_types';
 
 export const ExcerptList = memo(function ExcerptList(
 	props: Readonly<ExcerptListProps>,

@@ -1,4 +1,6 @@
+import type React from 'react';
 import type { DropDownOption } from '../DropDown';
+import type { ToolTip } from '../sharedTypes';
 
 export type EditControls = {
 	buttons?: ButtonBarGroup[];
@@ -41,4 +43,24 @@ export enum FormattingOption {
 	more = 'more',
 	copy = 'copy',
 	link = 'link',
+}
+
+export interface EditorButtonBarProps {
+	shortSize?: number;
+	mediumSize?: number;
+	state?: 'small' | 'medium' | 'regular' | 'auto';
+	activeFormats?: string[];
+	activeStyle?: 'h1' | 'h2' | 'h3' | 'p';
+	disabledFormats?: string[];
+	onCommand?: (command: any, e: React.MouseEvent<any> | undefined) => void;
+	onToolTip?: (tip: ToolTip | null) => void;
+}
+
+export interface RenderGroupProps {
+	onCommand?: (command: any, e: React.MouseEvent<any>) => void;
+	onToolTip?: (tip: ToolTip | null) => void;
+	buttonGroup: ButtonBarGroup;
+	activeFormats?: string[];
+	disabledFormats?: string[];
+	state?: 'regular' | 'small' | 'medium';
 }

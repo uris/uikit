@@ -1,7 +1,9 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
-import { fn } from 'storybook/test';
-import { FlexDiv } from '../uikit/FlexDiv/FlexDiv';
-import { TabBar, placeholderOptions } from '../uikit/TabBar/TabBar';
+import { expect, fn } from 'storybook/test';
+import { FlexDiv } from '../uikit/FlexDiv';
+import { TabBar } from '../uikit/TabBar';
+import { placeholderOptions } from '../uikit/TabBar/_types';
+import { runTabBarPlay } from './playHelpers';
 
 const meta: Meta<typeof TabBar> = {
 	title: 'UI Kit/TabBar',
@@ -38,5 +40,30 @@ export const Default: StoryObj<typeof TabBar> = {
 				<TabBar {...args} />
 			</FlexDiv>
 		);
+	},
+	play: async ({ canvasElement, args }) => {
+		await runTabBarPlay({ canvasElement, args });
+	},
+};
+
+export const WithClose: StoryObj<typeof TabBar> = {
+	args: {
+		...meta.args,
+		hasClose: true,
+	},
+	render: Default.render,
+	play: async ({ canvasElement, args }) => {
+		await runTabBarPlay({ canvasElement, args });
+	},
+};
+
+export const SelectedByValue: StoryObj<typeof TabBar> = {
+	args: {
+		...meta.args,
+		selectedValue: 'Option 2',
+	},
+	render: Default.render,
+	play: async ({ canvasElement }) => {
+		await expect(canvasElement).toHaveTextContent('Option 2');
 	},
 };

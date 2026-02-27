@@ -1,10 +1,6 @@
 import React, { useMemo } from 'react';
 import { useTheme } from '../../hooks';
-
-export interface DocsProps {
-	type?: 'pdf' | 'docx' | 'text' | 'not supported';
-	height?: number;
-}
+import type { DocsProps } from './_types';
 
 export const DocIcons = React.memo((props: DocsProps) => {
 	const { type = 'pdf', height = 36 } = props;

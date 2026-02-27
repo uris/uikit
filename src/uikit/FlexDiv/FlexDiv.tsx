@@ -2,7 +2,7 @@ import { motion } from 'motion/react';
 import React, { useMemo } from 'react';
 import { useTheme } from '../../hooks';
 import css from './FlexDiv.module.css';
-import type { FlexDivProps } from './_Types';
+import type { FlexDivProps } from './_types';
 
 // Extract helper functions outside component
 function setSize(style: string | number, isHeight: boolean) {

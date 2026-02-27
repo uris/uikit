@@ -1,1 +1,2 @@
-export { UICard, type UICardProps } from './UICard';
+export { UICard } from './UICard';
+export type { UICardProps } from './_types';

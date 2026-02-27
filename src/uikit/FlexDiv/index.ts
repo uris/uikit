@@ -1,2 +1,2 @@
 export { FlexDiv } from './FlexDiv';
-export type { FlexDivProps } from './_Types';
+export type { FlexDivProps } from './_types';

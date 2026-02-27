@@ -8,27 +8,7 @@ import React, {
 } from 'react';
 import { cleanString } from '../../util/utils';
 import css from './DivInput.module.css';
-
-export interface DivInputProps {
-	name?: string;
-	onClick?: () => void;
-	onDblClick?: () => void;
-	onChange?: (value: string | null) => void;
-	onSubmit?: (value: string) => void;
-	onFocus?: (event: React.FocusEvent<HTMLDivElement>) => void;
-	onBlur?: (value: string) => void;
-	placeholder?: string;
-	value?: string;
-	isEditable?: boolean;
-	wrap?: boolean;
-	focus?: boolean;
-	width?: number | string;
-	textAlign?: 'left' | 'center' | 'right';
-	clamp?: number;
-	padding?: string;
-	radius?: number;
-	bgColor?: string;
-}
+import type { DivInputProps } from './_types';
 
 export const DivInput = React.memo((props: DivInputProps) => {
 	const {

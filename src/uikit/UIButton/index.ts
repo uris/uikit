@@ -1,1 +1,2 @@
-export { UIButton, type UIButtonProps, type UIButtonHandle } from './UIButton';
+export { UIButton } from './UIButton';
+export type { UIButtonHandle, UIButtonProps } from './_types';

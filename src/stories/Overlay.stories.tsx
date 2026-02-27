@@ -1,7 +1,8 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
-import { fn } from 'storybook/test';
+import { expect, fn } from 'storybook/test';
 import { FlexDiv } from '../uikit/FlexDiv/FlexDiv';
 import { Overlay } from '../uikit/Overlay/Overlay';
+import { runOverlayPlay } from './playHelpers';
 
 const meta: Meta<typeof Overlay> = {
 	title: 'UI Kit/Overlay',
@@ -26,5 +27,33 @@ export const Default: StoryObj<typeof Overlay> = {
 				<Overlay {...args} />
 			</FlexDiv>
 		);
+	},
+	play: async ({ canvasElement, args }) => {
+		await runOverlayPlay({ canvasElement, args });
+	},
+};
+
+export const GlobalOverlay: StoryObj<typeof Overlay> = {
+	args: {
+		...meta.args,
+		global: true,
+		overlay: true,
+	},
+	render: Default.render,
+	play: async ({ canvasElement, args }) => {
+		await runOverlayPlay({ canvasElement, args });
+	},
+};
+
+export const HiddenGlobal: StoryObj<typeof Overlay> = {
+	args: {
+		...meta.args,
+		global: true,
+		overlay: false,
+	},
+	render: Default.render,
+	play: async ({ canvasElement }) => {
+		const overlay = canvasElement.querySelector('[class*="overlay"]');
+		await expect(overlay).not.toBeInTheDocument();
 	},
 };

@@ -1,6 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { FlexDiv } from '../uikit/FlexDiv/FlexDiv';
 import { Logos } from '../uikit/Logos/Logos';
+import { runLogosPlay } from './playHelpers';
 
 const meta: Meta<typeof Logos> = {
 	title: 'UI Kit/Logos',
@@ -21,5 +22,8 @@ export const Default: StoryObj<typeof Logos> = {
 				<Logos {...args} />
 			</FlexDiv>
 		);
+	},
+	play: async ({ canvasElement, args }) => {
+		await runLogosPlay({ canvasElement, args });
 	},
 };

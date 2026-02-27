@@ -1,2 +1,2 @@
-export { EditorSummary, type EditorSummaryProps } from './EditorSummary';
-export type { SuggestMark } from './_Types';
+export { EditorSummary } from './EditorSummary';
+export type { EditorSummaryProps, SuggestMark } from './_types';

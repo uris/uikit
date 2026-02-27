@@ -2,6 +2,7 @@ import type { Meta, StoryObj } from '@storybook/react-vite';
 import { fn } from 'storybook/test';
 import { FlexDiv } from '../uikit/FlexDiv/FlexDiv';
 import { UIButton } from '../uikit/UIButton/UIButton';
+import { runUIButtonPlay } from './playHelpers';
 
 const meta: Meta<typeof UIButton> = {
 	title: 'UI Kit/UIButton',
@@ -51,5 +52,8 @@ export const Default: StoryObj<typeof UIButton> = {
 				<UIButton {...args} />
 			</FlexDiv>
 		);
+	},
+	play: async ({ canvasElement, args }) => {
+		await runUIButtonPlay({ canvasElement, args });
 	},
 };

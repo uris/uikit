@@ -3,21 +3,14 @@ import { useTheme } from '../../hooks';
 import { useObserveResize } from '../../hooks/useObserveResize';
 import { DropDown, type DropDownOption } from '../DropDown';
 import { IconButton } from '../IconButton';
-import type { ToolTip } from '../sharedTypes';
 import css from './EditorButtonBar.module.css';
 import { coreButtons, editControls } from './_Data';
-import type { ButtonBarButton, ButtonBarGroup } from './_Types';
-
-export interface EditorButtonBarProps {
-	shortSize?: number;
-	mediumSize?: number;
-	state?: 'small' | 'medium' | 'regular' | 'auto';
-	activeFormats?: string[];
-	activeStyle?: 'h1' | 'h2' | 'h3' | 'p';
-	disabledFormats?: string[];
-	onCommand?: (command: any, e: React.MouseEvent<any> | undefined) => void;
-	onToolTip?: (tip: ToolTip | null) => void;
-}
+import type {
+	ButtonBarButton,
+	ButtonBarGroup,
+	EditorButtonBarProps,
+	RenderGroupProps,
+} from './_types';
 
 export const EditorButtonBar = React.memo((props: EditorButtonBarProps) => {
 	const {
@@ -116,15 +109,6 @@ export const EditorButtonBar = React.memo((props: EditorButtonBarProps) => {
 		</div>
 	);
 });
-
-interface RenderGroupProps {
-	onCommand?: (command: any, e: React.MouseEvent<any>) => void;
-	onToolTip?: (tip: ToolTip | null) => void;
-	buttonGroup: ButtonBarGroup;
-	activeFormats?: string[];
-	disabledFormats?: string[];
-	state?: 'regular' | 'small' | 'medium';
-}
 
 export const RenderGroup = React.memo((props: RenderGroupProps) => {
 	const {

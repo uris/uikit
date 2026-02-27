@@ -1,1 +1,2 @@
-export { DivInput, type DivInputProps } from './DivInput';
+export { DivInput } from './DivInput';
+export type { DivInputProps } from './_types';

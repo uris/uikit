@@ -1,4 +1,4 @@
-import { type Transition, type Variants, motion } from 'motion/react';
+import { motion } from 'motion/react';
 import React, {
 	forwardRef,
 	useCallback,
@@ -13,51 +13,10 @@ import { Badge } from '../Badge';
 import { Dot } from '../Dot';
 import { Icon } from '../Icon';
 import { ProgressIndicator } from '../Progress';
-import { type ToolTip, ToolTipType } from '../sharedTypes';
+import { ToolTipType } from '../sharedTypes';
+import type { ToolTip } from '../sharedTypes';
 import css from './UIButton.module.css';
-
-export interface UIButtonProps {
-	size?: 'large' | 'medium' | 'text';
-	variant?: 'solid' | 'outline' | 'text';
-	state?: 'normal' | 'hover' | 'disabled';
-	width?: string;
-	label?: string;
-	iconRight?: string;
-	iconLeft?: string;
-	fill?: boolean;
-	count?: number;
-	showDot?: boolean;
-	round?: boolean;
-	tooltip?: string;
-	iconSize?: number;
-	borderRadius?: number;
-	iconColor?: string;
-	bgColor?: string;
-	bgColorDisabled?: string;
-	labelColor?: string;
-	labelSize?: 's' | 'm' | 'l';
-	transition?: Transition;
-	variants?: Variants;
-	initial?: string;
-	animate?: string;
-	exit?: string;
-	underline?: boolean;
-	progress?: boolean;
-	working?: boolean;
-	duration?: number;
-	trigger?: boolean;
-	destructive?: boolean;
-	paddingRight?: number;
-	paddingLeft?: number;
-	onToolTip?: (tip: ToolTip | null) => void;
-	onClick?: (
-		e: React.MouseEvent<HTMLDivElement, MouseEvent> | undefined,
-	) => void;
-}
-
-export interface UIButtonHandle {
-	triggerClick: () => void;
-}
+import type { UIButtonHandle, UIButtonProps } from './_types';
 
 const UIButtonComponent = forwardRef<UIButtonHandle, UIButtonProps>(
 	(props, buttonRef: React.Ref<UIButtonHandle>) => {

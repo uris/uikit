@@ -1,3 +1,5 @@
+import type { ToolTip } from '../sharedTypes';
+
 export type AvatarInfo = {
 	first?: string;
 	last?: string;
@@ -7,3 +9,15 @@ export type AvatarInfo = {
 	color?: string;
 	bgColor?: string;
 };
+
+export interface AvatarGroupProps {
+	avatars?: AvatarInfo[] | null;
+	size?: number;
+	overlap?: number;
+	border?: number;
+	borderColor?: string;
+	gap?: number;
+	margin?: number;
+	firstOnly?: boolean;
+	onToolTip?: (tip: ToolTip | null) => void;
+}

@@ -3,6 +3,7 @@ import { fn } from 'storybook/test';
 import { lightTheme } from '../theme/themes';
 import { FlexDiv } from '../uikit/FlexDiv/FlexDiv';
 import { Switch } from '../uikit/Switch/Switch';
+import { runSwitchPlay } from './playHelpers';
 
 const meta: Meta<typeof Switch> = {
 	title: 'UI Kit/Switch',
@@ -28,5 +29,8 @@ export const Default: StoryObj<typeof Switch> = {
 				<Switch {...args} />
 			</FlexDiv>
 		);
+	},
+	play: async ({ canvasElement, args }) => {
+		await runSwitchPlay({ canvasElement, args });
 	},
 };

@@ -1,7 +1,9 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { fn } from 'storybook/test';
-import { FlexDiv } from '../uikit/FlexDiv/FlexDiv';
-import { UIFileIcon, UIFileIcons } from '../uikit/UIFileIcon/UIFileIcon';
+import { FlexDiv } from '../uikit/FlexDiv';
+import { UIFileIcon } from '../uikit/UIFileIcon';
+import { UIFileIcons } from '../uikit/UIFileIcon/_types';
+import { runUIFileIconPlay } from './playHelpers';
 
 const icons = Object.values(UIFileIcons).sort();
 const meta: Meta<typeof UIFileIcon> = {
@@ -31,5 +33,32 @@ export const Default: StoryObj<typeof UIFileIcon> = {
 				<UIFileIcon {...args} />
 			</FlexDiv>
 		);
+	},
+	play: async ({ canvasElement, args }) => {
+		await runUIFileIconPlay({ canvasElement, args });
+	},
+};
+
+export const PDF: StoryObj<typeof UIFileIcon> = {
+	args: {
+		...meta.args,
+		name: 'pdf',
+		pointer: true,
+	},
+	render: Default.render,
+	play: async ({ canvasElement, args }) => {
+		await runUIFileIconPlay({ canvasElement, args });
+	},
+};
+
+export const Spreadsheet: StoryObj<typeof UIFileIcon> = {
+	args: {
+		...meta.args,
+		name: 'spreadsheet',
+		pointer: true,
+	},
+	render: Default.render,
+	play: async ({ canvasElement, args }) => {
+		await runUIFileIconPlay({ canvasElement, args });
 	},
 };

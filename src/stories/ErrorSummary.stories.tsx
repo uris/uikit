@@ -4,6 +4,7 @@ import {
 	ErrorSummary,
 } from '../uikit/ErrorSummary/ErrorSummary';
 import { FlexDiv } from '../uikit/FlexDiv/FlexDiv';
+import { runErrorSummaryPlay } from './playHelpers';
 
 const errorMessages: ErrorMessage[] = [
 	{ id: '1', title: 'Error type 1', bullets: ['Bullet 1', 'Bullet 2'] },
@@ -27,5 +28,8 @@ export const Default: StoryObj<typeof ErrorSummary> = {
 				<ErrorSummary {...args} />
 			</FlexDiv>
 		);
+	},
+	play: async ({ canvasElement, args }) => {
+		await runErrorSummaryPlay({ canvasElement, args });
 	},
 };

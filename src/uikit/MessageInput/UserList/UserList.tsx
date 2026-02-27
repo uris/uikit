@@ -2,18 +2,8 @@ import type React from 'react';
 import { memo, useCallback, useEffect, useMemo, useState } from 'react';
 import { useTheme } from '../../../hooks';
 import { Avatar } from '../../Avatar';
-import type { ToolTip } from '../../sharedTypes';
 import css from './UserList.module.css';
-import { PrompState, type UserPresence } from './_Types';
-
-interface UserListProps {
-	userPresence?: UserPresence[];
-	owner?: string;
-	currentUser?: string;
-	presenceID?: string;
-	onTogglePrompt?: (userPresence: UserPresence) => void;
-	onToolTip?: (tip: ToolTip | null) => void;
-}
+import { PrompState, type UserListProps, type UserPresence } from './_types';
 
 function UserListComponent(props: Readonly<UserListProps>) {
 	const theme = useTheme();

@@ -2,28 +2,7 @@ import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { useTheme } from '../../hooks';
 import { IconButton } from '../IconButton';
 import css from './RadioButton.module.css';
-
-export type RadioButtonOption = {
-	fieldName?: string;
-	title?: string;
-	description?: string;
-	state?: boolean;
-	icon?: string;
-};
-
-export interface RadioButtonProps {
-	selected?: boolean;
-	option: RadioButtonOption;
-	deselect?: boolean;
-	tabIndex?: number;
-	wrap?: boolean;
-	list?: boolean;
-	hideRadio?: boolean;
-	toggleIcon?: boolean;
-	iconColor?: string;
-	noFrame?: boolean;
-	onChange?: (option: RadioButtonOption, state: boolean) => void;
-}
+import type { RadioButtonOption, RadioButtonProps } from './_types';
 
 export const RadioButton = React.memo((props: RadioButtonProps) => {
 	const theme = useTheme();

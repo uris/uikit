@@ -1,15 +1,7 @@
 import React, { useCallback, useMemo } from 'react';
 import { Icon } from '../Icon';
 import css from './UICard.module.css';
-
-export interface UICardProps {
-	id?: string;
-	icon?: string;
-	label?: string;
-	command?: string;
-	width?: number | string;
-	onCommand?: (command: { id?: string; command?: string }) => void;
-}
+import type { UICardProps } from './_types';
 
 export const UICard = React.memo(function UICard(props: Readonly<UICardProps>) {
 	const { id, icon, label, command, width, onCommand = () => null } = props;

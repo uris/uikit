@@ -1,1 +1,2 @@
-export { type PagerProps, Pager } from './Pager';
+export { Pager } from './Pager';
+export type { PagerProps } from './_types';

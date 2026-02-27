@@ -1,7 +1,8 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
-import { fn } from 'storybook/test';
+import { expect, fn } from 'storybook/test';
 import { DivInput } from '../uikit/DivInput/DivInput';
 import { FlexDiv } from '../uikit/FlexDiv/FlexDiv';
+import { runDivInputPlay } from './playHelpers';
 
 const meta: Meta<typeof DivInput> = {
 	title: 'UI Kit/DivInput',
@@ -43,5 +44,34 @@ export const Default: StoryObj<typeof DivInput> = {
 				<DivInput {...args} />
 			</FlexDiv>
 		);
+	},
+	play: async ({ canvasElement, args }) => {
+		await runDivInputPlay({ canvasElement, args });
+	},
+};
+
+export const Focused: StoryObj<typeof DivInput> = {
+	args: {
+		...meta.args,
+		value: 'Focus me',
+		focus: true,
+	},
+	render: Default.render,
+	play: async ({ canvasElement, args }) => {
+		await runDivInputPlay({ canvasElement, args });
+	},
+};
+
+export const ReadOnly: StoryObj<typeof DivInput> = {
+	args: {
+		...meta.args,
+		isEditable: false,
+		value: 'Read only text',
+	},
+	render: Default.render,
+	play: async ({ canvasElement }) => {
+		const textbox = canvasElement.querySelector('[role="textbox"]');
+		await expect(textbox).toBeInTheDocument();
+		await expect(textbox).toHaveAttribute('contenteditable', 'false');
 	},
 };

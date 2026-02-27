@@ -1,25 +1,10 @@
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { useTheme } from '../../hooks';
-import { Icon, type IconNames } from '../Icon';
+import { Icon } from '../Icon';
+import type { IconNames } from '../Icon/_types';
 import { type ToolTip, ToolTipType } from '../sharedTypes';
 import css from './UIChip.module.css';
-
-export interface UIChipProps {
-	label?: string;
-	icon?: IconNames | string;
-	disabled?: boolean;
-	focused?: boolean;
-	tooltip?: string;
-	background?: string;
-	variant?: 'small' | 'regular';
-	labelSize?: 's' | 'm' | 'l';
-	unframed?: boolean;
-	iconRight?: boolean;
-	iconColor?: string;
-	onToolTip?: (tip: ToolTip | null) => void;
-	onClick?: (e: React.MouseEvent<HTMLDivElement> | undefined) => void;
-	onMouseDown?: (e: React.MouseEvent<HTMLDivElement> | undefined) => void;
-}
+import type { UIChipProps } from './_types';
 
 export const UIChip = React.memo((props: UIChipProps) => {
 	const {

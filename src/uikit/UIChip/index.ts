@@ -1,3 +1,4 @@
-import { UIChip, type UIChipProps } from './UIChip';
+import { UIChip } from './UIChip';
+
 export { UIChip };
-export type { UIChipProps };
+export type { UIChipProps } from './_types';

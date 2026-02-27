@@ -4,7 +4,7 @@ import {
 	type ButtonBarGroup,
 	type EditControls,
 	FormattingOption,
-} from './_Types';
+} from './_types';
 
 export const coreButtons: { [key: string]: ButtonBarButton } = {
 	link: {

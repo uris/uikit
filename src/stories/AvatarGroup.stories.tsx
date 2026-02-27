@@ -2,6 +2,7 @@ import type { Meta, StoryObj } from '@storybook/react-vite';
 import type { AvatarInfo } from 'src/uikit/AvatarGroup';
 import { AvatarGroup } from '../uikit/AvatarGroup';
 import { FlexDiv } from '../uikit/FlexDiv';
+import { runAvatarGroupPlay } from './playHelpers';
 
 const avatars: AvatarInfo[] = [
 	{
@@ -38,5 +39,8 @@ export const Default: StoryObj<typeof AvatarGroup> = {
 				<AvatarGroup {...args} />
 			</FlexDiv>
 		);
+	},
+	play: async ({ canvasElement, args }) => {
+		await runAvatarGroupPlay({ canvasElement, args });
 	},
 };

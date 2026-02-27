@@ -1,4 +1,4 @@
-import { type Transition, type Variants, motion } from 'motion/react';
+import { motion } from 'motion/react';
 import React, {
 	useCallback,
 	useEffect,
@@ -9,38 +9,10 @@ import React, {
 import { Badge } from '../Badge';
 import { Dot } from '../Dot';
 import { Icon } from '../Icon';
-import { type ToolTip, ToolTipType } from '../sharedTypes';
+import { ToolTipType } from '../sharedTypes';
+import type { ToolTip } from '../sharedTypes';
 import css from './IconButton.module.css';
-
-export interface IconButtonProps {
-	frameSize?: number;
-	iconSize?: number;
-	icon?: string;
-	tooltip?: string;
-	color?: string;
-	colorOn?: string;
-	fillColor?: string;
-	disabled?: boolean;
-	bgColor?: string;
-	bgColorOn?: string;
-	bgColorHover?: string;
-	toggle?: boolean;
-	hover?: boolean;
-	toggleIcon?: boolean;
-	isToggled?: boolean;
-	showDot?: boolean;
-	count?: number;
-	transition?: Transition;
-	label?: string;
-	border?: boolean;
-	variants?: Variants;
-	initial?: string;
-	animate?: string;
-	exit?: string;
-	borderRadius?: number;
-	onClick?: (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => void;
-	onToolTip?: (tip: ToolTip | null) => void;
-}
+import type { IconButtonProps } from './_types';
 
 export const IconButton = React.memo((props: IconButtonProps) => {
 	const {

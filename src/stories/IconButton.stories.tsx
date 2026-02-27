@@ -1,8 +1,9 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { fn } from 'storybook/test';
-import { FlexDiv } from '../uikit/FlexDiv/FlexDiv';
-import { IconNames } from '../uikit/Icon/Icon';
-import { IconButton } from '../uikit/IconButton/IconButton';
+import { FlexDiv } from '../uikit/FlexDiv';
+import { IconNames } from '../uikit/Icon/_types';
+import { IconButton } from '../uikit/IconButton';
+import { runIconButtonPlay } from './playHelpers';
 
 const icons = Object.values(IconNames);
 const meta: Meta<typeof IconButton> = {
@@ -54,5 +55,8 @@ export const Default: StoryObj<typeof IconButton> = {
 				<IconButton {...args} />
 			</FlexDiv>
 		);
+	},
+	play: async ({ canvasElement, args }) => {
+		await runIconButtonPlay({ canvasElement, args });
 	},
 };

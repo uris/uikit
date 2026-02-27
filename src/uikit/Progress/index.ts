@@ -1,5 +1,4 @@
-export { DoneCheck, type DoneCheckProps } from './DoneCheck/DoneCheck';
-export {
-	ProgressIndicator,
-	type ProgressIndicatorProps,
-} from './ProgressIndicator/ProgressIndicator';
+export { DoneCheck } from './DoneCheck/DoneCheck';
+export type { DoneCheckProps } from './DoneCheck/_types';
+export { ProgressIndicator } from './ProgressIndicator/ProgressIndicator';
+export type { ProgressIndicatorProps } from './ProgressIndicator/_types';

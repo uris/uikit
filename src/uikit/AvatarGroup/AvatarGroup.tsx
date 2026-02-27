@@ -1,20 +1,7 @@
 import React, { useMemo } from 'react';
 import { Avatar } from '../Avatar';
-import type { ToolTip } from '../sharedTypes';
 import css from './AvatarGroup.module.css';
-import type { AvatarInfo } from './_Types';
-
-export interface AvatarGroupProps {
-	avatars?: AvatarInfo[] | null;
-	size?: number;
-	overlap?: number;
-	border?: number;
-	borderColor?: string;
-	gap?: number;
-	margin?: number;
-	firstOnly?: boolean;
-	onToolTip?: (tip: ToolTip | null) => void;
-}
+import type { AvatarGroupProps, AvatarInfo } from './_types';
 
 export const AvatarGroup = React.memo((props: AvatarGroupProps) => {
 	const {

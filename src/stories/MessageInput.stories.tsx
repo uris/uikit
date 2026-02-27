@@ -7,6 +7,7 @@ import {
 	PrompState,
 	type UserPresence,
 } from '../uikit/MessageInput/UserList/_Types';
+import { runMessageInputPlay } from './playHelpers';
 
 const testFile: Partial<File> = {
 	name: 'secret-plans-to-blow-up-the-deathstar.docx',
@@ -77,5 +78,8 @@ export const Default: StoryObj<typeof MessageInput> = {
 				<MessageInput {...args} />
 			</FlexDiv>
 		);
+	},
+	play: async ({ canvasElement, args }) => {
+		await runMessageInputPlay({ canvasElement, args });
 	},
 };

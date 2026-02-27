@@ -1,20 +1,7 @@
-import { type Transition, motion } from 'motion/react';
+import { motion } from 'motion/react';
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import css from './Switch.module.css';
-
-export interface SwitchProps {
-	state?: boolean;
-	height?: number;
-	width?: number;
-	bgColorOff?: string;
-	bgColorOn?: string;
-	knobColor?: string;
-	padding?: number;
-	onChange?: (state: boolean) => void;
-}
-
-// Extract static transition config
-const TRANSITION: Transition = { ease: 'easeInOut', duration: 0.3 };
+import { type SwitchProps, TRANSITION } from './_types';
 
 export const Switch = React.memo((props: SwitchProps) => {
 	const {
