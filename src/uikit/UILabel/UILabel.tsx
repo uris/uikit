@@ -1,6 +1,7 @@
 import type React from 'react';
 import { useCallback, useMemo } from 'react';
 import { useTheme } from '../../hooks';
+import { useTrackRenders } from '../../hooks/useTrackRenders';
 import css from './UILabel.module.css';
 import type { UILabelProps } from './_types';
 
@@ -113,6 +114,10 @@ export function UILabel(props: Readonly<UILabelProps>) {
 	]
 		.filter(Boolean)
 		.join(' ');
+
+	/* START.DEBUG */
+	useTrackRenders(props, 'UILabel');
+	/* END.DEBUG */
 
 	return (
 		<div

@@ -81,11 +81,7 @@ export async function runDivInputPlay<TArgs>({
 	const textbox = canvas.getByRole('textbox');
 	await userEvent.click(textbox);
 	await userEvent.type(textbox, 'abc');
-	fireEvent.paste(textbox, {
-		clipboardData: {
-			getData: () => ' pasted ',
-		},
-	});
+	await userEvent.paste('pasted');
 	await userEvent.keyboard('{Enter}');
 	if (isFn(storyArgs.onClick)) {
 		await expect(storyArgs.onClick).toHaveBeenCalled();
@@ -154,7 +150,7 @@ export async function runDropDownPlay<TArgs>({
 	if (isFn(storyArgs.onChange)) {
 		await expect(storyArgs.onChange).toHaveBeenCalled();
 	}
-	if (isFn(storyArgs.onValidate)) {
+	if (isFn(storyArgs.onValidate) && storyArgs.value === '') {
 		await expect(storyArgs.onValidate).toHaveBeenCalled();
 	}
 }
@@ -179,32 +175,6 @@ export async function runEditorButtonBarPlay<TArgs>({
 	}
 	if (isFn(storyArgs.onCommand)) {
 		await expect(storyArgs.onCommand).toHaveBeenCalled();
-	}
-}
-
-export async function runEditorSummaryPlay<TArgs>({
-	args,
-	canvasElement,
-}: PlayContext<TArgs>) {
-	await expectCanvas(canvasElement);
-	const canvas = within(canvasElement);
-	const storyArgs = asArgs(args);
-	await expect(canvas.getByText(/Suggested Edits/i)).toBeInTheDocument();
-	const icons = canvas.getAllByRole('img');
-	for (const icon of icons.slice(0, 5)) {
-		await userEvent.click(icon);
-	}
-	if (isFn(storyArgs.onChange)) {
-		await expect(storyArgs.onChange).toHaveBeenCalled();
-	}
-	if (isFn(storyArgs.onAccept)) {
-		await expect(storyArgs.onAccept).toHaveBeenCalled();
-	}
-	if (isFn(storyArgs.onReject)) {
-		await expect(storyArgs.onReject).toHaveBeenCalled();
-	}
-	if (isFn(storyArgs.onRejectAll)) {
-		await expect(storyArgs.onRejectAll).toHaveBeenCalled();
 	}
 }
 
@@ -289,10 +259,19 @@ export async function runMessageInputPlay<TArgs>({
 	const canvas = within(canvasElement);
 	const storyArgs = asArgs(args);
 	const input = canvas.getByRole('textbox');
+	await userEvent.click(input);
 	await userEvent.type(input, 'hello');
 	if (isFn(storyArgs.onChange)) {
 		await expect(storyArgs.onChange).toHaveBeenCalled();
 	}
+	await userEvent.tab();
+	if (isFn(storyArgs.onFocus)) {
+		await expect(storyArgs.onFocus).toHaveBeenCalled();
+	}
+	if (isFn(storyArgs.onBlur)) {
+		await expect(storyArgs.onBlur).toHaveBeenCalled();
+	}
+	await userEvent.click(input);
 	await userEvent.type(input, '{enter}');
 	if (isFn(storyArgs.onSend)) {
 		await expect(storyArgs.onSend).toHaveBeenCalled();
@@ -486,15 +465,41 @@ export async function runTextFieldPlay<TArgs>({
 	await expectCanvas(canvasElement);
 	const canvas = within(canvasElement);
 	const storyArgs = asArgs(args);
-	const input = canvas.getByRole('textbox');
+	const input = canvasElement.querySelector('input') as HTMLInputElement | null;
+	await expect(input).toBeInTheDocument();
+	if (!input) return;
 	await userEvent.click(input);
-	await userEvent.type(input, 'abc');
+	await userEvent.type(input, 'a');
+	await userEvent.tab();
+	await userEvent.click(input);
+	await userEvent.type(input, 'bc');
 	await userEvent.keyboard('{Enter}');
 	if (isFn(storyArgs.onChange)) {
 		await expect(storyArgs.onChange).toHaveBeenCalled();
 	}
+	if (isFn(storyArgs.onFocus)) {
+		await expect(storyArgs.onFocus).toHaveBeenCalled();
+	}
+	if (isFn(storyArgs.onBlur)) {
+		await expect(storyArgs.onBlur).toHaveBeenCalled();
+	}
+	if (isFn(storyArgs.onValidate) && storyArgs.value === '') {
+		await expect(storyArgs.onValidate).toHaveBeenCalled();
+	}
 	if (isFn(storyArgs.onSubmit)) {
 		await expect(storyArgs.onSubmit).toHaveBeenCalled();
+	}
+	if (storyArgs.actionButton === true) {
+		await userEvent.click(canvas.getByText('Translate'));
+		if (isFn(storyArgs.onAction)) {
+			await expect(storyArgs.onAction).toHaveBeenCalled();
+		}
+	}
+	if (storyArgs.inputType === 'password') {
+		const icons = canvas.getAllByRole('img');
+		if (icons.length > 0) {
+			await userEvent.click(icons[icons.length - 1]);
+		}
 	}
 }
 

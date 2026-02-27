@@ -1,5 +1,6 @@
 import { AnimatePresence, motion } from 'motion/react';
 import React, { useCallback, useMemo } from 'react';
+import { useTrackRenders } from '../../hooks/useTrackRenders';
 import css from './Overlay.module.css';
 import type { OverlayProps } from './_types';
 
@@ -38,6 +39,10 @@ export const Overlay = React.memo((props: OverlayProps) => {
 			'--overlay-color': color ?? 'rgb(0,0,0)',
 		} as React.CSSProperties;
 	}, [color]);
+
+	/* START.DEBUG */
+	useTrackRenders(props, 'Overlay');
+	/* END.DEBUG */
 
 	return (
 		<AnimatePresence initial={false}>

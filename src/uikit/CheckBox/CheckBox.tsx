@@ -1,6 +1,7 @@
 import { motion } from 'motion/react';
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { useTheme } from '../../hooks';
+import { useTrackRenders } from '../../hooks/useTrackRenders';
 import { Icon } from '../Icon';
 import css from './CheckBox.module.css';
 import type { CheckBoxProps } from './_types';
@@ -14,7 +15,7 @@ export const CheckBox = React.memo((props: CheckBoxProps) => {
 		label = undefined,
 		onChange = () => null,
 	} = props;
-	const [state, setState] = useState<'partial' | boolean>(checked);
+	const [state, setState] = useState<'mixed' | boolean>(checked);
 	const theme = useTheme();
 
 	useEffect(() => setState(checked), [checked]);
@@ -22,7 +23,7 @@ export const CheckBox = React.memo((props: CheckBoxProps) => {
 	// memo icon name
 	const iconName = useMemo(() => {
 		if (state === true) return 'checked';
-		if (state === 'partial') return 'partial';
+		if (state === 'mixed') return 'partial';
 		return 'unchecked';
 	}, [state]);
 
@@ -30,7 +31,7 @@ export const CheckBox = React.memo((props: CheckBoxProps) => {
 	const iconColor = useMemo(() => {
 		if (color) return color;
 		if (disabled) return theme.colors['core-icon-disabled'];
-		if (state === 'partial') return theme.colors['core-icon-primary'];
+		if (state === 'mixed') return theme.colors['core-icon-primary'];
 		if (!state) return theme.colors['core-icon-secondary'];
 		return theme.colors['core-text-special'];
 	}, [color, disabled, state, theme]);
@@ -49,7 +50,7 @@ export const CheckBox = React.memo((props: CheckBoxProps) => {
 		switch (state) {
 			case true:
 				break;
-			case 'partial':
+			case 'mixed':
 			case false:
 				newState = true;
 				break;
@@ -69,6 +70,10 @@ export const CheckBox = React.memo((props: CheckBoxProps) => {
 		[handleToggle],
 	);
 
+	/* START.DEBUG */
+	useTrackRenders(props, 'Checkbox');
+	/* END.DEBUG */
+
 	return (
 		<motion.div
 			className={css.wrapper}
@@ -77,7 +82,7 @@ export const CheckBox = React.memo((props: CheckBoxProps) => {
 			onKeyDown={handleKeyDown}
 			tabIndex={disabled ? -1 : 0}
 			role={'checkbox'}
-			aria-checked={state === 'partial' ? 'mixed' : state}
+			aria-checked={state === 'mixed' ? 'mixed' : state}
 			aria-disabled={disabled}
 		>
 			<div className={css.icon}>

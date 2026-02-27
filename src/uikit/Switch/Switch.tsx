@@ -1,5 +1,6 @@
 import { motion } from 'motion/react';
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
+import { useTrackRenders } from '../../hooks/useTrackRenders';
 import css from './Switch.module.css';
 import { type SwitchProps, TRANSITION } from './_types';
 
@@ -53,6 +54,10 @@ export const Switch = React.memo((props: SwitchProps) => {
 			'--switch-knob-size': `${height - padding * 2}px`,
 		} as React.CSSProperties;
 	}, [width, height, padding]);
+
+	/* START.DEBUG */
+	useTrackRenders(props, 'Switch');
+	/* END.DEBUG */
 
 	return (
 		<motion.div

@@ -1,6 +1,7 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { useTheme } from '../../hooks';
 import { useObserveResize } from '../../hooks/useObserveResize';
+import { useTrackRenders } from '../../hooks/useTrackRenders';
 import { DropDown, type DropDownOption } from '../DropDown';
 import { IconButton } from '../IconButton';
 import css from './EditorButtonBar.module.css';
@@ -54,6 +55,10 @@ export const EditorButtonBar = React.memo((props: EditorButtonBarProps) => {
 		},
 		[onCommand],
 	);
+
+	/* START.DEBUG */
+	useTrackRenders(props, 'EditorButtonBar');
+	/* END.DEBUG */
 
 	return (
 		<div className={css.wrapper} ref={ref}>

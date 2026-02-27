@@ -62,11 +62,18 @@ export function debug(previous: any, updated: any, name = 'component') {
 	} else {
 		for (const key of Object.keys(updated)) {
 			if (updated[key] !== props[key]) {
-				const propName = `${key}:`;
-				const prev = JSON.stringify(props[key]);
-				const next = JSON.stringify(updated[key]);
-				const valueChanged = `${prev} > ${next}`;
-				reasons.push(`${propName} ${valueChanged}`);
+				try {
+					const propName = `${key}:`;
+					const prev = JSON.stringify(props[key]);
+					const next = JSON.stringify(updated[key]);
+					const valueChanged = `${prev} > ${next}`;
+					reasons.push(`${propName} ${valueChanged}`);
+				} catch (error) {
+					let message = 'Unknown error';
+					if (error instanceof Error) message = error.message;
+					if (typeof error === 'string') message = error;
+					reasons.push(`${key} ${message}`);
+				}
 			}
 		}
 		console.log({

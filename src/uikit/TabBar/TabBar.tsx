@@ -6,6 +6,7 @@ import React, {
 	useState,
 } from 'react';
 import { useTheme } from '../../hooks';
+import { useTrackRenders } from '../../hooks/useTrackRenders';
 import { Badge } from '../Badge';
 import { Icon } from '../Icon';
 import { IconButton } from '../IconButton';
@@ -241,6 +242,10 @@ const Option = React.memo(
 			setTabWidth,
 			setUnderline,
 		]);
+
+		/* START.DEBUG */
+		useTrackRenders(props, 'TabBar');
+		/* END.DEBUG */
 
 		return (
 			<div

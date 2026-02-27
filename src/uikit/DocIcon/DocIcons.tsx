@@ -1,5 +1,6 @@
 import React, { useMemo } from 'react';
 import { useTheme } from '../../hooks';
+import { useTrackRenders } from '../../hooks/useTrackRenders';
 import type { DocsProps } from './_types';
 
 export const DocIcons = React.memo((props: DocsProps) => {
@@ -116,6 +117,10 @@ export const DocIcons = React.memo((props: DocsProps) => {
 		const item = images.filter((data) => type === data.name);
 		return item ? item[0].svg : null;
 	}, [height, type, theme]);
+
+	/* START.DEBUG */
+	useTrackRenders(props, 'DocIcon');
+	/* END.DEBUG */
 
 	return (
 		<div

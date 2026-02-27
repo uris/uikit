@@ -1,4 +1,5 @@
 import React, { useMemo } from 'react';
+import { useTrackRenders } from '../../hooks/useTrackRenders';
 import { Avatar } from '../Avatar';
 import css from './AvatarGroup.module.css';
 import type { AvatarGroupProps, AvatarInfo } from './_types';
@@ -46,6 +47,10 @@ export const AvatarGroup = React.memo((props: AvatarGroupProps) => {
 			</div>
 		));
 	}, [avatars, size, border, borderColor, firstOnly, onToolTip]);
+
+	/* START.DEBUG */
+	useTrackRenders(props, 'Avatar Group');
+	/* END.DEBUG */
 
 	return (
 		<div className={css.wrapper} style={cssVars}>

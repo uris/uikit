@@ -1,5 +1,6 @@
 import { AnimatePresence, motion } from 'motion/react';
 import React, { useMemo } from 'react';
+import { useTrackRenders } from '../../hooks/useTrackRenders';
 import css from './Dot.module.css';
 import { DEFAULT_TRANSITION, DEFAULT_VARIANTS, type DotProps } from './_types';
 
@@ -71,6 +72,10 @@ export const Dot = React.memo((props: DotProps) => {
 			'--dot-bg': `${bgColor}`,
 		} as React.CSSProperties;
 	}, [size, position, topOffset, rightOffset, border, bgColor]);
+
+	/* START.DEBUG */
+	useTrackRenders(props, 'Dot');
+	/* END.DEBUG */
 
 	return (
 		<AnimatePresence initial={false}>

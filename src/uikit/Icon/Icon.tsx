@@ -1,5 +1,6 @@
 import React, { useMemo } from 'react';
 import { useTheme } from '../../hooks';
+import { useTrackRenders } from '../../hooks/useTrackRenders';
 import type { IconProps } from './_types';
 import { type UIIcon, getIconRegistry } from './iconRegistry';
 
@@ -45,6 +46,10 @@ export const Icon = React.memo((props: IconProps) => {
 		theme,
 		opacity,
 	]);
+
+	/* START.DEBUG */
+	useTrackRenders(props, 'Icon');
+	/* END.DEBUG */
 
 	// Memoize the icon creation - only creates the ONE icon needed when name or toggle changes
 	const renderedIcon = useMemo(() => {

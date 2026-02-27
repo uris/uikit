@@ -9,6 +9,7 @@ import React, {
 	useState,
 } from 'react';
 import { useTheme } from '../../hooks';
+import { useTrackRenders } from '../../hooks/useTrackRenders';
 import { Badge } from '../Badge';
 import { Dot } from '../Dot';
 import { Icon } from '../Icon';
@@ -378,6 +379,10 @@ const UIButtonComponent = forwardRef<UIButtonHandle, UIButtonProps>(
 				'--ui-button-min-width': btnWidth ? setStyle(btnWidth) : 'unset',
 			} as React.CSSProperties;
 		}, [underline, btnWidth, setStyle]);
+
+		/* START.DEBUG */
+		useTrackRenders(props, 'UIButton');
+		/* END.DEBUG */
 
 		return (
 			<motion.div

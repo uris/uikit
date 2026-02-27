@@ -1,4 +1,5 @@
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
+import { useTrackRenders } from '../../hooks/useTrackRenders';
 import { RadioButton, type RadioButtonOption } from '../RadioButton';
 import css from './RadioButtonList.module.css';
 import type { RadioButtonListProps } from './_types';
@@ -144,6 +145,10 @@ export const RadioButtonList = React.memo((props: RadioButtonListProps) => {
 			'--rb-gap': `${gap}px`,
 		} as React.CSSProperties;
 	}, [wrap, margin, gap, noFrame]);
+
+	/* START.DEBUG */
+	useTrackRenders(props, 'Radio Button List');
+	/* END.DEBUG */
 
 	return (
 		<div

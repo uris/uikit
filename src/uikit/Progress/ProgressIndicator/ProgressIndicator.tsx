@@ -2,6 +2,7 @@ import { AnimatePresence, motion } from 'motion/react';
 import type React from 'react';
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { useTheme } from '../../../hooks';
+import { useTrackRenders } from '../../../hooks/useTrackRenders';
 import css from './ProgressIndicator.module.css';
 import type { ProgressIndicatorProps } from './_types';
 
@@ -51,6 +52,10 @@ export function ProgressIndicator(props: Readonly<ProgressIndicatorProps>) {
 	const openCircle = useMemo(() => {
 		return OpenCircle(size, secondsPerSpin, color, stroke, playing);
 	}, [size, secondsPerSpin, color, stroke, playing]);
+
+	/* START.DEBUG */
+	useTrackRenders(props, 'Progress Indicator');
+	/* END.DEBUG */
 
 	return (
 		<AnimatePresence initial={true}>

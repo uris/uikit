@@ -1,5 +1,6 @@
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { useTheme } from '../../hooks';
+import { useTrackRenders } from '../../hooks/useTrackRenders';
 import { IconButton } from '../IconButton';
 import css from './RadioButton.module.css';
 import type { RadioButtonOption, RadioButtonProps } from './_types';
@@ -69,6 +70,10 @@ export const RadioButton = React.memo((props: RadioButtonProps) => {
 			'--rb-bg': isSelected ? 'var(--core-surface-secondary)' : 'transparent',
 		} as React.CSSProperties;
 	}, [setFlex, isSelected, wrap, noFrame]);
+
+	/* START.DEBUG */
+	useTrackRenders(props, 'Radio Button');
+	/* END.DEBUG */
 
 	return (
 		<div

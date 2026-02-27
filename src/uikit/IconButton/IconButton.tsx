@@ -6,6 +6,7 @@ import React, {
 	useRef,
 	useState,
 } from 'react';
+import { useTrackRenders } from '../../hooks/useTrackRenders';
 import { Badge } from '../Badge';
 import { Dot } from '../Dot';
 import { Icon } from '../Icon';
@@ -119,6 +120,10 @@ export const IconButton = React.memo((props: IconButtonProps) => {
 			'--ib-color': textColor,
 		} as React.CSSProperties;
 	}, [bgColorNormal, bgHoverColor, textColor, border, frameSize, borderRadius]);
+
+	/* START.DEBUG */
+	useTrackRenders(props, 'IconButton');
+	/* END.DEBUG */
 
 	return (
 		<motion.div

@@ -8,6 +8,7 @@ import React, {
 } from 'react';
 import { useTheme } from '../../hooks';
 import { useObserveResize } from '../../hooks/useObserveResize';
+import { useTrackRenders } from '../../hooks/useTrackRenders';
 import css from './DraggablePanel.module.css';
 import type { Constraint } from './_types';
 
@@ -350,6 +351,10 @@ export const DraggablePanel = React.memo((props: DraggablePanelProps) => {
 			'--panel-bg': bgColor ?? 'transparent',
 		} as React.CSSProperties;
 	}, [bgColor]);
+
+	/* START.DEBUG */
+	useTrackRenders(props, 'DraggableDiv');
+	/* END.DEBUG */
 
 	return (
 		<div

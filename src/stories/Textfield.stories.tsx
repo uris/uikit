@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { expect, fn } from 'storybook/test';
-import { FlexDiv } from '../uikit/FlexDiv/FlexDiv';
-import { TextField } from '../uikit/Textfield/TextField';
+import { FlexDiv } from '../uikit/FlexDiv';
+import { TextField } from '../uikit/Textfield';
 import { runTextFieldPlay } from './playHelpers';
 
 const meta: Meta<typeof TextField> = {
@@ -43,6 +43,7 @@ export const Default: StoryObj<typeof TextField> = {
 export const PasswordWithAction: StoryObj<typeof TextField> = {
 	args: {
 		...meta.args,
+		placeholder: 'Enter password',
 		inputType: 'password',
 		actionButton: true,
 		value: 'secret',

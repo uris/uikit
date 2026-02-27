@@ -1,5 +1,6 @@
 import { AnimatePresence, type Transition, motion } from 'motion/react';
 import React, { useMemo } from 'react';
+import { useTrackRenders } from '../../hooks/useTrackRenders';
 import css from './ErrorSummary.module.css';
 import type { ErrorMessage, ErrorSummaryProps } from './_types';
 
@@ -46,6 +47,10 @@ export const ErrorSummary = React.memo((props: ErrorSummaryProps) => {
 			return null;
 		});
 	}, [entries, errors]);
+
+	/* START.DEBUG */
+	useTrackRenders(props, 'ErrorSummary');
+	/* END.DEBUG */
 
 	return (
 		<AnimatePresence initial={false}>

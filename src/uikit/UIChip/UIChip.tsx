@@ -1,5 +1,6 @@
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { useTheme } from '../../hooks';
+import { useTrackRenders } from '../../hooks/useTrackRenders';
 import { Icon } from '../Icon';
 import type { IconNames } from '../Icon/_types';
 import { type ToolTip, ToolTipType } from '../sharedTypes';
@@ -99,6 +100,10 @@ export const UIChip = React.memo((props: UIChipProps) => {
 			'--ui-chip-border-color': unframed ? 'transparent' : computedIconColor,
 		} as React.CSSProperties;
 	}, [padding, background, variant, unframed, computedIconColor]);
+
+	/* START.DEBUG */
+	useTrackRenders(props, 'UIChip');
+	/* END.DEBUG */
 
 	return (
 		<div

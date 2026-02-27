@@ -70,3 +70,19 @@ export const Gallery: StoryObj<typeof Icon> = {
 		await expect(args.onClick).toHaveBeenCalled();
 	},
 };
+
+export const ViewToggled: StoryObj<typeof Icon> = {
+	args: {
+		...meta.args,
+		name: 'view',
+		toggle: true,
+	},
+	render: Default.render,
+	play: async ({ canvasElement, args }) => {
+		const canvas = within(canvasElement);
+		const rendered = canvas.getByRole('img');
+		await expect(rendered).toBeInTheDocument();
+		await userEvent.click(rendered);
+		await expect(args.onClick).toHaveBeenCalled();
+	},
+};

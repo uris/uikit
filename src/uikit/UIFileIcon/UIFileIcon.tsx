@@ -1,5 +1,6 @@
 import React, { useCallback, useMemo } from 'react';
 import { useTheme } from '../../hooks';
+import { useTrackRenders } from '../../hooks/useTrackRenders';
 import type { FileIconDefinition, UIFileIconProps } from './_types';
 import { UIFileIcons } from './_types';
 
@@ -138,6 +139,10 @@ export const UIFileIcon = React.memo((props: UIFileIconProps) => {
 	const svgElement = FileIcon.filter((icon) => {
 		return icon.name.toLowerCase() === name.toLowerCase();
 	});
+
+	/* START.DEBUG */
+	useTrackRenders(props, 'UIFileIcon');
+	/* END.DEBUG */
 
 	if (svgElement.length > 0) return svgElement[0].icon;
 	return null;

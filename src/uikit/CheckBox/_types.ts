@@ -1,6 +1,6 @@
 export interface CheckBoxProps {
 	size?: number;
-	checked?: 'partial' | boolean;
+	checked?: 'mixed' | boolean;
 	disabled?: boolean;
 	color?: string;
 	label?: string;

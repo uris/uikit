@@ -1,6 +1,7 @@
 import { useAnimate } from 'motion/react';
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { useTheme } from '../../hooks';
+import { useTrackRenders } from '../../hooks/useTrackRenders';
 import { Badge } from '../Badge';
 import { Icon } from '../Icon';
 import css from './Grouper.module.css';
@@ -57,6 +58,10 @@ export const Grouper = React.memo((props: GrouperProps) => {
 			'--grouper-icon-size': `${iconSize}px`,
 		} as React.CSSProperties;
 	}, [frameSize, iconSize, border, unframed]);
+
+	/* START.DEBUG */
+	useTrackRenders(props, 'Grouper');
+	/* END.DEBUG */
 
 	return (
 		<div

@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useState } from 'react';
 import { useTheme } from '../../hooks';
+import { useTrackRenders } from '../../hooks/useTrackRenders';
 import { IconButton } from '../IconButton';
 import css from './UIButtonBar.module.css';
 import type { BarButton, UIButtonBarProps } from './_types';
@@ -61,6 +62,10 @@ export function UIButtonBar(props: Readonly<UIButtonBarProps>) {
 		},
 		[currentPage, hovered, theme],
 	);
+
+	/* START.DEBUG */
+	useTrackRenders(props, 'UIButtonBar');
+	/* END.DEBUG */
 
 	return (
 		<div className={css.wrapper}>

@@ -6,6 +6,7 @@ import React, {
 	useRef,
 	useState,
 } from 'react';
+import { useTrackRenders } from '../../hooks/useTrackRenders';
 import { cleanString } from '../../util/utils';
 import css from './DivInput.module.css';
 import type { DivInputProps } from './_types';
@@ -141,7 +142,10 @@ export const DivInput = React.memo((props: DivInputProps) => {
 	const handlePaste = useCallback(
 		(e: React.ClipboardEvent<HTMLDivElement>) => {
 			e.preventDefault();
-			const pasteText = cleanString(e.clipboardData.getData('text/plain'));
+			if (!e.clipboardData) return;
+			const textData = e.clipboardData.getData('text/plain');
+			if (!textData) return;
+			const pasteText = cleanString(textData);
 			const selection = globalThis.getSelection();
 			if (!selection?.rangeCount) return;
 			selection?.deleteFromDocument();
@@ -234,6 +238,10 @@ export const DivInput = React.memo((props: DivInputProps) => {
 		bgColor,
 		radius,
 	]);
+
+	/* START.DEBUG */
+	useTrackRenders(props, 'DivInput');
+	/* END.DEBUG */
 
 	// avoid issues with safari that refocuses editable divs on blur
 	// by wrapping it with a pointer events none

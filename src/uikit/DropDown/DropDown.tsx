@@ -6,6 +6,7 @@ import React, {
 	useState,
 } from 'react';
 import { useTheme } from '../../hooks';
+import { useTrackRenders } from '../../hooks/useTrackRenders';
 import { Icon } from '../Icon';
 import css from './DropDown.module.css';
 import type { DropDownOption, DropDownProps } from './_types';
@@ -193,6 +194,10 @@ export const DropDown = React.memo((props: DropDownProps) => {
 		index,
 		getSize,
 	]);
+
+	/* START.DEBUG */
+	useTrackRenders(props, 'DropDown');
+	/* END.DEBUG */
 
 	return (
 		<div className={css.wrapper} style={cssVars}>

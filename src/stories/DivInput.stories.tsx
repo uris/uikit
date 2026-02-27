@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { expect, fn } from 'storybook/test';
-import { DivInput } from '../uikit/DivInput/DivInput';
-import { FlexDiv } from '../uikit/FlexDiv/FlexDiv';
+import { DivInput } from '../uikit/DivInput';
+import { FlexDiv } from '../uikit/FlexDiv';
 import { runDivInputPlay } from './playHelpers';
 
 const meta: Meta<typeof DivInput> = {
@@ -22,7 +22,6 @@ const meta: Meta<typeof DivInput> = {
 		width: 'auto',
 		textAlign: 'left',
 		clamp: 3,
-		fontStyle: undefined,
 		padding: '16px',
 		bgColor: undefined,
 		radius: 4,

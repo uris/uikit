@@ -1,6 +1,7 @@
 import { motion } from 'motion/react';
 import React, { useMemo } from 'react';
 import { useTheme } from '../../hooks';
+import { useTrackRenders } from '../../hooks/useTrackRenders';
 import css from './FlexDiv.module.css';
 import type { FlexDivProps } from './_types';
 
@@ -98,6 +99,10 @@ export const FlexDiv = React.memo(
 			scrollY,
 			scrollX,
 		]);
+
+		/* START.DEBUG */
+		useTrackRenders(props, 'FlexDiv');
+		/* END.DEBUG */
 
 		return (
 			<motion.div

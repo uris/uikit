@@ -1,5 +1,6 @@
 import { useMemo } from 'react';
 import { useTheme } from '../../hooks';
+import { useTrackRenders } from '../../hooks/useTrackRenders';
 import type { LogoProps } from './_types';
 
 export function Logos(props: Readonly<LogoProps>) {
@@ -742,6 +743,10 @@ export function Logos(props: Readonly<LogoProps>) {
 		const item = images.filter((data) => image === data.name);
 		return item ? item[0].svg : null;
 	}, [height, image, color]);
+
+	/* START.DEBUG */
+	useTrackRenders(props, 'Logos');
+	/* END.DEBUG */
 
 	return <div style={{ display: 'inline' }}>{renderIcon}</div>;
 }

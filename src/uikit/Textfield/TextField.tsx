@@ -7,6 +7,7 @@ import React, {
 	useState,
 } from 'react';
 import { useTheme } from '../../hooks';
+import { useTrackRenders } from '../../hooks/useTrackRenders';
 import { Icon } from '../Icon';
 import { IconButton } from '../IconButton';
 import { UIButton } from '../UIButton';
@@ -266,6 +267,10 @@ export const TextField = React.memo(
 			setShowOpacity,
 			color,
 		]);
+
+		/* START.DEBUG */
+		useTrackRenders(props, 'TextField');
+		/* END.DEBUG */
 
 		return (
 			<div className={css.wrapper} style={cssVars}>

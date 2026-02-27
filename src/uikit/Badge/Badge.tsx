@@ -1,4 +1,5 @@
 import React, { useMemo } from 'react';
+import { useTrackRenders } from '../../hooks/useTrackRenders';
 import css from './Badge.module.css';
 import type { BadgeProps } from './_types';
 
@@ -25,6 +26,10 @@ export const Badge = React.memo((props: BadgeProps) => {
 					: 'var(--core-badge-primary)',
 		} as React.CSSProperties;
 	}, [variant]);
+
+	/* START.DEBUG */
+	useTrackRenders(props, 'Badge');
+	/* END.DEBUG */
 
 	if (count === undefined || count === '' || (hideNull && count === 0))
 		return null;

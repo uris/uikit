@@ -5,6 +5,7 @@ import React, {
 	useRef,
 	useState,
 } from 'react';
+import { useTrackRenders } from '../../hooks/useTrackRenders';
 import { UIButton } from '../UIButton';
 import css from './TextArea.module.css';
 import type { TextAreaProps } from './_types';
@@ -187,6 +188,10 @@ export const TextArea = React.memo((props: TextAreaProps) => {
 		borderRadius,
 		resizable,
 	]);
+
+	/* START.DEBUG */
+	useTrackRenders(props, 'TextArea');
+	/* END.DEBUG */
 
 	return (
 		<div

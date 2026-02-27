@@ -67,7 +67,7 @@ export const NoDrag: StoryObj<typeof DraggablePanel> = {
 		const handle = Array.from(canvasElement.querySelectorAll('div')).find(
 			(node) => (node as HTMLElement).style.cursor === 'col-resize',
 		);
-		await expect(handle).toBeUndefined();
+		expect(handle).toHaveStyle({ display: 'none' });
 	},
 };
 
