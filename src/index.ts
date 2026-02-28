@@ -110,8 +110,7 @@ export { UIChip } from './uikit/UIChip';
 export type { UIChipProps } from './uikit/UIChip';
 
 export { Icon } from './uikit/Icon';
-export type { IconProps } from './uikit/Icon';
-export type { IconNames } from './uikit/Icon/_types';
+export type { IconNames, IconProps } from './uikit/Icon/_types';
 
 export { UIButtonBar } from './uikit/UIButtonBar';
 export type { BarButton, UIButtonBarProps } from './uikit/UIButtonBar/_types';

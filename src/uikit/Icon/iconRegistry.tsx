@@ -416,16 +416,14 @@ export const STATIC_ICON_REGISTRY = new Map<string, IconDefinition>([
 		'like',
 		{
 			line: ({ stroke, strokeColor }: IconRenderProps) => (
-				<>
-					<path
-						d="M 13.447 16.354 C 13.167 16.759 12.706 17 12.214 17 L 3.5 17 C 2.672 17 2 16.328 2 15.5 L 2 8.5 C 2 7.672 2.672 7 3.5 7 L 4.343 7 C 4.762 7 5.161 6.825 5.445 6.517 L 9.265 2.379 C 9.883 1.71 11 2.147 11 3.058 L 11 7 L 16 7 C 16.828 7 17.5 7.672 17.5 8.5 L 17.5 10.031 C 17.5 10.336 17.407 10.634 17.233 10.885 Z M 5 6.5 L 5 17"
-						fill="transparent"
-						strokeWidth={stroke}
-						stroke={strokeColor}
-						strokeMiterlimit="10"
-						strokeDasharray=""
-					/>
-				</>
+				<path
+					d="M 13.447 16.354 C 13.167 16.759 12.706 17 12.214 17 L 3.5 17 C 2.672 17 2 16.328 2 15.5 L 2 8.5 C 2 7.672 2.672 7 3.5 7 L 4.343 7 C 4.762 7 5.161 6.825 5.445 6.517 L 9.265 2.379 C 9.883 1.71 11 2.147 11 3.058 L 11 7 L 16 7 C 16.828 7 17.5 7.672 17.5 8.5 L 17.5 10.031 C 17.5 10.336 17.407 10.634 17.233 10.885 Z M 5 6.5 L 5 17"
+					fill="transparent"
+					strokeWidth={stroke}
+					stroke={strokeColor}
+					strokeMiterlimit="10"
+					strokeDasharray=""
+				/>
 			),
 		},
 	],
@@ -433,16 +431,14 @@ export const STATIC_ICON_REGISTRY = new Map<string, IconDefinition>([
 		'unlike',
 		{
 			line: ({ stroke, strokeColor }: IconRenderProps) => (
-				<>
-					<path
-						d="M 6.053 4.646 C 6.333 4.241 6.794 4 7.286 4 L 16 4 C 16.828 4 17.5 4.672 17.5 5.5 L 17.5 12.5 C 17.5 13.328 16.828 14 16 14 L 15.157 14 C 14.738 14 14.339 14.175 14.055 14.483 L 10.235 18.621 C 9.617 19.29 8.5 18.853 8.5 17.942 L 8.5 14 L 3.5 14 C 2.672 14 2 13.328 2 12.5 L 2 10.969 C 2 10.664 2.093 10.366 2.267 10.115 Z M 14.5 14.5 L 14.5 4"
-						fill="transparent"
-						strokeWidth={stroke}
-						stroke={strokeColor}
-						strokeMiterlimit="10"
-						strokeDasharray=""
-					/>
-				</>
+				<path
+					d="M 6.053 4.646 C 6.333 4.241 6.794 4 7.286 4 L 16 4 C 16.828 4 17.5 4.672 17.5 5.5 L 17.5 12.5 C 17.5 13.328 16.828 14 16 14 L 15.157 14 C 14.738 14 14.339 14.175 14.055 14.483 L 10.235 18.621 C 9.617 19.29 8.5 18.853 8.5 17.942 L 8.5 14 L 3.5 14 C 2.672 14 2 13.328 2 12.5 L 2 10.969 C 2 10.664 2.093 10.366 2.267 10.115 Z M 14.5 14.5 L 14.5 4"
+					fill="transparent"
+					strokeWidth={stroke}
+					stroke={strokeColor}
+					strokeMiterlimit="10"
+					strokeDasharray=""
+				/>
 			),
 		},
 	],
@@ -450,12 +446,10 @@ export const STATIC_ICON_REGISTRY = new Map<string, IconDefinition>([
 		'stop',
 		{
 			line: ({ strokeColor }: IconRenderProps) => (
-				<>
-					<path
-						d="M 3 7.5 C 3 5.015 5.015 3 7.5 3 L 12.5 3 C 14.985 3 17 5.015 17 7.5 L 17 12.5 C 17 14.985 14.985 17 12.5 17 L 7.5 17 C 5.015 17 3 14.985 3 12.5 Z"
-						fill={strokeColor}
-					/>
-				</>
+				<path
+					d="M 3 7.5 C 3 5.015 5.015 3 7.5 3 L 12.5 3 C 14.985 3 17 5.015 17 7.5 L 17 12.5 C 17 14.985 14.985 17 12.5 17 L 7.5 17 C 5.015 17 3 14.985 3 12.5 Z"
+					fill={strokeColor}
+				/>
 			),
 		},
 	],
@@ -569,30 +563,28 @@ export const STATIC_ICON_REGISTRY = new Map<string, IconDefinition>([
 		'globe location',
 		{
 			line: ({ stroke, strokeColor }: IconRenderProps) => (
-				<>
-					<g transform="translate(2 2.5)">
-						<path
-							d="M 7.619 15.238 C 3.411 15.238 0 11.827 0 7.619 C -0.003 5.575 0.819 3.616 2.278 2.185 M 2.921 13.601 C 2.663 12.725 3.136 12.29 3.812 12.007 C 4.85 11.57 4.85 11.57 5.63 10.534 C 6.412 9.497 7.393 9.476 9.239 11.547 C 10.068 12.479 11.796 11.666 12.728 13.066 M 7.619 15.238 C 9.503 15.238 11.228 14.554 12.558 13.421 C 13.222 12.855 13.789 12.176 14.227 11.414 C 14.446 11.033 14.634 10.631 14.785 10.213 C 14.861 10.003 14.928 9.79 14.985 9.572 M 1.785 2.916 C 2.6 2.938 3.261 3.5 3.132 4.374 C 2.921 5.801 4.248 5.459 4.199 6.75 C 4.167 7.611 3.509 8.55 1.892 8.936 C 1.041 9.139 0.559 9.279 0.176 9.806 M 6.874 0.036 C 6.628 0.06 6.383 0.095 6.142 0.143 C 5.658 0.238 5.187 0.38 4.733 0.566 C 3.825 0.937 2.99 1.484 2.278 2.185"
-							fill="transparent"
-							strokeWidth={stroke}
-							stroke={strokeColor}
-							strokeLinejoin="round"
-							strokeDasharray=""
-						/>
-						<path
-							d="M 12.19 0 C 14.252 0 16 1.69 16 3.741 C 16 5.823 14.224 7.285 12.583 8.279 C 12.339 8.415 12.042 8.415 11.798 8.279 C 10.16 7.276 8.381 5.831 8.381 3.741 C 8.381 1.691 10.129 0 12.19 0 Z"
-							fill="transparent"
-							strokeWidth={stroke}
-							stroke={strokeColor}
-							strokeLinejoin="round"
-							strokeDasharray=""
-						/>
-						<path
-							d="M 12.952 3.81 C 12.952 4.23 12.611 4.571 12.19 4.571 C 11.77 4.571 11.429 4.23 11.429 3.81 C 11.429 3.389 11.77 3.048 12.19 3.048 C 12.611 3.048 12.952 3.389 12.952 3.81 Z"
-							fill={strokeColor}
-						/>
-					</g>
-				</>
+				<g transform="translate(2 2.5)">
+					<path
+						d="M 7.619 15.238 C 3.411 15.238 0 11.827 0 7.619 C -0.003 5.575 0.819 3.616 2.278 2.185 M 2.921 13.601 C 2.663 12.725 3.136 12.29 3.812 12.007 C 4.85 11.57 4.85 11.57 5.63 10.534 C 6.412 9.497 7.393 9.476 9.239 11.547 C 10.068 12.479 11.796 11.666 12.728 13.066 M 7.619 15.238 C 9.503 15.238 11.228 14.554 12.558 13.421 C 13.222 12.855 13.789 12.176 14.227 11.414 C 14.446 11.033 14.634 10.631 14.785 10.213 C 14.861 10.003 14.928 9.79 14.985 9.572 M 1.785 2.916 C 2.6 2.938 3.261 3.5 3.132 4.374 C 2.921 5.801 4.248 5.459 4.199 6.75 C 4.167 7.611 3.509 8.55 1.892 8.936 C 1.041 9.139 0.559 9.279 0.176 9.806 M 6.874 0.036 C 6.628 0.06 6.383 0.095 6.142 0.143 C 5.658 0.238 5.187 0.38 4.733 0.566 C 3.825 0.937 2.99 1.484 2.278 2.185"
+						fill="transparent"
+						strokeWidth={stroke}
+						stroke={strokeColor}
+						strokeLinejoin="round"
+						strokeDasharray=""
+					/>
+					<path
+						d="M 12.19 0 C 14.252 0 16 1.69 16 3.741 C 16 5.823 14.224 7.285 12.583 8.279 C 12.339 8.415 12.042 8.415 11.798 8.279 C 10.16 7.276 8.381 5.831 8.381 3.741 C 8.381 1.691 10.129 0 12.19 0 Z"
+						fill="transparent"
+						strokeWidth={stroke}
+						stroke={strokeColor}
+						strokeLinejoin="round"
+						strokeDasharray=""
+					/>
+					<path
+						d="M 12.952 3.81 C 12.952 4.23 12.611 4.571 12.19 4.571 C 11.77 4.571 11.429 4.23 11.429 3.81 C 11.429 3.389 11.77 3.048 12.19 3.048 C 12.611 3.048 12.952 3.389 12.952 3.81 Z"
+						fill={strokeColor}
+					/>
+				</g>
 			),
 		},
 	],
@@ -668,7 +660,7 @@ export const STATIC_ICON_REGISTRY = new Map<string, IconDefinition>([
 	[
 		'document editor',
 		{
-			line: ({ stroke, strokeColor }: IconRenderProps) => (
+			line: ({ strokeColor }: IconRenderProps) => (
 				<>
 					<g>
 						<defs>
@@ -827,12 +819,10 @@ export const STATIC_ICON_REGISTRY = new Map<string, IconDefinition>([
 		'chat',
 		{
 			line: ({ strokeColor }: IconRenderProps) => (
-				<>
-					<path
-						d="M 17.75 5 C 17.75 2.929 16.071 1.25 14 1.25 L 6 1.25 C 3.929 1.25 2.25 2.929 2.25 5 L 2.25 19 L 3.75 19 C 3.75 17.757 4.757 16.75 6 16.75 L 14 16.75 C 16.071 16.75 17.75 15.071 17.75 13 Z M 3.75 16 L 3.75 5 C 3.75 3.757 4.757 2.75 6 2.75 L 14 2.75 C 15.243 2.75 16.25 3.757 16.25 5 L 16.25 13 C 16.25 14.243 15.243 15.25 14 15.25 L 6 15.25 C 5.156 15.25 4.377 15.529 3.75 16 Z"
-						fill={strokeColor}
-					/>
-				</>
+				<path
+					d="M 17.75 5 C 17.75 2.929 16.071 1.25 14 1.25 L 6 1.25 C 3.929 1.25 2.25 2.929 2.25 5 L 2.25 19 L 3.75 19 C 3.75 17.757 4.757 16.75 6 16.75 L 14 16.75 C 16.071 16.75 17.75 15.071 17.75 13 Z M 3.75 16 L 3.75 5 C 3.75 3.757 4.757 2.75 6 2.75 L 14 2.75 C 15.243 2.75 16.25 3.757 16.25 5 L 16.25 13 C 16.25 14.243 15.243 15.25 14 15.25 L 6 15.25 C 5.156 15.25 4.377 15.529 3.75 16 Z"
+					fill={strokeColor}
+				/>
 			),
 		},
 	],
@@ -905,14 +895,12 @@ export const STATIC_ICON_REGISTRY = new Map<string, IconDefinition>([
 		'edit',
 		{
 			line: ({ strokeColor }: IconRenderProps) => (
-				<>
-					<path
-						fillRule="evenodd"
-						clipRule="evenodd"
-						d="M14.0272 0.966797L14.5303 1.46995L16.5303 3.46995L17.0893 4.02893L16.5017 4.55775L6.50172 13.5577L6.2878 13.7503H6H4H3.25V13.0003V11.0003V10.6663L3.49828 10.4428L13.4983 1.44281L14.0272 0.966797ZM4.75 11.3343V12.2503H5.7122L14.9107 3.97163L13.9728 3.03376L4.75 11.3343ZM17 16.7503H5V15.2503H17V16.7503ZM2 17.0003C2.55228 17.0003 3 16.5526 3 16.0003C3 15.448 2.55228 15.0003 2 15.0003C1.44772 15.0003 1 15.448 1 16.0003C1 16.5526 1.44772 17.0003 2 17.0003Z"
-						fill={strokeColor}
-					/>
-				</>
+				<path
+					fillRule="evenodd"
+					clipRule="evenodd"
+					d="M14.0272 0.966797L14.5303 1.46995L16.5303 3.46995L17.0893 4.02893L16.5017 4.55775L6.50172 13.5577L6.2878 13.7503H6H4H3.25V13.0003V11.0003V10.6663L3.49828 10.4428L13.4983 1.44281L14.0272 0.966797ZM4.75 11.3343V12.2503H5.7122L14.9107 3.97163L13.9728 3.03376L4.75 11.3343ZM17 16.7503H5V15.2503H17V16.7503ZM2 17.0003C2.55228 17.0003 3 16.5526 3 16.0003C3 15.448 2.55228 15.0003 2 15.0003C1.44772 15.0003 1 15.448 1 16.0003C1 16.5526 1.44772 17.0003 2 17.0003Z"
+					fill={strokeColor}
+				/>
 			),
 		},
 	],
@@ -939,12 +927,10 @@ export const STATIC_ICON_REGISTRY = new Map<string, IconDefinition>([
 		'text document',
 		{
 			line: ({ strokeColor }: IconRenderProps) => (
-				<>
-					<path
-						d="M 12.5 5.5 L 12.5 2.5 L 4.5 2.5 L 4.5 17.5 L 15.5 17.5 L 15.5 5.5 Z M 15.5 19 L 4.5 19 C 3.672 19 3 18.328 3 17.5 L 3 2.5 C 3 1.672 3.672 1 4.5 1 L 12.5 1 C 13.328 1 14 1.672 14 2.5 L 14 4 L 15.5 4 C 16.328 4 17 4.672 17 5.5 L 17 17.5 C 17 18.328 16.328 19 15.5 19 Z M 14 14.75 L 6 14.75 L 6 13.25 L 14 13.25 Z M 6 10.75 L 12 10.75 L 12 9.25 L 6 9.25 Z"
-						fill={strokeColor}
-					/>
-				</>
+				<path
+					d="M 12.5 5.5 L 12.5 2.5 L 4.5 2.5 L 4.5 17.5 L 15.5 17.5 L 15.5 5.5 Z M 15.5 19 L 4.5 19 C 3.672 19 3 18.328 3 17.5 L 3 2.5 C 3 1.672 3.672 1 4.5 1 L 12.5 1 C 13.328 1 14 1.672 14 2.5 L 14 4 L 15.5 4 C 16.328 4 17 4.672 17 5.5 L 17 17.5 C 17 18.328 16.328 19 15.5 19 Z M 14 14.75 L 6 14.75 L 6 13.25 L 14 13.25 Z M 6 10.75 L 12 10.75 L 12 9.25 L 6 9.25 Z"
+					fill={strokeColor}
+				/>
 			),
 		},
 	],
@@ -983,12 +969,10 @@ export const STATIC_ICON_REGISTRY = new Map<string, IconDefinition>([
 		'concise',
 		{
 			line: ({ strokeColor }: IconRenderProps) => (
-				<>
-					<path
-						d="M 18 7 L 2 7 L 2 8.5 L 18 8.5 Z M 14 12 L 2 12 L 2 13.5 L 14 13.5 Z"
-						fill={strokeColor}
-					/>
-				</>
+				<path
+					d="M 18 7 L 2 7 L 2 8.5 L 18 8.5 Z M 14 12 L 2 12 L 2 13.5 L 14 13.5 Z"
+					fill={strokeColor}
+				/>
 			),
 		},
 	],
@@ -996,12 +980,10 @@ export const STATIC_ICON_REGISTRY = new Map<string, IconDefinition>([
 		'moderate',
 		{
 			line: ({ strokeColor }: IconRenderProps) => (
-				<>
-					<path
-						d="M 2 4 L 14 4 L 14 5.5 L 2 5.5 Z M 2 9 L 18 9 L 18 10.5 L 2 10.5 Z M 10 14 L 2 14 L 2 15.5 L 10 15.5 Z"
-						fill={strokeColor}
-					/>
-				</>
+				<path
+					d="M 2 4 L 14 4 L 14 5.5 L 2 5.5 Z M 2 9 L 18 9 L 18 10.5 L 2 10.5 Z M 10 14 L 2 14 L 2 15.5 L 10 15.5 Z"
+					fill={strokeColor}
+				/>
 			),
 		},
 	],
@@ -1009,12 +991,10 @@ export const STATIC_ICON_REGISTRY = new Map<string, IconDefinition>([
 		'expanded',
 		{
 			line: ({ strokeColor }: IconRenderProps) => (
-				<>
-					<path
-						d="M 2 2 L 14 2 L 14 3.5 L 2 3.5 Z M 18 7 L 2 7 L 2 8.5 L 18 8.5 Z M 16 12 L 2 12 L 2 13.5 L 16 13.5 Z M 10 17 L 2 17 L 2 18.5 L 10 18.5 Z"
-						fill={strokeColor}
-					/>
-				</>
+				<path
+					d="M 2 2 L 14 2 L 14 3.5 L 2 3.5 Z M 18 7 L 2 7 L 2 8.5 L 18 8.5 Z M 16 12 L 2 12 L 2 13.5 L 16 13.5 Z M 10 17 L 2 17 L 2 18.5 L 10 18.5 Z"
+					fill={strokeColor}
+				/>
 			),
 		},
 	],
@@ -1022,14 +1002,12 @@ export const STATIC_ICON_REGISTRY = new Map<string, IconDefinition>([
 		'open circle',
 		{
 			line: ({ stroke, strokeColor }: IconRenderProps) => (
-				<>
-					<path
-						d="M 17.371 6.886 C 17.776 7.843 18 8.895 18 10 C 18 14.418 14.418 18 10 18 C 5.582 18 2 14.418 2 10 C 2 5.582 5.582 2 10 2"
-						fill="transparent"
-						strokeWidth={stroke}
-						stroke={strokeColor}
-					/>
-				</>
+				<path
+					d="M 17.371 6.886 C 17.776 7.843 18 8.895 18 10 C 18 14.418 14.418 18 10 18 C 5.582 18 2 14.418 2 10 C 2 5.582 5.582 2 10 2"
+					fill="transparent"
+					strokeWidth={stroke}
+					stroke={strokeColor}
+				/>
 			),
 		},
 	],
@@ -1064,12 +1042,10 @@ export const STATIC_ICON_REGISTRY = new Map<string, IconDefinition>([
 		'apple',
 		{
 			line: ({ strokeColor }: IconRenderProps) => (
-				<>
-					<path
-						d="M 9.643 5.355 C 10.635 5.355 11.505 4.967 12.253 4.19 C 13.001 3.414 13.376 2.511 13.376 1.482 C 13.376 1.369 13.367 1.208 13.349 1 C 13.218 1.018 13.12 1.033 13.055 1.045 C 12.14 1.176 11.336 1.625 10.641 2.392 C 9.946 3.16 9.599 3.981 9.599 4.855 C 9.599 4.956 9.613 5.123 9.643 5.355 Z M 13.197 19 C 13.904 19 14.685 18.515 15.54 17.545 C 16.395 16.576 17.049 15.436 17.5 14.127 C 15.819 13.259 14.979 12.012 14.979 10.388 C 14.979 9.032 15.659 7.872 17.019 6.908 C 16.075 5.724 14.828 5.132 13.278 5.132 C 12.624 5.132 12.027 5.23 11.487 5.426 L 11.149 5.551 L 10.694 5.73 C 10.397 5.843 10.127 5.899 9.884 5.899 C 9.694 5.899 9.444 5.834 9.135 5.703 L 8.788 5.56 L 8.458 5.426 C 7.977 5.224 7.461 5.123 6.908 5.123 C 5.43 5.123 4.242 5.623 3.345 6.622 C 2.448 7.622 2 8.94 2 10.576 C 2 12.878 2.719 15.005 4.156 16.956 C 5.153 18.319 6.065 19 6.891 19 C 7.241 19 7.588 18.932 7.933 18.795 L 8.369 18.616 L 8.717 18.491 C 9.204 18.319 9.652 18.233 10.062 18.233 C 10.495 18.233 10.994 18.343 11.558 18.563 L 11.834 18.67 C 12.411 18.89 12.865 19 13.197 19 Z"
-						fill={strokeColor}
-					/>
-				</>
+				<path
+					d="M 9.643 5.355 C 10.635 5.355 11.505 4.967 12.253 4.19 C 13.001 3.414 13.376 2.511 13.376 1.482 C 13.376 1.369 13.367 1.208 13.349 1 C 13.218 1.018 13.12 1.033 13.055 1.045 C 12.14 1.176 11.336 1.625 10.641 2.392 C 9.946 3.16 9.599 3.981 9.599 4.855 C 9.599 4.956 9.613 5.123 9.643 5.355 Z M 13.197 19 C 13.904 19 14.685 18.515 15.54 17.545 C 16.395 16.576 17.049 15.436 17.5 14.127 C 15.819 13.259 14.979 12.012 14.979 10.388 C 14.979 9.032 15.659 7.872 17.019 6.908 C 16.075 5.724 14.828 5.132 13.278 5.132 C 12.624 5.132 12.027 5.23 11.487 5.426 L 11.149 5.551 L 10.694 5.73 C 10.397 5.843 10.127 5.899 9.884 5.899 C 9.694 5.899 9.444 5.834 9.135 5.703 L 8.788 5.56 L 8.458 5.426 C 7.977 5.224 7.461 5.123 6.908 5.123 C 5.43 5.123 4.242 5.623 3.345 6.622 C 2.448 7.622 2 8.94 2 10.576 C 2 12.878 2.719 15.005 4.156 16.956 C 5.153 18.319 6.065 19 6.891 19 C 7.241 19 7.588 18.932 7.933 18.795 L 8.369 18.616 L 8.717 18.491 C 9.204 18.319 9.652 18.233 10.062 18.233 C 10.495 18.233 10.994 18.343 11.558 18.563 L 11.834 18.67 C 12.411 18.89 12.865 19 13.197 19 Z"
+					fill={strokeColor}
+				/>
 			),
 		},
 	],
@@ -1077,12 +1053,10 @@ export const STATIC_ICON_REGISTRY = new Map<string, IconDefinition>([
 		'linkedin',
 		{
 			line: (_props: IconRenderProps) => (
-				<>
-					<path
-						d="M 16.4 16.259 L 13.766 16.259 L 13.766 12.133 C 13.766 11.15 13.748 9.883 12.396 9.883 C 11.023 9.883 10.813 10.955 10.813 12.061 L 10.813 16.258 L 8.18 16.258 L 8.18 7.775 L 10.709 7.775 L 10.709 8.933 L 10.743 8.933 C 11.259 8.052 12.218 7.525 13.239 7.563 C 15.909 7.563 16.401 9.319 16.401 11.603 L 16.4 16.258 Z M 5.208 6.615 C 4.652 6.63 4.132 6.343 3.849 5.863 C 3.567 5.384 3.567 4.79 3.849 4.311 C 4.132 3.832 4.652 3.544 5.208 3.559 C 6.036 3.581 6.695 4.259 6.695 5.087 C 6.695 5.915 6.036 6.593 5.208 6.615 Z M 6.524 16.259 L 3.888 16.259 L 3.888 7.775 L 6.524 7.775 Z M 17.713 1.111 L 2.564 1.111 C 1.848 1.103 1.261 1.677 1.252 2.393 L 1.252 17.604 C 1.256 17.948 1.396 18.277 1.642 18.518 C 1.888 18.759 2.219 18.892 2.563 18.889 L 17.713 18.889 C 18.431 18.898 19.02 18.324 19.03 17.606 L 19.03 2.392 C 19.02 1.675 18.43 1.102 17.713 1.111"
-						fill="rgb(10, 102, 194)"
-					/>
-				</>
+				<path
+					d="M 16.4 16.259 L 13.766 16.259 L 13.766 12.133 C 13.766 11.15 13.748 9.883 12.396 9.883 C 11.023 9.883 10.813 10.955 10.813 12.061 L 10.813 16.258 L 8.18 16.258 L 8.18 7.775 L 10.709 7.775 L 10.709 8.933 L 10.743 8.933 C 11.259 8.052 12.218 7.525 13.239 7.563 C 15.909 7.563 16.401 9.319 16.401 11.603 L 16.4 16.258 Z M 5.208 6.615 C 4.652 6.63 4.132 6.343 3.849 5.863 C 3.567 5.384 3.567 4.79 3.849 4.311 C 4.132 3.832 4.652 3.544 5.208 3.559 C 6.036 3.581 6.695 4.259 6.695 5.087 C 6.695 5.915 6.036 6.593 5.208 6.615 Z M 6.524 16.259 L 3.888 16.259 L 3.888 7.775 L 6.524 7.775 Z M 17.713 1.111 L 2.564 1.111 C 1.848 1.103 1.261 1.677 1.252 2.393 L 1.252 17.604 C 1.256 17.948 1.396 18.277 1.642 18.518 C 1.888 18.759 2.219 18.892 2.563 18.889 L 17.713 18.889 C 18.431 18.898 19.02 18.324 19.03 17.606 L 19.03 2.392 C 19.02 1.675 18.43 1.102 17.713 1.111"
+					fill="rgb(10, 102, 194)"
+				/>
 			),
 		},
 	],
@@ -1090,26 +1064,24 @@ export const STATIC_ICON_REGISTRY = new Map<string, IconDefinition>([
 		'google',
 		{
 			line: (_props: IconRenderProps) => (
-				<>
-					<g transform="translate(1.05 1.197)">
-						<path
-							d="M 8.995 3.569 C 10.269 3.549 11.524 4.039 12.446 4.922 L 15.014 2.334 C 13.387 0.804 11.23 -0.019 8.995 0 C 5.583 0 2.485 1.922 0.956 4.961 L 3.936 7.275 C 4.662 5.137 6.642 3.569 8.995 3.569 Z"
-							fill="rgb(229,67,53)"
-						/>
-						<path
-							d="M 3.936 10.726 C 3.564 9.608 3.564 8.392 3.936 7.275 L 0.956 4.961 C -0.319 7.51 -0.319 10.51 0.956 13.039 Z"
-							fill="rgb(246,183,4)"
-						/>
-						<path
-							d="M 8.995 18 C 11.426 18 13.465 17.196 14.956 15.824 L 12.054 13.588 C 11.25 14.137 10.211 14.451 8.995 14.451 C 6.642 14.451 4.662 12.863 3.936 10.745 L 0.956 13.039 C 2.485 16.078 5.583 18 8.995 18 Z"
-							fill="rgb(52,163,83)"
-						/>
-						<path
-							d="M 17.642 9.216 C 17.642 8.608 17.583 7.981 17.485 7.392 L 8.995 7.392 L 8.995 10.863 L 13.858 10.863 C 13.662 11.981 13.014 12.961 12.054 13.588 L 14.956 15.843 C 16.661 14.255 17.642 11.941 17.642 9.216 Z"
-							fill="rgb(66,128,239)"
-						/>
-					</g>
-				</>
+				<g transform="translate(1.05 1.197)">
+					<path
+						d="M 8.995 3.569 C 10.269 3.549 11.524 4.039 12.446 4.922 L 15.014 2.334 C 13.387 0.804 11.23 -0.019 8.995 0 C 5.583 0 2.485 1.922 0.956 4.961 L 3.936 7.275 C 4.662 5.137 6.642 3.569 8.995 3.569 Z"
+						fill="rgb(229,67,53)"
+					/>
+					<path
+						d="M 3.936 10.726 C 3.564 9.608 3.564 8.392 3.936 7.275 L 0.956 4.961 C -0.319 7.51 -0.319 10.51 0.956 13.039 Z"
+						fill="rgb(246,183,4)"
+					/>
+					<path
+						d="M 8.995 18 C 11.426 18 13.465 17.196 14.956 15.824 L 12.054 13.588 C 11.25 14.137 10.211 14.451 8.995 14.451 C 6.642 14.451 4.662 12.863 3.936 10.745 L 0.956 13.039 C 2.485 16.078 5.583 18 8.995 18 Z"
+						fill="rgb(52,163,83)"
+					/>
+					<path
+						d="M 17.642 9.216 C 17.642 8.608 17.583 7.981 17.485 7.392 L 8.995 7.392 L 8.995 10.863 L 13.858 10.863 C 13.662 11.981 13.014 12.961 12.054 13.588 L 14.956 15.843 C 16.661 14.255 17.642 11.941 17.642 9.216 Z"
+						fill="rgb(66,128,239)"
+					/>
+				</g>
 			),
 		},
 	],
@@ -1135,12 +1107,10 @@ export const STATIC_ICON_REGISTRY = new Map<string, IconDefinition>([
 		'trash bin',
 		{
 			line: ({ strokeColor }: IconRenderProps) => (
-				<>
-					<path
-						d="M 17 0.5 L 3 0.5 L 3 2 L 17 2 Z M 5.5 16.75 L 14.5 16.75 L 14.5 5.75 L 5.5 5.75 Z M 14.8 18.25 L 5.2 18.25 C 4.537 18.25 4 17.713 4 17.05 L 4 5.45 C 4 4.787 4.537 4.25 5.2 4.25 L 14.8 4.25 C 15.463 4.25 16 4.787 16 5.45 L 16 17.05 C 16 17.713 15.463 18.25 14.8 18.25 Z M 7.25 14.25 L 7.25 8.25 L 8.75 8.25 L 8.75 14.25 Z M 11.25 8.25 L 11.25 14.25 L 12.75 14.25 L 12.75 8.25 Z"
-						fill={strokeColor}
-					/>
-				</>
+				<path
+					d="M 17 0.5 L 3 0.5 L 3 2 L 17 2 Z M 5.5 16.75 L 14.5 16.75 L 14.5 5.75 L 5.5 5.75 Z M 14.8 18.25 L 5.2 18.25 C 4.537 18.25 4 17.713 4 17.05 L 4 5.45 C 4 4.787 4.537 4.25 5.2 4.25 L 14.8 4.25 C 15.463 4.25 16 4.787 16 5.45 L 16 17.05 C 16 17.713 15.463 18.25 14.8 18.25 Z M 7.25 14.25 L 7.25 8.25 L 8.75 8.25 L 8.75 14.25 Z M 11.25 8.25 L 11.25 14.25 L 12.75 14.25 L 12.75 8.25 Z"
+					fill={strokeColor}
+				/>
 			),
 		},
 	],
@@ -1148,12 +1118,10 @@ export const STATIC_ICON_REGISTRY = new Map<string, IconDefinition>([
 		'recent chats',
 		{
 			line: ({ strokeColor }: IconRenderProps) => (
-				<>
-					<path
-						d="M 2 4.25 L 10 4.25 L 10 5.75 L 2 5.75 Z M 18 9.25 L 18 10.75 L 2 10.75 L 2 9.25 Z M 14 14.25 L 2 14.25 L 2 15.75 L 14 15.75 Z"
-						fill={strokeColor}
-					/>
-				</>
+				<path
+					d="M 2 4.25 L 10 4.25 L 10 5.75 L 2 5.75 Z M 18 9.25 L 18 10.75 L 2 10.75 L 2 9.25 Z M 14 14.25 L 2 14.25 L 2 15.75 L 14 15.75 Z"
+					fill={strokeColor}
+				/>
 			),
 		},
 	],
@@ -1161,12 +1129,10 @@ export const STATIC_ICON_REGISTRY = new Map<string, IconDefinition>([
 		'refresh',
 		{
 			line: ({ strokeColor }: IconRenderProps) => (
-				<>
-					<path
-						d="M 9 1.25 L 5 1.25 L 5 2.75 L 7.255 2.75 C 4.108 3.943 2.089 7.03 2.259 10.391 C 2.429 13.753 4.748 16.621 8 17.49 L 8 15.923 C 5.415 15.048 3.695 12.598 3.753 9.869 C 3.81 7.14 5.63 4.764 8.25 3.998 L 8.25 6 L 9.75 6 L 9.75 1.25 Z M 12.745 17.25 C 15.892 16.057 17.911 12.97 17.741 9.609 C 17.571 6.247 15.252 3.379 12 2.51 L 12 4.077 C 14.585 4.952 16.305 7.402 16.247 10.131 C 16.19 12.86 14.37 15.236 11.75 16.002 L 11.75 14 L 10.25 14 L 10.25 18.75 L 15 18.75 L 15 17.25 Z M 11 10 C 11 10.552 10.552 11 10 11 C 9.448 11 9 10.552 9 10 C 9 9.448 9.448 9 10 9 C 10.552 9 11 9.448 11 10 Z"
-						fill={strokeColor}
-					/>
-				</>
+				<path
+					d="M 9 1.25 L 5 1.25 L 5 2.75 L 7.255 2.75 C 4.108 3.943 2.089 7.03 2.259 10.391 C 2.429 13.753 4.748 16.621 8 17.49 L 8 15.923 C 5.415 15.048 3.695 12.598 3.753 9.869 C 3.81 7.14 5.63 4.764 8.25 3.998 L 8.25 6 L 9.75 6 L 9.75 1.25 Z M 12.745 17.25 C 15.892 16.057 17.911 12.97 17.741 9.609 C 17.571 6.247 15.252 3.379 12 2.51 L 12 4.077 C 14.585 4.952 16.305 7.402 16.247 10.131 C 16.19 12.86 14.37 15.236 11.75 16.002 L 11.75 14 L 10.25 14 L 10.25 18.75 L 15 18.75 L 15 17.25 Z M 11 10 C 11 10.552 10.552 11 10 11 C 9.448 11 9 10.552 9 10 C 9 9.448 9.448 9 10 9 C 10.552 9 11 9.448 11 10 Z"
+					fill={strokeColor}
+				/>
 			),
 		},
 	],
@@ -1174,16 +1140,14 @@ export const STATIC_ICON_REGISTRY = new Map<string, IconDefinition>([
 		'document',
 		{
 			line: ({ stroke, strokeColor }: IconRenderProps) => (
-				<>
-					<path
-						d="M 13.25 4 L 13.25 4.75 L 15.5 4.75 C 15.914 4.75 16.25 5.086 16.25 5.5 L 16.25 17.5 C 16.25 17.914 15.914 18.25 15.5 18.25 L 4.5 18.25 C 4.086 18.25 3.75 17.914 3.75 17.5 L 3.75 2.5 C 3.75 2.086 4.086 1.75 4.5 1.75 L 12.5 1.75 C 12.914 1.75 13.25 2.086 13.25 2.5 Z"
-						fill="transparent"
-						strokeWidth={stroke}
-						stroke={strokeColor}
-						strokeMiterlimit="10"
-						strokeDasharray=""
-					/>
-				</>
+				<path
+					d="M 13.25 4 L 13.25 4.75 L 15.5 4.75 C 15.914 4.75 16.25 5.086 16.25 5.5 L 16.25 17.5 C 16.25 17.914 15.914 18.25 15.5 18.25 L 4.5 18.25 C 4.086 18.25 3.75 17.914 3.75 17.5 L 3.75 2.5 C 3.75 2.086 4.086 1.75 4.5 1.75 L 12.5 1.75 C 12.914 1.75 13.25 2.086 13.25 2.5 Z"
+					fill="transparent"
+					strokeWidth={stroke}
+					stroke={strokeColor}
+					strokeMiterlimit="10"
+					strokeDasharray=""
+				/>
 			),
 		},
 	],
@@ -1191,30 +1155,25 @@ export const STATIC_ICON_REGISTRY = new Map<string, IconDefinition>([
 		'navigate',
 		{
 			line: ({ stroke, strokeColor }: IconRenderProps) => (
-				<>
-					<g transform="translate(2 4)">
-						<path
-							d="M 0 0 L 16 0 L 16 11.207 L 0 11.207 Z"
-							fill="transparent"
-						/>
-						<path
-							d="M 14.113 4.78 L 6.176 4.78 C 3.227 4.78 0.838 7.28 0.838 10.369 L 0.838 11.179"
-							fill="transparent"
-							strokeWidth={stroke}
-							stroke={strokeColor}
-							strokeMiterlimit="10"
-							strokeDasharray=""
-						/>
-						<path
-							d="M 10.62 8.972 L 14.81 4.78 L 10.62 0.588"
-							fill="transparent"
-							strokeWidth={stroke}
-							stroke={strokeColor}
-							strokeMiterlimit="10"
-							strokeDasharray=""
-						/>
-					</g>
-				</>
+				<g transform="translate(2 4)">
+					<path d="M 0 0 L 16 0 L 16 11.207 L 0 11.207 Z" fill="transparent" />
+					<path
+						d="M 14.113 4.78 L 6.176 4.78 C 3.227 4.78 0.838 7.28 0.838 10.369 L 0.838 11.179"
+						fill="transparent"
+						strokeWidth={stroke}
+						stroke={strokeColor}
+						strokeMiterlimit="10"
+						strokeDasharray=""
+					/>
+					<path
+						d="M 10.62 8.972 L 14.81 4.78 L 10.62 0.588"
+						fill="transparent"
+						strokeWidth={stroke}
+						stroke={strokeColor}
+						strokeMiterlimit="10"
+						strokeDasharray=""
+					/>
+				</g>
 			),
 		},
 	],
@@ -1222,12 +1181,10 @@ export const STATIC_ICON_REGISTRY = new Map<string, IconDefinition>([
 		'arrow right',
 		{
 			line: ({ strokeColor }: IconRenderProps) => (
-				<>
-					<path
-						d="M 10.53 3.469 L 16.53 9.469 L 17.06 9.999 L 16.53 10.529 L 10.53 16.529 L 9.47 15.469 L 14.19 10.749 L 4 10.749 L 4 9.249 L 14.19 9.249 L 9.47 4.53 L 10.53 3.47 Z"
-						fill={strokeColor}
-					/>
-				</>
+				<path
+					d="M 10.53 3.469 L 16.53 9.469 L 17.06 9.999 L 16.53 10.529 L 10.53 16.529 L 9.47 15.469 L 14.19 10.749 L 4 10.749 L 4 9.249 L 14.19 9.249 L 9.47 4.53 L 10.53 3.47 Z"
+					fill={strokeColor}
+				/>
 			),
 		},
 	],
@@ -1235,12 +1192,10 @@ export const STATIC_ICON_REGISTRY = new Map<string, IconDefinition>([
 		'arrow left',
 		{
 			line: ({ strokeColor }: IconRenderProps) => (
-				<>
-					<path
-						d="M 9.47 3.469 L 3.47 9.469 L 2.94 9.999 L 3.47 10.529 L 9.47 16.529 L 10.53 15.469 L 5.81 10.749 L 16 10.749 L 16 9.249 L 5.81 9.249 L 10.53 4.529 Z"
-						fill={strokeColor}
-					/>
-				</>
+				<path
+					d="M 9.47 3.469 L 3.47 9.469 L 2.94 9.999 L 3.47 10.529 L 9.47 16.529 L 10.53 15.469 L 5.81 10.749 L 16 10.749 L 16 9.249 L 5.81 9.249 L 10.53 4.529 Z"
+					fill={strokeColor}
+				/>
 			),
 		},
 	],
@@ -1248,12 +1203,10 @@ export const STATIC_ICON_REGISTRY = new Map<string, IconDefinition>([
 		'',
 		{
 			line: ({ strokeColor }: IconRenderProps) => (
-				<>
-					<path
-						d="M 10.53 3.469 L 16.53 9.469 L 17.06 9.999 L 16.53 10.529 L 10.53 16.529 L 9.47 15.469 L 14.19 10.749 L 4 10.749 L 4 9.249 L 14.19 9.249 L 9.47 4.53 L 10.53 3.47 Z"
-						fill={strokeColor}
-					/>
-				</>
+				<path
+					d="M 10.53 3.469 L 16.53 9.469 L 17.06 9.999 L 16.53 10.529 L 10.53 16.529 L 9.47 15.469 L 14.19 10.749 L 4 10.749 L 4 9.249 L 14.19 9.249 L 9.47 4.53 L 10.53 3.47 Z"
+					fill={strokeColor}
+				/>
 			),
 		},
 	],
@@ -1261,12 +1214,10 @@ export const STATIC_ICON_REGISTRY = new Map<string, IconDefinition>([
 		'arrow up',
 		{
 			line: ({ strokeColor }: IconRenderProps) => (
-				<>
-					<path
-						d="M 16.53 9.47 L 10.53 3.47 L 10 2.94 L 9.469 3.47 L 3.469 9.47 L 4.529 10.53 L 9.249 5.81 L 9.249 16 L 10.749 16 L 10.749 5.81 L 15.469 10.53 L 16.529 9.47 Z"
-						fill={strokeColor}
-					/>
-				</>
+				<path
+					d="M 16.53 9.47 L 10.53 3.47 L 10 2.94 L 9.469 3.47 L 3.469 9.47 L 4.529 10.53 L 9.249 5.81 L 9.249 16 L 10.749 16 L 10.749 5.81 L 15.469 10.53 L 16.529 9.47 Z"
+					fill={strokeColor}
+				/>
 			),
 		},
 	],
@@ -1314,12 +1265,10 @@ export const STATIC_ICON_REGISTRY = new Map<string, IconDefinition>([
 		'message',
 		{
 			line: ({ strokeColor }: IconRenderProps) => (
-				<>
-					<path
-						d="M 17.75 5 C 17.75 2.929 16.071 1.25 14 1.25 L 6 1.25 C 3.929 1.25 2.25 2.929 2.25 5 L 2.25 19 L 3.75 19 C 3.75 17.757 4.757 16.75 6 16.75 L 14 16.75 C 16.071 16.75 17.75 15.071 17.75 13 Z M 3.75 16 L 3.75 5 C 3.75 3.757 4.757 2.75 6 2.75 L 14 2.75 C 15.243 2.75 16.25 3.757 16.25 5 L 16.25 13 C 16.25 14.243 15.243 15.25 14 15.25 L 6 15.25 C 5.156 15.25 4.377 15.529 3.75 16 Z"
-						fill={strokeColor}
-					/>
-				</>
+				<path
+					d="M 17.75 5 C 17.75 2.929 16.071 1.25 14 1.25 L 6 1.25 C 3.929 1.25 2.25 2.929 2.25 5 L 2.25 19 L 3.75 19 C 3.75 17.757 4.757 16.75 6 16.75 L 14 16.75 C 16.071 16.75 17.75 15.071 17.75 13 Z M 3.75 16 L 3.75 5 C 3.75 3.757 4.757 2.75 6 2.75 L 14 2.75 C 15.243 2.75 16.25 3.757 16.25 5 L 16.25 13 C 16.25 14.243 15.243 15.25 14 15.25 L 6 15.25 C 5.156 15.25 4.377 15.529 3.75 16 Z"
+					fill={strokeColor}
+				/>
 			),
 		},
 	],
@@ -1333,12 +1282,10 @@ export const STATIC_ICON_REGISTRY = new Map<string, IconDefinition>([
 		'check',
 		{
 			line: ({ strokeColor }: IconRenderProps) => (
-				<>
-					<path
-						d="M 14.5 6 L 8.53 11.97 L 6.06 9.5 L 5 10.56 L 8 13.56 L 8.53 14.09 L 9.06 13.56 L 15.56 7.06 Z"
-						fill={strokeColor}
-					/>
-				</>
+				<path
+					d="M 14.5 6 L 8.53 11.97 L 6.06 9.5 L 5 10.56 L 8 13.56 L 8.53 14.09 L 9.06 13.56 L 15.56 7.06 Z"
+					fill={strokeColor}
+				/>
 			),
 		},
 	],
@@ -1367,14 +1314,12 @@ export const STATIC_ICON_REGISTRY = new Map<string, IconDefinition>([
 		'menu',
 		{
 			line: ({ strokeColor }: IconRenderProps) => (
-				<>
-					<path
-						fillRule="evenodd"
-						clipRule="evenodd"
-						d="M18 6.25H2v1.5h16v-1.5Zm0 6H2v1.5h16v-1.5Z"
-						fill={strokeColor}
-					/>
-				</>
+				<path
+					fillRule="evenodd"
+					clipRule="evenodd"
+					d="M18 6.25H2v1.5h16v-1.5Zm0 6H2v1.5h16v-1.5Z"
+					fill={strokeColor}
+				/>
 			),
 		},
 	],
@@ -1406,7 +1351,7 @@ export const STATIC_ICON_REGISTRY = new Map<string, IconDefinition>([
 	[
 		'ctrl key',
 		{
-			line: ({ stroke, strokeColor }: IconRenderProps) => (
+			line: ({ strokeColor }: IconRenderProps) => (
 				<>
 					<path d="M 0 0 L 33 0 L 33 24 L 0 24 Z" fill="transparent" />
 					<g transform="translate(3 2.998)">
@@ -1471,14 +1416,12 @@ export const STATIC_ICON_REGISTRY = new Map<string, IconDefinition>([
 		'person',
 		{
 			line: ({ strokeColor }: IconRenderProps) => (
-				<>
-					<path
-						fillRule="evenodd"
-						clipRule="evenodd"
-						d="M12.5 5a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0ZM14 5a4 4 0 1 1-8 0 4 4 0 0 1 8 0ZM3.5 13v-.5h13v.5a4.5 4.5 0 0 1-4.5 4.5H8A4.5 4.5 0 0 1 3.5 13ZM2 13v-.5A1.5 1.5 0 0 1 3.5 11h13a1.5 1.5 0 0 1 1.5 1.5v.5a6 6 0 0 1-6 6H8a6 6 0 0 1-6-6Z"
-						fill={strokeColor}
-					/>
-				</>
+				<path
+					fillRule="evenodd"
+					clipRule="evenodd"
+					d="M12.5 5a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0ZM14 5a4 4 0 1 1-8 0 4 4 0 0 1 8 0ZM3.5 13v-.5h13v.5a4.5 4.5 0 0 1-4.5 4.5H8A4.5 4.5 0 0 1 3.5 13ZM2 13v-.5A1.5 1.5 0 0 1 3.5 11h13a1.5 1.5 0 0 1 1.5 1.5v.5a6 6 0 0 1-6 6H8a6 6 0 0 1-6-6Z"
+					fill={strokeColor}
+				/>
 			),
 		},
 	],
@@ -1486,18 +1429,16 @@ export const STATIC_ICON_REGISTRY = new Map<string, IconDefinition>([
 		'upload',
 		{
 			line: ({ strokeColor }: IconRenderProps) => (
-				<>
-					<g transform="translate(1 0.94)">
-						<path
-							d="M 0 0.06 L 18 0.06 L 18 18.06 L 0 18.06 Z"
-							fill="transparent"
-						/>
-						<path
-							d="M 9.53 0.53 L 14.53 5.53 L 13.47 6.59 L 9.75 2.87 L 9.75 13.06 L 8.25 13.06 L 8.25 2.87 L 4.53 6.59 L 3.47 5.53 L 8.47 0.53 L 9 0 Z M 1 13.06 L 1 15.56 C 1 16.388 1.672 17.06 2.5 17.06 L 15.5 17.06 C 16.328 17.06 17 16.388 17 15.56 L 17 13.06 L 15.5 13.06 L 15.5 15.56 L 2.5 15.56 L 2.5 13.06 Z"
-							fill={strokeColor}
-						/>
-					</g>
-				</>
+				<g transform="translate(1 0.94)">
+					<path
+						d="M 0 0.06 L 18 0.06 L 18 18.06 L 0 18.06 Z"
+						fill="transparent"
+					/>
+					<path
+						d="M 9.53 0.53 L 14.53 5.53 L 13.47 6.59 L 9.75 2.87 L 9.75 13.06 L 8.25 13.06 L 8.25 2.87 L 4.53 6.59 L 3.47 5.53 L 8.47 0.53 L 9 0 Z M 1 13.06 L 1 15.56 C 1 16.388 1.672 17.06 2.5 17.06 L 15.5 17.06 C 16.328 17.06 17 16.388 17 15.56 L 17 13.06 L 15.5 13.06 L 15.5 15.56 L 2.5 15.56 L 2.5 13.06 Z"
+						fill={strokeColor}
+					/>
+				</g>
 			),
 		},
 	],
@@ -1505,14 +1446,12 @@ export const STATIC_ICON_REGISTRY = new Map<string, IconDefinition>([
 		'download',
 		{
 			line: ({ strokeColor }: IconRenderProps) => (
-				<>
-					<path
-						fillRule="evenodd"
-						clipRule="evenodd"
-						d="m10.75 12.19 3.72-3.72 1.06 1.06-5 5-.53.53-.53-.53-5-5 1.06-1.06 3.72 3.72V2h1.5v10.19ZM2 14v2.5A1.5 1.5 0 0 0 3.5 18h13a1.5 1.5 0 0 0 1.5-1.5V14h-1.5v2.5h-13V14H2Z"
-						fill={strokeColor}
-					/>
-				</>
+				<path
+					fillRule="evenodd"
+					clipRule="evenodd"
+					d="m10.75 12.19 3.72-3.72 1.06 1.06-5 5-.53.53-.53-.53-5-5 1.06-1.06 3.72 3.72V2h1.5v10.19ZM2 14v2.5A1.5 1.5 0 0 0 3.5 18h13a1.5 1.5 0 0 0 1.5-1.5V14h-1.5v2.5h-13V14H2Z"
+					fill={strokeColor}
+				/>
 			),
 		},
 	],
@@ -1538,20 +1477,18 @@ export const STATIC_ICON_REGISTRY = new Map<string, IconDefinition>([
 		'share',
 		{
 			line: ({ stroke, strokeColor }: IconRenderProps) => (
-				<>
-					<path
-						d="M11 7c-5.063 0-8 4.03-8 9 1.222-1.2 3-3 8-3v3l6-6-6-6v3Z"
-						stroke={strokeColor}
-						strokeWidth={stroke}
-					/>
-				</>
+				<path
+					d="M11 7c-5.063 0-8 4.03-8 9 1.222-1.2 3-3 8-3v3l6-6-6-6v3Z"
+					stroke={strokeColor}
+					strokeWidth={stroke}
+				/>
 			),
 		},
 	],
 	[
 		'g-p assist',
 		{
-			line: (_props: IconRenderProps) => (
+			line: ({ strokeColor }: IconRenderProps) => (
 				<>
 					<g>
 						<defs>
@@ -1606,15 +1543,13 @@ export const STATIC_ICON_REGISTRY = new Map<string, IconDefinition>([
 		'x',
 		{
 			line: ({ strokeColor }: IconRenderProps) => (
-				<>
-					<g transform="translate(1 1)">
-						<path d="M 0 0 L 18 0 L 18 18 L 0 18 Z" fill="transparent" />
-						<path
-							d="M 7.94 9 L 3.47 13.47 L 4.53 14.53 L 9 10.06 L 13.47 14.53 L 14.53 13.47 L 10.06 9 L 14.53 4.53 L 13.47 3.47 L 9 7.94 L 4.53 3.47 L 3.47 4.53 Z"
-							fill={strokeColor}
-						/>
-					</g>
-				</>
+				<g transform="translate(1 1)">
+					<path d="M 0 0 L 18 0 L 18 18 L 0 18 Z" fill="transparent" />
+					<path
+						d="M 7.94 9 L 3.47 13.47 L 4.53 14.53 L 9 10.06 L 13.47 14.53 L 14.53 13.47 L 10.06 9 L 14.53 4.53 L 13.47 3.47 L 9 7.94 L 4.53 3.47 L 3.47 4.53 Z"
+						fill={strokeColor}
+					/>
+				</g>
 			),
 		},
 	],
@@ -1622,12 +1557,10 @@ export const STATIC_ICON_REGISTRY = new Map<string, IconDefinition>([
 		'plus',
 		{
 			line: ({ strokeColor }: IconRenderProps) => (
-				<>
-					<path
-						d="M 9.25 10.75 L 9.25 16 L 10.75 16 L 10.75 10.75 L 16 10.75 L 16 9.25 L 10.75 9.25 L 10.75 4 L 9.25 4 L 9.25 9.25 L 4 9.25 L 4 10.75 Z"
-						fill={strokeColor}
-					/>
-				</>
+				<path
+					d="M 9.25 10.75 L 9.25 16 L 10.75 16 L 10.75 10.75 L 16 10.75 L 16 9.25 L 10.75 9.25 L 10.75 4 L 9.25 4 L 9.25 9.25 L 4 9.25 L 4 10.75 Z"
+					fill={strokeColor}
+				/>
 			),
 		},
 	],
@@ -1652,9 +1585,7 @@ export const STATIC_ICON_REGISTRY = new Map<string, IconDefinition>([
 		'chevron down',
 		{
 			line: ({ stroke, strokeColor }: IconRenderProps) => (
-				<>
-					<path d="m5 8 5 5 5-5" stroke={strokeColor} strokeWidth={stroke} />
-				</>
+				<path d="m5 8 5 5 5-5" stroke={strokeColor} strokeWidth={stroke} />
 			),
 		},
 	],
@@ -1662,9 +1593,7 @@ export const STATIC_ICON_REGISTRY = new Map<string, IconDefinition>([
 		'chevron up',
 		{
 			line: ({ stroke, strokeColor }: IconRenderProps) => (
-				<>
-					<path d="m15 12-5-5-5 5" stroke={strokeColor} strokeWidth={stroke} />
-				</>
+				<path d="m15 12-5-5-5 5" stroke={strokeColor} strokeWidth={stroke} />
 			),
 		},
 	],
@@ -1672,14 +1601,12 @@ export const STATIC_ICON_REGISTRY = new Map<string, IconDefinition>([
 		'checked',
 		{
 			line: ({ strokeColor }: IconRenderProps) => (
-				<>
-					<path
-						fillRule="evenodd"
-						clipRule="evenodd"
-						d="M3.5 2A1.5 1.5 0 0 0 2 3.5v13A1.5 1.5 0 0 0 3.5 18h13a1.5 1.5 0 0 0 1.5-1.5v-13A1.5 1.5 0 0 0 16.5 2h-13Zm9.47 4.97L9 10.94 7.03 8.97l-1.06 1.06 2.5 2.5.53.53.53-.53 4.5-4.5-1.06-1.06Z"
-						fill={strokeColor}
-					/>
-				</>
+				<path
+					fillRule="evenodd"
+					clipRule="evenodd"
+					d="M3.5 2A1.5 1.5 0 0 0 2 3.5v13A1.5 1.5 0 0 0 3.5 18h13a1.5 1.5 0 0 0 1.5-1.5v-13A1.5 1.5 0 0 0 16.5 2h-13Zm9.47 4.97L9 10.94 7.03 8.97l-1.06 1.06 2.5 2.5.53.53.53-.53 4.5-4.5-1.06-1.06Z"
+					fill={strokeColor}
+				/>
 			),
 		},
 	],
@@ -1687,17 +1614,15 @@ export const STATIC_ICON_REGISTRY = new Map<string, IconDefinition>([
 		'unchecked',
 		{
 			line: ({ stroke, strokeColor }: IconRenderProps) => (
-				<>
-					<rect
-						x="2.75"
-						y="2.75"
-						width="14.5"
-						height="14.5"
-						rx=".75"
-						stroke={strokeColor}
-						strokeWidth={stroke}
-					/>
-				</>
+				<rect
+					x="2.75"
+					y="2.75"
+					width="14.5"
+					height="14.5"
+					rx=".75"
+					stroke={strokeColor}
+					strokeWidth={stroke}
+				/>
 			),
 		},
 	],
@@ -1723,14 +1648,12 @@ export const STATIC_ICON_REGISTRY = new Map<string, IconDefinition>([
 		'search',
 		{
 			line: ({ strokeColor }: IconRenderProps) => (
-				<>
-					<path
-						fillRule="evenodd"
-						clipRule="evenodd"
-						d="M9 14.5a5.5 5.5 0 1 0 0-11 5.5 5.5 0 0 0 0 11Zm5.452-1.109a7 7 0 1 0-1.06 1.06l4.078 4.08 1.06-1.061-4.078-4.079ZM10 9a1 1 0 1 1-2 0 1 1 0 0 1 2 0Z"
-						fill={strokeColor}
-					/>
-				</>
+				<path
+					fillRule="evenodd"
+					clipRule="evenodd"
+					d="M9 14.5a5.5 5.5 0 1 0 0-11 5.5 5.5 0 0 0 0 11Zm5.452-1.109a7 7 0 1 0-1.06 1.06l4.078 4.08 1.06-1.061-4.078-4.079ZM10 9a1 1 0 1 1-2 0 1 1 0 0 1 2 0Z"
+					fill={strokeColor}
+				/>
 			),
 		},
 	],
@@ -1738,14 +1661,12 @@ export const STATIC_ICON_REGISTRY = new Map<string, IconDefinition>([
 		'filter',
 		{
 			line: ({ strokeColor }: IconRenderProps) => (
-				<>
-					<path
-						fillRule="evenodd"
-						clipRule="evenodd"
-						d="M2 4.25h16v1.5H2v-1.5Zm3 5h10v1.5H5v-1.5Zm7 5H8v1.5h4v-1.5Z"
-						fill={strokeColor}
-					/>
-				</>
+				<path
+					fillRule="evenodd"
+					clipRule="evenodd"
+					d="M2 4.25h16v1.5H2v-1.5Zm3 5h10v1.5H5v-1.5Zm7 5H8v1.5h4v-1.5Z"
+					fill={strokeColor}
+				/>
 			),
 		},
 	],
@@ -1753,12 +1674,10 @@ export const STATIC_ICON_REGISTRY = new Map<string, IconDefinition>([
 		'more',
 		{
 			line: ({ strokeColor }: IconRenderProps) => (
-				<>
-					<path
-						d="M 4 11.5 C 3.31 11.5 2.75 10.94 2.75 10.25 C 2.75 9.56 3.31 9 4 9 C 4.69 9 5.25 9.56 5.25 10.25 C 5.25 10.94 4.69 11.5 4 11.5 Z M 10 11.5 C 9.31 11.5 8.75 10.94 8.75 10.25 C 8.75 9.56 9.31 9 10 9 C 10.69 9 11.25 9.56 11.25 10.25 C 11.25 10.94 10.69 11.5 10 11.5 Z M 14.75 10.25 C 14.75 10.94 15.31 11.5 16 11.5 C 16.69 11.5 17.25 10.94 17.25 10.25 C 17.25 9.56 16.69 9 16 9 C 15.31 9 14.75 9.56 14.75 10.25 Z"
-						fill={strokeColor}
-					/>
-				</>
+				<path
+					d="M 4 11.5 C 3.31 11.5 2.75 10.94 2.75 10.25 C 2.75 9.56 3.31 9 4 9 C 4.69 9 5.25 9.56 5.25 10.25 C 5.25 10.94 4.69 11.5 4 11.5 Z M 10 11.5 C 9.31 11.5 8.75 10.94 8.75 10.25 C 8.75 9.56 9.31 9 10 9 C 10.69 9 11.25 9.56 11.25 10.25 C 11.25 10.94 10.69 11.5 10 11.5 Z M 14.75 10.25 C 14.75 10.94 15.31 11.5 16 11.5 C 16.69 11.5 17.25 10.94 17.25 10.25 C 17.25 9.56 16.69 9 16 9 C 15.31 9 14.75 9.56 14.75 10.25 Z"
+					fill={strokeColor}
+				/>
 			),
 		},
 	],
@@ -1833,14 +1752,12 @@ export const STATIC_ICON_REGISTRY = new Map<string, IconDefinition>([
 		'invoice',
 		{
 			line: ({ strokeColor }: IconRenderProps) => (
-				<>
-					<path
-						fillRule="evenodd"
-						clipRule="evenodd"
-						d="M12.5 5.5v-3h-8v15h11v-12h-3Zm3 13.5h-11A1.5 1.5 0 0 1 3 17.5v-15A1.5 1.5 0 0 1 4.5 1h8A1.5 1.5 0 0 1 14 2.5V4h1.5A1.5 1.5 0 0 1 17 5.5v12a1.5 1.5 0 0 1-1.5 1.5Zm-5-4.25H6v-1.5h4.5v1.5Zm-4.5-4h4.5v-1.5H6v1.5Zm8-.75a1 1 0 1 1-2 0 1 1 0 0 1 2 0Zm-1 5a1 1 0 1 0 0-2 1 1 0 0 0 0 2Z"
-						fill={strokeColor}
-					/>
-				</>
+				<path
+					fillRule="evenodd"
+					clipRule="evenodd"
+					d="M12.5 5.5v-3h-8v15h11v-12h-3Zm3 13.5h-11A1.5 1.5 0 0 1 3 17.5v-15A1.5 1.5 0 0 1 4.5 1h8A1.5 1.5 0 0 1 14 2.5V4h1.5A1.5 1.5 0 0 1 17 5.5v12a1.5 1.5 0 0 1-1.5 1.5Zm-5-4.25H6v-1.5h4.5v1.5Zm-4.5-4h4.5v-1.5H6v1.5Zm8-.75a1 1 0 1 1-2 0 1 1 0 0 1 2 0Zm-1 5a1 1 0 1 0 0-2 1 1 0 0 0 0 2Z"
+					fill={strokeColor}
+				/>
 			),
 		},
 	],
@@ -1848,14 +1765,12 @@ export const STATIC_ICON_REGISTRY = new Map<string, IconDefinition>([
 		'payment',
 		{
 			line: ({ strokeColor }: IconRenderProps) => (
-				<>
-					<path
-						fillRule="evenodd"
-						clipRule="evenodd"
-						d="M2.5 4.5h15v2.75h-15V4.5Zm0 4.25v6.75h15V8.75h-15ZM17.5 3h-15A1.5 1.5 0 0 0 1 4.5v11A1.5 1.5 0 0 0 2.5 17h15a1.5 1.5 0 0 0 1.5-1.5v-11A1.5 1.5 0 0 0 17.5 3ZM14 13a1 1 0 1 0 2 0 1 1 0 0 0-2 0Zm-2 1a1 1 0 1 1 0-2 1 1 0 0 1 0 2Z"
-						fill={strokeColor}
-					/>
-				</>
+				<path
+					fillRule="evenodd"
+					clipRule="evenodd"
+					d="M2.5 4.5h15v2.75h-15V4.5Zm0 4.25v6.75h15V8.75h-15ZM17.5 3h-15A1.5 1.5 0 0 0 1 4.5v11A1.5 1.5 0 0 0 2.5 17h15a1.5 1.5 0 0 0 1.5-1.5v-11A1.5 1.5 0 0 0 17.5 3ZM14 13a1 1 0 1 0 2 0 1 1 0 0 0-2 0Zm-2 1a1 1 0 1 1 0-2 1 1 0 0 1 0 2Z"
+					fill={strokeColor}
+				/>
 			),
 		},
 	],
@@ -1907,14 +1822,12 @@ export const STATIC_ICON_REGISTRY = new Map<string, IconDefinition>([
 		'book',
 		{
 			line: ({ strokeColor }: IconRenderProps) => (
-				<>
-					<path
-						fillRule="evenodd"
-						clipRule="evenodd"
-						d="M2 3.25h-.75v13.5H7A2.25 2.25 0 0 1 9.25 19h1.5A2.25 2.25 0 0 1 13 16.75h5.75V3.25H13a3.744 3.744 0 0 0-3 1.5 3.744 3.744 0 0 0-3-1.5H2ZM9.25 7A2.25 2.25 0 0 0 7 4.75H2.75v10.5H7c.844 0 1.623.279 2.25.75V7Zm1.5 9a3.734 3.734 0 0 1 2.25-.75h4.25V4.75H13A2.25 2.25 0 0 0 10.75 7v9Z"
-						fill={strokeColor}
-					/>
-				</>
+				<path
+					fillRule="evenodd"
+					clipRule="evenodd"
+					d="M2 3.25h-.75v13.5H7A2.25 2.25 0 0 1 9.25 19h1.5A2.25 2.25 0 0 1 13 16.75h5.75V3.25H13a3.744 3.744 0 0 0-3 1.5 3.744 3.744 0 0 0-3-1.5H2ZM9.25 7A2.25 2.25 0 0 0 7 4.75H2.75v10.5H7c.844 0 1.623.279 2.25.75V7Zm1.5 9a3.734 3.734 0 0 1 2.25-.75h4.25V4.75H13A2.25 2.25 0 0 0 10.75 7v9Z"
+					fill={strokeColor}
+				/>
 			),
 		},
 	],
@@ -1922,14 +1835,12 @@ export const STATIC_ICON_REGISTRY = new Map<string, IconDefinition>([
 		'sparkle',
 		{
 			line: ({ strokeColor }: IconRenderProps) => (
-				<>
-					<path
-						fillRule="evenodd"
-						clipRule="evenodd"
-						d="M10.5 2h.5a7 7 0 0 0 7 7v2a7 7 0 0 0-7 7H9a7 7 0 0 0-7-7V9a7 7 0 0 0 7-7h1.5ZM10 4.88A8.525 8.525 0 0 0 15.12 10 8.525 8.525 0 0 0 10 15.12 8.525 8.525 0 0 0 4.88 10 8.524 8.524 0 0 0 10 4.88ZM17 4a1 1 0 1 1-2 0 1 1 0 0 1 2 0ZM5 16a1 1 0 1 1-2 0 1 1 0 0 1 2 0Z"
-						fill={strokeColor}
-					/>
-				</>
+				<path
+					fillRule="evenodd"
+					clipRule="evenodd"
+					d="M10.5 2h.5a7 7 0 0 0 7 7v2a7 7 0 0 0-7 7H9a7 7 0 0 0-7-7V9a7 7 0 0 0 7-7h1.5ZM10 4.88A8.525 8.525 0 0 0 15.12 10 8.525 8.525 0 0 0 10 15.12 8.525 8.525 0 0 0 4.88 10 8.524 8.524 0 0 0 10 4.88ZM17 4a1 1 0 1 1-2 0 1 1 0 0 1 2 0ZM5 16a1 1 0 1 1-2 0 1 1 0 0 1 2 0Z"
+					fill={strokeColor}
+				/>
 			),
 		},
 	],
@@ -1937,14 +1848,12 @@ export const STATIC_ICON_REGISTRY = new Map<string, IconDefinition>([
 		'inbox',
 		{
 			line: ({ strokeColor }: IconRenderProps) => (
-				<>
-					<path
-						fillRule="evenodd"
-						clipRule="evenodd"
-						d="M2.5 4.5h15v4.75h-5.25V10a2.25 2.25 0 0 1-4.5 0v-.75H2.5V4.5Zm0 6.25v4.75h15v-4.75h-3.825a3.751 3.751 0 0 1-7.35 0H2.5ZM17.5 3h-15A1.5 1.5 0 0 0 1 4.5v11A1.5 1.5 0 0 0 2.5 17h15a1.5 1.5 0 0 0 1.5-1.5v-11A1.5 1.5 0 0 0 17.5 3Z"
-						fill={strokeColor}
-					/>
-				</>
+				<path
+					fillRule="evenodd"
+					clipRule="evenodd"
+					d="M2.5 4.5h15v4.75h-5.25V10a2.25 2.25 0 0 1-4.5 0v-.75H2.5V4.5Zm0 6.25v4.75h15v-4.75h-3.825a3.751 3.751 0 0 1-7.35 0H2.5ZM17.5 3h-15A1.5 1.5 0 0 0 1 4.5v11A1.5 1.5 0 0 0 2.5 17h15a1.5 1.5 0 0 0 1.5-1.5v-11A1.5 1.5 0 0 0 17.5 3Z"
+					fill={strokeColor}
+				/>
 			),
 		},
 	],
