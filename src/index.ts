@@ -113,6 +113,12 @@ export { Icon } from './uikit/Icon';
 export type { IconProps } from './uikit/Icon';
 export type { IconNames } from './uikit/Icon/_types';
 
+export { UIButtonBar } from './uikit/UIButtonBar';
+export type { BarButton, UIButtonBarProps } from './uikit/UIButtonBar/_types';
+
+export { UICard } from './uikit/UICard';
+export type { UICardProps } from './uikit/UICard/_types';
+
 export { UIFileIcon } from './uikit/UIFileIcon';
 export type { UIFileIconProps } from './uikit/UIFileIcon';
 export type { UIFileIcons } from './uikit/UIFileIcon/_types';

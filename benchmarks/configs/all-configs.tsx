@@ -4,41 +4,41 @@
  */
 
 import React from 'react';
-import { Avatar } from '../../src/uikit/Avatar/Avatar';
-import { AvatarGroup } from '../../src/uikit/AvatarGroup/AvatarGroup';
-import { Badge } from '../../src/uikit/Badge/Badge';
-import { CheckBox } from '../../src/uikit/CheckBox/CheckBox';
-import { DivInput } from '../../src/uikit/DivInput/DivInput';
-import { DocIcons } from '../../src/uikit/DocIcon/DocIcons';
-import { Dot } from '../../src/uikit/Dot/Dot';
-import { DraggablePanel } from '../../src/uikit/DraggablePanel/DrggablePanel';
-import { DropDown } from '../../src/uikit/DropDown/DropDown';
-import { EditorButtonBar } from '../../src/uikit/EditorButtonBar/EditorButtonBar';
-import { EditorSummary } from '../../src/uikit/EditorSummary/EditorSummary';
-import { ErrorSummary } from '../../src/uikit/ErrorSummary/ErrorSummary';
-import { FlexDiv } from '../../src/uikit/FlexDiv/FlexDiv';
-import { Grouper } from '../../src/uikit/Grouper/Grouper';
-import { Icon } from '../../src/uikit/Icon/Icon';
-import { IconButton } from '../../src/uikit/IconButton/IconButton';
-import { Logos } from '../../src/uikit/Logos/Logos';
-import { MessageInput } from '../../src/uikit/MessageInput/InputField/MessageInput';
-import { Overlay } from '../../src/uikit/Overlay/Overlay';
-import { Pager } from '../../src/uikit/Pager/Pager';
-import { ProgressIndicator } from '../../src/uikit/Progress/ProgressIndicator/ProgressIndicator';
-import { RadioButton } from '../../src/uikit/RadioButton/RadioButton';
-import { RadioButtonList } from '../../src/uikit/RadioButtonList/RadioButtonList';
-import { Slider } from '../../src/uikit/Slider/Slider';
-import { Spacer } from '../../src/uikit/Spacer/Spacer';
-import { Switch } from '../../src/uikit/Switch/Switch';
-import { TabBar } from '../../src/uikit/TabBar/TabBar';
-import { TextArea } from '../../src/uikit/TextArea/TextArea';
-import { TextField } from '../../src/uikit/Textfield/TextField';
-import { UIButton } from '../../src/uikit/UIButton/UIButton';
-import { UIButtonBar } from '../../src/uikit/UIButtonBar/UIButtonBar';
-import { UICard } from '../../src/uikit/UICard/UICard';
-import { UIChip } from '../../src/uikit/UIChip/UIChip';
-import { UIFileIcon } from '../../src/uikit/UIFileIcon/UIFileIcon';
-import { UILabel } from '../../src/uikit/UILabel/UILabel';
+import { Avatar,
+	AvatarGroup,
+	Badge,
+	CheckBox,
+	DivInput,
+	DocIcons,
+	Dot,
+	DraggablePanel,
+	DropDown,
+	EditorButtonBar,
+	ErrorSummary,
+	FlexDiv,
+	Grouper,
+	Icon,
+	IconButton,
+	Logos,
+	MessageInput,
+	Overlay,
+	Pager,
+	ProgressIndicator,
+	RadioButton,
+	RadioButtonList,
+	Slider,
+	Spacer,
+	Switch,
+	TabBar,
+	TextArea,
+	TextField,
+	UIButton,
+	UIButtonBar,
+	UICard,
+	UIChip,
+	UIFileIcon,
+	UILabel
+} from '../../src';
 import { fireEvent } from '@testing-library/react';
 import {
 	measureMountTime,
@@ -80,6 +80,12 @@ const mockAvatars = [
 	{ first: 'John', last: 'Doe', email: 'john@example.com' },
 	{ first: 'Jane', last: 'Smith', email: 'jane@example.com' },
 	{ first: 'Bob', last: 'Johnson', email: 'bob@example.com' },
+];
+
+const mockErrors = [
+	{ id: '1', title: '1', bullets: ['one'] },
+	{ id: '2', title: '2', bullets: ['one', 'two'] },
+	{ id: '3', title: '3', bullets: ['one'] },
 ];
 
 export const avatarGroupConfig: ComponentBenchmarkConfig = {
@@ -374,9 +380,9 @@ export const uiButtonConfig: ComponentBenchmarkConfig = {
 };
 
 const mockButtons = [
-	{ label: 'Save', icon: 'check' },
-	{ label: 'Cancel', icon: 'close' },
-	{ label: 'Delete', icon: 'trash' },
+	{ label: 'Save', icon: 'check', tip: 'check' },
+	{ label: 'Cancel', icon: 'close', tip: 'close' },
+	{ label: 'Delete', icon: 'trash', tip: 'delete' },
 ];
 
 export const uiButtonBarConfig: ComponentBenchmarkConfig = {
@@ -385,17 +391,17 @@ export const uiButtonBarConfig: ComponentBenchmarkConfig = {
 		{
 			name: 'Mount Time',
 			type: 'mount',
-			fn: () => measureMountTime(<UIButtonBar buttons={mockButtons} />, 50),
+			fn: () => measureMountTime(<UIButtonBar options={mockButtons} />, 50),
 		},
 		{
 			name: 'Re-render',
 			type: 'rerender',
 			fn: () =>
 				measureRerenderTime(
-					<UIButtonBar buttons={mockButtons} />,
+					<UIButtonBar options={mockButtons} />,
 					(container) => {
-						const updatedButtons = [...mockButtons, { label: 'New', icon: 'plus' }];
-						container.rerender(<UIButtonBar buttons={updatedButtons} />);
+						const updatedButtons = [...mockButtons, { label: 'New', icon: 'plus', tip:'plus' }];
+						container.rerender(<UIButtonBar options={updatedButtons} />);
 					},
 					50,
 				),
@@ -405,7 +411,7 @@ export const uiButtonBarConfig: ComponentBenchmarkConfig = {
 			type: 'event',
 			fn: () =>
 				measureEventResponseTime(
-					<UIButtonBar buttons={mockButtons} onClick={() => {}} />,
+					<UIButtonBar options={mockButtons} onChange={() => {}} />,
 					(container) => {
 						const button = container.container.querySelector('button');
 						if (button) fireEvent.click(button);
@@ -416,7 +422,7 @@ export const uiButtonBarConfig: ComponentBenchmarkConfig = {
 		{
 			name: 'Memory',
 			type: 'memory',
-			fn: () => measureMemoryDelta(<UIButtonBar buttons={mockButtons} />, 10),
+			fn: () => measureMemoryDelta(<UIButtonBar options={mockButtons} />, 10),
 		},
 	],
 };
@@ -429,9 +435,7 @@ export const uiCardConfig: ComponentBenchmarkConfig = {
 			type: 'mount',
 			fn: () =>
 				measureMountTime(
-					<UICard>
-						<div>Card Content</div>
-					</UICard>,
+					<UICard label={"Card Content"} />,
 					50,
 				),
 		},
@@ -440,14 +444,10 @@ export const uiCardConfig: ComponentBenchmarkConfig = {
 			type: 'rerender',
 			fn: () =>
 				measureRerenderTime(
-					<UICard>
-						<div>Initial Content</div>
-					</UICard>,
+					<UICard label={"Card Content"} />,
 					(container) => {
 						container.rerender(
-							<UICard>
-								<div>Updated Content</div>
-							</UICard>,
+							<UICard label={"Card Content"} />,
 						);
 					},
 					50,
@@ -458,9 +458,7 @@ export const uiCardConfig: ComponentBenchmarkConfig = {
 			type: 'memory',
 			fn: () =>
 				measureMemoryDelta(
-					<UICard title="Test">
-						<div>Content</div>
-					</UICard>,
+					<UICard label={"Card Content"} />,
 					10,
 				),
 		},
@@ -514,16 +512,16 @@ export const uiFileIconConfig: ComponentBenchmarkConfig = {
 		{
 			name: 'Mount Time',
 			type: 'mount',
-			fn: () => measureMountTime(<UIFileIcon filename="test.txt" />, 50),
+			fn: () => measureMountTime(<UIFileIcon name="document" />, 50),
 		},
 		{
 			name: 'Re-render',
 			type: 'rerender',
 			fn: () =>
 				measureRerenderTime(
-					<UIFileIcon filename="test.txt" />,
+					<UIFileIcon name="document" />,
 					(container) => {
-						container.rerender(<UIFileIcon filename="document.pdf" />);
+						container.rerender(<UIFileIcon name="pdf" />);
 					},
 					50,
 				),
@@ -531,7 +529,7 @@ export const uiFileIconConfig: ComponentBenchmarkConfig = {
 		{
 			name: 'Memory',
 			type: 'memory',
-			fn: () => measureMemoryDelta(<UIFileIcon filename="test.pdf" />, 10),
+			fn: () => measureMemoryDelta(<UIFileIcon name="pdf" />, 10),
 		},
 	],
 };
@@ -542,16 +540,16 @@ export const uiLabelConfig: ComponentBenchmarkConfig = {
 		{
 			name: 'Mount Time',
 			type: 'mount',
-			fn: () => measureMountTime(<UILabel text="Label" />, 50),
+			fn: () => measureMountTime(<UILabel label="Label" />, 50),
 		},
 		{
 			name: 'Re-render',
 			type: 'rerender',
 			fn: () =>
 				measureRerenderTime(
-					<UILabel text="Initial" />,
+					<UILabel label="Initial" />,
 					(container) => {
-						container.rerender(<UILabel text="Updated Label Text" />);
+						container.rerender(<UILabel label="Updated Label Text" />);
 					},
 					50,
 				),
@@ -559,7 +557,7 @@ export const uiLabelConfig: ComponentBenchmarkConfig = {
 		{
 			name: 'Memory',
 			type: 'memory',
-			fn: () => measureMemoryDelta(<UILabel text="Test Label" />, 10),
+			fn: () => measureMemoryDelta(<UILabel label="Test Label" />, 10),
 		},
 	],
 };
@@ -669,7 +667,7 @@ export const draggablePanelConfig: ComponentBenchmarkConfig = {
 			type: 'mount',
 			fn: () =>
 				measureMountTime(
-					<DraggablePanel>
+					<DraggablePanel dragsRight={true} isClosed={false} sizeConstraints={{min:100, max:0.9, initial:250}}>
 						<div>Panel Content</div>
 					</DraggablePanel>,
 					50,
@@ -680,12 +678,12 @@ export const draggablePanelConfig: ComponentBenchmarkConfig = {
 			type: 'rerender',
 			fn: () =>
 				measureRerenderTime(
-					<DraggablePanel x={0} y={0}>
+					<DraggablePanel dragsRight={true} isClosed={false} sizeConstraints={{min:100, max:0.9, initial:250}}>
 						<div>Content</div>
 					</DraggablePanel>,
 					(container) => {
 						container.rerender(
-							<DraggablePanel x={100} y={100}>
+							<DraggablePanel dragsRight={true} isClosed={true} sizeConstraints={{min:100, max:0.9, initial:250}}>
 								<div>Content</div>
 							</DraggablePanel>,
 						);
@@ -698,7 +696,7 @@ export const draggablePanelConfig: ComponentBenchmarkConfig = {
 			type: 'memory',
 			fn: () =>
 				measureMemoryDelta(
-					<DraggablePanel>
+					<DraggablePanel dragsRight={true} isClosed={false} sizeConstraints={{min:100, max:0.9, initial:250}}>
 						<div>Panel Content</div>
 					</DraggablePanel>,
 					10,
@@ -726,9 +724,9 @@ export const dropDownConfig: ComponentBenchmarkConfig = {
 			type: 'rerender',
 			fn: () =>
 				measureRerenderTime(
-					<DropDown options={mockDropDownOptions} selected="1" />,
+					<DropDown options={mockDropDownOptions} selectedValue="1" />,
 					(container) => {
-						container.rerender(<DropDown options={mockDropDownOptions} selected="2" />);
+						container.rerender(<DropDown options={mockDropDownOptions} selectedValue="2" />);
 					},
 					50,
 				),
@@ -767,10 +765,10 @@ export const editorButtonBarConfig: ComponentBenchmarkConfig = {
 			type: 'rerender',
 			fn: () =>
 				measureRerenderTime(
-					<EditorButtonBar buttons={['bold']} />,
+					<EditorButtonBar activeFormats={['bold']} />,
 					(container) => {
 						container.rerender(
-							<EditorButtonBar buttons={['bold', 'italic', 'underline']} />,
+							<EditorButtonBar activeFormats={['bold', 'italic', 'underline']} />,
 						);
 					},
 					50,
@@ -779,35 +777,7 @@ export const editorButtonBarConfig: ComponentBenchmarkConfig = {
 		{
 			name: 'Memory',
 			type: 'memory',
-			fn: () => measureMemoryDelta(<EditorButtonBar buttons={['bold', 'italic']} />, 10),
-		},
-	],
-};
-
-export const editorSummaryConfig: ComponentBenchmarkConfig = {
-	componentName: 'EditorSummary',
-	tests: [
-		{
-			name: 'Mount Time',
-			type: 'mount',
-			fn: () => measureMountTime(<EditorSummary content="Summary text" />, 50),
-		},
-		{
-			name: 'Re-render',
-			type: 'rerender',
-			fn: () =>
-				measureRerenderTime(
-					<EditorSummary content="Initial content" />,
-					(container) => {
-						container.rerender(<EditorSummary content="Updated content" />);
-					},
-					50,
-				),
-		},
-		{
-			name: 'Memory',
-			type: 'memory',
-			fn: () => measureMemoryDelta(<EditorSummary content="Summary text" />, 10),
+			fn: () => measureMemoryDelta(<EditorButtonBar activeFormats={['bold', 'italic']} />, 10),
 		},
 	],
 };
@@ -818,16 +788,16 @@ export const errorSummaryConfig: ComponentBenchmarkConfig = {
 		{
 			name: 'Mount Time',
 			type: 'mount',
-			fn: () => measureMountTime(<ErrorSummary message="Error message" />, 50),
+			fn: () => measureMountTime(<ErrorSummary entries={mockErrors} />, 50),
 		},
 		{
 			name: 'Re-render',
 			type: 'rerender',
 			fn: () =>
 				measureRerenderTime(
-					<ErrorSummary message="Initial error" />,
+					<ErrorSummary entries={[]} />,
 					(container) => {
-						container.rerender(<ErrorSummary message="Updated error" />);
+						container.rerender(<ErrorSummary entries={[...mockErrors, {id:"4", title:"1", bullets:["bullet"]}]}/>);
 					},
 					50,
 				),
@@ -835,7 +805,7 @@ export const errorSummaryConfig: ComponentBenchmarkConfig = {
 		{
 			name: 'Memory',
 			type: 'memory',
-			fn: () => measureMemoryDelta(<ErrorSummary message="Error message" />, 10),
+			fn: () => measureMemoryDelta(<ErrorSummary entries={mockErrors} />, 10),
 		},
 	],
 };
@@ -848,10 +818,7 @@ export const grouperConfig: ComponentBenchmarkConfig = {
 			type: 'mount',
 			fn: () =>
 				measureMountTime(
-					<Grouper>
-						<div>Child 1</div>
-						<div>Child 2</div>
-					</Grouper>,
+					<Grouper title={"title1"} open={false}/>,
 					50,
 				),
 		},
@@ -860,15 +827,10 @@ export const grouperConfig: ComponentBenchmarkConfig = {
 			type: 'rerender',
 			fn: () =>
 				measureRerenderTime(
-					<Grouper>
-						<div>Child 1</div>
-					</Grouper>,
+					<Grouper title={"title1"} open={false} />,
 					(container) => {
 						container.rerender(
-							<Grouper>
-								<div>Child 1</div>
-								<div>Child 2</div>
-							</Grouper>,
+							<Grouper title={"title1"} open={true} />,
 						);
 					},
 					50,
@@ -879,10 +841,7 @@ export const grouperConfig: ComponentBenchmarkConfig = {
 			type: 'memory',
 			fn: () =>
 				measureMemoryDelta(
-					<Grouper>
-						<div>Child 1</div>
-						<div>Child 2</div>
-					</Grouper>,
+					<Grouper title={"title1"} open={false} />,
 					10,
 				),
 		},
@@ -936,16 +895,16 @@ export const logosConfig: ComponentBenchmarkConfig = {
 		{
 			name: 'Mount Time',
 			type: 'mount',
-			fn: () => measureMountTime(<Logos type="default" />, 50),
+			fn: () => measureMountTime(<Logos image="apple" />, 50),
 		},
 		{
 			name: 'Re-render',
 			type: 'rerender',
 			fn: () =>
 				measureRerenderTime(
-					<Logos type="default" />,
+					<Logos image="apple" />,
 					(container) => {
-						container.rerender(<Logos type="alternate" />);
+						container.rerender(<Logos image="google" />);
 					},
 					50,
 				),
@@ -953,7 +912,7 @@ export const logosConfig: ComponentBenchmarkConfig = {
 		{
 			name: 'Memory',
 			type: 'memory',
-			fn: () => measureMemoryDelta(<Logos type="default" />, 10),
+			fn: () => measureMemoryDelta(<Logos image="apple" />, 10),
 		},
 	],
 };
@@ -1007,9 +966,7 @@ export const overlayConfig: ComponentBenchmarkConfig = {
 			type: 'mount',
 			fn: () =>
 				measureMountTime(
-					<Overlay show>
-						<div>Overlay Content</div>
-					</Overlay>,
+					<Overlay overlay={false} />,
 					50,
 				),
 		},
@@ -1018,14 +975,10 @@ export const overlayConfig: ComponentBenchmarkConfig = {
 			type: 'rerender',
 			fn: () =>
 				measureRerenderTime(
-					<Overlay show={false}>
-						<div>Content</div>
-					</Overlay>,
+					<Overlay overlay={false} />,
 					(container) => {
 						container.rerender(
-							<Overlay show={true}>
-								<div>Content</div>
-							</Overlay>,
+							<Overlay overlay={true} />,
 						);
 					},
 					50,
@@ -1036,9 +989,7 @@ export const overlayConfig: ComponentBenchmarkConfig = {
 			type: 'memory',
 			fn: () =>
 				measureMemoryDelta(
-					<Overlay show>
-						<div>Overlay Content</div>
-					</Overlay>,
+					<Overlay overlay={false} />,
 					10,
 				),
 		},
@@ -1051,16 +1002,16 @@ export const pagerConfig: ComponentBenchmarkConfig = {
 		{
 			name: 'Mount Time',
 			type: 'mount',
-			fn: () => measureMountTime(<Pager total={100} current={1} />, 50),
+			fn: () => measureMountTime(<Pager pages={100} index={1} />, 50),
 		},
 		{
 			name: 'Re-render',
 			type: 'rerender',
 			fn: () =>
 				measureRerenderTime(
-					<Pager total={100} current={1} />,
+					<Pager pages={100} index={1} />,
 					(container) => {
-						container.rerender(<Pager total={100} current={5} />);
+						container.rerender(<Pager pages={100} index={50} />);
 					},
 					50,
 				),
@@ -1070,7 +1021,7 @@ export const pagerConfig: ComponentBenchmarkConfig = {
 			type: 'event',
 			fn: () =>
 				measureEventResponseTime(
-					<Pager total={100} current={1} onChange={() => {}} />,
+					<Pager pages={100} index={1} onChange={() => {}} />,
 					(container) => {
 						const nextButton = container.container.querySelector('[aria-label*="next"], [class*="next"]');
 						if (nextButton) fireEvent.click(nextButton);
@@ -1081,7 +1032,7 @@ export const pagerConfig: ComponentBenchmarkConfig = {
 		{
 			name: 'Memory',
 			type: 'memory',
-			fn: () => measureMemoryDelta(<Pager total={100} current={1} />, 10),
+			fn: () => measureMemoryDelta(<Pager pages={100} index={1}  />, 10),
 		},
 	],
 };
@@ -1092,7 +1043,7 @@ export const progressConfig: ComponentBenchmarkConfig = {
 		{
 			name: 'Mount Time',
 			type: 'mount',
-			fn: () => measureMountTime(<Progress size={20} />, 50),
+			fn: () => measureMountTime(<ProgressIndicator size={20} />, 50),
 		},
 		{
 			name: 'Re-render',
@@ -1120,16 +1071,16 @@ export const radioButtonConfig: ComponentBenchmarkConfig = {
 		{
 			name: 'Mount Time',
 			type: 'mount',
-			fn: () => measureMountTime(<RadioButton label="Option 1" />, 50),
+			fn: () => measureMountTime(<RadioButton option={{title:"title", icon:"home"}} />, 50),
 		},
 		{
 			name: 'Re-render',
 			type: 'rerender',
 			fn: () =>
 				measureRerenderTime(
-					<RadioButton label="Option" selected={false} />,
+					<RadioButton  option={{title:"title", icon:"home"}} selected={false} />,
 					(container) => {
-						container.rerender(<RadioButton label="Option" selected={true} />);
+						container.rerender(<RadioButton option={{title:"title", icon:"home"}} selected={true} />);
 					},
 					50,
 				),
@@ -1139,7 +1090,7 @@ export const radioButtonConfig: ComponentBenchmarkConfig = {
 			type: 'event',
 			fn: () =>
 				measureEventResponseTime(
-					<RadioButton label="Option" onChange={() => {}} />,
+					<RadioButton option={{title:"title", icon:"home"}} onChange={() => {}} />,
 					(container) => {
 						const radio = container.container.querySelector('[class*="wrapper"]');
 						if (radio) fireEvent.click(radio);
@@ -1150,33 +1101,31 @@ export const radioButtonConfig: ComponentBenchmarkConfig = {
 		{
 			name: 'Memory',
 			type: 'memory',
-			fn: () => measureMemoryDelta(<RadioButton label="Option 1" />, 10),
+			fn: () => measureMemoryDelta(<RadioButton option={{title:"title", icon:"home"}} />, 10),
 		},
 	],
 };
 
-const mockRadioButtonListOptions = [
-	{ label: 'Option 1', value: '1' },
-	{ label: 'Option 2', value: '2' },
-	{ label: 'Option 3', value: '3' },
-];
-
+const mockRadios = [
+	{title:"Title1", icon:"home"},
+	{title:"Title2", icon:"home"},
+]
 export const radioButtonListConfig: ComponentBenchmarkConfig = {
 	componentName: 'RadioButtonList',
 	tests: [
 		{
 			name: 'Mount Time',
 			type: 'mount',
-			fn: () => measureMountTime(<RadioButtonList options={mockRadioButtonListOptions} />, 50),
+			fn: () => measureMountTime(<RadioButtonList options={mockRadios} />, 50),
 		},
 		{
 			name: 'Re-render',
 			type: 'rerender',
 			fn: () =>
 				measureRerenderTime(
-					<RadioButtonList options={mockRadioButtonListOptions} selected="1" />,
+					<RadioButtonList options={mockRadios} selectedIndexes={[0]} />,
 					(container) => {
-						container.rerender(<RadioButtonList options={mockRadioButtonListOptions} selected="2" />);
+						container.rerender(<RadioButtonList options={mockRadios} selectedIndexes={[1]} />);
 					},
 					50,
 				),
@@ -1186,7 +1135,7 @@ export const radioButtonListConfig: ComponentBenchmarkConfig = {
 			type: 'event',
 			fn: () =>
 				measureEventResponseTime(
-					<RadioButtonList options={mockRadioButtonListOptions} onChange={() => {}} />,
+					<RadioButtonList options={mockRadios} onChange={() => {}} />,
 					(container) => {
 						const firstRadio = container.container.querySelector('[class*="wrapper"]');
 						if (firstRadio) fireEvent.click(firstRadio);
@@ -1197,7 +1146,7 @@ export const radioButtonListConfig: ComponentBenchmarkConfig = {
 		{
 			name: 'Memory',
 			type: 'memory',
-			fn: () => measureMemoryDelta(<RadioButtonList options={mockRadioButtonListOptions} />, 10),
+			fn: () => measureMemoryDelta(<RadioButtonList options={mockRadios} />, 10),
 		},
 	],
 };
@@ -1208,16 +1157,16 @@ export const sliderConfig: ComponentBenchmarkConfig = {
 		{
 			name: 'Mount Time',
 			type: 'mount',
-			fn: () => measureMountTime(<Slider initial={50} />, 50),
+			fn: () => measureMountTime(<Slider value={50} />, 50),
 		},
 		{
 			name: 'Re-render',
 			type: 'rerender',
 			fn: () =>
 				measureRerenderTime(
-					<Slider initial={25} />,
+					<Slider value={25} />,
 					(container) => {
-						container.rerender(<Slider initial={75} />);
+						container.rerender(<Slider value={75} />);
 					},
 					50,
 				),
@@ -1238,7 +1187,7 @@ export const sliderConfig: ComponentBenchmarkConfig = {
 		{
 			name: 'Memory',
 			type: 'memory',
-			fn: () => measureMemoryDelta(<Slider initial={50} />, 10),
+			fn: () => measureMemoryDelta(<Slider value={50} />, 10),
 		},
 	],
 };
@@ -1283,16 +1232,16 @@ export const tabBarConfig: ComponentBenchmarkConfig = {
 		{
 			name: 'Mount Time',
 			type: 'mount',
-			fn: () => measureMountTime(<TabBar tabs={mockTabBarTabs} />, 50),
+			fn: () => measureMountTime(<TabBar options={mockTabBarTabs} />, 50),
 		},
 		{
 			name: 'Re-render',
 			type: 'rerender',
 			fn: () =>
 				measureRerenderTime(
-					<TabBar tabs={mockTabBarTabs} active="1" />,
+					<TabBar options={mockTabBarTabs} selectedValue="1" />,
 					(container) => {
-						container.rerender(<TabBar tabs={mockTabBarTabs} active="2" />);
+						container.rerender(<TabBar options={mockTabBarTabs} selectedValue="2" />);
 					},
 					50,
 				),
@@ -1302,7 +1251,7 @@ export const tabBarConfig: ComponentBenchmarkConfig = {
 			type: 'event',
 			fn: () =>
 				measureEventResponseTime(
-					<TabBar tabs={mockTabBarTabs} onChange={() => {}} />,
+					<TabBar options={mockTabBarTabs} onChange={() => {}} />,
 					(container) => {
 						const tab = container.container.querySelector('[role="tab"]');
 						if (tab) fireEvent.click(tab);
@@ -1313,7 +1262,7 @@ export const tabBarConfig: ComponentBenchmarkConfig = {
 		{
 			name: 'Memory',
 			type: 'memory',
-			fn: () => measureMemoryDelta(<TabBar tabs={mockTabBarTabs} />, 10),
+			fn: () => measureMemoryDelta(<TabBar options={mockTabBarTabs} />, 10),
 		},
 	],
 };
@@ -1368,27 +1317,26 @@ export const allBenchmarkConfigs = [
 	divInputConfig,
 	docIconConfig,
 	dotConfig,
-	// draggablePanelConfig,
-	// dropDownConfig,
-	// editorButtonBarConfig,
-	// editorSummaryConfig,
-	// errorSummaryConfig,
+	draggablePanelConfig,
+	dropDownConfig,
+	editorButtonBarConfig,
+	errorSummaryConfig,
 	flexDivConfig,
-	// grouperConfig,
+	grouperConfig,
 	iconConfig,
-	// iconButtonConfig,
-	// logosConfig,
-	// messageInputConfig,
-	// overlayConfig,
-	// pagerConfig,
-	// progressConfig,
-	// radioButtonConfig,
-	// radioButtonListConfig,
+	iconButtonConfig,
+	logosConfig,
+	messageInputConfig,
+	overlayConfig,
+	pagerConfig,
+	progressConfig,
+	radioButtonConfig,
+	radioButtonListConfig,
 	sliderConfig,
-	// spacerConfig,
+	spacerConfig,
 	switchConfig,
-	// tabBarConfig,
-	// textAreaConfig,
+	tabBarConfig,
+	textAreaConfig,
 	textFieldConfig,
 	uiButtonConfig,
 	uiButtonBarConfig,

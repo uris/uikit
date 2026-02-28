@@ -1,4 +1,4 @@
-import { AvatarProps } from '../uikit/Avatar';
+import type React from 'react';
 
 export function setSizeStyle(size: string | number | undefined): string {
 	if (!size) return 'auto';
@@ -16,14 +16,14 @@ export function cleanString(
 ) {
 	let clean: string = input;
 	const scriptsRegEx = /\b[^<]*(?:(?!<\/script>)<[^<]*)*<\/script>/gi;
-	clean = clean.replace(scriptsRegEx, '');
+	clean = clean.replaceAll(scriptsRegEx, '');
 	if (removeInvisible) {
 		const invisibleRegEx = /[\r\n\t]/gi;
-		clean = clean.replace(invisibleRegEx, '');
+		clean = clean.replaceAll(invisibleRegEx, '');
 	}
 	if (removeHtml) {
 		const htmlRegEx = /<\/?[a-z][^>]*>/gi;
-		clean = clean.replace(htmlRegEx, '');
+		clean = clean.replaceAll(htmlRegEx, '');
 	}
 	return clean;
 }
@@ -60,22 +60,7 @@ export function debug(previous: any, updated: any, name = 'component') {
 			event: 'Component Unmount',
 		});
 	} else {
-		for (const key of Object.keys(updated)) {
-			if (updated[key] !== props[key]) {
-				try {
-					const propName = `${key}:`;
-					const prev = JSON.stringify(props[key]);
-					const next = JSON.stringify(updated[key]);
-					const valueChanged = `${prev} > ${next}`;
-					reasons.push(`${propName} ${valueChanged}`);
-				} catch (error) {
-					let message = 'Unknown error';
-					if (error instanceof Error) message = error.message;
-					if (typeof error === 'string') message = error;
-					reasons.push(`${key} ${message}`);
-				}
-			}
-		}
+		const reasons = createPropChangeArray(props, updated);
 		console.log({
 			component: name,
 			'(re)render': true,
@@ -85,6 +70,28 @@ export function debug(previous: any, updated: any, name = 'component') {
 	}
 	return { props: updated, mount: false, unmount: false };
 }
+
+export function createPropChangeArray(props: any, updated: any) {
+	const reasons = [];
+	for (const key of Object.keys(updated)) {
+		if (updated[key] !== props[key]) {
+			try {
+				const propName = `${key}:`;
+				const prev = JSON.stringify(props[key]);
+				const next = JSON.stringify(updated[key]);
+				const valueChanged = `${prev} > ${next}`;
+				reasons.push(`${propName} ${valueChanged}`);
+			} catch (error) {
+				let message = 'Unknown error';
+				if (error instanceof Error) message = error.message;
+				if (typeof error === 'string') message = error;
+				reasons.push(`${key} ${message}`);
+			}
+		}
+	}
+	return reasons;
+}
+
 export function setProps(props: any, mount = false, unmount = false) {
 	if (process.env.NODE_ENV === 'test') return; // exit if running tests
 	return { props, mount, unmount };
@@ -100,3 +107,19 @@ export const hexToRgb = (hex: string | undefined) => {
 	const b = Number.parseInt(hex.slice(5, 7), 16);
 	return `"rgb(${r}, ${g}, ${b})"`;
 };
+
+/**
+ * Utility to accessibility - mimics click event with designated keys event
+ */
+export function accessibleKeyDown(
+	e: React.KeyboardEvent<any>,
+	clickFunction: () => void,
+	keys?: string[],
+) {
+	const activateWith = keys ?? ['Enter', ' '];
+	const match = activateWith.includes(e.key);
+	if (match) {
+		e.preventDefault();
+		clickFunction();
+	}
+}

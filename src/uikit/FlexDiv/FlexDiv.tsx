@@ -1,6 +1,5 @@
 import { motion } from 'motion/react';
 import React, { useMemo } from 'react';
-import { useTheme } from '../../hooks';
 import { useTrackRenders } from '../../hooks/useTrackRenders';
 import css from './FlexDiv.module.css';
 import type { FlexDivProps } from './_types';
@@ -27,14 +26,109 @@ function setFlex(style: string) {
 	return style;
 }
 
+const samePrimitive = (
+	prevNode: React.ReactNode,
+	nextNode: React.ReactNode,
+) => {
+	const prevIsPrimitive =
+		typeof prevNode === 'string' ||
+		typeof prevNode === 'number' ||
+		typeof prevNode === 'boolean';
+	const nextIsPrimitive =
+		typeof nextNode === 'string' ||
+		typeof nextNode === 'number' ||
+		typeof nextNode === 'boolean';
+	if (prevIsPrimitive || nextIsPrimitive) return prevNode === nextNode;
+};
+
+const sameArray = (prevNode: React.ReactNode, nextNode: React.ReactNode) => {
+	if (Array.isArray(prevNode) || Array.isArray(nextNode)) {
+		if (!Array.isArray(prevNode) || !Array.isArray(nextNode)) return false;
+		if (prevNode.length !== nextNode.length) return false;
+		return prevNode.every((node, index) =>
+			areReactNodesEqual(node, nextNode[index]),
+		);
+	}
+};
+
+const sameElements = (prevNode: React.ReactNode, nextNode: React.ReactNode) => {
+	if (!prevNode) return undefined;
+	if (!nextNode) return undefined;
+
+	if (prevNode.type !== nextNode.type) return false;
+	if (prevNode.key !== nextNode.key) return false;
+
+	const prevProps: any = prevNode.props ?? {};
+	const nextProps: any = nextNode.props ?? {};
+
+	const prevKeys = Object.keys(prevProps).filter((key) => key !== 'children');
+	const nextKeys = Object.keys(nextProps).filter((key) => key !== 'children');
+	if (prevKeys.length !== nextKeys.length) return false;
+
+	for (const key of prevKeys) {
+		if (!Object.hasOwn(nextProps, key)) return false;
+		if (!Object.is(prevProps[key], nextProps[key])) return false;
+	}
+
+	return areReactNodesEqual(prevProps.children, nextProps.children);
+};
+
+const nodesAreEqual = (
+	prevNode: React.ReactNode,
+	nextNode: React.ReactNode,
+) => {};
+
+function areReactNodesEqual(
+	prevNode: React.ReactNode,
+	nextNode: React.ReactNode,
+): boolean {
+	if (Object.is(prevNode, nextNode)) return true;
+	if (prevNode == null || nextNode == null) return prevNode === nextNode;
+
+	const isSamePrimitive = samePrimitive(prevNode, nextNode);
+	if (isSamePrimitive !== undefined) return isSamePrimitive;
+
+	const isSameArray = sameArray(prevNode, nextNode);
+	if (isSameArray !== undefined) return isSameArray;
+
+	const isSameElements = sameElements(prevNode, nextNode);
+	if (isSameElements !== undefined) return isSameElements;
+
+	if (React.isValidElement(prevNode) && React.isValidElement(nextNode)) {
+		const isSameElements = sameElements(prevNode, nextNode);
+		if (isSameElements !== undefined) return isSameElements;
+	}
+
+	return false;
+}
+
+/**
+ * Check equality since style/css updates to theme trigger false positive
+ */
+function areFlexDivPropsEqual(
+	prevProps: FlexDivProps,
+	nextProps: FlexDivProps,
+) {
+	const prevKeys = Object.keys(prevProps);
+	const nextKeys = Object.keys(nextProps);
+	if (prevKeys.length !== nextKeys.length) return false;
+
+	for (const key of prevKeys) {
+		if (!Object.hasOwn(nextProps, key)) return false;
+		if (key === 'children') continue;
+		if (!Object.is((prevProps as any)[key], (nextProps as any)[key]))
+			return false;
+	}
+	return areReactNodesEqual(prevProps.children, nextProps.children);
+}
+
 export const FlexDiv = React.memo(
 	React.forwardRef<HTMLDivElement, FlexDivProps>((props, ref) => {
-		const theme = useTheme();
 		const {
 			children,
 			scrollY = false,
 			scrollX = false,
-			background = theme.colors['core-surface-primary'],
+			background = 'var(--core-surface-primary)',
 			direction = 'column',
 			alignItems = 'start',
 			justify = 'start',
@@ -119,4 +213,5 @@ export const FlexDiv = React.memo(
 			</motion.div>
 		);
 	}),
+	areFlexDivPropsEqual,
 );

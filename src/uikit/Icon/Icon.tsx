@@ -1,16 +1,15 @@
 import React, { useMemo } from 'react';
 import { useTheme } from '../../hooks';
 import { useTrackRenders } from '../../hooks/useTrackRenders';
+import { accessibleKeyDown } from '../../util/utils';
 import type { IconProps } from './_types';
-import { type UIIcon, getIconRegistry } from './iconRegistry';
-
-export type { UIIcon };
+import { STATIC_ICON_REGISTRY } from './iconRegistry';
 
 export const Icon = React.memo((props: IconProps) => {
 	const theme = useTheme();
 	const {
 		name = 'home',
-		size = 22,
+		size = 20,
 		stroke = 1.5,
 		strokeColor = theme.colors['core-icon-primary'],
 		fillColor = 'transparent',
@@ -20,49 +19,53 @@ export const Icon = React.memo((props: IconProps) => {
 		onClick = () => null,
 	} = props;
 
-	const opacity = disabled ? 0.5 : 1;
+	// memo cursor style
+	const cursor = useMemo(() => {
+		if (disabled) return 'default';
+		return pointer ? 'pointer' : 'inherit';
+	}, [disabled, pointer]);
 
-	// Get icon registry Map - only recreates when props affecting SVG change
-	const iconRegistry = useMemo(() => {
-		return getIconRegistry({
-			size,
-			stroke,
-			strokeColor,
-			fillColor,
-			disabled,
-			pointer,
-			onClick,
-			theme,
-			opacity,
-		});
-	}, [
-		size,
-		stroke,
-		strokeColor,
-		fillColor,
-		disabled,
-		pointer,
-		onClick,
-		theme,
-		opacity,
-	]);
+	// memo icon style
+	const iconStyle = useMemo(() => {
+		return {
+			cursor,
+			userSelect: 'none' as const,
+			WebkitUserSelect: 'none' as const,
+			WebkitTapHighlightColor: 'transparent',
+			outline: 'none',
+			border: 0,
+		} as React.CSSProperties;
+	}, [cursor]);
+
+	const variantKey = toggle ? 'lineOn' : 'line';
+	const iconVariant = STATIC_ICON_REGISTRY.get(name);
+	const shape = iconVariant?.[variantKey] ?? iconVariant?.line;
 
 	/* START.DEBUG */
 	useTrackRenders(props, 'Icon');
 	/* END.DEBUG */
 
-	// Memoize the icon creation - only creates the ONE icon needed when name or toggle changes
-	const renderedIcon = useMemo(() => {
-		const normalizedName = name.toLowerCase();
-		const icon = iconRegistry.get(normalizedName);
+	if (!shape) return null;
 
-		if (!icon) return null;
-
-		// set the variant to return and call the factory function to create the SVG
-		const variant = toggle ? 'lineOn' : 'line';
-		const factory = icon[variant];
-		return factory ? factory() : null;
-	}, [name, toggle, iconRegistry]);
-
-	return renderedIcon;
+	return (
+		<svg
+			xmlns="http://www.w3.org/2000/svg"
+			width={size}
+			height={size}
+			viewBox="0 0 20 20"
+			style={iconStyle}
+			onClick={(e) => onClick(e)}
+			fill={fillColor}
+			role="img"
+			aria-label={`${name} icon`}
+			tabIndex={pointer && !disabled ? 0 : -1}
+			onKeyDown={(e) => accessibleKeyDown(e, () => onClick)}
+			opacity={disabled ? 0.5 : 1}
+		>
+			<title>{name} icon</title>
+			{shape({ stroke, strokeColor, fillColor })}
+		</svg>
+	);
 });
+
+Icon.displayName = 'Icon';

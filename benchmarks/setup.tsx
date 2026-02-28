@@ -23,6 +23,11 @@ vi.mock('motion/react', async () => {
 	};
 });
 
+// Disable render debug hook during benchmarks so timings focus on component behavior.
+vi.mock('../src/hooks/useTrackRenders', () => ({
+	useTrackRenders: () => {},
+}));
+
 // Setup global performance marks
 global.performance.mark = global.performance.mark || (() => {});
 global.performance.measure =

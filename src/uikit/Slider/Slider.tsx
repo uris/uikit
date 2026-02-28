@@ -62,6 +62,7 @@ export const Slider = React.memo((props: SliderProps) => {
 				tr.style.width = `${pixelPos}px`;
 				hd.style.left = `${pixelPos - padding + adjustment}px`;
 			}
+			didMount.current = true;
 		},
 		[padding],
 	);
@@ -82,6 +83,7 @@ export const Slider = React.memo((props: SliderProps) => {
 			relativeProgressRef.current = normalized; // updated the relative value
 			const max = relativeProgressRef.current === 1; // flag if at max value
 			setTrackAndHead(pixelPos, max);
+			didMount.current = true;
 		},
 		[scaleMax, scaleMin, setTrackAndHead],
 	);

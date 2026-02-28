@@ -55,7 +55,6 @@ const meta: Meta<typeof FlexDiv> = {
 };
 
 export default meta;
-// type Story = StoryObj<typeof FlexDiv>;
 
 export const Default: StoryObj<typeof FlexDiv> = {
 	render: (args) => {

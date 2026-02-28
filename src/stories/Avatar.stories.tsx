@@ -70,6 +70,7 @@ export const Default: StoryObj<typeof Avatar> = {
 };
 
 export const InteractiveWithInitials: StoryObj<typeof Avatar> = {
+	tags: ['tests'],
 	args: {
 		...meta.args,
 		image: undefined,
@@ -123,6 +124,7 @@ export const InteractiveWithInitials: StoryObj<typeof Avatar> = {
 };
 
 export const AutoSizingInitials: StoryObj<typeof Avatar> = {
+	tags: ['tests'],
 	args: {
 		...meta.args,
 		image: undefined,

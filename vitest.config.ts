@@ -13,20 +13,25 @@ const dirname =
 export default defineConfig({
 	plugins: [react()],
 	test: {
-		environment: 'jsdom',
-		globals: true,
-		setupFiles: ['./benchmarks/setup.tsx'],
-		include: ['**/*.bench.{ts,tsx}'],
-		benchmark: {
-			include: ['**/*.bench.{ts,tsx}'],
-			exclude: ['node_modules', 'dist'],
-		},
-		coverage: {
-			provider: 'v8',
-			reporter: ['text', 'json', 'html'],
-			exclude: ['node_modules/', 'dist/', '**/*.bench.ts'],
-		},
 		projects: [
+			{
+				test: {
+					name: 'benchmarks',
+					environment: 'jsdom',
+					globals: true,
+					setupFiles: ['./benchmarks/setup.tsx'],
+					include: ['**/*.bench.{ts,tsx}'],
+					benchmark: {
+						include: ['**/*.bench.{ts,tsx}'],
+						exclude: ['node_modules', 'dist'],
+					},
+					coverage: {
+						provider: 'v8',
+						reporter: ['text', 'json', 'html'],
+						exclude: ['node_modules/', 'dist/', '**/*.bench.ts'],
+					},
+				},
+			},
 			{
 				plugins: [
 					// The plugin will run tests for the stories defined in your Storybook config

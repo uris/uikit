@@ -1,5 +1,17 @@
 import type React from 'react';
 
+export interface IconProps {
+	name?: string;
+	size?: number;
+	stroke?: number;
+	strokeColor?: string;
+	fillColor?: string;
+	toggle?: boolean;
+	pointer?: boolean;
+	disabled?: boolean;
+	onClick?: (e: React.MouseEvent<SVGElement, MouseEvent>) => void;
+}
+
 export enum IconNames {
 	home = 'home',
 	inbox = 'inbox',
@@ -43,7 +55,6 @@ export enum IconNames {
 	arrowUp = 'arrow up',
 	arrowLeft = 'arrow left',
 	arrowRight = 'arrow right',
-	gpMark = 'gpMark',
 	navigate = 'navigate',
 	document = 'document',
 	refresh = 'refresh',
@@ -90,19 +101,4 @@ export enum IconNames {
 	code = 'code',
 	taskList = 'task list',
 	highlight = 'highlight',
-}
-
-export interface IconProps {
-	name?: string | IconNames;
-	size?: number;
-	stroke?: number;
-	strokeColor?: string;
-	accentColor?: string;
-	fillColor?: string;
-	type?: 'line' | 'dualtone';
-	toggle?: boolean;
-	pointer?: boolean;
-	theme?: any;
-	disabled?: boolean;
-	onClick?: (e: React.MouseEvent<SVGElement, MouseEvent>) => void;
 }

@@ -1,5 +1,6 @@
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { useTrackRenders } from '../../hooks/useTrackRenders';
+import { accessibleKeyDown } from '../../util/utils';
 import css from './Pager.module.css';
 import type { PagerProps } from './_types';
 
@@ -54,12 +55,7 @@ export const Pager = React.memo((props: PagerProps) => {
 						type={'button'}
 						key={`paging_bullet_${bulletId}`}
 						onClick={() => handleClick(bulletId)}
-						onKeyDown={(e) => {
-							if (e.key === 'Enter' || e.key === ' ') {
-								e.preventDefault(); // Prevent page scrolling on space key
-								handleClick(bulletId);
-							}
-						}}
+						onKeyDown={(e) => accessibleKeyDown(e, () => handleClick(bulletId))}
 						onTouchStart={() => handleClick(bulletId)}
 						tabIndex={bulletId}
 					/>

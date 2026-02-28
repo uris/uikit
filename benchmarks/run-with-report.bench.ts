@@ -6,7 +6,7 @@
 import { describe, it, expect } from 'vitest';
 import { runBenchmarkConfig } from './utils/benchmark';
 import { BenchmarkReporter } from './utils/reporter';
-import { allBenchmarkConfigs } from './configs/all-configs.tsx';
+import { allBenchmarkConfigs } from './configs/all-configs';
 
 describe('Full Benchmark Suite with Reporting', () => {
 	const reporter = new BenchmarkReporter();
@@ -28,6 +28,6 @@ describe('Full Benchmark Suite with Reporting', () => {
 
 	it('Generate Final Report', () => {
 		console.log(reporter.generateConsoleReport());
-		reporter.saveToFile('benchmark-results.md');
+		reporter.saveToFile('benchmarks/reports/benchmark-results.md');
 	});
 });

@@ -13,6 +13,9 @@ const config: StorybookConfig = {
 		name: '@storybook/react-vite',
 		options: {},
 	},
+	tags: {
+		tests: { defaultFilterSelection: 'exclude' }, // default filter out test
+	},
 	staticDirs: [{ from: '../public', to: '/public' }],
 	viteFinal: (config) => {
 		// Remove @fs prefix for image paths
