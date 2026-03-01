@@ -12,12 +12,12 @@ export function useMayaTheme() {
 		} else theme = newTheme;
 		document.documentElement.dataset.theme = theme.name;
 	};
-	
+
 	const toggleTheme = () => {
 		const lightMode = currentTheme.name === lightTheme.name;
 		const newTheme = lightMode ? darkTheme : lightTheme;
 		setTheme(newTheme);
-	}
+	};
 
 	return { darkTheme, lightTheme, currentTheme, setTheme, toggleTheme };
 }

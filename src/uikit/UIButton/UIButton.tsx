@@ -372,11 +372,11 @@ const UIButtonComponent = forwardRef<UIButtonHandle, UIButtonProps>(
 			if (typeof value === 'number') return `${value}px`;
 			return value;
 		}, []);
-		
-		const iconDivSize = useMemo(()=>{
-			if(round) return `${buttonStyle.minHeight}px`
-			return iconSize ? setStyle(iconSize) : 'unset'
-		},[round, iconSize, buttonStyle, setStyle])
+
+		const iconDivSize = useMemo(() => {
+			if (round) return `${buttonStyle.minHeight}px`;
+			return iconSize ? setStyle(iconSize) : 'unset';
+		}, [round, iconSize, buttonStyle, setStyle]);
 
 		const cssVars = useMemo(() => {
 			return {
@@ -405,12 +405,14 @@ const UIButtonComponent = forwardRef<UIButtonHandle, UIButtonProps>(
 				onClick={handleClick}
 			>
 				{!playing && iconLeft && (
-					<div className={css.icon}><Icon
-						name={iconLeft}
-						size={sizingStyles[size].iconSize}
-						strokeColor={iconStrokeColor}
-						pointer={state !== 'disabled'}
-					/></div>
+					<div className={css.icon}>
+						<Icon
+							name={iconLeft}
+							size={sizingStyles[size].iconSize}
+							strokeColor={iconStrokeColor}
+							pointer={state !== 'disabled'}
+						/>
+					</div>
 				)}
 				{playing && iconLeft && (
 					<ProgressIndicator
