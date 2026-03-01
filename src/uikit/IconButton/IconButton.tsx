@@ -84,12 +84,6 @@ export const IconButton = React.memo((props: IconButtonProps) => {
 		[color],
 	);
 
-	// memo accent color
-	const accentColor = useMemo(
-		() => colorOn || 'var(--core-icon-primary)',
-		[colorOn],
-	);
-
 	// memo bg color
 	const bgColorNormal = useMemo(() => {
 		if (on && toggle) return bgColorOn;
@@ -143,7 +137,6 @@ export const IconButton = React.memo((props: IconButtonProps) => {
 				<Icon
 					name={icon}
 					strokeColor={strokeColor}
-					accentColor={accentColor}
 					fillColor={fillColor}
 					disabled={disabled}
 					size={iconSize}

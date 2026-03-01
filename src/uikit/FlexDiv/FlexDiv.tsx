@@ -38,6 +38,8 @@ export const FlexDiv = React.memo(
 			justify = 'start',
 			height = 'viewport',
 			width = 'fill',
+			maxWidth = undefined,
+			centerSelf = undefined,
 			wrap = false,
 			reverse = false,
 			padding = 0,
@@ -65,9 +67,10 @@ export const FlexDiv = React.memo(
 				alignItems: `${setFlex(alignItems)}`,
 				boxSizing: 'border-box',
 				padding: `${setBox(padding)}`,
-				margin: `${setBox(margin)}`,
+				margin: centerSelf ? '0 auto' : `${setBox(margin)}`,
 				width: `${absolute ? 'unset' : setSize(width, false)}`,
 				height: `${absolute ? 'unset' : setSize(height, true)}`,
+				maxWidth: `${maxWidth ? setSize(maxWidth, false) : 'unset'}`,
 				flex: `${absolute ? 'unset' : (flex ?? 'unset')}`,
 				top: `${absolute ? '0' : 'unset'}`,
 				bottom: `${absolute ? '0' : 'unset'}`,
@@ -96,6 +99,8 @@ export const FlexDiv = React.memo(
 			background,
 			scrollY,
 			scrollX,
+			centerSelf,
+			maxWidth,
 		]);
 
 		/* START.DEBUG */

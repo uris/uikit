@@ -12,6 +12,8 @@ export interface FlexDivProps {
 	justify?: 'start' | 'top' | 'center' | 'end' | 'bottom' | 'between';
 	width?: number | 'grow' | 'fill' | 'fit' | 'viewport' | 'auto';
 	height?: number | 'grow' | 'fill' | 'fit' | 'viewport' | 'auto';
+	maxWidth?: number | string;
+	centerSelf?: boolean | string;
 	flex?: number;
 	reverse?: boolean;
 	wrap?: boolean;

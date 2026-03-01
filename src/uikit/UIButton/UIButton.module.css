@@ -29,6 +29,14 @@
 	transform: translateX(10px) translateY(-2px);
 }
 
+.icon {
+	composes: row from "../../util/flexBox.module.css";
+	min-width: var(--ui-button-icon-size);
+	min-height: var(--ui-button-icon-size);
+	height: var(--ui-button-icon-size);
+	width: var(--ui-button-icon-size);
+}
+
 .m {
 	composes: body-m-regular from "../../util/type.module.css";
 }

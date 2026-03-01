@@ -1,0 +1,110 @@
+import { Meta, Source, Unstyled } from '@storybook/addon-docs/blocks';
+import {FlexDiv} from "../uikit/FlexDiv";
+
+<Meta title="Quick Start" />
+
+<FlexDiv width={"fill"} height={"fill"} alignItems={"center"}>
+    <FlexDiv width={"fill"} height={"auto"}>
+        <Unstyled>
+            # Quick Start
+            Slice ships with a light and dark theme. To get set up, install Slice, wrap your app with the theme provider and use the included components. The built in theme hook makes switching themes easy.
+
+
+            #### 1. Install Slice and Motion
+            Make sure Slice and Motion/React are installed in your project ...
+        </Unstyled>
+        <Source
+            language='bash'
+            code={`
+                $ npm install @apple-pie/slice motion/react
+            `}
+        />
+        <Unstyled>
+            #### 2. Add the Theme Provider
+            Wrap your app (or where you plan to use Slice) with the built in `ThemeProvider`.
+        </Unstyled>
+        <Source
+            language='jsx'
+            code={`
+import { ThemeProvider } from '@apple-pie/slice';
+
+// ...
+      
+<ThemeProvider>
+    <App />
+</ThemeProvider>
+
+// ...      
+`}
+        />
+        <Unstyled>
+            #### 3. Use Slice components.
+            Now you can and use Slice components anywhere inside `<App />`.
+        </Unstyled>
+        <Source
+            language='jsx'
+            code={`
+import { Avatar } from '@apple-pie/slice';
+
+// ...
+
+<Avatar size={32} first={"John"} last={"Appleseed"} />
+      
+// ...
+            
+            `}
+        />
+        <Unstyled>
+            #### 4. Use the Slice theme in your own components.
+            Use the built in hook to grab the current theme and access tokens or values for use in your components. InteliSense will pick up all the available tokens as you type - no need to remeber them all.
+        </Unstyled>
+        <Source
+            language='jsx'
+            code={`
+import { useSliceTheme } from '@apple-pie/slice';
+
+// ...
+            
+const theme = useSliceTheme();
+      
+// Use theme.current.colors to get actual values from the active theme
+// this will return the value "#0000ff"
+        
+<MyLabel textColor={theme.current.colors["core-link-primary"]}>
+    My Custom Label
+</MyLabel>
+            
+// Use theme.colors to get the css token itself.
+// this will return the value "var(--core-link-primary)" 
+
+<span style={{color:theme.colors["core-link-primary"]}>
+    My Custom Label
+</span>
+            
+// ...                  
+`}
+        />
+        <Unstyled>
+            #### 5. Toggle light / dark modes
+            Use the built in hook to toogle/change the active theme (light mode and dark mode).
+        </Unstyled>
+        <Source
+            language='jsx'
+            code={`
+import { useSliceTheme, UIButton } from '@apple-pie/slice';
+
+// ...
+            
+const theme = useSliceTheme();
+            
+// ...
+            
+<UIButton label={"Toggle Theme"} onClick={() => theme.toggle()} />                       
+`}
+        />
+        <Unstyled>
+            Note: You can always also include Slice theme variables in your own CSS modules for non-dynaimc styles.
+        </Unstyled>
+    </FlexDiv>
+   
+</FlexDiv>

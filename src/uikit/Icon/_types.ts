@@ -6,6 +6,7 @@ export interface IconProps {
 	stroke?: number;
 	strokeColor?: string;
 	fillColor?: string;
+	coverUp?: string;
 	toggle?: boolean;
 	pointer?: boolean;
 	disabled?: boolean;

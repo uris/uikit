@@ -1,9 +1,14 @@
+import { DocsContainer } from '@storybook/addon-docs/blocks';
 import type { Preview } from '@storybook/react-vite';
-import React, { useEffect } from 'react';
-import './fonts.css';
-import '../src/theme/colors/colors.css';
-import '../src/theme/type/type.css';
-import { darkTheme, lightTheme, useMayaTheme } from '../src';
+import React from 'react';
+import { FlexDiv, darkTheme, lightTheme } from '../src';
+import { ThemeProvider } from '../src/providers';
+
+// options for theme selector
+const items = [
+	{ value: lightTheme.name, icon: 'circlehollow', title: 'Light theme' },
+	{ value: darkTheme.name, icon: 'circle', title: 'Dark theme' },
+] as any;
 
 const preview: Preview = {
 	globalTypes: {
@@ -12,46 +17,51 @@ const preview: Preview = {
 			description: 'Global theme for components',
 			defaultValue: 'light',
 			toolbar: {
-				// The icon for the toolbar item
 				icon: 'circlehollow',
-				// Array of options
-				items: [
-					{
-						value: lightTheme.name,
-						icon: 'circlehollow',
-						title: 'Light theme',
-					},
-					{ value: darkTheme.name, icon: 'circle', title: 'Dark theme' },
-				],
+				items,
 			},
 		},
 	},
+	initialGlobals: {
+		theme: lightTheme.name,
+	},
 	decorators: [
 		(Story, context) => {
-			const selectedTheme = context.globals.theme;
-			const { setTheme } = useMayaTheme();
-
-			// Update data-theme attribute for CSS variables
-			useEffect(() => setTheme(selectedTheme), [selectedTheme, setTheme]);
-
-			return <Story />;
+			const theme = context.globals.theme;
+			return (
+				<ThemeProvider theme={theme}>
+					<Story />
+				</ThemeProvider>
+			);
 		},
 	],
 	parameters: {
 		layout: 'fullscreen',
-
+		docs: {
+			container: ({ children, context }: { children: any; context: any }) => {
+				const { theme } = context.store.userGlobals.globals;
+				return (
+					<DocsContainer context={context}>
+						<ThemeProvider theme={theme}>
+							<FlexDiv
+								padding={'64px 88px'}
+								width={'fill'}
+								height={'fill'}
+								maxWidth={826}
+								centerSelf={true}
+							>
+								{children}
+							</FlexDiv>
+						</ThemeProvider>
+					</DocsContainer>
+				);
+			},
+		},
 		controls: {
 			matchers: {
 				color: /(background|color)$/i,
 				date: /Date$/i,
 			},
-		},
-
-		a11y: {
-			// 'todo' - show a11y violations in the test UI only
-			// 'error' - fail CI on a11y violations
-			// 'off' - skip a11y checks entirely
-			test: 'todo',
 		},
 	},
 };

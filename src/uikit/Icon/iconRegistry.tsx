@@ -5,6 +5,7 @@ export interface IconRenderProps {
 	stroke: number;
 	strokeColor: string;
 	fillColor: string;
+	coverUp: string;
 }
 
 export type IconLineRenderer = (props: IconRenderProps) => JSX.Element;
@@ -1722,7 +1723,7 @@ export const STATIC_ICON_REGISTRY = new Map<string, IconDefinition>([
 	[
 		'wallet',
 		{
-			line: ({ stroke, strokeColor }: IconRenderProps) => (
+			line: ({ stroke, strokeColor, coverUp }: IconRenderProps) => (
 				<>
 					<path
 						d="M 7 8 C 7.552 8 8 8.448 8 9 C 8 9.552 7.552 10 7 10 C 6.448 10 6 9.552 6 9 C 6 8.448 6.448 8 7 8 Z"
@@ -1738,7 +1739,7 @@ export const STATIC_ICON_REGISTRY = new Map<string, IconDefinition>([
 					/>
 					<path
 						d="M 17 10.6 L 17 7.4 C 17 7.179 16.821 7 16.6 7 L 13 7 C 11.895 7 11 7.895 11 9 C 11 10.105 11.895 11 13 11 L 16.6 11 C 16.821 11 17 10.821 17 10.6 Z"
-						fill={strokeColor}
+						fill={coverUp}
 						strokeWidth={stroke}
 						stroke={strokeColor}
 						strokeMiterlimit="10"

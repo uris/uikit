@@ -13,6 +13,7 @@ export const Icon = React.memo((props: IconProps) => {
 		stroke = 1.5,
 		strokeColor = theme.colors['core-icon-primary'],
 		fillColor = 'transparent',
+		coverUp = theme.colors['core-surface-primary'],
 		toggle = false,
 		pointer = true,
 		disabled = false,
@@ -63,7 +64,7 @@ export const Icon = React.memo((props: IconProps) => {
 			opacity={disabled ? 0.5 : 1}
 		>
 			<title>{name} icon</title>
-			{shape({ stroke, strokeColor, fillColor })}
+			{shape({ stroke, strokeColor, fillColor, coverUp })}
 		</svg>
 	);
 });

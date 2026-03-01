@@ -1,6 +1,6 @@
 # Maya UIKit
 
-A comprehensive React component library and theming system for building modern applications with styled-components.
+A comprehensive React component library and theming system for building modern applications.
 
 ## Overview
 

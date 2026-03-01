@@ -74,11 +74,6 @@
 
 .send {
 	position: absolute;
-	composes: row from "../../util/flexBox.module.css";
-	min-height: var(--ta-send-icon-size);
-	min-width: var(--ta-send-icon-size);
-	width: var(--ta-send-icon-size);
-	height: var(--ta-send-icon-size);
 	bottom: var(--ta-send-icon-offset-bottom);
 	right: var(--ta-send-icon-offset-right);
 }

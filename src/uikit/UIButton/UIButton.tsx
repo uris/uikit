@@ -372,13 +372,19 @@ const UIButtonComponent = forwardRef<UIButtonHandle, UIButtonProps>(
 			if (typeof value === 'number') return `${value}px`;
 			return value;
 		}, []);
+		
+		const iconDivSize = useMemo(()=>{
+			if(round) return `${buttonStyle.minHeight}px`
+			return iconSize ? setStyle(iconSize) : 'unset'
+		},[round, iconSize, buttonStyle, setStyle])
 
 		const cssVars = useMemo(() => {
 			return {
 				'--ui-button-decoration': underline ? 'underline' : 'unset',
 				'--ui-button-min-width': btnWidth ? setStyle(btnWidth) : 'unset',
+				'--ui-button-icon-size': iconDivSize,
 			} as React.CSSProperties;
-		}, [underline, btnWidth, setStyle]);
+		}, [underline, btnWidth, setStyle, iconDivSize]);
 
 		/* START.DEBUG */
 		useTrackRenders(props, 'UIButton');
@@ -399,12 +405,12 @@ const UIButtonComponent = forwardRef<UIButtonHandle, UIButtonProps>(
 				onClick={handleClick}
 			>
 				{!playing && iconLeft && (
-					<Icon
+					<div className={css.icon}><Icon
 						name={iconLeft}
 						size={sizingStyles[size].iconSize}
 						strokeColor={iconStrokeColor}
 						pointer={state !== 'disabled'}
-					/>
+					/></div>
 				)}
 				{playing && iconLeft && (
 					<ProgressIndicator
@@ -440,12 +446,14 @@ const UIButtonComponent = forwardRef<UIButtonHandle, UIButtonProps>(
 					/>
 				)}
 				{!playing && iconRight && (
-					<Icon
-						name={iconRight}
-						size={sizingStyles[size].iconSize}
-						strokeColor={iconStrokeColor}
-						pointer={state !== 'disabled'}
-					/>
+					<div className={css.icon}>
+						<Icon
+							name={iconRight}
+							size={sizingStyles[size].iconSize}
+							strokeColor={iconStrokeColor}
+							pointer={state !== 'disabled'}
+						/>
+					</div>
 				)}
 				<Dot show={!playing && showDot} />
 				{!playing && count && (

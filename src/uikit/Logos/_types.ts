@@ -6,9 +6,7 @@ export interface LogoProps {
 		| 'seattle seahawks'
 		| 'smile'
 		| 'drift'
-		| 'taylor amde'
-		| 'gp'
-		| 'gpmark'
+		| 'taylor made'
 		| 'envu'
 		| 'pdf'
 		| 'G2Leader'
@@ -19,11 +17,11 @@ export interface LogoProps {
 		| 'outlook'
 		| 'outlook-com'
 		| 'google'
-		| 'gptype'
-		| 'gpgia'
 		| 'linkedin'
 		| 'stripe'
-		| string;
+		| 'slice'
+		| 'slice logo';
 	color?: string;
-	height?: number;
+	height?: number | string;
+	width?: number | string;
 }
