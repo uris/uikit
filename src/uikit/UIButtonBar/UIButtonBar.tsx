@@ -56,9 +56,9 @@ export function UIButtonBar(props: Readonly<UIButtonBarProps>) {
 		(index: number) => {
 			const isSelected = currentPage === index;
 			const isHovered = hovered === index;
-			if (isSelected) return theme.colors['core-icon-primary'];
-			if (isHovered) return theme.colors['core-button-primary'];
-			return theme.colors['core-text-disabled'];
+			if (isSelected) return theme.current.colors['core-icon-primary'];
+			if (isHovered) return theme.current.colors['core-button-primary'];
+			return theme.current.colors['core-text-disabled'];
 		},
 		[currentPage, hovered, theme],
 	);

@@ -174,7 +174,9 @@ export const TextField = React.memo(
 		// memo icon color
 		const iconStrokeColor = useMemo(
 			() =>
-				iconLeft?.color ? iconLeft.color : theme.colors['core-icon-secondary'],
+				iconLeft?.color
+					? iconLeft.color
+					: theme.current.colors['core-icon-secondary'],
 			[iconLeft, theme],
 		);
 
@@ -322,7 +324,7 @@ export const TextField = React.memo(
 								<Icon
 									name={'x'}
 									size={clearButton.size}
-									strokeColor={theme.colors['core-icon-secondary']}
+									strokeColor={theme.current.colors['core-icon-secondary']}
 								/>
 							</motion.div>
 						)}
@@ -341,7 +343,7 @@ export const TextField = React.memo(
 									variant={'text'}
 									size={'text'}
 									state={text === '' ? 'disabled' : 'normal'}
-									labelColor={theme.colors['core-button-primary']}
+									labelColor={theme.current.colors['core-button-primary']}
 									onClick={onAction}
 								/>
 							</motion.div>

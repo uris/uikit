@@ -82,10 +82,10 @@ export const UIChip = React.memo((props: UIChipProps) => {
 	// memo icon color
 	const computedIconColor = useMemo(() => {
 		if (iconColor) return iconColor;
-		if (disabled) return theme.colors['core-icon-disabled'];
-		if (isHovered) return theme.colors['core-link-primary'];
-		if (isFocused) return theme.colors['core-link-primary'];
-		return theme.colors['core-text-primary'];
+		if (disabled) return theme.current.colors['core-icon-disabled'];
+		if (isHovered) return theme.current.colors['core-link-primary'];
+		if (isFocused) return theme.current.colors['core-link-primary'];
+		return theme.current.colors['core-text-primary'];
 	}, [iconColor, disabled, isFocused, isHovered, theme]);
 
 	// memo css vars

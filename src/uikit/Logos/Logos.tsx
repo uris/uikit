@@ -7,7 +7,7 @@ export function Logos(props: Readonly<LogoProps>) {
 	const theme = useTheme();
 	const {
 		image = 'gp',
-		color = theme.colors['core-text-primary'],
+		color = theme.current.colors['core-text-primary'],
 		height,
 		width,
 	} = props;
@@ -20,14 +20,15 @@ export function Logos(props: Readonly<LogoProps>) {
 
 	// memo slice logo
 	const sliceColor = useMemo(() => {
-		if (theme.name === 'lightMode') return theme.colors['core-text-primary'];
-		return theme.colors['core-text-special'];
+		if (theme.current.name === 'lightMode')
+			return theme.current.colors['core-text-primary'];
+		return theme.current.colors['core-text-special'];
 	}, [theme]);
 
 	// memo slice logo bg
 	const sliceBgColor = useMemo(() => {
-		if (theme.name === 'lightMode') return '#6af5ff';
-		return theme.colors['core-surface-secondary'];
+		if (theme.current.name === 'lightMode') return '#6af5ff';
+		return theme.current.colors['core-surface-secondary'];
 	}, [theme]);
 
 	const renderIcon = useMemo(() => {
@@ -584,7 +585,7 @@ export function Logos(props: Readonly<LogoProps>) {
 		];
 
 		const item = images.filter((data) => image === data.name);
-		return item ? item[0].svg : null;
+		return item[0] ? item[0].svg : null;
 	}, [adjustedHeight, width, image, color, sliceColor, sliceBgColor]);
 
 	/* START.DEBUG */

@@ -35,7 +35,7 @@
     }
 
     /* Target the h1 in the Docs view or standard stories */
-    h1, h2, h3, h4, h5, h6 {
+    h1, h2, h3, h4, h5 {
         font-family: 'Funnel Sans', sans-serif;
         font-weight: 420;
         font-size: 36px;
@@ -60,17 +60,24 @@
     h4 {
         font-size: 20px;
     }
+    h5 {
+        font-size: 16px;
+    }
     p {
-        font-family: 'Funnel Sans', sans-serif;
-        font-weight: 300;
+        font-family: 'Funnel Sans', sans-serif !important;
+        font-weight: 300 !important;
         font-size: var(--font-size-l) !important;
         line-height: 1.4em;
         letter-spacing: 2%;
         margin: 0 auto 1.5em auto !important;
         padding: 0 !important;
         color: var(--core-text-secondary) !important;
-        text-align: left;
-        width: 100%;
+        text-align: left !important;
+        width: 100% !important;
+    }
+    p.note {
+        font-size: var(--font-size-s) !important;
+        color: var(--core-text-tertiary) !important;
     }
     b, strong {
         font-weight: 580;
@@ -81,5 +88,28 @@
     }
     a:hover {
         text-decoration: none !important;
+    }
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        border: 0 solid var(--core-surface-secondary) !important;
+        margin: 0 auto 1.5em auto !important;
+    }
+    tr {
+        border-top: 1px solid var(--core-outline-primary) !important;
+    }
+    tr:last-child {
+        border-bottom: 1px solid var(--core-outline-primary) !important;
+    }
+    th, td {
+        font-family: 'Funnel Sans', sans-serif !important;
+        font-weight: 300 !important;
+        font-size: var(--font-size-m) !important;
+        line-height: 1.4em;
+        letter-spacing: 2%;
+        padding: 16px 8px !important;
+        color: var(--core-text-secondary) !important;
+        width: 100% !important;
+        border: 0 solid var(--core-surface-secondary) !important;
     }
 </style>

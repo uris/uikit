@@ -45,8 +45,8 @@ export const RadioButton = React.memo((props: RadioButtonProps) => {
 	const setIconColor = useMemo(() => {
 		if (iconColor) return iconColor;
 		return toggleIcon && isSelected
-			? theme.colors['core-button-primary']
-			: theme.colors['core-icon-primary'];
+			? theme.current.colors['core-button-primary']
+			: theme.current.colors['core-icon-primary'];
 	}, [iconColor, toggleIcon, isSelected, theme]);
 
 	// memo icon name

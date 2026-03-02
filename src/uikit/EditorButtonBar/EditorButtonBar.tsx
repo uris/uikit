@@ -131,7 +131,7 @@ export const RenderGroup = React.memo((props: RenderGroupProps) => {
 			{buttonGroup?.buttons?.map((button: ButtonBarButton, index: number) => {
 				const active = button?.id ? activeFormats?.includes(button.id) : false;
 				const bgColor = active
-					? theme.colors['core-surface-secondary']
+					? theme.current.colors['core-surface-secondary']
 					: 'transparent';
 				return (
 					<IconButton

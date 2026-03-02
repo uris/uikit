@@ -30,10 +30,10 @@ export const CheckBox = React.memo((props: CheckBoxProps) => {
 	// memo icon color
 	const iconColor = useMemo(() => {
 		if (color) return color;
-		if (disabled) return theme.colors['core-icon-disabled'];
-		if (state === 'mixed') return theme.colors['core-icon-primary'];
-		if (!state) return theme.colors['core-icon-secondary'];
-		return theme.colors['core-text-special'];
+		if (disabled) return theme.current.colors['core-icon-disabled'];
+		if (state === 'mixed') return theme.current.colors['core-icon-primary'];
+		if (!state) return theme.current.colors['core-icon-secondary'];
+		return theme.current.colors['core-text-special'];
 	}, [color, disabled, state, theme]);
 
 	// memo style vars

@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react';
-import { type MayaTheme, darkTheme, lightTheme } from '../theme/themes';
+import { type SliceTheme, darkTheme, lightTheme } from '../theme';
 
-export function useTheme() {
-	const [theme, setTheme] = useState<MayaTheme>(lightTheme);
+export function useObserveTheme() {
+	const [theme, setTheme] = useState<SliceTheme>(lightTheme);
 
 	useEffect(() => {
 		const observer = new MutationObserver((mutations) => {

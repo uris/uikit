@@ -1,5 +1,5 @@
 export {
-	type MayaTheme,
+	type SliceTheme,
 	darkTheme,
 	lightTheme,
 } from './themes';

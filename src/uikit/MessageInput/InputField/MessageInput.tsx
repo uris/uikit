@@ -178,14 +178,21 @@ export function MessageInput(props: Readonly<MessageInputProps>) {
 
 	const iconColor = useCallback(() => {
 		if (isFetching || isStreaming) {
-			if (theme.name === 'lightMode') return theme?.colors?.['core-text-light'];
-			return theme?.colors?.['core-surface-primary'];
+			if (theme.current.name === 'lightMode')
+				return theme?.current.colors?.['core-text-light'];
+			return theme?.current.colors?.['core-surface-primary'];
 		}
 		if (message === '') {
-			return theme?.colors?.['core-surface-secondary'];
+			return theme?.current.colors?.['core-surface-secondary'];
 		}
-		return theme?.colors?.['core-text-light'];
-	}, [isFetching, isStreaming, theme.name, theme?.colors, message]);
+		return theme?.current.colors?.['core-text-light'];
+	}, [
+		isFetching,
+		isStreaming,
+		theme.current.name,
+		theme?.current.colors,
+		message,
+	]);
 
 	const handleUpload = useCallback(
 		(e: React.MouseEvent<any> | undefined, type: PromptType) => {
@@ -321,7 +328,7 @@ export function MessageInput(props: Readonly<MessageInputProps>) {
 						tooltip={'Attach file'}
 						onClick={(e) => handleUpload(e, PromptType.file)}
 						size={'medium'}
-						iconColor={theme.colors['core-icon-primary']}
+						iconColor={theme.current.colors['core-icon-primary']}
 						round
 						onToolTip={(tip) => onToolTip(tip)}
 					/>
@@ -334,8 +341,8 @@ export function MessageInput(props: Readonly<MessageInputProps>) {
 						onClick={(_e) => jurisdictionClick()}
 						iconLeft={'focus'}
 						size={'medium'}
-						iconColor={theme.colors['core-icon-primary']}
-						labelColor={theme?.colors?.['core-text-secondary']}
+						iconColor={theme.current.colors['core-icon-primary']}
+						labelColor={theme?.current.colors?.['core-text-secondary']}
 						onToolTip={(tip) => onToolTip(tip)}
 					/>
 				</div>
@@ -343,11 +350,11 @@ export function MessageInput(props: Readonly<MessageInputProps>) {
 					<UIButton
 						variant={'solid'}
 						iconLeft={isStreaming ? 'stop' : 'arrow up'}
-						bgColorDisabled={theme?.colors?.['core-badge-secondary']}
+						bgColorDisabled={theme?.current.colors?.['core-badge-secondary']}
 						bgColor={
 							isFetching || isStreaming
-								? theme?.colors?.['core-text-primary']
-								: theme?.colors?.['core-button-primary']
+								? theme?.current.colors?.['core-text-primary']
+								: theme?.current.colors?.['core-button-primary']
 						}
 						iconColor={iconColor()}
 						state={setDisabled()}

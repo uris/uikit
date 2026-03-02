@@ -1,0 +1,18 @@
+import { Meta, Source, Unstyled, Markdown } from '@storybook/addon-docs/blocks';
+import {FlexDiv} from "../uikit/FlexDiv";
+import {Spacer} from "../uikit/Spacer";
+import Benchmarks from "../../benchmarks/reports/benchmark-results.md?raw";
+
+<Meta title="Benchmarks" />
+
+
+<FlexDiv width={"fill"} height={"fill"} alignItems={"center"}>
+    <FlexDiv width={"fill"} maxWidth={760} height={"auto"}>
+        <Unstyled>
+            # Slice Component Benchmarks
+            Slice's components are performance optimized for fast mount times, fast re-renders and optimal memory usage. The table below summarizes the last known performance benchmarks for Slice.
+        </Unstyled>
+        <Markdown>{Benchmarks}</Markdown>
+    </FlexDiv>
+
+</FlexDiv>

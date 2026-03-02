@@ -37,15 +37,15 @@ function UserListComponent(props: Readonly<UserListProps>) {
 		(enabled: boolean) =>
 			({
 				'--control-border-color': enabled
-					? theme.colors['core-outline-primary']
-					: theme.colors['feedback-warning'],
+					? theme.current.colors['core-outline-primary']
+					: theme.current.colors['feedback-warning'],
 				'--cursor-background': enabled
-					? theme.colors['core-icon-primary']
-					: theme.colors['feedback-warning'],
+					? theme.current.colors['core-icon-primary']
+					: theme.current.colors['feedback-warning'],
 				'--cursor-border-radius': enabled ? '100px' : '2px',
 				'--cursor-animation': enabled ? 'blink 2s infinite' : 'none',
 			}) as React.CSSProperties,
-		[theme.colors],
+		[theme.current.colors],
 	);
 
 	const renderedUserList = useMemo(

@@ -54,6 +54,8 @@ export const FlexDiv = React.memo(
 			exit,
 			border,
 			className,
+			scrollHandle,
+			scrollHandleHover,
 		} = props;
 
 		// Memoize layout
@@ -81,6 +83,10 @@ export const FlexDiv = React.memo(
 				background: `${background ?? 'transparent'}`,
 				overflowY: `${scrollY ? 'auto' : 'unset'}`,
 				overflowX: `${scrollX ? 'auto' : 'unset'}`,
+				color: 'var(--core-text-primary)',
+				'--flex-div-scroll-border': `${background ?? 'transparent'}`,
+				'--flex-div-scroll-handle': `${scrollHandle ?? 'var(--scroll-bar)'}`,
+				'--flex-div-scroll-handle-hover': `${scrollHandleHover ?? 'var(--scroll-bar-hover)'}`,
 			} as React.CSSProperties;
 		}, [
 			absolute,

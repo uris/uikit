@@ -104,10 +104,10 @@ const UIButtonComponent = forwardRef<UIButtonHandle, UIButtonProps>(
 		const destructiveColor = useCallback(
 			(icon: boolean) => {
 				if (icon && variant === 'solid') {
-					return theme.colors['core-text-light'];
+					return theme.current.colors['core-text-light'];
 				}
-				if (destructive) return theme.colors['feedback-warning'];
-				return theme.colors['core-text-primary'];
+				if (destructive) return theme.current.colors['feedback-warning'];
+				return theme.current.colors['core-text-primary'];
 			},
 			[destructive, theme, variant],
 		);
@@ -320,7 +320,7 @@ const UIButtonComponent = forwardRef<UIButtonHandle, UIButtonProps>(
 			() => ({
 				color: colorStyles[variant].color[btnState],
 				background: fill
-					? theme.colors['core-surface-primary']
+					? theme.current.colors['core-surface-primary']
 					: colorStyles[variant].background[state],
 				paddingRight: paddingRight ?? sizingStyles[size].paddingRight,
 				paddingLeft: paddingLeft ?? sizingStyles[size].paddingLeft,
@@ -362,7 +362,7 @@ const UIButtonComponent = forwardRef<UIButtonHandle, UIButtonProps>(
 		const progressColor = useMemo(
 			() =>
 				destructive
-					? theme.colors['feedback-warning']
+					? theme.current.colors['feedback-warning']
 					: colorStyles[variant].color[btnState],
 			[destructive, theme, colorStyles, variant, btnState],
 		);

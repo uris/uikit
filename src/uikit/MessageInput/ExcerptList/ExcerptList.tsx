@@ -35,7 +35,7 @@ export const ExcerptList = memo(function ExcerptList(
 							<Icon
 								name="recent chats"
 								size={16}
-								strokeColor={theme.colors['core-text-disabled']}
+								strokeColor={theme.current.colors['core-text-disabled']}
 							/>
 							{excerpt.docTitle ? excerpt.docTitle : 'Document excerpt'}
 						</div>
@@ -59,7 +59,7 @@ export const ExcerptList = memo(function ExcerptList(
 				</div>
 			);
 		});
-	}, [excerpts, theme.colors, onToolTip, handleRemoveFile]);
+	}, [excerpts, theme.current.colors, onToolTip, handleRemoveFile]);
 
 	return (
 		<div

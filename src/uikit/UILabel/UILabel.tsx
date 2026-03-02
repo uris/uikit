@@ -28,19 +28,19 @@ export function UILabel(props: Readonly<UILabelProps>) {
 		if (noFill) return 'var(--core-surface-primary)';
 		switch (state) {
 			case 'red':
-				return theme.colors['feedback-warning'];
+				return theme.current.colors['feedback-warning'];
 			case 'green':
-				return theme.colors['feedback-warning'];
+				return theme.current.colors['feedback-warning'];
 			case 'yellow':
-				return theme.colors['array-yellow'];
+				return theme.current.colors['array-yellow'];
 			case 'grey':
-				return theme.colors['core-surface-secondary'];
+				return theme.current.colors['core-surface-secondary'];
 			case 'lightgrey':
-				return theme.colors['core-button-disabled'];
+				return theme.current.colors['core-button-disabled'];
 			case 'white':
-				return theme.colors['core-surface-secondary'];
+				return theme.current.colors['core-surface-secondary'];
 			case 'blue':
-				return theme.colors['core-button-primary'];
+				return theme.current.colors['core-button-primary'];
 			default:
 				return 'var(--core-surface-primary)';
 		}
@@ -51,29 +51,29 @@ export function UILabel(props: Readonly<UILabelProps>) {
 		const getBorderColor = (colorState: string) => {
 			switch (colorState) {
 				case 'red':
-					return theme.colors['core-button-disabled'];
+					return theme.current.colors['core-button-disabled'];
 				case 'green':
 					return noFill
-						? theme.colors['feedback-positive']
-						: theme.colors['core-button-disabled'];
+						? theme.current.colors['feedback-positive']
+						: theme.current.colors['core-button-disabled'];
 				case 'yellow':
-					return theme.colors['array-yellow-label'];
+					return theme.current.colors['array-yellow-label'];
 				case 'grey':
 					return noFill
-						? theme.colors['core-text-secondary']
-						: theme.colors['core-button-disabled'];
+						? theme.current.colors['core-text-secondary']
+						: theme.current.colors['core-button-disabled'];
 				case 'lightgrey':
 					return noFill
-						? theme.colors['core-outline-primary']
-						: theme.colors['core-button-disabled'];
+						? theme.current.colors['core-outline-primary']
+						: theme.current.colors['core-button-disabled'];
 				case 'white':
 					return noFill
-						? theme.colors['core-text-secondary']
-						: theme.colors['core-badge-secondary'];
+						? theme.current.colors['core-text-secondary']
+						: theme.current.colors['core-badge-secondary'];
 				case 'blue':
 					return noFill
-						? theme.colors['core-text-secondary']
-						: theme.colors['core-button-primary'];
+						? theme.current.colors['core-text-secondary']
+						: theme.current.colors['core-button-primary'];
 				default:
 					return 'var(--core-outline-primary)';
 			}

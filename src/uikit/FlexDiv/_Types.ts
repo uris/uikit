@@ -26,4 +26,6 @@ export interface FlexDivProps {
 	transition?: Transition;
 	variants?: any;
 	gap?: number;
+	scrollHandle?: string;
+	scrollHandleHover?: string;
 }

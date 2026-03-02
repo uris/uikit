@@ -1,7 +1,7 @@
 import { DocsContainer } from '@storybook/addon-docs/blocks';
 import type { Preview } from '@storybook/react-vite';
 import React from 'react';
-import { FlexDiv, darkTheme, lightTheme } from '../src';
+import { FlexDiv, darkTheme, lightTheme, useTheme } from '../src';
 import { ThemeProvider } from '../src/providers';
 
 // options for theme selector
@@ -29,7 +29,7 @@ const preview: Preview = {
 		(Story, context) => {
 			const theme = context.globals.theme;
 			return (
-				<ThemeProvider theme={theme}>
+				<ThemeProvider theme={theme} system={true}>
 					<Story />
 				</ThemeProvider>
 			);
@@ -39,16 +39,16 @@ const preview: Preview = {
 		layout: 'fullscreen',
 		docs: {
 			container: ({ children, context }: { children: any; context: any }) => {
-				const { theme } = context.store.userGlobals.globals;
+				// always use light mode for docs
+				context.store.userGlobals.globals.theme = 'lightMode';
 				return (
 					<DocsContainer context={context}>
-						<ThemeProvider theme={theme}>
+						<ThemeProvider theme={'lightMode'}>
 							<FlexDiv
 								padding={'64px 88px'}
-								width={'fill'}
-								height={'fill'}
-								maxWidth={826}
+								absolute={true}
 								centerSelf={true}
+								scrollY={true}
 							>
 								{children}
 							</FlexDiv>
@@ -61,6 +61,11 @@ const preview: Preview = {
 			matchers: {
 				color: /(background|color)$/i,
 				date: /Date$/i,
+			},
+		},
+		options: {
+			storySort: {
+				order: ['Welcome', 'Quick Start', '*'],
 			},
 		},
 	},

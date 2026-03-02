@@ -129,16 +129,12 @@ export class BenchmarkReporter {
 
 	generateMarkdownReport(): string {
 		const lines: string[] = [];
-		const elapsed = this.formatTime((Date.now() - this.startTime) / 1000);
-
-		lines.push('# Component Performance Benchmark Report\n');
-		lines.push(`**Generated:** ${new Date().toISOString()}`);
-		lines.push(`**Duration:** ${elapsed}`);
-		lines.push(`**Components Tested:** ${this.results.length}\n`);
-		lines.push('---\n');
+		
+		lines.push(`*Generated:* ${new Date().toLocaleDateString()}`);
+		lines.push(`*Components Tested:* ${this.results.length}\n`);
+		lines.push('\n');
 
 		// Summary Table
-		lines.push('## Performance Summary\n');
 		lines.push(
 			'| Component | Rating | Mount (avg) | Re-render (avg) | Event (avg) | Memory Delta | Leak Suspected |',
 		);
@@ -167,7 +163,7 @@ export class BenchmarkReporter {
 			);
 		}
 
-		lines.push('\n---\n');
+		lines.push('\n\n');
 		lines.push('*Note: Memory measurements are simulated in jsdom test environment. Run in browser for actual memory measurements.*\n');
 		lines.push('*Rating: ⚡ Excellent (<2ms) | ✓✓ Very Good (2-5ms) | ✓ Good (5-16ms) | ⚠️ Fair (16-50ms) | ❌ Poor (>50ms)*\n');
 

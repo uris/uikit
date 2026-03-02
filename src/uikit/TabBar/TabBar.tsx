@@ -168,9 +168,10 @@ const Option = React.memo(
 
 		// memo icon color
 		const strokeColor = useMemo(() => {
-			if (!disabled && selected) return theme.colors['core-button-primary'];
-			if (disabled) return theme.colors['core-text-disabled'];
-			return theme.colors['core-text-primary'];
+			if (!disabled && selected)
+				return theme.current.colors['core-button-primary'];
+			if (disabled) return theme.current.colors['core-text-disabled'];
+			return theme.current.colors['core-text-primary'];
 		}, [disabled, selected, theme]);
 
 		// memo handleMouseOver

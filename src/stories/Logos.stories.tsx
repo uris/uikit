@@ -7,9 +7,10 @@ const meta: Meta<typeof Logos> = {
 	title: 'UI Kit/Logos',
 	component: Logos,
 	args: {
-		image: 'gp',
+		image: 'slice',
 		color: undefined,
 		height: 36,
+		width: undefined,
 	},
 };
 

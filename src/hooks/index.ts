@@ -1,2 +1,2 @@
 export { useTheme } from './useTheme';
-export { useMayaTheme } from './useMayaTheme';
+export { useObserveTheme } from './useObserveTheme';

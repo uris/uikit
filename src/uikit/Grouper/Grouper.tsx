@@ -78,7 +78,7 @@ export const Grouper = React.memo((props: GrouperProps) => {
 						<Icon
 							name="filter"
 							size={16}
-							strokeColor={theme.colors['core-text-disabled']}
+							strokeColor={theme.current.colors['core-text-disabled']}
 						/>
 					)}
 				</div>

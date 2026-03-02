@@ -8,12 +8,12 @@ export {
 	darkTheme,
 } from './theme/index';
 export type {
-	MayaTheme,
+	SliceTheme,
 	Colors,
 	Type,
 	Corners,
 } from './theme/index';
-export { useTheme, useMayaTheme } from './hooks/index';
+export { useTheme, useObserveTheme } from './hooks/index';
 
 export { Avatar } from './uikit/Avatar/index';
 export type { AvatarProps } from './uikit/Avatar/index';
