@@ -19,7 +19,11 @@ export const RadioButton = React.memo((props: RadioButtonProps) => {
 		noFrame = false,
 		iconColor,
 		onChange = () => null,
+		...divAttributes
 	} = props;
+	const { id: divId, className, style, ...rest } = divAttributes;
+	const divStyle = (style ?? {}) as React.CSSProperties;
+	const divClass = className ? ` ${className}` : '';
 	const [isSelected, setIsSelected] = useState<boolean>(selected);
 
 	useEffect(() => setIsSelected(selected), [selected]);
@@ -77,13 +81,15 @@ export const RadioButton = React.memo((props: RadioButtonProps) => {
 
 	return (
 		<div
-			className={css.wrapper}
-			style={cssVars}
+			id={divId}
+			className={`${css.wrapper}${divClass}`}
+			style={{ ...divStyle, ...cssVars }}
 			onClick={handleChange}
 			onKeyDown={handleKeyDown}
 			tabIndex={tabIndex}
 			aria-label={option.title}
 			aria-selected={isSelected}
+			{...rest}
 		>
 			{option.icon && !hideRadio && (
 				<div className={css.radioIcon}>

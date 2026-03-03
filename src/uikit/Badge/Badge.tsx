@@ -4,7 +4,10 @@ import css from './Badge.module.css';
 import type { BadgeProps } from './_types';
 
 export const Badge = React.memo((props: BadgeProps) => {
-	const { count, variant = 'dark', hideNull = true } = props;
+	const { count, variant = 'dark', hideNull = true, ...divAttributes } = props;
+	const { id: divId, className, style, ...rest } = divAttributes;
+	const divStyle = (style ?? {}) as React.CSSProperties;
+	const divClass = className ? ` ${className}` : '';
 
 	// memo display count
 	const displayCount = useMemo(() => {
@@ -36,10 +39,12 @@ export const Badge = React.memo((props: BadgeProps) => {
 
 	return (
 		<div
-			className={css.badge}
-			style={cssVars}
+			id={divId}
+			className={`${css.badge}${divClass}`}
+			style={{ ...divStyle, ...cssVars }}
 			role={'status'}
 			aria-live={'polite'}
+			{...rest}
 		>
 			{displayCount}
 		</div>

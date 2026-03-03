@@ -20,7 +20,11 @@ export const Avatar = React.memo((props: AvatarProps) => {
 		size = 34,
 		frame = 34,
 		tabIndex = 0,
+		...divAttributes
 	} = props;
+	const { id: divId, className, style, ...rest } = divAttributes;
+	const divStyle = style ?? ({} as React.CSSProperties);
+	const divClass = className ? ` ${className}` : '';
 
 	// memo initials computation
 	const initials = useMemo(
@@ -80,14 +84,20 @@ export const Avatar = React.memo((props: AvatarProps) => {
 		} as React.CSSProperties;
 	}, [size, frame, border, color, bgColor, borderColor, bgImage, setFontSize]);
 
+	// memo class names
+	const classNames = useMemo(() => {
+		return `${css.wrapper}${divClass}`;
+	}, [divClass]);
+
 	/* START.DEBUG */
 	useTrackRenders(props, 'Avatar');
 	/* END.DEBUG */
 
 	return (
 		<div
-			className={css.wrapper}
-			style={avatarVars}
+			id={divId}
+			className={classNames}
+			style={{ ...divStyle, ...avatarVars }}
 			onMouseEnter={onMouseEnter}
 			onMouseLeave={onMouseLeave}
 			onClick={onClick}
@@ -95,6 +105,7 @@ export const Avatar = React.memo((props: AvatarProps) => {
 			role={onClick ? 'button' : 'img'}
 			tabIndex={onClick ? tabIndex : undefined}
 			aria-label={`User Avatar - ${first}`}
+			{...rest}
 		>
 			<div aria-hidden={true} className={css.user}>
 				{displayContent}

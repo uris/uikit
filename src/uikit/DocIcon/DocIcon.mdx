@@ -1,0 +1,35 @@
+import {Meta, Unstyled} from '@storybook/addon-docs/blocks';
+import {FlexDiv} from '../FlexDiv';
+import * as DocIconStories from './DocIcon.stories';
+
+<Meta of={DocIconStories} />
+
+<FlexDiv width={"fill"} height={"fill"} alignItems={"center"}>
+    <FlexDiv width={"fill"} maxWidth={760} height={"auto"}>
+        <Unstyled>
+        # DocIcon
+
+        Part of `Components/DocIcons`.
+
+        ## Purpose
+
+        - Use `DocIcon` when you need this UI primitive inside the Slice component system.
+        - Implementation reviewed from: `src/uikit/DocIcon/DocIcons.tsx`.
+
+        ## Story Variants
+
+        - `Default`
+        - `Text`
+        - `Unsupported`
+
+        ## Attributes
+
+        - Props interface: `DocsProps`
+
+        | Prop | Type | Required | Default | Notes |
+        | --- | --- | --- | --- | --- |
+        | `type` | `'pdf' \\| 'docx' \\| 'text' \\| 'not supported'` | No | `'pdf'` | union |
+        | `height` | `number` | No | `36` | number |
+        </Unstyled>
+    </FlexDiv>
+</FlexDiv>

@@ -1,10 +1,12 @@
+import type React from 'react';
+
 export type DropDownOption = {
 	label?: string;
 	value?: string;
 	alt?: string;
 };
 
-export interface DropDownProps {
+type DropDownBaseProps = {
 	name?: string;
 	options?: DropDownOption[];
 	selectedIndex?: number;
@@ -29,4 +31,10 @@ export interface DropDownProps {
 	onBlur?: (value: string) => void;
 	onValidate?: (state: boolean) => void;
 	onFocus?: () => void;
-}
+};
+
+export type DropDownProps = Omit<
+	React.HTMLAttributes<HTMLDivElement>,
+	keyof DropDownBaseProps
+> &
+	DropDownBaseProps;

@@ -1,10 +1,10 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
+import { runErrorSummaryPlay } from 'src/stories/playHelpers';
 import {
 	type ErrorMessage,
 	ErrorSummary,
 } from 'src/uikit/ErrorSummary/ErrorSummary';
 import { FlexDiv } from 'src/uikit/FlexDiv/FlexDiv';
-import { runErrorSummaryPlay } from 'src/stories/playHelpers';
 
 const errorMessages: ErrorMessage[] = [
 	{ id: '1', title: 'Error type 1', bullets: ['Bullet 1', 'Bullet 2'] },

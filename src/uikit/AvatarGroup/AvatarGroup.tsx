@@ -15,7 +15,11 @@ export const AvatarGroup = React.memo((props: AvatarGroupProps) => {
 		margin = 0,
 		firstOnly = false,
 		onToolTip = () => null,
+		...divAttributes
 	} = props;
+	const { id: divId, className, style, ...rest } = divAttributes;
+	const divStyle = (style ?? {}) as React.CSSProperties;
+	const divClass = className ? ` ${className}` : '';
 
 	// memo css vars
 	const cssVars = useMemo(() => {
@@ -48,12 +52,22 @@ export const AvatarGroup = React.memo((props: AvatarGroupProps) => {
 		));
 	}, [avatars, size, border, borderColor, firstOnly, onToolTip]);
 
+	// memo class names
+	const classNames = useMemo(() => {
+		return `${css.wrapper}${divClass}`;
+	}, [divClass]);
+
 	/* START.DEBUG */
 	useTrackRenders(props, 'Avatar Group');
 	/* END.DEBUG */
 
 	return (
-		<div className={css.wrapper} style={cssVars}>
+		<div
+			id={divId}
+			className={classNames}
+			style={{ ...divStyle, ...cssVars }}
+			{...rest}
+		>
 			{renderedAvatars}
 		</div>
 	);

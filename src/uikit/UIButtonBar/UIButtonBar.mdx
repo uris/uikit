@@ -1,0 +1,36 @@
+import {Meta, Unstyled} from '@storybook/addon-docs/blocks';
+import {FlexDiv} from '../FlexDiv';
+import * as UIButtonBarStories from './UIButtonBar.stories';
+
+<Meta of={UIButtonBarStories} />
+
+<FlexDiv width={"fill"} height={"fill"} alignItems={"center"}>
+    <FlexDiv width={"fill"} maxWidth={760} height={"auto"}>
+        <Unstyled>
+        # UIButtonBar
+
+        Part of `Components/UI Button Bar`.
+
+        ## Purpose
+
+        - Use `UIButtonBar` when you need this UI primitive inside the Slice component system.
+        - Implementation reviewed from: `src/uikit/UIButtonBar/UIButtonBar.tsx`.
+
+        ## Story Variants
+
+        - `Default`
+
+        ## Attributes
+
+        - Props interface: `UIButtonBarProps`
+
+        | Prop | Type | Required | Default | Notes |
+        | --- | --- | --- | --- | --- |
+        | `onChange` | `(option: BarButton) => void` | No | `() => null` | callback |
+        | `onToolTip` | `(tip: ToolTip \| null) => void` | No | `() => null` | callback |
+        | `options` | `BarButton[]` | No | `[]` | array |
+        | `label` | `string` | No |  | string |
+        | `current` | `number` | No | `0` | number |
+        </Unstyled>
+    </FlexDiv>
+</FlexDiv>

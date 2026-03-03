@@ -1,9 +1,9 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
-import { fn } from 'storybook/test';
+import { runUIFileIconPlay } from 'src/stories/playHelpers';
 import { FlexDiv } from 'src/uikit/FlexDiv';
 import { UIFileIcon } from 'src/uikit/UIFileIcon';
 import { UIFileIcons } from 'src/uikit/UIFileIcon/_types';
-import { runUIFileIconPlay } from 'src/stories/playHelpers';
+import { fn } from 'storybook/test';
 
 const icons = Object.values(UIFileIcons).sort();
 const meta: Meta<typeof UIFileIcon> = {

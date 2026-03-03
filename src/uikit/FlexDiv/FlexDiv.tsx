@@ -56,7 +56,10 @@ export const FlexDiv = React.memo(
 			className,
 			scrollHandle,
 			scrollHandleHover,
+			...divAttributes
 		} = props;
+		const { id: divId, style: userStyle, ...rest } = divAttributes;
+		const wrapperStyle = (userStyle ?? {}) as React.CSSProperties;
 
 		// Memoize layout
 		const style = useMemo(() => {
@@ -117,14 +120,16 @@ export const FlexDiv = React.memo(
 
 		return (
 			<motion.div
+				id={divId}
 				ref={ref}
 				className={`${css.flexDiv} ${className ?? ''}`}
-				style={style}
+				style={{ ...wrapperStyle, ...style }}
 				transition={transition}
 				variants={variants}
 				initial={enter}
 				animate={animate}
 				exit={exit}
+				{...(rest as any)}
 			>
 				{children}
 			</motion.div>

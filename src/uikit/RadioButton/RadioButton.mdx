@@ -1,0 +1,42 @@
+import {Meta, Unstyled} from '@storybook/addon-docs/blocks';
+import {FlexDiv} from '../FlexDiv';
+import * as RadioButtonStories from './RadioButton.stories';
+
+<Meta of={RadioButtonStories} />
+
+<FlexDiv width={"fill"} height={"fill"} alignItems={"center"}>
+    <FlexDiv width={"fill"} maxWidth={760} height={"auto"}>
+        <Unstyled>
+        # RadioButton
+
+        Part of `Components/RadioButton`.
+
+        ## Purpose
+
+        - Use `RadioButton` when you need this UI primitive inside the Slice component system.
+        - Implementation reviewed from: `src/uikit/RadioButton/RadioButton.tsx`.
+
+        ## Story Variants
+
+        - `Default`
+
+        ## Attributes
+
+        - Props interface: `RadioButtonProps`
+
+        | Prop | Type | Required | Default | Notes |
+        | --- | --- | --- | --- | --- |
+        | `option` | `RadioButtonOption` | Yes | `{ fieldName: 'option', title: 'Option', state: false, icon: 'circle' }` | custom |
+        | `onChange` | `(option: RadioButtonOption, state: boolean) => void` | No | `() => null` | callback |
+        | `selected` | `boolean` | No | `false` | boolean |
+        | `deselect` | `boolean` | No | `true` | boolean |
+        | `tabIndex` | `number` | No | `1` | number |
+        | `wrap` | `boolean` | No | `false` | boolean |
+        | `list` | `boolean` | No | `false` | boolean |
+        | `hideRadio` | `boolean` | No | `false` | boolean |
+        | `toggleIcon` | `boolean` | No | `true` | boolean |
+        | `iconColor` | `string` | No | `undefined` | string |
+        | `noFrame` | `boolean` | No | `false` | boolean |
+        </Unstyled>
+    </FlexDiv>
+</FlexDiv>

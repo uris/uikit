@@ -1,0 +1,38 @@
+import {Meta, Unstyled} from '@storybook/addon-docs/blocks';
+import {FlexDiv} from '../FlexDiv';
+import * as UIFileIconStories from './UIFileIcon.stories';
+
+<Meta of={UIFileIconStories} />
+
+<FlexDiv width={"fill"} height={"fill"} alignItems={"center"}>
+    <FlexDiv width={"fill"} maxWidth={760} height={"auto"}>
+        <Unstyled>
+        # UIFileIcon
+
+        Part of `Components/UI File Icon`.
+
+        ## Purpose
+
+        - Use `UIFileIcon` when you need this UI primitive inside the Slice component system.
+        - Implementation reviewed from: `src/uikit/UIFileIcon/UIFileIcon.tsx`.
+
+        ## Story Variants
+
+        - `Default`
+        - `PDF`
+        - `Spreadsheet`
+
+        ## Attributes
+
+        - Props interface: `UIFileIconProps`
+
+        | Prop | Type | Required | Default | Notes |
+        | --- | --- | --- | --- | --- |
+        | `onClick` | `(e: React.MouseEvent<SVGElement, MouseEvent>) => void` | No | `() => null` | callback |
+        | `name` | `UIFileIcons \\| string` | No | `'document'` | union |
+        | `size` | `number` | No | `20` | number |
+        | `pointer` | `boolean` | No | `false` | boolean |
+        | `disabled` | `boolean` | No | `false` | boolean |
+        </Unstyled>
+    </FlexDiv>
+</FlexDiv>

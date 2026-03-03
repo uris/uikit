@@ -1,0 +1,41 @@
+import {Meta, Unstyled} from '@storybook/addon-docs/blocks';
+import {FlexDiv} from '../FlexDiv';
+import * as DotStories from './Dot.stories';
+
+<Meta of={DotStories} />
+
+<FlexDiv width={"fill"} height={"fill"} alignItems={"center"}>
+    <FlexDiv width={"fill"} maxWidth={760} height={"auto"}>
+        <Unstyled>
+        # Dot
+
+        Part of `Components/Dot`.
+
+        ## Purpose
+
+        - Use `Dot` when you need this UI primitive inside the Slice component system.
+        - Implementation reviewed from: `src/uikit/Dot/Dot.tsx`.
+
+        ## Story Variants
+
+        - `Default`
+
+        ## Attributes
+
+        - Props interface: `DotProps`
+
+        | Prop | Type | Required | Default | Notes |
+        | --- | --- | --- | --- | --- |
+        | `size` | `number` | No | `8` | number |
+        | `topOffset` | `number` | No | `2` | number |
+        | `rightOffset` | `number` | No | `2` | number |
+        | `border` | `number` | No | `3` | number |
+        | `position` | `'inline' \\| 'corner'` | No | `'corner'` | union |
+        | `state` | `'red' \\| 'yellow' \\| 'green' \\| 'blue' \\| 'grey'` | No | `'blue'` | union |
+        | `color` | `string` | No | `undefined` | string |
+        | `transition` | `Transition` | No | `undefined` | custom |
+        | `motionValues` | `Variants` | No | `undefined` | custom |
+        | `show` | `boolean` | No | `false` | boolean |
+        </Unstyled>
+    </FlexDiv>
+</FlexDiv>

@@ -1,0 +1,94 @@
+import {Meta, Unstyled} from '@storybook/addon-docs/blocks';
+import {FlexDiv} from '../uikit/FlexDiv';
+import {RenderSource} from '../../.storybook/RenderSource';
+
+<Meta title="Providers/ThemeProvider" />
+
+<FlexDiv width={"fill"} height={"fill"} alignItems={"center"}>
+    <FlexDiv width={"fill"} maxWidth={760} height={"auto"}>
+        <Unstyled>
+        # ThemeProvider
+        Provides Slice theme context behavior by writing `data-theme` on `document.documentElement` and loading Slice CSS token/type styles.
+
+        ## Base element
+        None (provider component, no wrapper element)
+
+        ## Interface
+        `ThemeProviderProps`
+
+        ## Props
+        <table style={{width: '100%'}}>
+          <colgroup>
+            <col style={{width: '1%'}} />
+            <col style={{width: '1%'}} />
+            <col style={{width: '1%'}} />
+            <col style={{width: '97%'}} />
+          </colgroup>
+          <thead>
+            <tr>
+              <th>Prop</th>
+              <th>Type</th>
+              <th>Default</th>
+              <th>Description</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td><code>children</code></td><td><code>React.ReactNode</code></td><td><code>undefined</code></td><td>Content rendered inside the provider.</td></tr>
+            <tr><td><code>theme</code></td><td><code>string</code></td><td><code>undefined</code></td><td>Manual theme selector. Values containing <code>'dark'</code> resolve to Slice dark mode, otherwise Slice light mode.</td></tr>
+            <tr><td><code>system</code></td><td><code>boolean</code></td><td><code>undefined</code></td><td>When <code>true</code>, uses `prefers-color-scheme` and updates automatically when the OS theme changes.</td></tr>
+          </tbody>
+        </table>
+
+        ## Returns
+        <table style={{width: '100%'}}>
+          <colgroup>
+            <col style={{width: '1%'}} />
+            <col style={{width: '1%'}} />
+            <col style={{width: '1%'}} />
+            <col style={{width: '97%'}} />
+          </colgroup>
+          <thead>
+            <tr>
+              <th>Return</th>
+              <th>Type</th>
+              <th>Default</th>
+              <th>Description</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td><code>children</code></td><td><code>React.ReactNode</code></td><td><code>undefined</code></td><td>Returns the provided `children` unchanged after applying theme side effects.</td></tr>
+          </tbody>
+        </table>
+
+        ## Code Examples
+        </Unstyled>
+
+        <RenderSource language={"tsx"}>
+{`
+import { ThemeProvider } from '@apple-pie/slice';
+
+export function App() {
+  return (
+    <ThemeProvider theme="lightMode">
+      <YourApp />
+    </ThemeProvider>
+  );
+}
+`}
+        </RenderSource>
+
+        <RenderSource language={"tsx"}>
+{`
+import { ThemeProvider } from '@apple-pie/slice';
+
+export function App() {
+  return (
+    <ThemeProvider system={true}>
+      <YourApp />
+    </ThemeProvider>
+  );
+}
+`}
+        </RenderSource>
+    </FlexDiv>
+</FlexDiv>

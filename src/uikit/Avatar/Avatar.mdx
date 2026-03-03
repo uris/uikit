@@ -1,0 +1,115 @@
+import {Meta, Unstyled} from '@storybook/addon-docs/blocks';
+import {FlexDiv} from '../FlexDiv';
+import * as AvatarStories from './Avatar.stories';
+import {RenderSource} from '../../../.storybook/RenderSource';
+
+<Meta of={AvatarStories} />
+
+<FlexDiv width={"fill"} height={"fill"} alignItems={"center"}>
+    <FlexDiv width={"fill"} maxWidth={760} height={"auto"}>
+        <Unstyled>
+        # Avatar
+        Renders a user profile image or fallback initials. Use it for identity surfaces where an image may or may not be available.
+
+        ## Base element
+        `HTMLDivElement`
+
+        ## Interface
+        `React.HTMLAttributes<HTMLDivElement> & AvatarProps`
+
+        ## Props
+        <table style={{width: '100%'}}>
+          <colgroup>
+            <col style={{width: '1%'}} />
+            <col style={{width: '1%'}} />
+            <col style={{width: '1%'}} />
+            <col style={{width: '97%'}} />
+          </colgroup>
+          <thead>
+            <tr>
+              <th className={"left"}>Prop</th>
+              <th className={"left"}>Type</th>
+              <th className={"left"}>Default</th>
+              <th>Description</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td><code>size</code></td><td><code>number</code></td><td><code>34</code></td><td>Outer rendered size in pixels.</td></tr>
+            <tr><td><code>frame</code></td><td><code>number</code></td><td><code>34</code></td><td>Inner frame size used for layout and auto font sizing.</td></tr>
+            <tr><td><code>first</code></td><td><code>string</code></td><td><code>''</code></td><td>First name used for initials and tooltip payload label.</td></tr>
+            <tr><td><code>last</code></td><td><code>string</code></td><td><code>''</code></td><td>Last name used for 2-letter initials when <code>firstOnly</code> is <code>false</code>.</td></tr>
+            <tr><td><code>image</code></td><td><code>string</code></td><td><code>''</code></td><td>Image URL. When present and <code>firstOnly</code> is <code>false</code>, initials are hidden.</td></tr>
+            <tr><td><code>border</code></td><td><code>number</code></td><td><code>0</code></td><td>Border width in pixels.</td></tr>
+            <tr><td><code>color</code></td><td><code>string</code></td><td><code>var(--core-text-primary)</code></td><td>Text color for initials.</td></tr>
+            <tr><td><code>borderColor</code></td><td><code>string</code></td><td><code>var(--core-surface-primary)</code></td><td>Border color token/value.</td></tr>
+            <tr><td><code>bgColor</code></td><td><code>string</code></td><td><code>var(--core-surface-secondary)</code></td><td>Background color token/value.</td></tr>
+            <tr><td><code>firstOnly</code></td><td><code>boolean</code></td><td><code>false</code></td><td>If <code>true</code>, renders only first initial and ignores image display.</td></tr>
+            <tr><td><code>fontSize</code></td><td><code>number | 'auto'</code></td><td><code>undefined</code></td><td>Font size in px, or <code>'auto'</code> to derive from <code>frame</code> (clamped 14-24px).</td></tr>
+            <tr><td><code>tabIndex</code></td><td><code>number</code></td><td><code>0</code></td><td>Keyboard tab index when interactive.</td></tr>
+            <tr><td><code>...divAttributes</code></td><td><code>HTMLAttributes</code><br/><code>HTMLDivElement</code>   </td><td><code>-</code></td><td>Native <code>div</code> props pass through (for example <code>id</code>, <code>data-testid</code>, <code>style</code>, <code>aria-*</code>).</td></tr>
+          </tbody>
+        </table>
+
+        ## Events
+        <table style={{width: '100%'}}>
+          <colgroup>
+            <col style={{width: '1%'}} />
+            <col style={{width: '99%'}} />
+          </colgroup>
+          <thead>
+            <tr>
+              <th className={"left"}>Event</th>
+              <th className={"left"}>Type</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td><code>onClick</code></td><td><code>(e: React.MouseEvent&lt;HTMLDivElement&gt;) =&gt; void</code></td></tr>
+            <tr><td><code>onKeyDown</code></td><td><code>(e: React.KeyboardEvent&lt;HTMLDivElement&gt;) =&gt; void</code></td></tr>
+            <tr><td><code>onToolTip</code></td><td><code>(tip: ToolTip | null) =&gt; void</code></td></tr>
+          </tbody>
+        </table>
+
+        ## Code Examples
+        </Unstyled>
+
+        <RenderSource language={"tsx"}>
+{`
+import { Avatar } from '@apple-pie/slice';
+
+export function AvatarWithImage() {
+  return (
+    <Avatar
+      first="John"
+      last="Doe"
+      image="/images/profile-male-02.jpg"
+      size={40}
+      frame={40}
+    />
+  );
+}
+`}
+        </RenderSource>
+
+        <RenderSource language={"tsx"}>
+{`
+import { Avatar } from '@apple-pie/slice';
+
+export function AvatarWithDivProps() {
+  return (
+    <Avatar
+      first="Jane"
+      last="Smith"
+      image=""
+      firstOnly={false}
+      id="assignee-avatar"
+      data-testid="assignee-avatar"
+      aria-label="Assignee avatar"
+      onClick={() => {}}
+      onKeyDown={() => {}}
+    />
+  );
+}
+`}
+        </RenderSource>
+    </FlexDiv>
+</FlexDiv>

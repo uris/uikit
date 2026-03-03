@@ -1,0 +1,39 @@
+import {Meta, Unstyled} from '@storybook/addon-docs/blocks';
+import {FlexDiv} from '../FlexDiv';
+import * as PagerStories from './Pager.stories';
+
+<Meta of={PagerStories} />
+
+<FlexDiv width={"fill"} height={"fill"} alignItems={"center"}>
+    <FlexDiv width={"fill"} maxWidth={760} height={"auto"}>
+        <Unstyled>
+        # Pager
+
+        Part of `Components/Pager`.
+
+        ## Purpose
+
+        - Use `Pager` when you need this UI primitive inside the Slice component system.
+        - Implementation reviewed from: `src/uikit/Pager/Pager.tsx`.
+
+        ## Story Variants
+
+        - `Default`
+
+        ## Attributes
+
+        - Props interface: `PagerProps`
+
+        | Prop | Type | Required | Default | Notes |
+        | --- | --- | --- | --- | --- |
+        | `onChange` | `(index: number) => void` | No | `() => null` | callback |
+        | `size` | `number` | No | `8` | number |
+        | `index` | `number` | No | `0` | number |
+        | `color` | `string` | No | `undefined` | string |
+        | `colorOn` | `string` | No | `undefined` | string |
+        | `colorHover` | `string` | No | `undefined` | string |
+        | `pages` | `number` | No | `2` | number |
+        | `gap` | `number` | No | `4` | number |
+        </Unstyled>
+    </FlexDiv>
+</FlexDiv>

@@ -1,0 +1,37 @@
+import {Meta, Unstyled} from '@storybook/addon-docs/blocks';
+import {FlexDiv} from '../FlexDiv';
+import * as UICardStories from './UICard.stories';
+
+<Meta of={UICardStories} />
+
+<FlexDiv width={"fill"} height={"fill"} alignItems={"center"}>
+    <FlexDiv width={"fill"} maxWidth={760} height={"auto"}>
+        <Unstyled>
+        # UICard
+
+        Part of `Components/UI Card`.
+
+        ## Purpose
+
+        - Use `UICard` when you need this UI primitive inside the Slice component system.
+        - Implementation reviewed from: `src/uikit/UICard/UICard.tsx`.
+
+        ## Story Variants
+
+        - `Default`
+
+        ## Attributes
+
+        - Props interface: `UICardProps`
+
+        | Prop | Type | Required | Default | Notes |
+        | --- | --- | --- | --- | --- |
+        | `onCommand` | `(command: { id?: string; command?: string }) => void` | No | `() => null` | callback |
+        | `id` | `string` | No | `'upload'` | string |
+        | `icon` | `string` | No | `'upload'` | string |
+        | `label` | `string` | No | `'Upload or drop'` | string |
+        | `command` | `string` | No | `'upload'` | string |
+        | `width` | `number \\| string` | No | `'auto'` | union |
+        </Unstyled>
+    </FlexDiv>
+</FlexDiv>

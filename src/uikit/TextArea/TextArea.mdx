@@ -1,0 +1,59 @@
+import {Meta, Unstyled} from '@storybook/addon-docs/blocks';
+import {FlexDiv} from '../FlexDiv';
+import * as TextAreaStories from './TextArea.stories';
+
+<Meta of={TextAreaStories} />
+
+<FlexDiv width={"fill"} height={"fill"} alignItems={"center"}>
+    <FlexDiv width={"fill"} maxWidth={760} height={"auto"}>
+        <Unstyled>
+        # TextArea
+
+        Part of `Components/TextArea`.
+
+        ## Purpose
+
+        - Use `TextArea` when you need this UI primitive inside the Slice component system.
+        - Implementation reviewed from: `src/uikit/TextArea/TextArea.tsx`.
+
+        ## Story Variants
+
+        - `Default`
+        - `ReturnSubmits`
+        - `WithSendButton`
+
+        ## Attributes
+
+        - Props interface: `TextAreaProps`
+
+        | Prop | Type | Required | Default | Notes |
+        | --- | --- | --- | --- | --- |
+        | `onChange` | `(value: string) => void` | No | `() => null` | callback |
+        | `onSubmit` | `(value: string) => void` | No | `() => null` | callback |
+        | `onFocus` | `() => void` | No | `() => null` | callback |
+        | `onBlur` | `() => void` | No | `() => null` | callback |
+        | `onValidate` | `(state: boolean) => void` | No | `() => null` | callback |
+        | `onKeyDown` | `(e: React.KeyboardEvent<HTMLTextAreaElement>) => void` | No | `() => null` | callback |
+        | `value` | `string` | No | `''` | string |
+        | `name` | `string` | No | `'text_area'` | string |
+        | `width` | `number \\| string` | No | `'100%'` | union |
+        | `minWidth` | `number \\| string` | No | `undefined` | union |
+        | `rows` | `number` | No | `6` | number |
+        | `focused` | `boolean` | No | `false` | boolean |
+        | `placeholder` | `string` | No | `'Enter text here...'` | string |
+        | `padding` | `number \\| string` | No | `'16px 4px 16px 16px'` | union |
+        | `validate` | `boolean` | No | `false` | boolean |
+        | `border` | `boolean` | No | `false` | boolean |
+        | `resizable` | `boolean` | No | `true` | boolean |
+        | `hasSend` | `boolean` | No | `false` | boolean |
+        | `sendOffset` | `{ bottom: number; right: number }` | No | `{ bottom: 6 | number, right: 6 }` |
+        | `sendSize` | `number` | No | `36` | number |
+        | `bgColor` | `string` | No | `undefined` | string |
+        | `borderRadius` | `number` | No | `4` | number |
+        | `returnSubmits` | `boolean` | No | `false` | boolean |
+        | `textSize` | `'s' \\| 'm' \\| 'l'` | No | `'m'` | union |
+        | `disabled` | `boolean` | No | `false` | boolean |
+        | `submitClears` | `boolean` | No | `true` | boolean |
+        </Unstyled>
+    </FlexDiv>
+</FlexDiv>

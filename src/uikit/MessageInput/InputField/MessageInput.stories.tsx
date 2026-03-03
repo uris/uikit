@@ -1,13 +1,13 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
-import { fn } from 'storybook/test';
+import { runMessageInputPlay } from 'src/stories/playHelpers';
 import { FlexDiv } from 'src/uikit/FlexDiv/FlexDiv';
-import type { Excerpt } from 'src/uikit/MessageInput/ExcerptList/ExcerptList';
+import type { DocExcerpt } from 'src/uikit/MessageInput/ExcerptList/_types';
 import { MessageInput } from 'src/uikit/MessageInput/InputField/MessageInput';
 import {
 	PrompState,
 	type UserPresence,
-} from 'src/uikit/MessageInput/UserList/_Types';
-import { runMessageInputPlay } from 'src/stories/playHelpers';
+} from 'src/uikit/MessageInput/UserList/_types';
+import { fn } from 'storybook/test';
 
 const testFile: Partial<File> = {
 	name: 'secret-plans-to-blow-up-the-deathstar.docx',
@@ -16,7 +16,7 @@ const testFile: Partial<File> = {
 	lastModified: new Date().getSeconds(),
 };
 
-const testExcerpt: Excerpt = {
+const testExcerpt: DocExcerpt = {
 	content:
 		'OB1, we meet again at last. When I left you I was but a learner. Now I am the master... Your powers grow weak old man.',
 	range: { from: 0, to: 100 },

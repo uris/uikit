@@ -10,7 +10,11 @@ export function Logos(props: Readonly<LogoProps>) {
 		color = theme.current.colors['core-text-primary'],
 		height,
 		width,
+		...divAttributes
 	} = props;
+	const { id: divId, className, style, ...rest } = divAttributes;
+	const divStyle = (style ?? {}) as React.CSSProperties;
+	const divClass = className ? ` ${className}` : '';
 
 	// memo height
 	const adjustedHeight = useMemo(() => {
@@ -594,11 +598,15 @@ export function Logos(props: Readonly<LogoProps>) {
 
 	return (
 		<div
+			id={divId}
+			className={divClass.trim()}
 			style={{
+				...divStyle,
 				display: 'inline',
 				width: width ?? 'unset',
 				height: adjustedHeight ?? 'unset',
 			}}
+			{...rest}
 		>
 			{renderIcon}
 		</div>

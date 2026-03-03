@@ -16,7 +16,9 @@ export const DoneCheck = React.memo((props: DoneCheckProps) => {
 		didEnd = () => null,
 		didStart = () => null,
 		play = false,
+		...svgAttributes
 	} = props;
+	const { id: svgId, className, style, ...rest } = svgAttributes;
 	const [check, animateCheck] = useAnimate();
 	const [isPresent, safeToRemove] = usePresence();
 
@@ -65,6 +67,8 @@ export const DoneCheck = React.memo((props: DoneCheckProps) => {
 	const checkMark = () => {
 		return (
 			<svg
+				id={svgId}
+				className={className}
 				ref={check}
 				xmlns="http://www.w3.org/2000/svg"
 				width={size}
@@ -72,7 +76,9 @@ export const DoneCheck = React.memo((props: DoneCheckProps) => {
 				scale={0.9}
 				viewBox="0 0 20 20"
 				fill="none"
+				style={(style ?? {}) as React.CSSProperties}
 				aria-label="Checkmark icon"
+				{...rest}
 			>
 				<title>Checkmark</title>
 				<path d="M 1 1 L 19 1 L 19 19 L 1 19 Z" fill="transparent" />

@@ -1,6 +1,7 @@
 import type { Transition, Variants } from 'motion/react';
+import type React from 'react';
 
-export interface DotProps {
+type DotBaseProps = {
 	size?: number;
 	topOffset?: number;
 	rightOffset?: number;
@@ -10,17 +11,22 @@ export interface DotProps {
 	color?: string;
 	transition?: Transition;
 	motionValues?: Variants;
+	motion?: Variants;
 	show?: boolean;
-}
+};
 
-// Extract default variants
+export type DotProps = Omit<
+	React.HTMLAttributes<HTMLDivElement>,
+	keyof DotBaseProps
+> &
+	DotBaseProps;
+
 export const DEFAULT_VARIANTS: Variants = {
 	initial: { opacity: 0 },
 	animate: { opacity: 1 },
 	exit: { opacity: 0 },
 };
 
-// Extract default transition
 export const DEFAULT_TRANSITION: Transition = {
 	ease: 'easeInOut',
 	duration: 0.5,

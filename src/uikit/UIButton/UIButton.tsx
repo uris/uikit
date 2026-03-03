@@ -57,7 +57,11 @@ const UIButtonComponent = forwardRef<UIButtonHandle, UIButtonProps>(
 			destructive = false,
 			onClick = () => null,
 			onToolTip = () => null,
+			...divAttributes
 		} = props;
+		const { id: divId, className, style, ...rest } = divAttributes;
+		const divStyle = (style ?? {}) as React.CSSProperties;
+		const divClass = className ? ` ${className}` : '';
 
 		const [btnState, setBtnState] = useState<'normal' | 'hover' | 'disabled'>(
 			state,
@@ -189,7 +193,7 @@ const UIButtonComponent = forwardRef<UIButtonHandle, UIButtonProps>(
 						labelColor ||
 						(destructive
 							? 'var(--feedback-warning)'
-							: 'var(--core-button-primary)'),
+							: 'var(--core-text-special)'),
 					disabled: 'var(--core-text-disabled)',
 				},
 			};
@@ -392,17 +396,19 @@ const UIButtonComponent = forwardRef<UIButtonHandle, UIButtonProps>(
 
 		return (
 			<motion.div
-				className={css.button}
+				id={divId}
+				className={`${css.button}${divClass}`}
 				ref={ref}
 				onMouseEnter={handleMouseEnter}
 				onMouseLeave={handleMouseLeave}
-				style={{ ...buttonStyle, ...cssVars }}
+				style={{ ...divStyle, ...buttonStyle, ...cssVars }}
 				transition={transition}
 				variants={variants}
 				initial={initial}
 				animate={animate}
 				exit={exit}
 				onClick={handleClick}
+				{...(rest as any)}
 			>
 				{!playing && iconLeft && (
 					<div className={css.icon}>

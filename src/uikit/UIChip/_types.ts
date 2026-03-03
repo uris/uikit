@@ -2,7 +2,7 @@ import type React from 'react';
 import type { IconNames } from '../Icon/_types';
 import type { ToolTip } from '../sharedTypes';
 
-export interface UIChipProps {
+type UIChipBaseProps = {
 	label?: string;
 	icon?: IconNames | string;
 	disabled?: boolean;
@@ -17,4 +17,10 @@ export interface UIChipProps {
 	onToolTip?: (tip: ToolTip | null) => void;
 	onClick?: (e: React.MouseEvent<HTMLDivElement> | undefined) => void;
 	onMouseDown?: (e: React.MouseEvent<HTMLDivElement> | undefined) => void;
-}
+};
+
+export type UIChipProps = Omit<
+	React.HTMLAttributes<HTMLDivElement>,
+	keyof UIChipBaseProps
+> &
+	UIChipBaseProps;

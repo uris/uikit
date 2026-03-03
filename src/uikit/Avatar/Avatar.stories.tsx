@@ -1,8 +1,8 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
-import { expect, fn, userEvent, within } from 'storybook/test';
 import { Avatar } from 'src/uikit/Avatar';
 import { FlexDiv } from 'src/uikit/FlexDiv';
 import { hexToRgb } from 'src/util/utils';
+import { expect, fn, userEvent, within } from 'storybook/test';
 
 const meta: Meta<typeof Avatar> = {
 	title: 'Components/Avatar',
@@ -24,7 +24,7 @@ const meta: Meta<typeof Avatar> = {
 
 export default meta;
 
-export const Default: StoryObj<typeof Avatar> = {
+export const Demo: StoryObj<typeof Avatar> = {
 	render: (args) => {
 		return (
 			<FlexDiv justify={'center'} alignItems={'center'} padding={64}>

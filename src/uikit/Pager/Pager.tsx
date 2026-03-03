@@ -14,7 +14,11 @@ export const Pager = React.memo((props: PagerProps) => {
 		pages = 2,
 		gap = 4,
 		onChange = () => null,
+		...divAttributes
 	} = props;
+	const { id: divId, className, style, ...rest } = divAttributes;
+	const divStyle = (style ?? {}) as React.CSSProperties;
+	const divClass = className ? ` ${className}` : '';
 	const [selected, setSelected] = useState<number>(index);
 
 	const bullets = useMemo(() => {
@@ -47,7 +51,12 @@ export const Pager = React.memo((props: PagerProps) => {
 	/* END.DEBUG */
 
 	return (
-		<div style={cssVars} className={css.wrapper}>
+		<div
+			id={divId}
+			style={{ ...divStyle, ...cssVars }}
+			className={`${css.wrapper}${divClass}`}
+			{...rest}
+		>
 			{bullets.map((bulletId: number) => {
 				return (
 					<input

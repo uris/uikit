@@ -1,9 +1,9 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
-import { fn } from 'storybook/test';
+import { runIconButtonPlay } from 'src/stories/playHelpers';
 import { FlexDiv } from 'src/uikit/FlexDiv';
 import { IconNames } from 'src/uikit/Icon/_types';
 import { IconButton } from 'src/uikit/IconButton';
-import { runIconButtonPlay } from 'src/stories/playHelpers';
+import { fn } from 'storybook/test';
 
 const icons = Object.values(IconNames);
 const meta: Meta<typeof IconButton> = {

@@ -1,0 +1,52 @@
+import {Meta, Unstyled} from '@storybook/addon-docs/blocks';
+import {FlexDiv} from '../FlexDiv';
+import * as TabBarStories from './TabBar.stories';
+
+<Meta of={TabBarStories} />
+
+<FlexDiv width={"fill"} height={"fill"} alignItems={"center"}>
+    <FlexDiv width={"fill"} maxWidth={760} height={"auto"}>
+        <Unstyled>
+        # TabBar
+
+        Part of `Components/TabBar`.
+
+        ## Purpose
+
+        - Use `TabBar` when you need this UI primitive inside the Slice component system.
+        - Implementation reviewed from: `src/uikit/TabBar/TabBar.tsx`.
+
+        ## Story Variants
+
+        - `Default`
+        - `WithClose`
+        - `SelectedByValue`
+
+        ## Attributes
+
+        - Props interface: `TabBarProps`
+
+        | Prop | Type | Required | Default | Notes |
+        | --- | --- | --- | --- | --- |
+        | `onToolTip` | `(tip: ToolTip \| null) => void` | No | `() => null` | callback |
+        | `onChange` | `(index: number) => void` | No | `() => null` | callback |
+        | `onTabChange` | `(option: TabOption) => void` | No | `() => null` | callback |
+        | `onClose` | `() => void` | No | `() => null` | callback |
+        | `options` | `TabOption[]` | No | `placeholderOptions` | array |
+        | `selected` | `number` | No | `0` | number |
+        | `underline` | `boolean` | No | `true` | boolean |
+        | `border` | `boolean` | No | `true` | boolean |
+        | `selectedValue` | `string` | No | `null` | string |
+        | `height` | `number \\| string` | No | `'100%'` | union |
+        | `width` | `number \\| string` | No | `'100%'` | union |
+        | `tabWidth` | `'min-content' \\| 'distribute' \\| number` | No | `'distribute'` | union |
+        | `closeWidth` | `number \\| string` | No | `'auto'` | union |
+        | `padding` | `number \\| string` | No | `8` | union |
+        | `iconSize` | `number` | No | `20` | number |
+        | `iconGap` | `number` | No | `8` | number |
+        | `tabGap` | `number` | No | `0` | number |
+        | `disabled` | `boolean` | No | `false` | boolean |
+        | `hasClose` | `boolean` | No | `false` | boolean |
+        </Unstyled>
+    </FlexDiv>
+</FlexDiv>

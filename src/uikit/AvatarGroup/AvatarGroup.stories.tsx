@@ -1,8 +1,8 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
+import { runAvatarGroupPlay } from 'src/stories/playHelpers';
 import type { AvatarInfo } from 'src/uikit/AvatarGroup';
 import { AvatarGroup } from 'src/uikit/AvatarGroup';
 import { FlexDiv } from 'src/uikit/FlexDiv';
-import { runAvatarGroupPlay } from 'src/stories/playHelpers';
 
 const avatars: AvatarInfo[] = [
 	{

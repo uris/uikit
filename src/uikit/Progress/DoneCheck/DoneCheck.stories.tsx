@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
-import { expect, fn, waitFor } from 'storybook/test';
 import { FlexDiv } from 'src/uikit/FlexDiv';
 import { DoneCheck } from 'src/uikit/Progress';
+import { expect, fn, waitFor } from 'storybook/test';
 
 const meta: Meta<typeof DoneCheck> = {
 	title: 'Components/DoneCheck',

@@ -1,0 +1,65 @@
+import {Meta, Unstyled} from '@storybook/addon-docs/blocks';
+import {FlexDiv} from '../FlexDiv';
+import * as UIButtonStories from './UIButton.stories';
+
+<Meta of={UIButtonStories} />
+
+<FlexDiv width={"fill"} height={"fill"} alignItems={"center"}>
+    <FlexDiv width={"fill"} maxWidth={760} height={"auto"}>
+        <Unstyled>
+        # UIButton
+
+        Part of `Components/UIButton`.
+
+        ## Purpose
+
+        - Use `UIButton` when you need this UI primitive inside the Slice component system.
+        - Implementation reviewed from: `src/uikit/UIButton/UIButton.tsx`.
+
+        ## Story Variants
+
+        - `Default`
+
+        ## Attributes
+
+        - Props interface: `UIButtonProps`
+
+        | Prop | Type | Required | Default | Notes |
+        | --- | --- | --- | --- | --- |
+        | `count` | `number` | No | `props.count === undefined ? undefined : Number(props.count)` | number |
+        | `iconSize` | `number` | No | `props.iconSize === undefined ? 20 : Number(props.iconSize)` | number |
+        | `onToolTip` | `(tip: ToolTip \| null) => void` | No | `() => null` | callback |
+        | `onClick` | `( e: React.MouseEvent<HTMLDivElement, MouseEvent> \| undefined, ) => void` | No | `() => null` | callback |
+        | `size` | `'large' \\| 'medium' \\| 'text'` | No | `'medium'` | union |
+        | `variant` | `'solid' \\| 'outline' \\| 'text'` | No | `'outline'` | union |
+        | `state` | `'normal' \\| 'hover' \\| 'disabled'` | No | `'normal'` | union |
+        | `width` | `string` | No | `'auto'` | string |
+        | `label` | `string` | No | `undefined` | string |
+        | `iconRight` | `string` | No | `undefined` | string |
+        | `iconLeft` | `string` | No | `undefined` | string |
+        | `fill` | `boolean` | No | `false` | boolean |
+        | `showDot` | `boolean` | No | `undefined` | boolean |
+        | `round` | `boolean` | No | `false` | boolean |
+        | `tooltip` | `string` | No | `undefined` | string |
+        | `borderRadius` | `number` | No | `undefined` | number |
+        | `iconColor` | `string` | No | `undefined` | string |
+        | `bgColor` | `string` | No | `undefined` | string |
+        | `bgColorDisabled` | `string` | No | `undefined` | string |
+        | `labelColor` | `string` | No | `undefined` | string |
+        | `labelSize` | `'s' \\| 'm' \\| 'l'` | No | `'m'` | union |
+        | `transition` | `Transition` | No | `undefined` | custom |
+        | `variants` | `Variants` | No | `undefined` | custom |
+        | `initial` | `string` | No | `undefined` | string |
+        | `animate` | `string` | No | `undefined` | string |
+        | `exit` | `string` | No | `undefined` | string |
+        | `underline` | `boolean` | No | `false` | boolean |
+        | `progress` | `boolean` | No | `false` | boolean |
+        | `working` | `boolean` | No | `false` | boolean |
+        | `duration` | `number` | No | `undefined` | number |
+        | `trigger` | `boolean` | No | `false` | boolean |
+        | `destructive` | `boolean` | No | `false` | boolean |
+        | `paddingRight` | `number` | No | `undefined` | number |
+        | `paddingLeft` | `number` | No | `undefined` | number |
+        </Unstyled>
+    </FlexDiv>
+</FlexDiv>

@@ -13,7 +13,11 @@ export const Overlay = React.memo((props: OverlayProps) => {
 		type = 'clear',
 		global = false,
 		overlay,
+		...divAttributes
 	} = props;
+	const { id: divId, className, style, ...rest } = divAttributes;
+	const divStyle = (style ?? {}) as React.CSSProperties;
+	const divClass = className ? ` ${className}` : '';
 
 	const show = !global || (global && overlay);
 
@@ -48,13 +52,15 @@ export const Overlay = React.memo((props: OverlayProps) => {
 		<AnimatePresence initial={false}>
 			{show && (
 				<motion.div
-					className={css.overlay}
-					style={cssVars}
+					id={divId}
+					className={`${css.overlay}${divClass}`}
+					style={{ ...divStyle, ...cssVars }}
 					initial={{ opacity: 0 }}
 					animate={{ opacity: computedOpacity }}
 					exit={{ opacity: 0 }}
 					onClick={handleClick}
 					onContextMenu={handleContextMenu}
+					{...(rest as any)}
 				/>
 			)}
 		</AnimatePresence>

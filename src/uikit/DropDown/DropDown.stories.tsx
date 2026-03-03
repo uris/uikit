@@ -1,9 +1,9 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
-import { fn } from 'storybook/test';
+import { runDropDownPlay } from 'src/stories/playHelpers';
 import { lightTheme } from 'src/theme/themes';
 import { DropDown, type DropDownOption } from 'src/uikit/DropDown/DropDown';
 import { FlexDiv } from 'src/uikit/FlexDiv/FlexDiv';
-import { runDropDownPlay } from 'src/stories/playHelpers';
+import { fn } from 'storybook/test';
 
 const optionsWPlace: DropDownOption[] = [
 	{ label: 'select an option', value: 'none' },

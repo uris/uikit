@@ -25,7 +25,7 @@ type ResizeHandle = {
 	offsetX?: boolean;
 };
 
-export interface DraggablePanelProps {
+type DraggablePanelBaseProps = {
 	children?: any;
 	onResize?: (info: Info) => void;
 	onResizeEnd?: (info: Info) => void;
@@ -43,7 +43,13 @@ export interface DraggablePanelProps {
 	dragHandleStyle?: DragHandleProps;
 	disableOnContext?: boolean;
 	isTouchDevice?: boolean;
-}
+};
+
+export type DraggablePanelProps = Omit<
+	React.HTMLAttributes<HTMLDivElement>,
+	keyof DraggablePanelBaseProps
+> &
+	DraggablePanelBaseProps;
 
 const MIN_SIZE = 50;
 
@@ -71,7 +77,11 @@ export const DraggablePanel = React.memo((props: DraggablePanelProps) => {
 		onResize = () => null,
 		onResizeStart = () => null,
 		onResizeEnd = () => null,
+		...divAttributes
 	} = props;
+	const { id: divId, className, style, ...rest } = divAttributes;
+	const divStyle = (style ?? {}) as React.CSSProperties;
+	const divClass = className ? ` ${className}` : '';
 	const handle = useRef<HTMLDivElement>(null);
 	const div = useRef<HTMLDivElement>(null);
 	const [isDragging, setIsDragging] = useState(false);
@@ -358,13 +368,15 @@ export const DraggablePanel = React.memo((props: DraggablePanelProps) => {
 
 	return (
 		<div
-			className={css.panel}
+			id={divId}
+			className={`${css.panel}${divClass}`}
 			ref={div}
 			onContextMenu={(e) => {
 				if (disableOnContext) e.preventDefault();
 				return true;
 			}}
 			style={{
+				...divStyle,
 				...cssVars,
 				overflow: 'visible',
 				width: width,
@@ -375,6 +387,7 @@ export const DraggablePanel = React.memo((props: DraggablePanelProps) => {
 					panelClosed || !borderRight || !drags ? 'none' : borderRight,
 				borderLeft: panelClosed || !borderLeft || !drags ? 'none' : borderLeft,
 			}}
+			{...rest}
 		>
 			<div
 				ref={handle}

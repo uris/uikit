@@ -23,7 +23,11 @@ export const EditorButtonBar = React.memo((props: EditorButtonBarProps) => {
 		activeStyle = 'p',
 		disabledFormats = [],
 		activeFormats,
+		...divAttributes
 	} = props;
+	const { id: divId, className, style, ...rest } = divAttributes;
+	const divStyle = (style ?? {}) as React.CSSProperties;
+	const divClass = className ? ` ${className}` : '';
 	const [barState, setBarState] = useState<'small' | 'medium' | 'regular'>(
 		'regular',
 	);
@@ -61,7 +65,13 @@ export const EditorButtonBar = React.memo((props: EditorButtonBarProps) => {
 	/* END.DEBUG */
 
 	return (
-		<div className={css.wrapper} ref={ref}>
+		<div
+			id={divId}
+			className={`${css.wrapper}${divClass}`}
+			style={divStyle}
+			ref={ref}
+			{...rest}
+		>
 			<div className={css.left}>
 				{editControls?.[barState].styles && (
 					<DropDown

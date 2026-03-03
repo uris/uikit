@@ -1,0 +1,58 @@
+import {Meta, Unstyled} from '@storybook/addon-docs/blocks';
+import {FlexDiv} from '../FlexDiv';
+import * as IconButtonStories from './IconButton.stories';
+
+<Meta of={IconButtonStories} />
+
+<FlexDiv width={"fill"} height={"fill"} alignItems={"center"}>
+    <FlexDiv width={"fill"} maxWidth={760} height={"auto"}>
+        <Unstyled>
+        # IconButton
+
+        Part of `Components/IconButton`.
+
+        ## Purpose
+
+        - Use `IconButton` when you need this UI primitive inside the Slice component system.
+        - Implementation reviewed from: `src/uikit/IconButton/IconButton.tsx`.
+
+        ## Story Variants
+
+        - `Default`
+
+        ## Attributes
+
+        - Props interface: `IconButtonProps`
+
+        | Prop | Type | Required | Default | Notes |
+        | --- | --- | --- | --- | --- |
+        | `bgColor` | `string` | No | `'var(--core-surface-secondary)'` | string |
+        | `bgColorOn` | `string` | No | `'var(--core-outline-primary)'` | string |
+        | `bgColorHover` | `string` | No | `'var(--core-outline-primary)'` | string |
+        | `onClick` | `(e: React.MouseEvent<HTMLDivElement, MouseEvent>) => void` | No | `() => null` | callback |
+        | `onToolTip` | `(tip: ToolTip \| null) => void` | No | `() => null` | callback |
+        | `frameSize` | `number` | No | `36` | number |
+        | `iconSize` | `number` | No | `20` | number |
+        | `icon` | `string` | No | `'more'` | string |
+        | `tooltip` | `string` | No | `undefined` | string |
+        | `color` | `string` | No | `undefined` | string |
+        | `colorOn` | `string` | No | `undefined` | string |
+        | `fillColor` | `string` | No | `undefined` | string |
+        | `disabled` | `boolean` | No | `false` | boolean |
+        | `toggle` | `boolean` | No | `true` | boolean |
+        | `hover` | `boolean` | No | `undefined` | boolean |
+        | `toggleIcon` | `boolean` | No | `false` | boolean |
+        | `isToggled` | `boolean` | No | `false` | boolean |
+        | `showDot` | `boolean` | No | `false` | boolean |
+        | `count` | `number` | No | `0` | number |
+        | `transition` | `Transition` | No | `undefined` | custom |
+        | `label` | `string` | No | `undefined` | string |
+        | `border` | `boolean` | No | `false` | boolean |
+        | `variants` | `Variants` | No | `undefined` | custom |
+        | `initial` | `string` | No | `undefined` | string |
+        | `animate` | `string` | No | `undefined` | string |
+        | `exit` | `string` | No | `undefined` | string |
+        | `borderRadius` | `number` | No | `4` | number |
+        </Unstyled>
+    </FlexDiv>
+</FlexDiv>

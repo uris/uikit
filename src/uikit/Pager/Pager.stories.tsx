@@ -1,8 +1,8 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
-import { fn } from 'storybook/test';
+import { runPagerPlay } from 'src/stories/playHelpers';
 import { FlexDiv } from 'src/uikit/FlexDiv/FlexDiv';
 import { Pager } from 'src/uikit/Pager/Pager';
-import { runPagerPlay } from 'src/stories/playHelpers';
+import { fn } from 'storybook/test';
 
 const meta: Meta<typeof Pager> = {
 	title: 'Components/Pager',

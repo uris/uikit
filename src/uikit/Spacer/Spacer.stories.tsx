@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
+import { runSpacerPlay } from 'src/stories/playHelpers';
 import { FlexDiv } from 'src/uikit/FlexDiv/FlexDiv';
 import { Spacer } from 'src/uikit/Spacer/Spacer';
-import { runSpacerPlay } from 'src/stories/playHelpers';
 
 const meta: Meta<typeof Spacer> = {
 	title: 'Components/Spacer',

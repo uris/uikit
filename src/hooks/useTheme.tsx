@@ -12,6 +12,7 @@ export function useTheme() {
 	const current = useObserveTheme();
 
 	const set = useCallback((newTheme: SliceTheme | string) => {
+		console.log('set theme', newTheme);
 		let theme: SliceTheme;
 		if (typeof newTheme === 'string') {
 			if (newTheme === 'system') {
@@ -30,7 +31,7 @@ export function useTheme() {
 	const toggle = () => {
 		const lightMode = current.name === lightTheme.name;
 		const newTheme = lightMode ? darkTheme : lightTheme;
-		set(newTheme);
+		document.documentElement.dataset.theme = newTheme.name;
 	};
 
 	const isDark = useMemo(() => {

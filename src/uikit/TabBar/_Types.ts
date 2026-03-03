@@ -1,3 +1,4 @@
+import type React from 'react';
 import type { ToolTip } from '../sharedTypes';
 
 export type TabOption = {
@@ -14,7 +15,7 @@ export const placeholderOptions: TabOption[] = [
 	{ name: 'Option 2', value: 'Option 2', icon: 'wallet' },
 ];
 
-export interface TabBarProps {
+type TabBarBaseProps = {
 	options?: TabOption[];
 	selected?: number;
 	underline?: boolean;
@@ -34,7 +35,13 @@ export interface TabBarProps {
 	onChange?: (index: number) => void;
 	onTabChange?: (option: TabOption) => void;
 	onClose?: () => void;
-}
+};
+
+export type TabBarProps = Omit<
+	React.HTMLAttributes<HTMLDivElement>,
+	keyof TabBarBaseProps
+> &
+	TabBarBaseProps;
 
 export interface TabOptionProps {
 	label?: string;

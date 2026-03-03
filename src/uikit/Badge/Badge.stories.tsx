@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
+import { runBadgePlay } from 'src/stories/playHelpers';
 import { Badge } from 'src/uikit/Badge/Badge';
 import { FlexDiv } from 'src/uikit/FlexDiv/FlexDiv';
-import { runBadgePlay } from 'src/stories/playHelpers';
 
 const meta: Meta<typeof Badge> = {
 	title: 'Components/Badge',

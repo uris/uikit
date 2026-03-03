@@ -44,7 +44,11 @@ export const IconButton = React.memo((props: IconButtonProps) => {
 		border = false,
 		onClick = () => null,
 		onToolTip = () => null,
+		...divAttributes
 	} = props;
+	const { id: divId, className, style, ...rest } = divAttributes;
+	const divStyle = (style ?? {}) as React.CSSProperties;
+	const divClass = className ? ` ${className}` : '';
 	const [on, setOn] = useState<boolean>(isToggled);
 	const ref = useRef<HTMLDivElement>(null);
 
@@ -121,8 +125,9 @@ export const IconButton = React.memo((props: IconButtonProps) => {
 
 	return (
 		<motion.div
-			className={css.button}
-			style={cssVars}
+			id={divId}
+			className={`${css.button}${divClass}`}
+			style={{ ...divStyle, ...cssVars }}
 			onClick={handleClick}
 			onMouseLeave={handleMouseLeave}
 			onMouseEnter={handleMouseEnter}
@@ -132,6 +137,7 @@ export const IconButton = React.memo((props: IconButtonProps) => {
 			animate={animate}
 			exit={exit}
 			ref={ref}
+			{...(rest as any)}
 		>
 			<div className={css.icon} style={{ opacity: disabled ? 0.3 : 1 }}>
 				<Icon

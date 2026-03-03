@@ -1,8 +1,8 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
-import { expect, fn, userEvent, within } from 'storybook/test';
+import { runIconPlay } from 'src/stories/playHelpers';
 import { FlexDiv } from 'src/uikit/FlexDiv';
 import { Icon, IconNames } from 'src/uikit/Icon';
-import { runIconPlay } from 'src/stories/playHelpers';
+import { expect, fn, userEvent, within } from 'storybook/test';
 
 const icons = Object.values(IconNames);
 const meta: Meta<typeof Icon> = {

@@ -1,4 +1,6 @@
-export interface SliderProps {
+import type React from 'react';
+
+type SliderBaseProps = {
 	value?: number;
 	scaleMin?: number;
 	scaleMax?: number;
@@ -14,4 +16,10 @@ export interface SliderProps {
 	cursor?: 'default' | 'grab' | 'grabbing' | 'pointer';
 	onChange?: (value: number, percent: number) => void;
 	onDragChange?: (value: number, percent: number) => void;
-}
+};
+
+export type SliderProps = Omit<
+	React.HTMLAttributes<HTMLDivElement>,
+	keyof SliderBaseProps
+> &
+	SliderBaseProps;

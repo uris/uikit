@@ -1,6 +1,6 @@
 import type React from 'react';
 
-export interface DivInputProps {
+type DivInputBaseProps = {
 	name?: string;
 	onClick?: () => void;
 	onDblClick?: () => void;
@@ -19,4 +19,10 @@ export interface DivInputProps {
 	padding?: string;
 	radius?: number;
 	bgColor?: string;
-}
+};
+
+export type DivInputProps = Omit<
+	React.HTMLAttributes<HTMLDivElement>,
+	keyof DivInputBaseProps
+> &
+	DivInputBaseProps;

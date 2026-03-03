@@ -1,0 +1,32 @@
+import {Meta, Unstyled} from '@storybook/addon-docs/blocks';
+import {FlexDiv} from '../FlexDiv';
+import * as SpacerStories from './Spacer.stories';
+
+<Meta of={SpacerStories} />
+
+<FlexDiv width={"fill"} height={"fill"} alignItems={"center"}>
+    <FlexDiv width={"fill"} maxWidth={760} height={"auto"}>
+        <Unstyled>
+        # Spacer
+
+        Part of `Components/Spacer`.
+
+        ## Purpose
+
+        - Use `Spacer` when you need this UI primitive inside the Slice component system.
+        - Implementation reviewed from: `src/uikit/Spacer/Spacer.tsx`.
+
+        ## Story Variants
+
+        - `Default`
+
+        ## Attributes
+
+        - Props interface: `SpacerProps`
+
+        | Prop | Type | Required | Default | Notes |
+        | --- | --- | --- | --- | --- |
+        | `size` | `number` | No | `8` | number |
+        </Unstyled>
+    </FlexDiv>
+</FlexDiv>

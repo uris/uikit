@@ -64,7 +64,15 @@ const preview: Preview = {
 		},
 		options: {
 			storySort: {
-				order: ['Welcome', ['Welcome', 'Quick Start', '*'], 'Hooks', '*'],
+				order: [
+					'Welcome',
+					['Welcome', 'Quick Start', '*'],
+					'Hooks',
+					['*', ['Docs', '*']],
+					'Providers',
+					['*', ['Docs', '*']],
+					'*',
+				],
 			},
 		},
 	},

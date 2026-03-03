@@ -16,7 +16,11 @@ export const Dot = React.memo((props: DotProps) => {
 		motionValues = undefined,
 		show = false,
 		state,
+		...divAttributes
 	} = props;
+	const { id: divId, className, style, ...rest } = divAttributes;
+	const divStyle = (style ?? {}) as React.CSSProperties;
+	const divClass = className ? ` ${className}` : '';
 
 	// memo variants
 	const variants = useMemo(() => {
@@ -81,8 +85,9 @@ export const Dot = React.memo((props: DotProps) => {
 		<AnimatePresence initial={false}>
 			{show && (
 				<motion.div
-					className={css.dot}
-					style={cssVars}
+					id={divId}
+					className={`${css.dot}${divClass}`}
+					style={{ ...divStyle, ...cssVars }}
 					initial={'initial'}
 					animate={'animate'}
 					exit={'exit'}
@@ -91,6 +96,7 @@ export const Dot = React.memo((props: DotProps) => {
 					role={'status'}
 					aria-live={'polite'}
 					aria-label={'Blue dot indicating active or new'}
+					{...(rest as any)}
 				>
 					<div className="dot" />
 				</motion.div>

@@ -1,0 +1,34 @@
+import {Meta, Unstyled} from '@storybook/addon-docs/blocks';
+import {FlexDiv} from '../FlexDiv';
+import * as BadgeStories from './Badge.stories';
+
+<Meta of={BadgeStories} />
+
+<FlexDiv width={"fill"} height={"fill"} alignItems={"center"}>
+    <FlexDiv width={"fill"} maxWidth={760} height={"auto"}>
+        <Unstyled>
+        # Badge
+
+        Part of `Components/Badge`.
+
+        ## Purpose
+
+        - Use `Badge` when you need this UI primitive inside the Slice component system.
+        - Implementation reviewed from: `src/uikit/Badge/Badge.tsx`.
+
+        ## Story Variants
+
+        - `Default`
+
+        ## Attributes
+
+        - Props interface: `BadgeProps`
+
+        | Prop | Type | Required | Default | Notes |
+        | --- | --- | --- | --- | --- |
+        | `count` | `number \\| string` | No | `5` | union |
+        | `hideNull` | `boolean` | No | `true` | boolean |
+        | `variant` | `'light' \\| 'dark'` | No | `'dark'` | union |
+        </Unstyled>
+    </FlexDiv>
+</FlexDiv>

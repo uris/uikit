@@ -23,7 +23,11 @@ export const RadioButtonList = React.memo((props: RadioButtonListProps) => {
 		iconColor = undefined,
 		iconSelectedColor = undefined,
 		onChange = () => null,
+		...divAttributes
 	} = props;
+	const { id: divId, className, style, ...rest } = divAttributes;
+	const divStyle = (style ?? {}) as React.CSSProperties;
+	const divClass = className ? ` ${className}` : '';
 
 	// internal array of selected indexes
 	const [selected, setSelected] = useState<number[] | null>(selectedIndexes);
@@ -152,8 +156,10 @@ export const RadioButtonList = React.memo((props: RadioButtonListProps) => {
 
 	return (
 		<div
-			className={`${css.wrapper} ${noFrame ? css.column : css.row}`}
-			style={cssVars}
+			id={divId}
+			className={`${css.wrapper} ${noFrame ? css.column : css.row}${divClass}`}
+			style={{ ...divStyle, ...cssVars }}
+			{...rest}
 		>
 			{label}
 			{renderedOptions}

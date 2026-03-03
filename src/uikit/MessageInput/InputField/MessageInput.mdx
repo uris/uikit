@@ -1,0 +1,60 @@
+import {Meta, Unstyled} from '@storybook/addon-docs/blocks';
+import {FlexDiv} from '../../FlexDiv';
+import * as MessageInputStories from './MessageInput.stories';
+
+<Meta of={MessageInputStories} />
+
+<FlexDiv width={"fill"} height={"fill"} alignItems={"center"}>
+    <FlexDiv width={"fill"} maxWidth={760} height={"auto"}>
+        <Unstyled>
+        # MessageInput
+
+        Part of `Components/MessageInput`.
+
+        ## Purpose
+
+        - Use `MessageInput` when you need this UI primitive inside the Slice component system.
+        - Implementation reviewed from: `src/uikit/MessageInput/InputField/MessageInput.tsx`.
+
+        ## Story Variants
+
+        - `Default`
+
+        ## Attributes
+
+        - Props interface: `MessageInputProps`
+
+        | Prop | Type | Required | Default | Notes |
+        | --- | --- | --- | --- | --- |
+        | `jurisdictionClick` | `() => void` | No | `() => null` | callback |
+        | `attachClick` | `(e: React.MouseEvent<any> \| undefined) => void` | No | `() => null` | callback |
+        | `onChangeFiles` | `(files: File[]) => void` | No | `() => null` | callback |
+        | `onChangeExcerpts` | `(excerpts: DocExcerpt[]) => void` | No | `() => null` | callback |
+        | `onTogglePrompt` | `(presence: UserPresence) => void` | No | `() => null` | callback |
+        | `onToolTip` | `(tip: ToolTip \| null) => void` | No | `() => null` | callback |
+        | `onChange` | `(prompt: string) => void` | No | `() => null` | callback |
+        | `onBlur` | `() => void` | No | `() => null` | callback |
+        | `onFocus` | `() => void` | No | `() => null` | callback |
+        | `onSend` | `(message: SendMessage) => void` | No | `() => null` | callback |
+        | `onStop` | `() => void` | No | `() => null` | callback |
+        | `maxHeight` | `number` | No | `300` | number |
+        | `focused` | `boolean` | No | `false` | boolean |
+        | `height` | `string` | No |  | string |
+        | `placeholder` | `string` | No | `'Ask me anytning HR compliance'` | string |
+        | `value` | `string` | No | `''` | string |
+        | `role` | `string` | No |  | string |
+        | `showFilters` | `boolean` | No |  | boolean |
+        | `isFetching` | `boolean` | No | `false` | boolean |
+        | `isStreaming` | `boolean` | No | `false` | boolean |
+        | `isShort` | `boolean` | No | `true` | boolean |
+        | `error` | `string \\| null` | No | `null` | union |
+        | `files` | `File[]` | No | `[]` | array |
+        | `excerpts` | `DocExcerpt[]` | No | `[]` | array |
+        | `users` | `UserPresence[]` | No | `[]` | array |
+        | `currentUser` | `string` | No | `'test@me.com'` | string |
+        | `owner` | `string` | No | `'test@me.com'` | string |
+        | `presenceID` | `string` | No |  | string |
+        | `jurisdiction` | `JurisdictionFocus \\| null` | No | `null` | union |
+        </Unstyled>
+    </FlexDiv>
+</FlexDiv>

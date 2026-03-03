@@ -1,0 +1,79 @@
+import {Meta, Unstyled} from '@storybook/addon-docs/blocks';
+import {RenderSource} from '../../.storybook/RenderSource';
+import {FlexDiv} from '../uikit/FlexDiv';
+
+<Meta title="Hooks/useObserveResize" />
+
+<FlexDiv width={"fill"} height={"fill"} alignItems={"center"}>
+    <FlexDiv width={"fill"} maxWidth={760} height={"auto"}>
+        <Unstyled>
+        # useObserveResize
+        Tracks an `HTMLElement` element's `width` and `height` using `ResizeObserver`, optionally ignoring width or height resize events.
+
+        ## Signature
+        `useObserveResize(element, options?)`
+
+        ## Parameters
+        <table style={{width: '100%'}}>
+          <colgroup>
+            <col style={{width: '1%'}} />
+            <col style={{width: '1%'}} />
+            <col style={{width: '1%'}} />
+            <col style={{width: '97%'}} />
+          </colgroup>
+          <thead>
+            <tr>
+              <th>Param</th>
+              <th>Type</th>
+              <th>Default</th>
+              <th>Description</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td><code>element</code></td><td><code>RefObject&lt;HTMLElement | null&gt; | undefined</code></td><td><code>-</code></td><td>Ref to the target element to observe.</td></tr>
+            <tr><td><code>options?.ignore?</code></td><td><code>'width' | 'height'</code></td><td><code>undefined</code></td><td>Optionally ignore width/height resize events.</td></tr>
+          </tbody>
+        </table>
+
+        ## Returns
+        <table style={{width: '100%'}}>
+          <colgroup>
+            <col style={{width: '1%'}} />
+            <col style={{width: '1%'}} />
+            <col style={{width: '97%'}} />
+          </colgroup>
+          <thead>
+            <tr>
+              <th>Return</th>
+              <th>Type/Default</th>
+              <th>Description</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td><code>size</code></td><td style={{ whiteSpace: 'nowrap'}}><code>{`{ width: number; height: number }`}</code><br/><code>{`{ width: 0, height: 0 }`}</code></td><td>Current measured dimensions for the observed element.</td></tr>
+          </tbody>
+        </table>
+
+        ## Code Examples
+        </Unstyled>
+
+        <RenderSource language={"tsx"}>
+{`
+import { useRef } from 'react';
+import { useObserveResize } from '@apple-pie/slice';
+
+function BoxInfo() {
+  const ref = useRef<HTMLDivElement>(null);
+  const size = useObserveResize(ref, { ignore: 'height' });
+
+  return (
+    <div>
+      <div ref={ref} style={{ width: 320, height: 120 }} />
+      <p>Width only updates: {size.width}</p>
+    </div>
+  );
+}
+`}
+        </RenderSource>
+</FlexDiv>
+</FlexDiv>

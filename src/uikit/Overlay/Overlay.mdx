@@ -1,0 +1,40 @@
+import {Meta, Unstyled} from '@storybook/addon-docs/blocks';
+import {FlexDiv} from '../FlexDiv';
+import * as OverlayStories from './Overlay.stories';
+
+<Meta of={OverlayStories} />
+
+<FlexDiv width={"fill"} height={"fill"} alignItems={"center"}>
+    <FlexDiv width={"fill"} maxWidth={760} height={"auto"}>
+        <Unstyled>
+        # Overlay
+
+        Part of `Components/Overlay`.
+
+        ## Purpose
+
+        - Use `Overlay` when you need this UI primitive inside the Slice component system.
+        - Implementation reviewed from: `src/uikit/Overlay/Overlay.tsx`.
+
+        ## Story Variants
+
+        - `Default`
+        - `GlobalOverlay`
+        - `HiddenGlobal`
+
+        ## Attributes
+
+        - Props interface: `OverlayProps`
+
+        | Prop | Type | Required | Default | Notes |
+        | --- | --- | --- | --- | --- |
+        | `color` | `string` | No | `'rgb(0 | string, 0, 0)'` |
+        | `onClick` | `() => void` | No | `() => null` | callback |
+        | `toggleOverlay` | `(state: boolean) => void` | No | `() => null` | callback |
+        | `opacity` | `number` | No | `0` | number |
+        | `type` | `'clear' \\| 'dark'` | No | `'clear'` | union |
+        | `global` | `boolean` | No | `false` | boolean |
+        | `overlay` | `any` | No | `undefined` | custom |
+        </Unstyled>
+    </FlexDiv>
+</FlexDiv>

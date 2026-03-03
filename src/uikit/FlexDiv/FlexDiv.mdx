@@ -1,0 +1,58 @@
+import {Meta, Unstyled} from '@storybook/addon-docs/blocks';
+import {FlexDiv} from '../FlexDiv';
+import * as FlexDivStories from './FlexDiv.stories';
+
+<Meta of={FlexDivStories} />
+
+<FlexDiv width={"fill"} height={"fill"} alignItems={"center"}>
+    <FlexDiv width={"fill"} maxWidth={760} height={"auto"}>
+        <Unstyled>
+        # FlexDiv
+
+        Part of `Components/FlexDiv`.
+
+        ## Purpose
+
+        - Use `FlexDiv` when you need this UI primitive inside the Slice component system.
+        - Implementation reviewed from: `src/uikit/FlexDiv/FlexDiv.tsx`.
+
+        ## Story Variants
+
+        - `Default`
+
+        ## Attributes
+
+        - Props interface: `FlexDivProps`
+
+        | Prop | Type | Required | Default | Notes |
+        | --- | --- | --- | --- | --- |
+        | `background` | `string` | No | `'var(--core-surface-primary)'` | string |
+        | `className` | `string` | No | `undefined` | string |
+        | `children` | `any` | No | `undefined` | custom |
+        | `scrollY` | `boolean` | No | `false` | boolean |
+        | `scrollX` | `boolean` | No | `false` | boolean |
+        | `absolute` | `boolean` | No | `false` | boolean |
+        | `direction` | `'row' \\| 'column'` | No | `'column'` | union |
+        | `alignItems` | `'start' \\| 'center' \\| 'end' \\| 'between'` | No | `'start'` | union |
+        | `justify` | `'start' \\| 'top' \\| 'center' \\| 'end' \\| 'bottom' \\| 'between'` | No | `'start'` | union |
+        | `width` | `number \\| 'grow' \\| 'fill' \\| 'fit' \\| 'viewport' \\| 'auto'` | No | `'fill'` | union |
+        | `height` | `number \\| 'grow' \\| 'fill' \\| 'fit' \\| 'viewport' \\| 'auto'` | No | `'viewport'` | union |
+        | `maxWidth` | `number \\| string` | No | `undefined` | union |
+        | `centerSelf` | `boolean \\| string` | No | `undefined` | union |
+        | `flex` | `number` | No | `undefined` | number |
+        | `reverse` | `boolean` | No | `false` | boolean |
+        | `wrap` | `boolean` | No | `false` | boolean |
+        | `border` | `string` | No |  | string |
+        | `padding` | `number \\| string` | No | `0` | union |
+        | `margin` | `number \\| string` | No | `0` | union |
+        | `enter` | `any` | No | `undefined` | custom |
+        | `exit` | `any` | No | `undefined` | custom |
+        | `animate` | `any` | No | `undefined` | custom |
+        | `transition` | `Transition` | No | `undefined` | custom |
+        | `variants` | `any` | No | `undefined` | custom |
+        | `gap` | `number` | No | `16` | number |
+        | `scrollHandle` | `string` | No |  | string |
+        | `scrollHandleHover` | `string` | No |  | string |
+        </Unstyled>
+    </FlexDiv>
+</FlexDiv>

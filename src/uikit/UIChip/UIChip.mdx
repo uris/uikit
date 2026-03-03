@@ -1,0 +1,45 @@
+import {Meta, Unstyled} from '@storybook/addon-docs/blocks';
+import {FlexDiv} from '../FlexDiv';
+import * as UIChipStories from './UIChip.stories';
+
+<Meta of={UIChipStories} />
+
+<FlexDiv width={"fill"} height={"fill"} alignItems={"center"}>
+    <FlexDiv width={"fill"} maxWidth={760} height={"auto"}>
+        <Unstyled>
+        # UIChip
+
+        Part of `Components/UI Chip`.
+
+        ## Purpose
+
+        - Use `UIChip` when you need this UI primitive inside the Slice component system.
+        - Implementation reviewed from: `src/uikit/UIChip/UIChip.tsx`.
+
+        ## Story Variants
+
+        - `Default`
+
+        ## Attributes
+
+        - Props interface: `UIChipProps`
+
+        | Prop | Type | Required | Default | Notes |
+        | --- | --- | --- | --- | --- |
+        | `onToolTip` | `(tip: ToolTip \| null) => void` | No | `() => null` | callback |
+        | `onClick` | `(e: React.MouseEvent<HTMLDivElement> \| undefined) => void` | No | `() => null` | callback |
+        | `onMouseDown` | `(e: React.MouseEvent<HTMLDivElement> \| undefined) => void` | No | `() => null` | callback |
+        | `label` | `string` | No | `'Chip Label'` | string |
+        | `icon` | `IconNames \\| string` | No | `'sparkle'` | union |
+        | `disabled` | `boolean` | No | `false` | boolean |
+        | `focused` | `boolean` | No | `false` | boolean |
+        | `tooltip` | `string` | No | `"UI Chip's tooltip"` | string |
+        | `background` | `string` | No |  | string |
+        | `variant` | `'small' \\| 'regular'` | No | `'regular'` | union |
+        | `labelSize` | `'s' \\| 'm' \\| 'l'` | No | `'m'` | union |
+        | `unframed` | `boolean` | No | `false` | boolean |
+        | `iconRight` | `boolean` | No | `false` | boolean |
+        | `iconColor` | `string` | No |  | string |
+        </Unstyled>
+    </FlexDiv>
+</FlexDiv>

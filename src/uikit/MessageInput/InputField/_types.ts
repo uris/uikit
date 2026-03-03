@@ -4,7 +4,7 @@ import type { DocExcerpt } from '../ExcerptList/_types';
 import type { UserPresence } from '../UserList/_types';
 import type { JurisdictionFocus, SendMessage } from '../_types';
 
-export interface MessageInputProps {
+type MessageInputBaseProps = {
 	maxHeight?: number;
 	focused?: boolean;
 	height?: string;
@@ -24,6 +24,7 @@ export interface MessageInputProps {
 	presenceID?: string;
 	jurisdiction?: JurisdictionFocus | null;
 	jurisdictionClick?: () => void;
+	complianceCheckClick?: () => void;
 	attachClick?: (e: React.MouseEvent<any> | undefined) => void;
 	onChangeFiles?: (files: File[]) => void;
 	onChangeExcerpts?: (excerpts: DocExcerpt[]) => void;
@@ -34,4 +35,10 @@ export interface MessageInputProps {
 	onFocus?: () => void;
 	onSend?: (message: SendMessage) => void;
 	onStop?: () => void;
-}
+};
+
+export type MessageInputProps = Omit<
+	React.HTMLAttributes<HTMLDivElement>,
+	keyof MessageInputBaseProps
+> &
+	MessageInputBaseProps;

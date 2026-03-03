@@ -1,0 +1,50 @@
+import {Meta, Unstyled} from '@storybook/addon-docs/blocks';
+import {FlexDiv} from '../FlexDiv';
+import * as DraggablePanelStories from './DraggablePanel.stories';
+
+<Meta of={DraggablePanelStories} />
+
+<FlexDiv width={"fill"} height={"fill"} alignItems={"center"}>
+    <FlexDiv width={"fill"} maxWidth={760} height={"auto"}>
+        <Unstyled>
+        # DraggablePanel
+
+        Part of `Components/Draggable Panel`.
+
+        ## Purpose
+
+        - Use `DraggablePanel` when you need this UI primitive inside the Slice component system.
+        - Implementation reviewed from: `src/uikit/DraggablePanel/DrggablePanel.tsx`.
+
+        ## Story Variants
+
+        - `Default`
+        - `NoDrag`
+        - `InitiallyClosed`
+
+        ## Attributes
+
+        - Props interface: `DraggablePanelProps`
+
+        | Prop | Type | Required | Default | Notes |
+        | --- | --- | --- | --- | --- |
+        | `resizeHandle` | `Partial<ResizeHandle>` | No | `{ width: 10, color: 'transparent', offsetX: true }` | custom |
+        | `dragHandleStyle` | `DragHandleProps` | No | `{ width: 6, height: 6, radius: 100, stroke: 1, color: 'var(--core-surface-primary)', strokeColor: 'var(--core-outline-primary)' }` | custom |
+        | `onResize` | `(info: Info) => void` | No | `() => null` | callback |
+        | `onResizeEnd` | `(info: Info) => void` | No | `() => null` | callback |
+        | `onResizeStart` | `(info: Info) => void` | No | `() => null` | callback |
+        | `borderRight` | `any` | No | `'1px solid var(--core-outline-primary)'` | custom |
+        | `children` | `any` | No | `undefined` | custom |
+        | `containerRef` | `React.RefObject<HTMLDivElement \\| null>` | No | `undefined` | union |
+        | `sizeConstraints` | `Constraint` | No | `{ initial: 250 | custom, min: 250, max: 500 }` |
+        | `dragsRight` | `boolean` | No | `true` | boolean |
+        | `isClosed` | `boolean` | No | `true` | boolean |
+        | `borderLeft` | `any` | No | `null` | custom |
+        | `bgColor` | `string` | No | `'transparent'` | string |
+        | `drags` | `boolean` | No | `true` | boolean |
+        | `dragHandle` | `boolean` | No | `true` | boolean |
+        | `disableOnContext` | `boolean` | No | `true` | boolean |
+        | `isTouchDevice` | `boolean` | No | `false` | boolean |
+        </Unstyled>
+    </FlexDiv>
+</FlexDiv>

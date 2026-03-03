@@ -1,8 +1,16 @@
-export interface CheckBoxProps {
+import type React from 'react';
+
+type CheckBoxBaseProps = {
 	size?: number;
-	checked?: 'mixed' | boolean;
+	checked?: 'mixed' | 'partial' | boolean;
 	disabled?: boolean;
 	color?: string;
 	label?: string;
 	onChange?: (state: boolean) => void;
-}
+};
+
+export type CheckBoxProps = Omit<
+	React.HTMLAttributes<HTMLDivElement>,
+	keyof CheckBoxBaseProps
+> &
+	CheckBoxBaseProps;

@@ -1,5 +1,8 @@
-export interface GrouperProps {
+import type React from 'react';
+
+type GrouperBaseProps = {
 	title?: string;
+	variant?: string;
 	toggle?: boolean;
 	open?: boolean;
 	hasIcon?: boolean;
@@ -13,4 +16,10 @@ export interface GrouperProps {
 	unframed?: boolean;
 	onChange?: (state: boolean) => void;
 	onClick?: () => void;
-}
+};
+
+export type GrouperProps = Omit<
+	React.HTMLAttributes<HTMLDivElement>,
+	keyof GrouperBaseProps
+> &
+	GrouperBaseProps;

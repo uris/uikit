@@ -11,10 +11,16 @@ export enum UIFileIcons {
 	Spreadhseet = 'spreadsheet',
 }
 
-export interface UIFileIconProps {
+type UIFileIconBaseProps = {
 	name?: UIFileIcons | string;
 	size?: number;
 	pointer?: boolean;
 	disabled?: boolean;
 	onClick?: (e: React.MouseEvent<SVGElement, MouseEvent>) => void;
-}
+};
+
+export type UIFileIconProps = Omit<
+	React.SVGAttributes<SVGSVGElement>,
+	keyof UIFileIconBaseProps
+> &
+	UIFileIconBaseProps;

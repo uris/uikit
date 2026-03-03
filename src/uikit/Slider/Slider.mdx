@@ -1,0 +1,47 @@
+import {Meta, Unstyled} from '@storybook/addon-docs/blocks';
+import {FlexDiv} from '../FlexDiv';
+import * as SliderStories from './Slider.stories';
+
+<Meta of={SliderStories} />
+
+<FlexDiv width={"fill"} height={"fill"} alignItems={"center"}>
+    <FlexDiv width={"fill"} maxWidth={760} height={"auto"}>
+        <Unstyled>
+        # Slider
+
+        Part of `Components/Slider`.
+
+        ## Purpose
+
+        - Use `Slider` when you need this UI primitive inside the Slice component system.
+        - Implementation reviewed from: `src/uikit/Slider/Slider.tsx`.
+
+        ## Story Variants
+
+        - `Default`
+        - `WithTestingActions`
+
+        ## Attributes
+
+        - Props interface: `SliderProps`
+
+        | Prop | Type | Required | Default | Notes |
+        | --- | --- | --- | --- | --- |
+        | `headColor` | `string` | No | `'var(--core-text-primary)'` | string |
+        | `trackColor` | `string` | No | `'var(--core-surface-secondary)'` | string |
+        | `progressColor` | `string` | No | `'var(--core-text-primary)'` | string |
+        | `onChange` | `(value: number, percent: number) => void` | No | `() => null` | callback |
+        | `onDragChange` | `(value: number, percent: number) => void` | No | `() => null` | callback |
+        | `value` | `number` | No | `25` | number |
+        | `scaleMin` | `number` | No | `0` | number |
+        | `scaleMax` | `number` | No | `100` | number |
+        | `width` | `number \\| string` | No | `100` | union |
+        | `height` | `number \\| string` | No | `2` | union |
+        | `touchHeight` | `number \\| string` | No | `24` | union |
+        | `trackHeadSize` | `number \\| null` | No | `7` | union |
+        | `trackHeadWidth` | `number \\| null` | No | `4` | union |
+        | `headType` | `'round' \\| 'square' \\| 'none'` | No | `'round'` | union |
+        | `cursor` | `'default' \\| 'grab' \\| 'grabbing' \\| 'pointer'` | No | `'default'` | union |
+        </Unstyled>
+    </FlexDiv>
+</FlexDiv>

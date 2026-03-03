@@ -1,8 +1,8 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
-import { fn } from 'storybook/test';
+import { runSwitchPlay } from 'src/stories/playHelpers';
 import { FlexDiv } from 'src/uikit/FlexDiv';
 import { Switch } from 'src/uikit/Switch';
-import { runSwitchPlay } from 'src/stories/playHelpers';
+import { fn } from 'storybook/test';
 
 const meta: Meta<typeof Switch> = {
 	title: 'Components/Switch',

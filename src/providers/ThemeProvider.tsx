@@ -1,49 +1,45 @@
 import type React from 'react';
-import { useEffect, useState } from 'react';
-import { useTheme } from '../hooks';
+import { useEffect } from 'react';
 import '../theme/colors/colors.css';
 import '../theme/type/type.css';
-import { type SliceTheme, darkTheme, lightTheme } from '../theme';
+import { darkTheme, lightTheme } from '../theme';
 
 interface ThemeProviderProps {
 	children?: React.ReactNode;
 	theme?: string;
 	system?: boolean;
 }
+
+// set up media query for system theme
+const darkModeMediaQuery = globalThis.matchMedia(
+	'(prefers-color-scheme: dark)',
+);
+
 export function ThemeProvider(props: Readonly<ThemeProviderProps>) {
 	const { children, theme, system } = props;
-	const sliceTheme = useTheme();
-	const darkModeMediaQuery = globalThis.matchMedia(
-		'(prefers-color-scheme: dark)',
-	);
-	const [activeTheme, setActiveTheme] = useState<SliceTheme>(lightTheme);
-
-	// set the active theme
-	useEffect(() => {
-		sliceTheme.set(activeTheme);
-	}, [activeTheme, sliceTheme]);
 
 	// update active theme based on theme prop
 	useEffect(() => {
 		if (theme) {
 			const newTheme = theme.includes('dark') ? darkTheme : lightTheme;
-			setActiveTheme(newTheme);
+			document.documentElement.dataset.theme = newTheme.name;
 		}
 	}, [theme]);
 
-	// update active theme based on system theme changes
-	// biome-ignore lint/correctness/useExhaustiveDependencies: on mount/unmount only
+	// update then active theme based on system changes
 	useEffect(() => {
 		// handler for the media query change
 		const handleSystemThemeChange = (e: MediaQueryListEvent) => {
 			if (system) {
-				setActiveTheme(e.matches ? darkTheme : lightTheme);
+				const autoTheme = e.matches ? darkTheme : lightTheme;
+				document.documentElement.dataset.theme = autoTheme.name;
 			}
 		};
 
 		// set the current system theme
 		if (system) {
-			setActiveTheme(darkModeMediaQuery.matches ? darkTheme : lightTheme);
+			const autoTheme = darkModeMediaQuery.matches ? darkTheme : lightTheme;
+			document.documentElement.dataset.theme = autoTheme.name;
 		}
 
 		// set listener on media query
@@ -53,7 +49,7 @@ export function ThemeProvider(props: Readonly<ThemeProviderProps>) {
 		return () => {
 			darkModeMediaQuery.removeEventListener('change', handleSystemThemeChange);
 		};
-	}, []);
+	}, [system]);
 
 	return children;
 }

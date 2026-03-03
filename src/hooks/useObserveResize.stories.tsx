@@ -38,7 +38,7 @@ function UseObserveResizeDemo(props: Readonly<ResizeDemoProps>) {
 					scaleMin={300}
 					scaleMax={400}
 					value={width}
-					trackHeadSize={16}
+					trackHeadSize={0}
 					onChange={(v, _) => setWidth(v)}
 				/>
 				Change Height
@@ -47,7 +47,7 @@ function UseObserveResizeDemo(props: Readonly<ResizeDemoProps>) {
 					scaleMin={150}
 					scaleMax={300}
 					value={height}
-					trackHeadSize={16}
+					trackHeadSize={0}
 					onChange={(v, _) => setHeight(v)}
 				/>
 			</FlexDiv>

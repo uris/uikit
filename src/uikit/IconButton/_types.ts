@@ -2,7 +2,7 @@ import type { Transition, Variants } from 'motion/react';
 import type React from 'react';
 import type { ToolTip } from '../sharedTypes';
 
-export interface IconButtonProps {
+type IconButtonBaseProps = {
 	frameSize?: number;
 	iconSize?: number;
 	icon?: string;
@@ -30,4 +30,10 @@ export interface IconButtonProps {
 	borderRadius?: number;
 	onClick?: (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => void;
 	onToolTip?: (tip: ToolTip | null) => void;
-}
+};
+
+export type IconButtonProps = Omit<
+	React.HTMLAttributes<HTMLDivElement>,
+	keyof IconButtonBaseProps
+> &
+	IconButtonBaseProps;

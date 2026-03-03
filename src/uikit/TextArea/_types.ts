@@ -1,9 +1,10 @@
 import type React from 'react';
 
-export interface TextAreaProps {
+type TextAreaBaseProps = {
 	value?: string;
 	name?: string;
 	width?: number | string;
+	height?: number | string;
 	minWidth?: number | string;
 	rows?: number;
 	focused?: boolean;
@@ -27,7 +28,13 @@ export interface TextAreaProps {
 	onBlur?: () => void;
 	onValidate?: (state: boolean) => void;
 	onKeyDown?: (e: React.KeyboardEvent<HTMLTextAreaElement>) => void;
-}
+};
+
+export type TextAreaProps = Omit<
+	React.HTMLAttributes<HTMLDivElement>,
+	keyof TextAreaBaseProps
+> &
+	TextAreaBaseProps;
 
 export type Tip = {
 	icon?: string;

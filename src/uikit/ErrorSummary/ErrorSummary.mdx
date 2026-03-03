@@ -1,0 +1,33 @@
+import {Meta, Unstyled} from '@storybook/addon-docs/blocks';
+import {FlexDiv} from '../FlexDiv';
+import * as ErrorSummaryStories from './ErrorSummary.stories';
+
+<Meta of={ErrorSummaryStories} />
+
+<FlexDiv width={"fill"} height={"fill"} alignItems={"center"}>
+    <FlexDiv width={"fill"} maxWidth={760} height={"auto"}>
+        <Unstyled>
+        # ErrorSummary
+
+        Part of `Error type 1`.
+
+        ## Purpose
+
+        - Use `ErrorSummary` when you need this UI primitive inside the Slice component system.
+        - Implementation reviewed from: `src/uikit/ErrorSummary/ErrorSummary.tsx`.
+
+        ## Story Variants
+
+        - `Default`
+
+        ## Attributes
+
+        - Props interface: `ErrorSummaryProps`
+
+        | Prop | Type | Required | Default | Notes |
+        | --- | --- | --- | --- | --- |
+        | `entries` | `ErrorMessage[]` | No | `errorMessages` | array |
+        | `errors` | `any[]` | No | `[]` | array |
+        </Unstyled>
+    </FlexDiv>
+</FlexDiv>

@@ -1,0 +1,51 @@
+import {Meta, Unstyled} from '@storybook/addon-docs/blocks';
+import {FlexDiv} from '../FlexDiv';
+import * as DivInputStories from './DivInput.stories';
+
+<Meta of={DivInputStories} />
+
+<FlexDiv width={"fill"} height={"fill"} alignItems={"center"}>
+    <FlexDiv width={"fill"} maxWidth={760} height={"auto"}>
+        <Unstyled>
+        # DivInput
+
+        Part of `Components/DivInput`.
+
+        ## Purpose
+
+        - Use `DivInput` when you need this UI primitive inside the Slice component system.
+        - Implementation reviewed from: `src/uikit/DivInput/DivInput.tsx`.
+
+        ## Story Variants
+
+        - `Default`
+        - `Focused`
+        - `ReadOnly`
+
+        ## Attributes
+
+        - Props interface: `DivInputProps`
+
+        | Prop | Type | Required | Default | Notes |
+        | --- | --- | --- | --- | --- |
+        | `onClick` | `() => void` | No | `() => null` | callback |
+        | `onDblClick` | `() => void` | No | `() => null` | callback |
+        | `onChange` | `(value: string \| null) => void` | No | `() => null` | callback |
+        | `onSubmit` | `(value: string) => void` | No | `() => null` | callback |
+        | `onFocus` | `(event: React.FocusEvent<HTMLDivElement>) => void` | No | `() => null` | callback |
+        | `onBlur` | `(value: string) => void` | No | `() => null` | callback |
+        | `bgColor` | `string` | No | `'var(--core-surface-secondary)'` | string |
+        | `name` | `string` | No | `'Input Field'` | string |
+        | `placeholder` | `string` | No | `'Placeholder'` | string |
+        | `value` | `string` | No | `''` | string |
+        | `isEditable` | `boolean` | No | `true` | boolean |
+        | `wrap` | `boolean` | No | `false` | boolean |
+        | `focus` | `boolean` | No | `false` | boolean |
+        | `width` | `number \\| string` | No | `'auto'` | union |
+        | `textAlign` | `'left' \\| 'center' \\| 'right'` | No | `'left'` | union |
+        | `clamp` | `number` | No | `3` | number |
+        | `padding` | `string` | No | `'0px'` | string |
+        | `radius` | `number` | No | `4` | number |
+        </Unstyled>
+    </FlexDiv>
+</FlexDiv>

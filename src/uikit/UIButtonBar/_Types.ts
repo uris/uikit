@@ -1,3 +1,4 @@
+import type React from 'react';
 import type { ToolTip } from '../sharedTypes';
 
 export type BarButton = {
@@ -7,10 +8,16 @@ export type BarButton = {
 	tip: string;
 };
 
-export interface UIButtonBarProps {
+type UIButtonBarBaseProps = {
 	options?: BarButton[];
 	label?: string;
 	current?: number;
 	onChange?: (option: BarButton) => void;
 	onToolTip?: (tip: ToolTip | null) => void;
-}
+};
+
+export type UIButtonBarProps = Omit<
+	React.HTMLAttributes<HTMLDivElement>,
+	keyof UIButtonBarBaseProps
+> &
+	UIButtonBarBaseProps;

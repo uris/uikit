@@ -11,6 +11,8 @@ import { Icon } from '../Icon';
 import css from './DropDown.module.css';
 import type { DropDownOption, DropDownProps } from './_types';
 
+export type { DropDownOption };
+
 export const DropDown = React.memo((props: DropDownProps) => {
 	const theme = useTheme();
 	const {
@@ -38,7 +40,11 @@ export const DropDown = React.memo((props: DropDownProps) => {
 		onValidate = () => null,
 		onFocus = () => null,
 		onBlur = () => null,
+		...divAttributes
 	} = props;
+	const { id: divId, className, style, ...rest } = divAttributes;
+	const divStyle = (style ?? {}) as React.CSSProperties;
+	const divClass = className ? ` ${className}` : '';
 
 	const [index, setIndex] = useState<number>(selectedIndex);
 	const [selectedText, setSelectedText] = useState<string>('Select an option');
@@ -200,7 +206,12 @@ export const DropDown = React.memo((props: DropDownProps) => {
 	/* END.DEBUG */
 
 	return (
-		<div className={css.wrapper} style={cssVars}>
+		<div
+			id={divId}
+			className={`${css.wrapper}${divClass}`}
+			style={{ ...divStyle, ...cssVars }}
+			{...rest}
+		>
 			<div className={`${css.face} ${css[size]}`}>{displayText}</div>
 			<div className={css.chevron}>
 				<Icon name="chevron down" size={iconSize} strokeColor={color} />

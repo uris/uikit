@@ -1,0 +1,68 @@
+import {Meta, Unstyled} from '@storybook/addon-docs/blocks';
+import {FlexDiv} from '../FlexDiv';
+import * as TextfieldStories from './Textfield.stories';
+
+<Meta of={TextfieldStories} />
+
+<FlexDiv width={"fill"} height={"fill"} alignItems={"center"}>
+    <FlexDiv width={"fill"} maxWidth={760} height={"auto"}>
+        <Unstyled>
+        # Textfield
+
+        Part of `Components/Textfield`.
+
+        ## Purpose
+
+        - Use `Textfield` when you need this UI primitive inside the Slice component system.
+        - Implementation reviewed from: `src/uikit/Textfield/TextField.tsx`.
+
+        ## Story Variants
+
+        - `Default`
+        - `PasswordWithAction`
+
+        ## Attributes
+
+        - Props interface: `TextFieldProps`
+
+        | Prop | Type | Required | Default | Notes |
+        | --- | --- | --- | --- | --- |
+        | `borderColor` | `{ focused: string; blurred: string; error: string }` | No | `{ focused: 'var(--core-link-primary)', blurred: 'var(--core-outline-primary)', error: 'var(--feedback-warning)' }` | custom |
+        | `backgroundColor` | `{ focused: string; blurred: string }` | No | `{ focused: 'var(--core-surface-secondary)', blurred: 'var(--core-surface-secondary)' }` | custom |
+        | `color` | `{ focused: string; blurred: string; error: string; placeholder: string; disabled: string; label: string; }` | No | `{ focused: 'var(--core-text-primary)', blurred: 'var(--core-text-primary)', error: 'var(--feedback-warning)', placeholder: 'var(--core-text-disabled)', disabled: 'var(--core-text-disabled)', label: 'var(--core-text-secondary)' }` | custom |
+        | `onChange` | `(value: string) => void` | No | `() => null` | callback |
+        | `onBlur` | `(value: string) => void` | No | `() => null` | callback |
+        | `onFocus` | `(value: string) => void` | No | `() => null` | callback |
+        | `onKeydown` | `(key: string, event: React.KeyboardEvent) => void` | No | `() => null` | callback |
+        | `onSubmit` | `(value: string) => void` | No | `() => null` | callback |
+        | `onPaste` | `(value: React.ClipboardEvent<HTMLInputElement>) => void` | No | `() => null` | callback |
+        | `onClear` | `() => void` | No | `() => null` | callback |
+        | `onAction` | `() => void` | No | `() => null` | callback |
+        | `onValidate` | `(state: boolean) => void` | No | `() => null` | callback |
+        | `value` | `string` | No | `''` | string |
+        | `name` | `string` | No | `'input_name'` | string |
+        | `label` | `string` | No | `''` | string |
+        | `labelSize` | `'s' \\| 'm' \\| 'l'` | No | `'m'` | union |
+        | `textSize` | `'s' \\| 'm' \\| 'l'` | No | `'m'` | union |
+        | `placeholder` | `string` | No | `'placeholder'` | string |
+        | `focused` | `boolean` | No | `false` | boolean |
+        | `editable` | `boolean` | No | `true` | boolean |
+        | `isValid` | `boolean` | No | `true` | boolean |
+        | `inline` | `boolean` | No | `false` | boolean |
+        | `maxLength` | `number` | No | `undefined` | number |
+        | `size` | `{ width?: number \\| string; height?: number \\| string }` | No | `{ width: '100%' | union, height: 'auto' }` |
+        | `padding` | `string` | No | `'8px 16px'` | string |
+        | `borderRadius` | `number \\| string` | No | `8` | union |
+        | `textAlign` | `'left' \\| 'center'` | No | `'left'` | union |
+        | `validate` | `boolean` | No | `true` | boolean |
+        | `iconLeft` | `{ name?: string; size?: number; color?: string }` | No | `null` | number |
+        | `clearButton` | `{ size?: number } \\| null` | No | `{ size: 20 }` | union |
+        | `clearBlurs` | `boolean` | No | `false` | boolean |
+        | `disabled` | `boolean` | No | `false` | boolean |
+        | `actionButton` | `boolean` | No | `false` | boolean |
+        | `borderType` | `'box' \\| 'underline' \\| 'none'` | No | `'box'` | union |
+        | `inputType` | `'text' \\| 'password'` | No | `'text'` | union |
+        | `noShow` | `boolean` | No | `false` | boolean |
+        </Unstyled>
+    </FlexDiv>
+</FlexDiv>

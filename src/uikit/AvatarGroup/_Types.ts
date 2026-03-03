@@ -1,3 +1,4 @@
+import type React from 'react';
 import type { ToolTip } from '../sharedTypes';
 
 export type AvatarInfo = {
@@ -10,7 +11,7 @@ export type AvatarInfo = {
 	bgColor?: string;
 };
 
-export interface AvatarGroupProps {
+export type AvatarGroupBaseProps = {
 	avatars?: AvatarInfo[] | null;
 	size?: number;
 	overlap?: number;
@@ -20,4 +21,10 @@ export interface AvatarGroupProps {
 	margin?: number;
 	firstOnly?: boolean;
 	onToolTip?: (tip: ToolTip | null) => void;
-}
+};
+
+export type AvatarGroupProps = Omit<
+	React.HTMLAttributes<HTMLDivElement>,
+	keyof AvatarGroupBaseProps
+> &
+	AvatarGroupBaseProps;

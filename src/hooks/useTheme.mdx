@@ -1,0 +1,72 @@
+import {Meta, Unstyled} from '@storybook/addon-docs/blocks';
+import {RenderSource} from '../../.storybook/RenderSource';
+import {FlexDiv} from '../uikit/FlexDiv';
+
+<Meta title="Hooks/useTheme" />
+
+<FlexDiv width={"fill"} height={"fill"} alignItems={"center"}>
+    <FlexDiv width={"fill"} maxWidth={760} height={"auto"}>
+        <Unstyled>
+        # useTheme
+        Main Slice theming hook. Returns the active theme plus helpers and token maps for CSS variables, class names, and typography.
+
+        ## Signature
+        `useTheme()`
+
+        ## Parameters
+        This hook does not take parameters.
+
+        ## Returns
+        <table style={{width: '100%'}}>
+          <colgroup>
+            <col style={{width: '1%'}} />
+            <col style={{width: '1%'}} />
+            <col style={{width: '1%'}} />
+            <col style={{width: '97%'}} />
+          </colgroup>
+          <thead>
+            <tr>
+              <th>Return</th>
+              <th>Type</th>
+              <th>Default</th>
+              <th>Description</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td><code>darkTheme</code></td><td><code>SliceTheme</code></td><td><code>-</code></td><td>Default Slice dark theme object.</td></tr>
+            <tr><td><code>lightTheme</code></td><td><code>SliceTheme</code></td><td><code>-</code></td><td>Default Slice light theme object.</td></tr>
+            <tr><td><code>current</code></td><td><code>SliceTheme</code></td><td><code>-</code></td><td>Currently active theme.</td></tr>
+            <tr><td><code>colors</code></td><td><code>Record&lt;string, string&gt;</code></td><td><code>colorCssVars</code></td><td>Color tokens mapped to CSS vars (for example <code>var(--core-text-primary)</code>).</td></tr>
+            <tr><td><code>colorsClass</code></td><td><code>Record&lt;string, string&gt;</code></td><td><code>colorClass</code></td><td>Color tokens mapped to utility class names.</td></tr>
+            <tr><td><code>typeClass</code></td><td><code>Record&lt;string, string&gt;</code></td><td><code>typeCssClasses</code></td><td>Typography tokens mapped to class names.</td></tr>
+            <tr><td><code>typeStyle</code></td><td><code>Record&lt;string, React.CSSProperties&gt;</code></td><td><code>typeStyles</code></td><td>Typography tokens mapped to inline style objects.</td></tr>
+            <tr><td><code>set</code></td><td><code>(newTheme: SliceTheme | string) =&gt; void</code></td><td><code>-</code></td><td>Sets theme using a <code>SliceTheme</code> object or name (<code>'lightMode'</code>, <code>'darkMode'</code>, <code>'system'</code>).</td></tr>
+            <tr><td><code>toggle</code></td><td><code>() =&gt; void</code></td><td><code>-</code></td><td>Toggles between light and dark theme names.</td></tr>
+            <tr><td><code>isDark</code></td><td><code>boolean</code></td><td><code>false</code></td><td><code>true</code> when the active theme name equals Slice dark mode.</td></tr>
+          </tbody>
+        </table>
+
+        ## Code Examples
+        </Unstyled>
+
+        <RenderSource language={"tsx"}>
+{`
+import { useTheme } from '@apple-pie/slice';
+
+function ThemeToggle() {
+  const theme = useTheme();
+
+  return (
+    <button
+      type="button"
+      className={theme.colorsClass['core-text-special']}
+      onClick={() => theme.toggle()}
+    >
+      Current: {theme.current.name}
+    </button>
+  );
+}
+`}
+        </RenderSource>
+    </FlexDiv>
+</FlexDiv>

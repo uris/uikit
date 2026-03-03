@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
+import { runDotPlay } from 'src/stories/playHelpers';
 import { Dot } from 'src/uikit/Dot/Dot';
 import { FlexDiv } from 'src/uikit/FlexDiv/FlexDiv';
-import { runDotPlay } from 'src/stories/playHelpers';
 
 const meta: Meta<typeof Dot> = {
 	title: 'Components/Dot',

@@ -1,31 +1,58 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
+import { FlexDiv } from '../uikit/FlexDiv';
+import { Spacer } from '../uikit/Spacer';
+import { UIButton } from '../uikit/UIButton';
 import { useTheme } from './useTheme';
 
 function UseThemeDemo() {
 	const theme = useTheme();
+	console.log('Theme colors:', theme.current);
 
 	return (
-		<div style={{ padding: 24 }}>
-			<h3>Current theme: {theme.current.name}</h3>
-			<p>isDark: {String(theme.isDark)}</p>
-			<div style={{ display: 'flex', gap: 8, marginBottom: 12 }}>
-				<button type="button" onClick={() => theme.set(theme.lightTheme)}>
-					Set Light
-				</button>
-				<button type="button" onClick={() => theme.set(theme.darkTheme)}>
-					Set Dark
-				</button>
-				<button type="button" onClick={() => theme.set('system')}>
-					Set System
-				</button>
-				<button type="button" onClick={() => theme.toggleTheme()}>
-					Toggle
-				</button>
-			</div>
-			<p style={{ color: theme.colors['core-link-primary'] }}>
-				Sample token text color: core-link-primary
-			</p>
-		</div>
+		<FlexDiv
+			absolute
+			width={'fill'}
+			height={'fill'}
+			alignItems={'center'}
+			justify={'center'}
+			direction={'column'}
+		>
+			<h3>
+				{theme.current.name.includes('light') ? 'Light theme' : 'Dark Theme'}{' '}
+				Selected
+			</h3>
+			<span>IsDark? {theme.isDark ? 'True' : 'False'}</span>
+			<Spacer size={24} />
+			<FlexDiv
+				width={'fill'}
+				height={'auto'}
+				direction={'column'}
+				alignItems={'center'}
+				justify={'center'}
+				gap={12}
+			>
+				<UIButton
+					label={'Set Light'}
+					onClick={() => theme.set(theme.lightTheme)}
+				/>
+				<UIButton
+					label={'Set Dark'}
+					onClick={() => theme.set(theme.darkTheme)}
+				/>
+				<UIButton label={'Set System'} onClick={() => theme.set('system')} />
+				<UIButton label={'Toggle'} onClick={() => theme.toggle()} />
+			</FlexDiv>
+			<Spacer size={24} />
+			<strong style={{ color: theme.colors['core-link-primary'] }}>
+				{`Var: '${theme.colors['core-link-primary']}'`}
+			</strong>
+			<strong style={{ color: theme.colors['core-link-primary'] }}>
+				{`Class: '${theme.colorsClass['core-link-primary']}'`}
+			</strong>{' '}
+			<strong style={{ color: theme.colors['core-link-primary'] }}>
+				{`Value: '${theme.current.colors['core-link-primary']}'`}
+			</strong>
+		</FlexDiv>
 	);
 }
 

@@ -1,6 +1,6 @@
 import type React from 'react';
 
-export interface IconProps {
+type IconBaseProps = {
 	name?: string;
 	size?: number;
 	stroke?: number;
@@ -11,7 +11,13 @@ export interface IconProps {
 	pointer?: boolean;
 	disabled?: boolean;
 	onClick?: (e: React.MouseEvent<SVGElement, MouseEvent>) => void;
-}
+};
+
+export type IconProps = Omit<
+	React.SVGAttributes<SVGSVGElement>,
+	keyof IconBaseProps
+> &
+	IconBaseProps;
 
 export enum IconNames {
 	home = 'home',

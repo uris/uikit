@@ -1,6 +1,6 @@
-import type { Transition } from 'motion/react';
+import type React from 'react';
 
-export interface SwitchProps {
+type SwitchBaseProps = {
 	state?: boolean;
 	height?: number;
 	width?: number;
@@ -9,4 +9,10 @@ export interface SwitchProps {
 	knobColor?: string;
 	padding?: number;
 	onChange?: (state: boolean) => void;
-}
+};
+
+export type SwitchProps = Omit<
+	React.HTMLAttributes<HTMLDivElement>,
+	keyof SwitchBaseProps
+> &
+	SwitchBaseProps;

@@ -45,7 +45,11 @@ export function MessageInput(props: Readonly<MessageInputProps>) {
 		onStop = () => null,
 		onSend = () => null,
 		onToolTip = () => null,
+		...divAttributes
 	} = props;
+	const { id: divId, className, style, ...rest } = divAttributes;
+	const divStyle = (style ?? {}) as React.CSSProperties;
+	const divClass = className ? ` ${className}` : '';
 	const theme = useTheme();
 	const ref = useRef<HTMLTextAreaElement>(null);
 	const wrapperRef = useRef<HTMLDivElement>(null);
@@ -265,13 +269,15 @@ export function MessageInput(props: Readonly<MessageInputProps>) {
 
 	return (
 		<div
-			className={wrapperClassName}
-			style={cssVars}
+			id={divId}
+			className={`${wrapperClassName}${divClass}`}
+			style={{ ...divStyle, ...cssVars }}
 			onKeyDown={() => null}
 			onClick={() => {
 				if (!isFocused) setFocus();
 			}}
 			ref={wrapperRef}
+			{...rest}
 		>
 			<AnimatePresence initial={false}>
 				{excerpts.length > 0 && (

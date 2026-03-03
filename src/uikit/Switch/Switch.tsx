@@ -14,7 +14,11 @@ export const Switch = React.memo((props: SwitchProps) => {
 		bgColorOff = 'var(--core-text-disabled)',
 		knobColor = 'var(--core-surface-primary)',
 		onChange = () => null,
+		...divAttributes
 	} = props;
+	const { id: divId, className, style, ...rest } = divAttributes;
+	const divStyle = (style ?? {}) as React.CSSProperties;
+	const divClass = className ? ` ${className}` : '';
 	const [on, setOn] = useState<boolean>(state);
 
 	// Sync with prop changes
@@ -45,17 +49,17 @@ export const Switch = React.memo((props: SwitchProps) => {
 		} as React.CSSProperties;
 	}, [width, height, padding, bgColorOff, bgColorOn, on, knobColor]);
 
-	console.log(cssVars);
-
 	/* START.DEBUG */
 	useTrackRenders(props, 'Switch');
 	/* END.DEBUG */
 
 	return (
 		<motion.div
-			className={css.wrapper}
-			style={{ ...cssVars, ...justify }}
+			id={divId}
+			className={`${css.wrapper}${divClass}`}
+			style={{ ...divStyle, ...justify, ...cssVars }}
 			onClick={handleClick}
+			{...(rest as any)}
 		>
 			<motion.div className={css.knob} layout={'preserve-aspect'} />
 		</motion.div>

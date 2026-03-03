@@ -14,7 +14,11 @@ export function UILabel(props: Readonly<UILabelProps>) {
 		button = false,
 		round = false,
 		onClick = () => null,
+		...divAttributes
 	} = props;
+	const { id: divId, className, style, ...rest } = divAttributes;
+	const divStyle = (style ?? {}) as React.CSSProperties;
+	const divClass = className ? ` ${className}` : '';
 
 	const handleClick = useCallback(
 		(e: React.MouseEvent<any>) => {
@@ -121,10 +125,12 @@ export function UILabel(props: Readonly<UILabelProps>) {
 
 	return (
 		<div
-			className={classNames}
+			id={divId}
+			className={`${classNames}${divClass}`}
 			onKeyDown={() => null}
-			style={cssVars}
+			style={{ ...divStyle, ...cssVars }}
 			onClick={handleClick}
+			{...rest}
 		>
 			{label}
 		</div>

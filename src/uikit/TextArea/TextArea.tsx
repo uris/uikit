@@ -38,7 +38,11 @@ export const TextArea = React.memo((props: TextAreaProps) => {
 		onValidate = () => null,
 		onSubmit = () => null,
 		onKeyDown = () => null,
+		...divAttributes
 	} = props;
+	const { id: divId, className, style, ...rest } = divAttributes;
+	const divStyle = (style ?? {}) as React.CSSProperties;
+	const divClass = className ? ` ${className}` : '';
 
 	const [isFocused, setIsFocused] = useState<boolean>(focused);
 	const [invalid, setInvalid] = useState<boolean>(false);
@@ -195,10 +199,12 @@ export const TextArea = React.memo((props: TextAreaProps) => {
 
 	return (
 		<div
-			className={css.wrapper}
-			style={cssVars}
+			id={divId}
+			className={`${css.wrapper}${divClass}`}
+			style={{ ...divStyle, ...cssVars }}
 			onBlur={() => handleBlur(text)}
 			onFocus={() => handleFocus()}
+			{...rest}
 		>
 			{hasSend && (
 				<div className={css.send} onMouseDown={(e) => handleSubmit(e)}>

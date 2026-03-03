@@ -1,13 +1,13 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { useEffect, useRef, useState } from 'react';
-import { expect, fn } from 'storybook/test';
+import { runDraggablePanelPlay } from 'src/stories/playHelpers';
 import {
 	DraggablePanel,
 	type DraggablePanelProps,
 } from 'src/uikit/DraggablePanel/DrggablePanel';
 import { FlexDiv } from 'src/uikit/FlexDiv/FlexDiv';
 import { IconButton } from 'src/uikit/IconButton';
-import { runDraggablePanelPlay } from 'src/stories/playHelpers';
+import { expect, fn } from 'storybook/test';
 
 const meta: Meta<typeof DraggablePanel> = {
 	title: 'Components/Draggable Panel',

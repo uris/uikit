@@ -1,0 +1,40 @@
+import {Meta, Unstyled} from '@storybook/addon-docs/blocks';
+import {FlexDiv} from '../../FlexDiv';
+import * as ProgressIndicatorStories from './ProgressIndicator.stories';
+
+<Meta of={ProgressIndicatorStories} />
+
+<FlexDiv width={"fill"} height={"fill"} alignItems={"center"}>
+    <FlexDiv width={"fill"} maxWidth={760} height={"auto"}>
+        <Unstyled>
+        # ProgressIndicator
+
+        Part of `Components/ProgressIndicator`.
+
+        ## Purpose
+
+        - Use `ProgressIndicator` when you need this UI primitive inside the Slice component system.
+        - Implementation reviewed from: `src/uikit/Progress/ProgressIndicator/ProgressIndicator.tsx`.
+
+        ## Story Variants
+
+        - `Default`
+
+        ## Attributes
+
+        - Props interface: `ProgressIndicatorProps`
+
+        | Prop | Type | Required | Default | Notes |
+        | --- | --- | --- | --- | --- |
+        | `didStart` | `() => void` | No | `() => null` | callback |
+        | `didStop` | `() => void` | No | `() => null` | callback |
+        | `size` | `number` | No | `20` | number |
+        | `secondsPerSpin` | `number` | No | `1` | number |
+        | `show` | `boolean` | No | `false` | boolean |
+        | `color` | `string` | No | `theme.current.colors['core-icon-primary']` | string |
+        | `stroke` | `number` | No | `1.5` | number |
+        | `duration` | `number` | No | `undefined` | number |
+        | `inline` | `boolean` | No | `false` | boolean |
+        </Unstyled>
+    </FlexDiv>
+</FlexDiv>

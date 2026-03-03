@@ -1,0 +1,55 @@
+import {Meta, Unstyled} from '@storybook/addon-docs/blocks';
+import {FlexDiv} from '../FlexDiv';
+import * as DropDownStories from './DropDown.stories';
+
+<Meta of={DropDownStories} />
+
+<FlexDiv width={"fill"} height={"fill"} alignItems={"center"}>
+    <FlexDiv width={"fill"} maxWidth={760} height={"auto"}>
+        <Unstyled>
+        # DropDown
+
+        Part of `Components/DropDown`.
+
+        ## Purpose
+
+        - Use `DropDown` when you need this UI primitive inside the Slice component system.
+        - Implementation reviewed from: `src/uikit/DropDown/DropDown.tsx`.
+
+        ## Story Variants
+
+        - `Default`
+
+        ## Attributes
+
+        - Props interface: `DropDownProps`
+
+        | Prop | Type | Required | Default | Notes |
+        | --- | --- | --- | --- | --- |
+        | `onChange` | `(index: number, option: DropDownOption) => void` | No | `() => null` | callback |
+        | `onBlur` | `(value: string) => void` | No | `() => null` | callback |
+        | `onValidate` | `(state: boolean) => void` | No | `() => null` | callback |
+        | `onFocus` | `() => void` | No | `() => null` | callback |
+        | `name` | `string` | No | `'Select'` | string |
+        | `options` | `DropDownOption[]` | No | `[]` | array |
+        | `selectedIndex` | `number` | No | `0` | number |
+        | `selectedValue` | `string` | No | `''` | string |
+        | `placeholder` | `boolean` | No | `true` | boolean |
+        | `borderRadius` | `number` | No | `4` | number |
+        | `validate` | `boolean` | No | `true` | boolean |
+        | `iconColor` | `string` | No | `theme.current.colors['core-icon-primary']` | string |
+        | `bgColor` | `string` | No | `'transparent'` | string |
+        | `width` | `string` | No | `'100%'` | string |
+        | `height` | `string` | No | `'auto'` | string |
+        | `paddingLeft` | `number \\| string` | No | `'8px'` | union |
+        | `paddingRight` | `number \\| string` | No | `'12px'` | union |
+        | `paddingTops` | `number \\| string` | No | `'8px'` | union |
+        | `iconSize` | `number` | No | `20` | number |
+        | `disabled` | `boolean` | No | `false` | boolean |
+        | `unframed` | `boolean` | No | `false` | boolean |
+        | `focused` | `boolean` | No | `false` | boolean |
+        | `gap` | `number` | No | `0` | number |
+        | `size` | `'small' \\| 'medium' \\| 'large'` | No | `'medium'` | union |
+        </Unstyled>
+    </FlexDiv>
+</FlexDiv>

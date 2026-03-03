@@ -6,7 +6,7 @@ type Size = {
 };
 
 export function useObserveResize(
-	element: RefObject<HTMLDivElement | null> | undefined,
+	element: RefObject<HTMLElement | null> | undefined,
 	options?: { ignore?: 'width' | 'height' },
 ) {
 	const [size, setSize] = useState<Size>({ width: 0, height: 0 });

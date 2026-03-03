@@ -23,7 +23,11 @@ export const Grouper = React.memo((props: GrouperProps) => {
 		showFilterBadge = false,
 		onChange = () => null,
 		onClick = () => null,
+		...divAttributes
 	} = props;
+	const { id: divId, className, style, ...rest } = divAttributes;
+	const divStyle = (style ?? {}) as React.CSSProperties;
+	const divClass = className ? ` ${className}` : '';
 	const theme = useTheme();
 	const [state, setState] = useState<boolean>(open);
 	const [icon, animateIcon] = useAnimate();
@@ -65,10 +69,12 @@ export const Grouper = React.memo((props: GrouperProps) => {
 
 	return (
 		<div
-			className={css.header}
-			style={cssVars}
+			id={divId}
+			className={`${css.header}${divClass}`}
+			style={{ ...divStyle, ...cssVars }}
 			onClick={handleToggle}
 			onKeyDown={handleToggle}
+			{...rest}
 		>
 			<div className={css.content}>
 				<div className={css.title}>

@@ -1,9 +1,9 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
-import type { RadioButtonOption } from 'src/uikit/RadioButton';
-import { fn } from 'storybook/test';
-import { FlexDiv } from 'src/uikit/FlexDiv/FlexDiv';
-import { RadioButtonList } from 'src/uikit/RadioButtonList/RadioButtonList';
 import { runRadioButtonListPlay } from 'src/stories/playHelpers';
+import { FlexDiv } from 'src/uikit/FlexDiv/FlexDiv';
+import type { RadioButtonOption } from 'src/uikit/RadioButton';
+import { RadioButtonList } from 'src/uikit/RadioButtonList/RadioButtonList';
+import { fn } from 'storybook/test';
 
 const options: RadioButtonOption[] = [
 	{

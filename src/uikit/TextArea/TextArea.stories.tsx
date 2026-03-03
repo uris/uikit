@@ -1,8 +1,8 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
-import { fn } from 'storybook/test';
+import { runTextAreaPlay } from 'src/stories/playHelpers';
 import { FlexDiv } from 'src/uikit/FlexDiv/FlexDiv';
 import { TextArea } from 'src/uikit/TextArea/TextArea';
-import { runTextAreaPlay } from 'src/stories/playHelpers';
+import { fn } from 'storybook/test';
 
 const meta: Meta<typeof TextArea> = {
 	title: 'Components/TextArea',

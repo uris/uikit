@@ -1,8 +1,8 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
-import { expect, fn } from 'storybook/test';
+import { runDivInputPlay } from 'src/stories/playHelpers';
 import { DivInput } from 'src/uikit/DivInput';
 import { FlexDiv } from 'src/uikit/FlexDiv';
-import { runDivInputPlay } from 'src/stories/playHelpers';
+import { expect, fn } from 'storybook/test';
 
 const meta: Meta<typeof DivInput> = {
 	title: 'Components/DivInput',

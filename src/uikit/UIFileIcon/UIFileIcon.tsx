@@ -11,7 +11,9 @@ export const UIFileIcon = React.memo((props: UIFileIconProps) => {
 		pointer = false,
 		disabled = false,
 		onClick = () => null,
+		...svgAttributes
 	} = props;
+	const { id: svgId, className, style, ...rest } = svgAttributes;
 	const theme = useTheme();
 
 	const handleKeyDown = useCallback(
@@ -144,6 +146,15 @@ export const UIFileIcon = React.memo((props: UIFileIconProps) => {
 	useTrackRenders(props, 'UIFileIcon');
 	/* END.DEBUG */
 
-	if (svgElement.length > 0) return svgElement[0].icon;
+	if (svgElement.length > 0) {
+		const iconNode = svgElement[0].icon as React.ReactElement<any>;
+		return React.cloneElement(iconNode, {
+			id: svgId,
+			className,
+			style: { ...(style ?? {}), ...(iconNode.props?.style ?? {}) },
+			onClick: (e: React.MouseEvent<SVGElement, MouseEvent>) => onClick(e),
+			...rest,
+		});
+	}
 	return null;
 });

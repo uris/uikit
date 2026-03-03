@@ -31,7 +31,11 @@ export const DivInput = React.memo((props: DivInputProps) => {
 		onClick = () => null,
 		radius = 4,
 		bgColor = 'var(--core-surface-secondary)',
+		...divAttributes
 	} = props;
+	const { id: divId, className, style, ...rest } = divAttributes;
+	const divStyle = (style ?? {}) as React.CSSProperties;
+	const divClass = className ? ` ${className}` : '';
 
 	const ref = useRef<HTMLDivElement>(null);
 	const innerText = useRef<string>(
@@ -246,7 +250,12 @@ export const DivInput = React.memo((props: DivInputProps) => {
 	// avoid issues with safari that refocuses editable divs on blur
 	// by wrapping it with a pointer events none
 	return (
-		<div className={css.wrapper} style={cssVars}>
+		<div
+			id={divId}
+			className={`${css.wrapper}${divClass}`}
+			style={{ ...divStyle, ...cssVars }}
+			{...rest}
+		>
 			<motion.div
 				className={css.input}
 				ref={ref}

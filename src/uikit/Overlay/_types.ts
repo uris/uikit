@@ -1,4 +1,6 @@
-export interface OverlayProps {
+import type React from 'react';
+
+type OverlayBaseProps = {
 	opacity?: number;
 	color?: string;
 	type?: 'clear' | 'dark';
@@ -6,4 +8,10 @@ export interface OverlayProps {
 	overlay?: any;
 	onClick?: () => void;
 	toggleOverlay?: (state: boolean) => void;
-}
+};
+
+export type OverlayProps = Omit<
+	React.HTMLAttributes<HTMLDivElement>,
+	keyof OverlayBaseProps
+> &
+	OverlayBaseProps;

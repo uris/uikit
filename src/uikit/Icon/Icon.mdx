@@ -1,0 +1,43 @@
+import {Meta, Unstyled} from '@storybook/addon-docs/blocks';
+import {FlexDiv} from '../FlexDiv';
+import * as IconStories from './Icon.stories';
+
+<Meta of={IconStories} />
+
+<FlexDiv width={"fill"} height={"fill"} alignItems={"center"}>
+    <FlexDiv width={"fill"} maxWidth={760} height={"auto"}>
+        <Unstyled>
+        # Icon
+
+        Part of `Components/Icon`.
+
+        ## Purpose
+
+        - Use `Icon` when you need this UI primitive inside the Slice component system.
+        - Implementation reviewed from: `src/uikit/Icon/Icon.tsx`.
+
+        ## Story Variants
+
+        - `Default`
+        - `Gallery`
+        - `ViewToggled`
+
+        ## Attributes
+
+        - Props interface: `IconProps`
+
+        | Prop | Type | Required | Default | Notes |
+        | --- | --- | --- | --- | --- |
+        | `onClick` | `(e: React.MouseEvent<SVGElement, MouseEvent>) => void` | No | `() => null` | callback |
+        | `name` | `string` | No | `'home'` | string |
+        | `size` | `number` | No | `20` | number |
+        | `stroke` | `number` | No | `1.5` | number |
+        | `strokeColor` | `string` | No | `theme.current.colors['core-icon-primary']` | string |
+        | `fillColor` | `string` | No | `'transparent'` | string |
+        | `coverUp` | `string` | No | `theme.current.colors['core-surface-primary']` | string |
+        | `toggle` | `boolean` | No | `false` | boolean |
+        | `pointer` | `boolean` | No | `true` | boolean |
+        | `disabled` | `boolean` | No | `false` | boolean |
+        </Unstyled>
+    </FlexDiv>
+</FlexDiv>

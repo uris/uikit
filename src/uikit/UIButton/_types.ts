@@ -2,7 +2,7 @@ import type { Transition, Variants } from 'motion/react';
 import type React from 'react';
 import type { ToolTip } from '../sharedTypes';
 
-export interface UIButtonProps {
+type UIButtonBaseProps = {
 	size?: 'large' | 'medium' | 'text';
 	variant?: 'solid' | 'outline' | 'text';
 	state?: 'normal' | 'hover' | 'disabled';
@@ -39,7 +39,13 @@ export interface UIButtonProps {
 	onClick?: (
 		e: React.MouseEvent<HTMLDivElement, MouseEvent> | undefined,
 	) => void;
-}
+};
+
+export type UIButtonProps = Omit<
+	React.HTMLAttributes<HTMLDivElement>,
+	keyof UIButtonBaseProps
+> &
+	UIButtonBaseProps;
 
 export interface UIButtonHandle {
 	triggerClick: () => void;

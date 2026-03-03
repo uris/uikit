@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
+import { runLogosPlay } from 'src/stories/playHelpers';
 import { FlexDiv } from 'src/uikit/FlexDiv/FlexDiv';
 import { Logos } from 'src/uikit/Logos/Logos';
-import { runLogosPlay } from 'src/stories/playHelpers';
 
 const meta: Meta<typeof Logos> = {
 	title: 'Components/Logos',

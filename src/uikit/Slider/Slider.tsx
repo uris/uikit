@@ -22,7 +22,11 @@ export const Slider = React.memo((props: SliderProps) => {
 		progressColor = 'var(--core-text-primary)',
 		onChange = () => null,
 		onDragChange = () => null,
+		...divAttributes
 	} = props;
+	const { id: divId, className, style, ...rest } = divAttributes;
+	const divStyle = (style ?? {}) as React.CSSProperties;
+	const divClass = className ? ` ${className}` : '';
 
 	// hook into the relevant on screen elements
 	const ref = useRef<HTMLDivElement>(null);
@@ -275,7 +279,13 @@ export const Slider = React.memo((props: SliderProps) => {
 	/* END.DEBUG */
 
 	return (
-		<div className={css.wrapper} style={cssVars} ref={ref}>
+		<div
+			id={divId}
+			className={`${css.wrapper}${divClass}`}
+			style={{ ...divStyle, ...cssVars }}
+			ref={ref}
+			{...rest}
+		>
 			<div className={css.trackBg}>
 				<div className={css.track} ref={track}>
 					<div className={css.trackHead} ref={head} />

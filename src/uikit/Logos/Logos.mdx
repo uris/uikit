@@ -1,0 +1,35 @@
+import {Meta, Unstyled} from '@storybook/addon-docs/blocks';
+import {FlexDiv} from '../FlexDiv';
+import * as LogosStories from './Logos.stories';
+
+<Meta of={LogosStories} />
+
+<FlexDiv width={"fill"} height={"fill"} alignItems={"center"}>
+    <FlexDiv width={"fill"} maxWidth={760} height={"auto"}>
+        <Unstyled>
+        # Logos
+
+        Part of `Components/Logos`.
+
+        ## Purpose
+
+        - Use `Logos` when you need this UI primitive inside the Slice component system.
+        - Implementation reviewed from: `src/uikit/Logos/Logos.tsx`.
+
+        ## Story Variants
+
+        - `Default`
+
+        ## Attributes
+
+        - Props interface: `LogoProps`
+
+        | Prop | Type | Required | Default | Notes |
+        | --- | --- | --- | --- | --- |
+        | `image` | `\\| 'zoom' \\| 'impossible foods' \\| 'gong' \\| 'seattle seahawks' \\| 'smile' \\| 'drift' \\| 'taylor made' \\| 'envu' \\| 'pdf' \\| 'G2Leader' \\| 'reviews' \\| 'G2Logo' \\| 'apple' \\| 'yahoo' \\| 'outlook' \\| 'outlook-com' \\| 'google' \\| 'linkedin' \\| 'stripe' \\| 'slice' \\| 'slice logo'` | No | `'gp'` | union |
+        | `color` | `string` | No | `theme.current.colors['core-text-primary']` | string |
+        | `height` | `number \\| string` | No | `36` | union |
+        | `width` | `number \\| string` | No | `undefined` | union |
+        </Unstyled>
+    </FlexDiv>
+</FlexDiv>

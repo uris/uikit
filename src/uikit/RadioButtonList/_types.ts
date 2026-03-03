@@ -1,6 +1,7 @@
+import type React from 'react';
 import type { RadioButtonOption } from '../RadioButton/_types';
 
-export interface RadioButtonListProps {
+type RadioButtonListBaseProps = {
 	options?: RadioButtonOption[];
 	selectedIndexes?: number[] | null;
 	selectedOptions?: string[] | null;
@@ -21,4 +22,10 @@ export interface RadioButtonListProps {
 		options: RadioButtonOption[] | null,
 		indexes: number[] | null,
 	) => void;
-}
+};
+
+export type RadioButtonListProps = Omit<
+	React.HTMLAttributes<HTMLDivElement>,
+	keyof RadioButtonListBaseProps
+> &
+	RadioButtonListBaseProps;

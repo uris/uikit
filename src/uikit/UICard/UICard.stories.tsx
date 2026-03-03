@@ -1,8 +1,8 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import { fn } from 'storybook/test';
+import { runUICardPlay } from 'src/stories/playHelpers';
 import { FlexDiv } from 'src/uikit/FlexDiv/FlexDiv';
 import { UICard } from 'src/uikit/UICard/UICard';
-import { runUICardPlay } from 'src/stories/playHelpers';
+import { fn } from 'storybook/test';
 
 const meta: Meta<typeof UICard> = {
 	title: 'Components/UI Card',

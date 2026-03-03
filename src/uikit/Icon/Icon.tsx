@@ -18,7 +18,9 @@ export const Icon = React.memo((props: IconProps) => {
 		pointer = true,
 		disabled = false,
 		onClick = () => null,
+		...svgAttributes
 	} = props;
+	const { id: svgId, className, style, ...rest } = svgAttributes;
 
 	// memo cursor style
 	const cursor = useMemo(() => {
@@ -50,11 +52,13 @@ export const Icon = React.memo((props: IconProps) => {
 
 	return (
 		<svg
+			id={svgId}
+			className={className}
 			xmlns="http://www.w3.org/2000/svg"
 			width={size}
 			height={size}
 			viewBox="0 0 20 20"
-			style={iconStyle}
+			style={{ ...(style ?? {}), ...iconStyle }}
 			onClick={(e) => onClick(e)}
 			fill={fillColor}
 			role="img"
@@ -62,6 +66,7 @@ export const Icon = React.memo((props: IconProps) => {
 			tabIndex={pointer && !disabled ? 0 : -1}
 			onKeyDown={(e) => accessibleKeyDown(e, () => onClick)}
 			opacity={disabled ? 0.5 : 1}
+			{...rest}
 		>
 			<title>{name} icon</title>
 			{shape({ stroke, strokeColor, fillColor, coverUp })}

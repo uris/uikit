@@ -1,10 +1,18 @@
+import type React from 'react';
+
 export type ErrorMessage = {
 	id?: string;
 	title?: string;
 	bullets?: string[];
 };
 
-export interface ErrorSummaryProps {
+type ErrorSummaryBaseProps = {
 	entries?: ErrorMessage[];
 	errors?: any[];
-}
+};
+
+export type ErrorSummaryProps = Omit<
+	React.HTMLAttributes<HTMLDivElement>,
+	keyof ErrorSummaryBaseProps
+> &
+	ErrorSummaryBaseProps;

@@ -1,9 +1,9 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import type { BarButton } from 'src/uikit/UIButtonBar';
-import { fn } from 'storybook/test';
-import { FlexDiv } from 'src/uikit/FlexDiv/FlexDiv';
-import { UIButtonBar } from 'src/uikit/UIButtonBar/UIButtonBar';
 import { runUIButtonBarPlay } from 'src/stories/playHelpers';
+import { FlexDiv } from 'src/uikit/FlexDiv/FlexDiv';
+import type { BarButton } from 'src/uikit/UIButtonBar';
+import { UIButtonBar } from 'src/uikit/UIButtonBar/UIButtonBar';
+import { fn } from 'storybook/test';
 
 const listView: BarButton[] = [
 	{ icon: 'arrow right', command: 'list', tip: 'List View' },

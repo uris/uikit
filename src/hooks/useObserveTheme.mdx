@@ -1,0 +1,54 @@
+import {Meta, Unstyled} from '@storybook/addon-docs/blocks';
+import {RenderSource} from '../../.storybook/RenderSource';
+import {FlexDiv} from '../uikit/FlexDiv';
+
+<Meta title="Hooks/useObserveTheme" />
+
+<FlexDiv width={"fill"} height={"fill"} alignItems={"center"}>
+    <FlexDiv width={"fill"} maxWidth={760} height={"auto"}>
+        <Unstyled>
+        # useObserveTheme
+        Observes <code>document.documentElement.dataset.theme</code> and returns the resolved Slice theme object.
+
+        ## Signature
+        `useObserveTheme()`
+
+        ## Parameters
+        This hook does not take parameters.
+
+        ## Returns
+        <table style={{width: '100%'}}>
+          <colgroup>
+            <col style={{width: '1%'}} />
+            <col style={{width: '1%'}} />
+            <col style={{width: '1%'}} />
+            <col style={{width: '97%'}} />
+          </colgroup>
+          <thead>
+            <tr>
+              <th>Return</th>
+              <th>Type</th>
+              <th>Default</th>
+              <th>Description</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td><code>theme</code></td><td><code>SliceTheme</code></td><td><code>lightTheme</code></td><td>Current observed theme from <code>data-theme</code>. Falls back to <code>lightTheme</code> when empty or unknown.</td></tr>
+          </tbody>
+        </table>
+
+        ## Code Examples
+        </Unstyled>
+
+        <RenderSource language={"tsx"}>
+{`
+import { useObserveTheme } from '@apple-pie/slice';
+
+function ThemeBadge() {
+  const theme = useObserveTheme();
+  return <span>Observed theme: {theme.name}</span>;
+}
+`}
+        </RenderSource>
+    </FlexDiv>
+</FlexDiv>

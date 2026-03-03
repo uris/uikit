@@ -5,7 +5,18 @@ import css from './UICard.module.css';
 import type { UICardProps } from './_types';
 
 export const UICard = React.memo(function UICard(props: Readonly<UICardProps>) {
-	const { id, icon, label, command, width, onCommand = () => null } = props;
+	const {
+		id,
+		icon,
+		label,
+		command,
+		width,
+		onCommand = () => null,
+		...divAttributes
+	} = props;
+	const { className, style, ...rest } = divAttributes;
+	const divStyle = (style ?? {}) as React.CSSProperties;
+	const divClass = className ? ` ${className}` : '';
 
 	// set style value callback
 	const setStyle = useCallback((value: string | number | undefined) => {
@@ -28,10 +39,12 @@ export const UICard = React.memo(function UICard(props: Readonly<UICardProps>) {
 
 	return (
 		<div
-			className={css.card}
-			style={cssVars}
+			id={id}
+			className={`${css.card}${divClass}`}
+			style={{ ...divStyle, ...cssVars }}
 			onClick={() => onCommand({ id, command })}
 			onKeyDown={() => onCommand({ id, command })}
+			{...rest}
 		>
 			{icon && (
 				<div className={css.icon}>

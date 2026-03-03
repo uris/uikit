@@ -18,7 +18,11 @@ export function ProgressIndicator(props: Readonly<ProgressIndicatorProps>) {
 		duration = undefined,
 		didStart = () => null,
 		didStop = () => null,
+		...divAttributes
 	} = props;
+	const { id: divId, className, style, ...rest } = divAttributes;
+	const divStyle = (style ?? {}) as React.CSSProperties;
+	const divClass = className ? ` ${className}` : '';
 	const [playing, setPlaying] = useState<boolean>(show);
 	const timer = useRef<any>(null);
 
@@ -61,11 +65,13 @@ export function ProgressIndicator(props: Readonly<ProgressIndicatorProps>) {
 		<AnimatePresence initial={true}>
 			{show && (
 				<motion.div
-					className={css.container}
-					style={cssVars}
+					id={divId}
+					className={`${css.container}${divClass}`}
+					style={{ ...divStyle, ...cssVars }}
 					initial={{ opacity: 0 }}
 					animate={{ opacity: 1 }}
 					exit={{ opacity: 0 }}
+					{...(rest as any)}
 				>
 					{openCircle}
 				</motion.div>

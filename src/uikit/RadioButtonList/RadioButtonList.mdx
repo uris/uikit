@@ -1,0 +1,49 @@
+import {Meta, Unstyled} from '@storybook/addon-docs/blocks';
+import {FlexDiv} from '../FlexDiv';
+import * as RadioButtonListStories from './RadioButtonList.stories';
+
+<Meta of={RadioButtonListStories} />
+
+<FlexDiv width={"fill"} height={"fill"} alignItems={"center"}>
+    <FlexDiv width={"fill"} maxWidth={760} height={"auto"}>
+        <Unstyled>
+        # RadioButtonList
+
+        Part of `Option 1`.
+
+        ## Purpose
+
+        - Use `RadioButtonList` when you need this UI primitive inside the Slice component system.
+        - Implementation reviewed from: `src/uikit/RadioButtonList/RadioButtonList.tsx`.
+
+        ## Story Variants
+
+        - `Default`
+        - `MultiSelect`
+
+        ## Attributes
+
+        - Props interface: `RadioButtonListProps`
+
+        | Prop | Type | Required | Default | Notes |
+        | --- | --- | --- | --- | --- |
+        | `onChange` | `( options: RadioButtonOption[] \| null, indexes: number[] \| null, ) => void` | No | `() => null` | callback |
+        | `options` | `RadioButtonOption[]` | No | `[]` | array |
+        | `selectedIndexes` | `number[] \\| null` | No | `null` | union |
+        | `selectedOptions` | `string[] \\| null` | No | `null` | union |
+        | `label` | `string \\| null` | No | `null` | union |
+        | `deselect` | `boolean` | No | `false` | boolean |
+        | `multiSelect` | `boolean` | No | `false` | boolean |
+        | `wrap` | `boolean` | No | `false` | boolean |
+        | `spacer` | `'xl' \\| 'lg' \\| 'md' \\| 'sm' \\| 'custom' \\| 'none'` | No | `'none'` | union |
+        | `custom` | `number` | No | `0` | number |
+        | `gap` | `number` | No | `16` | number |
+        | `tabIndexSeed` | `number` | No | `0` | number |
+        | `hideRadio` | `boolean` | No | `false` | boolean |
+        | `toggleIcon` | `boolean` | No | `true` | boolean |
+        | `iconColor` | `string` | No | `undefined` | string |
+        | `iconSelectedColor` | `string` | No | `undefined` | string |
+        | `noFrame` | `boolean` | No | `false` | boolean |
+        </Unstyled>
+    </FlexDiv>
+</FlexDiv>

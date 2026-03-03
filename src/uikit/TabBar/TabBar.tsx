@@ -36,7 +36,11 @@ export const TabBar = React.memo((props: TabBarProps) => {
 		onTabChange = () => null,
 		onClose = () => null,
 		onToolTip = () => null,
+		...divAttributes
 	} = props;
+	const { id: divId, className, style, ...rest } = divAttributes;
+	const divStyle = (style ?? {}) as React.CSSProperties;
+	const divClass = className ? ` ${className}` : '';
 
 	const [index, setIndex] = useState<number>(selected);
 
@@ -124,7 +128,12 @@ export const TabBar = React.memo((props: TabBarProps) => {
 	}, [tabGap, height, width, border, setStyle, closeWidth, padding]);
 
 	return (
-		<div className={css.wrapper} style={cssVars}>
+		<div
+			id={divId}
+			className={`${css.wrapper}${divClass}`}
+			style={{ ...divStyle, ...cssVars }}
+			{...rest}
+		>
 			{renderedOptions}
 			{hasClose && (
 				<div className={css.close}>

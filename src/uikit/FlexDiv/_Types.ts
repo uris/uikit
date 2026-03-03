@@ -1,6 +1,7 @@
 import type { Transition } from 'motion/react';
+import type React from 'react';
 
-export interface FlexDivProps {
+type FlexDivBaseProps = {
 	className?: string;
 	children?: any;
 	scrollY?: boolean;
@@ -28,4 +29,10 @@ export interface FlexDivProps {
 	gap?: number;
 	scrollHandle?: string;
 	scrollHandleHover?: string;
-}
+};
+
+export type FlexDivProps = Omit<
+	React.HTMLAttributes<HTMLDivElement>,
+	keyof FlexDivBaseProps
+> &
+	FlexDivBaseProps;

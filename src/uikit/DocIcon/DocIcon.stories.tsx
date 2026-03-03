@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
-import { expect, within } from 'storybook/test';
 import { DocIcons } from 'src/uikit/DocIcon';
 import { FlexDiv } from 'src/uikit/FlexDiv/FlexDiv';
+import { expect, within } from 'storybook/test';
 
 const meta: Meta<typeof DocIcons> = {
 	title: 'Components/DocIcons',

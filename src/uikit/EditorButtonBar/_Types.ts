@@ -45,7 +45,7 @@ export enum FormattingOption {
 	link = 'link',
 }
 
-export interface EditorButtonBarProps {
+type EditorButtonBarBaseProps = {
 	shortSize?: number;
 	mediumSize?: number;
 	state?: 'small' | 'medium' | 'regular' | 'auto';
@@ -54,7 +54,13 @@ export interface EditorButtonBarProps {
 	disabledFormats?: string[];
 	onCommand?: (command: any, e: React.MouseEvent<any> | undefined) => void;
 	onToolTip?: (tip: ToolTip | null) => void;
-}
+};
+
+export type EditorButtonBarProps = Omit<
+	React.HTMLAttributes<HTMLDivElement>,
+	keyof EditorButtonBarBaseProps
+> &
+	EditorButtonBarBaseProps;
 
 export interface RenderGroupProps {
 	onCommand?: (command: any, e: React.MouseEvent<any>) => void;

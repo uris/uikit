@@ -1,3 +1,5 @@
+import type React from 'react';
+
 export type RadioButtonOption = {
 	fieldName?: string;
 	title?: string;
@@ -6,7 +8,7 @@ export type RadioButtonOption = {
 	icon?: string;
 };
 
-export interface RadioButtonProps {
+type RadioButtonBaseProps = {
 	selected?: boolean;
 	option: RadioButtonOption;
 	deselect?: boolean;
@@ -18,4 +20,10 @@ export interface RadioButtonProps {
 	iconColor?: string;
 	noFrame?: boolean;
 	onChange?: (option: RadioButtonOption, state: boolean) => void;
-}
+};
+
+export type RadioButtonProps = Omit<
+	React.HTMLAttributes<HTMLDivElement>,
+	keyof RadioButtonBaseProps
+> &
+	RadioButtonBaseProps;

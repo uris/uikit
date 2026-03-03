@@ -23,7 +23,11 @@ export const UIChip = React.memo((props: UIChipProps) => {
 		onToolTip = () => null,
 		onClick = () => null,
 		onMouseDown = () => null,
+		...divAttributes
 	} = props;
+	const { id: divId, className, style, ...rest } = divAttributes;
+	const divStyle = (style ?? {}) as React.CSSProperties;
+	const divClass = className ? ` ${className}` : '';
 	const theme = useTheme();
 	const [isFocused, setIsFocused] = useState<boolean>(focused);
 	const [isHovered, setIsHovered] = useState<boolean>(false);
@@ -107,8 +111,9 @@ export const UIChip = React.memo((props: UIChipProps) => {
 
 	return (
 		<div
-			className={css.chip}
-			style={cssVars}
+			id={divId}
+			className={`${css.chip}${divClass}`}
+			style={{ ...divStyle, ...cssVars }}
 			onMouseDown={handleMouseDown}
 			onKeyDown={() => null}
 			onClick={handleClick}
@@ -116,6 +121,7 @@ export const UIChip = React.memo((props: UIChipProps) => {
 			onMouseLeave={(e) => handleMouseEnter(false, e)}
 			onFocus={() => setIsFocused(true)}
 			onBlur={() => setIsFocused(false)}
+			{...rest}
 		>
 			{icon && !iconRight && (
 				<div className={css.icon}>

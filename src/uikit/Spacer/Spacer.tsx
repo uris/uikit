@@ -3,16 +3,26 @@ import { useTrackRenders } from '../../hooks/useTrackRenders';
 import type { SpacerProps } from './_types';
 
 export const Spacer = React.memo((props: SpacerProps) => {
-	const { size = 8 } = props;
+	const { size = 8, ...divAttributes } = props;
+	const { id: divId, className, style, ...rest } = divAttributes;
 
-	const style = useMemo(
+	const spacerStyle = useMemo(
 		() => ({ height: size, minHeight: size, maxHeight: size }),
 		[size],
 	);
+	const divStyle = (style ?? {}) as React.CSSProperties;
+	const divClass = className ? ` ${className}` : '';
 
 	/* START.DEBUG */
 	useTrackRenders(props, 'Spacer');
 	/* END.DEBUG */
 
-	return <div style={style} />;
+	return (
+		<div
+			id={divId}
+			className={divClass.trim()}
+			style={{ ...divStyle, ...spacerStyle }}
+			{...rest}
+		/>
+	);
 });

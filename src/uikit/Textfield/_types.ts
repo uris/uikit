@@ -1,7 +1,7 @@
 import type { Transition } from 'motion/react';
 import type React from 'react';
 
-export interface TextFieldProps {
+type TextFieldBaseProps = {
 	value?: string;
 	name?: string;
 	label?: string;
@@ -45,7 +45,13 @@ export interface TextFieldProps {
 	borderType?: 'box' | 'underline' | 'none';
 	inputType?: 'text' | 'password';
 	noShow?: boolean;
-}
+};
+
+export type TextFieldProps = Omit<
+	React.HTMLAttributes<HTMLDivElement>,
+	keyof TextFieldBaseProps
+> &
+	TextFieldBaseProps;
 
 export const MOTION_CONFIG = {
 	variants: {

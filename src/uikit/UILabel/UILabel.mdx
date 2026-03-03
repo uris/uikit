@@ -1,0 +1,38 @@
+import {Meta, Unstyled} from '@storybook/addon-docs/blocks';
+import {FlexDiv} from '../FlexDiv';
+import * as UILabelStories from './UILabel.stories';
+
+<Meta of={UILabelStories} />
+
+<FlexDiv width={"fill"} height={"fill"} alignItems={"center"}>
+    <FlexDiv width={"fill"} maxWidth={760} height={"auto"}>
+        <Unstyled>
+        # UILabel
+
+        Part of `Components/UILabel`.
+
+        ## Purpose
+
+        - Use `UILabel` when you need this UI primitive inside the Slice component system.
+        - Implementation reviewed from: `src/uikit/UILabel/UILabel.tsx`.
+
+        ## Story Variants
+
+        - `Default`
+        - `ButtonLabel`
+
+        ## Attributes
+
+        - Props interface: `UILabelProps`
+
+        | Prop | Type | Required | Default | Notes |
+        | --- | --- | --- | --- | --- |
+        | `onClick` | `(e: React.MouseEvent<any>) => void` | No | `() => null` | callback |
+        | `label` | `string` | No | `'UI Label'` | string |
+        | `state` | `'red' \\| 'yellow' \\| 'green' \\| 'blue' \\| 'grey' \\| 'lightgrey' \\| 'white'` | No | `'red'` | union |
+        | `noFill` | `boolean` | No | `false` | boolean |
+        | `round` | `boolean` | No | `false` | boolean |
+        | `button` | `boolean` | No | `false` | boolean |
+        </Unstyled>
+    </FlexDiv>
+</FlexDiv>

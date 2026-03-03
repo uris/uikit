@@ -1,0 +1,45 @@
+import {Meta, Unstyled} from '@storybook/addon-docs/blocks';
+import {FlexDiv} from '../FlexDiv';
+import * as GrouperStories from './Grouper.stories';
+
+<Meta of={GrouperStories} />
+
+<FlexDiv width={"fill"} height={"fill"} alignItems={"center"}>
+    <FlexDiv width={"fill"} maxWidth={760} height={"auto"}>
+        <Unstyled>
+        # Grouper
+
+        Part of `Components/Grouper`.
+
+        ## Purpose
+
+        - Use `Grouper` when you need this UI primitive inside the Slice component system.
+        - Implementation reviewed from: `src/uikit/Grouper/Grouper.tsx`.
+
+        ## Story Variants
+
+        - `Default`
+
+        ## Attributes
+
+        - Props interface: `GrouperProps`
+
+        | Prop | Type | Required | Default | Notes |
+        | --- | --- | --- | --- | --- |
+        | `onChange` | `(state: boolean) => void` | No | `() => null` | callback |
+        | `onClick` | `() => void` | No | `() => null` | callback |
+        | `title` | `string` | No | `'Group Title'` | string |
+        | `toggle` | `boolean` | No | `true` | boolean |
+        | `open` | `boolean` | No | `true` | boolean |
+        | `hasIcon` | `boolean` | No | `true` | boolean |
+        | `iconName` | `string` | No | `'chevron down'` | string |
+        | `iconSize` | `number` | No | `18` | number |
+        | `frameSize` | `number` | No | `64` | number |
+        | `border` | `number` | No | `0` | number |
+        | `count` | `number \\| string` | No | `0` | union |
+        | `hideNull` | `boolean` | No | `true` | boolean |
+        | `showFilterBadge` | `boolean` | No | `false` | boolean |
+        | `unframed` | `boolean` | No | `false` | boolean |
+        </Unstyled>
+    </FlexDiv>
+</FlexDiv>

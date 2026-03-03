@@ -1,8 +1,8 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
-import { expect, fn } from 'storybook/test';
+import { runOverlayPlay } from 'src/stories/playHelpers';
 import { FlexDiv } from 'src/uikit/FlexDiv/FlexDiv';
 import { Overlay } from 'src/uikit/Overlay/Overlay';
-import { runOverlayPlay } from 'src/stories/playHelpers';
+import { expect, fn } from 'storybook/test';
 
 const meta: Meta<typeof Overlay> = {
 	title: 'Components/Overlay',

@@ -1,8 +1,8 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
-import { expect, fn } from 'storybook/test';
+import { runCheckBoxPlay } from 'src/stories/playHelpers';
 import { CheckBox } from 'src/uikit/CheckBox/CheckBox';
 import { FlexDiv } from 'src/uikit/FlexDiv/FlexDiv';
-import { runCheckBoxPlay } from 'src/stories/playHelpers';
+import { expect, fn } from 'storybook/test';
 
 const meta: Meta<typeof CheckBox> = {
 	title: 'Components/CheckBox',

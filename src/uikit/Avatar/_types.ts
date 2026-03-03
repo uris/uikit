@@ -1,7 +1,7 @@
 import type React from 'react';
 import type { ToolTip } from '../sharedTypes';
 
-export interface AvatarProps {
+export type AvatarBaseProps = {
 	size?: number;
 	frame?: number;
 	first?: string;
@@ -17,4 +17,10 @@ export interface AvatarProps {
 	onClick?: (e: React.MouseEvent<HTMLDivElement>) => void;
 	onKeyDown?: (e: React.KeyboardEvent<HTMLDivElement>) => void;
 	tabIndex?: number;
-}
+};
+
+export type AvatarProps = Omit<
+	React.HTMLAttributes<HTMLDivElement>,
+	keyof AvatarBaseProps
+> &
+	AvatarBaseProps;

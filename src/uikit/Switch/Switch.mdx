@@ -1,0 +1,39 @@
+import {Meta, Unstyled} from '@storybook/addon-docs/blocks';
+import {FlexDiv} from '../FlexDiv';
+import * as SwitchStories from './Switch.stories';
+
+<Meta of={SwitchStories} />
+
+<FlexDiv width={"fill"} height={"fill"} alignItems={"center"}>
+    <FlexDiv width={"fill"} maxWidth={760} height={"auto"}>
+        <Unstyled>
+        # Switch
+
+        Part of `Components/Switch`.
+
+        ## Purpose
+
+        - Use `Switch` when you need this UI primitive inside the Slice component system.
+        - Implementation reviewed from: `src/uikit/Switch/Switch.tsx`.
+
+        ## Story Variants
+
+        - `Default`
+
+        ## Attributes
+
+        - Props interface: `SwitchProps`
+
+        | Prop | Type | Required | Default | Notes |
+        | --- | --- | --- | --- | --- |
+        | `bgColorOff` | `string` | No | `'var(--core-text-disabled)'` | string |
+        | `bgColorOn` | `string` | No | `'var(--feedback-positive)'` | string |
+        | `knobColor` | `string` | No | `'var(--core-surface-primary)'` | string |
+        | `onChange` | `(state: boolean) => void` | No | `() => null` | callback |
+        | `state` | `boolean` | No | `false` | boolean |
+        | `height` | `number` | No | `22` | number |
+        | `width` | `number` | No | `44` | number |
+        | `padding` | `number` | No | `3` | number |
+        </Unstyled>
+    </FlexDiv>
+</FlexDiv>

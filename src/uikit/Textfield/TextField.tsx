@@ -68,7 +68,11 @@ export const TextField = React.memo(
 			clearBlurs = false,
 			disabled = false,
 			inputType = 'text',
+			...divAttributes
 		} = props;
+		const { id: divId, className, style, ...rest } = divAttributes;
+		const divStyle = (style ?? {}) as React.CSSProperties;
+		const divClass = className ? ` ${className}` : '';
 
 		const input = useRef<HTMLInputElement>(null);
 		const [text, setText] = useState<string>(value);
@@ -275,7 +279,12 @@ export const TextField = React.memo(
 		/* END.DEBUG */
 
 		return (
-			<div className={css.wrapper} style={cssVars}>
+			<div
+				id={divId}
+				className={`${css.wrapper}${divClass}`}
+				style={{ ...divStyle, ...cssVars }}
+				{...rest}
+			>
 				{label && (
 					<div className={`${css.label} ${css[labelSize]}`}>{label}</div>
 				)}

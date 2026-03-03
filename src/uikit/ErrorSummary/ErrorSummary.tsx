@@ -4,8 +4,13 @@ import { useTrackRenders } from '../../hooks/useTrackRenders';
 import css from './ErrorSummary.module.css';
 import type { ErrorMessage, ErrorSummaryProps } from './_types';
 
+export type { ErrorMessage };
+
 export const ErrorSummary = React.memo((props: ErrorSummaryProps) => {
-	const { entries, errors = [] } = props;
+	const { entries, errors = [], ...divAttributes } = props;
+	const { id: divId, className, style, ...rest } = divAttributes;
+	const divStyle = (style ?? {}) as React.CSSProperties;
+	const divClass = className ? ` ${className}` : '';
 
 	// memo animation variants
 	const variants = useMemo(
@@ -56,12 +61,15 @@ export const ErrorSummary = React.memo((props: ErrorSummaryProps) => {
 		<AnimatePresence initial={false}>
 			{entries && errors && errors.length > 0 && (
 				<motion.div
-					className={css.errorBox}
+					id={divId}
+					className={`${css.errorBox}${divClass}`}
+					style={divStyle}
 					initial={'enter'}
 					animate={'animate'}
 					exit={'exit'}
 					variants={variants}
 					transition={transition}
+					{...(rest as any)}
 				>
 					{renderedErrors}
 				</motion.div>

@@ -1,9 +1,9 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
-import { expect, fn } from 'storybook/test';
+import { runTabBarPlay } from 'src/stories/playHelpers';
 import { FlexDiv } from 'src/uikit/FlexDiv';
 import { TabBar } from 'src/uikit/TabBar';
 import { placeholderOptions } from 'src/uikit/TabBar/_types';
-import { runTabBarPlay } from 'src/stories/playHelpers';
+import { expect, fn } from 'storybook/test';
 
 const meta: Meta<typeof TabBar> = {
 	title: 'Components/TabBar',
