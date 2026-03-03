@@ -10,5 +10,3 @@ export interface SwitchProps {
 	padding?: number;
 	onChange?: (state: boolean) => void;
 }
-
-export const TRANSITION: Transition = { ease: 'easeInOut', duration: 0.3 };

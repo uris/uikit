@@ -1,9 +1,10 @@
-import { Meta, Source, Unstyled } from '@storybook/addon-docs/blocks';
+import { Meta, Unstyled } from '@storybook/addon-docs/blocks';
 import {FlexDiv} from "../uikit/FlexDiv";
 import {Logos} from "../uikit/Logos";
 import {Spacer} from "../uikit/Spacer";
+import {RenderSource} from "../../.storybook/RenderSource";
 
-<Meta title="Welcome" />
+<Meta title="Welcome/Welcome" />
 
 <FlexDiv width={"fill"} height={"fill"} justify={"center"} alignItems={"center"}>
     <FlexDiv width={"fill"} maxWidth={760} height={"auto"}>
@@ -12,22 +13,20 @@ import {Spacer} from "../uikit/Spacer";
         <Unstyled>
             ✌️Welcome to **Slice** - a free, flexible, and fast ui-kit for creating modern react apps (v18+). Start by adding it to your project:
         </Unstyled>
-        <Source
-            language='bash'
-            code={`
-                $ npm install @apple-pie/slice
-            `}
-        />
+        <RenderSource language='bash'>
+            ```
+            $ npm install @apple-pie/slice
+            ```
+        </RenderSource>
         <Unstyled>
             ##### Dependencies
             Folks at [motion.dev](https://motion.dev) created an amazing animation library - Slice uses their work to do some fancy stuff. Make sure that's also in your project.
         </Unstyled>
-        <Source
-            language='bash'
-            code={`
-                $ npm install motion/react
-            `}
-        />
+        <RenderSource language='bash'>
+            ```
+            $ npm install motion/react
+            ```
+        </RenderSource>
         <Unstyled>
             That should do it. Let's grab a slice ...
         </Unstyled>

@@ -1,7 +1,7 @@
 import type { ThemeVars } from 'storybook/theming';
 import { create } from 'storybook/theming/create';
 
-const sliceTheme: ThemeVars = create({
+export const sliceLightTheme: ThemeVars = create({
 	base: 'light',
 	brandTitle: 'Slice UIKit',
 	brandUrl: 'https://example.com',
@@ -9,4 +9,10 @@ const sliceTheme: ThemeVars = create({
 	brandTarget: '_self',
 });
 
-export default sliceTheme;
+export const sliceDarkTheme: ThemeVars = create({
+	base: 'dark',
+	brandTitle: 'Slice UIKit',
+	brandUrl: 'https://example.com',
+	brandImage: '/public/images/slice-s-white.svg',
+	brandTarget: '_self',
+});

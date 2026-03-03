@@ -1,4 +1,5 @@
 import type { StorybookConfig } from '@storybook/react-vite';
+import path from 'node:path';
 
 const config: StorybookConfig = {
 	stories: [
@@ -22,6 +23,12 @@ const config: StorybookConfig = {
 	},
 	staticDirs: [{ from: '../public', to: '/public' }],
 	viteFinal: (config) => {
+		config.resolve = config.resolve || {};
+		config.resolve.alias = {
+			...(config.resolve.alias || {}),
+			src: path.resolve(process.cwd(), 'src'),
+		};
+
 		// Remove @fs prefix for image paths
 		config.server = config.server || {};
 		config.server.fs = {

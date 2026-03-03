@@ -1,7 +1,7 @@
-import { useCallback } from 'react';
+import { useCallback, useMemo } from 'react';
 import type { SliceTheme } from '../theme';
 import { darkTheme, lightTheme } from '../theme';
-import { colorCssVars } from '../theme/colors/colors';
+import { colorClass, colorCssVars } from '../theme/colors/colors';
 import { typeCssClasses, typeStyles } from '../theme/type/type';
 import { useObserveTheme } from './useObserveTheme';
 
@@ -27,11 +27,15 @@ export function useTheme() {
 		document.documentElement.dataset.theme = theme.name;
 	}, []);
 
-	const toggleTheme = () => {
+	const toggle = () => {
 		const lightMode = current.name === lightTheme.name;
 		const newTheme = lightMode ? darkTheme : lightTheme;
 		set(newTheme);
 	};
+
+	const isDark = useMemo(() => {
+		return current.name === darkTheme.name;
+	}, [current]);
 
 	return {
 		/**
@@ -51,6 +55,10 @@ export function useTheme() {
 		 */
 		colors: colorCssVars,
 		/**
+		 * CSS Class names for the theme colors
+		 */
+		colorsClass: colorClass,
+		/**
 		 * CSS class names for theme typefaces
 		 */
 		typeClass: typeCssClasses,
@@ -59,13 +67,17 @@ export function useTheme() {
 		 */
 		typeStyle: typeStyles,
 		/**
-		 * Set a new theme by name or by passing in a SliceTheme object
+		 * Set a new theme by name or passing in a SliceTheme object
 		 * @param newTheme
 		 */
 		set,
 		/**
 		 * Toggle between light and dark themes
 		 */
-		toggleTheme,
+		toggle,
+		/**
+		 * If the currently active theme is the Slice's default dark theme'
+		 */
+		isDark,
 	};
 }

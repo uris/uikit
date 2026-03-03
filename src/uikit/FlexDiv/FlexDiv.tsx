@@ -107,10 +107,12 @@ export const FlexDiv = React.memo(
 			scrollX,
 			centerSelf,
 			maxWidth,
+			scrollHandle,
+			scrollHandleHover,
 		]);
 
 		/* START.DEBUG */
-		useTrackRenders(props, 'FlexDiv');
+		// useTrackRenders(props, 'FlexDiv');
 		/* END.DEBUG */
 
 		return (

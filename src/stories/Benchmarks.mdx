@@ -3,14 +3,16 @@ import {FlexDiv} from "../uikit/FlexDiv";
 import {Spacer} from "../uikit/Spacer";
 import Benchmarks from "../../benchmarks/reports/benchmark-results.md?raw";
 
-<Meta title="Benchmarks" />
+<Meta title="Welcome/Performance Notes" />
 
 
 <FlexDiv width={"fill"} height={"fill"} alignItems={"center"}>
     <FlexDiv width={"fill"} maxWidth={760} height={"auto"}>
         <Unstyled>
-            # Slice Component Benchmarks
-            Slice's components are performance optimized for fast mount times, fast re-renders and optimal memory usage. The table below summarizes the last known performance benchmarks for Slice.
+            # Component Raw Performance
+            Slice's components are optimized for fast mount times, fast re-renders and low memory usage. The table below summarizes basic performance benchmarks for Slice.
+            
+            Note: take these benchmarks as directional - they were not derived in a controlled environment (they were run on a development PC). Feel free to put Slice through the [CodSpeed](https://codspeed.io) ringer.
         </Unstyled>
         <Markdown>{Benchmarks}</Markdown>
     </FlexDiv>

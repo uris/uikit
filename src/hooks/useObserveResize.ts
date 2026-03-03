@@ -10,22 +10,25 @@ export function useObserveResize(
 	options?: { ignore?: 'width' | 'height' },
 ) {
 	const [size, setSize] = useState<Size>({ width: 0, height: 0 });
+	const ignore = options?.ignore;
 
 	const handleResize = useCallback(
 		(entries: ResizeObserverEntry[]) => {
-			if (entries[0]) {
-				const width = element?.current?.offsetWidth || 0;
-				const height = element?.current?.offsetHeight || 0;
-				const widthChange = width !== size.width;
-				const heightChange = height !== size.height;
-				if (options?.ignore === 'width' && !heightChange) return;
-				if (options?.ignore === 'height' && !widthChange) return;
-				if (size.width !== width || size.height !== height) {
-					setSize({ width, height });
+			if (!entries[0]) return;
+			const width = element?.current?.offsetWidth || 0;
+			const height = element?.current?.offsetHeight || 0;
+			setSize((prev) => {
+				const next = {
+					width: ignore === 'width' ? prev.width : width,
+					height: ignore === 'height' ? prev.height : height,
+				};
+				if (prev.width === next.width && prev.height === next.height) {
+					return prev;
 				}
-			}
+				return next;
+			});
 		},
-		[size, element, options],
+		[element, ignore],
 	);
 
 	useEffect(() => {
@@ -39,10 +42,14 @@ export function useObserveResize(
 
 		// set the new size of different to previous
 		setSize((prev) => {
-			if (prev.width === newWidth && prev.height === newHeight) {
+			const next = {
+				width: ignore === 'width' ? prev.width : newWidth,
+				height: ignore === 'height' ? prev.height : newHeight,
+			};
+			if (prev.width === next.width && prev.height === next.height) {
 				return prev; // same so no need to trigger re-renders
 			}
-			return { width: newWidth, height: newHeight };
+			return next;
 		});
 
 		// Observe size changes
@@ -53,7 +60,7 @@ export function useObserveResize(
 			resizeObserver.unobserve(el);
 			resizeObserver.disconnect();
 		};
-	}, [element, handleResize]);
+	}, [element, handleResize, ignore]);
 
 	return size;
 }

@@ -2,7 +2,7 @@ import { motion } from 'motion/react';
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { useTrackRenders } from '../../hooks/useTrackRenders';
 import css from './Switch.module.css';
-import { type SwitchProps, TRANSITION } from './_types';
+import type { SwitchProps } from './_types';
 
 export const Switch = React.memo((props: SwitchProps) => {
 	const {
@@ -11,8 +11,8 @@ export const Switch = React.memo((props: SwitchProps) => {
 		width = 44,
 		padding = 3,
 		bgColorOn = 'var(--feedback-positive)',
-		bgColorOff = 'var(--core-badge-secondary)',
-		knobColor = 'var(--core-text-light)',
+		bgColorOff = 'var(--core-text-disabled)',
+		knobColor = 'var(--core-surface-primary)',
 		onChange = () => null,
 	} = props;
 	const [on, setOn] = useState<boolean>(state);
@@ -27,22 +27,10 @@ export const Switch = React.memo((props: SwitchProps) => {
 		onChange(!on);
 	}, [on, onChange]);
 
-	// memo animation values
-	const animateValue = useMemo(
-		() => ({ backgroundColor: on ? bgColorOn : bgColorOff }),
-		[on, bgColorOn, bgColorOff],
-	);
-
 	// Memoize style object
 	const justify = useMemo(
 		() => ({ justifyContent: on ? 'flex-end' : 'flex-start' }),
 		[on],
-	);
-
-	// Memoize knob style
-	const knobStyle = useMemo(
-		() => ({ backgroundColor: knobColor }),
-		[knobColor],
 	);
 
 	// memo css vars
@@ -52,8 +40,12 @@ export const Switch = React.memo((props: SwitchProps) => {
 			'--switch-height': `${height}px`,
 			'--switch-padding': `${padding}px`,
 			'--switch-knob-size': `${height - padding * 2}px`,
+			'--switch-knob-color': knobColor,
+			'--switch-bg-color': on ? bgColorOn : bgColorOff,
 		} as React.CSSProperties;
-	}, [width, height, padding]);
+	}, [width, height, padding, bgColorOff, bgColorOn, on, knobColor]);
+
+	console.log(cssVars);
 
 	/* START.DEBUG */
 	useTrackRenders(props, 'Switch');
@@ -63,17 +55,9 @@ export const Switch = React.memo((props: SwitchProps) => {
 		<motion.div
 			className={css.wrapper}
 			style={{ ...cssVars, ...justify }}
-			transition={TRANSITION}
-			initial={state ? bgColorOn : bgColorOff}
-			animate={animateValue}
 			onClick={handleClick}
 		>
-			<motion.div
-				className={css.knob}
-				layout={'preserve-aspect'}
-				transition={TRANSITION}
-				style={knobStyle}
-			/>
+			<motion.div className={css.knob} layout={'preserve-aspect'} />
 		</motion.div>
 	);
 });

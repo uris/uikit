@@ -20,13 +20,11 @@ export function ThemeProvider(props: Readonly<ThemeProviderProps>) {
 
 	// set the active theme
 	useEffect(() => {
-		console.log('theme update', activeTheme);
 		sliceTheme.set(activeTheme);
 	}, [activeTheme, sliceTheme]);
 
 	// update active theme based on theme prop
 	useEffect(() => {
-		console.log('prop update', { theme });
 		if (theme) {
 			const newTheme = theme.includes('dark') ? darkTheme : lightTheme;
 			setActiveTheme(newTheme);
@@ -34,18 +32,17 @@ export function ThemeProvider(props: Readonly<ThemeProviderProps>) {
 	}, [theme]);
 
 	// update active theme based on system theme changes
+	// biome-ignore lint/correctness/useExhaustiveDependencies: on mount/unmount only
 	useEffect(() => {
 		// handler for the media query change
 		const handleSystemThemeChange = (e: MediaQueryListEvent) => {
 			if (system) {
-				console.log('auto update', e.matches);
 				setActiveTheme(e.matches ? darkTheme : lightTheme);
 			}
 		};
 
 		// set the current system theme
 		if (system) {
-			console.log('auto update', darkModeMediaQuery.matches);
 			setActiveTheme(darkModeMediaQuery.matches ? darkTheme : lightTheme);
 		}
 
