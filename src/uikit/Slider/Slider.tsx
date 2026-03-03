@@ -2,6 +2,7 @@ import React, { useCallback, useEffect, useMemo, useRef } from 'react';
 import { useObserveResize } from '../../hooks/useObserveResize';
 import { useTrackRenders } from '../../hooks/useTrackRenders';
 import { debounce } from '../../util/debounce';
+import { pointerPosition } from '../../util/utils';
 import css from './Slider.module.css';
 import type { SliderProps } from './_types';
 
@@ -110,11 +111,12 @@ export const Slider = React.memo((props: SliderProps) => {
 	// returns the pos value making sure it's in bounds
 	const updateSlider = useCallback(
 		(e: any) => {
+			const newPos = pointerPosition(e);
 			const el = ref?.current;
 			if (!el) return 0;
 			const rect = el.getBoundingClientRect();
 			const sliderWidth = rect.width;
-			let pos: number = e.clientX - rect.x;
+			let pos: number = newPos - rect.x;
 			if (pos > sliderWidth - padding) pos = sliderWidth;
 			else if (pos < padding) pos = 0;
 			const max = pos === sliderWidth;
@@ -127,7 +129,7 @@ export const Slider = React.memo((props: SliderProps) => {
 	// on mouse move, push slider to the updated mouse position and trigger the update events
 	// use ref values in the call back to avoid state issues
 	const handleMouseMove = useCallback(
-		(e: MouseEvent) => {
+		(e: MouseEvent | TouchEvent) => {
 			e.preventDefault();
 			const el = ref?.current;
 			if (el) {
@@ -142,10 +144,8 @@ export const Slider = React.memo((props: SliderProps) => {
 	// on mouse up, push slider to the updated mouse up position and trigger the update events
 	// also cleaning up the mouse move and mouse up listeners attached to the window
 	const handleMouseUp = useCallback(
-		(e: MouseEvent) => {
+		(e: MouseEvent | TouchEvent) => {
 			e.preventDefault();
-			globalThis.removeEventListener('mousemove', handleMouseMove, false);
-			globalThis.removeEventListener('mouseup', handleMouseUp, false);
 			const el = ref?.current;
 			if (el) {
 				const pos = updateSlider(e); // return new pixel pos and updates head/track
@@ -154,6 +154,10 @@ export const Slider = React.memo((props: SliderProps) => {
 				onDragChange(absProgressRef.current, relativeProgressRef.current); // immediate update
 				onChange(absProgressRef.current, relativeProgressRef.current);
 			}
+			globalThis.removeEventListener('mousemove', handleMouseMove, false);
+			globalThis.removeEventListener('touchmove', handleMouseMove, false);
+			globalThis.removeEventListener('mouseup', handleMouseUp, false);
+			globalThis.removeEventListener('touchend', handleMouseUp, false);
 		},
 		[
 			handleMouseMove,
@@ -168,11 +172,13 @@ export const Slider = React.memo((props: SliderProps) => {
 	// On mouse down push the progress of then slider to the mouse down point
 	// and trigger events - add the drag and mouse up window listeners
 	const handleMouseDown = useCallback(
-		(e: MouseEvent) => {
+		(e: MouseEvent | TouchEvent) => {
 			e.preventDefault();
 			e.stopPropagation();
 			globalThis.addEventListener('mousemove', handleMouseMove, false);
+			globalThis.addEventListener('touchmove', handleMouseMove, false);
 			globalThis.addEventListener('mouseup', handleMouseUp, false);
+			globalThis.addEventListener('touchend', handleMouseUp, false);
 			const el = ref?.current;
 			if (el) {
 				const pos = updateSlider(e); // return new pixel pos and updates head/track
@@ -203,8 +209,10 @@ export const Slider = React.memo((props: SliderProps) => {
 	useEffect(() => {
 		const el = ref?.current;
 		el?.addEventListener('mousedown', handleMouseDown, false);
+		el?.addEventListener('touchstart', handleMouseDown, false);
 		return () => {
 			el?.removeEventListener('mousedown', handleMouseDown, false);
+			el?.removeEventListener('touchstart', handleMouseDown, false);
 		};
 	}, [handleMouseDown]);
 

@@ -123,3 +123,15 @@ export function accessibleKeyDown(
 		clickFunction();
 	}
 }
+
+/**
+ * Get the pointer position from a DOM touch or mouse event
+ */
+export function pointerPosition(e: MouseEvent | TouchEvent): number {
+	if (e.type.startsWith('touch')) {
+		const touchEvent = e as TouchEvent;
+		return touchEvent.touches[0].clientX;
+	}
+	const mouseEvent = e as MouseEvent;
+	return mouseEvent.clientX;
+}

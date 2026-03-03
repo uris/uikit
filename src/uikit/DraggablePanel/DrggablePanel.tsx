@@ -9,6 +9,7 @@ import React, {
 import { useTheme } from '../../hooks';
 import { useObserveResize } from '../../hooks/useObserveResize';
 import { useTrackRenders } from '../../hooks/useTrackRenders';
+import { pointerPosition } from '../../util/utils';
 import css from './DraggablePanel.module.css';
 import type { Constraint } from './_types';
 
@@ -201,12 +202,7 @@ export const DraggablePanel = React.memo((props: DraggablePanelProps) => {
 
 	// get the current mouse X position using touch or mouse event
 	const getClientX = useCallback((e: MouseEvent | TouchEvent) => {
-		if (e.type.startsWith('touch')) {
-			const touchEvent = e as TouchEvent;
-			return touchEvent.touches[0]?.clientX || 0;
-		}
-		const mouseEvent = e as MouseEvent;
-		return mouseEvent.clientX;
+		return pointerPosition(e);
 	}, []);
 
 	// calculate the drag amount based on starting point and new client x point
@@ -297,13 +293,7 @@ export const DraggablePanel = React.memo((props: DraggablePanelProps) => {
 				divWidth.current = div.current.offsetWidth;
 				divHeight.current = div.current.offsetHeight;
 				deltaWidth.current = 0;
-				if (e.type.startsWith('touch')) {
-					const touchEvent = e as TouchEvent;
-					startX.current = touchEvent.touches[0]?.clientX || 0;
-				} else {
-					const mouseEvent = e as MouseEvent;
-					startX.current = mouseEvent.clientX;
-				}
+				startX.current = pointerPosition(e);
 				startWidth.current = Number.parseInt(
 					document.defaultView.getComputedStyle(el).width,
 					10,

@@ -11,7 +11,7 @@ import packageJson from './package.json';
 
 // Dynamic import of rollup-plugin-visualizer to avoid bundling it in production
 const rollup = async () => {
-	const {visualizer} = await import('rollup-plugin-visualizer');
+	const { visualizer } = await import('rollup-plugin-visualizer');
 
 	return {
 		input: 'src/index.ts',
@@ -34,7 +34,7 @@ const rollup = async () => {
 				end_comment: 'END.DEBUG',
 			}),
 			peerDepsExternal(),
-			resolve({extensions: ['.js', '.ts', '.tsx']}),
+			resolve({ extensions: ['.js', '.ts', '.tsx'] }),
 			commonjs(),
 			babel({
 				exclude: ['node_modules/**', 'src/stories/**'],
@@ -51,7 +51,7 @@ const rollup = async () => {
 				svgo: true, // Enable SVGO for optimizing SVGs
 				svgoConfig: {
 					// Custom SVGO config (optional)
-					plugins: [{name: 'removeViewBox', active: false}],
+					plugins: [{ name: 'removeViewBox', active: false }],
 				},
 			}),
 			// Export SVGs and PNgs as URLs for assets

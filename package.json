@@ -3,11 +3,7 @@
 	"version": "0.0.0",
 	"main": "dist/index.js",
 	"module": "dist/index.esm.js",
-	"files": [
-		"dist",
-		"README.md",
-		"scripts/copy-assets.mjs"
-	],
+	"files": ["dist", "README.md", "scripts/copy-assets.mjs"],
 	"scripts": {
 		"lint": "biome format --write . && biome check .",
 		"lint:fix": "biome format --write . && biome check --write .",
