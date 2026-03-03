@@ -41,7 +41,7 @@ export const Default: StoryObj<typeof CheckBox> = {
 export const Partial: StoryObj<typeof CheckBox> = {
 	args: {
 		...meta.args,
-		checked: 'partial',
+		checked: 'mixed',
 	},
 	render: Default.render,
 	play: async ({ canvasElement, args }) => {
