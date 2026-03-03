@@ -27,21 +27,21 @@ import {RenderSource} from '../../../.storybook/RenderSource';
           </colgroup>
           <thead>
             <tr>
-              <th className={"left"}>Prop</th>
-              <th className={"left"}>Type</th>
-              <th className={"left"}>Default</th>
-              <th className={"left"}>Description</th>
+              <th >Prop</th>
+              <th >Type</th>
+              <th >Default</th>
+              <th >Description</th>
             </tr>
           </thead>
           <tbody>
             <tr><td><code>avatars</code></td><td><code>AvatarInfo[] | null</code></td><td><code>[]</code></td><td>List of avatar records rendered in order. Each item can include names, image/avatar URL, colors, and email.</td></tr>
-            <tr><td><code>size</code></td><td><code>number</code></td><td><code>32</code></td><td>Avatar width/height in pixels for each item in the group.</td></tr>
-            <tr><td><code>overlap</code></td><td><code>number</code></td><td><code>8</code></td><td>Horizontal overlap amount between adjacent avatars. Positive values create tighter stacking.</td></tr>
             <tr><td><code>border</code></td><td><code>number</code></td><td><code>3</code></td><td>Border width applied to each child avatar.</td></tr>
             <tr><td><code>borderColor</code></td><td><code>string</code></td><td><code>undefined</code></td><td>Optional border color override passed to each child avatar.</td></tr>
+            <tr><td><code>firstOnly</code></td><td><code>boolean</code></td><td><code>false</code></td><td>If <code>true</code>, child avatars render only first initials and no image/last initial content.</td></tr>
             <tr><td><code>gap</code></td><td><code>number</code></td><td><code>0</code></td><td>Additional spacing between avatar wrappers.</td></tr>
             <tr><td><code>margin</code></td><td><code>number</code></td><td><code>0</code></td><td>Outer margin value for the group layout token.</td></tr>
-            <tr><td><code>firstOnly</code></td><td><code>boolean</code></td><td><code>false</code></td><td>If <code>true</code>, child avatars render only first initials and no image/last initial content.</td></tr>
+            <tr><td><code>overlap</code></td><td><code>number</code></td><td><code>8</code></td><td>Horizontal overlap amount between adjacent avatars. Positive values create tighter stacking.</td></tr>
+            <tr><td><code>size</code></td><td><code>number</code></td><td><code>32</code></td><td>Avatar width/height in pixels for each item in the group.</td></tr>
             <tr><td><code>...divAttributes</code></td><td><code>HTMLAttributes</code><br/><code>HTMLDivElement</code></td><td><code>-</code></td><td>Native <code>div</code> props pass through to the group root (for example <code>id</code>, <code>data-testid</code>, <code>className</code>, <code>style</code>, <code>aria-*</code>).</td></tr>
           </tbody>
         </table>
@@ -54,8 +54,8 @@ import {RenderSource} from '../../../.storybook/RenderSource';
           </colgroup>
           <thead>
             <tr>
-              <th className={"left"}>Event</th>
-              <th className={"left"}>Type</th>
+              <th >Event</th>
+              <th >Type</th>
             </tr>
           </thead>
           <tbody>

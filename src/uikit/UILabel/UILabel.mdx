@@ -1,6 +1,7 @@
 import {Meta, Unstyled} from '@storybook/addon-docs/blocks';
 import {FlexDiv} from '../FlexDiv';
 import * as UILabelStories from './UILabel.stories';
+import {RenderSource} from '../../../.storybook/RenderSource';
 
 <Meta of={UILabelStories} />
 
@@ -8,31 +9,78 @@ import * as UILabelStories from './UILabel.stories';
     <FlexDiv width={"fill"} maxWidth={760} height={"auto"}>
         <Unstyled>
         # UILabel
+        UILabel component documentation.
 
-        Part of `Components/UILabel`.
+        ## Base element
+        `HTMLDivElement`
 
-        ## Purpose
+        ## Interface
+        `UILabelProps`
 
-        - Use `UILabel` when you need this UI primitive inside the Slice component system.
-        - Implementation reviewed from: `src/uikit/UILabel/UILabel.tsx`.
+        ## Props
+        <table style={{width: '100%'}}>
+          <colgroup>
+            <col style={{width: '1%'}} />
+            <col style={{width: '1%'}} />
+            <col style={{width: '1%'}} />
+            <col style={{width: '97%'}} />
+          </colgroup>
+          <thead>
+            <tr>
+              <th className={"left"}>Prop</th>
+              <th className={"left"}>Type</th>
+              <th className={"left"}>Default</th>
+              <th>Description</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td><code>button</code></td><td><code>boolean</code></td><td><code>-</code></td><td>Boolean flag controlling `button`.</td></tr>
+            <tr><td><code>label</code></td><td><code>string</code></td><td><code>-</code></td><td>Text/value for `label`.</td></tr>
+            <tr><td><code>noFill</code></td><td><code>boolean</code></td><td><code>-</code></td><td>Boolean flag controlling `noFill`.</td></tr>
+            <tr><td><code>round</code></td><td><code>boolean</code></td><td><code>-</code></td><td>Boolean flag controlling `round`.</td></tr>
+            <tr><td><code>state</code></td><td><code>{`'red' | 'yellow' | 'green' | 'blue' | 'grey' | 'lightgrey' | 'white'`}</code></td><td><code>-</code></td><td>Controls `state`.</td></tr>
+            <tr><td><code>...divAttributes</code></td><td><code>{`HTMLAttributes<HTMLDivElement>`}</code></td><td><code>-</code></td><td>Native `div` props pass through (for example `id`, `data-testid`, `className`, `style`, `aria-*`).</td></tr>
+          </tbody>
+        </table>
 
-        ## Story Variants
+        ## Events
+        <table style={{width: '100%'}}>
+          <colgroup>
+            <col style={{width: '1%'}} />
+            <col style={{width: '99%'}} />
+          </colgroup>
+          <thead>
+            <tr>
+              <th className={"left"}>Event</th>
+              <th className={"left"}>Type</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td><code>onClick</code></td><td><code>{`(e: React.MouseEvent<any>) => void`}</code></td></tr>
+          </tbody>
+        </table>
 
-        - `Default`
-        - `ButtonLabel`
-
-        ## Attributes
-
-        - Props interface: `UILabelProps`
-
-        | Prop | Type | Required | Default | Notes |
-        | --- | --- | --- | --- | --- |
-        | `onClick` | `(e: React.MouseEvent<any>) => void` | No | `() => null` | callback |
-        | `label` | `string` | No | `'UI Label'` | string |
-        | `state` | `'red' \\| 'yellow' \\| 'green' \\| 'blue' \\| 'grey' \\| 'lightgrey' \\| 'white'` | No | `'red'` | union |
-        | `noFill` | `boolean` | No | `false` | boolean |
-        | `round` | `boolean` | No | `false` | boolean |
-        | `button` | `boolean` | No | `false` | boolean |
+        ## Code Examples
         </Unstyled>
+
+        <RenderSource language={"tsx"}>
+{`
+import { UILabel } from '@apple-pie/slice';
+
+export function UILabelExample() {
+  return (
+    <UILabel
+      label="Connected"
+      state="green"
+      round={true}
+      id="uilabel-example"
+      data-testid="uilabel-example"
+      className="custom-wrapper"
+      style={{ marginTop: 8, maxWidth: 480 }}
+    />
+  );
+}
+`}
+        </RenderSource>
     </FlexDiv>
 </FlexDiv>

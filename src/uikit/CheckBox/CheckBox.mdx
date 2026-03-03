@@ -1,6 +1,7 @@
 import {Meta, Unstyled} from '@storybook/addon-docs/blocks';
 import {FlexDiv} from '../FlexDiv';
 import * as CheckBoxStories from './CheckBox.stories';
+import {RenderSource} from '../../../.storybook/RenderSource';
 
 <Meta of={CheckBoxStories} />
 
@@ -8,32 +9,78 @@ import * as CheckBoxStories from './CheckBox.stories';
     <FlexDiv width={"fill"} maxWidth={760} height={"auto"}>
         <Unstyled>
         # CheckBox
+        CheckBox component documentation.
 
-        Part of `Components/CheckBox`.
+        ## Base element
+        `HTMLDivElement`
 
-        ## Purpose
+        ## Interface
+        `CheckBoxProps`
 
-        - Use `CheckBox` when you need this UI primitive inside the Slice component system.
-        - Implementation reviewed from: `src/uikit/CheckBox/CheckBox.tsx`.
+        ## Props
+        <table style={{width: '100%'}}>
+          <colgroup>
+            <col style={{width: '1%'}} />
+            <col style={{width: '1%'}} />
+            <col style={{width: '1%'}} />
+            <col style={{width: '97%'}} />
+          </colgroup>
+          <thead>
+            <tr>
+              <th className={"left"}>Prop</th>
+              <th className={"left"}>Type</th>
+              <th className={"left"}>Default</th>
+              <th>Description</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td><code>checked</code></td><td><code>{`'mixed' | 'partial' | boolean`}</code></td><td><code>-</code></td><td>Boolean flag controlling `checked`.</td></tr>
+            <tr><td><code>color</code></td><td><code>string</code></td><td><code>-</code></td><td>Color token/value for `color`.</td></tr>
+            <tr><td><code>disabled</code></td><td><code>boolean</code></td><td><code>-</code></td><td>Boolean flag controlling `disabled`.</td></tr>
+            <tr><td><code>label</code></td><td><code>string</code></td><td><code>-</code></td><td>Text/value for `label`.</td></tr>
+            <tr><td><code>size</code></td><td><code>number</code></td><td><code>-</code></td><td>Sizing/layout setting for `size`.</td></tr>
+            <tr><td><code>...divAttributes</code></td><td><code>{`HTMLAttributes<HTMLDivElement>`}</code></td><td><code>-</code></td><td>Native `div` props pass through (for example `id`, `data-testid`, `className`, `style`, `aria-*`).</td></tr>
+          </tbody>
+        </table>
 
-        ## Story Variants
+        ## Events
+        <table style={{width: '100%'}}>
+          <colgroup>
+            <col style={{width: '1%'}} />
+            <col style={{width: '99%'}} />
+          </colgroup>
+          <thead>
+            <tr>
+              <th className={"left"}>Event</th>
+              <th className={"left"}>Type</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td><code>onChange</code></td><td><code>{`(state: boolean) => void`}</code></td></tr>
+          </tbody>
+        </table>
 
-        - `Default`
-        - `Partial`
-        - `Disabled`
-
-        ## Attributes
-
-        - Props interface: `CheckBoxProps`
-
-        | Prop | Type | Required | Default | Notes |
-        | --- | --- | --- | --- | --- |
-        | `onChange` | `(state: boolean) => void` | No | `() => null` | callback |
-        | `size` | `number` | No | `20` | number |
-        | `checked` | `'mixed' \\| boolean` | No | `false` | union |
-        | `disabled` | `boolean` | No | `false` | boolean |
-        | `color` | `string` | No | `undefined` | string |
-        | `label` | `string` | No | `undefined` | string |
+        ## Code Examples
         </Unstyled>
+
+        <RenderSource language={"tsx"}>
+{`
+import { CheckBox } from '@apple-pie/slice';
+
+export function CheckBoxExample() {
+  return (
+    <CheckBox
+      label="Enable notifications"
+      checked={true}
+      onChange={(state) => console.log(state)}
+      id="checkbox-example"
+      data-testid="checkbox-example"
+      className="custom-wrapper"
+      style={{ marginTop: 8, maxWidth: 480 }}
+    />
+  );
+}
+`}
+        </RenderSource>
     </FlexDiv>
 </FlexDiv>

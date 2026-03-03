@@ -59,7 +59,7 @@ export default meta;
 export const Default: StoryObj<typeof FlexDiv> = {
 	render: (args) => {
 		return (
-			<FlexDiv justify={'center'} alignItems={'center'} padding={64}>
+			<FlexDiv absolute justify={'center'} alignItems={'center'} padding={64}>
 				<FlexDiv {...args} background={'var(--core-surface-secondary)'}>
 					Here's the latest • War with Iran: There could be more US casualties
 					as part of the military operations against Iran, President Donald

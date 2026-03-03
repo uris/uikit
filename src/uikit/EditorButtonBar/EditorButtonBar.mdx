@@ -1,6 +1,7 @@
 import {Meta, Unstyled} from '@storybook/addon-docs/blocks';
 import {FlexDiv} from '../FlexDiv';
 import * as EditorButtonBarStories from './EditorButtonBar.stories';
+import {RenderSource} from '../../../.storybook/RenderSource';
 
 <Meta of={EditorButtonBarStories} />
 
@@ -8,32 +9,81 @@ import * as EditorButtonBarStories from './EditorButtonBar.stories';
     <FlexDiv width={"fill"} maxWidth={760} height={"auto"}>
         <Unstyled>
         # EditorButtonBar
+        EditorButtonBar component documentation.
 
-        Part of `Components/EditorButtonBar`.
+        ## Base element
+        `HTMLDivElement`
 
-        ## Purpose
+        ## Interface
+        `EditorButtonBarProps`
 
-        - Use `EditorButtonBar` when you need this UI primitive inside the Slice component system.
-        - Implementation reviewed from: `src/uikit/EditorButtonBar/EditorButtonBar.tsx`.
+        ## Props
+        <table style={{width: '100%'}}>
+          <colgroup>
+            <col style={{width: '1%'}} />
+            <col style={{width: '1%'}} />
+            <col style={{width: '1%'}} />
+            <col style={{width: '97%'}} />
+          </colgroup>
+          <thead>
+            <tr>
+              <th className={"left"}>Prop</th>
+              <th className={"left"}>Type</th>
+              <th className={"left"}>Default</th>
+              <th>Description</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td><code>activeFormats</code></td><td><code>string[]</code></td><td><code>-</code></td><td>Text/value for `activeFormats`.</td></tr>
+            <tr><td><code>activeStyle</code></td><td><code>{`'h1' | 'h2' | 'h3' | 'p'`}</code></td><td><code>-</code></td><td>Controls `activeStyle`.</td></tr>
+            <tr><td><code>disabledFormats</code></td><td><code>string[]</code></td><td><code>-</code></td><td>Text/value for `disabledFormats`.</td></tr>
+            <tr><td><code>mediumSize</code></td><td><code>number</code></td><td><code>-</code></td><td>Sizing/layout setting for `mediumSize`.</td></tr>
+            <tr><td><code>shortSize</code></td><td><code>number</code></td><td><code>-</code></td><td>Sizing/layout setting for `shortSize`.</td></tr>
+            <tr><td><code>state</code></td><td><code>{`'small' | 'medium' | 'regular' | 'auto'`}</code></td><td><code>-</code></td><td>Controls `state`.</td></tr>
+            <tr><td><code>...divAttributes</code></td><td><code>{`HTMLAttributes<HTMLDivElement>`}</code></td><td><code>-</code></td><td>Native `div` props pass through (for example `id`, `data-testid`, `className`, `style`, `aria-*`).</td></tr>
+          </tbody>
+        </table>
 
-        ## Story Variants
+        ## Events
+        <table style={{width: '100%'}}>
+          <colgroup>
+            <col style={{width: '1%'}} />
+            <col style={{width: '99%'}} />
+          </colgroup>
+          <thead>
+            <tr>
+              <th className={"left"}>Event</th>
+              <th className={"left"}>Type</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td><code>onCommand</code></td><td><code>{`(command: any, e: React.MouseEvent<any> | undefined) => void`}</code></td></tr>
+            <tr><td><code>onToolTip</code></td><td><code>{`(tip: ToolTip | null) => void`}</code></td></tr>
+          </tbody>
+        </table>
 
-        - `Default`
-
-        ## Attributes
-
-        - Props interface: `EditorButtonBarProps`
-
-        | Prop | Type | Required | Default | Notes |
-        | --- | --- | --- | --- | --- |
-        | `onCommand` | `(command: any, e: React.MouseEvent<any> \| undefined) => void` | No | `() => null` | callback |
-        | `onToolTip` | `(tip: ToolTip \| null) => void` | No | `() => null` | callback |
-        | `shortSize` | `number` | No | `500` | number |
-        | `mediumSize` | `number` | No | `664` | number |
-        | `state` | `'small' \\| 'medium' \\| 'regular' \\| 'auto'` | No | `'auto'` | union |
-        | `activeFormats` | `string[]` | No | `[]` | array |
-        | `activeStyle` | `'h1' \\| 'h2' \\| 'h3' \\| 'p'` | No | `'p'` | union |
-        | `disabledFormats` | `string[]` | No | `[]` | array |
+        ## Code Examples
         </Unstyled>
+
+        <RenderSource language={"tsx"}>
+{`
+import { EditorButtonBar } from '@apple-pie/slice';
+
+export function EditorButtonBarExample() {
+  return (
+    <EditorButtonBar
+      state="regular"
+      activeStyle="p"
+      activeFormats={['bold']}
+      onCommand={(command) => console.log(command)}
+      id="editorbuttonbar-example"
+      data-testid="editorbuttonbar-example"
+      className="custom-wrapper"
+      style={{ marginTop: 8, maxWidth: 480 }}
+    />
+  );
+}
+`}
+        </RenderSource>
     </FlexDiv>
 </FlexDiv>

@@ -1,6 +1,7 @@
 import {Meta, Unstyled} from '@storybook/addon-docs/blocks';
 import {FlexDiv} from '../FlexDiv';
 import * as SliderStories from './Slider.stories';
+import {RenderSource} from '../../../.storybook/RenderSource';
 
 <Meta of={SliderStories} />
 
@@ -8,40 +9,88 @@ import * as SliderStories from './Slider.stories';
     <FlexDiv width={"fill"} maxWidth={760} height={"auto"}>
         <Unstyled>
         # Slider
+        Slider component documentation.
 
-        Part of `Components/Slider`.
+        ## Base element
+        `HTMLDivElement`
 
-        ## Purpose
+        ## Interface
+        `SliderProps`
 
-        - Use `Slider` when you need this UI primitive inside the Slice component system.
-        - Implementation reviewed from: `src/uikit/Slider/Slider.tsx`.
+        ## Props
+        <table style={{width: '100%'}}>
+          <colgroup>
+            <col style={{width: '1%'}} />
+            <col style={{width: '1%'}} />
+            <col style={{width: '1%'}} />
+            <col style={{width: '97%'}} />
+          </colgroup>
+          <thead>
+            <tr>
+              <th className={"left"}>Prop</th>
+              <th className={"left"}>Type</th>
+              <th className={"left"}>Default</th>
+              <th>Description</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td><code>cursor</code></td><td><code>{`'default' | 'grab' | 'grabbing' | 'pointer'`}</code></td><td><code>-</code></td><td>Controls `cursor`.</td></tr>
+            <tr><td><code>headColor</code></td><td><code>string</code></td><td><code>-</code></td><td>Color token/value for `headColor`.</td></tr>
+            <tr><td><code>headType</code></td><td><code>{`'round' | 'square' | 'none'`}</code></td><td><code>-</code></td><td>Controls `headType`.</td></tr>
+            <tr><td><code>height</code></td><td><code>{`number | string`}</code></td><td><code>-</code></td><td>Sizing/layout setting for `height`.</td></tr>
+            <tr><td><code>progressColor</code></td><td><code>string</code></td><td><code>-</code></td><td>Color token/value for `progressColor`.</td></tr>
+            <tr><td><code>scaleMax</code></td><td><code>number</code></td><td><code>-</code></td><td>Controls `scaleMax`.</td></tr>
+            <tr><td><code>scaleMin</code></td><td><code>number</code></td><td><code>-</code></td><td>Controls `scaleMin`.</td></tr>
+            <tr><td><code>touchHeight</code></td><td><code>{`number | string`}</code></td><td><code>-</code></td><td>Sizing/layout setting for `touchHeight`.</td></tr>
+            <tr><td><code>trackColor</code></td><td><code>string</code></td><td><code>-</code></td><td>Color token/value for `trackColor`.</td></tr>
+            <tr><td><code>trackHeadSize</code></td><td><code>{`number | null`}</code></td><td><code>-</code></td><td>Sizing/layout setting for `trackHeadSize`.</td></tr>
+            <tr><td><code>trackHeadWidth</code></td><td><code>{`number | null`}</code></td><td><code>-</code></td><td>Sizing/layout setting for `trackHeadWidth`.</td></tr>
+            <tr><td><code>value</code></td><td><code>number</code></td><td><code>-</code></td><td>Controls `value`.</td></tr>
+            <tr><td><code>width</code></td><td><code>{`number | string`}</code></td><td><code>-</code></td><td>Sizing/layout setting for `width`.</td></tr>
+            <tr><td><code>...divAttributes</code></td><td><code>{`HTMLAttributes<HTMLDivElement>`}</code></td><td><code>-</code></td><td>Native `div` props pass through (for example `id`, `data-testid`, `className`, `style`, `aria-*`).</td></tr>
+          </tbody>
+        </table>
 
-        ## Story Variants
+        ## Events
+        <table style={{width: '100%'}}>
+          <colgroup>
+            <col style={{width: '1%'}} />
+            <col style={{width: '99%'}} />
+          </colgroup>
+          <thead>
+            <tr>
+              <th className={"left"}>Event</th>
+              <th className={"left"}>Type</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td><code>onChange</code></td><td><code>{`(value: number, percent: number) => void`}</code></td></tr>
+            <tr><td><code>onDragChange</code></td><td><code>{`(value: number, percent: number) => void`}</code></td></tr>
+          </tbody>
+        </table>
 
-        - `Default`
-        - `WithTestingActions`
-
-        ## Attributes
-
-        - Props interface: `SliderProps`
-
-        | Prop | Type | Required | Default | Notes |
-        | --- | --- | --- | --- | --- |
-        | `headColor` | `string` | No | `'var(--core-text-primary)'` | string |
-        | `trackColor` | `string` | No | `'var(--core-surface-secondary)'` | string |
-        | `progressColor` | `string` | No | `'var(--core-text-primary)'` | string |
-        | `onChange` | `(value: number, percent: number) => void` | No | `() => null` | callback |
-        | `onDragChange` | `(value: number, percent: number) => void` | No | `() => null` | callback |
-        | `value` | `number` | No | `25` | number |
-        | `scaleMin` | `number` | No | `0` | number |
-        | `scaleMax` | `number` | No | `100` | number |
-        | `width` | `number \\| string` | No | `100` | union |
-        | `height` | `number \\| string` | No | `2` | union |
-        | `touchHeight` | `number \\| string` | No | `24` | union |
-        | `trackHeadSize` | `number \\| null` | No | `7` | union |
-        | `trackHeadWidth` | `number \\| null` | No | `4` | union |
-        | `headType` | `'round' \\| 'square' \\| 'none'` | No | `'round'` | union |
-        | `cursor` | `'default' \\| 'grab' \\| 'grabbing' \\| 'pointer'` | No | `'default'` | union |
+        ## Code Examples
         </Unstyled>
+
+        <RenderSource language={"tsx"}>
+{`
+import { Slider } from '@apple-pie/slice';
+
+export function SliderExample() {
+  return (
+    <Slider
+      value={42}
+      scaleMin={0}
+      scaleMax={100}
+      onChange={(value) => console.log(value)}
+      id="slider-example"
+      data-testid="slider-example"
+      className="custom-wrapper"
+      style={{ marginTop: 8, maxWidth: 480 }}
+    />
+  );
+}
+`}
+        </RenderSource>
     </FlexDiv>
 </FlexDiv>

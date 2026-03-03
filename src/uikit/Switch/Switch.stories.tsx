@@ -24,7 +24,7 @@ export default meta;
 export const Default: StoryObj<typeof Switch> = {
 	render: (args) => {
 		return (
-			<FlexDiv justify={'center'} alignItems={'center'} padding={64}>
+			<FlexDiv absolute justify={'center'} alignItems={'center'} padding={64}>
 				<Switch {...args} />
 			</FlexDiv>
 		);

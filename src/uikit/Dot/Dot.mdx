@@ -1,6 +1,7 @@
 import {Meta, Unstyled} from '@storybook/addon-docs/blocks';
 import {FlexDiv} from '../FlexDiv';
 import * as DotStories from './Dot.stories';
+import {RenderSource} from '../../../.storybook/RenderSource';
 
 <Meta of={DotStories} />
 
@@ -8,34 +9,85 @@ import * as DotStories from './Dot.stories';
     <FlexDiv width={"fill"} maxWidth={760} height={"auto"}>
         <Unstyled>
         # Dot
+        Dot component documentation.
 
-        Part of `Components/Dot`.
+        ## Base element
+        `HTMLDivElement`
 
-        ## Purpose
+        ## Interface
+        `DotProps`
 
-        - Use `Dot` when you need this UI primitive inside the Slice component system.
-        - Implementation reviewed from: `src/uikit/Dot/Dot.tsx`.
+        ## Props
+        <table style={{width: '100%'}}>
+          <colgroup>
+            <col style={{width: '1%'}} />
+            <col style={{width: '1%'}} />
+            <col style={{width: '1%'}} />
+            <col style={{width: '97%'}} />
+          </colgroup>
+          <thead>
+            <tr>
+              <th className={"left"}>Prop</th>
+              <th className={"left"}>Type</th>
+              <th className={"left"}>Default</th>
+              <th>Description</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td><code>border</code></td><td><code>number</code></td><td><code>-</code></td><td>Sizing/layout setting for `border`.</td></tr>
+            <tr><td><code>color</code></td><td><code>string</code></td><td><code>-</code></td><td>Color token/value for `color`.</td></tr>
+            <tr><td><code>motion</code></td><td><code>Variants</code></td><td><code>-</code></td><td>Controls `motion`.</td></tr>
+            <tr><td><code>motionValues</code></td><td><code>Variants</code></td><td><code>-</code></td><td>Controls `motionValues`.</td></tr>
+            <tr><td><code>position</code></td><td><code>{`'inline' | 'corner'`}</code></td><td><code>-</code></td><td>Controls `position`.</td></tr>
+            <tr><td><code>rightOffset</code></td><td><code>number</code></td><td><code>-</code></td><td>Controls `rightOffset`.</td></tr>
+            <tr><td><code>show</code></td><td><code>boolean</code></td><td><code>-</code></td><td>Boolean flag controlling `show`.</td></tr>
+            <tr><td><code>size</code></td><td><code>number</code></td><td><code>-</code></td><td>Sizing/layout setting for `size`.</td></tr>
+            <tr><td><code>state</code></td><td><code>{`'red' | 'yellow' | 'green' | 'blue' | 'grey'`}</code></td><td><code>-</code></td><td>Controls `state`.</td></tr>
+            <tr><td><code>topOffset</code></td><td><code>number</code></td><td><code>-</code></td><td>Controls `topOffset`.</td></tr>
+            <tr><td><code>transition</code></td><td><code>Transition</code></td><td><code>-</code></td><td>Controls `transition`.</td></tr>
+            <tr><td><code>...divAttributes</code></td><td><code>{`HTMLAttributes<HTMLDivElement>`}</code></td><td><code>-</code></td><td>Native `div` props pass through (for example `id`, `data-testid`, `className`, `style`, `aria-*`).</td></tr>
+          </tbody>
+        </table>
 
-        ## Story Variants
+        ## Events
+        <table style={{width: '100%'}}>
+          <colgroup>
+            <col style={{width: '1%'}} />
+            <col style={{width: '99%'}} />
+          </colgroup>
+          <thead>
+            <tr>
+              <th className={"left"}>Event</th>
+              <th className={"left"}>Type</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td><code>-</code></td><td><code>-</code></td></tr>
+          </tbody>
+        </table>
 
-        - `Default`
-
-        ## Attributes
-
-        - Props interface: `DotProps`
-
-        | Prop | Type | Required | Default | Notes |
-        | --- | --- | --- | --- | --- |
-        | `size` | `number` | No | `8` | number |
-        | `topOffset` | `number` | No | `2` | number |
-        | `rightOffset` | `number` | No | `2` | number |
-        | `border` | `number` | No | `3` | number |
-        | `position` | `'inline' \\| 'corner'` | No | `'corner'` | union |
-        | `state` | `'red' \\| 'yellow' \\| 'green' \\| 'blue' \\| 'grey'` | No | `'blue'` | union |
-        | `color` | `string` | No | `undefined` | string |
-        | `transition` | `Transition` | No | `undefined` | custom |
-        | `motionValues` | `Variants` | No | `undefined` | custom |
-        | `show` | `boolean` | No | `false` | boolean |
+        ## Code Examples
         </Unstyled>
+
+        <RenderSource language={"tsx"}>
+{`
+import { Dot } from '@apple-pie/slice';
+
+export function DotExample() {
+  return (
+    <Dot
+      state="green"
+      position="corner"
+      size={10}
+      show={true}
+      id="dot-example"
+      data-testid="dot-example"
+      className="custom-wrapper"
+      style={{ marginTop: 8, maxWidth: 480 }}
+    />
+  );
+}
+`}
+        </RenderSource>
     </FlexDiv>
 </FlexDiv>

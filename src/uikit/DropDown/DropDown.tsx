@@ -43,7 +43,7 @@ export const DropDown = React.memo((props: DropDownProps) => {
 		...divAttributes
 	} = props;
 	const { id: divId, className, style, ...rest } = divAttributes;
-	const divStyle = (style ?? {}) as React.CSSProperties;
+	const divStyle = style ?? ({} as React.CSSProperties);
 	const divClass = className ? ` ${className}` : '';
 
 	const [index, setIndex] = useState<number>(selectedIndex);

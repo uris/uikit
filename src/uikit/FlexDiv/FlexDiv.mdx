@@ -1,6 +1,7 @@
 import {Meta, Unstyled} from '@storybook/addon-docs/blocks';
-import {FlexDiv} from '../FlexDiv';
+import {FlexDiv} from './';
 import * as FlexDivStories from './FlexDiv.stories';
+import {RenderSource} from '../../../.storybook/RenderSource';
 
 <Meta of={FlexDivStories} />
 
@@ -8,51 +9,103 @@ import * as FlexDivStories from './FlexDiv.stories';
     <FlexDiv width={"fill"} maxWidth={760} height={"auto"}>
         <Unstyled>
         # FlexDiv
+        FlexDiv component documentation.
 
-        Part of `Components/FlexDiv`.
+        ## Base element
+        `HTMLDivElement`
 
-        ## Purpose
+        ## Interface
+        `FlexDivProps`
 
-        - Use `FlexDiv` when you need this UI primitive inside the Slice component system.
-        - Implementation reviewed from: `src/uikit/FlexDiv/FlexDiv.tsx`.
+        ## Props
+        <table style={{width: '100%'}}>
+          <colgroup>
+            <col style={{width: '1%'}} />
+            <col style={{width: '1%'}} />
+            <col style={{width: '1%'}} />
+            <col style={{width: '97%'}} />
+          </colgroup>
+          <thead>
+            <tr>
+              <th className={"left"}>Prop</th>
+              <th className={"left"}>Type</th>
+              <th className={"left"}>Default</th>
+              <th>Description</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td><code>absolute</code></td><td><code>boolean</code></td><td><code>-</code></td><td>Boolean flag controlling `absolute`.</td></tr>
+            <tr><td><code>alignItems</code></td><td><code>{`'start' | 'center' | 'end' | 'between'`}</code></td><td><code>-</code></td><td>Controls `alignItems`.</td></tr>
+            <tr><td><code>animate</code></td><td><code>any</code></td><td><code>-</code></td><td>Controls `animate`.</td></tr>
+            <tr><td><code>background</code></td><td><code>string</code></td><td><code>-</code></td><td>Text/value for `background`.</td></tr>
+            <tr><td><code>border</code></td><td><code>string</code></td><td><code>-</code></td><td>Sizing/layout setting for `border`.</td></tr>
+            <tr><td><code>centerSelf</code></td><td><code>{`boolean | string`}</code></td><td><code>-</code></td><td>Boolean flag controlling `centerSelf`.</td></tr>
+            <tr><td><code>children</code></td><td><code>any</code></td><td><code>-</code></td><td>Controls `children`.</td></tr>
+            <tr><td><code>className</code></td><td><code>string</code></td><td><code>-</code></td><td>Text/value for `className`.</td></tr>
+            <tr><td><code>direction</code></td><td><code>{`'row' | 'column'`}</code></td><td><code>-</code></td><td>Controls `direction`.</td></tr>
+            <tr><td><code>enter</code></td><td><code>any</code></td><td><code>-</code></td><td>Controls `enter`.</td></tr>
+            <tr><td><code>exit</code></td><td><code>any</code></td><td><code>-</code></td><td>Controls `exit`.</td></tr>
+            <tr><td><code>flex</code></td><td><code>number</code></td><td><code>-</code></td><td>Controls `flex`.</td></tr>
+            <tr><td><code>gap</code></td><td><code>number</code></td><td><code>-</code></td><td>Sizing/layout setting for `gap`.</td></tr>
+            <tr><td><code>height</code></td><td><code>{`number | 'grow' | 'fill' | 'fit' | 'viewport' | 'auto'`}</code></td><td><code>-</code></td><td>Sizing/layout setting for `height`.</td></tr>
+            <tr><td><code>justify</code></td><td><code>{`'start' | 'top' | 'center' | 'end' | 'bottom' | 'between'`}</code></td><td><code>-</code></td><td>Controls `justify`.</td></tr>
+            <tr><td><code>margin</code></td><td><code>{`number | string`}</code></td><td><code>-</code></td><td>Sizing/layout setting for `margin`.</td></tr>
+            <tr><td><code>maxWidth</code></td><td><code>{`number | string`}</code></td><td><code>-</code></td><td>Sizing/layout setting for `maxWidth`.</td></tr>
+            <tr><td><code>padding</code></td><td><code>{`number | string`}</code></td><td><code>-</code></td><td>Sizing/layout setting for `padding`.</td></tr>
+            <tr><td><code>reverse</code></td><td><code>boolean</code></td><td><code>-</code></td><td>Boolean flag controlling `reverse`.</td></tr>
+            <tr><td><code>scrollHandle</code></td><td><code>string</code></td><td><code>-</code></td><td>Text/value for `scrollHandle`.</td></tr>
+            <tr><td><code>scrollHandleHover</code></td><td><code>string</code></td><td><code>-</code></td><td>Text/value for `scrollHandleHover`.</td></tr>
+            <tr><td><code>scrollX</code></td><td><code>boolean</code></td><td><code>-</code></td><td>Boolean flag controlling `scrollX`.</td></tr>
+            <tr><td><code>scrollY</code></td><td><code>boolean</code></td><td><code>-</code></td><td>Boolean flag controlling `scrollY`.</td></tr>
+            <tr><td><code>transition</code></td><td><code>Transition</code></td><td><code>-</code></td><td>Controls `transition`.</td></tr>
+            <tr><td><code>variants</code></td><td><code>any</code></td><td><code>-</code></td><td>Controls `variants`.</td></tr>
+            <tr><td><code>width</code></td><td><code>{`number | 'grow' | 'fill' | 'fit' | 'viewport' | 'auto'`}</code></td><td><code>-</code></td><td>Sizing/layout setting for `width`.</td></tr>
+            <tr><td><code>wrap</code></td><td><code>boolean</code></td><td><code>-</code></td><td>Boolean flag controlling `wrap`.</td></tr>
+            <tr><td><code>...divAttributes</code></td><td><code>{`HTMLAttributes<HTMLDivElement>`}</code></td><td><code>-</code></td><td>Native `div` props pass through (for example `id`, `data-testid`, `className`, `style`, `aria-*`).</td></tr>
+          </tbody>
+        </table>
 
-        ## Story Variants
+        ## Events
+        <table style={{width: '100%'}}>
+          <colgroup>
+            <col style={{width: '1%'}} />
+            <col style={{width: '99%'}} />
+          </colgroup>
+          <thead>
+            <tr>
+              <th className={"left"}>Event</th>
+              <th className={"left"}>Type</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td><code>-</code></td><td><code>-</code></td></tr>
+          </tbody>
+        </table>
 
-        - `Default`
-
-        ## Attributes
-
-        - Props interface: `FlexDivProps`
-
-        | Prop | Type | Required | Default | Notes |
-        | --- | --- | --- | --- | --- |
-        | `background` | `string` | No | `'var(--core-surface-primary)'` | string |
-        | `className` | `string` | No | `undefined` | string |
-        | `children` | `any` | No | `undefined` | custom |
-        | `scrollY` | `boolean` | No | `false` | boolean |
-        | `scrollX` | `boolean` | No | `false` | boolean |
-        | `absolute` | `boolean` | No | `false` | boolean |
-        | `direction` | `'row' \\| 'column'` | No | `'column'` | union |
-        | `alignItems` | `'start' \\| 'center' \\| 'end' \\| 'between'` | No | `'start'` | union |
-        | `justify` | `'start' \\| 'top' \\| 'center' \\| 'end' \\| 'bottom' \\| 'between'` | No | `'start'` | union |
-        | `width` | `number \\| 'grow' \\| 'fill' \\| 'fit' \\| 'viewport' \\| 'auto'` | No | `'fill'` | union |
-        | `height` | `number \\| 'grow' \\| 'fill' \\| 'fit' \\| 'viewport' \\| 'auto'` | No | `'viewport'` | union |
-        | `maxWidth` | `number \\| string` | No | `undefined` | union |
-        | `centerSelf` | `boolean \\| string` | No | `undefined` | union |
-        | `flex` | `number` | No | `undefined` | number |
-        | `reverse` | `boolean` | No | `false` | boolean |
-        | `wrap` | `boolean` | No | `false` | boolean |
-        | `border` | `string` | No |  | string |
-        | `padding` | `number \\| string` | No | `0` | union |
-        | `margin` | `number \\| string` | No | `0` | union |
-        | `enter` | `any` | No | `undefined` | custom |
-        | `exit` | `any` | No | `undefined` | custom |
-        | `animate` | `any` | No | `undefined` | custom |
-        | `transition` | `Transition` | No | `undefined` | custom |
-        | `variants` | `any` | No | `undefined` | custom |
-        | `gap` | `number` | No | `16` | number |
-        | `scrollHandle` | `string` | No |  | string |
-        | `scrollHandleHover` | `string` | No |  | string |
+        ## Code Examples
         </Unstyled>
+
+        <RenderSource language={"tsx"}>
+{`
+import { FlexDiv } from '@apple-pie/slice';
+
+export function FlexDivExample() {
+  return (
+    <FlexDiv
+      direction="column"
+      gap={12}
+      padding={16}
+      background="var(--core-surface-secondary)"
+      id="flexdiv-example"
+      data-testid="flexdiv-example"
+      className="custom-wrapper"
+      style={{ marginTop: 8, maxWidth: 480 }}
+    >
+      <div>Panel content</div>
+    </FlexDiv>
+  );
+}
+`}
+        </RenderSource>
     </FlexDiv>
 </FlexDiv>

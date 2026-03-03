@@ -25,7 +25,7 @@ export const Slider = React.memo((props: SliderProps) => {
 		...divAttributes
 	} = props;
 	const { id: divId, className, style, ...rest } = divAttributes;
-	const divStyle = (style ?? {}) as React.CSSProperties;
+	const divStyle = style ?? ({} as React.CSSProperties);
 	const divClass = className ? ` ${className}` : '';
 
 	// hook into the relevant on screen elements

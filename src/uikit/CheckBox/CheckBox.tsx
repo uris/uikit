@@ -17,9 +17,9 @@ export const CheckBox = React.memo((props: CheckBoxProps) => {
 		...divAttributes
 	} = props;
 	const { id: divId, className, style, ...rest } = divAttributes;
-	const divStyle = (style ?? {}) as React.CSSProperties;
+	const divStyle = style ?? ({} as React.CSSProperties);
 	const divClass = className ? ` ${className}` : '';
-	const [state, setState] = useState<'mixed' | 'partial' | boolean>(checked);
+	const [state, setState] = useState<'mixed' | boolean>(checked);
 	const theme = useTheme();
 
 	useEffect(() => setState(checked), [checked]);
@@ -27,7 +27,7 @@ export const CheckBox = React.memo((props: CheckBoxProps) => {
 	// memo icon name
 	const iconName = useMemo(() => {
 		if (state === true) return 'checked';
-		if (state === 'mixed' || state === 'partial') return 'partial';
+		if (state === 'mixed') return 'partial';
 		return 'unchecked';
 	}, [state]);
 
@@ -35,8 +35,7 @@ export const CheckBox = React.memo((props: CheckBoxProps) => {
 	const iconColor = useMemo(() => {
 		if (color) return color;
 		if (disabled) return theme.current.colors['core-icon-disabled'];
-		if (state === 'mixed' || state === 'partial')
-			return theme.current.colors['core-icon-primary'];
+		if (state === 'mixed') return theme.current.colors['core-icon-primary'];
 		if (!state) return theme.current.colors['core-icon-secondary'];
 		return theme.current.colors['core-text-special'];
 	}, [color, disabled, state, theme]);
@@ -88,7 +87,7 @@ export const CheckBox = React.memo((props: CheckBoxProps) => {
 			onKeyDown={handleKeyDown}
 			tabIndex={disabled ? -1 : 0}
 			role={'checkbox'}
-			aria-checked={state === 'mixed' || state === 'partial' ? 'mixed' : state}
+			aria-checked={state === 'mixed' ? 'mixed' : state}
 			aria-disabled={disabled}
 			{...(rest as any)}
 		>

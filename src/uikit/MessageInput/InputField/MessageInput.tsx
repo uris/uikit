@@ -48,7 +48,7 @@ export function MessageInput(props: Readonly<MessageInputProps>) {
 		...divAttributes
 	} = props;
 	const { id: divId, className, style, ...rest } = divAttributes;
-	const divStyle = (style ?? {}) as React.CSSProperties;
+	const divStyle = style ?? ({} as React.CSSProperties);
 	const divClass = className ? ` ${className}` : '';
 	const theme = useTheme();
 	const ref = useRef<HTMLTextAreaElement>(null);

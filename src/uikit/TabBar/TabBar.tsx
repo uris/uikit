@@ -39,7 +39,7 @@ export const TabBar = React.memo((props: TabBarProps) => {
 		...divAttributes
 	} = props;
 	const { id: divId, className, style, ...rest } = divAttributes;
-	const divStyle = (style ?? {}) as React.CSSProperties;
+	const divStyle = style ?? ({} as React.CSSProperties);
 	const divClass = className ? ` ${className}` : '';
 
 	const [index, setIndex] = useState<number>(selected);

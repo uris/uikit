@@ -1,6 +1,7 @@
 import {Meta, Unstyled} from '@storybook/addon-docs/blocks';
 import {FlexDiv} from '../FlexDiv';
 import * as PagerStories from './Pager.stories';
+import {RenderSource} from '../../../.storybook/RenderSource';
 
 <Meta of={PagerStories} />
 
@@ -8,32 +9,80 @@ import * as PagerStories from './Pager.stories';
     <FlexDiv width={"fill"} maxWidth={760} height={"auto"}>
         <Unstyled>
         # Pager
+        Pager component documentation.
 
-        Part of `Components/Pager`.
+        ## Base element
+        `HTMLDivElement`
 
-        ## Purpose
+        ## Interface
+        `PagerProps`
 
-        - Use `Pager` when you need this UI primitive inside the Slice component system.
-        - Implementation reviewed from: `src/uikit/Pager/Pager.tsx`.
+        ## Props
+        <table style={{width: '100%'}}>
+          <colgroup>
+            <col style={{width: '1%'}} />
+            <col style={{width: '1%'}} />
+            <col style={{width: '1%'}} />
+            <col style={{width: '97%'}} />
+          </colgroup>
+          <thead>
+            <tr>
+              <th className={"left"}>Prop</th>
+              <th className={"left"}>Type</th>
+              <th className={"left"}>Default</th>
+              <th>Description</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td><code>color</code></td><td><code>string</code></td><td><code>-</code></td><td>Color token/value for `color`.</td></tr>
+            <tr><td><code>colorHover</code></td><td><code>string</code></td><td><code>-</code></td><td>Color token/value for `colorHover`.</td></tr>
+            <tr><td><code>colorOn</code></td><td><code>string</code></td><td><code>-</code></td><td>Color token/value for `colorOn`.</td></tr>
+            <tr><td><code>gap</code></td><td><code>number</code></td><td><code>-</code></td><td>Sizing/layout setting for `gap`.</td></tr>
+            <tr><td><code>index</code></td><td><code>number</code></td><td><code>-</code></td><td>Controls `index`.</td></tr>
+            <tr><td><code>pages</code></td><td><code>number</code></td><td><code>-</code></td><td>Controls `pages`.</td></tr>
+            <tr><td><code>size</code></td><td><code>number</code></td><td><code>-</code></td><td>Sizing/layout setting for `size`.</td></tr>
+            <tr><td><code>...divAttributes</code></td><td><code>{`HTMLAttributes<HTMLDivElement>`}</code></td><td><code>-</code></td><td>Native `div` props pass through (for example `id`, `data-testid`, `className`, `style`, `aria-*`).</td></tr>
+          </tbody>
+        </table>
 
-        ## Story Variants
+        ## Events
+        <table style={{width: '100%'}}>
+          <colgroup>
+            <col style={{width: '1%'}} />
+            <col style={{width: '99%'}} />
+          </colgroup>
+          <thead>
+            <tr>
+              <th className={"left"}>Event</th>
+              <th className={"left"}>Type</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td><code>onChange</code></td><td><code>{`(index: number) => void`}</code></td></tr>
+          </tbody>
+        </table>
 
-        - `Default`
-
-        ## Attributes
-
-        - Props interface: `PagerProps`
-
-        | Prop | Type | Required | Default | Notes |
-        | --- | --- | --- | --- | --- |
-        | `onChange` | `(index: number) => void` | No | `() => null` | callback |
-        | `size` | `number` | No | `8` | number |
-        | `index` | `number` | No | `0` | number |
-        | `color` | `string` | No | `undefined` | string |
-        | `colorOn` | `string` | No | `undefined` | string |
-        | `colorHover` | `string` | No | `undefined` | string |
-        | `pages` | `number` | No | `2` | number |
-        | `gap` | `number` | No | `4` | number |
+        ## Code Examples
         </Unstyled>
+
+        <RenderSource language={"tsx"}>
+{`
+import { Pager } from '@apple-pie/slice';
+
+export function PagerExample() {
+  return (
+    <Pager
+      pages={5}
+      index={2}
+      onChange={(idx) => console.log(idx)}
+      id="pager-example"
+      data-testid="pager-example"
+      className="custom-wrapper"
+      style={{ marginTop: 8, maxWidth: 480 }}
+    />
+  );
+}
+`}
+        </RenderSource>
     </FlexDiv>
 </FlexDiv>

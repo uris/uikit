@@ -47,7 +47,7 @@ export const IconButton = React.memo((props: IconButtonProps) => {
 		...divAttributes
 	} = props;
 	const { id: divId, className, style, ...rest } = divAttributes;
-	const divStyle = (style ?? {}) as React.CSSProperties;
+	const divStyle = style ?? ({} as React.CSSProperties);
 	const divClass = className ? ` ${className}` : '';
 	const [on, setOn] = useState<boolean>(isToggled);
 	const ref = useRef<HTMLDivElement>(null);

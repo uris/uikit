@@ -1,6 +1,7 @@
 import {Meta, Unstyled} from '@storybook/addon-docs/blocks';
 import {FlexDiv} from '../FlexDiv';
 import * as DropDownStories from './DropDown.stories';
+import {RenderSource} from '../../../.storybook/RenderSource';
 
 <Meta of={DropDownStories} />
 
@@ -8,48 +9,97 @@ import * as DropDownStories from './DropDown.stories';
     <FlexDiv width={"fill"} maxWidth={760} height={"auto"}>
         <Unstyled>
         # DropDown
+        DropDown component documentation.
 
-        Part of `Components/DropDown`.
+        ## Base element
+        `HTMLDivElement`
 
-        ## Purpose
+        ## Interface
+        `DropDownProps`
 
-        - Use `DropDown` when you need this UI primitive inside the Slice component system.
-        - Implementation reviewed from: `src/uikit/DropDown/DropDown.tsx`.
+        ## Props
+        <table style={{width: '100%'}}>
+          <colgroup>
+            <col style={{width: '1%'}} />
+            <col style={{width: '1%'}} />
+            <col style={{width: '1%'}} />
+            <col style={{width: '97%'}} />
+          </colgroup>
+          <thead>
+            <tr>
+              <th className={"left"}>Prop</th>
+              <th className={"left"}>Type</th>
+              <th className={"left"}>Default</th>
+              <th>Description</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td><code>bgColor</code></td><td><code>string</code></td><td><code>-</code></td><td>Color token/value for `bgColor`.</td></tr>
+            <tr><td><code>borderRadius</code></td><td><code>number</code></td><td><code>-</code></td><td>Sizing/layout setting for `borderRadius`.</td></tr>
+            <tr><td><code>disabled</code></td><td><code>boolean</code></td><td><code>-</code></td><td>Boolean flag controlling `disabled`.</td></tr>
+            <tr><td><code>focused</code></td><td><code>boolean</code></td><td><code>-</code></td><td>Boolean flag controlling `focused`.</td></tr>
+            <tr><td><code>gap</code></td><td><code>number</code></td><td><code>-</code></td><td>Sizing/layout setting for `gap`.</td></tr>
+            <tr><td><code>height</code></td><td><code>string</code></td><td><code>-</code></td><td>Sizing/layout setting for `height`.</td></tr>
+            <tr><td><code>iconColor</code></td><td><code>string</code></td><td><code>-</code></td><td>Color token/value for `iconColor`.</td></tr>
+            <tr><td><code>iconSize</code></td><td><code>number</code></td><td><code>-</code></td><td>Sizing/layout setting for `iconSize`.</td></tr>
+            <tr><td><code>name</code></td><td><code>string</code></td><td><code>-</code></td><td>Text/value for `name`.</td></tr>
+            <tr><td><code>options</code></td><td><code>DropDownOption[]</code></td><td><code>-</code></td><td>Controls `options`.</td></tr>
+            <tr><td><code>paddingLeft</code></td><td><code>{`number | string`}</code></td><td><code>-</code></td><td>Sizing/layout setting for `paddingLeft`.</td></tr>
+            <tr><td><code>paddingRight</code></td><td><code>{`number | string`}</code></td><td><code>-</code></td><td>Sizing/layout setting for `paddingRight`.</td></tr>
+            <tr><td><code>paddingTops</code></td><td><code>{`number | string`}</code></td><td><code>-</code></td><td>Sizing/layout setting for `paddingTops`.</td></tr>
+            <tr><td><code>placeholder</code></td><td><code>boolean</code></td><td><code>-</code></td><td>Boolean flag controlling `placeholder`.</td></tr>
+            <tr><td><code>selectedIndex</code></td><td><code>number</code></td><td><code>-</code></td><td>Controls `selectedIndex`.</td></tr>
+            <tr><td><code>selectedValue</code></td><td><code>string</code></td><td><code>-</code></td><td>Text/value for `selectedValue`.</td></tr>
+            <tr><td><code>size</code></td><td><code>{`'small' | 'medium' | 'large'`}</code></td><td><code>-</code></td><td>Sizing/layout setting for `size`.</td></tr>
+            <tr><td><code>unframed</code></td><td><code>boolean</code></td><td><code>-</code></td><td>Boolean flag controlling `unframed`.</td></tr>
+            <tr><td><code>validate</code></td><td><code>boolean</code></td><td><code>-</code></td><td>Boolean flag controlling `validate`.</td></tr>
+            <tr><td><code>width</code></td><td><code>string</code></td><td><code>-</code></td><td>Sizing/layout setting for `width`.</td></tr>
+            <tr><td><code>...divAttributes</code></td><td><code>{`HTMLAttributes<HTMLDivElement>`}</code></td><td><code>-</code></td><td>Native `div` props pass through (for example `id`, `data-testid`, `className`, `style`, `aria-*`).</td></tr>
+          </tbody>
+        </table>
 
-        ## Story Variants
+        ## Events
+        <table style={{width: '100%'}}>
+          <colgroup>
+            <col style={{width: '1%'}} />
+            <col style={{width: '99%'}} />
+          </colgroup>
+          <thead>
+            <tr>
+              <th className={"left"}>Event</th>
+              <th className={"left"}>Type</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td><code>onChange</code></td><td><code>{`(index: number, option: DropDownOption) => void`}</code></td></tr>
+            <tr><td><code>onBlur</code></td><td><code>{`(value: string) => void`}</code></td></tr>
+            <tr><td><code>onValidate</code></td><td><code>{`(state: boolean) => void`}</code></td></tr>
+            <tr><td><code>onFocus</code></td><td><code>{`() => void`}</code></td></tr>
+          </tbody>
+        </table>
 
-        - `Default`
-
-        ## Attributes
-
-        - Props interface: `DropDownProps`
-
-        | Prop | Type | Required | Default | Notes |
-        | --- | --- | --- | --- | --- |
-        | `onChange` | `(index: number, option: DropDownOption) => void` | No | `() => null` | callback |
-        | `onBlur` | `(value: string) => void` | No | `() => null` | callback |
-        | `onValidate` | `(state: boolean) => void` | No | `() => null` | callback |
-        | `onFocus` | `() => void` | No | `() => null` | callback |
-        | `name` | `string` | No | `'Select'` | string |
-        | `options` | `DropDownOption[]` | No | `[]` | array |
-        | `selectedIndex` | `number` | No | `0` | number |
-        | `selectedValue` | `string` | No | `''` | string |
-        | `placeholder` | `boolean` | No | `true` | boolean |
-        | `borderRadius` | `number` | No | `4` | number |
-        | `validate` | `boolean` | No | `true` | boolean |
-        | `iconColor` | `string` | No | `theme.current.colors['core-icon-primary']` | string |
-        | `bgColor` | `string` | No | `'transparent'` | string |
-        | `width` | `string` | No | `'100%'` | string |
-        | `height` | `string` | No | `'auto'` | string |
-        | `paddingLeft` | `number \\| string` | No | `'8px'` | union |
-        | `paddingRight` | `number \\| string` | No | `'12px'` | union |
-        | `paddingTops` | `number \\| string` | No | `'8px'` | union |
-        | `iconSize` | `number` | No | `20` | number |
-        | `disabled` | `boolean` | No | `false` | boolean |
-        | `unframed` | `boolean` | No | `false` | boolean |
-        | `focused` | `boolean` | No | `false` | boolean |
-        | `gap` | `number` | No | `0` | number |
-        | `size` | `'small' \\| 'medium' \\| 'large'` | No | `'medium'` | union |
+        ## Code Examples
         </Unstyled>
+
+        <RenderSource language={"tsx"}>
+{`
+import { DropDown } from '@apple-pie/slice';
+
+export function DropDownExample() {
+  return (
+    <DropDown
+      name="Jurisdiction"
+      options={[{ label: 'California', value: 'ca' }, { label: 'New York', value: 'ny' }]}
+      selectedIndex={0}
+      onChange={(index, option) => console.log(index, option)}
+      id="dropdown-example"
+      data-testid="dropdown-example"
+      className="custom-wrapper"
+      style={{ marginTop: 8, maxWidth: 480 }}
+    />
+  );
+}
+`}
+        </RenderSource>
     </FlexDiv>
 </FlexDiv>

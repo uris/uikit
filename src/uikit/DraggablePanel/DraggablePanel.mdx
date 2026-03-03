@@ -1,6 +1,7 @@
 import {Meta, Unstyled} from '@storybook/addon-docs/blocks';
 import {FlexDiv} from '../FlexDiv';
 import * as DraggablePanelStories from './DraggablePanel.stories';
+import {RenderSource} from '../../../.storybook/RenderSource';
 
 <Meta of={DraggablePanelStories} />
 
@@ -8,43 +9,75 @@ import * as DraggablePanelStories from './DraggablePanel.stories';
     <FlexDiv width={"fill"} maxWidth={760} height={"auto"}>
         <Unstyled>
         # DraggablePanel
+        DraggablePanel component documentation.
 
-        Part of `Components/Draggable Panel`.
+        ## Base element
+        `HTMLDivElement`
 
-        ## Purpose
+        ## Interface
+        `DraggablePanelProps`
 
-        - Use `DraggablePanel` when you need this UI primitive inside the Slice component system.
-        - Implementation reviewed from: `src/uikit/DraggablePanel/DrggablePanel.tsx`.
+        ## Props
+        <table style={{width: '100%'}}>
+          <colgroup>
+            <col style={{width: '1%'}} />
+            <col style={{width: '1%'}} />
+            <col style={{width: '1%'}} />
+            <col style={{width: '97%'}} />
+          </colgroup>
+          <thead>
+            <tr>
+              <th className={"left"}>Prop</th>
+              <th className={"left"}>Type</th>
+              <th className={"left"}>Default</th>
+              <th>Description</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td><code>...divAttributes</code></td><td><code>{`HTMLAttributes<HTMLDivElement>`}</code></td><td><code>-</code></td><td>Native `div` props pass through (for example `id`, `data-testid`, `className`, `style`, `aria-*`).</td></tr>
+          </tbody>
+        </table>
 
-        ## Story Variants
+        ## Events
+        <table style={{width: '100%'}}>
+          <colgroup>
+            <col style={{width: '1%'}} />
+            <col style={{width: '99%'}} />
+          </colgroup>
+          <thead>
+            <tr>
+              <th className={"left"}>Event</th>
+              <th className={"left"}>Type</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td><code>-</code></td><td><code>-</code></td></tr>
+          </tbody>
+        </table>
 
-        - `Default`
-        - `NoDrag`
-        - `InitiallyClosed`
-
-        ## Attributes
-
-        - Props interface: `DraggablePanelProps`
-
-        | Prop | Type | Required | Default | Notes |
-        | --- | --- | --- | --- | --- |
-        | `resizeHandle` | `Partial<ResizeHandle>` | No | `{ width: 10, color: 'transparent', offsetX: true }` | custom |
-        | `dragHandleStyle` | `DragHandleProps` | No | `{ width: 6, height: 6, radius: 100, stroke: 1, color: 'var(--core-surface-primary)', strokeColor: 'var(--core-outline-primary)' }` | custom |
-        | `onResize` | `(info: Info) => void` | No | `() => null` | callback |
-        | `onResizeEnd` | `(info: Info) => void` | No | `() => null` | callback |
-        | `onResizeStart` | `(info: Info) => void` | No | `() => null` | callback |
-        | `borderRight` | `any` | No | `'1px solid var(--core-outline-primary)'` | custom |
-        | `children` | `any` | No | `undefined` | custom |
-        | `containerRef` | `React.RefObject<HTMLDivElement \\| null>` | No | `undefined` | union |
-        | `sizeConstraints` | `Constraint` | No | `{ initial: 250 | custom, min: 250, max: 500 }` |
-        | `dragsRight` | `boolean` | No | `true` | boolean |
-        | `isClosed` | `boolean` | No | `true` | boolean |
-        | `borderLeft` | `any` | No | `null` | custom |
-        | `bgColor` | `string` | No | `'transparent'` | string |
-        | `drags` | `boolean` | No | `true` | boolean |
-        | `dragHandle` | `boolean` | No | `true` | boolean |
-        | `disableOnContext` | `boolean` | No | `true` | boolean |
-        | `isTouchDevice` | `boolean` | No | `false` | boolean |
+        ## Code Examples
         </Unstyled>
+
+        <RenderSource language={"tsx"}>
+{`
+import { DraggablePanel } from '@apple-pie/slice';
+
+export function DraggablePanelExample() {
+  return (
+    <DraggablePanel
+      sizeConstraints={{ initial: 320, min: 240, max: 560 }}
+      dragsRight={true}
+      bgColor="var(--core-surface-secondary)"
+      id="draggablepanel-example"
+      data-testid="draggablepanel-example"
+      className="custom-wrapper"
+      style={{ marginTop: 8, height: 240 }}
+    >
+      <div style={{ padding: 16 }}>Resizable panel content</div>
+    </DraggablePanel>
+  );
+}
+`}
+        </RenderSource>
     </FlexDiv>
 </FlexDiv>

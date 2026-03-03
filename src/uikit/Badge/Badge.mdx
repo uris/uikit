@@ -1,6 +1,7 @@
 import {Meta, Unstyled} from '@storybook/addon-docs/blocks';
 import {FlexDiv} from '../FlexDiv';
 import * as BadgeStories from './Badge.stories';
+import {RenderSource} from '../../../.storybook/RenderSource';
 
 <Meta of={BadgeStories} />
 
@@ -8,27 +9,76 @@ import * as BadgeStories from './Badge.stories';
     <FlexDiv width={"fill"} maxWidth={760} height={"auto"}>
         <Unstyled>
         # Badge
+        Badge component documentation.
 
-        Part of `Components/Badge`.
+        ## Base element
+        `HTMLDivElement`
 
-        ## Purpose
+        ## Interface
+        `BadgeProps`
 
-        - Use `Badge` when you need this UI primitive inside the Slice component system.
-        - Implementation reviewed from: `src/uikit/Badge/Badge.tsx`.
+        ## Props
+        <table style={{width: '100%'}}>
+          <colgroup>
+            <col style={{width: '1%'}} />
+            <col style={{width: '1%'}} />
+            <col style={{width: '1%'}} />
+            <col style={{width: '97%'}} />
+          </colgroup>
+          <thead>
+            <tr>
+              <th className={"left"}>Prop</th>
+              <th className={"left"}>Type</th>
+              <th className={"left"}>Default</th>
+              <th>Description</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td><code>count</code></td><td><code>{`number | string`}</code></td><td><code>-</code></td><td>Text/value for `count`.</td></tr>
+            <tr><td><code>hideNull</code></td><td><code>boolean</code></td><td><code>-</code></td><td>Boolean flag controlling `hideNull`.</td></tr>
+            <tr><td><code>variant</code></td><td><code>{`'light' | 'dark'`}</code></td><td><code>-</code></td><td>Controls `variant`.</td></tr>
+            <tr><td><code>...divAttributes</code></td><td><code>{`HTMLAttributes<HTMLDivElement>`}</code></td><td><code>-</code></td><td>Native `div` props pass through (for example `id`, `data-testid`, `className`, `style`, `aria-*`).</td></tr>
+          </tbody>
+        </table>
 
-        ## Story Variants
+        ## Events
+        <table style={{width: '100%'}}>
+          <colgroup>
+            <col style={{width: '1%'}} />
+            <col style={{width: '99%'}} />
+          </colgroup>
+          <thead>
+            <tr>
+              <th className={"left"}>Event</th>
+              <th className={"left"}>Type</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td><code>-</code></td><td><code>-</code></td></tr>
+          </tbody>
+        </table>
 
-        - `Default`
-
-        ## Attributes
-
-        - Props interface: `BadgeProps`
-
-        | Prop | Type | Required | Default | Notes |
-        | --- | --- | --- | --- | --- |
-        | `count` | `number \\| string` | No | `5` | union |
-        | `hideNull` | `boolean` | No | `true` | boolean |
-        | `variant` | `'light' \\| 'dark'` | No | `'dark'` | union |
+        ## Code Examples
         </Unstyled>
+
+        <RenderSource language={"tsx"}>
+{`
+import { Badge } from '@apple-pie/slice';
+
+export function BadgeExample() {
+  return (
+    <Badge
+      count={12}
+      variant="dark"
+      hideNull={true}
+      id="badge-example"
+      data-testid="badge-example"
+      className="custom-wrapper"
+      style={{ marginTop: 8, maxWidth: 480 }}
+    />
+  );
+}
+`}
+        </RenderSource>
     </FlexDiv>
 </FlexDiv>

@@ -15,7 +15,7 @@ export const UICard = React.memo(function UICard(props: Readonly<UICardProps>) {
 		...divAttributes
 	} = props;
 	const { className, style, ...rest } = divAttributes;
-	const divStyle = (style ?? {}) as React.CSSProperties;
+	const divStyle = style ?? ({} as React.CSSProperties);
 	const divClass = className ? ` ${className}` : '';
 
 	// set style value callback

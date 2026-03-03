@@ -26,7 +26,7 @@ export const EditorButtonBar = React.memo((props: EditorButtonBarProps) => {
 		...divAttributes
 	} = props;
 	const { id: divId, className, style, ...rest } = divAttributes;
-	const divStyle = (style ?? {}) as React.CSSProperties;
+	const divStyle = style ?? ({} as React.CSSProperties);
 	const divClass = className ? ` ${className}` : '';
 	const [barState, setBarState] = useState<'small' | 'medium' | 'regular'>(
 		'regular',

@@ -10,7 +10,7 @@ export const Spacer = React.memo((props: SpacerProps) => {
 		() => ({ height: size, minHeight: size, maxHeight: size }),
 		[size],
 	);
-	const divStyle = (style ?? {}) as React.CSSProperties;
+	const divStyle = style ?? ({} as React.CSSProperties);
 	const divClass = className ? ` ${className}` : '';
 
 	/* START.DEBUG */

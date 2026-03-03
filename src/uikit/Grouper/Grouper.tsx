@@ -26,7 +26,7 @@ export const Grouper = React.memo((props: GrouperProps) => {
 		...divAttributes
 	} = props;
 	const { id: divId, className, style, ...rest } = divAttributes;
-	const divStyle = (style ?? {}) as React.CSSProperties;
+	const divStyle = style ?? ({} as React.CSSProperties);
 	const divClass = className ? ` ${className}` : '';
 	const theme = useTheme();
 	const [state, setState] = useState<boolean>(open);

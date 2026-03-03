@@ -1,8 +1,8 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
+import { useTheme } from '../hooks/useTheme';
 import { FlexDiv } from '../uikit/FlexDiv';
 import { Spacer } from '../uikit/Spacer';
 import { UIButton } from '../uikit/UIButton';
-import { useTheme } from '../hooks/useTheme';
 import { ThemeProvider } from './ThemeProvider';
 
 type ThemeProviderDemoProps = {

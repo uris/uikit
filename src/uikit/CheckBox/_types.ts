@@ -2,7 +2,7 @@ import type React from 'react';
 
 type CheckBoxBaseProps = {
 	size?: number;
-	checked?: 'mixed' | 'partial' | boolean;
+	checked?: 'mixed' | boolean;
 	disabled?: boolean;
 	color?: string;
 	label?: string;

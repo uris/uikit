@@ -60,7 +60,7 @@ const UIButtonComponent = forwardRef<UIButtonHandle, UIButtonProps>(
 			...divAttributes
 		} = props;
 		const { id: divId, className, style, ...rest } = divAttributes;
-		const divStyle = (style ?? {}) as React.CSSProperties;
+		const divStyle = style ?? ({} as React.CSSProperties);
 		const divClass = className ? ` ${className}` : '';
 
 		const [btnState, setBtnState] = useState<'normal' | 'hover' | 'disabled'>(

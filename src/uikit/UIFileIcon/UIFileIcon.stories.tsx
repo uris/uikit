@@ -29,7 +29,7 @@ export default meta;
 export const Default: StoryObj<typeof UIFileIcon> = {
 	render: (args) => {
 		return (
-			<FlexDiv justify={'center'} alignItems={'center'} padding={64}>
+			<FlexDiv absolute justify={'center'} alignItems={'center'} padding={64}>
 				<UIFileIcon {...args} />
 			</FlexDiv>
 		);

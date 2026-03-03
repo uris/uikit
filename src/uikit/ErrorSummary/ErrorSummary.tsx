@@ -9,7 +9,7 @@ export type { ErrorMessage };
 export const ErrorSummary = React.memo((props: ErrorSummaryProps) => {
 	const { entries, errors = [], ...divAttributes } = props;
 	const { id: divId, className, style, ...rest } = divAttributes;
-	const divStyle = (style ?? {}) as React.CSSProperties;
+	const divStyle = style ?? ({} as React.CSSProperties);
 	const divClass = className ? ` ${className}` : '';
 
 	// memo animation variants

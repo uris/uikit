@@ -22,7 +22,7 @@ export const RadioButton = React.memo((props: RadioButtonProps) => {
 		...divAttributes
 	} = props;
 	const { id: divId, className, style, ...rest } = divAttributes;
-	const divStyle = (style ?? {}) as React.CSSProperties;
+	const divStyle = style ?? ({} as React.CSSProperties);
 	const divClass = className ? ` ${className}` : '';
 	const [isSelected, setIsSelected] = useState<boolean>(selected);
 

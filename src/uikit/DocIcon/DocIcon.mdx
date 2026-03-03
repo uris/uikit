@@ -1,6 +1,7 @@
 import {Meta, Unstyled} from '@storybook/addon-docs/blocks';
 import {FlexDiv} from '../FlexDiv';
 import * as DocIconStories from './DocIcon.stories';
+import {RenderSource} from '../../../.storybook/RenderSource';
 
 <Meta of={DocIconStories} />
 
@@ -8,28 +9,74 @@ import * as DocIconStories from './DocIcon.stories';
     <FlexDiv width={"fill"} maxWidth={760} height={"auto"}>
         <Unstyled>
         # DocIcon
+        DocIcon component documentation.
 
-        Part of `Components/DocIcons`.
+        ## Base element
+        `HTMLDivElement`
 
-        ## Purpose
+        ## Interface
+        `DocsProps`
 
-        - Use `DocIcon` when you need this UI primitive inside the Slice component system.
-        - Implementation reviewed from: `src/uikit/DocIcon/DocIcons.tsx`.
+        ## Props
+        <table style={{width: '100%'}}>
+          <colgroup>
+            <col style={{width: '1%'}} />
+            <col style={{width: '1%'}} />
+            <col style={{width: '1%'}} />
+            <col style={{width: '97%'}} />
+          </colgroup>
+          <thead>
+            <tr>
+              <th className={"left"}>Prop</th>
+              <th className={"left"}>Type</th>
+              <th className={"left"}>Default</th>
+              <th>Description</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td><code>height</code></td><td><code>number</code></td><td><code>-</code></td><td>Sizing/layout setting for `height`.</td></tr>
+            <tr><td><code>type</code></td><td><code>{`'pdf' | 'docx' | 'text' | 'not supported'`}</code></td><td><code>-</code></td><td>Controls `type`.</td></tr>
+            <tr><td><code>...divAttributes</code></td><td><code>{`HTMLAttributes<HTMLDivElement>`}</code></td><td><code>-</code></td><td>Native `div` props pass through (for example `id`, `data-testid`, `className`, `style`, `aria-*`).</td></tr>
+          </tbody>
+        </table>
 
-        ## Story Variants
+        ## Events
+        <table style={{width: '100%'}}>
+          <colgroup>
+            <col style={{width: '1%'}} />
+            <col style={{width: '99%'}} />
+          </colgroup>
+          <thead>
+            <tr>
+              <th className={"left"}>Event</th>
+              <th className={"left"}>Type</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td><code>-</code></td><td><code>-</code></td></tr>
+          </tbody>
+        </table>
 
-        - `Default`
-        - `Text`
-        - `Unsupported`
-
-        ## Attributes
-
-        - Props interface: `DocsProps`
-
-        | Prop | Type | Required | Default | Notes |
-        | --- | --- | --- | --- | --- |
-        | `type` | `'pdf' \\| 'docx' \\| 'text' \\| 'not supported'` | No | `'pdf'` | union |
-        | `height` | `number` | No | `36` | number |
+        ## Code Examples
         </Unstyled>
+
+        <RenderSource language={"tsx"}>
+{`
+import { DocIcons } from '@apple-pie/slice';
+
+export function DocIconsExample() {
+  return (
+    <DocIcons
+      type="pdf"
+      height={28}
+      id="docicon-example"
+      data-testid="docicon-example"
+      className="custom-wrapper"
+      style={{ marginTop: 8, maxWidth: 480 }}
+    />
+  );
+}
+`}
+        </RenderSource>
     </FlexDiv>
 </FlexDiv>

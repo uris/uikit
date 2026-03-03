@@ -1,6 +1,7 @@
 import {Meta, Unstyled} from '@storybook/addon-docs/blocks';
 import {FlexDiv} from '../../FlexDiv';
 import * as MessageInputStories from './MessageInput.stories';
+import {RenderSource} from '../../../../.storybook/RenderSource';
 
 <Meta of={MessageInputStories} />
 
@@ -8,53 +9,108 @@ import * as MessageInputStories from './MessageInput.stories';
     <FlexDiv width={"fill"} maxWidth={760} height={"auto"}>
         <Unstyled>
         # MessageInput
+        MessageInput component documentation.
 
-        Part of `Components/MessageInput`.
+        ## Base element
+        `HTMLDivElement`
 
-        ## Purpose
+        ## Interface
+        `MessageInputProps`
 
-        - Use `MessageInput` when you need this UI primitive inside the Slice component system.
-        - Implementation reviewed from: `src/uikit/MessageInput/InputField/MessageInput.tsx`.
+        ## Props
+        <table style={{width: '100%'}}>
+          <colgroup>
+            <col style={{width: '1%'}} />
+            <col style={{width: '1%'}} />
+            <col style={{width: '1%'}} />
+            <col style={{width: '97%'}} />
+          </colgroup>
+          <thead>
+            <tr>
+              <th className={"left"}>Prop</th>
+              <th className={"left"}>Type</th>
+              <th className={"left"}>Default</th>
+              <th>Description</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td><code>attachClick</code></td><td><code>{`(e: React.MouseEvent<any> | undefined) => void`}</code></td><td><code>-</code></td><td>Controls `attachClick`.</td></tr>
+            <tr><td><code>complianceCheckClick</code></td><td><code>{`() => void`}</code></td><td><code>-</code></td><td>Controls `complianceCheckClick`.</td></tr>
+            <tr><td><code>currentUser</code></td><td><code>string</code></td><td><code>-</code></td><td>Text/value for `currentUser`.</td></tr>
+            <tr><td><code>error</code></td><td><code>{`string | null`}</code></td><td><code>-</code></td><td>Text/value for `error`.</td></tr>
+            <tr><td><code>excerpts</code></td><td><code>DocExcerpt[]</code></td><td><code>-</code></td><td>Controls `excerpts`.</td></tr>
+            <tr><td><code>files</code></td><td><code>File[]</code></td><td><code>-</code></td><td>Controls `files`.</td></tr>
+            <tr><td><code>focused</code></td><td><code>boolean</code></td><td><code>-</code></td><td>Boolean flag controlling `focused`.</td></tr>
+            <tr><td><code>height</code></td><td><code>string</code></td><td><code>-</code></td><td>Sizing/layout setting for `height`.</td></tr>
+            <tr><td><code>isFetching</code></td><td><code>boolean</code></td><td><code>-</code></td><td>Boolean flag controlling `isFetching`.</td></tr>
+            <tr><td><code>isShort</code></td><td><code>boolean</code></td><td><code>-</code></td><td>Boolean flag controlling `isShort`.</td></tr>
+            <tr><td><code>isStreaming</code></td><td><code>boolean</code></td><td><code>-</code></td><td>Boolean flag controlling `isStreaming`.</td></tr>
+            <tr><td><code>jurisdiction</code></td><td><code>{`JurisdictionFocus | null`}</code></td><td><code>-</code></td><td>Controls `jurisdiction`.</td></tr>
+            <tr><td><code>jurisdictionClick</code></td><td><code>{`() => void`}</code></td><td><code>-</code></td><td>Controls `jurisdictionClick`.</td></tr>
+            <tr><td><code>maxHeight</code></td><td><code>number</code></td><td><code>-</code></td><td>Sizing/layout setting for `maxHeight`.</td></tr>
+            <tr><td><code>owner</code></td><td><code>string</code></td><td><code>-</code></td><td>Text/value for `owner`.</td></tr>
+            <tr><td><code>placeholder</code></td><td><code>string</code></td><td><code>-</code></td><td>Text/value for `placeholder`.</td></tr>
+            <tr><td><code>presenceID</code></td><td><code>string</code></td><td><code>-</code></td><td>Text/value for `presenceID`.</td></tr>
+            <tr><td><code>role</code></td><td><code>string</code></td><td><code>-</code></td><td>Text/value for `role`.</td></tr>
+            <tr><td><code>showFilters</code></td><td><code>boolean</code></td><td><code>-</code></td><td>Boolean flag controlling `showFilters`.</td></tr>
+            <tr><td><code>users</code></td><td><code>UserPresence[]</code></td><td><code>-</code></td><td>Controls `users`.</td></tr>
+            <tr><td><code>value</code></td><td><code>string</code></td><td><code>-</code></td><td>Text/value for `value`.</td></tr>
+            <tr><td><code>...divAttributes</code></td><td><code>{`HTMLAttributes<HTMLDivElement>`}</code></td><td><code>-</code></td><td>Native `div` props pass through (for example `id`, `data-testid`, `className`, `style`, `aria-*`).</td></tr>
+          </tbody>
+        </table>
 
-        ## Story Variants
+        ## Events
+        <table style={{width: '100%'}}>
+          <colgroup>
+            <col style={{width: '1%'}} />
+            <col style={{width: '99%'}} />
+          </colgroup>
+          <thead>
+            <tr>
+              <th className={"left"}>Event</th>
+              <th className={"left"}>Type</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td><code>onChangeFiles</code></td><td><code>{`(files: File[]) => void`}</code></td></tr>
+            <tr><td><code>onChangeExcerpts</code></td><td><code>{`(excerpts: DocExcerpt[]) => void`}</code></td></tr>
+            <tr><td><code>onTogglePrompt</code></td><td><code>{`(presence: UserPresence) => void`}</code></td></tr>
+            <tr><td><code>onToolTip</code></td><td><code>{`(tip: ToolTip | null) => void`}</code></td></tr>
+            <tr><td><code>onChange</code></td><td><code>{`(prompt: string) => void`}</code></td></tr>
+            <tr><td><code>onBlur</code></td><td><code>{`() => void`}</code></td></tr>
+            <tr><td><code>onFocus</code></td><td><code>{`() => void`}</code></td></tr>
+            <tr><td><code>onSend</code></td><td><code>{`(message: SendMessage) => void`}</code></td></tr>
+            <tr><td><code>onStop</code></td><td><code>{`() => void`}</code></td></tr>
+          </tbody>
+        </table>
 
-        - `Default`
-
-        ## Attributes
-
-        - Props interface: `MessageInputProps`
-
-        | Prop | Type | Required | Default | Notes |
-        | --- | --- | --- | --- | --- |
-        | `jurisdictionClick` | `() => void` | No | `() => null` | callback |
-        | `attachClick` | `(e: React.MouseEvent<any> \| undefined) => void` | No | `() => null` | callback |
-        | `onChangeFiles` | `(files: File[]) => void` | No | `() => null` | callback |
-        | `onChangeExcerpts` | `(excerpts: DocExcerpt[]) => void` | No | `() => null` | callback |
-        | `onTogglePrompt` | `(presence: UserPresence) => void` | No | `() => null` | callback |
-        | `onToolTip` | `(tip: ToolTip \| null) => void` | No | `() => null` | callback |
-        | `onChange` | `(prompt: string) => void` | No | `() => null` | callback |
-        | `onBlur` | `() => void` | No | `() => null` | callback |
-        | `onFocus` | `() => void` | No | `() => null` | callback |
-        | `onSend` | `(message: SendMessage) => void` | No | `() => null` | callback |
-        | `onStop` | `() => void` | No | `() => null` | callback |
-        | `maxHeight` | `number` | No | `300` | number |
-        | `focused` | `boolean` | No | `false` | boolean |
-        | `height` | `string` | No |  | string |
-        | `placeholder` | `string` | No | `'Ask me anytning HR compliance'` | string |
-        | `value` | `string` | No | `''` | string |
-        | `role` | `string` | No |  | string |
-        | `showFilters` | `boolean` | No |  | boolean |
-        | `isFetching` | `boolean` | No | `false` | boolean |
-        | `isStreaming` | `boolean` | No | `false` | boolean |
-        | `isShort` | `boolean` | No | `true` | boolean |
-        | `error` | `string \\| null` | No | `null` | union |
-        | `files` | `File[]` | No | `[]` | array |
-        | `excerpts` | `DocExcerpt[]` | No | `[]` | array |
-        | `users` | `UserPresence[]` | No | `[]` | array |
-        | `currentUser` | `string` | No | `'test@me.com'` | string |
-        | `owner` | `string` | No | `'test@me.com'` | string |
-        | `presenceID` | `string` | No |  | string |
-        | `jurisdiction` | `JurisdictionFocus \\| null` | No | `null` | union |
+        ## Code Examples
         </Unstyled>
+
+        <RenderSource language={"tsx"}>
+{`
+import { MessageInput } from '@apple-pie/slice';
+
+export function MessageInputExample() {
+  return (
+    <MessageInput
+      placeholder="Ask a compliance question"
+      value="How should we handle overtime approvals?"
+      currentUser="dev@example.com"
+      owner="owner@example.com"
+      files={[]}
+      excerpts={[{ docTitle: 'Employee Handbook', content: 'Overtime policy excerpt' }]}
+      users={[{ first: 'Dev', last: 'User', email: 'dev@example.com' }]}
+      onChange={(prompt) => console.log(prompt)}
+      onSend={(message) => console.log(message)}
+      id="messageinput-example"
+      data-testid="messageinput-example"
+      className="custom-wrapper"
+      style={{ marginTop: 8, maxWidth: 480 }}
+    />
+  );
+}
+`}
+        </RenderSource>
     </FlexDiv>
 </FlexDiv>

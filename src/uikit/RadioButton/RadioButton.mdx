@@ -1,6 +1,7 @@
 import {Meta, Unstyled} from '@storybook/addon-docs/blocks';
 import {FlexDiv} from '../FlexDiv';
 import * as RadioButtonStories from './RadioButton.stories';
+import {RenderSource} from '../../../.storybook/RenderSource';
 
 <Meta of={RadioButtonStories} />
 
@@ -8,35 +9,83 @@ import * as RadioButtonStories from './RadioButton.stories';
     <FlexDiv width={"fill"} maxWidth={760} height={"auto"}>
         <Unstyled>
         # RadioButton
+        RadioButton component documentation.
 
-        Part of `Components/RadioButton`.
+        ## Base element
+        `HTMLDivElement`
 
-        ## Purpose
+        ## Interface
+        `RadioButtonProps`
 
-        - Use `RadioButton` when you need this UI primitive inside the Slice component system.
-        - Implementation reviewed from: `src/uikit/RadioButton/RadioButton.tsx`.
+        ## Props
+        <table style={{width: '100%'}}>
+          <colgroup>
+            <col style={{width: '1%'}} />
+            <col style={{width: '1%'}} />
+            <col style={{width: '1%'}} />
+            <col style={{width: '97%'}} />
+          </colgroup>
+          <thead>
+            <tr>
+              <th className={"left"}>Prop</th>
+              <th className={"left"}>Type</th>
+              <th className={"left"}>Default</th>
+              <th>Description</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td><code>deselect</code></td><td><code>boolean</code></td><td><code>-</code></td><td>Boolean flag controlling `deselect`.</td></tr>
+            <tr><td><code>hideRadio</code></td><td><code>boolean</code></td><td><code>-</code></td><td>Boolean flag controlling `hideRadio`.</td></tr>
+            <tr><td><code>iconColor</code></td><td><code>string</code></td><td><code>-</code></td><td>Color token/value for `iconColor`.</td></tr>
+            <tr><td><code>list</code></td><td><code>boolean</code></td><td><code>-</code></td><td>Boolean flag controlling `list`.</td></tr>
+            <tr><td><code>noFrame</code></td><td><code>boolean</code></td><td><code>-</code></td><td>Boolean flag controlling `noFrame`.</td></tr>
+            <tr><td><code>option</code></td><td><code>RadioButtonOption</code></td><td><code>-</code></td><td>Controls `option`.</td></tr>
+            <tr><td><code>selected</code></td><td><code>boolean</code></td><td><code>-</code></td><td>Boolean flag controlling `selected`.</td></tr>
+            <tr><td><code>tabIndex</code></td><td><code>number</code></td><td><code>-</code></td><td>Controls `tabIndex`.</td></tr>
+            <tr><td><code>toggleIcon</code></td><td><code>boolean</code></td><td><code>-</code></td><td>Boolean flag controlling `toggleIcon`.</td></tr>
+            <tr><td><code>wrap</code></td><td><code>boolean</code></td><td><code>-</code></td><td>Boolean flag controlling `wrap`.</td></tr>
+            <tr><td><code>...divAttributes</code></td><td><code>{`HTMLAttributes<HTMLDivElement>`}</code></td><td><code>-</code></td><td>Native `div` props pass through (for example `id`, `data-testid`, `className`, `style`, `aria-*`).</td></tr>
+          </tbody>
+        </table>
 
-        ## Story Variants
+        ## Events
+        <table style={{width: '100%'}}>
+          <colgroup>
+            <col style={{width: '1%'}} />
+            <col style={{width: '99%'}} />
+          </colgroup>
+          <thead>
+            <tr>
+              <th className={"left"}>Event</th>
+              <th className={"left"}>Type</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td><code>onChange</code></td><td><code>{`(option: RadioButtonOption, state: boolean) => void`}</code></td></tr>
+          </tbody>
+        </table>
 
-        - `Default`
-
-        ## Attributes
-
-        - Props interface: `RadioButtonProps`
-
-        | Prop | Type | Required | Default | Notes |
-        | --- | --- | --- | --- | --- |
-        | `option` | `RadioButtonOption` | Yes | `{ fieldName: 'option', title: 'Option', state: false, icon: 'circle' }` | custom |
-        | `onChange` | `(option: RadioButtonOption, state: boolean) => void` | No | `() => null` | callback |
-        | `selected` | `boolean` | No | `false` | boolean |
-        | `deselect` | `boolean` | No | `true` | boolean |
-        | `tabIndex` | `number` | No | `1` | number |
-        | `wrap` | `boolean` | No | `false` | boolean |
-        | `list` | `boolean` | No | `false` | boolean |
-        | `hideRadio` | `boolean` | No | `false` | boolean |
-        | `toggleIcon` | `boolean` | No | `true` | boolean |
-        | `iconColor` | `string` | No | `undefined` | string |
-        | `noFrame` | `boolean` | No | `false` | boolean |
+        ## Code Examples
         </Unstyled>
+
+        <RenderSource language={"tsx"}>
+{`
+import { RadioButton } from '@apple-pie/slice';
+
+export function RadioButtonExample() {
+  return (
+    <RadioButton
+      option={{ title: 'Email alerts', fieldName: 'alerts' }}
+      selected={true}
+      onChange={(option, state) => console.log(option, state)}
+      id="radiobutton-example"
+      data-testid="radiobutton-example"
+      className="custom-wrapper"
+      style={{ marginTop: 8, maxWidth: 480 }}
+    />
+  );
+}
+`}
+        </RenderSource>
     </FlexDiv>
 </FlexDiv>

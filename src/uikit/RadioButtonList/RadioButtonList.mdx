@@ -1,6 +1,7 @@
 import {Meta, Unstyled} from '@storybook/addon-docs/blocks';
 import {FlexDiv} from '../FlexDiv';
 import * as RadioButtonListStories from './RadioButtonList.stories';
+import {RenderSource} from '../../../.storybook/RenderSource';
 
 <Meta of={RadioButtonListStories} />
 
@@ -8,42 +9,90 @@ import * as RadioButtonListStories from './RadioButtonList.stories';
     <FlexDiv width={"fill"} maxWidth={760} height={"auto"}>
         <Unstyled>
         # RadioButtonList
+        RadioButtonList component documentation.
 
-        Part of `Option 1`.
+        ## Base element
+        `HTMLDivElement`
 
-        ## Purpose
+        ## Interface
+        `RadioButtonListProps`
 
-        - Use `RadioButtonList` when you need this UI primitive inside the Slice component system.
-        - Implementation reviewed from: `src/uikit/RadioButtonList/RadioButtonList.tsx`.
+        ## Props
+        <table style={{width: '100%'}}>
+          <colgroup>
+            <col style={{width: '1%'}} />
+            <col style={{width: '1%'}} />
+            <col style={{width: '1%'}} />
+            <col style={{width: '97%'}} />
+          </colgroup>
+          <thead>
+            <tr>
+              <th className={"left"}>Prop</th>
+              <th className={"left"}>Type</th>
+              <th className={"left"}>Default</th>
+              <th>Description</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td><code>custom</code></td><td><code>number</code></td><td><code>-</code></td><td>Controls `custom`.</td></tr>
+            <tr><td><code>deselect</code></td><td><code>boolean</code></td><td><code>-</code></td><td>Boolean flag controlling `deselect`.</td></tr>
+            <tr><td><code>gap</code></td><td><code>number</code></td><td><code>-</code></td><td>Sizing/layout setting for `gap`.</td></tr>
+            <tr><td><code>hideRadio</code></td><td><code>boolean</code></td><td><code>-</code></td><td>Boolean flag controlling `hideRadio`.</td></tr>
+            <tr><td><code>iconColor</code></td><td><code>string</code></td><td><code>-</code></td><td>Color token/value for `iconColor`.</td></tr>
+            <tr><td><code>iconSelectedColor</code></td><td><code>string</code></td><td><code>-</code></td><td>Color token/value for `iconSelectedColor`.</td></tr>
+            <tr><td><code>label</code></td><td><code>{`string | null`}</code></td><td><code>-</code></td><td>Text/value for `label`.</td></tr>
+            <tr><td><code>multiSelect</code></td><td><code>boolean</code></td><td><code>-</code></td><td>Boolean flag controlling `multiSelect`.</td></tr>
+            <tr><td><code>noFrame</code></td><td><code>boolean</code></td><td><code>-</code></td><td>Boolean flag controlling `noFrame`.</td></tr>
+            <tr><td><code>options</code></td><td><code>RadioButtonOption[]</code></td><td><code>-</code></td><td>Controls `options`.</td></tr>
+            <tr><td><code>selectedIndexes</code></td><td><code>{`number[] | null`}</code></td><td><code>-</code></td><td>Controls `selectedIndexes`.</td></tr>
+            <tr><td><code>selectedOptions</code></td><td><code>{`string[] | null`}</code></td><td><code>-</code></td><td>Text/value for `selectedOptions`.</td></tr>
+            <tr><td><code>spacer</code></td><td><code>{`'xl' | 'lg' | 'md' | 'sm' | 'custom' | 'none'`}</code></td><td><code>-</code></td><td>Controls `spacer`.</td></tr>
+            <tr><td><code>tabIndexSeed</code></td><td><code>number</code></td><td><code>-</code></td><td>Controls `tabIndexSeed`.</td></tr>
+            <tr><td><code>toggleIcon</code></td><td><code>boolean</code></td><td><code>-</code></td><td>Boolean flag controlling `toggleIcon`.</td></tr>
+            <tr><td><code>wrap</code></td><td><code>boolean</code></td><td><code>-</code></td><td>Boolean flag controlling `wrap`.</td></tr>
+            <tr><td><code>...divAttributes</code></td><td><code>{`HTMLAttributes<HTMLDivElement>`}</code></td><td><code>-</code></td><td>Native `div` props pass through (for example `id`, `data-testid`, `className`, `style`, `aria-*`).</td></tr>
+          </tbody>
+        </table>
 
-        ## Story Variants
+        ## Events
+        <table style={{width: '100%'}}>
+          <colgroup>
+            <col style={{width: '1%'}} />
+            <col style={{width: '99%'}} />
+          </colgroup>
+          <thead>
+            <tr>
+              <th className={"left"}>Event</th>
+              <th className={"left"}>Type</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td><code>onChange</code></td><td><code>{`( options: RadioButtonOption[] | null, indexes: number[] | null, ) => void`}</code></td></tr>
+          </tbody>
+        </table>
 
-        - `Default`
-        - `MultiSelect`
-
-        ## Attributes
-
-        - Props interface: `RadioButtonListProps`
-
-        | Prop | Type | Required | Default | Notes |
-        | --- | --- | --- | --- | --- |
-        | `onChange` | `( options: RadioButtonOption[] \| null, indexes: number[] \| null, ) => void` | No | `() => null` | callback |
-        | `options` | `RadioButtonOption[]` | No | `[]` | array |
-        | `selectedIndexes` | `number[] \\| null` | No | `null` | union |
-        | `selectedOptions` | `string[] \\| null` | No | `null` | union |
-        | `label` | `string \\| null` | No | `null` | union |
-        | `deselect` | `boolean` | No | `false` | boolean |
-        | `multiSelect` | `boolean` | No | `false` | boolean |
-        | `wrap` | `boolean` | No | `false` | boolean |
-        | `spacer` | `'xl' \\| 'lg' \\| 'md' \\| 'sm' \\| 'custom' \\| 'none'` | No | `'none'` | union |
-        | `custom` | `number` | No | `0` | number |
-        | `gap` | `number` | No | `16` | number |
-        | `tabIndexSeed` | `number` | No | `0` | number |
-        | `hideRadio` | `boolean` | No | `false` | boolean |
-        | `toggleIcon` | `boolean` | No | `true` | boolean |
-        | `iconColor` | `string` | No | `undefined` | string |
-        | `iconSelectedColor` | `string` | No | `undefined` | string |
-        | `noFrame` | `boolean` | No | `false` | boolean |
+        ## Code Examples
         </Unstyled>
+
+        <RenderSource language={"tsx"}>
+{`
+import { RadioButtonList } from '@apple-pie/slice';
+
+export function RadioButtonListExample() {
+  return (
+    <RadioButtonList
+      label="Notification Channels"
+      options={[{ title: 'Email', fieldName: 'email' }, { title: 'SMS', fieldName: 'sms' }]}
+      selectedIndexes={[0]}
+      onChange={(options, indexes) => console.log(options, indexes)}
+      id="radiobuttonlist-example"
+      data-testid="radiobuttonlist-example"
+      className="custom-wrapper"
+      style={{ marginTop: 8, maxWidth: 480 }}
+    />
+  );
+}
+`}
+        </RenderSource>
     </FlexDiv>
 </FlexDiv>

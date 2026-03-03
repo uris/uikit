@@ -1,6 +1,7 @@
 import {Meta, Unstyled} from '@storybook/addon-docs/blocks';
 import {FlexDiv} from '../../FlexDiv';
 import * as DoneCheckStories from './DoneCheck.stories';
+import {RenderSource} from '../../../../.storybook/RenderSource';
 
 <Meta of={DoneCheckStories} />
 
@@ -8,34 +9,83 @@ import * as DoneCheckStories from './DoneCheck.stories';
     <FlexDiv width={"fill"} maxWidth={760} height={"auto"}>
         <Unstyled>
         # DoneCheck
+        DoneCheck component documentation.
 
-        Part of `Components/DoneCheck`.
+        ## Base element
+        `SVGSVGElement`
 
-        ## Purpose
+        ## Interface
+        `DoneCheckProps`
 
-        - Use `DoneCheck` when you need this UI primitive inside the Slice component system.
-        - Implementation reviewed from: `src/uikit/Progress/DoneCheck/DoneCheck.tsx`.
+        ## Props
+        <table style={{width: '100%'}}>
+          <colgroup>
+            <col style={{width: '1%'}} />
+            <col style={{width: '1%'}} />
+            <col style={{width: '1%'}} />
+            <col style={{width: '97%'}} />
+          </colgroup>
+          <thead>
+            <tr>
+              <th className={"left"}>Prop</th>
+              <th className={"left"}>Type</th>
+              <th className={"left"}>Default</th>
+              <th>Description</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td><code>bounce</code></td><td><code>number</code></td><td><code>-</code></td><td>Controls `bounce`.</td></tr>
+            <tr><td><code>color</code></td><td><code>string</code></td><td><code>-</code></td><td>Color token/value for `color`.</td></tr>
+            <tr><td><code>delay</code></td><td><code>number</code></td><td><code>-</code></td><td>Controls `delay`.</td></tr>
+            <tr><td><code>didEnd</code></td><td><code>{`() => void`}</code></td><td><code>-</code></td><td>Controls `didEnd`.</td></tr>
+            <tr><td><code>didStart</code></td><td><code>{`() => void`}</code></td><td><code>-</code></td><td>Controls `didStart`.</td></tr>
+            <tr><td><code>duration</code></td><td><code>number</code></td><td><code>-</code></td><td>Controls `duration`.</td></tr>
+            <tr><td><code>play</code></td><td><code>boolean</code></td><td><code>-</code></td><td>Boolean flag controlling `play`.</td></tr>
+            <tr><td><code>size</code></td><td><code>number</code></td><td><code>-</code></td><td>Sizing/layout setting for `size`.</td></tr>
+            <tr><td><code>stroke</code></td><td><code>number</code></td><td><code>-</code></td><td>Controls `stroke`.</td></tr>
+            <tr><td><code>...svgAttributes</code></td><td><code>{`SVGAttributes<SVGSVGElement>`}</code></td><td><code>-</code></td><td>Native `svg` props pass through (for example `id`, `data-testid`, `className`, `style`, `aria-*`).</td></tr>
+          </tbody>
+        </table>
 
-        ## Story Variants
+        ## Events
+        <table style={{width: '100%'}}>
+          <colgroup>
+            <col style={{width: '1%'}} />
+            <col style={{width: '99%'}} />
+          </colgroup>
+          <thead>
+            <tr>
+              <th className={"left"}>Event</th>
+              <th className={"left"}>Type</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td><code>-</code></td><td><code>-</code></td></tr>
+          </tbody>
+        </table>
 
-        - `Default`
-        - `Static`
-
-        ## Attributes
-
-        - Props interface: `DoneCheckProps`
-
-        | Prop | Type | Required | Default | Notes |
-        | --- | --- | --- | --- | --- |
-        | `didStart` | `() => void` | No | `() => null` | callback |
-        | `didEnd` | `() => void` | No | `() => null` | callback |
-        | `size` | `number` | No | `88` | number |
-        | `color` | `string` | No | `theme.current.colors['feedback-positive']` | string |
-        | `stroke` | `number` | No | `0.75` | number |
-        | `duration` | `number` | No | `0.35` | number |
-        | `bounce` | `number` | No | `0.7` | number |
-        | `delay` | `number` | No | `0.5` | number |
-        | `play` | `boolean` | No | `false` | boolean |
+        ## Code Examples
         </Unstyled>
+
+        <RenderSource language={"tsx"}>
+{`
+import { DoneCheck } from '@apple-pie/slice';
+
+export function DoneCheckExample() {
+  return (
+    <DoneCheck
+      play={true}
+      size={28}
+      color="var(--core-icon-special)"
+      didEnd={() => console.log('done')}
+      id="donecheck-example"
+      data-testid="donecheck-example"
+      className="custom-wrapper"
+      style={{ display: 'block', marginTop: 8 }}
+    />
+  );
+}
+`}
+        </RenderSource>
     </FlexDiv>
 </FlexDiv>

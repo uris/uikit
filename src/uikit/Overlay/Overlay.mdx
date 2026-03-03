@@ -1,6 +1,7 @@
 import {Meta, Unstyled} from '@storybook/addon-docs/blocks';
 import {FlexDiv} from '../FlexDiv';
 import * as OverlayStories from './Overlay.stories';
+import {RenderSource} from '../../../.storybook/RenderSource';
 
 <Meta of={OverlayStories} />
 
@@ -8,33 +9,80 @@ import * as OverlayStories from './Overlay.stories';
     <FlexDiv width={"fill"} maxWidth={760} height={"auto"}>
         <Unstyled>
         # Overlay
+        Overlay component documentation.
 
-        Part of `Components/Overlay`.
+        ## Base element
+        `HTMLDivElement`
 
-        ## Purpose
+        ## Interface
+        `OverlayProps`
 
-        - Use `Overlay` when you need this UI primitive inside the Slice component system.
-        - Implementation reviewed from: `src/uikit/Overlay/Overlay.tsx`.
+        ## Props
+        <table style={{width: '100%'}}>
+          <colgroup>
+            <col style={{width: '1%'}} />
+            <col style={{width: '1%'}} />
+            <col style={{width: '1%'}} />
+            <col style={{width: '97%'}} />
+          </colgroup>
+          <thead>
+            <tr>
+              <th className={"left"}>Prop</th>
+              <th className={"left"}>Type</th>
+              <th className={"left"}>Default</th>
+              <th>Description</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td><code>color</code></td><td><code>string</code></td><td><code>-</code></td><td>Color token/value for `color`.</td></tr>
+            <tr><td><code>global</code></td><td><code>boolean</code></td><td><code>-</code></td><td>Boolean flag controlling `global`.</td></tr>
+            <tr><td><code>opacity</code></td><td><code>number</code></td><td><code>-</code></td><td>Controls `opacity`.</td></tr>
+            <tr><td><code>overlay</code></td><td><code>any</code></td><td><code>-</code></td><td>Controls `overlay`.</td></tr>
+            <tr><td><code>toggleOverlay</code></td><td><code>{`(state: boolean) => void`}</code></td><td><code>-</code></td><td>Boolean flag controlling `toggleOverlay`.</td></tr>
+            <tr><td><code>type</code></td><td><code>{`'clear' | 'dark'`}</code></td><td><code>-</code></td><td>Controls `type`.</td></tr>
+            <tr><td><code>...divAttributes</code></td><td><code>{`HTMLAttributes<HTMLDivElement>`}</code></td><td><code>-</code></td><td>Native `div` props pass through (for example `id`, `data-testid`, `className`, `style`, `aria-*`).</td></tr>
+          </tbody>
+        </table>
 
-        ## Story Variants
+        ## Events
+        <table style={{width: '100%'}}>
+          <colgroup>
+            <col style={{width: '1%'}} />
+            <col style={{width: '99%'}} />
+          </colgroup>
+          <thead>
+            <tr>
+              <th className={"left"}>Event</th>
+              <th className={"left"}>Type</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td><code>onClick</code></td><td><code>{`() => void`}</code></td></tr>
+          </tbody>
+        </table>
 
-        - `Default`
-        - `GlobalOverlay`
-        - `HiddenGlobal`
-
-        ## Attributes
-
-        - Props interface: `OverlayProps`
-
-        | Prop | Type | Required | Default | Notes |
-        | --- | --- | --- | --- | --- |
-        | `color` | `string` | No | `'rgb(0 | string, 0, 0)'` |
-        | `onClick` | `() => void` | No | `() => null` | callback |
-        | `toggleOverlay` | `(state: boolean) => void` | No | `() => null` | callback |
-        | `opacity` | `number` | No | `0` | number |
-        | `type` | `'clear' \\| 'dark'` | No | `'clear'` | union |
-        | `global` | `boolean` | No | `false` | boolean |
-        | `overlay` | `any` | No | `undefined` | custom |
+        ## Code Examples
         </Unstyled>
+
+        <RenderSource language={"tsx"}>
+{`
+import { Overlay } from '@apple-pie/slice';
+
+export function OverlayExample() {
+  return (
+    <Overlay
+      overlay={true}
+      opacity={0.4}
+      type="dark"
+      onClick={() => console.log('overlay click')}
+      id="overlay-example"
+      data-testid="overlay-example"
+      className="custom-wrapper"
+      style={{ marginTop: 8, maxWidth: 480 }}
+    />
+  );
+}
+`}
+        </RenderSource>
     </FlexDiv>
 </FlexDiv>

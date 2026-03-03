@@ -26,7 +26,7 @@ export default meta;
 export const Default: StoryObj<typeof UIButtonBar> = {
 	render: (args) => {
 		return (
-			<FlexDiv justify={'center'} alignItems={'center'} padding={64}>
+			<FlexDiv absolute justify={'center'} alignItems={'center'} padding={64}>
 				<UIButtonBar {...args} />
 			</FlexDiv>
 		);

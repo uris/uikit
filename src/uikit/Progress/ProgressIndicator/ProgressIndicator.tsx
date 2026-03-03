@@ -21,7 +21,7 @@ export function ProgressIndicator(props: Readonly<ProgressIndicatorProps>) {
 		...divAttributes
 	} = props;
 	const { id: divId, className, style, ...rest } = divAttributes;
-	const divStyle = (style ?? {}) as React.CSSProperties;
+	const divStyle = style ?? ({} as React.CSSProperties);
 	const divClass = className ? ` ${className}` : '';
 	const [playing, setPlaying] = useState<boolean>(show);
 	const timer = useRef<any>(null);
