@@ -6,7 +6,7 @@ import React, {
 	useRef,
 	useState,
 } from 'react';
-import { useTrackRenders } from '../../hooks/useTrackRenders';
+import { useTrackRenders } from '../../hooks/useTrackRenders/useTrackRenders';
 import { cleanString } from '../../util/utils';
 import css from './DivInput.module.css';
 import type { DivInputProps } from './_types';

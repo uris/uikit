@@ -1,7 +1,7 @@
 import type React from 'react';
 import { useCallback, useMemo } from 'react';
 import { useTheme } from '../../hooks';
-import { useTrackRenders } from '../../hooks/useTrackRenders';
+import { useTrackRenders } from '../../hooks/useTrackRenders/useTrackRenders';
 import css from './UILabel.module.css';
 import type { UILabelProps } from './_types';
 

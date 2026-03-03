@@ -1,6 +1,6 @@
 import { AnimatePresence, motion } from 'motion/react';
 import React, { useCallback, useMemo } from 'react';
-import { useTrackRenders } from '../../hooks/useTrackRenders';
+import { useTrackRenders } from '../../hooks/useTrackRenders/useTrackRenders';
 import css from './Overlay.module.css';
 import type { OverlayProps } from './_types';
 

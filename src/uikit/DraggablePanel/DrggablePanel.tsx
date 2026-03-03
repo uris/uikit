@@ -7,8 +7,8 @@ import React, {
 	useState,
 } from 'react';
 import { useTheme } from '../../hooks';
-import { useObserveResize } from '../../hooks/useObserveResize';
-import { useTrackRenders } from '../../hooks/useTrackRenders';
+import { useObserveResize } from '../../hooks/useObserveResize/useObserveResize';
+import { useTrackRenders } from '../../hooks/useTrackRenders/useTrackRenders';
 import { pointerPosition } from '../../util/utils';
 import css from './DraggablePanel.module.css';
 import type { Constraint } from './_types';

@@ -1,0 +1,90 @@
+import {Meta, Unstyled} from '@storybook/addon-docs/blocks';
+import {RenderSource} from '../../../.storybook/RenderSource';
+import {FlexDiv} from '../../uikit/FlexDiv';
+
+<Meta title="Hooks/useDoubleClick" />
+
+<FlexDiv width={"fill"} height={"fill"} alignItems={"center"}>
+    <FlexDiv width={"fill"} maxWidth={760} height={"auto"}>
+        <Unstyled>
+        # useDoubleClick
+        Distinguishes single-click and double-click interactions using a configurable debounce delay.
+
+        ## Signature
+        `useDoubleClick<T,Y>(onClick, onDblClick, delay?)`
+
+        ## Parameters
+        <table style={{width: '100%'}}>
+          <colgroup>
+            <col style={{width: '1%'}} />
+            <col style={{width: 'auto'}} />
+            <col style={{width: '1%'}} />
+            <col style={{width: '50%'}} />
+          </colgroup>
+          <thead>
+            <tr>
+              <th>Param</th>
+              <th>Type</th>
+              <th>Default</th>
+              <th>Description</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td><code>onClick</code></td><td><code>{`(payload?: T) => void`}</code></td><td><code>-</code></td><td>Called when a single click is confirmed after the delay window.</td></tr>
+            <tr><td><code>onDblClick</code></td><td><code>{`(payload?: Y) => void`}</code></td><td><code>-</code></td><td>Called immediately when a double click is detected.</td></tr>
+            <tr><td><code>delay</code></td><td><code>number</code></td><td><code>200</code></td><td>Milliseconds to wait before resolving a click as single-click.</td></tr>
+          </tbody>
+        </table>
+
+        ## Returns
+        <table style={{width: '100%'}}>
+          <colgroup>
+              <col style={{width: '1%'}} />
+              <col style={{width: 'auto'}} />
+              <col style={{width: '1%'}} />
+              <col style={{width: '50%'}} />
+          </colgroup>
+          <thead>
+            <tr>
+              <th>Return</th>
+              <th>Type</th>
+              <th>Default</th>
+              <th>Description</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td><code>didClick</code></td><td><code>{`(payload: T) => (() => void)`}</code></td><td><code>-</code></td><td>Queues single-click handling and returns a cleanup callback that clears the pending timer.</td></tr>
+            <tr><td><code>didDblClick</code></td><td><code>{`(payload: Y) => void`}</code></td><td><code>-</code></td><td>Cancels any pending single-click timer and runs the double-click callback.</td></tr>
+          </tbody>
+        </table>
+
+        ## Code Examples
+        </Unstyled>
+
+        <RenderSource language={"tsx"}>
+{`
+import { useDoubleClick } from '@apple-pie/slice';
+
+function FileRow() {
+  const [didClick, didDblClick] = useDoubleClick<string, string>(
+    (id) => console.log('selected', id),
+    (id) => console.log('opened', id),
+    180,
+  );
+
+  return (
+    <div
+      role="button"
+      tabIndex={0}
+      onClick={() => didClick('file-17')}
+      onDoubleClick={() => didDblClick('file-17')}
+      style={{ padding: 12, border: '1px solid var(--core-outline-primary)' }}
+    >
+      Employee Handbook.pdf
+    </div>
+  );
+}
+`}
+        </RenderSource>
+    </FlexDiv>
+</FlexDiv>

@@ -13,7 +13,7 @@ export type {
 	Type,
 	Corners,
 } from './theme/index';
-export { useTheme, useObserveTheme } from './hooks/index';
+export { useTheme, useObserveTheme, useLastUpdated } from './hooks/index';
 
 export { Avatar } from './uikit/Avatar/index';
 export type { AvatarProps } from './uikit/Avatar/index';

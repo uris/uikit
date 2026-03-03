@@ -1,9 +1,9 @@
 import { useCallback, useMemo } from 'react';
-import type { SliceTheme } from '../theme';
-import { darkTheme, lightTheme } from '../theme';
-import { colorClass, colorCssVars } from '../theme/colors/colors';
-import { typeCssClasses, typeStyles } from '../theme/type/type';
-import { useObserveTheme } from './useObserveTheme';
+import type { SliceTheme } from '../../theme';
+import { darkTheme, lightTheme } from '../../theme';
+import { colorClass, colorCssVars } from '../../theme/colors/colors';
+import { typeCssClasses, typeStyles } from '../../theme/type/type';
+import { useObserveTheme } from '../useObserveTheme/useObserveTheme';
 
 /**
  * Hook to manage Slice theming

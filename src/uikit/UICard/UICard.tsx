@@ -1,5 +1,5 @@
 import React, { useCallback, useMemo } from 'react';
-import { useTrackRenders } from '../../hooks/useTrackRenders';
+import { useTrackRenders } from '../../hooks/useTrackRenders/useTrackRenders';
 import { Icon } from '../Icon';
 import css from './UICard.module.css';
 import type { UICardProps } from './_types';

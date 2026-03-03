@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { useTheme } from '../../hooks';
-import { useTrackRenders } from '../../hooks/useTrackRenders';
+import { useTrackRenders } from '../../hooks/useTrackRenders/useTrackRenders';
 import { IconButton } from '../IconButton';
 import css from './RadioButton.module.css';
 import type { RadioButtonOption, RadioButtonProps } from './_types';

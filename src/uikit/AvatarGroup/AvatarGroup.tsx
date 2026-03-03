@@ -1,5 +1,5 @@
 import React, { useMemo } from 'react';
-import { useTrackRenders } from '../../hooks/useTrackRenders';
+import { useTrackRenders } from '../../hooks/useTrackRenders/useTrackRenders';
 import { Avatar } from '../Avatar';
 import css from './AvatarGroup.module.css';
 import type { AvatarGroupProps, AvatarInfo } from './_types';

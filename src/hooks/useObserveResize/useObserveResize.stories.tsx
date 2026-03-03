@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { useRef, useState } from 'react';
-import { FlexDiv } from '../uikit/FlexDiv';
-import { Slider } from '../uikit/Slider';
+import { FlexDiv } from '../../uikit/FlexDiv';
+import { Slider } from '../../uikit/Slider';
 import { useObserveResize } from './useObserveResize';
 
 type ResizeDemoProps = {

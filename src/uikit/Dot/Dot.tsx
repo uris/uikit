@@ -1,6 +1,6 @@
 import { AnimatePresence, motion } from 'motion/react';
 import React, { useMemo } from 'react';
-import { useTrackRenders } from '../../hooks/useTrackRenders';
+import { useTrackRenders } from '../../hooks/useTrackRenders/useTrackRenders';
 import css from './Dot.module.css';
 import { DEFAULT_TRANSITION, DEFAULT_VARIANTS, type DotProps } from './_types';
 

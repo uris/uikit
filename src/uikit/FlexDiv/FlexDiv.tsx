@@ -1,6 +1,6 @@
 import { motion } from 'motion/react';
 import React, { useMemo } from 'react';
-import { useTrackRenders } from '../../hooks/useTrackRenders';
+import { useTrackRenders } from '../../hooks/useTrackRenders/useTrackRenders';
 import css from './FlexDiv.module.css';
 import type { FlexDivProps } from './_types';
 

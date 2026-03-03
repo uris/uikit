@@ -1,5 +1,5 @@
 import React, { useMemo } from 'react';
-import { useTrackRenders } from '../../hooks/useTrackRenders';
+import { useTrackRenders } from '../../hooks/useTrackRenders/useTrackRenders';
 import css from './Badge.module.css';
 import type { BadgeProps } from './_types';
 

@@ -7,7 +7,7 @@ import React, {
 	useState,
 } from 'react';
 import { useTheme } from '../../hooks';
-import { useTrackRenders } from '../../hooks/useTrackRenders';
+import { useTrackRenders } from '../../hooks/useTrackRenders/useTrackRenders';
 import { Icon } from '../Icon';
 import { IconButton } from '../IconButton';
 import { UIButton } from '../UIButton';

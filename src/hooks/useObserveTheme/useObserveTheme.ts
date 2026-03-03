@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { type SliceTheme, darkTheme, lightTheme } from '../theme';
+import { type SliceTheme, darkTheme, lightTheme } from '../../theme';
 
 export function useObserveTheme() {
 	const [theme, setTheme] = useState<SliceTheme>(lightTheme);

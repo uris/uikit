@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
-import { FlexDiv } from '../uikit/FlexDiv';
+import { FlexDiv } from '../../uikit/FlexDiv';
 import { useObserveTheme } from './useObserveTheme';
 
 function UseObserveThemeDemo() {

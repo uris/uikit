@@ -1,6 +1,6 @@
 import React, { useMemo } from 'react';
 import { useTheme } from '../../hooks';
-import { useTrackRenders } from '../../hooks/useTrackRenders';
+import { useTrackRenders } from '../../hooks/useTrackRenders/useTrackRenders';
 import type { DocsProps } from './_types';
 
 export const DocIcons = React.memo((props: DocsProps) => {

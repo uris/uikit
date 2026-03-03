@@ -1,5 +1,5 @@
 import React, { useCallback, useMemo } from 'react';
-import { useTrackRenders } from '../../hooks/useTrackRenders';
+import { useTrackRenders } from '../../hooks/useTrackRenders/useTrackRenders';
 import css from './Avatar.module.css';
 import type { AvatarProps } from './_types';
 

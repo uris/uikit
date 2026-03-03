@@ -1,0 +1,83 @@
+import {Meta, Unstyled} from '@storybook/addon-docs/blocks';
+import {RenderSource} from '../../../.storybook/RenderSource';
+import {FlexDiv} from '../../uikit/FlexDiv';
+
+<Meta title="Hooks/useWindow" />
+
+<FlexDiv width={"fill"} height={"fill"} alignItems={"center"}>
+    <FlexDiv width={"fill"} maxWidth={760} height={"auto"}>
+        <Unstyled>
+        # useWindow
+        Tracks viewport size, form factor, touch capability, pixel ratio, and Electron runtime state.
+
+        ## Signature
+        `useWindow(top?: boolean)`
+
+        ## Parameters
+        <table style={{width: '100%'}}>
+            <colgroup>
+                <col style={{width: '1%'}} />
+                <col style={{width: '1%'}} />
+                <col style={{width: '1%'}} />
+                <col style={{width: '97%'}} />
+            </colgroup>
+            <thead>
+            <tr>
+                <th>Parameter</th>
+                <th>Type</th>
+                <th>Default</th>
+                <th>Description</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr><td><code>Top?</code></td><td><code>boolean</code></td><td><code>true</code></td><td>Use to top most frame to set width and height of the viewport. If false, uses the current frame.</td></tr>
+            </tbody>
+        </table>
+
+        ## Returns
+        <table style={{width: '100%'}}>
+          <colgroup>
+            <col style={{width: '1%'}} />
+            <col style={{width: '1%'}} />
+            <col style={{width: '1%'}} />
+            <col style={{width: '97%'}} />
+          </colgroup>
+          <thead>
+            <tr>
+              <th>Return</th>
+              <th>Type</th>
+              <th>Default</th>
+              <th>Description</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td><code>viewportWidth</code></td><td><code>number | null</code></td><td><code>null</code></td><td>Current `innerWidth`.</td></tr>
+            <tr><td><code>viewportHeight</code></td><td><code>number | null</code></td><td><code>null</code></td><td>Current `innerHeight`.</td></tr>
+            <tr><td><code>height</code></td><td><code>string</code></td><td><code>'100vh'</code></td><td>A height token for setting layout height.</td></tr>
+            <tr><td><code>isTouchDevice</code></td><td><code>boolean</code></td><td><code>false</code></td><td>`true` when touch input is available.</td></tr>
+            <tr><td><code>isElectron</code></td><td><code>boolean</code></td><td><code>false</code></td><td>`true` when running in Electron.</td></tr>
+            <tr><td><code>formFactor</code></td><td><code>FormFactor</code></td><td><code>FormFactor.Desktop</code></td><td>Screen classification based on width breakpoints.</td></tr>
+            <tr><td><code>dpr</code></td><td><code>number</code></td><td><code>1</code></td><td>Device pixel ratio clamped to `1 | 2 | 3`.</td></tr>
+          </tbody>
+        </table>
+
+        ## Code Examples
+        </Unstyled>
+
+        <RenderSource language={"tsx"}>
+{`
+import { useWindow } from '@apple-pie/slice';
+
+function ViewportBadge() {
+  const win = useWindow();
+
+  return (
+    <div style={{ padding: 12, border: '1px solid var(--core-outline-primary)' }}>
+      {win.formFactor} • {win.viewportWidth} x {win.viewportHeight}
+    </div>
+  );
+}
+`}
+        </RenderSource>
+    </FlexDiv>
+</FlexDiv>

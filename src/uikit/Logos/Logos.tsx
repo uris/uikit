@@ -1,6 +1,6 @@
 import { useMemo } from 'react';
 import { useTheme } from '../../hooks';
-import { useTrackRenders } from '../../hooks/useTrackRenders';
+import { useTrackRenders } from '../../hooks/useTrackRenders/useTrackRenders';
 import type { LogoProps } from './_types';
 
 export function Logos(props: Readonly<LogoProps>) {

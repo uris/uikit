@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useState } from 'react';
 import { useTheme } from '../../hooks';
-import { useTrackRenders } from '../../hooks/useTrackRenders';
+import { useTrackRenders } from '../../hooks/useTrackRenders/useTrackRenders';
 import { IconButton } from '../IconButton';
 import css from './UIButtonBar.module.css';
 import type { BarButton, UIButtonBarProps } from './_types';

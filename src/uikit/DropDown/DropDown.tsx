@@ -6,7 +6,7 @@ import React, {
 	useState,
 } from 'react';
 import { useTheme } from '../../hooks';
-import { useTrackRenders } from '../../hooks/useTrackRenders';
+import { useTrackRenders } from '../../hooks/useTrackRenders/useTrackRenders';
 import { Icon } from '../Icon';
 import css from './DropDown.module.css';
 import type { DropDownOption, DropDownProps } from './_types';

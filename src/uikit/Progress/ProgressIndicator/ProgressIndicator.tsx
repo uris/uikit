@@ -2,7 +2,7 @@ import { AnimatePresence, motion } from 'motion/react';
 import type React from 'react';
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { useTheme } from '../../../hooks';
-import { useTrackRenders } from '../../../hooks/useTrackRenders';
+import { useTrackRenders } from '../../../hooks/useTrackRenders/useTrackRenders';
 import css from './ProgressIndicator.module.css';
 import type { ProgressIndicatorProps } from './_types';
 

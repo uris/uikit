@@ -1,0 +1,80 @@
+import {Meta, Unstyled} from '@storybook/addon-docs/blocks';
+import {RenderSource} from '../../../.storybook/RenderSource';
+import {FlexDiv} from '../../uikit/FlexDiv';
+
+<Meta title="Hooks/useLastUpdated" />
+
+<FlexDiv width={"fill"} height={"fill"} alignItems={"center"}>
+    <FlexDiv width={"fill"} maxWidth={760} height={"auto"}>
+        <Unstyled>
+        # useLastUpdated
+        Takes any given timestamp, compares it to the current time, and provides a human-readable text signaling the elapsed time. By default, the elapsed time text is updated every minute (configurable).
+
+        ## Signature
+        `useLastUpdated(timestamp, prefix?, interval?)`
+
+        ## Parameters
+        <table style={{width: '100%'}}>
+          <colgroup>
+            <col style={{width: '1%'}} />
+            <col style={{width: '1%'}} />
+            <col style={{width: '1%'}} />
+            <col style={{width: '97%'}} />
+          </colgroup>
+          <thead>
+            <tr>
+              <th>Param</th>
+              <th>Type</th>
+              <th>Default</th>
+              <th>Description</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td><code>timestamp</code></td><td><code>string | undefined</code></td><td><code>-</code></td><td>ISO date/time value to format.</td></tr>
+            <tr><td><code>prefix</code></td><td><code>string</code></td><td><code>''</code></td><td>Optional label prefix (for example <code>'Updated '</code>).</td></tr>
+            <tr><td><code>interval</code></td><td><code>number</code></td><td><code>1</code></td><td>Refresh cadence in minutes. Values under <code>1</code> are clamped to <code>1</code>.</td></tr>
+          </tbody>
+        </table>
+
+        ## Returns
+        <table style={{width: '100%'}}>
+          <colgroup>
+            <col style={{width: '1%'}} />
+            <col style={{width: '1%'}} />
+            <col style={{width: '1%'}} />
+            <col style={{width: '97%'}} />
+          </colgroup>
+          <thead>
+            <tr>
+              <th>Return</th>
+              <th>Type</th>
+              <th>Default</th>
+              <th>Description</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td><code>lastUpdated</code></td><td><code>string</code></td><td><code>''</code></td><td>Formatted text like <code>'Just now'</code>, <code>'5 mins. ago'</code>, or a date string.</td></tr>
+            <tr><td><code>timer</code></td><td><code>number</code></td><td><code>1</code></td><td>The interval argument currently in use.</td></tr>
+          </tbody>
+        </table>
+
+        ## Code Examples
+        </Unstyled>
+
+        <RenderSource language={"tsx"}>
+{`
+import { useLastUpdated } from '@apple-pie/slice';
+
+function UpdatedAt({ timestamp }: { timestamp?: string }) {
+  const { lastUpdated } = useLastUpdated(timestamp, 'Updated ', 1);
+
+  return (
+    <span style={{ color: 'var(--core-text-secondary)' }}>
+      {lastUpdated || 'No updates yet'}
+    </span>
+  );
+}
+`}
+        </RenderSource>
+    </FlexDiv>
+</FlexDiv>

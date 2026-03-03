@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect, useMemo, useRef } from 'react';
-import { useObserveResize } from '../../hooks/useObserveResize';
-import { useTrackRenders } from '../../hooks/useTrackRenders';
+import { useObserveResize } from '../../hooks/useObserveResize/useObserveResize';
+import { useTrackRenders } from '../../hooks/useTrackRenders/useTrackRenders';
 import { debounce } from '../../util/debounce';
 import { pointerPosition } from '../../util/utils';
 import css from './Slider.module.css';

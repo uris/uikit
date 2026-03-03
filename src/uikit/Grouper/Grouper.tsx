@@ -1,7 +1,7 @@
 import { useAnimate } from 'motion/react';
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { useTheme } from '../../hooks';
-import { useTrackRenders } from '../../hooks/useTrackRenders';
+import { useTrackRenders } from '../../hooks/useTrackRenders/useTrackRenders';
 import { Badge } from '../Badge';
 import { Icon } from '../Icon';
 import css from './Grouper.module.css';

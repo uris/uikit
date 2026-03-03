@@ -1,7 +1,7 @@
 import { type Transition, useAnimate, usePresence } from 'motion/react';
 import React, { useEffect } from 'react';
 import { useTheme } from '../../../hooks';
-import { useTrackRenders } from '../../../hooks/useTrackRenders';
+import { useTrackRenders } from '../../../hooks/useTrackRenders/useTrackRenders';
 import type { DoneCheckProps } from './_types';
 
 export const DoneCheck = React.memo((props: DoneCheckProps) => {

@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
-import { useTrackRenders } from '../../hooks/useTrackRenders';
+import { useTrackRenders } from '../../hooks/useTrackRenders/useTrackRenders';
 import { accessibleKeyDown } from '../../util/utils';
 import css from './Pager.module.css';
 import type { PagerProps } from './_types';

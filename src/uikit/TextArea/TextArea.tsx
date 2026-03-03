@@ -5,7 +5,7 @@ import React, {
 	useRef,
 	useState,
 } from 'react';
-import { useTrackRenders } from '../../hooks/useTrackRenders';
+import { useTrackRenders } from '../../hooks/useTrackRenders/useTrackRenders';
 import { UIButton } from '../UIButton';
 import css from './TextArea.module.css';
 import type { TextAreaProps } from './_types';

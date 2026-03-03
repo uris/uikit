@@ -1,5 +1,5 @@
 import React, { useMemo } from 'react';
-import { useTrackRenders } from '../../hooks/useTrackRenders';
+import { useTrackRenders } from '../../hooks/useTrackRenders/useTrackRenders';
 import type { SpacerProps } from './_types';
 
 export const Spacer = React.memo((props: SpacerProps) => {
