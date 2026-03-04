@@ -20,7 +20,9 @@ function readLocalStorageValue<T>(key: string, fallback: T): T {
 		}
 		return JSON.parse(raw) as T;
 	} catch (error) {
-		console.error(`Error parsing local storage item for key ${key}:`, { error });
+		console.error(`Error parsing local storage item for key ${key}:`, {
+			error,
+		});
 		return fallback;
 	}
 }
@@ -28,7 +30,7 @@ function readLocalStorageValue<T>(key: string, fallback: T): T {
 export function useLocalStore<T>(key: string, value: T) {
 	const [item, setItem] = useState<T>(() => readLocalStorageValue(key, value));
 
-    // rehydrate on prop changes
+	// rehydrate on prop changes
 	useEffect(() => {
 		setItem(readLocalStorageValue(key, value));
 	}, [key, value]);

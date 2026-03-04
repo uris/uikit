@@ -30,7 +30,7 @@ function UseLocalStoreDemo(props: Readonly<UseLocalStoreDemoProps>) {
 				gap={12}
 				padding={16}
 				border={'1px solid var(--core-outline-primary)'}
-				background={"none"}
+				background={'none'}
 				alignItems={'center'}
 			>
 				<strong>Key: {storageKey}</strong>
@@ -41,9 +41,23 @@ function UseLocalStoreDemo(props: Readonly<UseLocalStoreDemoProps>) {
 					value={draft}
 					onChange={(v) => setDraft(v)}
 				/>
-				<FlexDiv width={'auto'} height={'auto'} gap={8} background={"none"} direction={'row'}>
-					<UIButton label={'Save'} variant={"outline"} onClick={() => setName(draft)} />
-					<UIButton label={'Reset'} variant={"outline"} onClick={() => setName('Jane Doe')} />
+				<FlexDiv
+					width={'auto'}
+					height={'auto'}
+					gap={8}
+					background={'none'}
+					direction={'row'}
+				>
+					<UIButton
+						label={'Save'}
+						variant={'outline'}
+						onClick={() => setName(draft)}
+					/>
+					<UIButton
+						label={'Reset'}
+						variant={'outline'}
+						onClick={() => setName('Jane Doe')}
+					/>
 				</FlexDiv>
 			</FlexDiv>
 		</FlexDiv>

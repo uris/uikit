@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useCallback, useEffect } from 'react';
 
 export interface KeyboardShortcut {
 	key: string;
@@ -13,7 +13,8 @@ export function useKeyboardShortcuts(
 	isAppleDevice: boolean,
 ) {
 	// don't process shortcuts on editable elements, like inputs, editable divs, etc.
-	const isEditable = (e: KeyboardEvent) => {
+
+	const isEditable = useCallback((e: MouseEvent) => {
 		const target = e.target as HTMLElement | null;
 		if (target) {
 			const tag = target.tagName;
@@ -25,20 +26,24 @@ export function useKeyboardShortcuts(
 			);
 		}
 		return false;
-	};
+	}, []);
 
 	// get keyboard event check if it's a shortcut
-	function handleKeyPress(e: KeyboardEvent) {
-		if (isEditable(e)) return;
-		const isMeta = (isAppleDevice && e.metaKey) || (!isAppleDevice && e.ctrlKey);
-		for (const s of shortcuts) {
-			if (s.key.toLowerCase() === e.key.toLowerCase() && isMeta) {
-				e.preventDefault();
-				shortCutHandler(s);
-				break;
+	const handleKeyPress = useCallback(
+		(e: KeyboardEvent) => {
+			if (isEditable(e)) return;
+			const isMeta =
+				(isAppleDevice && e.metaKey) || (!isAppleDevice && e.ctrlKey);
+			for (const s of shortcuts) {
+				if (s.key.toLowerCase() === e.key.toLowerCase() && isMeta) {
+					e.preventDefault();
+					shortCutHandler(s);
+					break;
+				}
 			}
-		}
-	}
+		},
+		[isAppleDevice, shortcuts, shortCutHandler, isEditable],
+	);
 
 	// set keyboard listener
 	useEffect(() => {
@@ -47,5 +52,5 @@ export function useKeyboardShortcuts(
 		return () => {
 			globalThis.removeEventListener('keydown', handleKeyPress, false);
 		};
-	}, [isAppleDevice, shortcuts, shortCutHandler]);
+	}, [shortcuts, handleKeyPress]);
 }

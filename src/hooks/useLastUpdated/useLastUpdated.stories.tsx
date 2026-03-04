@@ -36,7 +36,13 @@ function UseLastUpdatedDemo(props: Readonly<UseLastUpdatedDemoProps>) {
 				alignItems={'center'}
 			>
 				<span>Time: {timestamp}</span>
-				<FlexDiv width={'auto'} height={'auto'} gap={8} background={'none'} alignItems={'center'}>
+				<FlexDiv
+					width={'auto'}
+					height={'auto'}
+					gap={8}
+					background={'none'}
+					alignItems={'center'}
+				>
 					<UIButton
 						label={'Set Time Now'}
 						variant={'outline'}
@@ -53,7 +59,9 @@ function UseLastUpdatedDemo(props: Readonly<UseLastUpdatedDemoProps>) {
 						label={'Set Time 2 days ago'}
 						variant={'outline'}
 						onClick={() =>
-							setTimestamp(new Date(Date.now() - 60 * 1000 * 60 * 24 * 2).toISOString())
+							setTimestamp(
+								new Date(Date.now() - 60 * 1000 * 60 * 24 * 2).toISOString(),
+							)
 						}
 					/>
 					<strong>{lastUpdated}</strong>

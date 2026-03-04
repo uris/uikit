@@ -42,9 +42,12 @@ export function useLastUpdated(
 		}
 		setLastUpdated(getTimeDifference(timestamp, prefix));
 		const refreshMinutes = Math.max(interval, 1);
-		const intervalTimer = setInterval(() => {
-			setLastUpdated(getTimeDifference(timestamp, prefix));
-		}, refreshMinutes * 60 * 1000);
+		const intervalTimer = setInterval(
+			() => {
+				setLastUpdated(getTimeDifference(timestamp, prefix));
+			},
+			refreshMinutes * 60 * 1000,
+		);
 		return () => {
 			clearInterval(intervalTimer);
 		};

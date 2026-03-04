@@ -44,9 +44,7 @@ function UseKeyboardShortcutsDemo() {
 				<strong>Keyboard Shortcuts Demo</strong>
 				<span>
 					Try{' '}
-					{isAppleDevice
-						? 'Command+B / Command+S'
-						: 'Control+B / Control+S'}
+					{isAppleDevice ? 'Command+B / Command+S' : 'Control+B / Control+S'}
 				</span>
 				<span>Last shortcut: {lastShortcut}</span>
 				<input

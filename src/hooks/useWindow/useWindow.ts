@@ -12,7 +12,8 @@ function checkElectron() {
 }
 
 const isElectron = checkElectron();
-const isAppleDevice = navigator.platform.startsWith("Mac") || navigator.platform === "iPhone";
+const isAppleDevice =
+	navigator.platform.startsWith('Mac') || navigator.platform === 'iPhone';
 const dpr = (Math.min(Math.ceil(window.devicePixelRatio), 3) as 1 | 2 | 3) ?? 1;
 const isTouchDevice =
 	'ontouchstart' in globalThis || navigator.maxTouchPoints > 0;
