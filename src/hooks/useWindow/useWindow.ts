@@ -23,7 +23,6 @@ export function useWindow(top = true) {
 	const [viewportHeight, setViewportHeight] = useState<number | null>(null);
 	const [height, setHeight] = useState<string>('100vh');
 	const [formFactor, setFormFactor] = useState<FormFactor>(FormFactor.Desktop);
-	const isTouch = useRef<boolean>(false);
 
 	useEffect(() => {
 		handleResize();
@@ -46,7 +45,7 @@ export function useWindow(top = true) {
 		// note: mobile devices can have task bars that are included inside the viewport.
 		// for mobile devices, set root containers to the inner height pixel which removes
 		// the height of any toolbars and provides the "true" view port height
-		if (!isElectron) setHeight(isTouch ? `${windowHeight}px` : '100vh');
+		if (!isElectron) setHeight(isTouchDevice ? `${windowHeight}px` : '100vh');
 	}
 
 	return {

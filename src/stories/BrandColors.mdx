@@ -1,0 +1,21 @@
+import {Meta, Unstyled} from '@storybook/addon-docs/blocks';
+import {FlexDiv} from "../uikit/FlexDiv";
+import {BrandColors} from "../theme/components/BrandColors";
+
+<Meta title="Colors/Core Colors" />
+
+<FlexDiv width={"fill"} height={"fill"} alignItems={"center"}>
+    <FlexDiv width={"fill"} maxWidth={760} height={"auto"}>
+        <Unstyled>
+            # Core Colors
+            Brand typically provides the foundational pallet from which color schemes are derived. Slice's light and dark themes are simply references to it's core colors.
+            Likewise, any future custom themes, like a high contrast theme, would simply pull from these core colors.
+            
+            Note: The brand pallet can be extended with special colors to ensure coverage for specific application types/needs.
+            
+            <BrandColors />
+
+            Note: While tokens are available via CSS in Slice for every core color, you should avoid referencing these directly and opt for referencing them bia theme based tokens.
+        </Unstyled>   
+    </FlexDiv>
+</FlexDiv>

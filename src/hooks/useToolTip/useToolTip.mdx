@@ -1,0 +1,87 @@
+import {Meta, Unstyled} from '@storybook/addon-docs/blocks';
+import {RenderSource} from '../../../.storybook/RenderSource';
+import {FlexDiv} from '../../uikit/FlexDiv';
+
+<Meta title="Hooks/useToolTip" />
+
+<FlexDiv width={"fill"} height={"fill"} alignItems={"center"}>
+    <FlexDiv width={"fill"} maxWidth={760} height={"auto"}>
+        <Unstyled>
+        # useToolTip
+        Computes tooltip coordinates from an anchor ref and the rendered tooltip rectangle.
+
+        ## Signature
+        `useToolTip(toolTip, tipElement)`
+
+        ## Parameters
+        <table style={{width: '100%'}}>
+          <colgroup>
+            <col style={{width: '1%'}} />
+            <col style={{width: '1%'}} />
+            <col style={{width: '1%'}} />
+            <col style={{width: '97%'}} />
+          </colgroup>
+          <thead>
+            <tr>
+              <th>Param</th>
+              <th>Type</th>
+              <th>Default</th>
+              <th>Description</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td><code>toolTip</code></td><td><code>ToolTip | null</code></td><td><code>-</code></td><td>Tooltip payload object that includes the anchor <code>ref</code>.</td></tr>
+            <tr><td><code>tipElement</code></td><td><code>{`RefObject<HTMLDivElement | null>`}</code></td><td><code>-</code></td><td>Ref to the rendered tooltip element used for width measurement.</td></tr>
+          </tbody>
+        </table>
+
+        ## Returns
+        <table style={{width: '100%'}}>
+          <colgroup>
+            <col style={{width: '1%'}} />
+            <col style={{width: '1%'}} />
+            <col style={{width: '1%'}} />
+            <col style={{width: '97%'}} />
+          </colgroup>
+          <thead>
+            <tr>
+              <th>Return</th>
+              <th>Type</th>
+              <th>Default</th>
+              <th>Description</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td><code>coords</code></td><td><code>{`{ x: number; y: number }`}</code></td><td><code>{`{ x: 0, y: 0 }`}</code></td><td>Viewport coordinates where the tooltip should be placed.</td></tr>
+          </tbody>
+        </table>
+
+        ## Code Examples
+        </Unstyled>
+
+        <RenderSource language={"tsx"}>
+{`
+import { useRef, useState } from 'react';
+import { IconButton, Tip, useToolTip } from '@apple-pie/slice';
+import type { ToolTip } from '@apple-pie/slice';
+
+function TipExample() {
+  const [tip, setTip] = useState<ToolTip | null>(null);
+  const tipRef = useRef<HTMLDivElement>(null);
+  const coords = useToolTip(tip, tipRef);
+
+  return (
+    <>
+      <IconButton
+        icon="home"
+        tooltip="Click Me"
+        onToolTip={(nextTip) => setTip(nextTip)}
+      />
+      <Tip ref={tipRef} tip={tip} coords={coords} size="m" />
+    </>
+  );
+}
+`}
+        </RenderSource>
+    </FlexDiv>
+</FlexDiv>

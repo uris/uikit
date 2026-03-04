@@ -29,6 +29,7 @@ function UseWindowDemo() {
 				<span>Form Factor: {win.formFactor}</span>
 				<span>Touch Device: {win.isTouchDevice ? 'true' : 'false'}</span>
 				<span>Electron: {win.isElectron ? 'true' : 'false'}</span>
+				<span>IsAppleDevice: {win.isAppleDevice ? 'true' : 'false'}</span>
 				<span>Display Pixel Density: {win.dpr}</span>
 				<span>"True" height token: {win.height}</span>
 			</FlexDiv>

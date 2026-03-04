@@ -67,6 +67,8 @@ const preview: Preview = {
 				order: [
 					'Welcome',
 					['Welcome', 'Quick Start', '*'],
+					'Colors',
+					['Core Colors', '*'],
 					'Hooks',
 					['*', ['Docs', '*']],
 					'Providers',

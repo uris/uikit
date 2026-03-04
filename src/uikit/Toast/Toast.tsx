@@ -1,0 +1,208 @@
+import {
+	AnimatePresence,
+	type Transition,
+	type Variants,
+	motion,
+} from 'motion/react';
+import React, {
+	useCallback,
+	useEffect,
+	useRef,
+	useState,
+	useMemo,
+} from 'react';
+import { useTheme } from '../../hooks';
+import { useTrackRenders } from '../../hooks/useTrackRenders/useTrackRenders';
+import { accessibleKeyDown, filterClasses, setStyle } from '../../util/utils';
+import { Icon } from '../Icon';
+import css from './Toast.module.css';
+import type { ToastProps } from './_types';
+
+const ToastBase = React.forwardRef<HTMLDivElement, ToastProps>((props, ref) => {
+	const {
+		message = null,
+		size = 'm',
+		border = true,
+		padding,
+		radius = 8,
+		showDelay = 0,
+		duration = 5000,
+		position = 'bottom',
+		offset = 24,
+		close = true,
+		type = 'info',
+		didHide = () => null,
+		...divAttributes
+	} = props;
+
+	const theme = useTheme();
+
+	// div attributes to add
+	const { id: divId, className, style, ...rest } = divAttributes;
+	const divStyle = style ?? ({} as React.CSSProperties);
+	const divClass = className ? `${className}` : '';
+
+	// need the animate set only after the ready state is processed
+	const [ready, setReady] = useState<boolean>(false);
+	const [content, setContent] = useState<string | null>(null);
+	const timer = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+	// update show and animation
+	useEffect(() => {
+		if (timer.current) clearTimeout(timer.current);
+		const show = message && message.length > 0;
+		if (show) {
+			timer.current = setTimeout(() => {
+				setContent(message);
+				if (timer.current) clearTimeout(timer.current);
+				timer.current = setTimeout(() => {
+					setContent(null);
+				}, duration);
+			}, showDelay);
+		} else {
+			setContent(null);
+		}
+		// clean up timers
+		return () => {
+			if (timer.current) clearTimeout(timer.current);
+		};
+	}, [message, showDelay, duration]);
+
+	// ready to animate in/out
+	useEffect(() => setReady(content !== null), [content]);
+
+	// set the default padding accommodating the close icon fix
+	const defaultPadding = useMemo(() => {
+		return close ? '10px 12px 10px 16px' : '10px 16px';
+	}, [close]);
+
+	const colorScheme = useMemo(() => {
+		switch (type) {
+			case 'success':
+				return {
+					border: 'var(--array-land-label)',
+					bg: 'var(--array-land)',
+					text: 'var(--array-land-label)',
+				};
+			case 'warning':
+				return {
+					border: 'var(--array-orange-label)',
+					bg: 'var(--array-orange)',
+					text: 'var(--array-orange-label)',
+				};
+			case 'error':
+				return {
+					border: 'var(--feedback-warning)',
+					bg: 'var(--array-magenta)',
+					text: 'var(--feedback-warning)',
+				};
+			default:
+				return {
+					border: 'var(--core-outline-primary)',
+					bg: 'var(--core-surface-secondary)',
+					text: 'var(--core-text-primary)',
+				};
+		}
+	}, [type]);
+
+	// memo css vars
+	const cssVars = useMemo(() => {
+		return {
+			'--toast-padding': setStyle(padding, defaultPadding),
+			'--toast-background': colorScheme.bg,
+			'--toast-color': colorScheme.text,
+			'--toast-border': border ? `1px solid ${colorScheme.border}` : 'unset',
+			'--toast-border-radius': setStyle(radius, 4),
+		} as React.CSSProperties;
+	}, [padding, border, colorScheme, radius, defaultPadding]);
+
+	const variants = useMemo(() => {
+		const positionShow =
+			position === 'bottom' ? { bottom: offset } : { top: offset };
+		const positionHide =
+			position === 'bottom' ? { bottom: -offset } : { top: -offset };
+		const transition: Transition = { ease: 'easeInOut', duration: 0.25 };
+		return {
+			initial: { opacity: 0, ...positionHide },
+			animate: { opacity: 1, ...positionShow, transition },
+			exit: { opacity: 0, ...positionHide, transition },
+		} as Variants;
+	}, [position, offset]);
+
+	// memo class names
+	const classNames = useMemo(() => {
+		return filterClasses([css.wrapper, css[size], divClass]);
+	}, [size, divClass]);
+
+	// hide on close
+	const handleClose = useCallback(() => {
+		setContent(null);
+	}, []);
+
+	// prevent hide on hover / focus
+	const handleMouseOver = useCallback(() => {
+		if (timer.current) clearTimeout(timer.current);
+	}, []);
+
+	// rest hide on mouse out / blur
+	const handleMouseOut = useCallback(() => {
+		if (timer.current) clearTimeout(timer.current);
+		timer.current = setTimeout(() => {
+			setContent(null);
+		}, duration);
+	}, [duration]);
+
+	/* START.DEBUG */
+	useTrackRenders(props, 'Toast');
+	/* END.DEBUG */
+
+	return (
+		<AnimatePresence onExitComplete={() => didHide()} initial={false}>
+			{ready && (
+				<motion.div
+					ref={ref}
+					id={divId}
+					className={classNames}
+					{...rest}
+					onMouseEnter={handleMouseOver}
+					onMouseLeave={handleMouseOut}
+					onFocus={handleMouseOver}
+					onBlur={handleMouseOut}
+					style={{
+						...divStyle,
+						...cssVars,
+						visibility: ready ? 'visible' : 'hidden',
+					}}
+					variants={variants}
+					initial={'initial'}
+					animate={'animate'}
+					exit={'exit'}
+				>
+					<div role={'status'} aria-live={'polite'} className={css.message}>
+						{content}
+					</div>
+					{close && (
+						<div
+							className={css.close}
+							tabIndex={0}
+							role={'button'}
+							aria-label={'dismiss message'}
+							onKeyDown={(e) => accessibleKeyDown(e, handleClose)}
+							onClick={handleClose}
+						>
+							<Icon
+								name={'x'}
+								size={20}
+								strokeColor={theme.current.colors['core-icon-primary']}
+							/>
+						</div>
+					)}
+				</motion.div>
+			)}
+		</AnimatePresence>
+	);
+});
+
+ToastBase.displayName = 'Toast';
+
+export const Toast = React.memo(ToastBase);

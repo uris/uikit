@@ -1,4 +1,3 @@
-import type { Type } from '../type/types';
 import type { Colors, CoreColors } from './types';
 
 export const coreColors: CoreColors = {
@@ -93,6 +92,20 @@ export const coreColors: CoreColors = {
 	'brand-white-0': '#ffffff',
 	'product-red-400': '#ff474a',
 	'product-red-500': '#df0529',
+	'core-drop-shadow-light': '#0339491a',
+	'core-drop-shadow-dark': '#0000007a',
+	'core-surface-coverup-translucent-light': '#1f262d52',
+	'core-surface-coverup-translucent-dark': '#0000007a',
+	'core-surface-overlay-translucent-light': '#ffffffcc',
+	'core-surface-overlay-translucent-dark': '#1f262dcc',
+	'scroll-bar-light': '#e3e8ef',
+	'scroll-bar-dark': 'rgba(255, 255, 255, 0.1)',
+	'scroll-bar-hover-light': '#cdd5df',
+	'scroll-bar-hover-dark': 'rgba(255, 255, 255, 0.15)',
+	'surface-shadow-soft-light': '0px 4px 24px #0339491a',
+	'surface-shadow-soft-dark': '0px 4px 24px #0000007a',
+	'surface-shadow-strong-light': '0px 4px 64px #0339491a',
+	'surface-shadow-strong-dark': '0px 4px 64px #0000007a',
 };
 
 export const light: Colors = {
@@ -114,7 +127,7 @@ export const light: Colors = {
 	'core-badge-secondary': coreColors['brand-grey-100'],
 	'core-button-disabled': coreColors['brand-grey-50'],
 	'core-button-primary': coreColors['brand-sea-500'],
-	'core-drop-shadow': '#0339491a',
+	'core-drop-shadow': coreColors['core-drop-shadow-light'],
 	'core-gp-logo-primary': coreColors['brand-sea-700'],
 	'core-gp-logo-secondary': coreColors['brand-grey-950'],
 	'core-icon-dark': coreColors['brand-grey-950'],
@@ -128,8 +141,10 @@ export const light: Colors = {
 	'core-outline-primary': coreColors['brand-grey-100'],
 	'core-outline-special': coreColors['brand-sea-100'],
 	'core-outline-tertiary': coreColors['brand-sea-500'],
-	'core-surface-coverup-translucent': '#1f262d52',
-	'core-surface-overlay-translucent': '#ffffffcc',
+	'core-surface-coverup-translucent':
+		coreColors['core-surface-coverup-translucent-light'],
+	'core-surface-overlay-translucent':
+		coreColors['core-surface-overlay-translucent-light'],
 	'core-surface-primary': coreColors['brand-white-0'],
 	'core-surface-secondary': coreColors['brand-grey-50'],
 	'core-surface-special': coreColors['brand-sea-50'],
@@ -157,10 +172,10 @@ export const light: Colors = {
 	'gia-tag-risk-moderate': coreColors['brand-orange-500'],
 	'gia-text-excerpt-highlight': coreColors['brand-orange-100'],
 	'gia-text-selection': coreColors['brand-sea-100'],
-	'scroll-bar': '#E3E8EF',
-	'scroll-bar-hover': '#CDD5DF',
-	'surface-shadow-soft': '0px 4px 24px #0339491a',
-	'surface-shadow-strong': '0px 4px 64px #0339491a',
+	'scroll-bar': coreColors['scroll-bar-light'],
+	'scroll-bar-hover': coreColors['scroll-bar-hover-light'],
+	'surface-shadow-soft': coreColors['surface-shadow-soft-light'],
+	'surface-shadow-strong': coreColors['surface-shadow-strong-light'],
 };
 
 export const dark: Colors = {
@@ -182,7 +197,7 @@ export const dark: Colors = {
 	'core-badge-secondary': coreColors['brand-grey-700'],
 	'core-button-disabled': coreColors['brand-grey-900'],
 	'core-button-primary': coreColors['brand-sea-500'],
-	'core-drop-shadow': '#0000007a',
+	'core-drop-shadow': coreColors['core-drop-shadow-dark'],
 	'core-gp-logo-primary': coreColors['brand-sea-500'],
 	'core-gp-logo-secondary': coreColors['brand-white-0'],
 	'core-icon-dark': coreColors['brand-grey-950'],
@@ -196,8 +211,10 @@ export const dark: Colors = {
 	'core-outline-primary': coreColors['brand-grey-700'],
 	'core-outline-special': coreColors['brand-sky-900'],
 	'core-outline-tertiary': coreColors['brand-sky-300'],
-	'core-surface-coverup-translucent': '#0000007a',
-	'core-surface-overlay-translucent': '#1f262dcc',
+	'core-surface-coverup-translucent':
+		coreColors['core-surface-coverup-translucent-dark'],
+	'core-surface-overlay-translucent':
+		coreColors['core-surface-overlay-translucent-dark'],
 	'core-surface-primary': coreColors['brand-grey-950'],
 	'core-surface-secondary': coreColors['brand-grey-900'],
 	'core-surface-special': coreColors['brand-sky-950'],
@@ -225,10 +242,10 @@ export const dark: Colors = {
 	'gia-tag-risk-moderate': coreColors['brand-orange-500'],
 	'gia-text-excerpt-highlight': coreColors['brand-orange-100'],
 	'gia-text-selection': coreColors['brand-sea-900'],
-	'scroll-bar': 'rgba(255,255,255,0.1)',
-	'scroll-bar-hover': 'rgba(255,255,255,0.15)',
-	'surface-shadow-soft': '0px 4px 24px #0000007a',
-	'surface-shadow-strong': '0px 4px 64px #0000007a',
+	'scroll-bar': coreColors['scroll-bar-dark'],
+	'scroll-bar-hover': coreColors['scroll-bar-hover-dark'],
+	'surface-shadow-soft': coreColors['surface-shadow-soft-dark'],
+	'surface-shadow-strong': coreColors['surface-shadow-strong-dark'],
 };
 
 export const colorCssVars: Record<keyof Colors, string> = {

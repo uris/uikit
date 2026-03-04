@@ -2,7 +2,7 @@
 	composes: row from "../../util/flexBox.module.css";
 	line-height: 1em;
 	white-space: nowrap;
-	padding: var(--label-padding);
+	padding: var(--label-padding) !important;
 	width: min-content;
 	border-radius: var(--label-border-radius);
 	border: 1px solid var(--core-outline-primary);

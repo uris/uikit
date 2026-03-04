@@ -1,3 +1,4 @@
+import value from '*.png';
 import type React from 'react';
 
 export function setSizeStyle(size: string | number | undefined): string {
@@ -134,4 +135,27 @@ export function pointerPosition(e: MouseEvent | TouchEvent): number {
 	}
 	const mouseEvent = e as MouseEvent;
 	return mouseEvent.clientX;
+}
+
+/**
+ * Filter and trim class name array
+ */
+export function filterClasses(classNames: string[]): string {
+	return classNames
+		.filter((item) => item !== '')
+		.join(' ')
+		.trim();
+}
+
+/**
+ * Takes a style string or number and returns a valid CSS style string
+ */
+export function setStyle(
+	value: string | number | undefined,
+	defaultVal: number | string | undefined = undefined,
+) {
+	const useValue = value ?? defaultVal;
+	if (!useValue) return 'unset';
+	if (typeof useValue === 'string') return useValue;
+	return `${useValue}px`;
 }

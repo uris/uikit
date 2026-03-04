@@ -1,6 +1,7 @@
 export { useTheme } from './useTheme/useTheme';
 export { useObserveTheme } from './useObserveTheme/useObserveTheme';
 export { useDoubleClick } from './useDoubleClick/useDoubleClick';
+export { useToolTip } from './useToolTip/useToolTip';
 export {
 	type KeyboardShortcut,
 	type KeyboardShortcuts,
@@ -9,3 +10,4 @@ export {
 export { useLastUpdated } from './useLastUpdated/useLastUpdated';
 export { useLocalStore } from './useLocalStore/useLocalStore';
 export { useWindow, FormFactor } from './useWindow/useWindow';
+export { useObserveResize } from './useObserveResize/useObserveResize';

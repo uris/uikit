@@ -90,6 +90,20 @@ export type CoreColors = {
 	'brand-yellow-950': string;
 	'product-red-400': string;
 	'product-red-500': string;
+	'core-drop-shadow-light': string;
+	'core-drop-shadow-dark': string;
+	'core-surface-coverup-translucent-light': string;
+	'core-surface-coverup-translucent-dark': string;
+	'core-surface-overlay-translucent-light': string;
+	'core-surface-overlay-translucent-dark': string;
+	'scroll-bar-light': string;
+	'scroll-bar-dark': string;
+	'scroll-bar-hover-light': string;
+	'scroll-bar-hover-dark': string;
+	'surface-shadow-soft-light': string;
+	'surface-shadow-soft-dark': string;
+	'surface-shadow-strong-light': string;
+	'surface-shadow-strong-dark': string;
 };
 
 export type Colors = {

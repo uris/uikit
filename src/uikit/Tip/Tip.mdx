@@ -1,0 +1,96 @@
+import {Meta, Unstyled} from '@storybook/addon-docs/blocks';
+import {FlexDiv} from '../FlexDiv';
+import * as TipStories from './Tip.stories';
+import {RenderSource} from '../../../.storybook/RenderSource';
+
+<Meta of={TipStories} />
+
+<FlexDiv width={"fill"} height={"fill"} alignItems={"center"}>
+    <FlexDiv width={"fill"} maxWidth={760} height={"auto"}>
+        <Unstyled>
+        # Tip
+        Renders a positioned tooltip surface and animates visibility based on resolved coordinates.
+
+        ## Singleton usage pattern
+        Add a single `Tip` instance for the app (or app shell), not one per component. Use shared state management to set `tip` and `coords` from any element emitting tooltip events, so one global `Tip` handles show/hide across the full UI.
+
+
+        ## Base element
+        `HTMLDivElement`
+
+        ## Interface
+        `ToolTipProps`
+
+        ## Props
+        <table style={{width: '100%'}}>
+          <colgroup>
+            <col style={{width: '1%'}} />
+            <col style={{width: '1%'}} />
+            <col style={{width: '1%'}} />
+            <col style={{width: '97%'}} />
+          </colgroup>
+          <thead>
+            <tr>
+              <th className={"left"}>Prop</th>
+              <th className={"left"}>Type</th>
+              <th className={"left"}>Default</th>
+              <th>Description</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td><code>bgColor</code></td><td><code>string</code></td><td><code>var(--core-surface-secondary)</code></td><td>Tooltip background color token/value.</td></tr>
+            <tr><td><code>border</code></td><td><code>boolean</code></td><td><code>true</code></td><td>Whether a border is shown around the tooltip.</td></tr>
+            <tr><td><code>borderColor</code></td><td><code>string</code></td><td><code>var(--core-outline-primary)</code></td><td>Tooltip border color token/value.</td></tr>
+            <tr><td><code>color</code></td><td><code>string</code></td><td><code>var(--core-text-primary)</code></td><td>Text color token/value.</td></tr>
+            <tr><td><code>coords</code></td><td><code>{`{ x: number; y: number }`}</code></td><td><code>{`{ x: 0, y: 0 }`}</code></td><td>Coordinates used to place the tooltip.</td></tr>
+            <tr><td><code>hideDelay</code></td><td><code>number</code></td><td><code>2500</code></td><td>Delay in ms before the tooltip auto-hides.</td></tr>
+            <tr><td><code>padding</code></td><td><code>number | string</code></td><td><code>3px 6px</code></td><td>Tooltip padding.</td></tr>
+            <tr><td><code>radius</code></td><td><code>number</code></td><td><code>4</code></td><td>Tooltip border radius in px.</td></tr>
+            <tr><td><code>showDelay</code></td><td><code>number</code></td><td><code>500</code></td><td>Delay in ms before the tooltip appears.</td></tr>
+            <tr><td><code>size</code></td><td><code>{`'s' | 'm' | 'l'`}</code></td><td><code>'s'</code></td><td>Typography size variant.</td></tr>
+            <tr><td><code>tip</code></td><td><code>ToolTip | null</code></td><td><code>undefined</code></td><td>Tooltip payload containing label and anchor metadata.</td></tr>
+            <tr><td><code>...motionDivAttributes</code></td><td><code>{`HTMLMotionProps<'div'>`}</code></td><td><code>-</code></td><td>Native and motion props passed through to the root <code>motion.div</code>.</td></tr>
+          </tbody>
+        </table>
+
+        ## Events
+        `Tip` has no events
+            
+        ## Code Examples
+        </Unstyled>
+
+        <RenderSource language={"tsx"}>
+{`
+import { useRef, useState } from 'react';
+import { IconButton, Tip, useToolTip } from '@apple-pie/slice';
+import type { ToolTip } from '@apple-pie/slice';
+
+function TipExample() {
+  const [tip, setTip] = useState<ToolTip | null>(null);
+  const tipRef = useRef<HTMLDivElement>(null);
+  const coords = useToolTip(tip, tipRef);
+
+  return (
+    <>
+      <IconButton
+        icon="home"
+        tooltip="Click Me"
+        onToolTip={(nextTip) => setTip(nextTip)}
+      />
+      <Tip
+        id="tip-example"
+        data-testid="tip-example"
+        className="custom-wrapper"
+        style={{ zIndex: 20 }}
+        ref={tipRef}
+        tip={tip}
+        coords={coords}
+        size="m"
+      />
+    </>
+  );
+}
+`}
+        </RenderSource>
+    </FlexDiv>
+</FlexDiv>

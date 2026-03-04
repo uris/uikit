@@ -1,0 +1,20 @@
+.wrapper {
+	composes: rowStart from "../../util/flexBox.module.css";
+	padding: var(--tooltip-padding) !important;
+	position: fixed;
+	border: var(--tooltip-border);
+	border-radius: var(--tooltip-border-radius);
+	background: var(--tooltip-background);
+	z-index: 10;
+}
+
+.s {
+	composes: body-s-regular from "../../util/type.module.css";
+}
+
+.m {
+	composes: body-m-regular from "../../util/type.module.css";
+}
+.l {
+	composes: body-l-regular from "../../util/type.module.css";
+}

@@ -68,7 +68,7 @@ export const Icon = React.memo((props: IconProps) => {
 			opacity={disabled ? 0.5 : 1}
 			{...rest}
 		>
-			<title>{name} icon</title>
+			<title />
 			{shape({ stroke, strokeColor, fillColor, coverUp })}
 		</svg>
 	);

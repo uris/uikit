@@ -19,8 +19,12 @@ export {
 	useKeyboardShortcuts,
 	useTheme,
 	useObserveTheme,
+	useToolTip,
 	useLastUpdated,
 	useLocalStore,
+	useWindow,
+	useDoubleClick,
+	useObserveResize,
 } from './hooks/index';
 
 export { Avatar } from './uikit/Avatar/index';

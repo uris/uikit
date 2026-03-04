@@ -9,7 +9,7 @@ const meta: Meta<typeof Dot> = {
 	argTypes: {
 		state: {
 			control: { type: 'radio' },
-			options: ['red', 'yellow', 'geren', 'blue', 'grey', undefined],
+			options: ['red', 'yellow', 'green', 'blue', 'grey', undefined],
 		},
 	},
 	args: {
