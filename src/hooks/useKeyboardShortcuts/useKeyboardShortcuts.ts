@@ -14,7 +14,7 @@ export function useKeyboardShortcuts(
 ) {
 	// don't process shortcuts on editable elements, like inputs, editable divs, etc.
 
-	const isEditable = useCallback((e: MouseEvent) => {
+	const isEditable = useCallback((e: KeyboardEvent) => {
 		const target = e.target as HTMLElement | null;
 		if (target) {
 			const tag = target.tagName;
