@@ -1,0 +1,82 @@
+import {Meta, Unstyled} from '@storybook/addon-docs/blocks';
+import {RenderSource} from '../../../.storybook/RenderSource';
+import {FlexDiv} from '../../uikit/FlexDiv';
+
+<Meta title="Hooks/useLocalStore" />
+
+<FlexDiv width={"fill"} height={"fill"} alignItems={"center"}>
+    <FlexDiv width={"fill"} maxWidth={760} height={"auto"}>
+        <Unstyled>
+        # useLocalStore
+        Persists a typed value in `localStorage` and keeps React state synchronized with the same key.
+
+        ## Signature
+        `useLocalStore<T>(key, value)`
+
+        ## Parameters
+        <table style={{width: '100%'}}>
+          <colgroup>
+              <col style={{width: '1%'}} />
+              <col style={{width: 'auto'}} />
+              <col style={{width: '1%'}} />
+              <col style={{width: '50%'}} />
+          </colgroup>
+          <thead>
+            <tr>
+              <th>Param</th>
+              <th>Type</th>
+              <th>Default</th>
+              <th>Description</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td><code>key</code></td><td><code>string</code></td><td><code>-</code></td><td>Storage key used in `localStorage`.</td></tr>
+            <tr><td><code>value</code></td><td><code>T</code></td><td><code>-</code></td><td>Fallback/initial value used when the key is missing or invalid.</td></tr>
+          </tbody>
+        </table>
+
+        ## Returns
+        <table style={{width: '100%'}}>
+          <colgroup>
+              <col style={{width: '1%'}} />
+              <col style={{width: 'auto'}} />
+              <col style={{width: '1%'}} />
+              <col style={{width: '50%'}} />
+          </colgroup>
+          <thead>
+            <tr>
+              <th>Return</th>
+              <th>Type</th>
+              <th>Default</th>
+              <th>Description</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td><code>item</code></td><td><code>T</code></td><td><code>value</code></td><td>Current state value synced with storage.</td></tr>
+            <tr><td><code>updateItem</code></td><td><code>{`(data: T) => void`}</code></td><td><code>-</code></td><td>Writes to storage and updates local state.</td></tr>
+          </tbody>
+        </table>
+
+        ## Code Examples
+        </Unstyled>
+
+        <RenderSource language={"tsx"}>
+{`
+import { useLocalStore } from '@apple-pie/slice';
+
+function ProfileName() {
+  const [name, setName] = useLocalStore<string>('profile-name', 'Jane Doe');
+
+  return (
+    <div>
+      <span>{name}</span>
+      <button type="button" onClick={() => setName('John Smith')}>
+        Save
+      </button>
+    </div>
+  );
+}
+`}
+        </RenderSource>
+    </FlexDiv>
+</FlexDiv>

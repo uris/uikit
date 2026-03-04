@@ -13,7 +13,15 @@ export type {
 	Type,
 	Corners,
 } from './theme/index';
-export { useTheme, useObserveTheme, useLastUpdated } from './hooks/index';
+export {
+	type KeyboardShortcut,
+	type KeyboardShortcuts,
+	useKeyboardShortcuts,
+	useTheme,
+	useObserveTheme,
+	useLastUpdated,
+	useLocalStore,
+} from './hooks/index';
 
 export { Avatar } from './uikit/Avatar/index';
 export type { AvatarProps } from './uikit/Avatar/index';

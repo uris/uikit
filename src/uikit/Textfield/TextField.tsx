@@ -61,7 +61,7 @@ export const TextField = React.memo(
 				error: 'var(--feedback-warning)',
 				placeholder: 'var(--core-text-disabled)',
 				disabled: 'var(--core-text-disabled)',
-				label: 'var(--core-text-secondary)',
+				label: 'var(--core-text-tertiary)',
 			},
 			iconLeft = null,
 			clearButton = { size: 20 },

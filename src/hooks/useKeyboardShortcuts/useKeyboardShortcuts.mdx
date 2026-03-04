@@ -1,0 +1,85 @@
+import {Meta, Unstyled} from '@storybook/addon-docs/blocks';
+import {RenderSource} from '../../../.storybook/RenderSource';
+import {FlexDiv} from '../../uikit/FlexDiv';
+
+<Meta title="Hooks/useKeyboardShortcuts" />
+
+<FlexDiv width={"fill"} height={"fill"} alignItems={"center"}>
+    <FlexDiv width={"fill"} maxWidth={760} height={"auto"}>
+        <Unstyled>
+        # useKeyboardShortcuts
+        Adds a global keydown listener and triggers handlers for configured `Cmd/Ctrl + key` combinations.
+
+        ## Signature
+        `useKeyboardShortcuts(shortcuts, shortCutHandler, isAppleDevice)`
+
+        ## Parameters
+        <table style={{width: '100%'}}>
+          <colgroup>
+            <col style={{width: '1%'}} />
+            <col style={{width: '1%'}} />
+            <col style={{width: '1%'}} />
+            <col style={{width: '97%'}} />
+          </colgroup>
+          <thead>
+            <tr>
+              <th>Param</th>
+              <th>Type</th>
+              <th>Default</th>
+              <th>Description</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td><code>shortcuts</code></td><td><code>{`KeyboardShortcut[]`}</code></td><td><code>-</code></td><td>List of shortcut definitions with <code>key</code> and <code>name</code>.</td></tr>
+            <tr><td><code>shortCutHandler</code></td><td><code>{`(shortcut: KeyboardShortcut) => void`}</code></td><td><code>-</code></td><td>Callback executed when a shortcut matches.</td></tr>
+            <tr><td><code>isAppleDevice</code></td><td><code>boolean</code></td><td><code>-</code></td><td>Uses <code>metaKey</code> when <code>true</code>, otherwise <code>ctrlKey</code>.</td></tr>
+          </tbody>
+        </table>
+
+        ## Returns
+        <table style={{width: '100%'}}>
+          <colgroup>
+            <col style={{width: '1%'}} />
+            <col style={{width: '1%'}} />
+            <col style={{width: '1%'}} />
+            <col style={{width: '97%'}} />
+          </colgroup>
+          <thead>
+            <tr>
+              <th>Return</th>
+              <th>Type</th>
+              <th>Default</th>
+              <th>Description</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td><code>-</code></td><td><code>void</code></td><td><code>-</code></td><td>Registers/unregisters side effects only.</td></tr>
+          </tbody>
+        </table>
+
+        ## Code Examples
+        </Unstyled>
+
+        <RenderSource language={"tsx"}>
+{`
+import { useWindow, useKeyboardShortcuts } from '@apple-pie/slice';
+
+const SHORTCUTS = [
+    { key: 'b', name: 'bold' },
+    { key: 's', name: 'save' },
+]
+
+function Shortcuts() {
+    const { isAppleDevice } = useWindow();
+    useKeyboardShortcuts(shortcuts, handleShortcut, isAppleDevice);
+
+    function handleShortcut(shortcut: KeyboardShortcut) {
+        console.log('shortcut', shortcut.name);
+    }
+    
+    return <div>Try Cmd/Ctrl + B or Cmd/Ctrl + S</div>;
+}
+`}
+        </RenderSource>
+    </FlexDiv>
+</FlexDiv>
