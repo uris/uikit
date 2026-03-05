@@ -26,6 +26,7 @@
 }
 
 .token {
+	color: var(--core-text-special);
 	width: 100%;
 	text-overflow: ellipsis;
 	display: -webkit-box;
@@ -33,4 +34,12 @@
 	white-space: nowrap;
 	-webkit-line-clamp: var(--div-input-line-clamp);
 	-webkit-box-orient: vertical;
+}
+
+.core {
+	color: var(--core-text-disabled);
+}
+
+.hex {
+	color: var(--core-text-disabled);
 }

@@ -178,7 +178,7 @@ const Option = React.memo(
 		// memo icon color
 		const strokeColor = useMemo(() => {
 			if (!disabled && selected)
-				return theme.current.colors['core-button-primary'];
+				return theme.current.colors['core-text-special'];
 			if (disabled) return theme.current.colors['core-text-disabled'];
 			return theme.current.colors['core-text-primary'];
 		}, [disabled, selected, theme]);
@@ -208,7 +208,7 @@ const Option = React.memo(
 		// memo color
 		const textColor = useMemo(() => {
 			if (disabled) return 'var(--core-text-disabled)';
-			if (selected) return 'var(--core-button-primary)';
+			if (selected) return 'var(--core-text-special)';
 			return 'var(--core-text-primary)';
 		}, [disabled, selected]);
 

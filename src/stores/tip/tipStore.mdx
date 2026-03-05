@@ -1,0 +1,124 @@
+import {Meta, Unstyled} from '@storybook/addon-docs/blocks';
+import {RenderSource} from '../../../.storybook/RenderSource';
+import {FlexDiv} from '../../uikit/FlexDiv';
+import NoteSection from "../../../.storybook/Notice";
+
+<Meta title="Stores/Tip Store" />
+
+<FlexDiv width={"fill"} height={"fill"} alignItems={"center"}>
+    <FlexDiv width={"fill"} maxWidth={760} height={"auto"}>
+        <Unstyled>
+        <NoteSection>
+            Slice stores uses a module-level singleton pattern: each store is created once when the module is loaded - every import of the module module shares the same store instance.
+        </NoteSection>
+
+        # TipStore
+        Global tooltip state helpers built with Zustand. Supports atomic selector hooks for React and imperative access outside React.
+
+        ## React exports (reactive)
+        React exports are reactive subscriptions for components updating automatically as state changes/mutates.
+        <table style={{width: '100%'}}>
+          <colgroup>
+            <col style={{width: '1%'}} />
+            <col style={{width: '25%'}} />
+            <col style={{width: '98%'}} />
+          </colgroup>
+          <thead>
+            <tr>
+              <th className={"left"}>Export</th>
+              <th className={"left"}>Type</th>
+              <th className={"left"}>Description</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td><code>useTipStore</code></td><td><code>Zustand store hook</code></td><td>Main store hook for selector-based subscriptions.</td></tr>
+            <tr><td><code>useTip</code></td><td><code>{`() => ToolTip | null`}</code></td><td>Atomic hook selecting only <code>tip</code>.</td></tr>
+            <tr><td><code>useTipActions</code></td><td><code>{`() => {`}{` push, clear `}{`}`}</code></td><td>Hook selecting only <code>actions</code>.</td></tr>
+          </tbody>
+        </table>
+
+        ## Imperative exports (non-reactive)
+        These APIs call the same singleton store instance directly. Use them for service layers, event handlers, and utilities where hooks are not allowed. Imperative exports are direct store reads/writes and do not trigger component subscription behavior.
+        <table style={{width: '100%'}}>
+          <colgroup>
+            <col style={{width: '1%'}} />
+            <col style={{width: '25%'}} />
+            <col style={{width: '98%'}} />
+          </colgroup>
+          <thead>
+            <tr>
+              <th className={"left"}>Export</th>
+              <th className={"left"}>Type</th>
+              <th className={"left"}>Description</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td><code>tipActions</code></td><td><code>{`{ push, clear }`}</code></td><td>Imperative actions for non-React code paths.</td></tr>
+            <tr><td><code>getTip</code></td><td><code>{`() => ToolTip | null`}</code></td><td>Imperative snapshot read from current store state.</td></tr>
+          </tbody>
+        </table>
+
+        ## Atomic selectors in React
+        Use focused selectors so components only re-render when their selected slice changes.
+
+        <RenderSource language={"tsx"}>
+{`
+import { useTip, useTipActions } from '@apple-pie/slice/stores/tip';
+
+function TipLauncher() {
+  const tip = useTip();
+  const actions = useTipActions();
+
+  return (
+    <button
+      type="button"
+      onMouseEnter={(event) =>
+        actions.push({ payload: { label: 'Go home' }, event })
+      }
+      onMouseLeave={() => actions.clear()}
+    >
+      {tip?.payload?.label ?? 'Hover me'}
+    </button>
+  );
+}
+`}
+        </RenderSource>
+
+        ## Generic selector usage in React
+        Use `useTipStore` directly when you need a custom selector.
+
+        <RenderSource language={"tsx"}>
+{`
+import { useTipStore } from '@apple-pie/slice/stores/tip';
+
+function TipLabel() {
+  const label = useTipStore((state) => state.tip?.payload?.label ?? null);
+  return <span>{label ?? 'no tip'}</span>;
+}
+`}
+        </RenderSource>
+
+        ## Imperative usage outside React
+        Use imperative helpers in utility modules, services, and non-component handlers.
+        These are non-reactive reads/writes.
+
+        <RenderSource language={"tsx"}>
+{`
+import { tipActions, getTip } from '@apple-pie/slice/stores/tip';
+
+export function setGlobalTip(label: string) {
+  tipActions.push({ payload: { label } });
+}
+
+export function clearGlobalTip() {
+  tipActions.clear();
+}
+
+export function getCurrentTipLabel() {
+  return getTip()?.payload?.label ?? null;
+}
+`}
+        </RenderSource>
+        </Unstyled>
+    </FlexDiv>
+</FlexDiv>

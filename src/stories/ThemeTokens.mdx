@@ -1,0 +1,86 @@
+import {Meta, Unstyled} from '@storybook/addon-docs/blocks';
+import {useState} from 'react';
+import {FlexDiv} from "../uikit/FlexDiv";
+import {ColorTileGroup} from "../theme/components/ColorTileGroup";
+import {TabBar} from "../uikit/TabBar";
+import {darkTheme, lightTheme} from "../theme";
+import {useTheme} from "../hooks";
+import {useEffect} from "react";
+import {Spacer} from "../uikit/Spacer";
+
+<Meta title="Colors/Theme Tokens & Colors" />
+
+export function ThemeTokensPreview() {
+    const manageTheme = useTheme();
+    const [theme, setTheme] = useState(manageTheme.current);
+    useEffect(() => setTheme(manageTheme.current), [manageTheme.current])
+
+    return (
+        <>
+            <TabBar
+                options={[
+                    { name: 'Light Theme', value: 'lightMode', icon: 'circle' },
+                    { name: 'Dark Theme', value: 'darkMode', icon: 'circle fill' },
+                ]}
+                iconSize={16}
+                selectedValue={theme.name.includes("dark") ? 'darkMode' : 'lightMode'}
+                onTabChange={(option) => {
+                    manageTheme.set(option.value==="darkMode"? darkTheme : lightTheme)
+                }}
+            />
+
+            <h1>Theme Tokens & Colors</h1>
+            <p>Each theme has an identical set of tokens that reference different color values. Use the tabs to compare token values between light and dark modes.</p>
+
+            <h4>Array Colors</h4>
+            <p>Array colors represent a range of colors for coded UI states (for example tags). Each array color includes a primary value (usually background) and a label value (usually text/border).</p>
+            <ColorTileGroup pattern={"array"} theme={theme} />
+
+            <h4>Badge</h4>
+            <p>Theme tokens used for badge backgrounds and supporting contrast.</p>
+            <ColorTileGroup pattern={"core-badge"} theme={theme} />
+
+            <h4>Button</h4>
+            <p>Theme tokens used by button surfaces and disabled states.</p>
+            <ColorTileGroup pattern={"core-button"} theme={theme} />
+            
+            <h4>Icon</h4>
+            <p>Theme tokens used for icon color across primary, secondary, and state variants.</p>
+            <ColorTileGroup pattern={"core-icon"} theme={theme} />
+
+            <h4>Outline & Borders</h4>
+            <p>Theme tokens for outlines, separators, and border emphasis levels.</p>
+            <ColorTileGroup pattern={"core-outline"} theme={theme} />
+
+            <h4>Surfaces & Backgrounds</h4>
+            <p>Theme tokens for base surfaces, layered surfaces, and special background treatments.</p>
+            <ColorTileGroup pattern={"core-surface"} theme={theme} />
+
+            <h4>Text & Links</h4>
+            <p>Theme tokens for text hierarchy and interactive link colors.</p>
+            <ColorTileGroup pattern={["core-text", "core-link"]} theme={theme} />
+
+            <h4>Messages & Feedback</h4>
+            <p>Theme tokens for feedback states such as informative, warning, urgency, and positive.</p>
+            <ColorTileGroup pattern={"feedback"} theme={theme} />
+
+            <h4>Scrollbars Handle</h4>
+            <p>Theme tokens for scrollbar track/handle and hover interaction states.</p>
+            <ColorTileGroup pattern={"scroll-bar"} theme={theme} />
+
+            <h4>Shadows (Drop shadows)</h4>
+            <p>Theme tokens for elevation and shadow depth.</p>
+            <ColorTileGroup pattern={"surface-shadow"} theme={theme} />
+            
+            <Spacer size={64} />
+        </>
+    )
+}
+
+<FlexDiv width={"fill"} height={"fill"} alignItems={"center"}>
+    <FlexDiv width={"fill"} maxWidth={760} height={"auto"}>
+        <Unstyled>
+            <ThemeTokensPreview />
+        </Unstyled>
+    </FlexDiv>
+</FlexDiv>

@@ -5,6 +5,7 @@ import type { ColorTileProps } from './_types';
 
 const ColorTileBase = (props: Readonly<ColorTileProps>) => {
 	const {
+		core = undefined,
 		token = 'Brand 00',
 		hex = '#ffffff',
 		width = 150,
@@ -82,7 +83,8 @@ const ColorTileBase = (props: Readonly<ColorTileProps>) => {
 			<div className={css.tile} />
 			<div className={css.tokens}>
 				<div className={css.token}>{token}</div>
-				<div className={css.token}>{hex}</div>
+				{core && <div className={`${css.token} ${css.core}`}>{core}</div>}
+				<div className={`${css.token} ${css.hex}`}>{hex}</div>
 			</div>
 		</div>
 	);

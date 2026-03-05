@@ -53,13 +53,14 @@ export const FlexDiv = React.memo(
 			enter,
 			exit,
 			border,
+			borderRadius,
 			className,
 			scrollHandle,
 			scrollHandleHover,
 			...divAttributes
 		} = props;
 		const { id: divId, style: userStyle, ...rest } = divAttributes;
-		const wrapperStyle = (userStyle ?? {}) as React.CSSProperties;
+		const wrapperStyle = userStyle ?? {};
 
 		// Memoize layout
 		const style = useMemo(() => {
@@ -87,6 +88,7 @@ export const FlexDiv = React.memo(
 				overflow: 'hidden',
 				overflowY: `${scrollY ? 'auto' : 'unset'}`,
 				overflowX: `${scrollX ? 'auto' : 'unset'}`,
+				borderRadius: borderRadius ? `${borderRadius}px` : 'unset',
 				color: 'var(--core-text-primary)',
 				'--flex-div-scroll-border': `${background ?? 'transparent'}`,
 				'--flex-div-scroll-handle': `${scrollHandle ?? 'var(--scroll-bar)'}`,
@@ -113,6 +115,7 @@ export const FlexDiv = React.memo(
 			maxWidth,
 			scrollHandle,
 			scrollHandleHover,
+			borderRadius,
 		]);
 
 		/* START.DEBUG */

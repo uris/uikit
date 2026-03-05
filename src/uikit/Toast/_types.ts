@@ -1,5 +1,12 @@
 import type { HTMLMotionProps } from 'motion/react';
 
+export enum ToastType {
+	Success = 'success',
+	Error = 'error',
+	Warning = 'warning',
+	Info = 'info',
+}
+
 type ToastBaseProps = {
 	message?: string | null;
 	size?: 's' | 'm' | 'l';
@@ -11,7 +18,7 @@ type ToastBaseProps = {
 	showDelay?: number;
 	duration?: number;
 	close?: boolean;
-	type?: 'success' | 'error' | 'warning' | 'info';
+	type?: ToastType;
 	didHide?: () => void;
 };
 

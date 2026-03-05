@@ -2,12 +2,12 @@ import type { Meta, StoryObj } from '@storybook/react-vite';
 import { useRef } from 'react';
 import { useTip, useTipActions } from 'src/stores/tip';
 import { FlexDiv } from 'src/uikit/FlexDiv/FlexDiv';
-import { useToolTip } from '../../hooks/useToolTip/useToolTip';
-import { IconButton } from '../IconButton';
-import { Tip } from './Tip';
+import { useToolTip } from '../../hooks';
+import { IconButton } from '../../uikit/IconButton';
+import { Tip } from '../../uikit/Tip';
 
 const meta: Meta<typeof Tip> = {
-	title: 'Components/Tip',
+	title: 'Stores/Tip Store',
 	component: Tip,
 	args: {
 		tip: undefined,
@@ -24,7 +24,7 @@ const meta: Meta<typeof Tip> = {
 
 export default meta;
 
-export const Default: StoryObj<typeof Tip> = {
+export const Demo: StoryObj<typeof Tip> = {
 	render: (args) => {
 		const tip = useTip();
 		const actions = useTipActions();
@@ -35,7 +35,7 @@ export const Default: StoryObj<typeof Tip> = {
 			<FlexDiv absolute justify={'center'} alignItems={'center'} padding={64}>
 				<IconButton
 					icon={'home'}
-					tooltip={'Go Home'}
+					tooltip={'Home Button'}
 					onToolTip={actions.push}
 				/>
 				<Tip {...args} coords={coords} tip={tip} ref={tipRef} />

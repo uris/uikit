@@ -226,7 +226,7 @@ export const dark: Colors = {
 	'core-text-secondary': coreColors['brand-grey-200'],
 	'core-text-tertiary': coreColors['brand-grey-400'],
 	'core-text-special': coreColors['brand-sky-300'],
-	'core-link-primary': coreColors['brand-sea-500'],
+	'core-link-primary': coreColors['brand-sky-300'],
 	'eor-tag-employee': coreColors['brand-sky-700'],
 	'eor-tag-overdue': coreColors['product-red-400'],
 	'eor-tag-paid': coreColors['brand-land-700'],

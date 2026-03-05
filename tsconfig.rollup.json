@@ -1,0 +1,25 @@
+{
+	"compilerOptions": {
+		"strict": true,
+		"noImplicitAny": true,
+		"strictNullChecks": true,
+		"strictFunctionTypes": true,
+		"strictBindCallApply": true,
+		"strictPropertyInitialization": true,
+		"noImplicitThis": true,
+		"alwaysStrict": true,
+		"baseUrl": "./",
+		"target": "ES6",
+		"lib": ["ESNext", "DOM"],
+		"module": "ESNext",
+		"jsx": "react-jsx",
+		"jsxImportSource": "react",
+		"esModuleInterop": true,
+		"allowSyntheticDefaultImports": true,
+		"skipLibCheck": true,
+		"moduleResolution": "Bundler",
+		"resolveJsonModule": true
+	},
+	"include": ["src/**/*"],
+	"exclude": ["**/*.stories.ts", "**/*.stories.tsx", "src/stories/**"]
+}

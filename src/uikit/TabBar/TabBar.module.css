@@ -17,7 +17,7 @@
 	width: var(--tab-bar-option-width);
 	flex: var(--tab-bar-option-flex);
 	white-space: nowrap;
-	box-shadow: 0 var(--tab-bar-option-border) 0 0 var(--core-button-primary);
+	box-shadow: 0 var(--tab-bar-option-border) 0 0 var(--core-text-special);
 	cursor: var(--tab-bar-option-cursor);
 	-webkit-user-select: none;
 	user-select: none;

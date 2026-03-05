@@ -6,13 +6,13 @@ export {
 	dark,
 	lightTheme,
 	darkTheme,
-} from './theme/index';
+} from './theme';
 export type {
 	SliceTheme,
 	Colors,
 	Type,
 	Corners,
-} from './theme/index';
+} from './theme';
 export {
 	type KeyboardShortcut,
 	type KeyboardShortcuts,
@@ -25,7 +25,7 @@ export {
 	useWindow,
 	useDoubleClick,
 	useObserveResize,
-} from './hooks/index';
+} from './hooks';
 
 export { Avatar } from './uikit/Avatar/index';
 export type { AvatarProps } from './uikit/Avatar/index';
@@ -110,10 +110,18 @@ export { TabBar } from './uikit/TabBar';
 export type { TabOption, TabBarProps } from './uikit/TabBar';
 
 export { TextArea } from './uikit/TextArea';
-export type { TextAreaProps, Tip } from './uikit/TextArea';
+export type { TextAreaProps } from './uikit/TextArea';
 
 export { TextField } from './uikit/Textfield';
 export type { TextFieldProps } from './uikit/Textfield';
+
+export { ThemeProvider } from './providers';
+
+export { Tip } from './uikit/Tip';
+export type { ToolTipProps } from './uikit/Tip';
+
+export { Toast, ToastType } from './uikit/Toast';
+export type { ToastProps } from './uikit/Toast';
 
 export { UIButton } from './uikit/UIButton';
 export type { UIButtonProps, UIButtonHandle } from './uikit/UIButton';

@@ -6,6 +6,7 @@ import { Toast } from '../../uikit/Toast/Toast';
 import type { ToolTip } from '../../uikit/sharedTypes';
 import { coreColors } from '../colors/colors';
 import { ColorTile } from './ColorTile';
+import { ColorTileGroup } from './ColorTileGroup';
 
 export function BrandColors() {
 	const [tip, setTip] = useState<ToolTip | null>(null);

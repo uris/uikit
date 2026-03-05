@@ -16,7 +16,7 @@ import { useTrackRenders } from '../../hooks/useTrackRenders/useTrackRenders';
 import { accessibleKeyDown, filterClasses, setStyle } from '../../util/utils';
 import { Icon } from '../Icon';
 import css from './Toast.module.css';
-import type { ToastProps } from './_types';
+import { type ToastProps, ToastType } from './_types';
 
 const ToastBase = React.forwardRef<HTMLDivElement, ToastProps>((props, ref) => {
 	const {
@@ -30,7 +30,7 @@ const ToastBase = React.forwardRef<HTMLDivElement, ToastProps>((props, ref) => {
 		position = 'bottom',
 		offset = 24,
 		close = true,
-		type = 'info',
+		type = ToastType.Info,
 		didHide = () => null,
 		...divAttributes
 	} = props;
@@ -56,7 +56,7 @@ const ToastBase = React.forwardRef<HTMLDivElement, ToastProps>((props, ref) => {
 				setContent(message);
 				if (timer.current) clearTimeout(timer.current);
 				timer.current = setTimeout(() => {
-					setContent(null);
+					setReady(false);
 				}, duration);
 			}, showDelay);
 		} else {
@@ -136,7 +136,7 @@ const ToastBase = React.forwardRef<HTMLDivElement, ToastProps>((props, ref) => {
 
 	// hide on close
 	const handleClose = useCallback(() => {
-		setContent(null);
+		setReady(false);
 	}, []);
 
 	// prevent hide on hover / focus

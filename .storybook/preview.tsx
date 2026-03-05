@@ -73,6 +73,8 @@ const preview: Preview = {
 					['*', ['Docs', '*']],
 					'Providers',
 					['*', ['Docs', '*']],
+					'Stores',
+					['About Slice Stores', '*'],
 					'*',
 				],
 			},

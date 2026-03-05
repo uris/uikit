@@ -1,9 +1,77 @@
 {
 	"name": "@apple-pie/slice",
-	"version": "0.0.0",
-	"main": "dist/index.js",
-	"module": "dist/index.esm.js",
+	"version": "0.0.1",
+	"main": "dist/cjs/index.js",
+	"module": "dist/esm/index.js",
+	"exports": {
+		".": {
+			"types": "./dist/types/index.d.ts",
+			"import": "./dist/esm/index.js",
+			"require": "./dist/cjs/index.js"
+		},
+		"./hooks": {
+			"types": "./dist/types/hooks/index.d.ts",
+			"import": "./dist/esm/hooks.js",
+			"require": "./dist/cjs/hooks.js"
+		},
+		"./hooks/*": {
+			"types": "./dist/types/hooks/*/*.d.ts",
+			"import": "./dist/esm/hooks/*.js",
+			"require": "./dist/cjs/hooks/*.js"
+		},
+		"./providers": {
+			"types": "./dist/types/providers/index.d.ts",
+			"import": "./dist/esm/providers.js",
+			"require": "./dist/cjs/providers.js"
+		},
+		"./providers/*": {
+			"types": "./dist/types/providers/*.d.ts",
+			"import": "./dist/esm/providers/*.js",
+			"require": "./dist/cjs/providers/*.js"
+		},
+		"./stores": {
+			"types": "./dist/types/stores/index.d.ts",
+			"import": "./dist/esm/stores.js",
+			"require": "./dist/cjs/stores.js"
+		},
+		"./stores/*": {
+			"types": "./dist/types/stores/*/index.d.ts",
+			"import": "./dist/esm/stores/*.js",
+			"require": "./dist/cjs/stores/*.js"
+		},
+		"./theme": {
+			"types": "./dist/types/theme/index.d.ts",
+			"import": "./dist/esm/theme.js",
+			"require": "./dist/cjs/theme.js"
+		},
+		"./theme/colors": {
+			"types": "./dist/types/theme/colors/colors.d.ts",
+			"import": "./dist/esm/theme/colors.js",
+			"require": "./dist/cjs/theme/colors.js"
+		},
+		"./theme/corners": {
+			"types": "./dist/types/theme/corners/corners.d.ts",
+			"import": "./dist/esm/theme/corners.js",
+			"require": "./dist/cjs/theme/corners.js"
+		},
+		"./theme/type": {
+			"types": "./dist/types/theme/type/type.d.ts",
+			"import": "./dist/esm/theme/type.js",
+			"require": "./dist/cjs/theme/type.js"
+		},
+		"./theme/themes": {
+			"types": "./dist/types/theme/themes.d.ts",
+			"import": "./dist/esm/theme/themes.js",
+			"require": "./dist/cjs/theme/themes.js"
+		},
+		"./uikit/*": {
+			"types": "./dist/types/uikit/*/index.d.ts",
+			"import": "./dist/esm/uikit/*.js",
+			"require": "./dist/cjs/uikit/*.js"
+		}
+	},
 	"files": ["dist", "README.md", "scripts/copy-assets.mjs"],
+	"sideEffects": ["**/*.css"],
 	"scripts": {
 		"lint": "biome format --write . && biome check .",
 		"lint:fix": "biome format --write . && biome check --write .",
@@ -15,7 +83,7 @@
 		"benchmark:watch": "vitest bench --project benchmarks",
 		"benchmark:ui": "vitest bench --project benchmarks --ui",
 		"prebuild": "rm -rf dist",
-		"build": "NODE_ENV=production rollup -c --bundleConfigAsCjs && ./scripts/copy-css.sh",
+		"build": "NODE_ENV=production rollup -c --bundleConfigAsCjs && tsc -p tsconfig.build.json && ./scripts/copy-css.sh",
 		"dev": "vite",
 		"storybook": "storybook dev -p 6006",
 		"build-storybook": "storybook build"
@@ -70,6 +138,12 @@
 	"peerDependencies": {
 		"motion": "^11.15.0",
 		"react": "^18.0.0 || ^19.0.0",
-		"react-dom": "^18.0.0 || ^19.0.0"
+		"react-dom": "^18.0.0 || ^19.0.0",
+		"zustand": "^5.0.0"
+	},
+	"peerDependenciesMeta": {
+		"zustand": {
+			"optional": true
+		}
 	}
 }

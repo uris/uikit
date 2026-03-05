@@ -11,6 +11,9 @@ import {RenderSource} from '../../../.storybook/RenderSource';
         # Toast
         Displays transient status messaging with optional auto-dismiss and close action.
 
+        ## Singleton usage pattern
+        Add a single `Toast` instance for the app (or app shell), not one per component. Use shared state management to set `message` so that one toast handles notifications across the UI.
+
         ## Base element
         `motion.div`
 

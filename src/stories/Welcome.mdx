@@ -6,7 +6,7 @@ import {RenderSource} from "../../.storybook/RenderSource";
 
 <Meta title="Welcome/Welcome" />
 
-<FlexDiv width={"fill"} height={"fill"} justify={"center"} alignItems={"center"}>
+<FlexDiv width={"fill"} height={"fill"} justify={"start"} alignItems={"center"}>
     <FlexDiv width={"fill"} maxWidth={760} height={"auto"}>
         <Logos image={"slice logo"} width={"100%"} />
         <Spacer size={36} />
@@ -29,6 +29,8 @@ import {RenderSource} from "../../.storybook/RenderSource";
         </RenderSource>
         <Unstyled>
             That should do it. Let's grab a slice ...
+            <Spacer size={32} />
+            <p className={"note"}>Note: Slice exposes optional Zustand-based store helpers (for example toast state). You only need to install <code>zustand</code> if you use these store paths. If you do not import stores, your app bundle can tree-shake store code out.</p>
         </Unstyled>
     </FlexDiv>
 </FlexDiv>

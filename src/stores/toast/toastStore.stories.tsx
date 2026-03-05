@@ -1,12 +1,11 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { useToast, useToastActions } from 'src/stores/toast';
 import { FlexDiv } from 'src/uikit/FlexDiv/FlexDiv';
-import { IconButton } from '../IconButton';
-import { Toast } from './Toast';
-import { ToastType } from './_types';
+import { IconButton } from '../../uikit/IconButton';
+import { Toast, ToastType } from '../../uikit/Toast';
 
 const meta: Meta<typeof Toast> = {
-	title: 'Components/Toast',
+	title: 'Stores/ToastStore',
 	component: Toast,
 	args: {
 		message: undefined,
@@ -16,14 +15,14 @@ const meta: Meta<typeof Toast> = {
 		offset: undefined,
 		position: 'bottom',
 		size: 'm',
-		close: false,
+		close: true,
 		type: ToastType.Info,
 	},
 };
 
 export default meta;
 
-export const Default: StoryObj<typeof Toast> = {
+export const Demo: StoryObj<typeof Toast> = {
 	render: (args) => {
 		const toast = useToast();
 		const toastActions = useToastActions();
@@ -48,8 +47,8 @@ export const Default: StoryObj<typeof Toast> = {
 					{...args}
 					message={toast?.message ?? null}
 					type={toast?.type ?? args.type}
-					duration={toast?.duration ?? args.duration}
 					close={toast?.close ?? args.close}
+					duration={toast?.duration ?? args.duration}
 					didHide={toastActions.clear}
 				/>
 			</FlexDiv>

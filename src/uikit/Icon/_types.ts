@@ -46,6 +46,8 @@ export enum IconNames {
 	download = 'download',
 	share = 'share',
 	checkCircle = 'check circle',
+	circle = 'circle',
+	circleFill = 'circle fill',
 	person = 'person',
 	ctrlKey = 'ctrl key',
 	commandKey = 'cmd key',
