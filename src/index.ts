@@ -6,12 +6,15 @@ export {
 	dark,
 	lightTheme,
 	darkTheme,
+	elevations,
+	Elevation,
 } from './theme';
 export type {
 	SliceTheme,
 	Colors,
 	Type,
 	Corners,
+	Elevations,
 } from './theme';
 export {
 	type KeyboardShortcut,

@@ -66,6 +66,7 @@ const buildInputs = () => {
 	const themeEntries = [
 		['theme/colors', 'src/theme/colors/colors.ts'],
 		['theme/corners', 'src/theme/corners/corners.ts'],
+		['theme/elevations', 'src/theme/elevations/elevations.ts'],
 		['theme/type', 'src/theme/type/type.ts'],
 		['theme/themes', 'src/theme/themes.ts'],
 	];

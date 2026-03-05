@@ -1,6 +1,6 @@
 {
 	"name": "@apple-pie/slice",
-	"version": "0.0.1",
+	"version": "0.0.2",
 	"main": "dist/cjs/index.js",
 	"module": "dist/esm/index.js",
 	"exports": {
@@ -53,6 +53,11 @@
 			"types": "./dist/types/theme/corners/corners.d.ts",
 			"import": "./dist/esm/theme/corners.js",
 			"require": "./dist/cjs/theme/corners.js"
+		},
+		"./theme/elevations": {
+			"types": "./dist/types/theme/elevations/elevations.d.ts",
+			"import": "./dist/esm/theme/elevations.js",
+			"require": "./dist/cjs/theme/elevations.js"
 		},
 		"./theme/type": {
 			"types": "./dist/types/theme/type/type.d.ts",

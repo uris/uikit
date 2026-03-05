@@ -6,6 +6,7 @@
 	left: var(--pi-inset);
 	right: var(--pi-inset);
 	color: var(--core-text-disabled);
+	z-index: var(--elevation-status);
 }
 
 .iconWrapper {

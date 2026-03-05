@@ -2,6 +2,7 @@
 	composes: row from "../../util/flexBox.module.css";
 	gap: var(--pager-gap);
 	width: 100%;
+	z-index: var(--elevation-status);
 }
 
 .bullet {

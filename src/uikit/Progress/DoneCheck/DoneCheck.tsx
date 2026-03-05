@@ -76,7 +76,7 @@ export const DoneCheck = React.memo((props: DoneCheckProps) => {
 				scale={0.9}
 				viewBox="0 0 20 20"
 				fill="none"
-				style={(style ?? {}) as React.CSSProperties}
+				style={style ?? {}}
 				aria-label="Checkmark icon"
 				{...rest}
 			>

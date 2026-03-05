@@ -6,7 +6,7 @@
 	border: var(--toast-border);
 	border-radius: var(--toast-border-radius);
 	background: var(--toast-background);
-	z-index: 10;
+	z-index: var(--elevation-status);
 	gap: 16px;
 	box-shadow: var(--surface-shadow-soft);
 	left: 50%;

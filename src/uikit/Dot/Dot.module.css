@@ -13,5 +13,5 @@
 	border: var(--dot-border) solid var(--core-surface-primary);
 	background: var(--dot-bg);
 	border-radius: 100%;
-	z-index: 1000;
+	z-index: var(--elevation-status);
 }

@@ -5,7 +5,7 @@
 	border: var(--tooltip-border);
 	border-radius: var(--tooltip-border-radius);
 	background: var(--tooltip-background);
-	z-index: 10;
+	z-index: var(--elevation-describe);
 }
 
 .s {

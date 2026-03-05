@@ -5,5 +5,5 @@
 	right: 0;
 	bottom: 0;
 	background-color: var(--overlay-color);
-	z-index: 500;
+	z-index: var(--elevation-overlay);
 }
