@@ -1,0 +1,39 @@
+import {Meta, Unstyled} from '@storybook/addon-docs/blocks';
+import {FlexDiv} from "../uikit/FlexDiv";
+import {FunnelSans} from "../theme/_helpers/FunnelSans";
+import {TypeSizes} from "../theme/_helpers/TypeSizes";
+
+<Meta title="Typography/Slice Type Sizes" />
+
+<FlexDiv width={"fill"} height={"fill"} alignItems={"center"}>
+    <FlexDiv width={"fill"} maxWidth={760} height={"auto"}>
+        <Unstyled>
+            # Type Sizes
+            The Slice theme uses a concise range of type sizes that can be applied across form factors.
+            
+            There are two basic groups of type sizes: body (for all body text, buttons, etx) and heading (for titles, etc.). This makes the type model simple yet flexible and powerful.
+            
+            ## body extra small
+            <TypeSizes filter="body-xs" sample={"I’m not in this world to live up to your expectations and you’re not in this world to live up to mine."}/>
+
+            ## body small
+            <TypeSizes filter="body-s" sample={"Empty your cup so that it may be filled; become devoid to gain totality."}/>
+
+            ## body medium
+            <TypeSizes filter="body-m" smaple={"A wise man can learn more from a foolish question than a fool can learn from a wise answer."}/>
+
+            ## body large
+            <TypeSizes filter="body-l" sample={"A goal is not always meant to be reached, it often serves simply as something to aim at."}/>
+            
+            ## heading small
+            <TypeSizes filter="heading-s" sample={"Mistakes are always forgivable, if one has the courage to admit them."}/>
+
+            ## heading medium
+            <TypeSizes filter="heading-m" sample={"If you love life, don't waste time, for time is what life is made up of."}/>
+
+            ## heading large
+            <TypeSizes filter="heading-l" sample={"Be happy, but never satisfied."}/>
+            
+        </Unstyled>   
+    </FlexDiv>
+</FlexDiv>

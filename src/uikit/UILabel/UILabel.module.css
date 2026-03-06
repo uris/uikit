@@ -4,8 +4,9 @@
 	white-space: nowrap;
 	padding: var(--label-padding) !important;
 	width: min-content;
+	color: var(--label-color);
 	border-radius: var(--label-border-radius);
-	border: 1px solid var(--core-outline-primary);
+	border: var(--label-border-size) solid var(--core-outline-primary);
 	cursor: var(--label-cursor);
 }
 
@@ -13,8 +14,16 @@
 	composes: body-m-regular from "../../util/type.module.css";
 }
 
-.regular {
+.s {
 	composes: body-s-regular from "../../util/type.module.css";
+}
+
+.m {
+	composes: body-m-regular from "../../util/type.module.css";
+}
+
+.l {
+	composes: body-l-regular from "../../util/type.module.css";
 }
 
 .red {

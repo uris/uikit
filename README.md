@@ -1,80 +1,147 @@
-# Maya UIKit
+# Slice (`@apple-pie/slice`)
 
-A comprehensive React component library and theming system for building modern applications.
+Slice is a TypeScript-first React UI kit with theme tokens, utility hooks, optional Zustand stores, Storybook docs, and benchmark tooling.
 
-## Overview
+## What is included
 
-Maya UIKit provides a complete set of UI components and a flexible theming system to accelerate application development. The library includes 30+ production-ready components ranging from basic inputs to complex interactive elements, all built with TypeScript for type safety and developer experience.
-
-### Components
-
-The UIKit includes a wide range of components for common UI patterns:
-
-**Form Elements:**
-- TextField, TextArea, DivInput - Text input components with validation support
-- CheckBox, RadioButton, RadioButtonList - Selection controls
-- Switch, Slider - Toggle and range inputs
-- DropDown - Customizable dropdown menus
-
-**Buttons & Navigation:**
-- UIButton, IconButton - Primary action components
-- TabBar - Tab navigation with customizable options
-- Pager - Pagination controls
-
-**Feedback & Status:**
-- Badge - Status indicators and labels
-- Dot - Simple status dots
-- ProgressIndicator, DoneCheck - Loading and completion states
-- ProgressBar - Multi-step progress visualization
-- ErrorSummary - Error message display
-
-**Content Display:**
-- Avatar, AvatarGroup - User avatars with grouping
-- UIChip - Dismissible tags and labels
-- UILabel - Styled text labels
-- Overlay - Modal overlays
-
-**Icons & Media:**
-- Icon - Comprehensive icon set with IconNames
-- UIFileIcon - File type icons
-- DocIcons - Document type indicators
-- Logos - Brand logos
-
-**Layout & Organization:**
-- FlexDiv - Flexible layout container
-- Spacer - Spacing utility
-- Grouper - Content grouping
-- DraggablePanel - Draggable UI panels
-
-**Advanced Components:**
-- MessageInput - Rich message input with document upload
-- EditorButtonBar - Text editor toolbar
-- ToolTip - Contextual tooltips
-
-### Theming System
-
-The library includes a powerful theming system with:
-
-- **Pre-built Themes:** Light and dark themes out of the box
-- **Theme Hook:** `useMayaTheme` for easy theme switching
-- **Type-safe Theme Objects:** Full TypeScript support for theme customization
-- **Comprehensive Styling:** Colors, typography, corners, and legacy style support
-
-Theme exports include:
-- `lightTheme` / `darkTheme` - Complete theme objects
-- `light` / `dark` - Theme configurations
-- `GiaTheme`, `LyraColors`, `LyraTypeStyles` - Type definitions
+- 30+ reusable UI components (inputs, buttons, navigation, overlays, feedback, layout, icons)
+- Theme system with light/dark presets and typed theme tokens
+- React hooks for theme, window sizing, keyboard shortcuts, local storage, resize, and more
+- Optional Zustand-powered stores (`toast`, `tip`)
+- Rollup + TypeScript build pipeline for CJS, ESM, and declaration output
+- Component performance benchmarks powered by Vitest
 
 ## Installation
 
 ```bash
-npm install maya-uikit
+npm install @apple-pie/slice
 ```
 
-### Peer Dependencies
-You will need to manage your own version of react, react-dom,
-styled-components and motion. Your project must have
-the following dependencies installed:
+Peer dependencies:
 
 ```bash
-npm install react react-dom styled-components motion
+npm install react react-dom motion
+```
+
+Optional (only if using store exports):
+
+```bash
+npm install zustand
+```
+
+## Quick start
+
+```tsx
+import { ThemeProvider, Avatar, UIButton, useTheme } from '@apple-pie/slice';
+
+function ThemeToggle() {
+  const theme = useTheme();
+  return (
+    <UIButton
+      label={theme.isDark ? 'Switch to Light' : 'Switch to Dark'}
+      onClick={() => theme.toggle()}
+    />
+  );
+}
+
+export default function App() {
+  return (
+    <ThemeProvider system>
+      <Avatar size={32} first="John" last="Appleseed" />
+      <ThemeToggle />
+    </ThemeProvider>
+  );
+}
+```
+
+## Public API
+
+Root import:
+
+```ts
+import { Avatar, useTheme, ThemeProvider } from '@apple-pie/slice';
+```
+
+Subpath imports are also published:
+
+- `@apple-pie/slice/uikit/*`
+- `@apple-pie/slice/hooks`
+- `@apple-pie/slice/hooks/*`
+- `@apple-pie/slice/providers`
+- `@apple-pie/slice/providers/*`
+- `@apple-pie/slice/stores`
+- `@apple-pie/slice/stores/*`
+- `@apple-pie/slice/theme`
+- `@apple-pie/slice/theme/colors`
+- `@apple-pie/slice/theme/corners`
+- `@apple-pie/slice/theme/elevations`
+- `@apple-pie/slice/theme/type`
+- `@apple-pie/slice/theme/themes`
+
+## Components
+
+- `Avatar`, `AvatarGroup`, `Badge`, `CheckBox`, `DivInput`, `Dot`, `DropDown`
+- `EditorButtonBar`, `ErrorSummary`, `FlexDiv`, `Grouper`, `Icon`, `IconButton`
+- `Logos`, `MessageInput`, `Overlay`, `Pager`, `ProgressIndicator`, `DoneCheck`
+- `RadioButton`, `RadioButtonList`, `Slider`, `Spacer`, `Switch`, `TabBar`
+- `TextField`, `TextArea`, `Tip`, `Toast`, `UIButton`, `UIButtonBar`
+- `UICard`, `UIChip`, `UIFileIcon`, `UILabel`, `DocIcons`, `DraggablePanel`
+
+## Hooks
+
+- `useTheme`, `useObserveTheme`
+- `useKeyboardShortcuts`
+- `useDoubleClick`
+- `useToolTip`
+- `useLastUpdated`
+- `useLocalStore`
+- `useWindow`
+- `useObserveResize`
+
+## Stores (optional)
+
+- `toast` store: `useToast`, `useToastActions`, `toastActions`, `getToast`
+- `tip` store: `useTip`, `useTipActions`, `tipActions`, `getTip`
+
+Example:
+
+```ts
+import { useToast, useToastActions } from '@apple-pie/slice/stores/toast';
+```
+
+## Theme exports
+
+- Presets: `lightTheme`, `darkTheme`
+- Color tokens: `light`, `dark`
+- Elevation tokens: `elevations` / `Elevation`
+- Types: `SliceTheme`, `Colors`, `Type`, `Corners`, `Elevations`
+
+## Development
+
+```bash
+npm run dev               # Vite dev app
+npm run storybook         # Storybook on :6006
+npm run test              # Vitest tests
+npm run benchmark         # Benchmarks with formatted report
+npm run benchmark:raw     # Raw vitest benchmark output
+npm run build             # Rollup + types + css copy
+npm run lint              # Biome format + check
+```
+
+Benchmark details: `benchmarks/GUIDE.md`
+
+Build architecture details: `devdocs/build-architecture.md`
+
+## Build outputs
+
+`npm run build` generates:
+
+- `dist/esm` for ESM
+- `dist/cjs` for CommonJS
+- `dist/types` for `.d.ts`
+- `dist/css` for shared utility css modules
+
+## Notes
+
+- Styling is CSS-module based and published with CSS side effects enabled (`"**/*.css"`).
+- Storybook docs (`*.stories.*` and `src/stories/**`) are excluded from publishable type output.

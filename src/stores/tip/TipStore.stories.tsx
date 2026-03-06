@@ -32,7 +32,14 @@ export const Demo: StoryObj<typeof Tip> = {
 		const coords = useToolTip(tip, tipRef);
 
 		return (
-			<FlexDiv absolute justify={'center'} alignItems={'center'} padding={64}>
+			<FlexDiv
+				absolute
+				justify={'center'}
+				alignItems={'center'}
+				padding={64}
+				gap={16}
+			>
+				Hover me!
 				<IconButton
 					icon={'home'}
 					tooltip={'Home Button'}

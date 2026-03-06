@@ -37,11 +37,18 @@ export const Demo: StoryObj<typeof Toast> = {
 		};
 
 		return (
-			<FlexDiv absolute justify={'center'} alignItems={'center'} padding={64}>
+			<FlexDiv
+				absolute
+				justify={'center'}
+				alignItems={'center'}
+				padding={64}
+				gap={16}
+			>
+				Click me!
 				<IconButton
 					icon={'home'}
 					tooltip={'Go Home'}
-					onClick={() => handleToast('You clicked home')}
+					onClick={() => handleToast('Thank you for clicking!')}
 				/>
 				<Toast
 					{...args}

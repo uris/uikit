@@ -32,6 +32,8 @@ export { switchBenchmarkConfig } from './Switch.bench';
 export { tabBarBenchmarkConfig } from './TabBar.bench';
 export { textAreaBenchmarkConfig } from './TextArea.bench';
 export { textfieldBenchmarkConfig } from './Textfield.bench';
+export { tipBenchmarkConfig } from './Tip.bench';
+export { toastBenchmarkConfig } from './Toast.bench';
 export { uiButtonBenchmarkConfig } from './UIButton.bench';
 export { uiButtonBarBenchmarkConfig } from './UIButtonBar.bench';
 export { uiCardBenchmarkConfig } from './UICard.bench';

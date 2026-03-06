@@ -8,11 +8,14 @@ const meta: Meta<typeof UILabel> = {
 	title: 'Components/UILabel',
 	component: UILabel,
 	args: {
-		label: 'UI Label',
+		children: 'UI Label',
 		state: 'red',
 		noFill: false,
 		button: false,
 		round: false,
+		size: 'm',
+		padding: undefined,
+		border: 1,
 		onClick: fn(),
 	},
 };

@@ -55,3 +55,17 @@ global.ResizeObserver = class ResizeObserver {
 	observe() {}
 	unobserve() {}
 } as any;
+
+// Mock matchMedia for theme-aware components/hooks in jsdom.
+if (!globalThis.matchMedia) {
+	globalThis.matchMedia = ((query: string) => ({
+		matches: false,
+		media: query,
+		onchange: null,
+		addEventListener: () => {},
+		removeEventListener: () => {},
+		addListener: () => {},
+		removeListener: () => {},
+		dispatchEvent: () => false,
+	})) as typeof globalThis.matchMedia;
+}

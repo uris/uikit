@@ -267,14 +267,6 @@ export const typeStyles: Record<keyof Type, React.CSSProperties> = {
 		textDecoration: 'none',
 		letterSpacing: '0.15px',
 	},
-	'heading-s-bold': {
-		fontFamily: `${fontFamily}`,
-		fontWeight: '650',
-		fontSize: '20px',
-		lineHeight: '140%',
-		textDecoration: 'none',
-		letterSpacing: '0.2px',
-	},
 	'heading-s-medium': {
 		fontFamily: `${fontFamily}`,
 		fontWeight: '560',
@@ -283,17 +275,25 @@ export const typeStyles: Record<keyof Type, React.CSSProperties> = {
 		textDecoration: 'none',
 		letterSpacing: '0.2px',
 	},
-	'heading-m-bold': {
+	'heading-s-bold': {
 		fontFamily: `${fontFamily}`,
 		fontWeight: '650',
-		fontSize: '24px',
-		lineHeight: '116.67%',
+		fontSize: '20px',
+		lineHeight: '140%',
 		textDecoration: 'none',
 		letterSpacing: '0.2px',
 	},
 	'heading-m-medium': {
 		fontFamily: `${fontFamily}`,
 		fontWeight: '560',
+		fontSize: '24px',
+		lineHeight: '116.67%',
+		textDecoration: 'none',
+		letterSpacing: '0.2px',
+	},
+	'heading-m-bold': {
+		fontFamily: `${fontFamily}`,
+		fontWeight: '650',
 		fontSize: '24px',
 		lineHeight: '116.67%',
 		textDecoration: 'none',

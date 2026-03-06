@@ -40,7 +40,7 @@ import {RenderSource} from '../../../.storybook/RenderSource';
           <tbody>
             <tr><td><code>border</code></td><td><code>boolean</code></td><td><code>true</code></td><td>When <code>true</code>, shows a border using the selected <code>type</code> color scheme.</td></tr>
             <tr><td><code>close</code></td><td><code>boolean</code></td><td><code>true</code></td><td>When <code>true</code>, renders a close icon that dismisses the toast immediately.</td></tr>
-            <tr><td><code>duration</code></td><td><code>number</code></td><td><code>5000</code></td><td>Auto-dismiss duration in milliseconds after the toast becomes visible.</td></tr>
+            <tr><td><code>duration</code></td><td><code>number | "Infinite"</code></td><td><code>5000</code></td><td>Auto-dismiss duration in milliseconds or "Infinite" with no auto-dismiss (forces close button to be visible).</td></tr>
             <tr><td><code>message</code></td><td><code>string | null</code></td><td><code>null</code></td><td>Message content. Empty or <code>null</code> hides the toast.</td></tr>
             <tr><td><code>offset</code></td><td><code>number</code></td><td><code>24</code></td><td>Distance in pixels from the top or bottom edge based on <code>position</code>.</td></tr>
             <tr><td><code>padding</code></td><td><code>number | string</code></td><td><code>close ? '10px 12px 10px 16px' : '10px 16px'</code></td><td>Inner spacing for the toast container.</td></tr>

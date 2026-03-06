@@ -32,6 +32,8 @@ import { Avatar,
 	TabBar,
 	TextArea,
 	TextField,
+	Tip,
+	Toast,
 	UIButton,
 	UIButtonBar,
 	UICard,
@@ -1308,6 +1310,122 @@ export const textAreaConfig: ComponentBenchmarkConfig = {
 	],
 };
 
+export const tipConfig: ComponentBenchmarkConfig = {
+	componentName: 'Tip',
+	tests: [
+		{
+			name: 'Mount Time',
+			type: 'mount',
+			fn: () =>
+				measureMountTime(
+					<Tip
+						tip={{ payload: { label: 'Helpful tip' } }}
+						coords={{ x: 120, y: 80 }}
+						showDelay={60000}
+						hideDelay={5000}
+					/>,
+					50,
+				),
+		},
+		{
+			name: 'Re-render',
+			type: 'rerender',
+			fn: () =>
+				measureRerenderTime(
+					<Tip
+						tip={{ payload: { label: 'Initial tip' } }}
+						coords={{ x: 120, y: 80 }}
+						showDelay={60000}
+						hideDelay={5000}
+					/>,
+					(container) => {
+						container.rerender(
+							<Tip
+								tip={{ payload: { label: 'Updated tip content' } }}
+								coords={{ x: 180, y: 100 }}
+								showDelay={60000}
+								hideDelay={5000}
+							/>,
+						);
+					},
+					50,
+				),
+		},
+		{
+			name: 'Memory',
+			type: 'memory',
+			fn: () =>
+				measureMemoryDelta(
+					<Tip
+						tip={{ payload: { label: 'Memory tip' } }}
+						coords={{ x: 100, y: 60 }}
+						showDelay={60000}
+						hideDelay={5000}
+					/>,
+					10,
+				),
+		},
+	],
+};
+
+export const toastConfig: ComponentBenchmarkConfig = {
+	componentName: 'Toast',
+	tests: [
+		{
+			name: 'Mount Time',
+			type: 'mount',
+			fn: () =>
+				measureMountTime(
+					<Toast
+						message="Saved successfully"
+						type="success"
+						showDelay={60000}
+						duration={5000}
+					/>,
+					50,
+				),
+		},
+		{
+			name: 'Re-render',
+			type: 'rerender',
+			fn: () =>
+				measureRerenderTime(
+					<Toast
+						message="Saving..."
+						type="info"
+						showDelay={60000}
+						duration={5000}
+					/>,
+					(container) => {
+						container.rerender(
+							<Toast
+								message="Save failed"
+								type="error"
+								showDelay={60000}
+								duration={5000}
+							/>,
+						);
+					},
+					50,
+				),
+		},
+		{
+			name: 'Memory',
+			type: 'memory',
+			fn: () =>
+				measureMemoryDelta(
+					<Toast
+						message="Memory benchmark"
+						type="info"
+						showDelay={60000}
+						duration={5000}
+					/>,
+					10,
+				),
+		},
+	],
+};
+
 // Export all configs as an array
 export const allBenchmarkConfigs = [
 	avatarConfig,
@@ -1337,6 +1455,8 @@ export const allBenchmarkConfigs = [
 	switchConfig,
 	tabBarConfig,
 	textAreaConfig,
+	tipConfig,
+	toastConfig,
 	textFieldConfig,
 	uiButtonConfig,
 	uiButtonBarConfig,

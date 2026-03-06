@@ -55,9 +55,11 @@ const ToastBase = React.forwardRef<HTMLDivElement, ToastProps>((props, ref) => {
 			timer.current = setTimeout(() => {
 				setContent(message);
 				if (timer.current) clearTimeout(timer.current);
-				timer.current = setTimeout(() => {
-					setReady(false);
-				}, duration);
+				if (duration !== 'Infinite') {
+					timer.current = setTimeout(() => {
+						setReady(false);
+					}, duration);
+				}
 			}, showDelay);
 		} else {
 			setContent(null);
@@ -147,9 +149,11 @@ const ToastBase = React.forwardRef<HTMLDivElement, ToastProps>((props, ref) => {
 	// rest hide on mouse out / blur
 	const handleMouseOut = useCallback(() => {
 		if (timer.current) clearTimeout(timer.current);
-		timer.current = setTimeout(() => {
-			setContent(null);
-		}, duration);
+		if (duration !== 'Infinite') {
+			timer.current = setTimeout(() => {
+				setContent(null);
+			}, duration);
+		}
 	}, [duration]);
 
 	/* START.DEBUG */
@@ -181,7 +185,7 @@ const ToastBase = React.forwardRef<HTMLDivElement, ToastProps>((props, ref) => {
 					<div role={'status'} aria-live={'polite'} className={css.message}>
 						{content}
 					</div>
-					{close && (
+					{(duration === 'Infinite' || close) && (
 						<div
 							className={css.close}
 							tabIndex={0}

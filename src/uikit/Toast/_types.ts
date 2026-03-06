@@ -16,7 +16,7 @@ type ToastBaseProps = {
 	position?: 'top' | 'bottom';
 	offset?: number;
 	showDelay?: number;
-	duration?: number;
+	duration?: number | 'Infinite';
 	close?: boolean;
 	type?: ToastType;
 	didHide?: () => void;

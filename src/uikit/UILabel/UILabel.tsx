@@ -2,17 +2,22 @@ import type React from 'react';
 import { useCallback, useMemo } from 'react';
 import { useTheme } from '../../hooks';
 import { useTrackRenders } from '../../hooks/useTrackRenders/useTrackRenders';
+import { setStyle } from '../../util/utils';
 import css from './UILabel.module.css';
 import type { UILabelProps } from './_types';
 
 export function UILabel(props: Readonly<UILabelProps>) {
 	const theme = useTheme();
 	const {
-		label,
+		children,
 		state,
 		noFill = false,
 		button = false,
 		round = false,
+		border = 1,
+		padding,
+		color,
+		size = 'm',
 		onClick = () => null,
 		...divAttributes
 	} = props;
@@ -94,13 +99,20 @@ export function UILabel(props: Readonly<UILabelProps>) {
 		};
 	}, [noFill, theme]);
 
+	const setPadding = useMemo(() => {
+		if (padding) return setStyle(padding);
+		return button ? '6px 12px' : '4px 6px';
+	}, [padding, button]);
+
 	// memo css vars
 	const cssVars = useMemo(() => {
 		return {
-			'--label-padding': button ? '6px 12px' : '4px 6px',
+			'--label-padding': setPadding,
 			'--label-border-radius': round ? '100px' : '4px',
 			'--label-cursor': button ? 'pointer' : 'default',
+			'--label-color': color ?? 'var(--core-text-primary)',
 			'--label-background': backgroundColor,
+			'--label-border-size': border ? `${border}px` : '0',
 			'--label-border-color-red': borderColors.red,
 			'--label-border-color-green': borderColors.green,
 			'--label-border-color-yellow': borderColors.yellow,
@@ -109,7 +121,7 @@ export function UILabel(props: Readonly<UILabelProps>) {
 			'--label-border-color-white': borderColors.white,
 			'--label-border-color-blue': borderColors.blue,
 		} as React.CSSProperties;
-	}, [button, round, backgroundColor, borderColors]);
+	}, [button, border, round, backgroundColor, borderColors, setPadding, color]);
 
 	const classNames = [
 		css.label,
@@ -126,13 +138,13 @@ export function UILabel(props: Readonly<UILabelProps>) {
 	return (
 		<div
 			id={divId}
-			className={`${classNames}${divClass}`}
+			className={`${classNames} ${css[size]}${divClass}`}
 			onKeyDown={() => null}
 			style={{ ...divStyle, ...cssVars }}
 			onClick={handleClick}
 			{...rest}
 		>
-			{label}
+			{children}
 		</div>
 	);
 }

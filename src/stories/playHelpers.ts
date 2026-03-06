@@ -583,8 +583,11 @@ export async function runUILabelPlay<TArgs>({
 	await expectCanvas(canvasElement);
 	const canvas = within(canvasElement);
 	const storyArgs = asArgs(args);
-	if (typeof storyArgs.label === 'string') {
-		const label = canvas.getByText(storyArgs.label);
+	if (
+		typeof storyArgs.children === 'string' ||
+		typeof storyArgs.children === 'number'
+	) {
+		const label = canvas.getByText(String(storyArgs.children));
 		await expect(label).toBeInTheDocument();
 		if (storyArgs.button === true) {
 			await userEvent.click(label);
