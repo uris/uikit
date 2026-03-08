@@ -6,13 +6,16 @@ import React, {
 	useState,
 } from 'react';
 import { useTheme } from '../../hooks';
-import { UIButton } from '../UIButton';
+import { Button } from '../Button';
+import { type FileItem, FileList } from '../FileList';
 import css from './PromptInput.module.css';
 import type { PromptProps } from './_types';
 
 const PromptInputBase = React.forwardRef<HTMLDivElement, PromptProps>(
 	(props, ref) => {
 		const {
+			children,
+			attachments = [],
 			value = '',
 			working = false,
 			maxHeight,
@@ -33,11 +36,13 @@ const PromptInputBase = React.forwardRef<HTMLDivElement, PromptProps>(
 			stopEnabled = false,
 			textSize = 'm',
 			maxLength,
+			toolbarGap = 8,
 			onChange,
 			onBlur,
 			onFocus,
 			onSubmit,
 			onStop,
+			onAttachmentsChange,
 		} = props;
 		const { isDark } = useTheme();
 		const [isFocused, setIsFocused] = useState<boolean>(focused ?? false);
@@ -50,24 +55,33 @@ const PromptInputBase = React.forwardRef<HTMLDivElement, PromptProps>(
 		const handleFocus = useCallback(() => {
 			setIsFocused(true);
 			textAreaRef?.current?.focus();
-			onFocus?.(textAreaRef.current?.value);
-		}, [onFocus]);
+			onFocus?.(textAreaRef.current?.value, attachments);
+		}, [onFocus, attachments]);
 
 		// process blur callback
 		const handleBlur = useCallback(() => {
 			setIsFocused(false);
 			textAreaRef.current?.blur();
-			onBlur?.(textAreaRef.current?.value);
-		}, [onBlur]);
+			onBlur?.(textAreaRef.current?.value, attachments);
+		}, [onBlur, attachments]);
+
+		// handle attachments change
+		const handleAttachmentsChange = useCallback(
+			(newFiles: FileItem[]) => {
+				onAttachmentsChange?.(newFiles);
+				onChange?.(textAreaRef.current?.value, newFiles);
+			},
+			[onAttachmentsChange, onChange],
+		);
 
 		// callback to handle text change
 		const handleChange = useCallback(
 			(e: React.ChangeEvent<HTMLTextAreaElement>) => {
 				const newValue = e.target.value;
 				setTextValue(newValue);
-				onChange?.(newValue);
+				onChange?.(newValue, attachments);
 			},
-			[onChange],
+			[onChange, attachments],
 		);
 
 		// handle submit contents
@@ -75,9 +89,10 @@ const PromptInputBase = React.forwardRef<HTMLDivElement, PromptProps>(
 			if (isWorking || isStopEnabled) return;
 			const currentValue = textAreaRef.current?.value;
 			if (currentValue) {
-				onSubmit?.(currentValue);
+				onSubmit?.(currentValue, attachments);
 				setIsWorking(true);
 				if (submitClears) setTextValue('');
+
 				if (submitEnablesStop) setIsStopEnabled(true);
 				handleBlur();
 			}
@@ -88,6 +103,7 @@ const PromptInputBase = React.forwardRef<HTMLDivElement, PromptProps>(
 			submitEnablesStop,
 			isWorking,
 			isStopEnabled,
+			attachments,
 		]);
 
 		// handle stop working
@@ -235,6 +251,19 @@ const PromptInputBase = React.forwardRef<HTMLDivElement, PromptProps>(
 		return (
 			<div className={css.wrapperBg} ref={ref} style={cssVars}>
 				<div className={css.textareaWrapper}>
+					{attachments.length > 0 && (
+						<div className={css.attachments}>
+							<FileList
+								files={attachments}
+								onChange={handleAttachmentsChange}
+								bgColor={'var(--core-surface-primary)'}
+								size={'s'}
+								direction={'row'}
+								gap={8}
+								iconSize={24}
+							/>
+						</div>
+					)}
 					<textarea
 						id={'messageInput'}
 						name={'messageInput'}
@@ -249,22 +278,24 @@ const PromptInputBase = React.forwardRef<HTMLDivElement, PromptProps>(
 						maxLength={maxLength}
 						rows={1}
 					/>
-					{(attachButton || sendButton) && (
+					{(children || attachButton || sendButton) && (
 						<div className={css.buttonBar} onMouseDown={handleClickButtonBar}>
-							{!attachButton && <div />}
-							{attachButton && (
-								<UIButton
-									round
-									label={undefined}
-									variant={'outline'}
-									iconLeft={'plus'}
-									iconSize={20}
-									state={attachState}
-									onMouseDown={handleClickAttach}
-								/>
-							)}
+							<div className={css.toolBar} style={{ gap: toolbarGap }}>
+								{attachButton && (
+									<Button
+										round
+										label={undefined}
+										variant={'outline'}
+										iconLeft={'plus'}
+										iconSize={20}
+										state={attachState}
+										onMouseDown={handleClickAttach}
+									/>
+								)}
+								{children}
+							</div>
 							{sendButton && (
-								<UIButton
+								<Button
 									round
 									label={undefined}
 									variant={isStopEnabled ? 'outline' : 'solid'}

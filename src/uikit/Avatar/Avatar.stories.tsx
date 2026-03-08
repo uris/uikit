@@ -10,7 +10,7 @@ const meta: Meta<typeof Avatar> = {
 	args: {
 		first: 'John',
 		last: 'Doe',
-		image: 'public/images/profile-male-02.jpg',
+		image: 'https://www.slice-uikit.com/public/images/profile-male-02.jpg',
 		border: 0,
 		borderColor: undefined,
 		bgColor: undefined,

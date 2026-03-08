@@ -8,9 +8,9 @@ import React, {
 } from 'react';
 import { useTheme } from '../../hooks';
 import { useTrackRenders } from '../../hooks/useTrackRenders/useTrackRenders';
+import { Button } from '../Button';
 import { Icon } from '../Icon';
 import { IconButton } from '../IconButton';
-import { UIButton } from '../UIButton';
 import css from './TextField.module.css';
 import { MOTION_CONFIG, type TextFieldProps } from './_types';
 
@@ -347,7 +347,7 @@ export const TextField = React.memo(
 								exit={'exit'}
 								transition={MOTION_CONFIG.transition}
 							>
-								<UIButton
+								<Button
 									label={'Translate'}
 									variant={'text'}
 									size={'text'}

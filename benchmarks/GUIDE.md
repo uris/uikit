@@ -54,7 +54,7 @@ Results are saved to `benchmark-results.md` in the root directory.
 benchmarks/
 ├── components/          # Component-specific benchmarks
 │   ├── Avatar.bench.tsx
-│   ├── UIButton.bench.tsx
+│   ├── Button.bench.tsx
 │   ├── FlexDiv.bench.tsx
 │   └── Icon.bench.tsx
 ├── utils/              # Benchmark utilities
@@ -187,9 +187,9 @@ Measures re-render performance when props change.
 
 ```typescript
 const result = await measureRerenderTime(
-	<UIButton label="Initial" state="normal" />,
+	<Button label="Initial" state="normal" />,
 	(container) => {
-		container.rerender(<UIButton label="Updated" state="disabled" />);
+		container.rerender(<Button label="Updated" state="disabled" />);
 	},
 	50,
 );
@@ -200,7 +200,7 @@ Measures event handler response time.
 
 ```typescript
 const result = await measureEventResponseTime(
-	<UIButton label="Click" onClick={() => {}} />,
+	<Button label="Click" onClick={() => {}} />,
 	(container) => {
 		const button = container.container.querySelector('button');
 		if (button) button.click();
@@ -235,7 +235,7 @@ const result = await measureMemoryDelta(
 📊 Components Tested: 4
 
 ============================================================
-📦 UIButton
+📦 Button
 ============================================================
 
 🚀 Mount Performance: ⚡
@@ -273,7 +273,7 @@ Generated in `benchmark-results.md`:
 | Component | Rating | Mount (avg) | Re-render (avg) | Event (avg) | Memory Delta | Leak Suspected |
 |-----------|:------:|-------------|-----------------|-------------|--------------|:--------------:|
 | Avatar    | ⚡     | 0.414ms     | 0.486ms         | -           | 2.45KB       | ✓ No           |
-| UIButton  | ⚡     | 1.550ms     | 0.816ms         | 0.00400ms   | 3.21KB       | ✓ No           |
+| Button  | ⚡     | 1.550ms     | 0.816ms         | 0.00400ms   | 3.21KB       | ✓ No           |
 | FlexDiv   | ⚡     | 0.752ms     | 0.476ms         | -           | 1.98KB       | ✓ No           |
 | Icon      | ⚡     | 0.724ms     | 0.404ms         | -           | 2.11KB       | ✓ No           |
 ```
@@ -303,7 +303,7 @@ Recommended performance targets by component complexity:
 - **Event Response:** < 2ms (Excellent)
 - **Memory:** < 50KB
 
-### Complex Components (UIButton, TabBar, MessageInput)
+### Complex Components (Button, TabBar, PromptInput)
 - **Mount Time:** < 5ms (Very Good), < 16ms (Good)
 - **Re-render:** < 5ms (Very Good)
 - **Event Response:** < 5ms (Very Good)
@@ -345,7 +345,7 @@ diff benchmark-baseline.md benchmark-results.md
 // ✓ Good - Typical usage
 bench('Button with icon and badge', async () => {
 	await measureMountTime(
-		<UIButton label="Save" iconLeft="check" count={5} />,
+		<Button label="Save" iconLeft="check" count={5} />,
 		50,
 	);
 });

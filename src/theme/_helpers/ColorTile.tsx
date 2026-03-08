@@ -1,5 +1,6 @@
 import React, { useCallback, useMemo, useRef } from 'react';
 import type { ToolTip } from '../../uikit/sharedTypes';
+import { copyToClipboard } from '../../util/utils';
 import css from './ColorTile.module.css';
 import type { ColorTileProps } from './_types';
 
@@ -25,20 +26,8 @@ const ColorTileBase = (props: Readonly<ColorTileProps>) => {
 
 	const copyColorToClipboard = useCallback(async () => {
 		onTooltip(null);
-		try {
-			const textArea = document.createElement('textarea');
-			textArea.value = `token: ${token}, Hex: ${hex}`;
-			textArea.style.position = 'fixed';
-			textArea.style.left = '-9999px';
-			document.body.appendChild(textArea);
-			textArea.focus();
-			textArea.select();
-			document.execCommand('copy');
-			textArea.remove();
-			onCopy(token, hex);
-		} catch (error) {
-			console.log('Error copying color to clipboard:', error);
-		}
+		const copied = await copyToClipboard(`token: ${token}, Hex: ${hex}`);
+		if (copied) onCopy(token, hex);
 	}, [hex, token, onCopy, onTooltip]);
 
 	const onKeyDown = useCallback(

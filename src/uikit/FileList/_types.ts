@@ -7,11 +7,9 @@ export type FileItem = {
 	progress?: number;
 	error?: string;
 };
-export type FileItems = FileItem[];
-export type FileInput = FileItems | FileList;
 
 type FileListBaseProps = {
-	files?: FileInput;
+	files?: FileItem[];
 	direction?: 'row' | 'column';
 	gap?: number;
 	size?: 'xs' | 's' | 'm' | 'l' | 'xl';
@@ -19,7 +17,8 @@ type FileListBaseProps = {
 	minWidth?: number | string;
 	padding?: number | string;
 	iconSize?: number;
-	onChange?: (files: FileItems) => void;
+	onChange?: (files: FileItem[]) => void;
+	bgColor?: string;
 	onToolTip?: (tip: ToolTip | null) => void;
 };
 

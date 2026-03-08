@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
+import { Button } from '../../uikit/Button';
 import { FlexDiv } from '../../uikit/FlexDiv';
 import { Spacer } from '../../uikit/Spacer';
-import { UIButton } from '../../uikit/UIButton';
 import { useTheme } from './useTheme';
 
 function UseThemeDemo() {
@@ -31,16 +31,13 @@ function UseThemeDemo() {
 				justify={'center'}
 				gap={12}
 			>
-				<UIButton
+				<Button
 					label={'Set Light'}
 					onClick={() => theme.set(theme.lightTheme)}
 				/>
-				<UIButton
-					label={'Set Dark'}
-					onClick={() => theme.set(theme.darkTheme)}
-				/>
-				<UIButton label={'Set System'} onClick={() => theme.set('system')} />
-				<UIButton label={'Toggle'} onClick={() => theme.toggle()} />
+				<Button label={'Set Dark'} onClick={() => theme.set(theme.darkTheme)} />
+				<Button label={'Set System'} onClick={() => theme.set('system')} />
+				<Button label={'Toggle'} onClick={() => theme.toggle()} />
 			</FlexDiv>
 			<Spacer size={24} />
 			<strong style={{ color: theme.colors['core-link-primary'] }}>

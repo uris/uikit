@@ -16,10 +16,11 @@
 	padding: var(--file-padding) !important;
 	border: 1px solid var(--file-border-color);
 	border-radius: 4px;
-	overflow: hidden;
+	overflow: var(--file-overflow);
 	max-width: var(--file-max-width);
 	min-width: var(--file-min-width);
 	color: var(--core-text-primary);
+	background: transparent;
 	gap: 4px;
 }
 
@@ -27,7 +28,7 @@
 .file::before {
 	content: "";
 	position: absolute;
-	background: var(--core-surface-secondary);
+	background: var(--file-bg-color);
 	top: 0;
 	bottom: 0;
 	left: 0;

@@ -1,5 +1,6 @@
 import value from '*.png';
 import type React from 'react';
+import { useCallback } from 'react';
 
 export function setSizeStyle(size: string | number | undefined): string {
 	if (!size) return 'auto';
@@ -159,3 +160,24 @@ export function setStyle(
 	if (typeof useValue === 'string') return useValue;
 	return `${useValue}px`;
 }
+
+/**
+ * Copy to clipboard
+ */
+export const copyToClipboard = async (rawContent: string): Promise<boolean> => {
+	try {
+		const textArea = document.createElement('textarea');
+		textArea.value = rawContent;
+		textArea.style.position = 'fixed';
+		textArea.style.left = '-9999px';
+		document.body.appendChild(textArea);
+		textArea.focus();
+		textArea.select();
+		document.execCommand('copy');
+		textArea.remove();
+		return true;
+	} catch (error) {
+		console.log('Error copying color to clipboard:', error);
+		return false;
+	}
+};

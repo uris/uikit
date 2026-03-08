@@ -15,7 +15,7 @@ export const Icon = React.memo((props: IconProps) => {
 		fillColor = 'transparent',
 		coverUp = theme.current.colors['core-surface-primary'],
 		toggle = false,
-		pointer = true,
+		pointer = false,
 		disabled = false,
 		onClick = () => null,
 		...svgAttributes

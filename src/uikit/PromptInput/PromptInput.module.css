@@ -63,6 +63,12 @@
 	background: var(--core-surface-secondary);
 }
 
+.attachments {
+	composes: rowStart from "../../util/flexBox.module.css";
+	padding: 16px 16px 0 16px !important;
+	width: 100%;
+}
+
 .clear {
 	composes: row from "../../util/flexBox.module.css";
 	padding: 12px 8px 0 0 !important;
@@ -74,6 +80,12 @@
 	padding: 8px 16px 16px 16px !important;
 	width: 100%;
 	cursor: text;
+}
+
+.toolBar {
+	composes: rowStart from "../../util/flexBox.module.css";
+	flex: 1;
+	gap: 8px;
 }
 
 .textarea {

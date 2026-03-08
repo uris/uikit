@@ -9,7 +9,7 @@ export const FileIcon = React.memo((props: FileIconProps) => {
 	const {
 		name = 'pdf',
 		size = 24,
-		pointer = true,
+		pointer = false,
 		disabled = false,
 		onClick,
 		...svgAttributes
@@ -65,9 +65,9 @@ export const FileIcon = React.memo((props: FileIconProps) => {
 			viewBox="0 0 20 20"
 			style={{ ...style, ...iconStyle }}
 			onClick={handleClick}
-			role="img"
+			role={pointer ? 'button' : 'img'}
 			aria-label={`${name} icon`}
-			aria-disabled={disabled}
+			aria-disabled={pointer ? disabled : undefined}
 			tabIndex={pointer && !disabled ? 0 : -1}
 			onKeyDown={(e) => {
 				if (!pointer || disabled) return;

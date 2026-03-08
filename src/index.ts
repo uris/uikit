@@ -79,19 +79,11 @@ export type { OverlayProps } from './uikit/Overlay';
 export { FlexDiv } from './uikit/FlexDiv';
 export type { FlexDivProps } from './uikit/FlexDiv';
 
-export { MessageInput } from './uikit/MessageInput';
-export type {
-	MessageInputProps,
-	SendMessage,
-	UploadDocument,
-} from './uikit/MessageInput';
-export type {
-	PromptType,
-	Role,
-} from './uikit/MessageInput/_types';
-
 export { Pager } from './uikit/Pager';
 export type { PagerProps } from './uikit/Pager';
+
+export { PromptInput } from './uikit/PromptInput';
+export type { PromptProps } from './uikit/PromptInput';
 
 export { DoneCheck, ProgressIndicator } from './uikit/Progress';
 export type { DoneCheckProps, ProgressIndicatorProps } from './uikit/Progress';
@@ -127,11 +119,11 @@ export type { ToolTipProps } from './uikit/Tip';
 export { Toast, ToastType } from './uikit/Toast';
 export type { ToastProps } from './uikit/Toast';
 
-export { UIButton } from './uikit/UIButton';
-export type { UIButtonProps, UIButtonHandle } from './uikit/UIButton';
+export { Button } from './uikit/Button';
+export type { ButtonProps, ButtonHandle } from './uikit/Button';
 
-export { UIChip } from './uikit/UIChip';
-export type { UIChipProps } from './uikit/UIChip';
+export { Chip } from './uikit/Chip';
+export type { ChipProps } from './uikit/Chip';
 
 export { FileIcon, FileIconNames } from './uikit/FileIcon';
 export type { FileIconProps } from './uikit/FileIcon/_types';
@@ -139,15 +131,11 @@ export type { FileIconProps } from './uikit/FileIcon/_types';
 export { Icon, IconNames } from './uikit/Icon';
 export type { IconProps } from './uikit/Icon/_types';
 
-export { UIButtonBar } from './uikit/UIButtonBar';
-export type { BarButton, UIButtonBarProps } from './uikit/UIButtonBar/_types';
+export { ButtonBar } from './uikit/ButtonBar';
+export type { BarButton, ButtonBarProps } from './uikit/ButtonBar/_types';
 
-export { UICard } from './uikit/UICard';
-export type { UICardProps } from './uikit/UICard/_types';
+export { Card } from './uikit/Card';
+export type { CardProps } from './uikit/Card/_types';
 
-export { UIFileIcon } from './uikit/UIFileIcon';
-export type { UIFileIconProps } from './uikit/UIFileIcon';
-export type { UIFileIcons } from './uikit/UIFileIcon/_types';
-
-export { UILabel } from './uikit/UILabel';
-export type { UILabelProps } from './uikit/UILabel';
+export { Label } from './uikit/Label';
+export type { LabelProps } from './uikit/Label';

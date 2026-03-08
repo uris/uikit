@@ -32,12 +32,12 @@ npm install zustand
 ## Quick start
 
 ```tsx
-import { ThemeProvider, Avatar, UIButton, useTheme } from '@apple-pie/slice';
+import { ThemeProvider, Avatar, Button, useTheme } from '@apple-pie/slice';
 
 function ThemeToggle() {
   const theme = useTheme();
   return (
-    <UIButton
+    <Button
       label={theme.isDark ? 'Switch to Light' : 'Switch to Dark'}
       onClick={() => theme.toggle()}
     />
@@ -84,8 +84,8 @@ Subpath imports are also published:
 - `EditorButtonBar`, `ErrorSummary`, `FlexDiv`, `Grouper`, `Icon`, `IconButton`
 - `Logos`, `MessageInput`, `Overlay`, `Pager`, `ProgressIndicator`, `DoneCheck`
 - `RadioButton`, `RadioButtonList`, `Slider`, `Spacer`, `Switch`, `TabBar`
-- `TextField`, `TextArea`, `Tip`, `Toast`, `UIButton`, `UIButtonBar`
-- `UICard`, `UIChip`, `UIFileIcon`, `UILabel`, `DocIcons`, `DraggablePanel`
+- `TextField`, `TextArea`, `Tip`, `Toast`, `Button`, `ButtonBar`
+- `Card`, `Chip`, `Label`, `DocIcons`, `DraggablePanel`
 
 ## Hooks
 

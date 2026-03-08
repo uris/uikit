@@ -1,8 +1,8 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { useState } from 'react';
+import { Button } from '../../uikit/Button';
 import { FlexDiv } from '../../uikit/FlexDiv';
 import { TextField } from '../../uikit/Textfield';
-import { UIButton } from '../../uikit/UIButton';
 import { useLocalStore } from './useLocalStore';
 
 type UseLocalStoreDemoProps = {
@@ -48,12 +48,12 @@ function UseLocalStoreDemo(props: Readonly<UseLocalStoreDemoProps>) {
 					background={'none'}
 					direction={'row'}
 				>
-					<UIButton
+					<Button
 						label={'Save'}
 						variant={'outline'}
 						onClick={() => setName(draft)}
 					/>
-					<UIButton
+					<Button
 						label={'Reset'}
 						variant={'outline'}
 						onClick={() => setName('Jane Doe')}

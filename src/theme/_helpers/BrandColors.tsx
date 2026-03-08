@@ -1,12 +1,11 @@
 import { useCallback, useRef, useState } from 'react';
 import { useToolTip } from '../../hooks';
 import { FlexDiv } from '../../uikit/FlexDiv';
-import { Tip } from '../../uikit/Tip/Tip';
-import { Toast } from '../../uikit/Toast/Toast';
+import { Tip } from '../../uikit/Tip';
+import { Toast } from '../../uikit/Toast';
 import type { ToolTip } from '../../uikit/sharedTypes';
 import { coreColors } from '../colors/colors';
 import { ColorTile } from './ColorTile';
-import { ColorTileGroup } from './ColorTileGroup';
 
 export function BrandColors() {
 	const [tip, setTip] = useState<ToolTip | null>(null);

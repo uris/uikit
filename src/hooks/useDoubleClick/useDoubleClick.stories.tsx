@@ -1,8 +1,8 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { useState } from 'react';
+import { Button } from '../../uikit/Button';
 import { FlexDiv } from '../../uikit/FlexDiv';
 import { Spacer } from '../../uikit/Spacer';
-import { UIButton } from '../../uikit/UIButton';
 import { useDoubleClick } from './useDoubleClick';
 
 type UseDoubleClickDemoProps = {
@@ -35,7 +35,7 @@ function UseDoubleClickDemo(props: Readonly<UseDoubleClickDemoProps>) {
 			alignItems={'center'}
 			direction={'column'}
 		>
-			<UIButton
+			<Button
 				label={'Click Or Double Click Me'}
 				variant={'solid'}
 				size={'large'}

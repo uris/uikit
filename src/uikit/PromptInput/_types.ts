@@ -1,6 +1,9 @@
 import type React from 'react';
+import type { FileItem } from '../FileList';
 
 type BasePromptProps = {
+	attachments?: FileItem[];
+	children?: React.ReactNode;
 	value?: string;
 	maxHeight?: string | number;
 	working?: boolean;
@@ -20,12 +23,14 @@ type BasePromptProps = {
 	attachButton?: boolean;
 	stopEnabled?: boolean;
 	maxLength?: number;
+	toolbarGap?: number;
 	textSize?: 's' | 'm' | 'l';
-	onChange?: (value: string) => void;
-	onSubmit?: (value: string) => void;
-	onBlur?: (value: string | undefined) => void;
-	onFocus?: (value: string | undefined) => void;
+	onChange?: (value: string | undefined, attachments?: FileItem[]) => void;
+	onSubmit?: (value: string | undefined, attachments?: FileItem[]) => void;
+	onBlur?: (value: string | undefined, attachments?: FileItem[]) => void;
+	onFocus?: (value: string | undefined, attachments?: FileItem[]) => void;
 	onStop?: () => void;
+	onAttachmentsChange?: (attachments: FileItem[]) => void;
 };
 
 export type PromptProps = Omit<

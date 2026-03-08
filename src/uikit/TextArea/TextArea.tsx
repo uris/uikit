@@ -6,7 +6,7 @@ import React, {
 	useState,
 } from 'react';
 import { useTrackRenders } from '../../hooks/useTrackRenders/useTrackRenders';
-import { UIButton } from '../UIButton';
+import { Button } from '../Button';
 import css from './TextArea.module.css';
 import type { TextAreaProps } from './_types';
 
@@ -208,7 +208,7 @@ export const TextArea = React.memo((props: TextAreaProps) => {
 		>
 			{hasSend && (
 				<div className={css.send} onMouseDown={(e) => handleSubmit(e)}>
-					<UIButton
+					<Button
 						iconLeft={'arrow up'}
 						size={'medium'}
 						variant={'solid'}

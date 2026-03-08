@@ -1,8 +1,8 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { useTheme } from '../hooks/useTheme/useTheme';
+import { Button } from '../uikit/Button';
 import { FlexDiv } from '../uikit/FlexDiv';
 import { Spacer } from '../uikit/Spacer';
-import { UIButton } from '../uikit/UIButton';
 import { ThemeProvider } from './ThemeProvider';
 
 type ThemeProviderDemoProps = {
@@ -32,9 +32,9 @@ function ThemeProviderChildDemo() {
 			<span>isDark: {theme.isDark ? 'true' : 'false'}</span>
 			<Spacer size={8} />
 			<FlexDiv direction={'row'} gap={8} width={'auto'} height={'auto'}>
-				<UIButton label={'Set Light'} onClick={() => theme.set('lightMode')} />
-				<UIButton label={'Set Dark'} onClick={() => theme.set('darkMode')} />
-				<UIButton label={'Toggle'} onClick={() => theme.toggle()} />
+				<Button label={'Set Light'} onClick={() => theme.set('lightMode')} />
+				<Button label={'Set Dark'} onClick={() => theme.set('darkMode')} />
+				<Button label={'Toggle'} onClick={() => theme.toggle()} />
 			</FlexDiv>
 		</FlexDiv>
 	);

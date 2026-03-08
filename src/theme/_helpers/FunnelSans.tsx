@@ -1,8 +1,8 @@
 import { useState } from 'react';
 import { FlexDiv } from '../../uikit/FlexDiv';
+import { Label } from '../../uikit/Label';
 import { Slider } from '../../uikit/Slider';
 import { TabBar, type TabOption } from '../../uikit/TabBar';
-import { UILabel } from '../../uikit/UILabel';
 import css from './FunnelSans.module.css';
 
 const tabs: TabOption[] = [
@@ -45,9 +45,9 @@ export function FunnelSans() {
 				alignItems={'center'}
 				gap={16}
 			>
-				<UILabel border={0} size="l">
+				<Label border={0} size="l">
 					Variable Weight
-				</UILabel>
+				</Label>
 				<Slider
 					value={weight}
 					width={'100%'}
@@ -56,9 +56,9 @@ export function FunnelSans() {
 					scaleMax={800}
 					onChange={(v, _) => handleWeightChange(v)}
 				/>
-				<UILabel size="l" padding={'4px 16px'}>
+				<Label size="l" padding={'4px 16px'}>
 					{weight}
-				</UILabel>
+				</Label>
 			</FlexDiv>
 		</FlexDiv>
 	);

@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useMemo, useState } from 'react';
+import React, { useCallback, useMemo } from 'react';
 import { fileIconName, nameAndExtension } from '../../util/files';
 import { accessibleKeyDown, setStyle } from '../../util/utils';
 import { FileIcon } from '../FileIcon';
@@ -6,16 +6,7 @@ import { Icon } from '../Icon';
 import { ProgressIndicator } from '../Progress';
 import type { ToolTip } from '../sharedTypes';
 import css from './FileList.module.css';
-import type { FileInput, FileItem, FileItems, FileListProps } from './_types';
-
-/**
- * utility list items to array
- */
-function toArray(items?: FileInput): FileItems {
-	if (!items) return [];
-	if (Array.isArray(items)) return items;
-	return Array.from(items).map((file) => ({ file }));
-}
+import type { FileItem, FileListProps } from './_types';
 
 /**
  * utility get file name from file item
@@ -27,8 +18,10 @@ function fileNameFromItem(item: FileItem): string {
 /**
  * cal progress as a percentage string
  */
-function normalizeProgress(progress?: number): string {
-	if (progress === undefined || Number.isNaN(progress)) return '100%';
+function normalizeProgress(uploading?: boolean, progress?: number): string {
+	if (progress === undefined || Number.isNaN(progress)) {
+		return uploading ? '0%' : '100%';
+	}
 	const percent = progress <= 1 ? progress * 100 : progress;
 	const clamped = Math.max(0, Math.min(100, percent));
 	return `${Math.round(clamped)}%`;
@@ -52,7 +45,7 @@ function displayClose(uploading: boolean | undefined): React.CSSProperties {
 
 export const FileList = React.memo((props: FileListProps) => {
 	const {
-		files,
+		files = [],
 		onChange,
 		onToolTip,
 		maxWidth,
@@ -62,9 +55,9 @@ export const FileList = React.memo((props: FileListProps) => {
 		gap = 10,
 		size = 's',
 		iconSize = 24,
+		bgColor,
 		...divAttributes
 	} = props;
-	const [listItems, setListItems] = useState<FileItems>(() => toArray(files));
 
 	// div attributes to add
 	const { id: divId, className, style, ...rest } = divAttributes;
@@ -80,10 +73,10 @@ export const FileList = React.memo((props: FileListProps) => {
 
 	// memoize ready-to-render list
 	const displayList = useMemo(() => {
-		return listItems.map((item, index) => {
+		return files.map((item, index) => {
 			const fileName = fileNameFromItem(item);
 			const fileMeta = fileNameToFileItem(fileName);
-			const progress = normalizeProgress(item.progress);
+			const progress = normalizeProgress(item.uploading, item.progress);
 			return {
 				...fileMeta,
 				key: `${fileMeta.name}-${index}`,
@@ -93,19 +86,15 @@ export const FileList = React.memo((props: FileListProps) => {
 				error: item.error,
 			};
 		});
-	}, [listItems, fileNameToFileItem]);
-
-	// update list items if props change
-	useEffect(() => setListItems(toArray(files)), [files]);
+	}, [files, fileNameToFileItem]);
 
 	// remove items from the list
 	const handleRemove = useCallback(
 		(index: number) => {
-			const updated = listItems.filter((_, itemIndex) => itemIndex !== index);
-			setListItems(updated);
+			const updated = files.filter((_, itemIndex) => itemIndex !== index);
 			onChange?.(updated);
 		},
-		[listItems, onChange],
+		[files, onChange],
 	);
 
 	// show remove tooltip
@@ -138,8 +127,10 @@ export const FileList = React.memo((props: FileListProps) => {
 			'--file-wrap': direction === 'column' ? 'nowrap' : 'wrap',
 			'--file-padding': padding ? setStyle(padding) : '4px 4px 4px 2px',
 			'--file-icon-size': setStyle(iconSize),
+			'--file-overflow': direction === 'column' ? 'unset' : 'hidden',
+			'--file-bg-color': bgColor ?? 'var(--core-surface-secondary)',
 		} as React.CSSProperties;
-	}, [maxWidth, gap, direction, minWidth, padding, iconSize]);
+	}, [maxWidth, gap, direction, minWidth, padding, iconSize, bgColor]);
 
 	// CSS var for then progress of each file
 	const fileCSSVars = useCallback((progress: string, error?: string) => {

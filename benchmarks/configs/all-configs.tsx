@@ -21,7 +21,6 @@ import { Avatar,
 	Icon,
 	IconButton,
 	Logos,
-	MessageInput,
 	Overlay,
 	Pager,
 	ProgressIndicator,
@@ -35,12 +34,11 @@ import { Avatar,
 	TextField,
 	Tip,
 	Toast,
-	UIButton,
-	UIButtonBar,
-	UICard,
-	UIChip,
-	UIFileIcon,
-	UILabel
+	Button,
+	ButtonBar,
+	Card,
+	Chip,
+	Label
 } from '../../src';
 import { FileList } from '../../src/uikit/FileList';
 import { PromptInput } from '../../src/uikit/PromptInput/PromptInput';
@@ -413,22 +411,22 @@ export const textFieldConfig: ComponentBenchmarkConfig = {
 	],
 };
 
-export const uiButtonConfig: ComponentBenchmarkConfig = {
-	componentName: 'UIButton',
+export const buttonConfig: ComponentBenchmarkConfig = {
+	componentName: 'Button',
 	tests: [
 		{
 			name: 'Mount Time',
 			type: 'mount',
-			fn: () => measureMountTime(<UIButton label="Click Me" />, 50),
+			fn: () => measureMountTime(<Button label="Click Me" />, 50),
 		},
 		{
 			name: 'State Change Re-render',
 			type: 'rerender',
 			fn: () =>
 				measureRerenderTime(
-					<UIButton label="Button" state="normal" />,
+					<Button label="Button" state="normal" />,
 					(container) => {
-						container.rerender(<UIButton label="Button" state="disabled" />);
+						container.rerender(<Button label="Button" state="disabled" />);
 					},
 					50,
 				),
@@ -438,7 +436,7 @@ export const uiButtonConfig: ComponentBenchmarkConfig = {
 			type: 'event',
 			fn: () =>
 				measureEventResponseTime(
-					<UIButton label="Click" onClick={() => {}} />,
+					<Button label="Click" onClick={() => {}} />,
 					(container) => {
 						const button = container.container.querySelector('[class*="button"]');
 						if (button) fireEvent.click(button);
@@ -450,7 +448,7 @@ export const uiButtonConfig: ComponentBenchmarkConfig = {
 			name: 'Memory',
 			type: 'memory',
 			fn: () =>
-				measureMemoryDelta(<UIButton label="Test" iconLeft="check" count={5} />, 10),
+				measureMemoryDelta(<Button label="Test" iconLeft="check" count={5} />, 10),
 		},
 	],
 };
@@ -461,23 +459,23 @@ const mockButtons = [
 	{ label: 'Delete', icon: 'trash', tip: 'delete' },
 ];
 
-export const uiButtonBarConfig: ComponentBenchmarkConfig = {
-	componentName: 'UIButtonBar',
+export const buttonBarConfig: ComponentBenchmarkConfig = {
+	componentName: 'ButtonBar',
 	tests: [
 		{
 			name: 'Mount Time',
 			type: 'mount',
-			fn: () => measureMountTime(<UIButtonBar options={mockButtons} />, 50),
+			fn: () => measureMountTime(<ButtonBar options={mockButtons} />, 50),
 		},
 		{
 			name: 'Re-render',
 			type: 'rerender',
 			fn: () =>
 				measureRerenderTime(
-					<UIButtonBar options={mockButtons} />,
+					<ButtonBar options={mockButtons} />,
 					(container) => {
 						const updatedButtons = [...mockButtons, { label: 'New', icon: 'plus', tip:'plus' }];
-						container.rerender(<UIButtonBar options={updatedButtons} />);
+						container.rerender(<ButtonBar options={updatedButtons} />);
 					},
 					50,
 				),
@@ -487,7 +485,7 @@ export const uiButtonBarConfig: ComponentBenchmarkConfig = {
 			type: 'event',
 			fn: () =>
 				measureEventResponseTime(
-					<UIButtonBar options={mockButtons} onChange={() => {}} />,
+					<ButtonBar options={mockButtons} onChange={() => {}} />,
 					(container) => {
 						const button = container.container.querySelector('button');
 						if (button) fireEvent.click(button);
@@ -498,20 +496,20 @@ export const uiButtonBarConfig: ComponentBenchmarkConfig = {
 		{
 			name: 'Memory',
 			type: 'memory',
-			fn: () => measureMemoryDelta(<UIButtonBar options={mockButtons} />, 10),
+			fn: () => measureMemoryDelta(<ButtonBar options={mockButtons} />, 10),
 		},
 	],
 };
 
-export const uiCardConfig: ComponentBenchmarkConfig = {
-	componentName: 'UICard',
+export const cardConfig: ComponentBenchmarkConfig = {
+	componentName: 'Card',
 	tests: [
 		{
 			name: 'Mount Time',
 			type: 'mount',
 			fn: () =>
 				measureMountTime(
-					<UICard label={"Card Content"} />,
+					<Card label={"Card Content"} />,
 					50,
 				),
 		},
@@ -520,10 +518,10 @@ export const uiCardConfig: ComponentBenchmarkConfig = {
 			type: 'rerender',
 			fn: () =>
 				measureRerenderTime(
-					<UICard label={"Card Content"} />,
+					<Card label={"Card Content"} />,
 					(container) => {
 						container.rerender(
-							<UICard label={"Card Content"} />,
+							<Card label={"Card Content"} />,
 						);
 					},
 					50,
@@ -534,29 +532,29 @@ export const uiCardConfig: ComponentBenchmarkConfig = {
 			type: 'memory',
 			fn: () =>
 				measureMemoryDelta(
-					<UICard label={"Card Content"} />,
+					<Card label={"Card Content"} />,
 					10,
 				),
 		},
 	],
 };
 
-export const uiChipConfig: ComponentBenchmarkConfig = {
-	componentName: 'UIChip',
+export const chipConfig: ComponentBenchmarkConfig = {
+	componentName: 'Chip',
 	tests: [
 		{
 			name: 'Mount Time',
 			type: 'mount',
-			fn: () => measureMountTime(<UIChip label="Chip" />, 50),
+			fn: () => measureMountTime(<Chip label="Chip" />, 50),
 		},
 		{
 			name: 'Re-render',
 			type: 'rerender',
 			fn: () =>
 				measureRerenderTime(
-					<UIChip label="Initial" />,
+					<Chip label="Initial" />,
 					(container) => {
-						container.rerender(<UIChip label="Updated" />);
+						container.rerender(<Chip label="Updated" />);
 					},
 					50,
 				),
@@ -566,7 +564,7 @@ export const uiChipConfig: ComponentBenchmarkConfig = {
 			type: 'event',
 			fn: () =>
 				measureEventResponseTime(
-					<UIChip label="Chip" onClick={() => {}} />,
+					<Chip label="Chip" onClick={() => {}} />,
 					(container) => {
 						const chip = container.container.querySelector('[class*="chip"]');
 						if (chip) fireEvent.click(chip);
@@ -577,27 +575,27 @@ export const uiChipConfig: ComponentBenchmarkConfig = {
 		{
 			name: 'Memory',
 			type: 'memory',
-			fn: () => measureMemoryDelta(<UIChip label="Chip" icon="check" />, 10),
+			fn: () => measureMemoryDelta(<Chip label="Chip" icon="check" />, 10),
 		},
 	],
 };
 
-export const uiFileIconConfig: ComponentBenchmarkConfig = {
-	componentName: 'UIFileIcon',
+export const labelConfig: ComponentBenchmarkConfig = {
+	componentName: 'Label',
 	tests: [
 		{
 			name: 'Mount Time',
 			type: 'mount',
-			fn: () => measureMountTime(<UIFileIcon name="document" />, 50),
+			fn: () => measureMountTime(<Label label="Label" />, 50),
 		},
 		{
 			name: 'Re-render',
 			type: 'rerender',
 			fn: () =>
 				measureRerenderTime(
-					<UIFileIcon name="document" />,
+					<Label label="Initial" />,
 					(container) => {
-						container.rerender(<UIFileIcon name="pdf" />);
+						container.rerender(<Label label="Updated Label Text" />);
 					},
 					50,
 				),
@@ -605,35 +603,7 @@ export const uiFileIconConfig: ComponentBenchmarkConfig = {
 		{
 			name: 'Memory',
 			type: 'memory',
-			fn: () => measureMemoryDelta(<UIFileIcon name="pdf" />, 10),
-		},
-	],
-};
-
-export const uiLabelConfig: ComponentBenchmarkConfig = {
-	componentName: 'UILabel',
-	tests: [
-		{
-			name: 'Mount Time',
-			type: 'mount',
-			fn: () => measureMountTime(<UILabel label="Label" />, 50),
-		},
-		{
-			name: 'Re-render',
-			type: 'rerender',
-			fn: () =>
-				measureRerenderTime(
-					<UILabel label="Initial" />,
-					(container) => {
-						container.rerender(<UILabel label="Updated Label Text" />);
-					},
-					50,
-				),
-		},
-		{
-			name: 'Memory',
-			type: 'memory',
-			fn: () => measureMemoryDelta(<UILabel label="Test Label" />, 10),
+			fn: () => measureMemoryDelta(<Label label="Test Label" />, 10),
 		},
 	],
 };
@@ -989,47 +959,6 @@ export const logosConfig: ComponentBenchmarkConfig = {
 			name: 'Memory',
 			type: 'memory',
 			fn: () => measureMemoryDelta(<Logos image="apple" />, 10),
-		},
-	],
-};
-
-export const messageInputConfig: ComponentBenchmarkConfig = {
-	componentName: 'MessageInput',
-	tests: [
-		{
-			name: 'Mount Time',
-			type: 'mount',
-			fn: () => measureMountTime(<MessageInput />, 50),
-		},
-		{
-			name: 'Re-render',
-			type: 'rerender',
-			fn: () =>
-				measureRerenderTime(
-					<MessageInput value="Initial" />,
-					(container) => {
-						container.rerender(<MessageInput value="Updated message" />);
-					},
-					50,
-				),
-		},
-		{
-			name: 'Event Response',
-			type: 'event',
-			fn: () =>
-				measureEventResponseTime(
-					<MessageInput onFocus={() => {}} />,
-					(container) => {
-						const input = container.container.querySelector('textarea, input');
-						if (input) fireEvent.focus(input);
-					},
-					50,
-				),
-		},
-		{
-			name: 'Memory',
-			type: 'memory',
-			fn: () => measureMemoryDelta(<MessageInput />, 10),
 		},
 	],
 };
@@ -1554,7 +1483,6 @@ export const allBenchmarkConfigs = [
 	iconConfig,
 	iconButtonConfig,
 	logosConfig,
-	messageInputConfig,
 	promptInputConfig,
 	overlayConfig,
 	pagerConfig,
@@ -1569,10 +1497,9 @@ export const allBenchmarkConfigs = [
 	tipConfig,
 	toastConfig,
 	textFieldConfig,
-	uiButtonConfig,
-	uiButtonBarConfig,
-	uiCardConfig,
-	uiChipConfig,
-	uiFileIconConfig,
-	uiLabelConfig,
+	buttonConfig,
+	buttonBarConfig,
+	cardConfig,
+	chipConfig,
+	labelConfig,
 ];

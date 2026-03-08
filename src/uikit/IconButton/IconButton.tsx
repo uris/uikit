@@ -147,7 +147,7 @@ export const IconButton = React.memo((props: IconButtonProps) => {
 					disabled={disabled}
 					size={iconSize}
 					toggle={toggleIcon ? isToggled : false}
-					pointer
+					pointer={true}
 				/>
 			</div>
 			{label && <div className={css.label}>{label}</div>}

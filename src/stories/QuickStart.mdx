@@ -95,7 +95,7 @@ import {RenderSource} from "../../.storybook/RenderSource";
         </Unstyled>
         <RenderSource language='jsx'>
             ```
-            import { useTheme, lightTheme, UIButton } from '@apple-pie/slice';
+            import { useTheme, lightTheme, Button } from '@apple-pie/slice';
 
             // ...
             
@@ -104,10 +104,10 @@ import {RenderSource} from "../../.storybook/RenderSource";
             // ...
             
             // toggle light / dark theme            
-            <UIButton label={"Toggle Theme"} onClick={() => theme.toggle()} />
+            <Button label={"Toggle Theme"} onClick={() => theme.toggle()} />
             
             // set theme by name / object - pass "system" to use your PC theme              
-            <UIButton label={"Light Mode"} onClick={() => theme.set(lightTheme)} />
+            <Button label={"Light Mode"} onClick={() => theme.set(lightTheme)} />
             ```
         </RenderSource>
         <Unstyled>

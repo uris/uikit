@@ -16,7 +16,6 @@ const meta: Meta<typeof FileList> = {
 			{ file: 'pdf.pdf', error: 'Upload failed' },
 			{ file: 'video.mp4' },
 			{ file: 'audio.mp3' },
-			{ file: 'config.json' },
 		],
 		size: 's',
 		maxWidth: undefined,

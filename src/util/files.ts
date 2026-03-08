@@ -40,7 +40,22 @@ export function fileIconName(extension: string) {
 		case 'mp4':
 		case 'mov':
 			return 'video';
+		case 'clipboard':
+			return 'clipboard';
 		default:
 			return 'other';
 	}
+}
+
+/**
+ * Create a text file from clipboard content placing a clipboard file extension
+ */
+export function clipboardTextToFile(
+	content: string,
+	fileName = `clipboard-${Date.now()}.clipboard`,
+) {
+	const normalizedName = fileName.endsWith('.clipboard')
+		? fileName
+		: `${fileName}.clipboard`;
+	return new File([content], normalizedName, { type: 'text/plain' });
 }

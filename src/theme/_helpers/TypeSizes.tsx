@@ -1,5 +1,5 @@
 import { FlexDiv } from '../../uikit/FlexDiv';
-import { UILabel } from '../../uikit/UILabel';
+import { Label } from '../../uikit/Label';
 import { typeStyles } from '../type/type';
 import css from './TypeSizes.module.css';
 
@@ -30,14 +30,14 @@ export function TypeSizes(
 			{types.map((entry) => {
 				return (
 					<div className={css.wrapper} key={entry.name}>
-						<UILabel
+						<Label
 							size="l"
 							border={0}
 							padding={'0'}
 							color={'var(--core-text-disabled)'}
 						>
 							{`${entry.name}: Size: ${entry.props.fontSize}, Weight: ${entry.props.fontWeight}, Line Height: ${entry.props.lineHeight}, Letter Spacing: ${entry.props.letterSpacing}`}
-						</UILabel>
+						</Label>
 						<div className={`${css.sample} ${entry.name}`}>{sample}</div>
 					</div>
 				);

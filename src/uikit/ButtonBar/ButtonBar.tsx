@@ -1,0 +1,111 @@
+import { useCallback, useEffect, useState } from 'react';
+import { useTheme } from '../../hooks';
+import { useTrackRenders } from '../../hooks/useTrackRenders/useTrackRenders';
+import { IconButton } from '../IconButton';
+import css from './ButtonBar.module.css';
+import type { BarButton, ButtonBarProps } from './_types';
+
+export function ButtonBar(props: Readonly<ButtonBarProps>) {
+	const {
+		options = [],
+		current = 0,
+		label,
+		onChange = () => null,
+		onToolTip = () => null,
+		...divAttributes
+	} = props;
+	const { id: divId, className, style, ...rest } = divAttributes;
+	const divStyle = style ?? ({} as React.CSSProperties);
+	const divClass = className ? ` ${className}` : '';
+	const theme = useTheme();
+	const [hovered, setHovered] = useState<number>(-1);
+	const [currentPage, setCurrentPage] = useState<number>(current);
+
+	useEffect(() => setCurrentPage(current), [current]);
+
+	const handleMouseEnter = useCallback((index: number) => {
+		setHovered(index);
+	}, []);
+
+	const handleMouseLeave = useCallback(() => {
+		setHovered(-1);
+	}, []);
+
+	const handleClick = useCallback(
+		(button: BarButton, index: number) => {
+			setCurrentPage(index);
+			onChange(button);
+		},
+		[onChange],
+	);
+
+	// memo display
+	const display = useCallback(
+		(index: number) => {
+			return index === options.length - 1 ? css.last : '';
+		},
+		[options.length],
+	);
+
+	// memo selected
+	const selected = useCallback(
+		(index: number) => {
+			return currentPage === index ? css.selected : '';
+		},
+		[currentPage],
+	);
+
+	// memo icon stroke color
+	const iconColor = useCallback(
+		(index: number) => {
+			const isSelected = currentPage === index;
+			const isHovered = hovered === index;
+			if (isSelected) return theme.current.colors['core-icon-primary'];
+			if (isHovered) return theme.current.colors['core-button-primary'];
+			return theme.current.colors['core-text-disabled'];
+		},
+		[currentPage, hovered, theme],
+	);
+
+	/* START.DEBUG */
+	useTrackRenders(props, 'ButtonBar');
+	/* END.DEBUG */
+
+	return (
+		<div
+			id={divId}
+			className={`${css.wrapper}${divClass}`}
+			style={divStyle}
+			{...rest}
+		>
+			{label && <div className={css.label}>{label}</div>}
+			{options?.map((button: BarButton, index: number) => {
+				return (
+					<div
+						className={css.button}
+						key={`button-bar-${button.icon}-${index}`}
+						onMouseEnter={() => handleMouseEnter(index)}
+						onMouseLeave={() => handleMouseLeave()}
+					>
+						<div
+							className={selected(index)}
+							onClick={() => handleClick(button, index)}
+							onKeyDown={() => handleClick(button, index)}
+						>
+							<IconButton
+								icon={button.icon}
+								color={iconColor(index)}
+								label={button.label}
+								tooltip={button.tip}
+								onToolTip={onToolTip}
+								hover
+								toggle={false}
+							/>
+						</div>
+						<div className={`${css.divider} ${display(index)}`} />
+					</div>
+				);
+			})}
+		</div>
+	);
+}

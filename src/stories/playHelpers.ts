@@ -251,33 +251,6 @@ export async function runLogosPlay<TArgs>({
 	await expect(canvas.getByRole('img')).toBeInTheDocument();
 }
 
-export async function runMessageInputPlay<TArgs>({
-	args,
-	canvasElement,
-}: PlayContext<TArgs>) {
-	await expectCanvas(canvasElement);
-	const canvas = within(canvasElement);
-	const storyArgs = asArgs(args);
-	const input = canvas.getByRole('textbox');
-	await userEvent.click(input);
-	await userEvent.type(input, 'hello');
-	if (isFn(storyArgs.onChange)) {
-		await expect(storyArgs.onChange).toHaveBeenCalled();
-	}
-	await userEvent.tab();
-	if (isFn(storyArgs.onFocus)) {
-		await expect(storyArgs.onFocus).toHaveBeenCalled();
-	}
-	if (isFn(storyArgs.onBlur)) {
-		await expect(storyArgs.onBlur).toHaveBeenCalled();
-	}
-	await userEvent.click(input);
-	await userEvent.type(input, '{enter}');
-	if (isFn(storyArgs.onSend)) {
-		await expect(storyArgs.onSend).toHaveBeenCalled();
-	}
-}
-
 export async function runOverlayPlay<TArgs>({
 	args,
 	canvasElement,
@@ -503,7 +476,7 @@ export async function runTextFieldPlay<TArgs>({
 	}
 }
 
-export async function runUIButtonPlay<TArgs>({
+export async function runButtonPlay<TArgs>({
 	args,
 	canvasElement,
 }: PlayContext<TArgs>) {
@@ -516,7 +489,7 @@ export async function runUIButtonPlay<TArgs>({
 	}
 }
 
-export async function runUIButtonBarPlay<TArgs>({
+export async function runButtonBarPlay<TArgs>({
 	args,
 	canvasElement,
 }: PlayContext<TArgs>) {
@@ -531,7 +504,7 @@ export async function runUIButtonBarPlay<TArgs>({
 	}
 }
 
-export async function runUICardPlay<TArgs>({
+export async function runCardPlay<TArgs>({
 	args,
 	canvasElement,
 }: PlayContext<TArgs>) {
@@ -544,7 +517,7 @@ export async function runUICardPlay<TArgs>({
 	}
 }
 
-export async function runUIChipPlay<TArgs>({
+export async function runChipPlay<TArgs>({
 	args,
 	canvasElement,
 }: PlayContext<TArgs>) {
@@ -576,7 +549,7 @@ export async function runUIFileIconPlay<TArgs>({
 	}
 }
 
-export async function runUILabelPlay<TArgs>({
+export async function runLabelPlay<TArgs>({
 	args,
 	canvasElement,
 }: PlayContext<TArgs>) {

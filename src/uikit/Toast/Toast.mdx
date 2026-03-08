@@ -9,7 +9,7 @@ import {RenderSource} from '../../../.storybook/RenderSource';
     <FlexDiv width={"fill"} maxWidth={760} height={"auto"}>
         <Unstyled>
         # Toast
-        Displays transient status messaging with optional auto-dismiss and close action.
+        Renders transient status messaging with optional auto-dismiss and close action.
 
         ## Singleton usage pattern
         Add a single `Toast` instance for the app (or app shell), not one per component. Use shared state management to set `message` so that one toast handles notifications across the UI.
@@ -78,14 +78,14 @@ import {RenderSource} from '../../../.storybook/RenderSource';
         <RenderSource language={"tsx"}>
 {`
 import { useState } from 'react';
-import { Toast, UIButton } from '@apple-pie/slice';
+import { Toast, Button } from '@apple-pie/slice';
 
 export function ToastStatusExample() {
   const [message, setMessage] = useState<string | null>(null);
 
   return (
     <>
-      <UIButton
+      <Button
         label="Save profile"
         onClick={() => setMessage('Profile saved successfully')}
       />

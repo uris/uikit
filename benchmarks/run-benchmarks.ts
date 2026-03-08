@@ -5,7 +5,7 @@
 
 import React from 'react';
 import { Avatar } from '../src/uikit/Avatar/Avatar';
-import { UIButton } from '../src/uikit/UIButton/UIButton';
+import { Button } from '../src/uikit/Button/Button';
 import { FlexDiv } from '../src/uikit/FlexDiv/FlexDiv';
 import {
 	measureMountTime,
@@ -47,28 +47,28 @@ async function runBenchmarks() {
 		memory: avatarMemory,
 	});
 
-	// UIButton Benchmarks
-	console.log('Testing UIButton component...');
+	// Button Benchmarks
+	console.log('Testing Button component...');
 	const buttonMount = await measureMountTime(
-		React.createElement(UIButton, { label: 'Click Me' }),
+		React.createElement(Button, { label: 'Click Me' }),
 		50,
 	);
 	const buttonRerender = await measureRerenderTime(
-		React.createElement(UIButton, { label: 'Button', state: 'normal' }),
+		React.createElement(Button, { label: 'Button', state: 'normal' }),
 		(container) => {
 			container.rerender(
-				React.createElement(UIButton, { label: 'Button', state: 'disabled' }),
+				React.createElement(Button, { label: 'Button', state: 'disabled' }),
 			);
 		},
 		50,
 	);
 	const buttonMemory = await measureMemoryDelta(
-		React.createElement(UIButton, { label: 'Test', iconLeft: 'check' }),
+		React.createElement(Button, { label: 'Test', iconLeft: 'check' }),
 		10,
 	);
 
 	reporter.addResult({
-		componentName: 'UIButton',
+		componentName: 'Button',
 		mountTime: buttonMount,
 		rerenderTime: buttonRerender,
 		memory: buttonMemory,

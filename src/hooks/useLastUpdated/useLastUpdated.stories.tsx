@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { useState } from 'react';
+import { Button } from '../../uikit/Button';
 import { FlexDiv } from '../../uikit/FlexDiv';
-import { UIButton } from '../../uikit/UIButton';
 import { useLastUpdated } from './useLastUpdated';
 
 type UseLastUpdatedDemoProps = {
@@ -43,19 +43,19 @@ function UseLastUpdatedDemo(props: Readonly<UseLastUpdatedDemoProps>) {
 					background={'none'}
 					alignItems={'center'}
 				>
-					<UIButton
+					<Button
 						label={'Set Time Now'}
 						variant={'outline'}
 						onClick={() => setTimestamp(new Date().toISOString())}
 					/>
-					<UIButton
+					<Button
 						label={'Set Time 10 mins ago'}
 						variant={'outline'}
 						onClick={() =>
 							setTimestamp(new Date(Date.now() - 10 * 60 * 1000).toISOString())
 						}
 					/>
-					<UIButton
+					<Button
 						label={'Set Time 2 days ago'}
 						variant={'outline'}
 						onClick={() =>

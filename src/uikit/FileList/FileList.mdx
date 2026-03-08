@@ -9,7 +9,9 @@ import {RenderSource} from '../../../.storybook/RenderSource';
     <FlexDiv width={"fill"} maxWidth={760} height={"auto"}>
         <Unstyled>
         # FileList
-        Displays a list of files as removable chips with file-type icons. It supports upload-aware states per item, including in-progress uploads (`uploading` + `progress`) and error messaging (`error`), and emits updates when files are removed.
+        Renders a list of files as removable chips with file-type icons. It supports upload-aware states per item, including in-progress uploads (`uploading` + `progress`) and error messaging (`error`).
+
+        `FileList` is a controlled component: clicking remove emits `onChange(updatedFiles)` but does not mutate internal list state. The parent must pass the updated `files` prop for the UI to change.
 
         ## Base element
         `HTMLDivElement`
@@ -34,7 +36,7 @@ import {RenderSource} from '../../../.storybook/RenderSource';
             </tr>
           </thead>
           <tbody>
-            <tr><td><code>files</code></td><td><code>{`FileItems | FileList`}</code></td><td><code>-</code></td><td>Rendered file data. Each `FileItem` supports `file`, `uploading`, `progress`, and `error`.</td></tr>
+            <tr><td><code>files</code></td><td><code>FileItem[]</code></td><td><code>-</code></td><td>Rendered file data. Each `FileItem` supports `file`, `uploading`, `progress`, and `error`.</td></tr>
             <tr><td><code>direction</code></td><td><code>{`'row' | 'column'`}</code></td><td><code>'row'</code></td><td>Controls list direction and wrapping behavior.</td></tr>
             <tr><td><code>gap</code></td><td><code>number</code></td><td><code>10</code></td><td>Sizing/layout setting for `gap`.</td></tr>
             <tr><td><code>size</code></td><td><code>{`'xs' | 's' | 'm' | 'l' | 'xl'`}</code></td><td><code>'s'</code></td><td>Typography size preset used by each list item.</td></tr>
@@ -59,7 +61,7 @@ import {RenderSource} from '../../../.storybook/RenderSource';
             </tr>
           </thead>
           <tbody>
-            <tr><td><code>onChange</code></td><td><code>{`(files: FileItems) => void`}</code></td></tr>
+            <tr><td><code>onChange</code></td><td><code>{`(files: FileItem[]) => void`}</code></td></tr>
             <tr><td><code>onToolTip</code></td><td><code>{`(tip: ToolTip | null) => void`}</code></td></tr>
           </tbody>
         </table>
