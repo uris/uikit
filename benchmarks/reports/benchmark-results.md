@@ -1,46 +1,49 @@
-*Generated:* 3/5/2026
-*Components Tested:* 36
+*Generated:* 3/7/2026
+*Components Tested:* 39
 
 
 
 | Component | Rating | Mount (avg) | Re-render (avg) | Event (avg) | Memory Delta | Leak Suspected |
 |-----------|:------:|-------------|-----------------|-------------|--------------|:--------------:|
-| Avatar | ⚡ | 0.414ms | 0.113ms | - | 2.53KB | ✓ No |
-| AvatarGroup | ⚡ | 1.166ms | 0.465ms | - | 2.28KB | ✓ No |
-| Badge | ⚡ | 0.441ms | 0.117ms | - | 3.13KB | ✓ No |
-| CheckBox | ⚡ | 1.224ms | 0.850ms | 0.684ms | 2.36KB | ✓ No |
-| DivInput | ⚡ | 0.625ms | 0.474ms | 0.477ms | 3.07KB | ✓ No |
-| DocIcon | ⚡ | 0.938ms | 0.492ms | - | 3.46KB | ✓ No |
-| Dot | ⚡ | 0.328ms | 0.0759ms | - | 2.91KB | ✓ No |
-| DraggablePanel | ⚡ | 1.460ms | 0.344ms | - | 3.27KB | ✓ No |
-| DropDown | ⚡ | 1.452ms | 0.392ms | 0.0726ms | 3.32KB | ✓ No |
-| EditorButtonBar | ✓ | 6.712ms | 1.957ms | - | 3.00KB | ✓ No |
-| ErrorSummary | ⚡ | 0.351ms | 0.119ms | - | 3.24KB | ✓ No |
-| FlexDiv | ⚡ | 1.272ms | 0.682ms | - | - | - |
-| Grouper | ⚡ | 0.576ms | 0.295ms | - | 3.31KB | ✓ No |
-| Icon | ⚡ | 0.827ms | 0.220ms | - | 3.31KB | ✓ No |
-| IconButton | ⚡ | 1.003ms | 0.307ms | 0.0563ms | 2.73KB | ✓ No |
-| Logos | ⚡ | 1.888ms | 0.648ms | - | 3.65KB | ✓ No |
-| MessageInput | ✓✓ | 4.523ms | 3.818ms | 1.718ms | 3.61KB | ✓ No |
-| Overlay | ⚡ | 0.404ms | 0.391ms | - | 2.66KB | ✓ No |
-| Pager | ⚡ | 1.097ms | 0.836ms | 0.181ms | 3.53KB | ✓ No |
-| Progress | ⚡ | 0.366ms | 0.253ms | - | 3.72KB | ✓ No |
-| RadioButton | ⚡ | 0.889ms | 0.661ms | 0.744ms | 2.90KB | ✓ No |
-| RadioButtonList | ⚡ | 1.680ms | 1.207ms | 0.0407ms | 2.25KB | ✓ No |
-| Slider | ⚡ | 0.644ms | 0.261ms | 0.194ms | 2.91KB | ✓ No |
-| Spacer | ⚡ | 0.277ms | 0.144ms | - | 3.57KB | ✓ No |
-| Switch | ⚡ | 0.498ms | 0.471ms | 0.426ms | 2.76KB | ✓ No |
-| TabBar | ⚡ | 0.910ms | 0.365ms | 0.0740ms | 2.75KB | ✓ No |
-| TextArea | ⚡ | 0.454ms | 0.507ms | 0.295ms | 3.28KB | ✓ No |
-| Tip | ⚡ | 0.452ms | 0.177ms | - | 2.38KB | ✓ No |
-| Toast | ⚡ | 0.414ms | 0.0946ms | - | 2.81KB | ✓ No |
-| TextField | ⚡ | 0.826ms | 0.394ms | 0.372ms | 3.34KB | ✓ No |
-| UIButton | ⚡ | 1.504ms | 0.918ms | 0.0582ms | 2.67KB | ✓ No |
-| UIButtonBar | ⚡ | 0.997ms | 1.095ms | 0.0277ms | 2.78KB | ✓ No |
-| UICard | ⚡ | 0.271ms | 0.0367ms | - | 3.31KB | ✓ No |
-| UIChip | ⚡ | 0.522ms | 0.156ms | 0.123ms | 2.93KB | ✓ No |
-| UIFileIcon | ⚡ | 0.675ms | 0.297ms | - | 2.75KB | ✓ No |
-| UILabel | ⚡ | 0.211ms | 0.0539ms | - | 3.24KB | ✓ No |
+| Avatar | ⚡ | 0.404ms | 0.112ms | - | 2.44KB | ✓ No |
+| AvatarGroup | ⚡ | 0.674ms | 0.327ms | - | 3.53KB | ✓ No |
+| Badge | ⚡ | 0.286ms | 0.126ms | - | 3.19KB | ✓ No |
+| CheckBox | ⚡ | 0.964ms | 0.884ms | 0.643ms | 3.39KB | ✓ No |
+| DivInput | ⚡ | 1.170ms | 0.483ms | 0.377ms | 2.93KB | ✓ No |
+| DocIcon | ⚡ | 1.237ms | 0.468ms | - | 3.40KB | ✓ No |
+| Dot | ⚡ | 0.201ms | 0.0651ms | - | 2.72KB | ✓ No |
+| DraggablePanel | ⚡ | 1.408ms | 0.244ms | - | 3.09KB | ✓ No |
+| DropDown | ⚡ | 0.909ms | 0.264ms | 0.0506ms | 3.02KB | ✓ No |
+| EditorButtonBar | ✓ | 7.022ms | 2.225ms | - | 2.99KB | ✓ No |
+| ErrorSummary | ⚡ | 0.213ms | 0.113ms | - | 3.20KB | ✓ No |
+| FileIcon | ⚡ | 0.650ms | 0.147ms | - | 2.95KB | ✓ No |
+| FileList | ✓✓ | 2.123ms | 1.205ms | - | 2.91KB | ✓ No |
+| FlexDiv | ⚡ | 1.339ms | 0.842ms | - | - | - |
+| Grouper | ⚡ | 0.571ms | 0.295ms | - | 3.60KB | ✓ No |
+| Icon | ⚡ | 1.097ms | 0.0892ms | - | 3.24KB | ✓ No |
+| IconButton | ⚡ | 0.997ms | 0.253ms | 0.0386ms | 2.44KB | ✓ No |
+| Logos | ⚡ | 1.891ms | 0.722ms | - | 3.14KB | ✓ No |
+| MessageInput | ✓✓ | 4.582ms | 3.556ms | 1.959ms | 3.61KB | ✓ No |
+| PromptInput | ✓✓ | 3.164ms | 2.253ms | - | 3.30KB | ✓ No |
+| Overlay | ⚡ | 0.396ms | 0.341ms | - | 3.15KB | ✓ No |
+| Pager | ⚡ | 1.408ms | 0.789ms | 0.161ms | 3.73KB | ✓ No |
+| Progress | ⚡ | 0.556ms | 0.240ms | - | 2.72KB | ✓ No |
+| RadioButton | ⚡ | 0.944ms | 0.451ms | 0.521ms | 2.85KB | ✓ No |
+| RadioButtonList | ⚡ | 1.782ms | 1.287ms | 0.0472ms | 2.68KB | ✓ No |
+| Slider | ⚡ | 0.635ms | 0.287ms | 0.242ms | 2.79KB | ✓ No |
+| Spacer | ⚡ | 0.320ms | 0.221ms | - | 2.14KB | ✓ No |
+| Switch | ⚡ | 0.635ms | 0.407ms | 0.340ms | 2.66KB | ✓ No |
+| TabBar | ⚡ | 0.676ms | 0.330ms | 0.0586ms | 3.80KB | ✓ No |
+| TextArea | ⚡ | 0.298ms | 0.218ms | 0.243ms | 3.16KB | ✓ No |
+| Tip | ⚡ | 0.668ms | 0.184ms | - | 2.49KB | ✓ No |
+| Toast | ⚡ | 0.433ms | 0.139ms | - | 2.84KB | ✓ No |
+| TextField | ⚡ | 0.913ms | 0.365ms | 0.427ms | 3.38KB | ✓ No |
+| UIButton | ⚡ | 1.683ms | 1.018ms | 0.0669ms | 3.47KB | ✓ No |
+| UIButtonBar | ⚡ | 1.657ms | 1.228ms | 0.0286ms | 2.85KB | ✓ No |
+| UICard | ⚡ | 0.387ms | 0.0790ms | - | 2.78KB | ✓ No |
+| UIChip | ⚡ | 0.680ms | 0.151ms | 0.206ms | 2.84KB | ✓ No |
+| UIFileIcon | ⚡ | 1.004ms | 0.478ms | - | 2.93KB | ✓ No |
+| UILabel | ⚡ | 0.513ms | 0.168ms | - | 3.04KB | ✓ No |
 
 
 

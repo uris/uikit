@@ -28,7 +28,7 @@ function fileNameFromItem(item: FileItem): string {
  * cal progress as a percentage string
  */
 function normalizeProgress(progress?: number): string {
-	if (progress === undefined || Number.isNaN(progress)) return '0%';
+	if (progress === undefined || Number.isNaN(progress)) return '100%';
 	const percent = progress <= 1 ? progress * 100 : progress;
 	const clamped = Math.max(0, Math.min(100, percent));
 	return `${Math.round(clamped)}%`;

@@ -15,6 +15,7 @@ import { Avatar,
 	DropDown,
 	EditorButtonBar,
 	ErrorSummary,
+	FileIcon,
 	FlexDiv,
 	Grouper,
 	Icon,
@@ -41,6 +42,8 @@ import { Avatar,
 	UIFileIcon,
 	UILabel
 } from '../../src';
+import { FileList } from '../../src/uikit/FileList';
+import { PromptInput } from '../../src/uikit/PromptInput/PromptInput';
 import { fireEvent } from '@testing-library/react';
 import {
 	measureMountTime,
@@ -253,6 +256,77 @@ export const iconConfig: ComponentBenchmarkConfig = {
 			name: 'Memory',
 			type: 'memory',
 			fn: () => measureMemoryDelta(<Icon name="home" />, 10),
+		},
+	],
+};
+
+export const fileIconConfig: ComponentBenchmarkConfig = {
+	componentName: 'FileIcon',
+	tests: [
+		{
+			name: 'Mount Time',
+			type: 'mount',
+			fn: () => measureMountTime(<FileIcon name="pdf" size={24} />, 50),
+		},
+		{
+			name: 'Re-render',
+			type: 'rerender',
+			fn: () =>
+				measureRerenderTime(
+					<FileIcon name="pdf" size={24} />,
+					(container) => {
+						container.rerender(<FileIcon name="sheet" size={24} />);
+					},
+					50,
+				),
+		},
+		{
+			name: 'Memory',
+			type: 'memory',
+			fn: () => measureMemoryDelta(<FileIcon name="image" size={24} />, 10),
+		},
+	],
+};
+
+export const fileListConfig: ComponentBenchmarkConfig = {
+	componentName: 'FileList',
+	tests: [
+		{
+			name: 'Mount Time',
+			type: 'mount',
+			fn: () =>
+				measureMountTime(
+					<FileList files={[{ file: 'document.pdf' }, { file: 'notes.txt' }]} />,
+					50,
+				),
+		},
+		{
+			name: 'Re-render',
+			type: 'rerender',
+			fn: () =>
+				measureRerenderTime(
+					<FileList files={[{ file: 'document.pdf' }, { file: 'notes.txt' }]} />,
+					(container) => {
+						container.rerender(
+							<FileList
+								files={[
+									{ file: 'document.pdf', uploading: true, progress: 0.5 },
+									{ file: 'notes.txt', error: 'Upload failed' },
+								]}
+							/>,
+						);
+					},
+					50,
+				),
+		},
+		{
+			name: 'Memory',
+			type: 'memory',
+			fn: () =>
+				measureMemoryDelta(
+					<FileList files={[{ file: 'document.pdf' }, { file: 'notes.txt' }]} />,
+					10,
+				),
 		},
 	],
 };
@@ -960,6 +1034,40 @@ export const messageInputConfig: ComponentBenchmarkConfig = {
 	],
 };
 
+export const promptInputConfig: ComponentBenchmarkConfig = {
+	componentName: 'PromptInput',
+	tests: [
+		{
+			name: 'Mount Time',
+			type: 'mount',
+			fn: () => measureMountTime(<PromptInput value="Test prompt" />, 50),
+		},
+		{
+			name: 'Re-render',
+			type: 'rerender',
+			fn: () =>
+				measureRerenderTime(
+					<PromptInput value="Initial prompt" />,
+					(container) => {
+						container.rerender(
+							<PromptInput value="Updated prompt" working={true} />,
+						);
+					},
+					50,
+				),
+		},
+		{
+			name: 'Memory',
+			type: 'memory',
+			fn: () =>
+				measureMemoryDelta(
+					<PromptInput value="Memory benchmark prompt" />,
+					10,
+				),
+		},
+	],
+};
+
 export const overlayConfig: ComponentBenchmarkConfig = {
 	componentName: 'Overlay',
 	tests: [
@@ -1439,12 +1547,15 @@ export const allBenchmarkConfigs = [
 	dropDownConfig,
 	editorButtonBarConfig,
 	errorSummaryConfig,
+	fileIconConfig,
+	fileListConfig,
 	flexDivConfig,
 	grouperConfig,
 	iconConfig,
 	iconButtonConfig,
 	logosConfig,
 	messageInputConfig,
+	promptInputConfig,
 	overlayConfig,
 	pagerConfig,
 	progressConfig,

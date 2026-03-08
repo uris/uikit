@@ -20,6 +20,7 @@ type BasePromptProps = {
 	attachButton?: boolean;
 	stopEnabled?: boolean;
 	maxLength?: number;
+	textSize?: 's' | 'm' | 'l';
 	onChange?: (value: string) => void;
 	onSubmit?: (value: string) => void;
 	onBlur?: (value: string | undefined) => void;

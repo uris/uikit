@@ -23,6 +23,7 @@ const meta: Meta<typeof PromptInput> = {
 		sendButton: true,
 		attachButton: true,
 		stopEnabled: false,
+		textSize: 'm',
 		onChange: fn(),
 		onBlur: fn(),
 		onFocus: fn(),

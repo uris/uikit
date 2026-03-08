@@ -31,6 +31,7 @@ const PromptInputBase = React.forwardRef<HTMLDivElement, PromptProps>(
 			attachButton = true,
 			sendButton = true,
 			stopEnabled = false,
+			textSize = 'm',
 			maxLength,
 			onChange,
 			onBlur,
@@ -237,7 +238,7 @@ const PromptInputBase = React.forwardRef<HTMLDivElement, PromptProps>(
 					<textarea
 						id={'messageInput'}
 						name={'messageInput'}
-						className={css.textarea}
+						className={`${css.textarea} ${css[textSize]}`}
 						ref={textAreaRef}
 						value={textValue ?? ''}
 						onChange={handleChange}

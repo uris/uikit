@@ -77,7 +77,6 @@
 }
 
 .textarea {
-	composes: body-m-regular from "../../util/type.module.css";
 	padding: 16px !important;
 	box-sizing: border-box;
 	field-sizing: content;
@@ -91,4 +90,16 @@
 	&::placeholder {
 		color: var(--core-text-disabled);
 	}
+}
+
+.s {
+	composes: body-s-regular from "../../util/type.module.css";
+}
+
+.m {
+	composes: body-m-regular from "../../util/type.module.css";
+}
+
+.l {
+	composes: body-l-regular from "../../util/type.module.css";
 }
