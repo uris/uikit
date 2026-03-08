@@ -17,7 +17,7 @@ export function Label(props: Readonly<LabelProps>) {
 		border = 1,
 		padding,
 		color,
-		inline = false,
+		inline = true,
 		size = 'm',
 		onClick = () => null,
 		...divAttributes
