@@ -2,6 +2,12 @@
 
 Slice is a TypeScript-first React UI kit with theme tokens, utility hooks, optional Zustand stores, Storybook docs, and benchmark tooling.
 
+## Beta and links
+
+- This project is currently in **beta**. Until the official v1 release, breaking changes may be introduced without prior notice.
+- Documentation and showcase: https://slice-uikit.com
+- Repository: access is limited to authorized contributors/collaborators.
+
 ## What is included
 
 - 30+ reusable UI components (inputs, buttons, navigation, overlays, feedback, layout, icons)
@@ -82,7 +88,7 @@ Subpath imports are also published:
 
 - `Avatar`, `AvatarGroup`, `Badge`, `CheckBox`, `DivInput`, `Dot`, `DropDown`
 - `EditorButtonBar`, `ErrorSummary`, `FlexDiv`, `Grouper`, `Icon`, `IconButton`
-- `Logos`, `MessageInput`, `Overlay`, `Pager`, `ProgressIndicator`, `DoneCheck`
+- `Logos`, `PromptInput`, `Overlay`, `Pager`, `ProgressIndicator`, `DoneCheck`
 - `RadioButton`, `RadioButtonList`, `Slider`, `Spacer`, `Switch`, `TabBar`
 - `TextField`, `TextArea`, `Tip`, `Toast`, `Button`, `ButtonBar`
 - `Card`, `Chip`, `Label`, `DocIcons`, `DraggablePanel`
