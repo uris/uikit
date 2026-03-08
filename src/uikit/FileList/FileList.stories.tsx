@@ -8,19 +8,23 @@ const meta: Meta<typeof FileList> = {
 	component: FileList,
 	args: {
 		files: [
-			'document.doc',
-			'spreadsheet.xls',
-			'image.png',
-			'markdown.md',
-			'pdf.pdf',
-			'video.mp4',
-			'audio.mp3',
-			'a veru long name for a file that is of type unknown that is also very freakishly long.zip',
+			{ file: 'document.doc' },
+			{ file: 'presentation.ppt' },
+			{ file: 'spreadsheet.xls', uploading: true, progress: 0.35 },
+			{ file: 'image.png' },
+			{ file: 'markdown.md', uploading: true, progress: 0.82 },
+			{ file: 'pdf.pdf', error: 'Upload failed' },
+			{ file: 'video.mp4' },
+			{ file: 'audio.mp3' },
+			{ file: 'config.json' },
 		],
 		size: 's',
 		maxWidth: undefined,
+		minWidth: undefined,
 		direction: 'row',
+		padding: undefined,
 		gap: 8,
+		iconSize: 24,
 		onChange: fn(),
 		onToolTip: fn(),
 	},
@@ -34,7 +38,7 @@ export const Default: StoryObj<typeof FileList> = {
 			<FlexDiv
 				justify={'center'}
 				alignItems={'center'}
-				padding={64}
+				padding={'0px 64px'}
 				style={{ overflow: 'hidden' }}
 				width={'fill'}
 				height={'viewport'}

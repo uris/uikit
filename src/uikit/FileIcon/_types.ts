@@ -5,7 +5,11 @@ type FileIconBaseProps = {
 	size?: number;
 	pointer?: boolean;
 	disabled?: boolean;
-	onClick?: (e: React.MouseEvent<SVGElement, MouseEvent>) => void;
+	onClick?: (
+		e:
+			| React.MouseEvent<SVGElement, MouseEvent>
+			| React.KeyboardEvent<SVGSVGElement>,
+	) => void;
 };
 
 export type FileIconProps = Omit<

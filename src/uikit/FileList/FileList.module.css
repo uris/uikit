@@ -11,19 +11,34 @@
 }
 
 .file {
+	position: relative;
 	composes: rowStart from "../../util/flexBox.module.css";
-	padding: 4px 4px 4px 2px !important;
-	border: 1px solid var(--core-outline-primary);
+	padding: var(--file-padding) !important;
+	border: 1px solid var(--file-border-color);
 	border-radius: 4px;
 	overflow: hidden;
 	max-width: var(--file-max-width);
+	min-width: var(--file-min-width);
 	color: var(--core-text-primary);
 	gap: 4px;
 }
 
+/* file progress bar */
+.file::before {
+	content: "";
+	position: absolute;
+	background: var(--core-surface-secondary);
+	top: 0;
+	bottom: 0;
+	left: 0;
+	width: var(--file-progress);
+	transition: width 1s ease-in-out 0s;
+	z-index: 1;
+}
+
 .fileName {
 	composes: row from "../../util/flexBox.module.css";
-	flex: 1;
+	width: 100%;
 	overflow: hidden;
 	text-overflow: ellipsis;
 	white-space: nowrap;
@@ -31,14 +46,34 @@
 	display: -webkit-box !important;
 	-webkit-line-clamp: 1;
 	-webkit-box-orient: vertical;
+	z-index: 2;
+}
+
+.meta {
+	composes: columnStart from "../../util/flexBox.module.css";
+	flex: 1;
+	min-width: 0;
+	gap: 2px;
+	z-index: 2;
+}
+
+.status {
+	composes: body-xs-regular from "../../util/type.module.css";
+	color: var(--core-text-secondary);
+	line-height: 1.2;
+}
+
+.error {
+	color: var(--feedback-warning);
 }
 
 .fileIcon {
 	composes: row from "../../util/flexBox.module.css";
-	min-width: 24px;
-	min-height: 24px;
-	max-width: 24px;
-	max-height: 24px;
+	min-width: var(--file-icon-size);
+	min-height: var(--file-icon-size);
+	max-width: var(--file-icon-size);
+	max-height: var(--file-icon-size);
+	z-index: 2;
 }
 
 .icon {
@@ -49,6 +84,11 @@
 	max-width: 20px;
 	max-height: 20px;
 	cursor: pointer;
+	z-index: 2;
+}
+
+.xs {
+	composes: body-xs-regular from "../../util/type.module.css";
 }
 
 .s {
@@ -61,4 +101,8 @@
 
 .l {
 	composes: body-l-regular from "../../util/type.module.css";
+}
+
+.xl {
+	composes: body-xl-regular from "../../util/type.module.css";
 }

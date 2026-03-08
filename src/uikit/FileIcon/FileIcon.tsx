@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react';
+import React, { useCallback, useMemo } from 'react';
 import { useTheme } from '../../hooks';
 import { useTrackRenders } from '../../hooks/useTrackRenders/useTrackRenders';
 import { accessibleKeyDown } from '../../util/utils';
@@ -11,7 +11,7 @@ export const FileIcon = React.memo((props: FileIconProps) => {
 		size = 24,
 		pointer = true,
 		disabled = false,
-		onClick = () => null,
+		onClick,
 		...svgAttributes
 	} = props;
 	const { id: svgId, className, style, ...rest } = svgAttributes;
@@ -35,6 +35,17 @@ export const FileIcon = React.memo((props: FileIconProps) => {
 		} as React.CSSProperties;
 	}, [cursor]);
 
+	const handleClick = useCallback(
+		(
+			e:
+				| React.MouseEvent<SVGElement, MouseEvent>
+				| React.KeyboardEvent<SVGSVGElement>,
+		) => {
+			if (!disabled) onClick?.(e);
+		},
+		[onClick, disabled],
+	);
+
 	const definition = STATIC_FILE_ICONS.get(name);
 	const paths = definition?.paths(isDark ? 'dark' : 'light');
 
@@ -52,12 +63,16 @@ export const FileIcon = React.memo((props: FileIconProps) => {
 			width={size}
 			height={size}
 			viewBox="0 0 20 20"
-			style={{ ...(style ?? {}), ...iconStyle }}
-			onClick={(e) => onClick(e)}
+			style={{ ...style, ...iconStyle }}
+			onClick={handleClick}
 			role="img"
 			aria-label={`${name} icon`}
+			aria-disabled={disabled}
 			tabIndex={pointer && !disabled ? 0 : -1}
-			onKeyDown={(e) => accessibleKeyDown(e, () => onClick)}
+			onKeyDown={(e) => {
+				if (!pointer || disabled) return;
+				accessibleKeyDown(e, () => handleClick(e));
+			}}
 			opacity={disabled ? 0.5 : 1}
 			{...rest}
 		>

@@ -15,6 +15,15 @@ export function fileIconName(extension: string) {
 		case 'doc':
 		case 'txt':
 			return 'text';
+		case 'md':
+			return 'md';
+		case 'html':
+		case 'js':
+		case 'ts':
+		case 'tsx':
+		case 'json':
+		case 'py':
+			return 'code';
 		case 'xls':
 		case 'xlsx':
 		case 'csv':
