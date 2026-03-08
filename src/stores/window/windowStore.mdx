@@ -1,0 +1,132 @@
+import {Meta, Unstyled} from '@storybook/addon-docs/blocks';
+import {RenderSource} from '../../../.storybook/RenderSource';
+import {FlexDiv} from '../../uikit/FlexDiv';
+import NoteSection from '../../../.storybook/Notice';
+
+<Meta title="Stores/Window Store" />
+
+<FlexDiv width={'fill'} height={'fill'} alignItems={'center'}>
+    <FlexDiv width={'fill'} maxWidth={760} height={'auto'}>
+        <Unstyled>
+        <NoteSection>
+            Slice stores uses a module-level singleton pattern: each store is created once when the module is loaded - every import of the module shares the same store instance.
+        </NoteSection>
+
+        # WindowStore
+        Global viewport and runtime state built with Zustand. It mirrors the values from `useWindow` while exposing atomic selector hooks for React and imperative reads for non-React code.
+
+        ## Important!
+            `window store` has an initialize action that sets a window 'resize' event listener, returning the clean up function. <b>You should only call this action once in your application</b>, or you'll end up with multiple window listeners that can collide.
+            
+        ## React exports (reactive)
+        React exports are reactive subscriptions for components updating automatically as state changes.
+        <table style={{width: '100%'}}>
+          <colgroup>
+            <col style={{width: '1%'}} />
+            <col style={{width: '25%'}} />
+            <col style={{width: '98%'}} />
+          </colgroup>
+          <thead>
+            <tr>
+              <th className={'left'}>Export</th>
+              <th className={'left'}>Type</th>
+              <th className={'left'}>Description</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td><code>useWindowStore</code></td><td><code>Zustand store hook</code></td><td>Main store hook for custom selectors.</td></tr>
+            <tr><td><code>useInitializeWindow</code></td><td><code>{`() => () => void`}</code></td><td>Returns an init function that attaches resize listeners and returns cleanup.</td></tr>
+            <tr><td><code>useFormFactor</code></td><td><code>{`() => FormFactor`}</code></td><td>Atomic selector for current form factor.</td></tr>
+            <tr><td><code>useViewportWidth</code></td><td><code>{`() => number`}</code></td><td>Atomic selector for viewport width.</td></tr>
+            <tr><td><code>useViewportHeight</code></td><td><code>{`() => number`}</code></td><td>Atomic selector for viewport height.</td></tr>
+            <tr><td><code>useIsTouchDevice</code></td><td><code>{`() => boolean`}</code></td><td>Atomic selector for touch support.</td></tr>
+            <tr><td><code>useIsElectron</code></td><td><code>{`() => boolean`}</code></td><td>Atomic selector for Electron runtime.</td></tr>
+            <tr><td><code>useIsAppleDevice</code></td><td><code>{`() => boolean`}</code></td><td>Atomic selector for Apple platform detection.</td></tr>
+            <tr><td><code>useDpr</code></td><td><code>{`() => 1 | 2 | 3`}</code></td><td>Atomic selector for clamped pixel ratio.</td></tr>
+          </tbody>
+        </table>
+
+        ## Imperative exports (non-reactive)
+        Imperative helpers are snapshot reads from the singleton store for utility and service layers.
+        <table style={{width: '100%'}}>
+          <colgroup>
+            <col style={{width: '1%'}} />
+            <col style={{width: '25%'}} />
+            <col style={{width: '98%'}} />
+          </colgroup>
+          <thead>
+            <tr>
+              <th className={'left'}>Export</th>
+              <th className={'left'}>Type</th>
+              <th className={'left'}>Description</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td><code>formFactor</code></td><td><code>{`() => FormFactor`}</code></td><td>Read current form factor outside React.</td></tr>
+            <tr><td><code>viewportWidth</code></td><td><code>{`() => number`}</code></td><td>Read current viewport width outside React.</td></tr>
+            <tr><td><code>viewportHeight</code></td><td><code>{`() => number`}</code></td><td>Read current viewport height outside React.</td></tr>
+            <tr><td><code>isTouchDevice</code></td><td><code>{`() => boolean`}</code></td><td>Read touch support outside React.</td></tr>
+            <tr><td><code>isElectron</code></td><td><code>{`() => boolean`}</code></td><td>Read Electron runtime flag outside React.</td></tr>
+            <tr><td><code>isAppleDevice</code></td><td><code>{`() => boolean`}</code></td><td>Read Apple platform flag outside React.</td></tr>
+            <tr><td><code>dpr</code></td><td><code>{`() => 1 | 2 | 3`}</code></td><td>Read clamped device pixel ratio outside React.</td></tr>
+          </tbody>
+        </table>
+
+        ## Example from `useWindow` to `WindowStore`
+        This pattern initializes listeners once per component mount and reads the same values that `useWindow()` previously returned.
+
+        <RenderSource language={'tsx'}>
+{`
+import { useEffect } from 'react';
+import {
+  useInitializeWindow,
+  useFormFactor,
+  useViewportWidth,
+  useViewportHeight,
+  useIsTouchDevice,
+  useIsElectron,
+  useIsAppleDevice,
+  useDpr,
+} from '@apple-pie/slice/stores/window';
+
+function ViewportBadge() {
+  const initialize = useInitializeWindow();
+  const formFactor = useFormFactor();
+  const viewportWidth = useViewportWidth();
+  const viewportHeight = useViewportHeight();
+  const isTouchDevice = useIsTouchDevice();
+  const isElectron = useIsElectron();
+  const isAppleDevice = useIsAppleDevice();
+  const dpr = useDpr();
+
+  // Important! Call this only once in your application as it initializes.
+  useEffect(() => initialize(), [initialize]);
+
+  return (
+    <div style={{ padding: 12, border: '1px solid var(--core-outline-primary)' }}>
+      {formFactor} • {viewportWidth} x {viewportHeight} • dpr:{dpr}
+      <br />
+      touch:{String(isTouchDevice)} electron:{String(isElectron)} apple:{String(isAppleDevice)}
+    </div>
+  );
+}
+`}
+        </RenderSource>
+
+        ## Imperative usage outside React
+        <RenderSource language={'tsx'}>
+{`
+import { viewportWidth, viewportHeight, formFactor } from '@apple-pie/slice/stores/window';
+
+export function getWindowSnapshot() {
+  return {
+    formFactor: formFactor(),
+    width: viewportWidth(),
+    height: viewportHeight(),
+  };
+}
+`}
+        </RenderSource>
+        </Unstyled>
+    </FlexDiv>
+</FlexDiv>

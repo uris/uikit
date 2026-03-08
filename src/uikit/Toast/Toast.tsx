@@ -34,7 +34,6 @@ const ToastBase = React.forwardRef<HTMLDivElement, ToastProps>((props, ref) => {
 		didHide = () => null,
 		...divAttributes
 	} = props;
-
 	const theme = useTheme();
 
 	// div attributes to add
@@ -156,6 +155,20 @@ const ToastBase = React.forwardRef<HTMLDivElement, ToastProps>((props, ref) => {
 		}
 	}, [duration]);
 
+	// memo icon color based on type
+	const iconColor = useMemo(() => {
+		switch (type) {
+			case ToastType.Error:
+				return theme.current.colors['feedback-warning'];
+			case ToastType.Success:
+				return theme.current.colors['array-land-label'];
+			case ToastType.Warning:
+				return theme.current.colors['array-orange-label'];
+			default:
+				return theme.current.colors['core-text-primary'];
+		}
+	}, [type, theme]);
+
 	/* START.DEBUG */
 	useTrackRenders(props, 'Toast');
 	/* END.DEBUG */
@@ -194,11 +207,7 @@ const ToastBase = React.forwardRef<HTMLDivElement, ToastProps>((props, ref) => {
 							onKeyDown={(e) => accessibleKeyDown(e, handleClose)}
 							onClick={handleClose}
 						>
-							<Icon
-								name={'x'}
-								size={20}
-								strokeColor={theme.current.colors['core-icon-primary']}
-							/>
+							<Icon name={'x'} size={20} strokeColor={iconColor} />
 						</div>
 					)}
 				</motion.div>

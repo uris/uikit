@@ -8,7 +8,6 @@ import React, {
 	useRef,
 	useState,
 } from 'react';
-import { useTheme } from '../../hooks';
 import { useTrackRenders } from '../../hooks/useTrackRenders/useTrackRenders';
 import { Badge } from '../Badge';
 import { Dot } from '../Dot';
@@ -21,7 +20,6 @@ import type { UIButtonHandle, UIButtonProps } from './_types';
 
 const UIButtonComponent = forwardRef<UIButtonHandle, UIButtonProps>(
 	(props, buttonRef: React.Ref<UIButtonHandle>) => {
-		const theme = useTheme();
 		const {
 			size = 'medium',
 			variant = 'outline',
@@ -75,26 +73,25 @@ const UIButtonComponent = forwardRef<UIButtonHandle, UIButtonProps>(
 		const handleClick = useCallback(
 			(e: React.MouseEvent<any> | undefined) => {
 				onToolTip(null);
-				if (state === 'disabled') return;
+				if (btnState === 'disabled') return;
 				if (progress && duration) {
 					setPlaying(true);
 				} else {
 					onClick(e);
 				}
 			},
-			[onToolTip, state, progress, duration, onClick],
+			[onToolTip, btnState, progress, duration, onClick],
 		);
 
 		useEffect(() => setBtnState(state), [state]);
 		useEffect(() => setPlaying(working), [working]);
 
-		// memo button width - note the inclusion of unnecessary dependencies for story book purposes
-		// biome-ignore lint/correctness/useExhaustiveDependencies: avoid expensive observers
+		// memo button widths
 		useEffect(() => {
 			if (!variant || !size || !labelSize) return;
 			if (ref?.current) setBtnWidth(ref.current.offsetWidth);
 			else setBtnWidth(width);
-		}, [width, variant, labelSize, size, iconLeft, iconRight]);
+		}, [width, variant, labelSize, size]);
 
 		useImperativeHandle(buttonRef, () => ({
 			triggerClick: () => handleClick(undefined),
@@ -107,13 +104,14 @@ const UIButtonComponent = forwardRef<UIButtonHandle, UIButtonProps>(
 		// memo destructive check
 		const destructiveColor = useCallback(
 			(icon: boolean) => {
-				if (icon && variant === 'solid') {
-					return theme.current.colors['core-text-light'];
+				if (icon) {
+					if (btnState === 'disabled') return 'var(--core-text-disabled)';
+					if (variant === 'solid') return 'var(--core-text-light)';
 				}
-				if (destructive) return theme.current.colors['feedback-warning'];
-				return theme.current.colors['core-text-primary'];
+				if (destructive) return 'var(--feedback-warning)';
+				return 'var(--core-text-primary)';
 			},
-			[destructive, theme, variant],
+			[destructive, variant, btnState],
 		);
 
 		// memo solid styles
@@ -167,7 +165,7 @@ const UIButtonComponent = forwardRef<UIButtonHandle, UIButtonProps>(
 				iconColor: {
 					normal: iconColor || destructiveColor(true),
 					hover: iconColor || destructiveColor(true),
-					disabled: iconColor || 'var(--core-text-disabled)',
+					disabled: iconColor || destructiveColor(true),
 				},
 				background: {
 					normal: bgColor || 'var(--core-surface-primary)',
@@ -198,12 +196,12 @@ const UIButtonComponent = forwardRef<UIButtonHandle, UIButtonProps>(
 				},
 			};
 		}, [
-			iconColor,
+			labelColor,
 			destructive,
+			destructiveColor,
 			bgColor,
 			bgColorDisabled,
-			labelColor,
-			destructiveColor,
+			iconColor,
 		]);
 
 		// memo text styles
@@ -324,7 +322,7 @@ const UIButtonComponent = forwardRef<UIButtonHandle, UIButtonProps>(
 			() => ({
 				color: colorStyles[variant].color[btnState],
 				background: fill
-					? theme.current.colors['core-surface-primary']
+					? 'var(--core-surface-primary)'
 					: colorStyles[variant].background[state],
 				paddingRight: paddingRight ?? sizingStyles[size].paddingRight,
 				paddingLeft: paddingLeft ?? sizingStyles[size].paddingLeft,
@@ -346,7 +344,6 @@ const UIButtonComponent = forwardRef<UIButtonHandle, UIButtonProps>(
 				variant,
 				btnState,
 				fill,
-				theme,
 				state,
 				paddingRight,
 				paddingLeft,
@@ -356,19 +353,13 @@ const UIButtonComponent = forwardRef<UIButtonHandle, UIButtonProps>(
 			],
 		);
 
-		// memo icon stroke color
-		const iconStrokeColor = useMemo(
-			() => colorStyles[variant].iconColor[state],
-			[colorStyles, variant, state],
-		);
-
 		// memo progress color
 		const progressColor = useMemo(
 			() =>
 				destructive
-					? theme.current.colors['feedback-warning']
+					? 'var(feedback-warning)'
 					: colorStyles[variant].color[btnState],
-			[destructive, theme, colorStyles, variant, btnState],
+			[destructive, colorStyles, variant, btnState],
 		);
 
 		const setStyle = useCallback((value: string | number | undefined) => {
@@ -394,6 +385,12 @@ const UIButtonComponent = forwardRef<UIButtonHandle, UIButtonProps>(
 		useTrackRenders(props, 'UIButton');
 		/* END.DEBUG */
 
+		console.log(
+			'UIButton',
+			{ btnState },
+			colorStyles[variant].iconColor[btnState],
+		);
+
 		return (
 			<motion.div
 				id={divId}
@@ -415,51 +412,57 @@ const UIButtonComponent = forwardRef<UIButtonHandle, UIButtonProps>(
 						<Icon
 							name={iconLeft}
 							size={sizingStyles[size].iconSize}
-							strokeColor={iconStrokeColor}
-							pointer={state !== 'disabled'}
+							strokeColor={colorStyles[variant].iconColor[btnState]}
+							pointer={btnState !== 'disabled'}
 						/>
 					</div>
 				)}
 				{playing && iconLeft && (
-					<ProgressIndicator
-						show={playing}
-						didStop={handleDidStop}
-						duration={duration}
-						size={sizingStyles[size].iconSize}
-						color={progressColor}
-						inline
-					/>
+					<div className={css.icon}>
+						<ProgressIndicator
+							show={playing}
+							didStop={handleDidStop}
+							duration={duration}
+							size={sizingStyles[size].iconSize}
+							color={progressColor}
+							inline
+						/>
+					</div>
 				)}
 				{playing && !iconLeft && !iconRight && (
-					<ProgressIndicator
-						show={playing}
-						didStop={handleDidStop}
-						duration={duration}
-						size={sizingStyles[size].iconSize}
-						color={progressColor}
-						inline={false}
-					/>
+					<div className={css.icon}>
+						<ProgressIndicator
+							show={playing}
+							didStop={handleDidStop}
+							duration={duration}
+							size={sizingStyles[size].iconSize}
+							color={progressColor}
+							inline={false}
+						/>
+					</div>
 				)}
 				{shouldShowLabel && (
 					<div className={`${css.label} ${css[labelSize]}`}>{label}</div>
 				)}
 				{playing && iconRight && (
-					<ProgressIndicator
-						show={playing}
-						didStop={handleDidStop}
-						duration={duration}
-						size={sizingStyles[size].iconSize}
-						color={progressColor}
-						inline
-					/>
+					<div className={css.icon}>
+						<ProgressIndicator
+							show={playing}
+							didStop={handleDidStop}
+							duration={duration}
+							size={sizingStyles[size].iconSize}
+							color={progressColor}
+							inline
+						/>
+					</div>
 				)}
 				{!playing && iconRight && (
 					<div className={css.icon}>
 						<Icon
 							name={iconRight}
 							size={sizingStyles[size].iconSize}
-							strokeColor={iconStrokeColor}
-							pointer={state !== 'disabled'}
+							strokeColor={colorStyles[variant].iconColor[btnState]}
+							pointer={btnState !== 'disabled'}
 						/>
 					</div>
 				)}

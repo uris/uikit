@@ -1,6 +1,8 @@
 import {Meta, Unstyled} from '@storybook/addon-docs/blocks';
 import {RenderSource} from '../../../.storybook/RenderSource';
 import {FlexDiv} from '../../uikit/FlexDiv';
+import {Spacer} from "../../uikit/Spacer";
+import Notice from "../../../.storybook/Notice";
 
 <Meta title="Hooks/useWindow" />
 
@@ -11,7 +13,7 @@ import {FlexDiv} from '../../uikit/FlexDiv';
         Tracks viewport size, form factor, touch capability, pixel ratio, and Electron runtime state.
 
         ## Signature
-        `useWindow(top?: boolean)`
+        `useWindow(breakpoints?: BreakPoints, top?: boolean)`
 
         ## Parameters
         <table style={{width: '100%'}}>
@@ -30,7 +32,8 @@ import {FlexDiv} from '../../uikit/FlexDiv';
             </tr>
             </thead>
             <tbody>
-            <tr><td><code>Top?</code></td><td><code>boolean</code></td><td><code>true</code></td><td>Use to top most frame to set width and height of the viewport. If false, uses the current frame.</td></tr>
+            <tr><td><code>breakpoints?</code></td><td><code>BreakPoints</code></td><td><code>{`{ mobile: 576, tablet: 768, desktop: 992, desktopL: 1200, desktopXL: 1400 }`}</code></td><td>Optional width thresholds used to resolve <code>formFactor</code>. If omitted, the hook uses its built-in defaults (Bootstrap 5 breakpoints).</td></tr>
+            <tr><td><code>top?</code></td><td><code>boolean</code></td><td><code>true</code></td><td>Use the top most window in the window hierarchy. If used in an iFrame that's on a different domain, it will fall back to that iFrame window.</td></tr>
             </tbody>
         </table>
 
@@ -80,5 +83,34 @@ function ViewportBadge() {
 }
 `}
         </RenderSource>
+
+        <RenderSource language={"tsx"}>
+{`
+import { FormFactor, useWindow, type BreakPoints } from '@apple-pie/slice';
+
+const customBreakpoints: BreakPoints = {
+  [FormFactor.Mobile]: 600,
+  [FormFactor.Tablet]: 1024,
+  [FormFactor.Desktop]: 1280,
+  [FormFactor.DesktopL]: 1536,
+  [FormFactor.DesktopXL]: 1920,
+};
+
+function ViewportBadgeWithCustomBreakpoints() {
+  const win = useWindow(customBreakpoints);
+
+  return (
+    <div style={{ padding: 12, border: '1px solid var(--core-outline-primary)' }}>
+      {win.formFactor} • {win.viewportWidth} x {win.viewportHeight}
+    </div>
+  );
+}
+`}
+        </RenderSource>
+        <Spacer size={32} />
+        <Notice>
+            Note: Slice also implements and alternative (but optional) [`WindowStore`](/docs/stores-window-store--docs) that creates a Zustand singleton window state object you can efficiently access throughout your application.
+        </Notice>
+        <Spacer size={64} />
     </FlexDiv>
 </FlexDiv>

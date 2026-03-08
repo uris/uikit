@@ -19,6 +19,7 @@ export type {
 export {
 	type KeyboardShortcut,
 	type KeyboardShortcuts,
+	type BreakPoints,
 	useKeyboardShortcuts,
 	useTheme,
 	useObserveTheme,
@@ -132,8 +133,11 @@ export type { UIButtonProps, UIButtonHandle } from './uikit/UIButton';
 export { UIChip } from './uikit/UIChip';
 export type { UIChipProps } from './uikit/UIChip';
 
-export { Icon } from './uikit/Icon';
-export type { IconNames, IconProps } from './uikit/Icon/_types';
+export { FileIcon, FileIconNames } from './uikit/FileIcon';
+export type { FileIconProps } from './uikit/FileIcon/_types';
+
+export { Icon, IconNames } from './uikit/Icon';
+export type { IconProps } from './uikit/Icon/_types';
 
 export { UIButtonBar } from './uikit/UIButtonBar';
 export type { BarButton, UIButtonBarProps } from './uikit/UIButtonBar/_types';

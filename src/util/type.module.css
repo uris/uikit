@@ -106,18 +106,45 @@
 	letter-spacing: 0.15px;
 }
 
-.heading-s-bold {
+.body-xl-regular {
 	font-family: var(--font-family), sans-serif;
-	font-weight: 650;
+	font-weight: var(--font-weight-regular);
+	font-size: var(--font-size-xl);
+	line-height: 162.5%;
+	text-decoration: none;
+	letter-spacing: 0.1px;
+}
+
+.body-xl-medium {
+	font-family: var(--font-family), sans-serif;
+	font-weight: var(--font-weight-medium);
+	font-size: var(--font-size-xl);
+	line-height: 162.5%;
+	text-decoration: none;
+	letter-spacing: 0.1px;
+}
+
+.body-xl-bold {
+	font-family: var(--font-family), sans-serif;
+	font-weight: var(--font-weight-bold);
+	font-size: var(--font-size-xl);
+	line-height: 162.5%;
+	text-decoration: none;
+	letter-spacing: 0.15px;
+}
+
+.heading-s-medium {
+	font-family: var(--font-family), sans-serif;
+	font-weight: 500;
 	font-size: 20px;
 	line-height: 140%;
 	text-decoration: none;
 	letter-spacing: 0.2px;
 }
 
-.heading-s-medium {
+.heading-s-bold {
 	font-family: var(--font-family), sans-serif;
-	font-weight: 560;
+	font-weight: 600;
 	font-size: 20px;
 	line-height: 140%;
 	text-decoration: none;
@@ -126,7 +153,7 @@
 
 .heading-m-bold {
 	font-family: var(--font-family), sans-serif;
-	font-weight: 650;
+	font-weight: 500;
 	font-size: 24px;
 	line-height: 116.67%;
 	text-decoration: none;
@@ -135,7 +162,7 @@
 
 .heading-m-medium {
 	font-family: var(--font-family), sans-serif;
-	font-weight: 560;
+	font-weight: 600;
 	font-size: 24px;
 	line-height: 116.67%;
 	text-decoration: none;
@@ -144,8 +171,8 @@
 
 .heading-l-medium {
 	font-family: var(--font-family), sans-serif;
-	font-weight: 560;
-	font-size: 28px;
+	font-weight: 500;
+	font-size: 30px;
 	line-height: 128.57%;
 	text-decoration: none;
 	letter-spacing: 0.2px;
@@ -153,8 +180,26 @@
 
 .heading-l-bold {
 	font-family: var(--font-family), sans-serif;
-	font-weight: 650;
-	font-size: 28px;
+	font-weight: 600;
+	font-size: 30px;
+	line-height: 128.57%;
+	text-decoration: none;
+	letter-spacing: 0.2px;
+}
+
+.heading-xl-medium {
+	font-family: var(--font-family), sans-serif;
+	font-weight: 500;
+	font-size: 36px;
+	line-height: 128.57%;
+	text-decoration: none;
+	letter-spacing: 0.2px;
+}
+
+.heading-xl-bold {
+	font-family: var(--font-family), sans-serif;
+	font-weight: 600;
+	font-size: 36px;
 	line-height: 128.57%;
 	text-decoration: none;
 	letter-spacing: 0.2px;

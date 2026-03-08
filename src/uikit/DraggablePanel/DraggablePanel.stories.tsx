@@ -10,7 +10,7 @@ import { IconButton } from 'src/uikit/IconButton';
 import { expect, fn } from 'storybook/test';
 
 const meta: Meta<typeof DraggablePanel> = {
-	title: 'Components/Draggable Panel',
+	title: 'Components/DraggablePanel',
 	component: DraggablePanel,
 	parameters: {
 		layout: 'fullscreen',

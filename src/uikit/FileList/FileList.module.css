@@ -1,0 +1,64 @@
+.wrapper {
+	composes: rowStart from "../../util/flexBox.module.css";
+	width: 100%;
+	overflow: hidden;
+	flex-wrap: var(--file-wrap);
+	flex-direction: var(--file-direction) !important;
+	align-items: flex-start !important;
+	gap: var(--file-gap);
+	user-select: none;
+	-webkit-user-select: none;
+}
+
+.file {
+	composes: rowStart from "../../util/flexBox.module.css";
+	padding: 4px 4px 4px 2px !important;
+	border: 1px solid var(--core-outline-primary);
+	border-radius: 4px;
+	overflow: hidden;
+	max-width: var(--file-max-width);
+	color: var(--core-text-primary);
+	gap: 4px;
+}
+
+.fileName {
+	composes: row from "../../util/flexBox.module.css";
+	flex: 1;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+	word-break: break-all;
+	display: -webkit-box !important;
+	-webkit-line-clamp: 1;
+	-webkit-box-orient: vertical;
+}
+
+.fileIcon {
+	composes: row from "../../util/flexBox.module.css";
+	min-width: 24px;
+	min-height: 24px;
+	max-width: 24px;
+	max-height: 24px;
+}
+
+.icon {
+	composes: row from "../../util/flexBox.module.css";
+	margin-left: 4px !important;
+	min-width: 20px;
+	min-height: 20px;
+	max-width: 20px;
+	max-height: 20px;
+	cursor: pointer;
+}
+
+.s {
+	composes: body-s-regular from "../../util/type.module.css";
+}
+
+.m {
+	composes: body-m-regular from "../../util/type.module.css";
+}
+
+.l {
+	composes: body-l-regular from "../../util/type.module.css";
+}

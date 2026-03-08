@@ -33,36 +33,7 @@
     img {
         margin: 0 auto 1.5em auto !important;
     }
-
-    /* Target the h1 in the Docs view or standard stories */
-    h1, h2, h3, h4, h5 {
-        font-family: 'Funnel Sans', sans-serif;
-        font-weight: 420;
-        font-size: 36px;
-        margin: 1.5em 0 0.5em 0;
-        letter-spacing: 1%;
-        line-height: 1.2em;
-        color: var(--core-text-primary);
-        padding: 0;
-    }
-    h1:first-child {
-        margin: 0 0 0.5em 0;
-    }
-    h1 {
-        font-weight: 500;
-    }
-    h2 {
-        font-size: 28px;
-    }
-    h3 {
-        font-size: 24px;
-    }
-    h4 {
-        font-size: 20px;
-    }
-    h5 {
-        font-size: 16px;
-    }
+    
     p {
         font-family: 'Funnel Sans', sans-serif !important;
         font-weight: 300 !important;
@@ -75,10 +46,12 @@
         text-align: left !important;
         width: 100% !important;
     }
+    
     p.note {
         font-size: var(--font-size-s) !important;
         color: var(--core-text-tertiary) !important;
     }
+    
     b, strong {
         font-weight: 580;
     }
@@ -125,6 +98,14 @@
         background: var(--core-surface-secondary) !important;
         color: var(--core-text-primary) !important;
     }
+    a code {
+        color: var(--core-text-special) !important;
+        text-decoration: underline !important;
+    }
+    a:hover code {
+        color: var(--core-text-special) !important;
+        text-decoration: none !important;
+    }
     td code {
         font-family: 'Funnel Sans', sans-serif !important;
         padding: 2px 6px !important;
@@ -136,4 +117,5 @@
     div.note-section p:first-child {
         margin:0 !important;
     }
+    
 </style>

@@ -145,3 +145,4 @@ Build architecture details: `devdocs/build-architecture.md`
 
 - Styling is CSS-module based and published with CSS side effects enabled (`"**/*.css"`).
 - Storybook docs (`*.stories.*` and `src/stories/**`) are excluded from publishable type output.
+- Named media query aliases are compiled via PostCSS custom media. Definitions live in `src/theme/breakpoints/custom-media.css` and can be used in CSS as `@media (--bp-tablet) { ... }`.

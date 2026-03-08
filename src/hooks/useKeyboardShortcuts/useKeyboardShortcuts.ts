@@ -2,6 +2,7 @@ import { useCallback, useEffect } from 'react';
 
 export interface KeyboardShortcut {
 	key: string;
+	metaPressed?: boolean;
 	name: string;
 }
 
@@ -35,7 +36,8 @@ export function useKeyboardShortcuts(
 			const isMeta =
 				(isAppleDevice && e.metaKey) || (!isAppleDevice && e.ctrlKey);
 			for (const s of shortcuts) {
-				if (s.key.toLowerCase() === e.key.toLowerCase() && isMeta) {
+				if (s.metaPressed && !isMeta) continue;
+				if (s.key.toLowerCase() === e.key.toLowerCase()) {
 					e.preventDefault();
 					shortCutHandler(s);
 					break;

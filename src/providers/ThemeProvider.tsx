@@ -3,6 +3,7 @@ import { useEffect } from 'react';
 import '../theme/colors/colors.css';
 import '../theme/elevations/elevation.css';
 import '../theme/type/type.css';
+import '../theme/breakpoints/custom-media.css';
 import { darkTheme, lightTheme } from '../theme';
 
 interface ThemeProviderProps {

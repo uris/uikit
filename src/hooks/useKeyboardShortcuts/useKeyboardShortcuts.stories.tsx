@@ -13,8 +13,9 @@ function UseKeyboardShortcutsDemo() {
 	const [lastShortcut, setLastShortcut] = useState<string>('none');
 
 	const shortcuts: KeyboardShortcuts = [
-		{ key: 'b', name: 'Bold' },
-		{ key: 's', name: 'Save' },
+		{ key: 'b', name: 'Bold', metaPressed: true },
+		{ key: 's', name: 'Save', metaPressed: true },
+		{ key: 'a', name: 'A Pressed' },
 	];
 
 	const handleShortcut = (shortcut: KeyboardShortcut) => {
@@ -44,7 +45,9 @@ function UseKeyboardShortcutsDemo() {
 				<strong>Keyboard Shortcuts Demo</strong>
 				<span>
 					Try{' '}
-					{isAppleDevice ? 'Command+B / Command+S' : 'Control+B / Control+S'}
+					{isAppleDevice
+						? 'Command+B / Command+S / A'
+						: 'Control+B / Control+S / A'}
 				</span>
 				<span>Last shortcut: {lastShortcut}</span>
 				<input

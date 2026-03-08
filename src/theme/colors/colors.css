@@ -214,7 +214,7 @@
 	--core-icon-tertiary: var(--brand-sky-300);
 	--core-outline-secondary: var(--brand-grey-100);
 	--core-outline-primary: var(--brand-grey-700);
-	--core-outline-special: var(--brand-sky-900);
+	--core-outline-special: var(--brand-sky-300);
 	--core-outline-tertiary: var(--brand-sky-300);
 	--core-surface-coverup-translucent: var(
 		--core-surface-coverup-translucent-dark
@@ -454,4 +454,24 @@
 
 body {
 	background: var(--core-surface-primary);
+}
+
+a {
+	color: var(--core-text-special);
+	text-decoration: underline;
+}
+
+a:visited {
+	color: var(--core-text-special);
+	text-decoration: underline;
+}
+
+a:hover {
+	text-decoration: none;
+}
+
+code {
+	border: 1px solid var(--core-outline-primary);
+	background: var(--core-surface-secondary);
+	color: var(--core-text-primary);
 }

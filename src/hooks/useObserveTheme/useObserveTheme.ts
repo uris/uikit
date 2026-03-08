@@ -1,10 +1,23 @@
 import { useEffect, useState } from 'react';
 import { type SliceTheme, darkTheme, lightTheme } from '../../theme';
 
+function resolveTheme(themeName: string | undefined): SliceTheme {
+	if (!themeName || themeName === '' || themeName.includes(lightTheme.name)) {
+		return lightTheme;
+	}
+	return darkTheme;
+}
+
 export function useObserveTheme() {
-	const [theme, setTheme] = useState<SliceTheme>(lightTheme);
+	const [theme, setTheme] = useState<SliceTheme>(() => {
+		if (typeof document === 'undefined') return lightTheme;
+		return resolveTheme(document.documentElement.dataset.theme);
+	});
 
 	useEffect(() => {
+		// Sync once on mount in case the theme was set before this hook subscribed.
+		setTheme(resolveTheme(document.documentElement.dataset.theme));
+
 		const observer = new MutationObserver((mutations) => {
 			for (const mutation of mutations) {
 				if (
@@ -12,15 +25,7 @@ export function useObserveTheme() {
 					mutation.attributeName === 'data-theme'
 				) {
 					const newTheme = document.documentElement.dataset.theme;
-					if (
-						!newTheme ||
-						newTheme === '' ||
-						newTheme.includes(lightTheme.name)
-					)
-						setTheme(lightTheme);
-					else {
-						setTheme(darkTheme);
-					}
+					setTheme(resolveTheme(newTheme));
 				}
 			}
 		});

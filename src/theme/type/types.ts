@@ -11,10 +11,15 @@ export type Type = {
 	'body-l-regular': string;
 	'body-l-medium': string;
 	'body-l-bold': string;
+	'body-xl-regular': string;
+	'body-xl-medium': string;
+	'body-xl-bold': string;
 	'heading-s-bold': string;
 	'heading-s-medium': string;
 	'heading-m-bold': string;
 	'heading-m-medium': string;
 	'heading-l-bold': string;
 	'heading-l-medium': string;
+	'heading-xl-bold': string;
+	'heading-xl-medium': string;
 };

@@ -8,7 +8,8 @@ import {FlexDiv} from '../../uikit/FlexDiv';
     <FlexDiv width={"fill"} maxWidth={760} height={"auto"}>
         <Unstyled>
         # useKeyboardShortcuts
-        Adds a global keydown listener and triggers handlers for configured `Cmd/Ctrl + key` combinations.
+        Adds a global keydown listener and triggers handlers for configured shortcuts.
+        Shortcut matching is skipped when focus is inside editable elements (`input`, `textarea`, `select`, or content-editable).
 
         ## Signature
         `useKeyboardShortcuts(shortcuts, shortCutHandler, isAppleDevice)`
@@ -30,9 +31,9 @@ import {FlexDiv} from '../../uikit/FlexDiv';
             </tr>
           </thead>
           <tbody>
-            <tr><td><code>shortcuts</code></td><td><code>{`KeyboardShortcut[]`}</code></td><td><code>-</code></td><td>List of shortcut definitions with <code>key</code> and <code>name</code>.</td></tr>
+            <tr><td><code>shortcuts</code></td><td><code>{`KeyboardShortcut[]`}</code></td><td><code>-</code></td><td>List of shortcut definitions with <code>key</code>, <code>name</code>, and optional <code>metaPressed</code>.</td></tr>
             <tr><td><code>shortCutHandler</code></td><td><code>{`(shortcut: KeyboardShortcut) => void`}</code></td><td><code>-</code></td><td>Callback executed when a shortcut matches.</td></tr>
-            <tr><td><code>isAppleDevice</code></td><td><code>boolean</code></td><td><code>-</code></td><td>Uses <code>metaKey</code> when <code>true</code>, otherwise <code>ctrlKey</code>.</td></tr>
+            <tr><td><code>isAppleDevice</code></td><td><code>boolean</code></td><td><code>-</code></td><td>When <code>metaPressed</code> is set on a shortcut, uses <code>metaKey</code> when <code>true</code>, otherwise <code>ctrlKey</code>.</td></tr>
           </tbody>
         </table>
 
@@ -63,11 +64,13 @@ import {FlexDiv} from '../../uikit/FlexDiv';
         <RenderSource language={"tsx"}>
 {`
 import { useWindow, useKeyboardShortcuts } from '@apple-pie/slice';
+import type { KeyboardShortcut, KeyboardShortcuts } from '@apple-pie/slice';
 
-const SHORTCUTS = [
-    { key: 'b', name: 'bold' },
-    { key: 's', name: 'save' },
-]
+const shortcuts: KeyboardShortcuts = [
+    { key: 'b', name: 'Bold', metaPressed: true },
+    { key: 's', name: 'Save', metaPressed: true },
+    { key: 'a', name: 'A Pressed' },
+];
 
 function Shortcuts() {
     const { isAppleDevice } = useWindow();
@@ -77,7 +80,7 @@ function Shortcuts() {
         console.log('shortcut', shortcut.name);
     }
     
-    return <div>Try Cmd/Ctrl + B or Cmd/Ctrl + S</div>;
+    return <div>Try Cmd/Ctrl + B, Cmd/Ctrl + S, or A</div>;
 }
 `}
         </RenderSource>

@@ -17,6 +17,7 @@ const fontSizes = {
 	s: 14,
 	m: 15,
 	l: 16,
+	xl: 17,
 };
 
 // ** new styles aligned to lyra */
@@ -105,45 +106,80 @@ export const type: Type = {
       line-height: 162.5%;
       text-decoration: none;
       letter-spacing: 0.15px`,
-	'heading-s-bold': `
+	'body-xl-regular': `
       font-family: ${fontFamily};
-      font-weight: 650;
-      font-size: 20px; 
-      line-height: 140%;
+      font-weight: ${fontWeights.regular};
+      font-size: ${fontSizes.xl}px;
+      line-height: 162.5%;
       text-decoration: none;
-      letter-spacing: 0.2px`,
+      letter-spacing: 0.1px`,
+	'body-xl-medium': `
+      font-family: ${fontFamily};
+      font-weight: ${fontWeights.medium};
+      font-size: ${fontSizes.xl}px;
+      line-height: 162.5%;
+      text-decoration: none;
+      letter-spacing: 0.1px`,
+	'body-xl-bold': `
+      font-family: ${fontFamily};
+      font-weight: ${fontWeights.bold};
+      font-size: ${fontSizes.xl}px;
+      line-height: 162.5%;
+      text-decoration: none;
+      letter-spacing: 0.15px`,
 	'heading-s-medium': `
       font-family: ${fontFamily};
-      font-weight: 560;
+      font-weight: 500;
       font-size: 20px; 
       line-height: 140%;
       text-decoration: none;
       letter-spacing: 0.2px`,
-	'heading-m-bold': `
+	'heading-s-bold': `
       font-family: ${fontFamily};
-      font-weight: 650;
-      font-size: 24px; 
-      line-height: 116.67%;
+      font-weight: 600;
+      font-size: 20px; 
+      line-height: 140%;
       text-decoration: none;
       letter-spacing: 0.2px`,
 	'heading-m-medium': `
       font-family: ${fontFamily};
-      font-weight: 560;
+      font-weight: 500;
+      font-size: 24px; 
+      line-height: 116.67%;
+      text-decoration: none;
+      letter-spacing: 0.2px`,
+	'heading-m-bold': `
+      font-family: ${fontFamily};
+      font-weight: 600;
       font-size: 24px; 
       line-height: 116.67%;
       text-decoration: none;
       letter-spacing: 0.2px`,
 	'heading-l-medium': `
       font-family: ${fontFamily};
-      font-weight: 560;
+      font-weight: 500;
       font-size: 28px; 
       line-height: 128.57%;
       text-decoration: none;
       letter-spacing: 0.2px`,
 	'heading-l-bold': `
       font-family: ${fontFamily};
-      font-weight: 650;
+      font-weight: 600;
       font-size: 28px; 
+      line-height: 128.57%;
+      text-decoration: none;
+      letter-spacing: 0.2px`,
+	'heading-xl-medium': `
+      font-family: ${fontFamily};
+      font-weight: 500;
+      font-size: 36px; 
+      line-height: 128.57%;
+      text-decoration: none;
+      letter-spacing: 0.2px`,
+	'heading-xl-bold': `
+      font-family: ${fontFamily};
+      font-weight: 600;
+      font-size: 36px; 
       line-height: 128.57%;
       text-decoration: none;
       letter-spacing: 0.2px`,
@@ -162,12 +198,17 @@ export const typeCssClasses: Record<keyof Type, string> = {
 	'body-l-regular': 'body-l-regular',
 	'body-l-medium': 'body-l-medium',
 	'body-l-bold': 'body-l-bold',
+	'body-xl-regular': 'body-xl-regular',
+	'body-xl-medium': 'body-xl-medium',
+	'body-xl-bold': 'body-xl-bold',
 	'heading-s-bold': 'heading-s-bold',
 	'heading-s-medium': 'heading-s-medium',
 	'heading-m-medium': 'heading-m-medium',
 	'heading-m-bold': 'heading-m-bold',
 	'heading-l-medium': 'heading-l-medium',
 	'heading-l-bold': 'heading-l-bold',
+	'heading-xl-medium': 'heading-xl-medium',
+	'heading-xl-bold': 'heading-xl-bold',
 };
 
 export const typeStyles: Record<keyof Type, React.CSSProperties> = {
@@ -267,9 +308,33 @@ export const typeStyles: Record<keyof Type, React.CSSProperties> = {
 		textDecoration: 'none',
 		letterSpacing: '0.15px',
 	},
+	'body-xl-regular': {
+		fontFamily: `${fontFamily}`,
+		fontWeight: `${fontWeights.regular}`,
+		fontSize: `${fontSizes.xl}px`,
+		lineHeight: '162.5%',
+		textDecoration: 'none',
+		letterSpacing: '0.1px',
+	},
+	'body-xl-medium': {
+		fontFamily: `${fontFamily}`,
+		fontWeight: `${fontWeights.medium}`,
+		fontSize: `${fontSizes.xl}px`,
+		lineHeight: '162.5%',
+		textDecoration: 'none',
+		letterSpacing: '0.1px',
+	},
+	'body-xl-bold': {
+		fontFamily: `${fontFamily}`,
+		fontWeight: `${fontWeights.bold}`,
+		fontSize: `${fontSizes.xl}px`,
+		lineHeight: '162.5%',
+		textDecoration: 'none',
+		letterSpacing: '0.15px',
+	},
 	'heading-s-medium': {
 		fontFamily: `${fontFamily}`,
-		fontWeight: '560',
+		fontWeight: '500',
 		fontSize: '20px',
 		lineHeight: '140%',
 		textDecoration: 'none',
@@ -277,7 +342,7 @@ export const typeStyles: Record<keyof Type, React.CSSProperties> = {
 	},
 	'heading-s-bold': {
 		fontFamily: `${fontFamily}`,
-		fontWeight: '650',
+		fontWeight: '600',
 		fontSize: '20px',
 		lineHeight: '140%',
 		textDecoration: 'none',
@@ -285,7 +350,7 @@ export const typeStyles: Record<keyof Type, React.CSSProperties> = {
 	},
 	'heading-m-medium': {
 		fontFamily: `${fontFamily}`,
-		fontWeight: '560',
+		fontWeight: '500',
 		fontSize: '24px',
 		lineHeight: '116.67%',
 		textDecoration: 'none',
@@ -293,7 +358,7 @@ export const typeStyles: Record<keyof Type, React.CSSProperties> = {
 	},
 	'heading-m-bold': {
 		fontFamily: `${fontFamily}`,
-		fontWeight: '650',
+		fontWeight: '600',
 		fontSize: '24px',
 		lineHeight: '116.67%',
 		textDecoration: 'none',
@@ -301,16 +366,32 @@ export const typeStyles: Record<keyof Type, React.CSSProperties> = {
 	},
 	'heading-l-medium': {
 		fontFamily: `${fontFamily}`,
-		fontWeight: '560',
-		fontSize: '28px',
+		fontWeight: '500',
+		fontSize: '30px',
 		lineHeight: '128.57%',
 		textDecoration: 'none',
 		letterSpacing: '0.2px',
 	},
 	'heading-l-bold': {
 		fontFamily: `${fontFamily}`,
-		fontWeight: '650',
-		fontSize: '28px',
+		fontWeight: '600',
+		fontSize: '30px',
+		lineHeight: '128.57%',
+		textDecoration: 'none',
+		letterSpacing: '0.2px',
+	},
+	'heading-xl-medium': {
+		fontFamily: `${fontFamily}`,
+		fontWeight: '500',
+		fontSize: '36px',
+		lineHeight: '128.57%',
+		textDecoration: 'none',
+		letterSpacing: '0.2px',
+	},
+	'heading-xl-bold': {
+		fontFamily: `${fontFamily}`,
+		fontWeight: '600',
+		fontSize: '36px',
 		lineHeight: '128.57%',
 		textDecoration: 'none',
 		letterSpacing: '0.2px',

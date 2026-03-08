@@ -5,8 +5,14 @@ import { IconButton } from '../../uikit/IconButton';
 import { Toast, ToastType } from '../../uikit/Toast';
 
 const meta: Meta<typeof Toast> = {
-	title: 'Stores/ToastStore',
+	title: 'Stores/Toast Store',
 	component: Toast,
+	argTypes: {
+		type: {
+			control: { type: 'radio' }, // Dropdown selection
+			options: Object.values(ToastType), // Enum values as options
+		},
+	},
 	args: {
 		message: undefined,
 		border: undefined,
@@ -30,7 +36,6 @@ export const Demo: StoryObj<typeof Toast> = {
 		const handleToast = (message?: string | null) => {
 			const notification = {
 				message: message ?? null,
-				type: ToastType.Info,
 				duration: 5000,
 			};
 			toastActions.push(notification);
