@@ -87,7 +87,7 @@ Subpath imports are also published:
 ## Components
 
 - `Avatar`, `AvatarGroup`, `Badge`, `CheckBox`, `DivInput`, `Dot`, `DropDown`
-- `EditorButtonBar`, `ErrorSummary`, `FlexDiv`, `Grouper`, `Icon`, `IconButton`
+- `ErrorSummary`, `FlexDiv`, `Grouper`, `Icon`, `IconButton`
 - `Logos`, `PromptInput`, `Overlay`, `Pager`, `ProgressIndicator`, `DoneCheck`
 - `RadioButton`, `RadioButtonList`, `Slider`, `Spacer`, `Switch`, `TabBar`
 - `TextField`, `TextArea`, `Tip`, `Toast`, `Button`, `ButtonBar`

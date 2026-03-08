@@ -155,29 +155,6 @@ export async function runDropDownPlay<TArgs>({
 	}
 }
 
-export async function runEditorButtonBarPlay<TArgs>({
-	args,
-	canvasElement,
-}: PlayContext<TArgs>) {
-	await expectCanvas(canvasElement);
-	const canvas = within(canvasElement);
-	const storyArgs = asArgs(args);
-	const select = canvas.queryByRole('combobox');
-	if (select) {
-		const options = select.querySelectorAll('option');
-		if (options.length > 1) {
-			await userEvent.selectOptions(select, options[1]);
-		}
-	}
-	const icons = canvas.getAllByRole('img');
-	if (icons.length > 0) {
-		await userEvent.click(icons[0]);
-	}
-	if (isFn(storyArgs.onCommand)) {
-		await expect(storyArgs.onCommand).toHaveBeenCalled();
-	}
-}
-
 export async function runErrorSummaryPlay<TArgs>({
 	canvasElement,
 }: PlayContext<TArgs>) {

@@ -123,7 +123,16 @@ export function Label(props: Readonly<LabelProps>) {
 			'--label-border-color-blue': borderColors.blue,
 			'--label-inline': inline ? 'inline-flex' : 'flex',
 		} as React.CSSProperties;
-	}, [button, border, round, backgroundColor, borderColors, setPadding, color]);
+	}, [
+		button,
+		border,
+		round,
+		backgroundColor,
+		borderColors,
+		setPadding,
+		color,
+		inline,
+	]);
 
 	const classNames = [
 		css.label,

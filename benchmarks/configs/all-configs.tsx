@@ -13,7 +13,6 @@ import { Avatar,
 	Dot,
 	DraggablePanel,
 	DropDown,
-	EditorButtonBar,
 	ErrorSummary,
 	FileIcon,
 	FlexDiv,
@@ -798,36 +797,6 @@ export const dropDownConfig: ComponentBenchmarkConfig = {
 	],
 };
 
-export const editorButtonBarConfig: ComponentBenchmarkConfig = {
-	componentName: 'EditorButtonBar',
-	tests: [
-		{
-			name: 'Mount Time',
-			type: 'mount',
-			fn: () => measureMountTime(<EditorButtonBar />, 50),
-		},
-		{
-			name: 'Re-render',
-			type: 'rerender',
-			fn: () =>
-				measureRerenderTime(
-					<EditorButtonBar activeFormats={['bold']} />,
-					(container) => {
-						container.rerender(
-							<EditorButtonBar activeFormats={['bold', 'italic', 'underline']} />,
-						);
-					},
-					50,
-				),
-		},
-		{
-			name: 'Memory',
-			type: 'memory',
-			fn: () => measureMemoryDelta(<EditorButtonBar activeFormats={['bold', 'italic']} />, 10),
-		},
-	],
-};
-
 export const errorSummaryConfig: ComponentBenchmarkConfig = {
 	componentName: 'ErrorSummary',
 	tests: [
@@ -1474,7 +1443,6 @@ export const allBenchmarkConfigs = [
 	dotConfig,
 	draggablePanelConfig,
 	dropDownConfig,
-	editorButtonBarConfig,
 	errorSummaryConfig,
 	fileIconConfig,
 	fileListConfig,

@@ -265,8 +265,8 @@ const PromptInputBase = React.forwardRef<HTMLDivElement, PromptProps>(
 						</div>
 					)}
 					<textarea
-						id={'messageInput'}
-						name={'messageInput'}
+						id={'promptInput'}
+						name={'promptInput'}
 						className={`${css.textarea} ${css[textSize]}`}
 						ref={textAreaRef}
 						value={textValue ?? ''}

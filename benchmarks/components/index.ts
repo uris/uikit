@@ -12,7 +12,6 @@ export { docIconBenchmarkConfig } from './DocIcon.bench';
 export { dotBenchmarkConfig } from './Dot.bench';
 export { draggablePanelBenchmarkConfig } from './DraggablePanel.bench';
 export { dropDownBenchmarkConfig } from './DropDown.bench';
-export { editorButtonBarBenchmarkConfig } from './EditorButtonBar.bench';
 export { editorSummaryBenchmarkConfig } from './EditorSummary.bench';
 export { errorSummaryBenchmarkConfig } from './ErrorSummary.bench';
 export { fileIconBenchmarkConfig } from './FileIcon.bench';
