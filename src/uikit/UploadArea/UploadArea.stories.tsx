@@ -71,7 +71,7 @@ export const Busy: StoryObj<typeof UploadArea> = {
 				padding={64}
 				gap={16}
 			>
-				<UploadArea {...args} files={uploadFiles} busy />
+				<UploadArea {...args} files={uploadFiles} busy={true} />
 			</FlexDiv>
 		);
 	},

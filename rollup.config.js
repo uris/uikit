@@ -3,12 +3,17 @@ import path from 'node:path';
 import babel from '@rollup/plugin-babel';
 import commonjs from '@rollup/plugin-commonjs';
 import resolve from '@rollup/plugin-node-resolve';
+import terser from '@rollup/plugin-terser';
 import typescript from '@rollup/plugin-typescript';
 import url from '@rollup/plugin-url';
 import svgr from '@svgr/rollup';
 import peerDepsExternal from 'rollup-plugin-peer-deps-external';
 import postcss from 'rollup-plugin-postcss';
 import stripCode from 'rollup-plugin-strip-code';
+
+const shouldMinify = process.env.MINIFY === 'true';
+const keepJsDocComments = (_node, comment) =>
+	comment.type === 'comment2' && comment.value.startsWith('*');
 
 const buildInputs = () => {
 	const inputs = {
@@ -63,6 +68,25 @@ const buildInputs = () => {
 		}
 	}
 
+	const workersDir = path.resolve('src/workers');
+	if (fs.existsSync(workersDir)) {
+		for (const entry of fs.readdirSync(workersDir, { withFileTypes: true })) {
+			if (!entry.isDirectory()) continue;
+			const workerName = entry.name;
+			const candidates = [
+				path.join(workersDir, workerName, `${workerName}.ts`),
+				path.join(workersDir, workerName, `${workerName}.worker.ts`),
+				path.join(workersDir, workerName, `${workerName}.runtime.ts`),
+				path.join(workersDir, workerName, 'index.ts'),
+			];
+			const workerEntry = candidates.find((candidate) =>
+				fs.existsSync(candidate),
+			);
+			if (!workerEntry) continue;
+			inputs[`workers/${workerName}/${workerName}`] = workerEntry;
+		}
+	}
+
 	const themeEntries = [
 		['theme/colors', 'src/theme/colors/colors.ts'],
 		['theme/corners', 'src/theme/corners/corners.ts'],
@@ -79,6 +103,18 @@ const buildInputs = () => {
 	return inputs;
 };
 
+const entryFileName = (format) => (chunkInfo) => {
+	const ext = format === 'esm' ? '.mjs' : '.js';
+	if (chunkInfo.name === 'index') return `index${ext}`;
+	if (chunkInfo.name.startsWith('uikit/'))
+		return `${chunkInfo.name}/index${ext}`;
+	if (chunkInfo.name.startsWith('workers/')) return `${chunkInfo.name}${ext}`;
+	return `[name]${ext}`;
+};
+
+const chunkFileName = (format) =>
+	`chunks/[name]-[hash]${format === 'esm' ? '.mjs' : '.js'}`;
+
 // Dynamic import of rollup-plugin-visualizer to avoid bundling it in production
 const rollup = async () => {
 	const { visualizer } = await import('rollup-plugin-visualizer');
@@ -90,15 +126,15 @@ const rollup = async () => {
 				dir: 'dist/cjs',
 				format: 'cjs',
 				sourcemap: false,
-				entryFileNames: '[name].js',
-				chunkFileNames: 'chunks/[name]-[hash].js',
+				entryFileNames: entryFileName('cjs'),
+				chunkFileNames: chunkFileName('cjs'),
 			},
 			{
 				dir: 'dist/esm',
 				format: 'esm',
 				sourcemap: false,
-				entryFileNames: '[name].js',
-				chunkFileNames: 'chunks/[name]-[hash].js',
+				entryFileNames: entryFileName('esm'),
+				chunkFileNames: chunkFileName('esm'),
 			},
 		],
 		external: ['react', 'react-dom', 'motion'],
@@ -137,6 +173,27 @@ const rollup = async () => {
 				emitFiles: true,
 				publicPath: '../', // Change to navigate from dist/index.js to dist/assets
 			}),
+			terser(
+				shouldMinify
+					? {
+							compress: {
+								pure_funcs: ['console.log'],
+							},
+							format: {
+								comments: keepJsDocComments,
+							},
+						}
+					: {
+							compress: {
+								pure_funcs: ['console.log'],
+							},
+							mangle: false,
+							format: {
+								beautify: true,
+								comments: keepJsDocComments,
+							},
+						},
+			),
 			visualizer({
 				filename: 'reports/package-size-visualizer.html',
 				gzipSize: true,

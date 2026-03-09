@@ -74,25 +74,31 @@ import {RenderSource} from '../../../.storybook/RenderSource';
         </table>
 
         ## Code Examples
+        **Layout requirement:** `DraggablePanel` should be used inside a horizontal (`row`) container with a sibling content area set to `flex: 1` (and usually `minWidth: 0`) so the content region grows/shrinks as the panel resizes.
         </Unstyled>
 
         <RenderSource language={"tsx"}>
 {`
-import { DraggablePanel } from '@apple-pie/slice';
+import { DraggablePanel, FlexDiv } from '@apple-pie/slice';
 
 export function DraggablePanelExample() {
   return (
-    <DraggablePanel
-      sizeConstraints={{ initial: 320, min: 240, max: 560 }}
-      dragsRight={true}
-      bgColor="var(--core-surface-secondary)"
-      id="draggablepanel-example"
-      data-testid="draggablepanel-example"
-      className="custom-wrapper"
-      style={{ marginTop: 8, height: 240 }}
-    >
-      <div style={{ padding: 16 }}>Resizable panel content</div>
-    </DraggablePanel>
+    <FlexDiv width="fill" height={240} direction="row">
+      <DraggablePanel
+        // > 1 => pixels
+        sizeConstraints={{ initial: 320, min: 240, max: 560 }}
+        dragsRight={true}
+        bgColor="var(--core-surface-secondary)"
+        id="draggablepanel-example"
+        data-testid="draggablepanel-example"
+        className="custom-wrapper"
+      >
+        <div style={{ padding: 16 }}>Resizable panel content</div>
+      </DraggablePanel>
+      <div style={{ flex: 1, minWidth: 0, padding: 16 }}>
+        Main content area
+      </div>
+    </FlexDiv>
   );
 }
 `}
@@ -108,11 +114,14 @@ export function DraggablePanelControlled() {
   const [isClosed, setIsClosed] = useState(false);
   const [width, setWidth] = useState<number | null>(null);
 
+  // 1) Parent layout must be a horizontal row container.
   return (
     <FlexDiv ref={containerRef} width="viewport" height={360} direction="row">
+      {/* 2) Draggable panel is one child in the row. */}
       <DraggablePanel
         containerRef={containerRef}
         isClosed={isClosed}
+        // 0..1 => percentage of container width, > 1 => pixels
         sizeConstraints={{ initial: 0.28, min: 220, max: 560 }}
         onResize={(info) => setWidth(info.divWidth)}
       >
@@ -120,7 +129,8 @@ export function DraggablePanelControlled() {
           Panel width: {width ? Math.round(width) : '-'}px
         </div>
       </DraggablePanel>
-      <div style={{ padding: 16 }}>
+      {/* 3) Sibling content must use flex: 1 so it absorbs remaining width. */}
+      <div style={{ flex: 1, minWidth: 0, padding: 16 }}>
         <button onClick={() => setIsClosed((prev) => !prev)}>
           {isClosed ? 'Open' : 'Close'} panel
         </button>

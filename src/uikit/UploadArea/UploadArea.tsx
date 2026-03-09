@@ -45,11 +45,11 @@ const UploadAreaBase = React.forwardRef<HTMLDivElement, UploadAreaProps>(
 
 		// callback to trigger click
 		const handleClickUpload = useCallback(() => {
-			if (busy) return;
+			if (busy || files.length > 0) return;
 			if (!inputRef?.current) return;
 			inputRef.current.value = '';
 			inputRef.current?.click();
-		}, [busy]);
+		}, [busy, files.length]);
 
 		// call back on file change
 		const handleFileInputChange = useCallback(
@@ -123,7 +123,7 @@ const UploadAreaBase = React.forwardRef<HTMLDivElement, UploadAreaProps>(
 				'--ua-padding': setStyle(padding),
 				'--ua-bg-color': hovered ? bgColorHover : bgColor,
 				'--ua-icon-size': `${iconSize}px`,
-				'--ua-cursor': busy ? 'default' : 'pointer',
+				'--ua-cursor': busy || files.length > 0 ? 'default' : 'pointer',
 				'--ua-width': setStyle(width),
 				'--ua-height': setStyle(height),
 			} as React.CSSProperties;
@@ -140,6 +140,7 @@ const UploadAreaBase = React.forwardRef<HTMLDivElement, UploadAreaProps>(
 			busy,
 			hovered,
 			height,
+			files.length,
 			width,
 		]);
 
