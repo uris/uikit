@@ -10,10 +10,10 @@ Slice is a TypeScript-first React UI kit with theme tokens, utility hooks, optio
 
 ## What is included
 
-- 30+ reusable UI components (inputs, buttons, navigation, overlays, feedback, layout, icons)
+- 30+ reusable UI components (inputs, buttons, navigation, overlays, feedback, layout, icons, upload UI)
 - Theme system with light/dark presets and typed theme tokens
 - React hooks for theme, window sizing, keyboard shortcuts, local storage, resize, and more
-- Optional Zustand-powered stores (`toast`, `tip`)
+- Optional Zustand-powered stores (`toast`, `tip`, `uploads`, `window`)
 - Rollup + TypeScript build pipeline for CJS, ESM, and declaration output
 - Component performance benchmarks powered by Vitest
 
@@ -77,6 +77,7 @@ Subpath imports are also published:
 - `@apple-pie/slice/providers/*`
 - `@apple-pie/slice/stores`
 - `@apple-pie/slice/stores/*`
+- `@apple-pie/slice/workers/*`
 - `@apple-pie/slice/theme`
 - `@apple-pie/slice/theme/colors`
 - `@apple-pie/slice/theme/corners`
@@ -87,11 +88,11 @@ Subpath imports are also published:
 ## Components
 
 - `Avatar`, `AvatarGroup`, `Badge`, `CheckBox`, `DivInput`, `Dot`, `DropDown`
-- `ErrorSummary`, `FlexDiv`, `Grouper`, `Icon`, `IconButton`
+- `ErrorSummary`, `FileIcon`, `FileList`, `FlexDiv`, `Grouper`, `Icon`, `IconButton`
 - `Logos`, `PromptInput`, `Overlay`, `Pager`, `ProgressIndicator`, `DoneCheck`
 - `RadioButton`, `RadioButtonList`, `Slider`, `Spacer`, `Switch`, `TabBar`
 - `TextField`, `TextArea`, `Tip`, `Toast`, `Button`, `ButtonBar`
-- `Card`, `Chip`, `Label`, `DocIcons`, `DraggablePanel`
+- `Card`, `Chip`, `Label`, `DocIcons`, `DraggablePanel`, `UploadArea`
 
 ## Hooks
 
@@ -108,12 +109,41 @@ Subpath imports are also published:
 
 - `toast` store: `useToast`, `useToastActions`, `toastActions`, `getToast`
 - `tip` store: `useTip`, `useTipActions`, `tipActions`, `getTip`
+- `window` store: `useWindowStore`, atomic viewport/runtime hooks, imperative viewport helpers
+- `uploads` store: `useUploadsStore`, `useUploads`, `useUploadsActions`, `createUploadsWorker`, `uploadsActions`
 
 Example:
 
 ```ts
 import { useToast, useToastActions } from '@apple-pie/slice/stores/toast';
 ```
+
+Uploads store example:
+
+```ts
+import {
+  createUploadsWorker,
+  uploadsActions,
+  useUploads,
+  useUploadsActions,
+} from '@apple-pie/slice/stores/uploads';
+
+const worker = createUploadsWorker();
+
+uploadsActions.initialize({ uploadURL: '/api/uploads' }, worker);
+```
+
+For consuming browser apps using a built worker asset, pass an explicit worker URL from your bundler:
+
+```ts
+import { createUploadsWorker, uploadsActions } from '@apple-pie/slice/stores/uploads';
+import uploadsWorkerUrl from '@apple-pie/slice/workers/uploads/uploads?url';
+
+const worker = createUploadsWorker(uploadsWorkerUrl);
+uploadsActions.initialize({ uploadURL: '/api/uploads' }, worker);
+```
+
+This worker URL pattern assumes modern frontend tooling such as Vite or similar browser-focused bundlers.
 
 ## Theme exports
 
