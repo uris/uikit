@@ -14,7 +14,7 @@ const meta: Meta<typeof PromptInput> = {
 	component: PromptInput,
 	args: {
 		value: '',
-		attachments,
+		attachments: [],
 		working: false,
 		borderStyle: 'gradient',
 		borderColor: undefined,
@@ -53,6 +53,42 @@ export const Default: StoryObj<typeof PromptInput> = {
 				padding={64}
 			>
 				<PromptInput {...args} />
+			</FlexDiv>
+		);
+	},
+};
+
+export const Prompt: StoryObj<typeof PromptInput> = {
+	render: (args) => {
+		return (
+			<FlexDiv
+				direction={'row'}
+				justify={'center'}
+				alignItems={'center'}
+				absolute
+				padding={64}
+			>
+				<PromptInput
+					{...args}
+					value={'This is my question to you ...'}
+					attachments={attachments}
+				/>
+			</FlexDiv>
+		);
+	},
+};
+
+export const Working: StoryObj<typeof PromptInput> = {
+	render: (args) => {
+		return (
+			<FlexDiv
+				direction={'row'}
+				justify={'center'}
+				alignItems={'center'}
+				absolute
+				padding={64}
+			>
+				<PromptInput {...args} working stopEnabled />
 			</FlexDiv>
 		);
 	},

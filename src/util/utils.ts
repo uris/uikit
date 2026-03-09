@@ -1,6 +1,4 @@
-import value from '*.png';
 import type React from 'react';
-import { useCallback } from 'react';
 
 export function setSizeStyle(size: string | number | undefined): string {
 	if (!size) return 'auto';
@@ -177,7 +175,7 @@ export const copyToClipboard = async (rawContent: string): Promise<boolean> => {
 		textArea.remove();
 		return true;
 	} catch (error) {
-		console.log('Error copying color to clipboard:', error);
+		console.warn('Unable to copy to clipboard:', error);
 		return false;
 	}
 };
@@ -186,7 +184,6 @@ export const copyToClipboard = async (rawContent: string): Promise<boolean> => {
  * Create a tint value from a hex color
  */
 export const tintFromColor = (hex: string, percent: number) => {
-	if (typeof hex !== 'string') return hex;
 	const normalizedHex = hex.trim().replace('#', '');
 	const isValidLength =
 		normalizedHex.length === 3 || normalizedHex.length === 6;
