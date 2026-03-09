@@ -1,0 +1,56 @@
+.wrapper {
+	composes: column from "../../util/flexBox.module.css";
+	padding: var(--ua-padding) !important;
+	border: var(--ua-border) var(--ua-border-style) var(--ua-border-color);
+	border-radius: var(--ua-radius);
+	background: var(--ua-bg-color);
+	gap: 8px;
+	cursor: var(--ua-cursor);
+	width: var(--ua-width);
+	height: var(--ua-height);
+	user-select: none;
+	-webkit-user-select: none;
+}
+
+.icon {
+	composes: row from "../../util/flexBox.module.css";
+	min-height: var(--ua-icon-size);
+	height: var(--ua-icon-size);
+	min-width: var(--ua-icon-size);
+	width: var(--ua-icon-size);
+	pointer-events: none;
+}
+
+.title {
+	composes: body-l-bold from "../../util/type.module.css";
+	pointer-events: none;
+}
+
+.message {
+	composes: row from "../../util/flexBox.module.css";
+	color: var(--core-text-tertiary);
+	pointer-events: none;
+	gap: 8px;
+}
+
+.files {
+	composes: column from "../../util/flexBox.module.css";
+	margin-top: 16px !important;
+	width: 100%;
+}
+
+.xs {
+	composes: body-xs-regular from "../../util/type.module.css";
+}
+
+.s {
+	composes: body-s-regular from "../../util/type.module.css";
+}
+
+.m {
+	composes: body-m-regular from "../../util/type.module.css";
+}
+
+.l {
+	composes: body-l-regular from "../../util/type.module.css";
+}

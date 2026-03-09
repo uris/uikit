@@ -19,6 +19,7 @@ type FileListBaseProps = {
 	iconSize?: number;
 	onChange?: (files: FileItem[]) => void;
 	bgColor?: string;
+	canRemove?: boolean;
 	onToolTip?: (tip: ToolTip | null) => void;
 };
 

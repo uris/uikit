@@ -56,6 +56,7 @@ export const FileList = React.memo((props: FileListProps) => {
 		size = 's',
 		iconSize = 24,
 		bgColor,
+		canRemove = true,
 		...divAttributes
 	} = props;
 
@@ -169,21 +170,25 @@ export const FileList = React.memo((props: FileListProps) => {
 					<div className={css.icon} style={displayProgress(i.uploading)}>
 						<ProgressIndicator inline size={20} show={i.uploading} />
 					</div>
-					<div
-						className={css.icon}
-						style={displayClose(i.uploading)}
-						role={'button'}
-						aria-label={'remove file'}
-						onMouseOver={handleMouseOver}
-						onMouseOut={handleMouseOut}
-						onFocus={handleMouseOver}
-						onBlur={handleMouseOut}
-						onClick={() => handleRemove(i.index)}
-						onKeyDown={(e) => accessibleKeyDown(e, () => handleRemove(i.index))}
-						tabIndex={0}
-					>
-						<Icon name={'x'} style={{ pointerEvents: 'none' }} />
-					</div>
+					{canRemove && (
+						<div
+							className={css.icon}
+							style={displayClose(i.uploading)}
+							role={'button'}
+							aria-label={'remove file'}
+							onMouseOver={handleMouseOver}
+							onMouseOut={handleMouseOut}
+							onFocus={handleMouseOver}
+							onBlur={handleMouseOut}
+							onClick={() => handleRemove(i.index)}
+							onKeyDown={(e) =>
+								accessibleKeyDown(e, () => handleRemove(i.index))
+							}
+							tabIndex={0}
+						>
+							<Icon name={'x'} style={{ pointerEvents: 'none' }} />
+						</div>
+					)}
 				</div>
 			))}
 		</div>

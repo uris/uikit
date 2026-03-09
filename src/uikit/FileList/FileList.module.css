@@ -16,7 +16,8 @@
 	padding: var(--file-padding) !important;
 	border: 1px solid var(--file-border-color);
 	border-radius: 4px;
-	overflow: var(--file-overflow);
+	overflow: hidden;
+	min-height: max-content;
 	max-width: var(--file-max-width);
 	min-width: var(--file-min-width);
 	color: var(--core-text-primary);

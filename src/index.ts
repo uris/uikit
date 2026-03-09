@@ -136,3 +136,14 @@ export type { CardProps } from './uikit/Card/_types';
 
 export { Label } from './uikit/Label';
 export type { LabelProps } from './uikit/Label';
+
+export { UploadArea } from './uikit/UploadArea';
+export type { UploadAreaProps } from './uikit/UploadArea/_types';
+export {
+	imageTypes,
+	videoTypes,
+	documentTypes,
+	audioTypes,
+	textTypes,
+	allTypes,
+} from './uikit/UploadArea/_types';
