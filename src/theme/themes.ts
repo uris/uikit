@@ -4,6 +4,8 @@ import { corners } from './corners/corners';
 import type { Corners } from './corners/types';
 import type { Elevations } from './elevations/_types';
 import { elevations } from './elevations/elevations';
+import type { SliceMotion } from './motion/_types';
+import { motion } from './motion/motion';
 import { type } from './type/type';
 import type { Type } from './type/types';
 
@@ -14,6 +16,7 @@ export type SliceTheme = {
 	type: Type;
 	corners: Corners;
 	elevations: Elevations;
+	motion: SliceMotion;
 };
 
 export const lightTheme: SliceTheme = {
@@ -23,6 +26,7 @@ export const lightTheme: SliceTheme = {
 	type,
 	corners,
 	elevations,
+	motion,
 };
 
 export const darkTheme: SliceTheme = {
@@ -32,4 +36,5 @@ export const darkTheme: SliceTheme = {
 	type,
 	corners,
 	elevations,
+	motion,
 };

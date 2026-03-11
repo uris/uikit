@@ -6,6 +6,7 @@ export {
 	dark,
 	lightTheme,
 	darkTheme,
+	motion,
 	elevations,
 	Elevation,
 } from './theme';

@@ -5,7 +5,6 @@ type DoneCheckBaseProps = {
 	color?: string;
 	stroke?: number;
 	duration?: number;
-	bounce?: number;
 	delay?: number;
 	play?: boolean;
 	didStart?: () => void;

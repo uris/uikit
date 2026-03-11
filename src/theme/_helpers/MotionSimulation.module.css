@@ -1,0 +1,47 @@
+.wrapper {
+	box-sizing: border-box;
+	padding: var(--wrapper-padding);
+	width: var(--wrapper-width);
+	min-height: calc(var(--object-size) + (var(--wrapper-padding) * 2));
+	height: calc(var(--object-size) + (var(--wrapper-padding) * 2));
+	position: relative;
+	border-radius: 100px;
+	overflow: visible;
+	background: var(--core-surface-primary);
+	border: 1px solid var(--core-outline-primary);
+	cursor: pointer;
+}
+
+.instructions {
+	composes: body-m-regular from "../../util/type.module.css";
+	color: var(--core-text-disabled);
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	position: absolute;
+	z-index: 1;
+}
+
+.object {
+	position: absolute;
+	composes: row from "../../util/flexBox.module.css";
+	min-height: var(--object-size);
+	min-width: var(--object-size);
+	max-height: var(--object-size);
+	max-width: var(--object-size);
+	border-radius: 100%;
+	background: var(--core-text-special);
+	top: 50%;
+	left: var(--left);
+	transform: translateY(-50%);
+	transition: left var(--duration) var(--transition);
+	cursor: pointer;
+	z-index: 2;
+}
+
+.controls {
+	composes: row from "../../util/flexBox.module.css";
+	padding: 16px !important;
+	width: 100%;
+	gap: 16px;
+}

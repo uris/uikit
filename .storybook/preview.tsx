@@ -1,8 +1,7 @@
 import { DocsContainer } from '@storybook/addon-docs/blocks';
 import type { Preview } from '@storybook/react-vite';
 import React from 'react';
-import { FlexDiv, darkTheme, lightTheme } from '../src';
-import { ThemeProvider } from '../src/providers';
+import { FlexDiv, ThemeProvider, darkTheme, lightTheme } from '../src';
 
 // options for theme selector
 const items = [
@@ -71,6 +70,7 @@ const preview: Preview = {
 					['Core Colors', '*'],
 					'Typography',
 					['Funnel Sans', '*'],
+					'Motion',
 					'Hooks',
 					['*', ['Docs', '*']],
 					'Providers',

@@ -8,7 +8,7 @@
 	gap: 8px;
 	border-radius: 8px;
 	cursor: pointer;
-	transition: all 0.25s ease-in-out 0s;
+	transition: all var(--motion-water-duration) var(--motion-water) 0s;
 	user-select: none;
 	-webkit-user-select: none;
 }

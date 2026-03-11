@@ -1,6 +1,6 @@
 .label {
 	composes: row from "../../util/flexBox.module.css";
-	display: var(--label-inline);
+	display: var(--label-inline) !important;
 	line-height: 1em;
 	white-space: nowrap;
 	padding: var(--label-padding) !important;

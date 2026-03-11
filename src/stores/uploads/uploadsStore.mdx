@@ -13,21 +13,71 @@ import NoteSection from "../../../.storybook/Notice";
         </NoteSection>
 
         # UploadsStore
-        Global upload queue state built with Zustand and a Web Worker for optimal performance and experience. The store owns the shared upload state, while the worker performs the upload scheduling and progress tracking on a separate thread.
+        Global upload queue state built with Zustand and a Web Worker for optimal performance allowing app interactions while uploads are in progress.
+        The store tracks upload state, while the worker performs the upload scheduling, progress tracking, etc. on a separate thread.
 
         ## Important!
-        `uploads store` requires a web worker instance during initialization. The store does not create the worker for you automatically.
-        <b>You should initialize the uploads worker and store once in your application</b>, then reuse that same store state and actions to manage all uploads in your app.
-
+        `uploads store` requires initialization with the uploads web worker instance. It does not create the worker automatically and defers to the consuming app's tooling to do so.
+        
         ## Web worker setup
-        Slice ships as a standalone uploads worker file. You have two basic setup options:
-        - Use the provided `createUploadsWorker()` with no argument for local/package-internal setups like Storybook.
-        - In consuming apps, import the built worker asset URL with your bundler and pass that URL into `createUploadsWorker(workerUrl)`.
+        Slice ships as a standalone uploads worker file. Depending on your project setup, you have a few basic setup options:
+        - Use the provided `createUploadsWorker()` with no argument for local/package-internal setups.
+        - Pass an explicit worker URL into `createUploadsWorker(workerUrl)` when your app wants to control worker resolution.
+            
+        For app-level integrations, the most portable pattern is `new URL('./uploads.ts', import.meta.url)`. That works well across Vite, Vue, Webpack, Rspack, Angular, and most browser-first bundlers. Frameworks with SSR such as Next.js should create the worker only on the client.
+        
+        <RenderSource language={"tsx"}>
+{`
+// note: for SSR frameworks such as Next.js, create the worker only on the client.
+export function createUploadsWorker(workerUrl?: string | URL) {
+  return new Worker(
+    workerUrl ?? new URL('../../workers/uploads/uploads.ts', import.meta.url),
+    { type: 'module' },
+  );
+}
+`}
+        </RenderSource>    
 
-        <br />
-        The explicit worker URL pattern assumes <b>modern frontend tooling</b> that supports worker/asset URL imports, such as Vite or similar web-app bundlers.
+       Here's an example of how you might implement the uploads store with a singleton worker instance:
 
-        The web worker handles all upload activity and pushes updates throughout the upload life-cycle back to the store. Those updates include files' upload status as well as worker busy/idle state.
+        <RenderSource language={"tsx"}>
+```
+import React, { useEffect, useRef } from 'react';
+import {
+  createUploadsWorker,
+  useUploadsActions,
+  useUploadsWorkerStatus,
+} from '@apple-pie/slice/stores/uploads';
+
+// setup uploads
+const config = {
+    uploadURL: '/api/uploads',
+    maxQueueSize: 10,
+    maxConcurrentUploads: 2,
+};
+
+// create a worker
+function getStoryWorker(): UploadsWorkerInstance | null {
+    const uploadsWorkerUrl = new URL('../../workers/uploads/uploads.ts', import.meta.url);
+    return createUploadsWorker(uploadsWorkerUrl);
+}
+
+// initialize the store and use atomic hook throughout your app
+export function App() {
+    const actions = useUploadsActions();
+    const workerStatus = useUploadsWorkerStatus();
+    const workerRef = useRef<Worker | null>(null);
+
+    useEffect(() => {
+        if (workerRef.current) return;
+        workerRef.current = getStoryWorker();
+        workerRef.current && actions.initialize(storyOptions, workerRef.current);
+    }, [actions]);
+
+    return <div>{workerStatus}</div>;
+}
+```
+        </RenderSource>
 
         ## Upload data shape
         Each item in uploads is an `Upload` object representing the current state of a single file as it moves through the upload process.
@@ -276,13 +326,33 @@ function UploadManager() {
         </RenderSource>
 
         ## Consuming app usage with a built worker asset
-        In consuming apps, the most reliable approach is to import the built worker asset URL with the app bundler and pass that URL into `createUploadsWorker(workerUrl)`.
+        In consuming apps, the most reliable approach is to pass an explicit worker URL into `createUploadsWorker(workerUrl)`.
         <br />
-        This example assumes a bundler that supports `?url` asset imports for browser-targeted apps.
+        Prefer `new URL('./uploads.ts', import.meta.url)` as the default portable pattern. If your bundler supports `?url` imports, that can also work, but it is bundler-specific and may need extra TypeScript module declarations.
 
         <RenderSource language={"tsx"}>
 {`
 import { createUploadsWorker, uploadsActions } from '@apple-pie/slice/stores/uploads';
+
+const worker = createUploadsWorker(new URL('./uploads.ts', import.meta.url));
+
+uploadsActions.initialize(
+  {
+    uploadURL: '/api/uploads',
+    maxQueueSize: 10,
+    maxConcurrentUploads: 2,
+  },
+  worker,
+);
+`}
+        </RenderSource>
+
+        Vite-style `?url` example:
+
+        <RenderSource language={"tsx"}>
+{`
+import { createUploadsWorker, uploadsActions } from '@apple-pie/slice/stores/uploads';
+// @ts-expect-error Vite resolves ?url imports, but TypeScript needs an explicit declaration for them.
 import uploadsWorkerUrl from '@apple-pie/slice/workers/uploads/uploads?url';
 
 // Create the uploads worker once for the lifetime of your app.

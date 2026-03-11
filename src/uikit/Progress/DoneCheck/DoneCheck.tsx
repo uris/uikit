@@ -1,106 +1,60 @@
-import { type Transition, useAnimate, usePresence } from 'motion/react';
-import React, { useEffect } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { useTheme } from '../../../hooks';
 import { useTrackRenders } from '../../../hooks/useTrackRenders/useTrackRenders';
+import { Icon } from '../../Icon';
+import css from './DoneCheck.module.css';
 import type { DoneCheckProps } from './_types';
 
 export const DoneCheck = React.memo((props: DoneCheckProps) => {
 	const theme = useTheme();
 	const {
 		size = 88,
-		stroke = 0.75,
-		duration = 0.35,
-		bounce = 0.7,
-		delay = 0.5,
+		stroke = 1.5,
 		color = theme.current.colors['feedback-positive'],
-		didEnd = () => null,
-		didStart = () => null,
-		play = false,
-		...svgAttributes
-	} = props;
-	const { id: svgId, className, style, ...rest } = svgAttributes;
-	const [check, animateCheck] = useAnimate();
-	const [isPresent, safeToRemove] = usePresence();
-
-	useEffect(() => {
-		const variants = { initial: { scale: 0.9 }, animate: { scale: 1 } };
-		const spring: Transition = {
-			type: 'spring',
-			time: duration,
-			bounce,
-			delay,
-		};
-		const instant: Transition = { ease: 'linear', duration: 0, delay: 0 };
-		if (isPresent && play) {
-			const enterAnimation = async () => {
-				didStart();
-				await animateCheck(check.current, variants.initial, instant);
-				await animateCheck(check.current, variants.animate, spring);
-				didEnd();
-			};
-			enterAnimation();
-		} else if (isPresent && !play) {
-			const enterAnimation = async () => {
-				await animateCheck(check.current, variants.animate, instant);
-			};
-			enterAnimation();
-		} else if (!isPresent) {
-			const exitAnimation = async () => {
-				await animateCheck(check.current, variants.initial, instant);
-				safeToRemove();
-			};
-			exitAnimation();
-		}
-	}, [
-		isPresent,
-		play,
-		animateCheck,
-		check,
-		didEnd,
+		play = true,
+		delay = 0,
+		duration = 1,
 		didStart,
-		safeToRemove,
-		bounce,
-		delay,
-		duration,
-	]);
+		didEnd,
+	} = props;
+	const [playing, setPlaying] = useState<boolean>(false);
 
-	const checkMark = () => {
-		return (
-			<svg
-				id={svgId}
-				className={className}
-				ref={check}
-				xmlns="http://www.w3.org/2000/svg"
-				width={size}
-				height={size}
-				scale={0.9}
-				viewBox="0 0 20 20"
-				fill="none"
-				style={style ?? {}}
-				aria-label="Checkmark icon"
-				{...rest}
-			>
-				<title>Checkmark</title>
-				<path d="M 1 1 L 19 1 L 19 19 L 1 19 Z" fill="transparent" />
-				<path
-					d="M 10 2 C 14.418 2 18 5.582 18 10 C 18 14.418 14.418 18 10 18 C 5.582 18 2 14.418 2 10 C 2 5.582 5.582 2 10 2 Z"
-					fill="transparent"
-					strokeWidth={stroke}
-					stroke={color}
-				/>
-				<path
-					d="M 6.5 9.5 L 9 12 L 13.5 7.5"
-					fill="transparent"
-					strokeWidth={stroke}
-					stroke={color}
-				/>
-			</svg>
-		);
-	};
+	// update play with props
+	useEffect(() => setPlaying(play), [play]);
+
+	const transition = useMemo(() => {
+		return `scale ${duration}s var(--motion-spring) ${delay}s`;
+	}, [delay, duration]);
+
+	// css var memos
+	const cssVars = useMemo(() => {
+		return {
+			'--icon-size': `${size}px`,
+			'--icon-scale': playing ? 1 : 0,
+			'--icon-transition': playing ? transition : 'unset',
+		} as React.CSSProperties;
+	}, [size, playing, transition]);
 
 	/* START.DEBUG */
 	useTrackRenders(props, 'DoneCheck');
 	/* END.DEBUG */
 
-	return checkMark();
+	return (
+		<div className={css.wrapper} role={'status'} aria-live={'polite'}>
+			<div
+				className={css.icon}
+				style={cssVars}
+				onTransitionEnd={() => didEnd?.()}
+				onTransitionStart={() => didStart?.()}
+			>
+				<Icon
+					name="check circle"
+					size={size}
+					color={color}
+					stroke={stroke}
+					strokeColor={color}
+				/>
+			</div>
+		</div>
+	);
 });

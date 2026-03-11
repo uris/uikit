@@ -1459,16 +1459,20 @@ export const STATIC_ICON_REGISTRY = new Map<string, IconDefinition>([
 	[
 		'check circle',
 		{
-			line: ({ strokeColor }: IconRenderProps) => (
+			line: ({ strokeColor, stroke }: IconRenderProps) => (
 				<>
-					<path d="M 1 1 L 19 1 L 19 19 L 1 19 Z" fill="transparent" />
-					<path
-						d="M 12.97 6.97 L 9 10.94 L 7.03 8.97 L 5.97 10.03 L 8.47 12.53 L 9 13.06 L 9.53 12.53 L 14.03 8.03 Z"
-						fill={strokeColor}
+					<circle
+						cx="9.96"
+						cy="9.96"
+						r="7.25"
+						fill="none"
+						stroke={strokeColor}
+						strokeWidth={stroke}
 					/>
-					<path
-						d="M 19 10 C 19 14.971 14.971 19 10 19 C 5.029 19 1 14.971 1 10 C 1 5.029 5.029 1 10 1 C 14.971 1 19 5.029 19 10 Z M 10 2.5 C 5.858 2.5 2.5 5.858 2.5 10 C 2.5 14.142 5.858 17.5 10 17.5 C 14.142 17.5 17.5 14.142 17.5 10 C 17.5 5.858 14.142 2.5 10 2.5 Z"
-						fill={strokeColor}
+					<polyline
+						points="6.66 9.94 9.05 12.06 13.26 7.86"
+						strokeWidth={stroke}
+						stroke={strokeColor}
 					/>
 				</>
 			),

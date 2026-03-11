@@ -10,6 +10,7 @@ import { useTheme } from '../../hooks';
 import { useObserveResize } from '../../hooks/useObserveResize/useObserveResize';
 import { useTrackRenders } from '../../hooks/useTrackRenders/useTrackRenders';
 import { pointerPosition } from '../../util/utils';
+import switchStories from '../Switch/Switch.stories';
 import css from './DraggablePanel.module.css';
 import type { Constraint } from './_types';
 
@@ -284,6 +285,12 @@ export const DraggablePanel = React.memo((props: DraggablePanelProps) => {
 		if (!isOver.current) setHighlight(false);
 	}, [doDrag, onResizeEnd, onResize, setHighlight]);
 
+	const transition = useMemo(() => {
+		if (lastWidth && lastWidth > 500)
+			return 'width var(--motion-magnet-duration) var(--motion-magnet)';
+		return 'width var(--motion-water-duration) var(--motion-water)';
+	}, [lastWidth]);
+
 	// handle starting drag
 	const initDrag = useCallback(
 		(e: any) => {
@@ -372,7 +379,7 @@ export const DraggablePanel = React.memo((props: DraggablePanelProps) => {
 				width: width,
 				height: '100%',
 				maxWidth: drags ? constraints.max : 'unset',
-				transition: isDragging ? '' : 'width 0.2s ease',
+				transition: isDragging ? '' : transition,
 				borderRight:
 					panelClosed || !borderRight || !drags ? 'none' : borderRight,
 				borderLeft: panelClosed || !borderLeft || !drags ? 'none' : borderLeft,
@@ -415,7 +422,8 @@ export const DraggablePanel = React.memo((props: DraggablePanelProps) => {
 						maxWidth: 3,
 						height: '100%',
 						pointerEvents: 'none',
-						transition: 'background-color 0.2s ease',
+						transition:
+							'background-color var(--motion-water-duration) var(--motion-water)',
 					}}
 				/>
 			</div>

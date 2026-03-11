@@ -9,7 +9,7 @@
 	box-shadow: 0 0 0 var(--dd-box-shadow-size) var(--dd-border-color);
 	padding: var(--dd-padding-tops) var(--dd-padding-left) var(--dd-padding-tops)
 		var(--dd-padding-right) !important;
-	transition: all 0.2s ease-in-out 0s;
+	transition: all var(--motion-water-duration) var(--motion-water) 0s;
 }
 
 .face {

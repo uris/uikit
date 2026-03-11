@@ -6,7 +6,7 @@
 	border-radius: 100px;
 	cursor: pointer;
 	background: var(--switch-bg-color);
-	transition: background 0.25s ease-in-out 0s;
+	transition: background var(--motion-water-duration) var(--motion-water) 0s;
 }
 
 .knob {

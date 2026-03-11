@@ -34,7 +34,7 @@
 	bottom: 0;
 	left: 0;
 	width: var(--file-progress);
-	transition: width 1s ease-in-out 0s;
+	transition: width var(--motion-water-duration) var(--motion-water) 0s;
 	z-index: 1;
 }
 

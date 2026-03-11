@@ -337,7 +337,7 @@ const ButtonComponent = forwardRef<ButtonHandle, ButtonProps>(
 				borderColor: colorStyles[variant].borderColor[btnState],
 				cursor:
 					state === 'disabled' ? ('default' as const) : ('pointer' as const),
-				transition: 'all 0s ease-in-out 0s',
+				transition: 'all var(--motion-water-duration) var(--motion-water) 0s',
 			}),
 			[
 				colorStyles,

@@ -9,7 +9,7 @@
 	border-radius: var(--tf-border-radius);
 	background: var(--tf-bg);
 	box-shadow: var(--tf-box-shadow);
-	transition: all 0.25s ease-in-out 0s;
+	transition: all var(--motion-water-duration) var(--motion-water) 0s;
 }
 
 .container {

@@ -63,6 +63,11 @@
 			"import": "./dist/esm/theme/elevations.mjs",
 			"require": "./dist/cjs/theme/elevations.js"
 		},
+		"./theme/motion": {
+			"types": "./dist/types/theme/motion/motion.d.ts",
+			"import": "./dist/esm/theme/motion.mjs",
+			"require": "./dist/cjs/theme/motion.js"
+		},
 		"./theme/type": {
 			"types": "./dist/types/theme/type/type.d.ts",
 			"import": "./dist/esm/theme/type.mjs",

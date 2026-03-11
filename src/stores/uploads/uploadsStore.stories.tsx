@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
-import React, { useEffect, useMemo } from 'react';
+import React, { useEffect } from 'react';
 import { Button } from '../../uikit/Button';
 import type { FileItem } from '../../uikit/FileList';
 import { FlexDiv } from '../../uikit/FlexDiv';
@@ -9,6 +9,8 @@ import {
 	FileUploadStatus,
 	WorkerStatus,
 } from '../../workers/uploads/uploads-worker';
+// @ts-expect-error Vite resolves ?url imports in Storybook
+import uploadsWorkerUrl from '../../workers/uploads/uploads.ts?url';
 import type { UploadsWorkerInstance } from './_types';
 import {
 	createUploadsWorker,
@@ -25,16 +27,12 @@ const storyOptions: ConfigurationOptions = {
 	maxConcurrentUploads: 2,
 };
 
-let storyWorker: UploadsWorkerInstance | null = null;
-
 function getStoryWorker(): UploadsWorkerInstance | null {
-	if (typeof Worker === 'undefined') return null;
-
-	if (!storyWorker) {
-		storyWorker = createUploadsWorker();
-	}
-
-	return storyWorker;
+	const uploadsWorkerUrl = new URL(
+		'../../workers/uploads/uploads.ts',
+		import.meta.url,
+	);
+	return createUploadsWorker(uploadsWorkerUrl);
 }
 
 const WorkerDemo = () => {
@@ -44,11 +42,12 @@ const WorkerDemo = () => {
 	const error = useUploadsError();
 	const actions = useUploadsActions();
 	const [files, setFiles] = React.useState<FileItem[]>([]);
+	const workerRef = React.useRef<UploadsWorkerInstance | null>(null);
 
 	useEffect(() => {
-		const worker = getStoryWorker();
-		if (!worker) return;
-		actions.initialize(storyOptions, worker);
+		if (workerRef.current) return;
+		workerRef.current = getStoryWorker();
+		workerRef.current && actions.initialize(storyOptions, workerRef.current);
 	}, [actions]);
 
 	useEffect(() => {
