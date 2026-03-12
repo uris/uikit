@@ -70,6 +70,7 @@ const preview: Preview = {
 					['Core Colors', '*'],
 					'Typography',
 					['Funnel Sans', '*'],
+					'Icons',
 					'Motion',
 					'Hooks',
 					['*', ['Docs', '*']],

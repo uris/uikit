@@ -527,25 +527,6 @@ export const STATIC_ICON_REGISTRY = new Map<string, IconDefinition>([
 		},
 	],
 	[
-		'compliance check',
-		{
-			line: ({ stroke, strokeColor }: IconRenderProps) => (
-				<>
-					<path
-						d="M3 3.313a1.5 1.5 0 0 1 1.302-1.487L10.5 1l5.228.804A1.5 1.5 0 0 1 17 3.287v10.875a1.5 1.5 0 0 1-.714 1.277L10.5 19l-6.706-3.576A1.5 1.5 0 0 1 3 14.1V3.313Z"
-						stroke={strokeColor}
-						strokeWidth={stroke}
-					/>
-					<path
-						d="M7.385 9.25a4.48 4.48 0 0 0 2.865-2.865 4.48 4.48 0 0 0 2.865 2.865 4.48 4.48 0 0 0-2.865 2.865A4.48 4.48 0 0 0 7.385 9.25Z"
-						stroke={strokeColor}
-						strokeWidth={stroke}
-					/>
-				</>
-			),
-		},
-	],
-	[
 		'text document',
 		{
 			line: ({ strokeColor }: IconRenderProps) => (

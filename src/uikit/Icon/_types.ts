@@ -74,7 +74,6 @@ export enum IconNames {
 	moderate = 'moderate',
 	mail = 'mail',
 	textDocument = 'text document',
-	complianceCheck = 'compliance check',
 	edit = 'edit',
 	characterBeam = 'character beam',
 	undo = 'undo',
