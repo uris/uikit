@@ -3,14 +3,15 @@
 	padding: var(--rb-padding) !important;
 	max-width: var(--rb-max-width);
 	flex: var(--rb-flex);
-	border: 1px solid var(--core-outline-primary);
+	border: var(--rb-border);
 	background: var(--rb-bg);
-	gap: 8px;
+	gap: var(--rb-gap);
 	border-radius: 8px;
 	cursor: pointer;
 	transition: all var(--motion-water-duration) var(--motion-water) 0s;
 	user-select: none;
 	-webkit-user-select: none;
+	outline: none;
 }
 
 .radioIcon {

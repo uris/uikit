@@ -12,7 +12,7 @@ export const CheckBox = React.memo((props: CheckBoxProps) => {
 		checked = false,
 		disabled = false,
 		color = undefined,
-		label = undefined,
+		children = undefined,
 		onChange = () => null,
 		...divAttributes
 	} = props;
@@ -26,9 +26,9 @@ export const CheckBox = React.memo((props: CheckBoxProps) => {
 
 	// memo icon name
 	const iconName = useMemo(() => {
-		if (state === true) return 'checked';
-		if (state === 'mixed') return 'partial';
-		return 'unchecked';
+		if (state === true) return 'checkbox checked';
+		if (state === 'mixed') return 'checkbox partial';
+		return 'checkbox';
 	}, [state]);
 
 	// memo icon color
@@ -87,14 +87,15 @@ export const CheckBox = React.memo((props: CheckBoxProps) => {
 			onKeyDown={handleKeyDown}
 			tabIndex={disabled ? -1 : 0}
 			role={'checkbox'}
-			aria-checked={state === 'mixed' ? 'mixed' : state}
+			aria-checked={state}
 			aria-disabled={disabled}
+			aria-label={String(children as string)}
 			{...(rest as any)}
 		>
 			<div className={css.icon}>
 				<Icon name={iconName} strokeColor={iconColor} size={size} />
 			</div>
-			{label && <span className={css.label}>{label}</span>}
+			{children && <span className={css.label}>{children}</span>}
 		</motion.div>
 	);
 });

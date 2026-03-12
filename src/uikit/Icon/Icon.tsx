@@ -2,6 +2,7 @@ import React, { useMemo } from 'react';
 import { useTheme } from '../../hooks';
 import { useTrackRenders } from '../../hooks/useTrackRenders/useTrackRenders';
 import { accessibleKeyDown } from '../../util/utils';
+import css from './Icon.module.css';
 import type { IconProps } from './_types';
 import { STATIC_ICON_REGISTRY } from './iconRegistry';
 
@@ -31,12 +32,7 @@ export const Icon = React.memo((props: IconProps) => {
 	// memo icon style
 	const iconStyle = useMemo(() => {
 		return {
-			cursor,
-			userSelect: 'none' as const,
-			WebkitUserSelect: 'none' as const,
-			WebkitTapHighlightColor: 'transparent',
-			outline: 'none',
-			border: 0,
+			'--cursor': cursor,
 		} as React.CSSProperties;
 	}, [cursor]);
 
@@ -53,7 +49,7 @@ export const Icon = React.memo((props: IconProps) => {
 	return (
 		<svg
 			id={svgId}
-			className={className}
+			className={`${css.icon} ${className}`}
 			xmlns="http://www.w3.org/2000/svg"
 			width={size}
 			height={size}

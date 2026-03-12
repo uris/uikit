@@ -22,5 +22,5 @@
 
 .label {
 	composes: body-m-regular from "../../util/type.module.css";
-	color: var(--core-text-primary);
+	color: var(--cb-label-color);
 }

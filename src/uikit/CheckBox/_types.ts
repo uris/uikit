@@ -1,11 +1,11 @@
 import type React from 'react';
 
 type CheckBoxBaseProps = {
+	children?: React.ReactNode | string;
 	size?: number;
 	checked?: 'mixed' | boolean;
 	disabled?: boolean;
 	color?: string;
-	label?: string;
 	onChange?: (state: boolean) => void;
 };
 

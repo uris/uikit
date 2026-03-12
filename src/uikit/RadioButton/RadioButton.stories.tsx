@@ -21,8 +21,9 @@ const meta: Meta<typeof RadioButton> = {
 		list: true,
 		hideRadio: false,
 		toggleIcon: true,
-		noFrame: false,
+		noFrame: true,
 		iconColor: undefined,
+		checkedIcon: 'check circle',
 		onChange: fn(),
 	},
 };
@@ -33,9 +34,12 @@ export const Default: StoryObj<typeof RadioButton> = {
 	render: (args) => {
 		return (
 			<FlexDiv
+				absolute
 				direction={'row'}
 				justify={'center'}
 				alignItems={'center'}
+				width={'fill'}
+				height={'fit'}
 				padding={64}
 			>
 				<RadioButton {...args} />

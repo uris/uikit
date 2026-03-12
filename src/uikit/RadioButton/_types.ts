@@ -19,6 +19,8 @@ type RadioButtonBaseProps = {
 	toggleIcon?: boolean;
 	iconColor?: string;
 	noFrame?: boolean;
+	gap?: number;
+	checkedIcon?: 'check circle' | 'circle fill';
 	onChange?: (option: RadioButtonOption, state: boolean) => void;
 };
 

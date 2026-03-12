@@ -3,10 +3,17 @@ import { useCallback, useEffect } from 'react';
 export interface KeyboardShortcut {
 	key: string;
 	metaPressed?: boolean;
+	shiftPressed?: boolean;
+	altPressed?: boolean;
 	name: string;
 }
 
 export type KeyboardShortcuts = KeyboardShortcut[];
+
+function normalizeShortcutKey(key: string) {
+	if (key.length === 1) return key.toLowerCase();
+	return key.toLowerCase();
+}
 
 export function useKeyboardShortcuts(
 	shortcuts: KeyboardShortcuts,
@@ -35,9 +42,12 @@ export function useKeyboardShortcuts(
 			if (isEditable(e)) return;
 			const isMeta =
 				(isAppleDevice && e.metaKey) || (!isAppleDevice && e.ctrlKey);
+			const normalizedEventKey = normalizeShortcutKey(e.key);
 			for (const s of shortcuts) {
-				if (s.metaPressed && !isMeta) continue;
-				if (s.key.toLowerCase() === e.key.toLowerCase()) {
+				if (Boolean(s.metaPressed) !== isMeta) continue;
+				if (Boolean(s.shiftPressed) !== e.shiftKey) continue;
+				if (Boolean(s.altPressed) !== e.altKey) continue;
+				if (normalizeShortcutKey(s.key) === normalizedEventKey) {
 					e.preventDefault();
 					shortCutHandler(s);
 					break;

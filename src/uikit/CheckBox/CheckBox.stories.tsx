@@ -10,7 +10,7 @@ const meta: Meta<typeof CheckBox> = {
 	argTypes: {
 		checked: {
 			control: { type: 'radio' }, // Dropdown selection
-			options: [true, false], // Enum values as options
+			options: [true, false, 'mixed'], // Enum values as options
 		},
 	},
 	args: {
@@ -18,7 +18,7 @@ const meta: Meta<typeof CheckBox> = {
 		checked: false,
 		disabled: false,
 		color: undefined,
-		label: 'Checkbox label',
+		children: 'Checkbox label' as string,
 		onChange: fn(),
 	},
 };
@@ -55,9 +55,8 @@ export const Disabled: StoryObj<typeof CheckBox> = {
 		disabled: true,
 	},
 	render: Default.render,
-	play: async ({ canvasElement, args }) => {
-		const canvas = canvasElement;
-		const checkbox = canvas.querySelector('[role="checkbox"]');
+	play: async ({ canvasElement }) => {
+		const checkbox = canvasElement.querySelector('[role="checkbox"]');
 		await expect(checkbox).toBeInTheDocument();
 		await expect(checkbox).toHaveAttribute('aria-disabled', 'true');
 	},

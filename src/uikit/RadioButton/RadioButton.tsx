@@ -1,12 +1,11 @@
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
-import { useTheme } from '../../hooks';
 import { useTrackRenders } from '../../hooks/useTrackRenders/useTrackRenders';
-import { IconButton } from '../IconButton';
+import { setStyle } from '../../util/utils';
+import { Icon } from '../Icon';
 import css from './RadioButton.module.css';
-import type { RadioButtonOption, RadioButtonProps } from './_types';
+import type { RadioButtonProps } from './_types';
 
 export const RadioButton = React.memo((props: RadioButtonProps) => {
-	const theme = useTheme();
 	const {
 		option,
 		selected = false,
@@ -16,8 +15,10 @@ export const RadioButton = React.memo((props: RadioButtonProps) => {
 		list = false,
 		hideRadio = false,
 		toggleIcon = true,
-		noFrame = false,
+		noFrame = true,
+		checkedIcon = 'check circle',
 		iconColor,
+		gap = 6,
 		onChange = () => null,
 		...divAttributes
 	} = props;
@@ -48,15 +49,16 @@ export const RadioButton = React.memo((props: RadioButtonProps) => {
 	// memo icon color
 	const setIconColor = useMemo(() => {
 		if (iconColor) return iconColor;
+		if (checkedIcon === 'circle fill') return 'var(--core-text-primary)';
 		return toggleIcon && isSelected
-			? theme.current.colors['core-button-primary']
-			: theme.current.colors['core-icon-primary'];
-	}, [iconColor, toggleIcon, isSelected, theme]);
+			? 'var(--core-text-special)'
+			: 'var(--core-text-primary)';
+	}, [iconColor, toggleIcon, isSelected, checkedIcon]);
 
 	// memo icon name
 	const iconName = useMemo(
-		() => (toggleIcon && isSelected ? 'checked' : 'unchecked'),
-		[toggleIcon, isSelected],
+		() => (toggleIcon && isSelected ? checkedIcon : 'circle'),
+		[toggleIcon, isSelected, checkedIcon],
 	);
 
 	// memo flex
@@ -71,9 +73,14 @@ export const RadioButton = React.memo((props: RadioButtonProps) => {
 			'--rb-max-width': wrap ? '50%' : '100%',
 			'--rb-flex': setFlex,
 			'--rb-padding': noFrame ? '0' : '8px 16px 8px 10px',
-			'--rb-bg': isSelected ? 'var(--core-surface-secondary)' : 'transparent',
+			'--rb-bg':
+				!noFrame && isSelected
+					? 'var(--core-surface-secondary)'
+					: 'transparent',
+			'--rb-border': noFrame ? 'none' : '1px solid var(--core-outline-primary)',
+			'--rb-gap': setStyle(gap),
 		} as React.CSSProperties;
-	}, [setFlex, isSelected, wrap, noFrame]);
+	}, [setFlex, isSelected, wrap, noFrame, gap]);
 
 	/* START.DEBUG */
 	useTrackRenders(props, 'Radio Button');
@@ -93,13 +100,7 @@ export const RadioButton = React.memo((props: RadioButtonProps) => {
 		>
 			{option.icon && !hideRadio && (
 				<div className={css.radioIcon}>
-					<IconButton
-						toggle={false}
-						icon={iconName}
-						color={setIconColor}
-						frameSize={20}
-						iconSize={20}
-					/>
+					<Icon name={iconName} strokeColor={setIconColor} size={20} />
 				</div>
 			)}
 			<div className={css.radioContent}>

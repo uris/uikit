@@ -15,6 +15,8 @@ function UseKeyboardShortcutsDemo() {
 	const shortcuts: KeyboardShortcuts = [
 		{ key: 'b', name: 'Bold', metaPressed: true },
 		{ key: 's', name: 'Save', metaPressed: true },
+		{ key: 'k', name: 'Quick Open', metaPressed: true, shiftPressed: true },
+		{ key: 'd', name: 'Duplicate', altPressed: true },
 		{ key: 'a', name: 'A Pressed' },
 	];
 
@@ -46,8 +48,8 @@ function UseKeyboardShortcutsDemo() {
 				<span>
 					Try{' '}
 					{isAppleDevice
-						? 'Command+B / Command+S / A'
-						: 'Control+B / Control+S / A'}
+						? 'Command+B / Command+S / Command+Shift+K / Option+D / A'
+						: 'Control+B / Control+S / Control+Shift+K / Alt+D / A'}
 				</span>
 				<span>Last shortcut: {lastShortcut}</span>
 				<input

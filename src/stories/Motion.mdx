@@ -14,22 +14,26 @@ import { RenderSource } from '../../.storybook/RenderSource';
 			interface feel natural, responsive, and efficient.
 
 			The three core motion presets are previewed below.
+            <Spacer size={24} />
 
-            #### Water
+            #### "Water"
             Water is a smoother, more natural alternative to a standard ease-in-out
             curve. It works well for most UI state transitions like hover state colors.
             This is the main transition used by Slice.
             <MotionSimulation easing={"water"} duration={0.25} />
+            <Spacer size={24} />
 
-			#### Magnet
+			#### "Magnet"
 			Magnet is an ease-out curve with a snapping feel. It works best for
 			elements that move over larger distances, such as panels and drawers. While it's default duration is twice that of water, it feels "snappier".
 			<MotionSimulation easing={"magnet"} duration={0.5} />
+            <Spacer size={24} />
 
-			#### Spring
+			#### "Spring"
 			Spring should be used sparingly for emphasis. In Slice it is primarily
 			used for the optional bounce effect in the done checkmark component. Note: the larger the range of the transition, the more noticeable the spring effect.
 			<MotionSimulation easing={"spring"} duration={1} />
+            <Spacer size={24} />
 
 			#### Slice Motion Values
 			These are the motion values currently used by the theme.

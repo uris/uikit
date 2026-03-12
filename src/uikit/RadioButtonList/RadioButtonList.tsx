@@ -18,9 +18,10 @@ export const RadioButtonList = React.memo((props: RadioButtonListProps) => {
 		custom = 0,
 		gap = 16,
 		hideRadio = false,
-		noFrame = false,
+		noFrame = true,
 		toggleIcon = true,
 		iconColor = undefined,
+		checkedIcon = 'check circle',
 		iconSelectedColor = undefined,
 		onChange = () => null,
 		...divAttributes
@@ -117,6 +118,7 @@ export const RadioButtonList = React.memo((props: RadioButtonListProps) => {
 					tabIndex={i + 1 + 100 * tabIndexSeed}
 					toggleIcon={toggleIcon}
 					iconColor={isSelected(i) ? iconSelectedColor : iconColor}
+					checkedIcon={checkedIcon}
 				/>
 			);
 		});
@@ -132,6 +134,7 @@ export const RadioButtonList = React.memo((props: RadioButtonListProps) => {
 		toggleIcon,
 		iconColor,
 		iconSelectedColor,
+		checkedIcon,
 	]);
 
 	// memo margin

@@ -18,6 +18,7 @@ type RadioButtonListBaseProps = {
 	iconColor?: string;
 	iconSelectedColor?: string;
 	noFrame?: boolean;
+	checkedIcon?: 'check circle' | 'circle fill';
 	onChange?: (
 		options: RadioButtonOption[] | null,
 		indexes: number[] | null,

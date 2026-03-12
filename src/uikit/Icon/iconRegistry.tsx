@@ -21,47 +21,6 @@ export interface IconDefinition {
  */
 export const STATIC_ICON_REGISTRY = new Map<string, IconDefinition>([
 	[
-		'task list',
-		{
-			line: ({ stroke, strokeColor }: IconRenderProps) => (
-				<>
-					<path
-						d="M11 6L21 6"
-						stroke={strokeColor}
-						strokeWidth={stroke}
-						strokeLinecap="round"
-					/>
-					<path
-						d="M11 12L21 12"
-						stroke={strokeColor}
-						strokeWidth={stroke}
-						strokeLinecap="round"
-					/>
-					<path
-						d="M11 18L21 18"
-						stroke={strokeColor}
-						strokeWidth={stroke}
-						strokeLinecap="round"
-					/>
-					<path
-						d="M3 7.39286C3 7.39286 4 8.04466 4.5 9C4.5 9 6 5.25 8 4"
-						stroke={strokeColor}
-						strokeWidth={stroke}
-						strokeLinecap="round"
-						strokeLinejoin="round"
-					/>
-					<path
-						d="M3 18.3929C3 18.3929 4 19.0447 4.5 20C4.5 20 6 16.25 8 15"
-						stroke={strokeColor}
-						strokeWidth={stroke}
-						strokeLinecap="round"
-						strokeLinejoin="round"
-					/>
-				</>
-			),
-		},
-	],
-	[
 		'highlight',
 		{
 			line: ({ strokeColor }: IconRenderProps) => (
@@ -70,344 +29,6 @@ export const STATIC_ICON_REGISTRY = new Map<string, IconDefinition>([
 					<path
 						d="M 20.825 11.376 C 20.713 11.263 20.56 11.199 20.401 11.199 C 20.241 11.199 20.089 11.263 19.976 11.376 L 16.201 15.15 L 9.85 8.799 L 13.626 5.025 C 13.86 4.79 13.86 4.41 13.626 4.176 C 13.391 3.941 13.011 3.942 12.777 4.176 L 9.002 7.951 C 8.629 8.324 8.543 8.897 8.791 9.362 L 7.202 10.951 C 6.734 11.419 6.734 12.179 7.202 12.647 L 7.554 12.999 L 3.178 17.374 C 3.03 17.521 2.969 17.734 3.017 17.937 C 3.065 18.14 3.215 18.303 3.413 18.368 L 8.812 20.168 C 8.95 20.215 9.099 20.209 9.232 20.153 C 9.305 20.123 9.371 20.079 9.427 20.023 L 12.002 17.447 L 12.353 17.799 C 12.822 18.267 13.581 18.267 14.05 17.799 L 15.638 16.211 C 16.104 16.458 16.677 16.372 17.049 15.999 L 20.825 12.224 C 21.06 11.99 21.06 11.61 20.825 11.376 Z M 13.201 16.95 L 8.05 11.799 L 9.602 10.248 L 14.753 15.399 Z"
 						fill={strokeColor}
-					/>
-				</>
-			),
-		},
-	],
-	[
-		'bold',
-		{
-			line: ({ stroke, strokeColor }: IconRenderProps) => (
-				<>
-					<path
-						fillRule="evenodd"
-						clipRule="evenodd"
-						d="M5 6C5 4.58579 5 3.87868 5.43934 3.43934C5.87868 3 6.58579 3 8 3H12.5789C15.0206 3 17 5.01472 17 7.5C17 9.98528 15.0206 12 12.5789 12H5V6Z"
-						stroke={strokeColor}
-						strokeWidth={stroke}
-						strokeLinecap="round"
-						strokeLinejoin="round"
-					/>
-					<path
-						d="M12.4286 12H13.6667C16.0599 12 18 14.0147 18 16.5C18 18.9853 16.0599 21 13.6667 21H8C6.58579 21 5.87868 21 5.43934 20.5607C5 20.1213 5 19.4142 5 18V12"
-						stroke={strokeColor}
-						strokeWidth={stroke}
-						strokeLinecap="round"
-						strokeLinejoin="round"
-					/>
-				</>
-			),
-		},
-	],
-	[
-		'italic',
-		{
-			line: ({ stroke, strokeColor }: IconRenderProps) => (
-				<>
-					<path
-						d="M12 4H19"
-						stroke={strokeColor}
-						strokeWidth={stroke}
-						strokeLinecap="round"
-						strokeLinejoin="round"
-					/>
-					<path
-						d="M8 20L16 4"
-						stroke={strokeColor}
-						strokeWidth={stroke}
-						strokeLinecap="round"
-						strokeLinejoin="round"
-					/>
-					<path
-						d="M5 20H12"
-						stroke={strokeColor}
-						strokeWidth={stroke}
-						strokeLinecap="round"
-						strokeLinejoin="round"
-					/>
-				</>
-			),
-		},
-	],
-	[
-		'underline',
-		{
-			line: ({ stroke, strokeColor }: IconRenderProps) => (
-				<>
-					<path
-						d="M5.5 3V11.5C5.5 15.0899 8.41015 18 12 18C15.5899 18 18.5 15.0899 18.5 11.5V3"
-						stroke={strokeColor}
-						strokeWidth={stroke}
-						strokeLinecap="round"
-						strokeLinejoin="round"
-					/>
-					<path
-						d="M3 21H21"
-						stroke={strokeColor}
-						strokeWidth={stroke}
-						strokeLinecap="round"
-					/>
-				</>
-			),
-		},
-	],
-	[
-		'strike',
-		{
-			line: ({ stroke, strokeColor }: IconRenderProps) => (
-				<>
-					<path
-						d="M4 12H20"
-						stroke={strokeColor}
-						strokeWidth={stroke}
-						strokeLinecap="round"
-						strokeLinejoin="round"
-					/>
-					<path
-						d="M17.5 7.66667C17.5 5.08934 15.0376 3 12 3C8.96243 3 6.5 5.08934 6.5 7.66667C6.5 8.15279 6.55336 8.59783 6.6668 9M6 16.3333C6 18.9107 8.68629 21 12 21C15.3137 21 18 19.6667 18 16.3333C18 13.9404 16.9693 12.5782 14.9079 12"
-						stroke={strokeColor}
-						strokeWidth={stroke}
-						strokeLinecap="round"
-					/>
-				</>
-			),
-		},
-	],
-	[
-		'link',
-		{
-			line: ({ strokeColor }: IconRenderProps) => (
-				<>
-					<path d="M 0 0 L 24 0 L 24 24 L 0 24 Z" fill="transparent" />
-					<path
-						d="M 12.251 18.425 C 15.169 18.425 17.041 16.923 17.041 14.629 C 17.041 12.8 15.925 11.834 13.323 11.219 L 11.891 10.876 C 10.106 10.445 9.35 9.9 9.35 8.924 C 9.35 7.694 10.562 6.824 12.241 6.824 C 13.753 6.824 14.834 7.509 15.265 8.722 C 15.405 9.056 15.616 9.214 15.968 9.214 C 16.425 9.214 16.706 8.951 16.706 8.511 C 16.706 8.379 16.688 8.239 16.653 8.107 C 16.26 6.507 14.501 5.4 12.242 5.4 C 9.597 5.4 7.69 6.912 7.69 9.039 C 7.69 10.77 8.78 11.781 11.17 12.343 L 12.788 12.73 C 14.616 13.17 15.381 13.767 15.381 14.822 C 15.381 16.087 14.089 17.01 12.252 17.01 C 10.626 17.01 9.404 16.263 8.956 15.015 C 8.798 14.637 8.605 14.47 8.236 14.47 C 7.761 14.47 7.471 14.76 7.471 15.217 C 7.471 15.376 7.497 15.543 7.541 15.71 C 8.007 17.37 9.835 18.425 12.252 18.425 Z"
-						fill={strokeColor}
-					/>
-					<path
-						d="M 5.36 11.75 L 19.15 11.75 C 19.352 11.75 19.51 11.592 19.51 11.39 C 19.511 11.294 19.474 11.202 19.406 11.134 C 19.338 11.066 19.246 11.029 19.15 11.03 L 5.36 11.03 C 5.264 11.029 5.172 11.066 5.104 11.134 C 5.037 11.202 4.999 11.294 5 11.39 C 5 11.592 5.158 11.75 5.36 11.75 Z"
-						fill={strokeColor}
-					/>
-				</>
-			),
-		},
-	],
-	[
-		'bullet list',
-		{
-			line: ({ stroke, strokeColor }: IconRenderProps) => (
-				<>
-					<path
-						d="M8 5L20 5"
-						stroke={strokeColor}
-						strokeWidth={stroke}
-						strokeLinecap="round"
-					/>
-					<path
-						d="M4 5H4.00898"
-						stroke={strokeColor}
-						strokeWidth={stroke}
-						strokeLinecap="round"
-						strokeLinejoin="round"
-					/>
-					<path
-						d="M4 12H4.00898"
-						stroke={strokeColor}
-						strokeWidth={stroke}
-						strokeLinecap="round"
-						strokeLinejoin="round"
-					/>
-					<path
-						d="M4 19H4.00898"
-						stroke={strokeColor}
-						strokeWidth={stroke}
-						strokeLinecap="round"
-						strokeLinejoin="round"
-					/>
-					<path
-						d="M8 12L20 12"
-						stroke={strokeColor}
-						strokeWidth={stroke}
-						strokeLinecap="round"
-					/>
-					<path
-						d="M8 19L20 19"
-						stroke={strokeColor}
-						strokeWidth={stroke}
-						strokeLinecap="round"
-					/>
-				</>
-			),
-		},
-	],
-	[
-		'numbered list',
-		{
-			line: ({ stroke, strokeColor }: IconRenderProps) => (
-				<>
-					<path
-						d="M11 6L21 6"
-						stroke={strokeColor}
-						strokeWidth={stroke}
-						strokeLinecap="round"
-					/>
-					<path
-						d="M11 12L21 12"
-						stroke={strokeColor}
-						strokeWidth={stroke}
-						strokeLinecap="round"
-					/>
-					<path
-						d="M11 18L21 18"
-						stroke={strokeColor}
-						strokeWidth={stroke}
-						strokeLinecap="round"
-					/>
-					<path
-						d="M3 15H4.5C4.77879 15 4.91819 15 5.03411 15.0231C5.51014 15.1177 5.88225 15.4899 5.97694 15.9659C6 16.0818 6 16.2212 6 16.5C6 16.7788 6 16.9182 5.97694 17.0341C5.88225 17.5101 5.51014 17.8823 5.03411 17.9769C4.91819 18 4.77879 18 4.5 18C4.22121 18 4.08181 18 3.96589 18.0231C3.48986 18.1177 3.11775 18.4899 3.02306 18.9659C3 19.0818 3 19.2212 3 19.5V20.4C3 20.6828 3 20.8243 3.08787 20.9121C3.17574 21 3.31716 21 3.6 21H6"
-						stroke={strokeColor}
-						strokeWidth={stroke}
-						strokeLinecap="round"
-						strokeLinejoin="round"
-					/>
-					<path
-						d="M3 3H4.2C4.36569 3 4.5 3.13431 4.5 3.3V9M4.5 9H3M4.5 9H6"
-						stroke={strokeColor}
-						strokeWidth={stroke}
-						strokeLinecap="round"
-						strokeLinejoin="round"
-					/>
-				</>
-			),
-		},
-	],
-	[
-		'sink',
-		{
-			line: ({ stroke, strokeColor }: IconRenderProps) => (
-				<>
-					<path
-						d="M15 4.5H20"
-						stroke={strokeColor}
-						strokeWidth={stroke}
-						strokeLinecap="round"
-						strokeLinejoin="round"
-					/>
-					<path
-						d="M15 9.5H18"
-						stroke={strokeColor}
-						strokeWidth={stroke}
-						strokeLinecap="round"
-						strokeLinejoin="round"
-					/>
-					<path
-						d="M15 14.5H20"
-						stroke={strokeColor}
-						strokeWidth={stroke}
-						strokeLinecap="round"
-						strokeLinejoin="round"
-					/>
-					<path
-						d="M15 19.5H18"
-						stroke={strokeColor}
-						strokeWidth={stroke}
-						strokeLinecap="round"
-						strokeLinejoin="round"
-					/>
-					<path
-						d="M11 3V21"
-						stroke={strokeColor}
-						strokeWidth={stroke}
-						strokeLinecap="round"
-						strokeLinejoin="round"
-					/>
-					<path
-						d="M4 8.5L5.54218 9.74227C6.84739 10.7937 7.5 11.3193 7.5 12C7.5 12.6807 6.84739 13.2063 5.54218 14.2577L4 15.5"
-						stroke={strokeColor}
-						strokeWidth={stroke}
-						strokeLinecap="round"
-						strokeLinejoin="round"
-					/>
-				</>
-			),
-		},
-	],
-	[
-		'lift',
-		{
-			line: ({ stroke, strokeColor }: IconRenderProps) => (
-				<>
-					<path
-						d="M4 4.5H9"
-						stroke={strokeColor}
-						strokeWidth={stroke}
-						strokeLinecap="round"
-						strokeLinejoin="round"
-					/>
-					<path
-						d="M6 9.5H9"
-						stroke={strokeColor}
-						strokeWidth={stroke}
-						strokeLinecap="round"
-						strokeLinejoin="round"
-					/>
-					<path
-						d="M4 14.5H9"
-						stroke={strokeColor}
-						strokeWidth={stroke}
-						strokeLinecap="round"
-						strokeLinejoin="round"
-					/>
-					<path
-						d="M6 19.5H9"
-						stroke={strokeColor}
-						strokeWidth={stroke}
-						strokeLinecap="round"
-						strokeLinejoin="round"
-					/>
-					<path
-						d="M13 3V21"
-						stroke={strokeColor}
-						strokeWidth={stroke}
-						strokeLinecap="round"
-						strokeLinejoin="round"
-					/>
-					<path
-						d="M20 8.5L18.4578 9.74227C17.1526 10.7937 16.5 11.3193 16.5 12C16.5 12.6807 17.1526 13.2063 18.4578 14.2577L20 15.5"
-						stroke={strokeColor}
-						strokeWidth={stroke}
-						strokeLinecap="round"
-						strokeLinejoin="round"
-					/>
-				</>
-			),
-		},
-	],
-	[
-		'code',
-		{
-			line: ({ stroke, strokeColor }: IconRenderProps) => (
-				<>
-					<path
-						d="M17 8L18.8398 9.85008C19.6133 10.6279 20 11.0168 20 11.5C20 11.9832 19.6133 12.3721 18.8398 13.1499L17 15"
-						stroke={strokeColor}
-						strokeWidth={stroke}
-						strokeLinecap="round"
-						strokeLinejoin="round"
-					/>
-					<path
-						d="M7 8L5.16019 9.85008C4.38673 10.6279 4 11.0168 4 11.5C4 11.9832 4.38673 12.3721 5.16019 13.1499L7 15"
-						stroke={strokeColor}
-						strokeWidth={stroke}
-						strokeLinecap="round"
-						strokeLinejoin="round"
-					/>
-					<path
-						d="M14.5 4L9.5 20"
-						stroke={strokeColor}
-						strokeWidth={stroke}
-						strokeLinecap="round"
-						strokeLinejoin="round"
 					/>
 				</>
 			),
@@ -1350,70 +971,6 @@ export const STATIC_ICON_REGISTRY = new Map<string, IconDefinition>([
 		},
 	],
 	[
-		'ctrl key',
-		{
-			line: ({ strokeColor }: IconRenderProps) => (
-				<>
-					<path d="M 0 0 L 33 0 L 33 24 L 0 24 Z" fill="transparent" />
-					<g transform="translate(3 2.998)">
-						<path
-							d="M 8.646 12.49 C 9.898 12.49 10.445 11.717 10.879 11.717 C 11.125 11.717 11.288 11.911 11.288 12.213 C 11.288 12.757 10.107 13.409 8.646 13.409 C 6.239 13.409 5 11.268 5 9.032 C 5 6.795 6.239 4.654 8.705 4.654 C 10.178 4.654 11.112 5.475 11.112 5.911 C 11.112 6.188 10.949 6.42 10.691 6.42 C 10.224 6.42 9.99 5.574 8.705 5.574 C 6.86 5.574 6.098 7.387 6.098 9.032 C 6.098 10.677 6.882 12.49 8.644 12.49 Z M 13.062 5.513 C 13.062 5.163 13.262 4.944 13.576 4.944 C 13.89 4.944 14.089 5.161 14.089 5.513 L 14.089 6.904 L 14.511 6.904 C 14.849 6.904 15.024 7.072 15.024 7.362 C 15.024 7.652 14.849 7.82 14.511 7.82 L 14.089 7.82 L 14.089 12.838 C 14.089 13.188 13.89 13.407 13.576 13.407 C 13.262 13.407 13.062 13.19 13.062 12.838 L 13.062 7.823 L 12.641 7.823 C 12.303 7.823 12.127 7.654 12.127 7.364 C 12.127 7.075 12.303 6.906 12.641 6.906 L 13.062 6.906 L 13.062 5.516 Z M 16.263 7.4 C 16.263 7.05 16.463 6.83 16.777 6.83 C 17.091 6.83 17.29 7.047 17.29 7.4 L 17.29 7.944 L 17.315 7.944 C 17.549 7.448 18.121 6.83 18.717 6.83 C 19.08 6.83 19.289 7.072 19.289 7.375 C 19.289 7.677 19.08 7.871 18.646 7.954 C 18.038 8.062 17.29 8.533 17.29 9.78 L 17.29 12.84 C 17.29 13.19 17.091 13.409 16.777 13.409 C 16.463 13.409 16.263 13.193 16.263 12.84 Z M 21.463 12.84 C 21.463 13.19 21.263 13.409 20.949 13.409 C 20.635 13.409 20.436 13.193 20.436 12.84 L 20.436 4.571 C 20.436 4.221 20.635 4.002 20.949 4.002 C 21.263 4.002 21.463 4.219 21.463 4.571 Z"
-							fill={strokeColor}
-							strokeWidth="0.5"
-							stroke={strokeColor}
-							strokeMiterlimit="10"
-							strokeDasharray=""
-						/>
-						<path
-							d="M 0 14.98 L 0 3.032 C 0 1.018 1.026 0.001 3.07 0 L 7 0 L 7 0.002 L 21.965 0 L 23.93 0 C 25.983 0 27 1.017 27 3.031 L 27 14.981 C 27 16.994 25.984 18.001 23.93 18.001 L 21.965 18.001 L 7 18.002 L 7 18.001 L 3.07 18.001 C 1.026 18.001 0 16.994 0 14.98 Z M 3.09 1.576 C 2.112 1.576 1.574 2.104 1.574 3.12 L 1.574 14.891 C 1.574 15.909 2.112 16.426 3.09 16.426 L 7 16.427 L 7 16.43 L 21.955 16.428 L 23.91 16.428 C 24.878 16.428 25.426 15.909 25.426 14.893 L 25.426 3.12 C 25.426 2.104 24.878 1.576 23.91 1.576 L 21.955 1.576 L 7 1.58 L 7 1.576 Z"
-							fill={strokeColor}
-						/>
-					</g>
-				</>
-			),
-		},
-	],
-	[
-		'g key',
-		{
-			line: ({ strokeColor }: IconRenderProps) => (
-				<>
-					<path d="M 0 0 L 24 0 L 24 24 L 0 24 Z" fill="transparent" />
-					<g transform="translate(3 2.998)">
-						<path
-							d="M 3.07 18.001 L 14.93 18.001 C 16.984 18.001 18 16.994 18 14.981 L 18 3.031 C 18 1.017 16.983 0 14.93 0 L 3.07 0 C 1.026 0.001 0 1.018 0 3.032 L 0 14.98 C 0 16.994 1.026 18.001 3.07 18.001 Z M 3.09 16.426 C 2.112 16.426 1.574 15.909 1.574 14.891 L 1.574 3.12 C 1.574 2.104 2.112 1.576 3.09 1.576 L 14.91 1.576 C 15.878 1.576 16.426 2.104 16.426 3.12 L 16.426 14.893 C 16.426 15.909 15.878 16.428 14.91 16.428 Z"
-							fill={strokeColor}
-						/>
-						<path
-							d="M 9.044 13.581 C 11.43 13.581 12.847 12.184 12.847 10.169 L 12.847 9.456 C 12.847 8.927 12.534 8.615 12.026 8.615 L 9.513 8.615 C 9.152 8.615 8.937 8.849 8.937 9.182 C 8.937 9.475 9.152 9.739 9.513 9.739 L 11.293 9.739 L 11.293 10.375 C 11.293 11.528 10.54 12.291 9.063 12.291 C 7.49 12.291 6.444 10.952 6.444 8.908 C 6.444 6.884 7.48 5.515 9.034 5.515 C 10.139 5.515 10.961 6.043 11.362 7.011 C 11.527 7.344 11.713 7.481 12.016 7.481 C 12.417 7.481 12.681 7.226 12.681 6.816 C 12.681 6.649 12.662 6.522 12.593 6.365 C 12.134 5.134 10.833 4.224 9.014 4.224 C 6.483 4.224 4.859 6.053 4.859 8.908 C 4.859 11.773 6.483 13.581 9.044 13.581 Z"
-							fill={strokeColor}
-						/>
-					</g>
-				</>
-			),
-		},
-	],
-	[
-		'cmd key',
-		{
-			line: ({ strokeColor }: IconRenderProps) => (
-				<>
-					<path d="M 0 0 L 24 0 L 24 24 L 0 24 Z" fill="transparent" />
-					<g transform="translate(3 2.998)">
-						<path
-							d="M 3.07 18.001 L 14.93 18.001 C 16.984 18.001 18 16.994 18 14.981 L 18 3.031 C 18 1.017 16.983 0 14.93 0 L 3.07 0 C 1.026 0.001 0 1.018 0 3.032 L 0 14.98 C 0 16.994 1.026 18.001 3.07 18.001 Z M 3.09 16.426 C 2.112 16.426 1.574 15.909 1.574 14.891 L 1.574 3.12 C 1.574 2.104 2.112 1.576 3.09 1.576 L 14.91 1.576 C 15.878 1.576 16.426 2.104 16.426 3.12 L 16.426 14.893 C 16.426 15.909 15.878 16.428 14.91 16.428 Z"
-							fill={strokeColor}
-						/>
-						<path
-							d="M 6.708 8.096 L 6.708 9.905 L 5.974 9.905 C 5.426 9.901 4.9 10.116 4.511 10.501 C 4.122 10.886 3.902 11.411 3.901 11.959 C 3.898 12.51 4.115 13.04 4.504 13.431 C 4.893 13.823 5.422 14.042 5.974 14.041 C 7.119 14.033 8.044 13.104 8.047 11.959 L 8.047 11.216 L 9.826 11.216 L 9.826 11.959 C 9.826 13.105 10.753 14.036 11.899 14.041 C 12.45 14.04 12.979 13.82 13.367 13.43 C 13.756 13.039 13.974 12.51 13.972 11.959 C 13.972 10.824 13.043 9.906 11.899 9.906 L 11.157 9.906 L 11.157 8.096 L 11.899 8.096 C 12.448 8.097 12.975 7.881 13.364 7.494 C 13.752 7.107 13.971 6.581 13.972 6.032 C 13.971 4.888 13.044 3.961 11.899 3.96 C 10.756 3.963 9.83 4.889 9.826 6.032 L 9.826 6.776 L 8.047 6.776 L 8.047 6.033 C 8.04 4.891 7.116 3.967 5.974 3.96 C 5.424 3.958 4.896 4.176 4.507 4.566 C 4.118 4.955 3.9 5.483 3.901 6.033 C 3.9 6.582 4.119 7.109 4.508 7.497 C 4.897 7.884 5.425 8.1 5.974 8.096 Z M 8.047 9.915 L 8.047 8.086 L 9.826 8.086 L 9.826 9.914 Z M 5.974 6.787 C 5.774 6.788 5.581 6.709 5.44 6.568 C 5.298 6.426 5.219 6.233 5.221 6.033 C 5.221 5.633 5.563 5.281 5.974 5.281 C 6.374 5.281 6.708 5.633 6.708 6.033 L 6.708 6.787 Z M 11.899 6.787 L 11.157 6.787 L 11.157 6.033 C 11.157 5.633 11.499 5.281 11.899 5.281 C 12.3 5.281 12.652 5.633 12.652 6.033 C 12.652 6.454 12.31 6.787 11.899 6.787 Z M 5.974 11.196 L 6.708 11.196 L 6.708 11.949 C 6.708 12.359 6.375 12.692 5.965 12.692 C 5.554 12.692 5.221 12.359 5.221 11.949 C 5.221 11.548 5.563 11.196 5.974 11.196 Z M 11.899 11.196 C 12.3 11.196 12.652 11.548 12.652 11.949 C 12.652 12.369 12.31 12.702 11.899 12.702 C 11.487 12.697 11.155 12.361 11.157 11.949 L 11.157 11.196 Z"
-							fill={strokeColor}
-						/>
-					</g>
-				</>
-			),
-		},
-	],
-	[
 		'person',
 		{
 			line: ({ strokeColor }: IconRenderProps) => (
@@ -1462,9 +1019,9 @@ export const STATIC_ICON_REGISTRY = new Map<string, IconDefinition>([
 			line: ({ strokeColor, stroke }: IconRenderProps) => (
 				<>
 					<circle
-						cx="9.96"
-						cy="9.96"
-						r="7.25"
+						cx="10"
+						cy="10"
+						r="8.25"
 						fill="none"
 						stroke={strokeColor}
 						strokeWidth={stroke}
@@ -1487,43 +1044,6 @@ export const STATIC_ICON_REGISTRY = new Map<string, IconDefinition>([
 					stroke={strokeColor}
 					strokeWidth={stroke}
 				/>
-			),
-		},
-	],
-	[
-		'g-p assist',
-		{
-			line: ({ strokeColor }: IconRenderProps) => (
-				<>
-					<g>
-						<defs>
-							<linearGradient
-								id="iddX7xoI2TUg1057052775"
-								x1="0.49751243781094523"
-								x2="0.5024875621890548"
-								y1="0"
-								y2="1"
-							>
-								<stop offset="0" stopColor={strokeColor} stopOpacity="1" />
-								<stop offset="0.50" stopColor={strokeColor} stopOpacity="1" />
-								<stop offset="1" stopColor={strokeColor} stopOpacity="1" />
-							</linearGradient>
-						</defs>
-						<path
-							d="M 10.5 0.016 C 10.509 4.815 14.401 8.7 19.2 8.7 L 19.2 10.5 C 14.395 10.5 10.5 14.395 10.5 19.2 L 8.7 19.2 C 8.7 14.401 4.815 10.509 0.016 10.5 L 0 10.5 L 0 8.7 L 0.016 8.7 C 4.808 8.691 8.691 4.808 8.7 0.016 L 8.7 0 L 10.5 0 Z M 9.6 14.94 C 10.659 12.562 12.562 10.659 14.94 9.6 C 12.562 8.541 10.659 6.638 9.6 4.26 C 8.541 6.639 6.639 8.541 4.26 9.6 C 6.638 10.659 8.541 12.562 9.6 14.94 Z"
-							transform="translate(1.4 1.4) rotate(90 9.6 9.6)"
-							fill="url(#iddX7xoI2TUg1057052775)"
-						/>
-					</g>
-					<path
-						d="M 18.2 5 C 18.863 5 19.4 4.463 19.4 3.8 C 19.4 3.137 18.863 2.6 18.2 2.6 C 17.537 2.6 17 3.137 17 3.8 C 17 4.463 17.537 5 18.2 5 Z"
-						fill={strokeColor}
-					/>
-					<path
-						d="M 3.8 19.4 C 4.463 19.4 5 18.863 5 18.2 C 5 17.537 4.463 17 3.8 17 C 3.137 17 2.6 17.537 2.6 18.2 C 2.6 18.863 3.137 19.4 3.8 19.4 Z"
-						fill={strokeColor}
-					/>
-				</>
 			),
 		},
 	],
@@ -1625,7 +1145,7 @@ export const STATIC_ICON_REGISTRY = new Map<string, IconDefinition>([
 		},
 	],
 	[
-		'checked',
+		'checkbox checked',
 		{
 			line: ({ strokeColor }: IconRenderProps) => (
 				<path
@@ -1638,7 +1158,7 @@ export const STATIC_ICON_REGISTRY = new Map<string, IconDefinition>([
 		},
 	],
 	[
-		'unchecked',
+		'checkbox',
 		{
 			line: ({ stroke, strokeColor }: IconRenderProps) => (
 				<rect
@@ -1654,7 +1174,7 @@ export const STATIC_ICON_REGISTRY = new Map<string, IconDefinition>([
 		},
 	],
 	[
-		'partial',
+		'checkbox partial',
 		{
 			line: ({ stroke, strokeColor }: IconRenderProps) => (
 				<>
@@ -1664,7 +1184,8 @@ export const STATIC_ICON_REGISTRY = new Map<string, IconDefinition>([
 						width="16"
 						height="16"
 						rx="1.5"
-						fill={strokeColor}
+						stroke={strokeColor}
+						strokeWidth={stroke}
 					/>
 					<path d="M14 10H6" stroke={strokeColor} strokeWidth={stroke} />
 				</>
