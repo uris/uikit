@@ -2,7 +2,7 @@
 	composes: body-l-bold from "../../../src/utils/styling/type.module.css";
 	font-family: "Funnel Sans", sans-serif !important;
 	font-size: 28px !important;
-	line-height: 1em;
+	line-height: 1em !important;
 	margin-bottom: 8px !important;
 	font-weight: 500;
 }

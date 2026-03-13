@@ -1,6 +1,5 @@
-import { Unstyled } from '@storybook/addon-docs/blocks';
 import React from 'react';
-import { FlexDiv } from '../src';
+import { FlexDiv } from '../../../src/components/FlexDiv';
 
 const NoteSection = React.memo((props: { children: React.ReactNode }) => {
 	const { children } = props;

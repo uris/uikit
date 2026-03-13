@@ -71,9 +71,6 @@ export type {
 export { Grouper } from './components/Grouper';
 export type { GrouperProps } from './components/Grouper';
 
-export { Logos } from './components/Logos';
-export type { LogoProps } from './components/Logos';
-
 export { Overlay } from './components/Overlay';
 export type { OverlayProps } from './components/Overlay';
 
