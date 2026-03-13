@@ -28,6 +28,6 @@ describe('Full Benchmark Suite with Reporting', () => {
 
 	it('Generate Final Report', () => {
 		console.log(reporter.generateConsoleReport());
-		reporter.saveToFile('benchmarks/reports/benchmark-results.md');
+		reporter.saveToFile('reports/benchmark-results.md');
 	});
 });

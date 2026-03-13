@@ -77,7 +77,6 @@ const buildInputs = () => {
 			const candidates = [
 				path.join(workersDir, workerName, `${workerName}.ts`),
 				path.join(workersDir, workerName, `${workerName}.worker.ts`),
-				path.join(workersDir, workerName, `${workerName}.runtime.ts`),
 				path.join(workersDir, workerName, 'index.ts'),
 			];
 			const workerEntry = candidates.find((candidate) =>

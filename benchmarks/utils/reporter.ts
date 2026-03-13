@@ -283,6 +283,7 @@ export class BenchmarkReporter {
 		const path = require('node:path');
 		const content = this.generateMarkdownReport();
 		const filePath = path.join(process.cwd(), filename);
+		fs.mkdirSync(path.dirname(filePath), { recursive: true });
 		fs.writeFileSync(filePath, content);
 		console.log(`\n✅ Report saved to: ${filePath}`);
 	}

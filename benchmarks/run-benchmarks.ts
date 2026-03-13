@@ -124,7 +124,7 @@ async function runBenchmarks() {
 	console.log(reporter.generateConsoleReport());
 
 	// Save markdown report
-	reporter.saveToFile('benchmark-results.md');
+	reporter.saveToFile('reports/benchmark-results.md');
 
 	console.log('\n✅ Benchmarks complete!\n');
 }
