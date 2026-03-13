@@ -1,0 +1,160 @@
+import {Meta, Unstyled} from '@storybook/addon-docs/blocks';
+import {FlexDiv} from '../FlexDiv';
+import * as PromptInputStories from './PromptInput.stories';
+import {RenderSource} from '../../../.storybook/RenderSource';
+
+<Meta of={PromptInputStories} />
+
+<FlexDiv width={"fill"} height={"fill"} alignItems={"center"}>
+    <FlexDiv width={"fill"} maxWidth={760} height={"auto"}>
+        <Unstyled>
+        # PromptInput
+        Renders a flexible, auto-resizing prompt textarea for chat and AI message boxes, with working/stop states, configurable border styles, optional attach/send controls, and customizable toolbar content.
+        Choose border style of gradient to apply an "ai" gradient affordance to the border.
+        Attachment chips are controlled via `attachments` + `onAttachmentsChange` (parent owns attachment state).
+
+        ## Base element
+        `HTMLDivElement`
+
+        ## Interface
+        `PromptProps`
+
+        ## Props
+        <table style={{width: '100%'}}>
+          <colgroup>
+            <col style={{width: '1%'}} />
+            <col style={{width: '1%'}} />
+            <col style={{width: '1%'}} />
+            <col style={{width: '97%'}} />
+          </colgroup>
+          <thead>
+            <tr>
+              <th className={"left"}>Prop</th>
+              <th className={"left"}>Type</th>
+              <th className={"left"}>Default</th>
+              <th>Description</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td><code>children</code></td><td><code>React.ReactNode</code></td><td><code>-</code></td><td>Optional custom toolbar content rendered beside the attach button.</td></tr>
+            <tr><td><code>attachments</code></td><td><code>FileItem[]</code></td><td><code>[]</code></td><td>Attachment list rendered above the textarea. Controlled by parent state.</td></tr>
+            <tr><td><code>value</code></td><td><code>string</code></td><td><code>''</code></td><td>Current textarea value.</td></tr>
+            <tr><td><code>maxHeight</code></td><td><code>{`string | number`}</code></td><td><code>-</code></td><td>Maximum height constraint for the input surface.</td></tr>
+            <tr><td><code>working</code></td><td><code>boolean</code></td><td><code>false</code></td><td>Controls the working state and send/stop behavior.</td></tr>
+            <tr><td><code>borderStyle</code></td><td><code>{`'solid' | 'gradient' | 'none'`}</code></td><td><code>'gradient'</code></td><td>Border rendering style.</td></tr>
+            <tr><td><code>borderWidth</code></td><td><code>number</code></td><td><code>1</code></td><td>Border width in pixels.</td></tr>
+            <tr><td><code>borderColor</code></td><td><code>{`string | number`}</code></td><td><code>-</code></td><td>Border color when idle.</td></tr>
+            <tr><td><code>borderColorOn</code></td><td><code>{`string | number`}</code></td><td><code>-</code></td><td>Border color when focused/active.</td></tr>
+            <tr><td><code>borderAnimate</code></td><td><code>boolean</code></td><td><code>true</code></td><td>Enables/disables animated gradient border while working.</td></tr>
+            <tr><td><code>borderRadius</code></td><td><code>number</code></td><td><code>8</code></td><td>Outer border radius in pixels.</td></tr>
+            <tr><td><code>placeholder</code></td><td><code>string</code></td><td><code>'Ask me anything ...'</code></td><td>Placeholder text when idle.</td></tr>
+            <tr><td><code>placeholderWorking</code></td><td><code>string</code></td><td><code>'Working ...'</code></td><td>Placeholder text while working.</td></tr>
+            <tr><td><code>focused</code></td><td><code>boolean</code></td><td><code>false</code></td><td>Programmatically control focus state.</td></tr>
+            <tr><td><code>submitClears</code></td><td><code>boolean</code></td><td><code>true</code></td><td>Clears input value after submit when enabled.</td></tr>
+            <tr><td><code>submitEnablesStop</code></td><td><code>boolean</code></td><td><code>true</code></td><td>Switches send button to stop mode after submit.</td></tr>
+            <tr><td><code>enterSubmits</code></td><td><code>boolean</code></td><td><code>true</code></td><td>Submits on Enter key press.</td></tr>
+            <tr><td><code>sendButton</code></td><td><code>boolean</code></td><td><code>true</code></td><td>Show/hide the send/stop button.</td></tr>
+            <tr><td><code>attachButton</code></td><td><code>boolean</code></td><td><code>true</code></td><td>Show/hide the attach button.</td></tr>
+            <tr><td><code>stopEnabled</code></td><td><code>boolean</code></td><td><code>false</code></td><td>External control for stop mode state.</td></tr>
+            <tr><td><code>maxLength</code></td><td><code>number</code></td><td><code>-</code></td><td>Maximum character count for textarea input.</td></tr>
+            <tr><td><code>toolbarGap</code></td><td><code>number</code></td><td><code>8</code></td><td>Gap spacing for toolbar controls.</td></tr>
+            <tr><td><code>textSize</code></td><td><code>{`'s' | 'm' | 'l'`}</code></td><td><code>'m'</code></td><td>Textarea text size preset.</td></tr>
+            <tr><td><code>...divAttributes</code></td><td><code>{`HTMLAttributes<HTMLDivElement>`}</code></td><td><code>-</code></td><td>Native `div` props pass through (for example `id`, `data-testid`, `className`, `style`, `aria-*`).</td></tr>
+          </tbody>
+        </table>
+
+        ## Events
+        <table style={{width: '100%'}}>
+          <colgroup>
+            <col style={{width: '1%'}} />
+            <col style={{width: '25%'}} />
+            <col style={{width: '50%'}} />
+          </colgroup>
+          <thead>
+            <tr>
+              <th className={"left"}>Event</th>
+              <th className={"left"}>Type</th>
+              <th>Description</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td><code>onChange</code></td><td><code>{`(value: string | undefined, attachments?: FileItem[]) => void`}</code></td><td>Fires whenever textarea content changes.</td></tr>
+            <tr><td><code>onSubmit</code></td><td><code>{`(value: string | undefined, attachments?: FileItem[]) => void`}</code></td><td>Fires when user submits the prompt (Enter or send button).</td></tr>
+            <tr><td><code>onBlur</code></td><td><code>{`(value: string | undefined, attachments?: FileItem[]) => void`}</code></td><td>Fires when input loses focus.</td></tr>
+            <tr><td><code>onFocus</code></td><td><code>{`(value: string | undefined, attachments?: FileItem[]) => void`}</code></td><td>Fires when input receives focus.</td></tr>
+            <tr><td><code>onStop</code></td><td><code>{`() => void`}</code></td><td>Fires when stop action is triggered during working state.</td></tr>
+            <tr><td><code>onAttachmentsChange</code></td><td><code>{`(attachments: FileItem[]) => void`}</code></td><td>Fires when files are removed from the attachment list.</td></tr>
+          </tbody>
+        </table>
+
+        ## Code Examples
+        </Unstyled>
+
+        <RenderSource language={"tsx"}>
+{`
+import { useState } from 'react';
+import { PromptInput } from '@apple-pie/slice/components/PromptInput/PromptInput';
+
+export function PromptInputExample() {
+  const [attachments, setAttachments] = useState([
+    { file: 'policy.pdf' },
+    { file: 'notes.txt' },
+  ]);
+
+  return (
+    <PromptInput
+      attachments={attachments}
+      value="Summarize this policy update"
+      placeholder="Ask the assistant anything ..."
+      borderStyle="gradient"
+      textSize="m"
+      onAttachmentsChange={(items) => setAttachments(items)}
+      onSubmit={(value) => console.log(value)}
+      id="promptinput-example"
+      data-testid="promptinput-example"
+      className="custom-wrapper"
+      style={{ marginTop: 8, maxWidth: 720 }}
+    />
+  );
+}
+`}
+        </RenderSource>
+
+        <Unstyled>
+        ## Custom Toolbar Tools
+        JSX you write inside the prompt tags will render as `children` appearing as custom tools into the bottom toolbar area next to the attach button (you can toggle attach on/off). This is useful for context controls like model selection, tone, or output format.
+        </Unstyled>
+
+        <RenderSource language={"tsx"}>
+{`
+import { useState } from 'react';
+import { PromptInput } from '@apple-pie/slice/components/PromptInput/PromptInput';
+
+export function PromptInputWithModelSelector() {
+  const [model, setModel] = useState('gpt-4.1');
+
+  return (
+    <PromptInput
+      placeholder="Ask a question..."
+      onSubmit={(value) => console.log({ value, model })}
+      toolbarGap={10}
+    >
+      <label style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
+        <span style={{ fontSize: 12 }}>Model</span>
+        <select
+          value={model}
+          onChange={(e) => setModel(e.target.value)}
+          style={{ height: 28 }}
+        >
+          <option value="gpt-4.1">GPT-4.1</option>
+          <option value="gpt-4o-mini">GPT-4o mini</option>
+          <option value="gpt-4.1-mini">GPT-4.1 mini</option>
+        </select>
+      </label>
+    </PromptInput>
+  );
+}
+`}
+        </RenderSource>
+    </FlexDiv>
+</FlexDiv>

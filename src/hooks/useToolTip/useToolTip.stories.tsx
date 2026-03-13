@@ -1,9 +1,9 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { useRef, useState } from 'react';
-import { FlexDiv } from '../../uikit/FlexDiv';
-import { IconButton } from '../../uikit/IconButton';
-import { Tip } from '../../uikit/Tip/Tip';
-import type { ToolTip } from '../../uikit/sharedTypes';
+import { FlexDiv } from '../../components/FlexDiv';
+import { IconButton } from '../../components/IconButton';
+import { Tip } from '../../components/Tip/Tip';
+import type { ToolTip } from '../../components/sharedTypes';
 import { useToolTip } from './useToolTip';
 
 function UseToolTipDemo() {

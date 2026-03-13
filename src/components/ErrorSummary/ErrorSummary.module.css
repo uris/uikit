@@ -1,0 +1,41 @@
+.errorBox {
+	composes: columnStart from "../../utils/styling/flexBox.module.css";
+	composes: body-m-regular from "../../utils/styling/type.module.css";
+	width: 100%;
+	background: var(--core-surface-secondary);
+	color: var(--feedback-warning);
+	border: 1px solid var(--feedback-warning);
+	border-radius: 4px;
+	padding: 0 16px 16px 16px !important;
+	overflow: hidden;
+	margin-bottom: 44px !important;
+}
+
+.error {
+	composes: columnStart from "../../utils/styling/flexBox.module.css";
+	width: 100%;
+}
+
+.p {
+	margin: 0;
+	padding: 16px 0 0 0;
+	composes: body-m-regular from "../../utils/styling/type.module.css";
+}
+
+.strong {
+	composes: body-m-bold from "../../utils/styling/type.module.css";
+}
+
+.ul {
+	list-style-type: none;
+	list-style-position: outside;
+	margin: 0;
+	padding: 0;
+}
+
+.li {
+	composes: body-m-regular from "../../utils/styling/type.module.css";
+	margin: 3px 0 3px 0;
+	line-height: 1.2em;
+	padding: 0;
+}

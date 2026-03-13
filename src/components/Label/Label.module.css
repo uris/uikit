@@ -1,0 +1,70 @@
+.label {
+	composes: row from "../../utils/styling/flexBox.module.css";
+	display: var(--label-inline) !important;
+	line-height: 1em;
+	white-space: nowrap;
+	padding: var(--label-padding) !important;
+	width: min-content;
+	color: var(--label-color);
+	border-radius: var(--label-border-radius);
+	border: var(--label-border-size) solid var(--core-outline-primary);
+	cursor: var(--label-cursor);
+}
+
+.button {
+	composes: body-m-regular from "../../utils/styling/type.module.css";
+}
+
+.s {
+	composes: body-s-regular from "../../utils/styling/type.module.css";
+}
+
+.m {
+	composes: body-m-regular from "../../utils/styling/type.module.css";
+}
+
+.l {
+	composes: body-l-regular from "../../utils/styling/type.module.css";
+}
+
+.red {
+	background: var(--label-background);
+	color: var(--core-text-light);
+	border-color: var(--label-border-color-red);
+}
+
+.green {
+	background: var(--label-background);
+	color: var(--core-text-light);
+	border-color: var(--label-border-color-green);
+}
+
+.yellow {
+	background: var(--label-background);
+	color: var(--core-text-primary);
+	border-color: var(--label-border-color-yellow);
+}
+
+.grey {
+	background: var(--label-background);
+	color: var(--core-text-secondary);
+	border-color: var(--label-border-color-grey);
+}
+
+.lightgrey {
+	background: var(--label-background);
+	color: var(--core-text-disabled);
+	border-color: var(--label-border-color-lightgrey);
+}
+
+.white {
+	background: var(--label-background);
+	color: var(--core-text-primary);
+	border-color: var(--label-border-color-white);
+}
+
+.blue {
+	background: var(--label-background);
+	color: var(--core-text-light);
+	border-color: var(--label-border-color-blue);
+}

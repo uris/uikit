@@ -1,8 +1,8 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { useState } from 'react';
-import { Button } from '../../uikit/Button';
-import { FlexDiv } from '../../uikit/FlexDiv';
-import { TextField } from '../../uikit/Textfield';
+import { Button } from '../../components/Button';
+import { FlexDiv } from '../../components/FlexDiv';
+import { TextField } from '../../components/Textfield';
 import { useLocalStore } from './useLocalStore';
 
 type UseLocalStoreDemoProps = {

@@ -70,13 +70,14 @@ import { Avatar, useTheme, ThemeProvider } from '@apple-pie/slice';
 
 Subpath imports are also published:
 
-- `@apple-pie/slice/uikit/*`
+- `@apple-pie/slice/components/*`
 - `@apple-pie/slice/hooks`
 - `@apple-pie/slice/hooks/*`
 - `@apple-pie/slice/providers`
 - `@apple-pie/slice/providers/*`
 - `@apple-pie/slice/stores`
 - `@apple-pie/slice/stores/*`
+- `@apple-pie/slice/utils`
 - `@apple-pie/slice/workers/*`
 - `@apple-pie/slice/theme`
 - `@apple-pie/slice/theme/colors`
@@ -84,6 +85,18 @@ Subpath imports are also published:
 - `@apple-pie/slice/theme/elevations`
 - `@apple-pie/slice/theme/type`
 - `@apple-pie/slice/theme/themes`
+
+## Utilities
+
+- Package utilities are published from `@apple-pie/slice/utils`
+- Internal utility source lives under `src/utils/functions/*`
+- Shared utility CSS modules live under `src/utils/styling/*`
+
+Example:
+
+```ts
+import { addOpacity, copyToClipboard, tintFromColor } from '@apple-pie/slice/utils';
+```
 
 ## Components
 
@@ -166,7 +179,7 @@ npm run lint              # Biome format + check
 
 Benchmark details: `benchmarks/GUIDE.md`
 
-Build architecture details: `devdocs/build-architecture.md`
+Build architecture details: `contributor-docs/build-architecture.md`
 
 ## Build outputs
 
@@ -180,5 +193,5 @@ Build architecture details: `devdocs/build-architecture.md`
 ## Notes
 
 - Styling is CSS-module based and published with CSS side effects enabled (`"**/*.css"`).
-- Storybook docs (`*.stories.*` and `src/stories/**`) are excluded from publishable type output.
+- Storybook docs (`*.stories.*` and `documentation/**`) are excluded from publishable type output.
 - Named media query aliases are compiled via PostCSS custom media. Definitions live in `src/theme/breakpoints/custom-media.css` and can be used in CSS as `@media (--bp-tablet) { ... }`.

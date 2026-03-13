@@ -39,8 +39,8 @@ import { Avatar,
 	Chip,
 	Label
 } from '../../src';
-import { FileList } from '../../src/uikit/FileList';
-import { PromptInput } from '../../src/uikit/PromptInput/PromptInput';
+import { FileList } from '../../src/components/FileList';
+import { PromptInput } from '../../src/components/PromptInput/PromptInput';
 import { fireEvent } from '@testing-library/react';
 import {
 	measureMountTime,

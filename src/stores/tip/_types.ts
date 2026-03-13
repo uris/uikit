@@ -1,4 +1,4 @@
-import type { ToolTip } from '../../uikit/sharedTypes';
+import type { ToolTip } from '../../components/sharedTypes';
 
 export interface TipStore {
 	tip: ToolTip | null;

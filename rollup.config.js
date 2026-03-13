@@ -22,14 +22,15 @@ const buildInputs = () => {
 		providers: 'src/providers/index.ts',
 		stores: 'src/stores/index.ts',
 		theme: 'src/theme/index.ts',
+		utils: 'src/utils/index.ts',
 	};
 
-	const uikitDir = path.resolve('src/uikit');
-	for (const entry of fs.readdirSync(uikitDir, { withFileTypes: true })) {
+	const componentsDir = path.resolve('src/components');
+	for (const entry of fs.readdirSync(componentsDir, { withFileTypes: true })) {
 		if (!entry.isDirectory()) continue;
-		const componentEntry = path.join(uikitDir, entry.name, 'index.ts');
+		const componentEntry = path.join(componentsDir, entry.name, 'index.ts');
 		if (fs.existsSync(componentEntry)) {
-			inputs[`uikit/${entry.name}`] = componentEntry;
+			inputs[`components/${entry.name}`] = componentEntry;
 		}
 	}
 
@@ -107,7 +108,8 @@ const buildInputs = () => {
 const entryFileName = (format) => (chunkInfo) => {
 	const ext = format === 'esm' ? '.mjs' : '.js';
 	if (chunkInfo.name === 'index') return `index${ext}`;
-	if (chunkInfo.name.startsWith('uikit/'))
+	if (chunkInfo.name === 'utils') return `utils/index${ext}`;
+	if (chunkInfo.name.startsWith('components/'))
 		return `${chunkInfo.name}/index${ext}`;
 	if (chunkInfo.name.startsWith('workers/')) return `${chunkInfo.name}${ext}`;
 	return `[name]${ext}`;
@@ -148,13 +150,13 @@ const rollup = async () => {
 			resolve({ extensions: ['.js', '.ts', '.tsx'] }),
 			commonjs(),
 			babel({
-				exclude: ['node_modules/**', 'src/stories/**'],
+				exclude: ['node_modules/**', 'documentation/**'],
 				presets: ['@babel/preset-react'],
 				babelHelpers: 'bundled',
 			}),
 			typescript({
 				tsconfig: './tsconfig.rollup.json',
-				exclude: ['src/stories/**', '**/*.stories.ts', '**/*.stories.tsx'],
+				exclude: ['documentation/**', '**/*.stories.ts', '**/*.stories.tsx'],
 			}),
 			postcss(),
 			svgr({

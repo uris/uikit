@@ -1,10 +1,10 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { useRef } from 'react';
+import { FlexDiv } from 'src/components/FlexDiv/FlexDiv';
 import { useTip, useTipActions } from 'src/stores/tip';
-import { FlexDiv } from 'src/uikit/FlexDiv/FlexDiv';
+import { IconButton } from '../../components/IconButton';
+import { Tip } from '../../components/Tip';
 import { useToolTip } from '../../hooks';
-import { IconButton } from '../../uikit/IconButton';
-import { Tip } from '../../uikit/Tip';
 
 const meta: Meta<typeof Tip> = {
 	title: 'Stores/Tip Store',

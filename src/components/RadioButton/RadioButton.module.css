@@ -1,0 +1,45 @@
+.wrapper {
+	composes: row from "../../utils/styling/flexBox.module.css";
+	padding: var(--rb-padding) !important;
+	max-width: var(--rb-max-width);
+	flex: var(--rb-flex);
+	border: var(--rb-border);
+	background: var(--rb-bg);
+	gap: var(--rb-gap);
+	border-radius: 8px;
+	cursor: pointer;
+	transition: all var(--motion-water-duration) var(--motion-water) 0s;
+	user-select: none;
+	-webkit-user-select: none;
+	outline: none;
+}
+
+.radioIcon {
+	composes: column from "../../utils/styling/flexBox.module.css";
+	width: 20px;
+	height: 20px;
+	max-width: 20px;
+	max-height: 20px;
+	min-height: 20px;
+	min-width: 20px;
+}
+
+.radioTitle {
+	composes: rowStart from "../../utils/styling/flexBox.module.css";
+	composes: body-m-regular from "../../utils/styling/type.module.css";
+	color: var(--core-text-primary);
+	white-space: nowrap;
+	flex: 1;
+}
+
+.radioSummary {
+	composes: rowStart from "../../utils/styling/flexBox.module.css";
+	composes: body-s-regular from "../../utils/styling/type.module.css";
+	color: var(--core-text-primary);
+	flex: 1;
+}
+
+.radioContent {
+	composes: columnStart from "../../utils/styling/flexBox.module.css";
+	width: 100%;
+}

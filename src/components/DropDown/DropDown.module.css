@@ -1,0 +1,65 @@
+.wrapper {
+	composes: rowStart from "../../utils/styling/flexBox.module.css";
+	position: relative;
+	gap: var(--dd-gap);
+	min-width: var(--dd-width);
+	width: var(--dd-width);
+	border-radius: var(--dd-border-radius);
+	background-color: var(--dd-bg-color);
+	box-shadow: 0 0 0 var(--dd-box-shadow-size) var(--dd-border-color);
+	padding: var(--dd-padding-tops) var(--dd-padding-left) var(--dd-padding-tops)
+		var(--dd-padding-right) !important;
+	transition: all var(--motion-water-duration) var(--motion-water) 0s;
+}
+
+.face {
+	composes: rowStart from "../../utils/styling/flexBox.module.css";
+	flex: 1;
+	overflow: hidden;
+	display: -webkit-box;
+	-webkit-line-clamp: 1;
+	-webkit-box-orient: vertical;
+	text-overflow: ellipsis;
+	word-break: break-all;
+	color: var(--dd-color);
+}
+
+.small {
+	composes: body-s-regular from "../../utils/styling/type.module.css";
+}
+
+.medium {
+	composes: body-m-regular from "../../utils/styling/type.module.css";
+}
+
+.large {
+	composes: body-l-regular from "../../utils/styling/type.module.css";
+}
+
+.chevron {
+	composes: rowStart from "../../utils/styling/flexBox.module.css";
+	min-height: var(--dd-icon-size);
+	max-height: var(--dd-icon-size);
+	min-width: var(--dd-icon-size);
+	max-width: var(--dd-icon-size);
+}
+
+.select {
+	position: absolute;
+	opacity: 0;
+	width: 100%;
+	height: 100%;
+	font-size: 14px;
+	background-color: #1f99cd;
+	background-position: right 10px center;
+	background-repeat: no-repeat;
+	background-size: auto 50%;
+	border: none;
+	outline: none;
+	-moz-appearance: none;
+	-webkit-appearance: none;
+	appearance: none;
+	&::-ms-expand {
+		display: none;
+	}
+}

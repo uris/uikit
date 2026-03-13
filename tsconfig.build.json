@@ -1,13 +1,5 @@
 {
 	"extends": "./tsconfig.json",
 	"include": ["src/**/*"],
-	"exclude": [
-		"src/theme/_helpers/**",
-		"src/theme/_helpers/*.ts",
-		"src/theme/_helpers/*.tsx",
-		"src/theme/_helpers/*.css",
-		"**/*.stories.ts",
-		"**/*.stories.tsx",
-		"src/stories/**"
-	]
+	"exclude": ["**/*.stories.ts", "**/*.stories.tsx", "documentation/**"]
 }

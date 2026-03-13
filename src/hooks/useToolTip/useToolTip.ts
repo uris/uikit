@@ -1,6 +1,6 @@
 import type React from 'react';
 import { useLayoutEffect, useState } from 'react';
-import type { ToolTip } from '../../uikit/sharedTypes';
+import type { ToolTip } from '../../components/sharedTypes';
 
 const hiddenCoords = { x: 0, y: 0 };
 

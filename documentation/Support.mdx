@@ -1,0 +1,25 @@
+import { Meta, Unstyled } from '@storybook/addon-docs/blocks';
+import { FlexDiv } from '../components/FlexDiv';
+import { Label } from '../components/Label';
+import Notice from "../../.storybook/Notice";
+
+<Meta title="Welcome/Support" />
+
+<FlexDiv width={"fill"} height={"fill"} justify={"start"} alignItems={"center"}>
+  <FlexDiv width={"fill"} maxWidth={760} height={"auto"}>
+    <Unstyled>
+      <Notice>Note: During beta, repository access is limited to authorized contributors/collaborators.</Notice>
+      # Support
+      Slice is currently in <Label inline>Beta</Label> - For support, please contact:
+      <a href={"mailto:urisvirott@gmail.com"}>urisvirott@gmail.com</a>
+
+      - Feature requests
+      - Custom icon requests
+      - Repository collaborator access requests
+      - Etc.
+
+      #### Additional support:
+      You can find the Slice storybook on: [slice-uikit.com](https://slice-uikit.com)
+    </Unstyled>
+  </FlexDiv>
+</FlexDiv>

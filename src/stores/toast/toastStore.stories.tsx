@@ -1,8 +1,8 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
+import { FlexDiv } from 'src/components/FlexDiv/FlexDiv';
 import { useToast, useToastActions } from 'src/stores/toast';
-import { FlexDiv } from 'src/uikit/FlexDiv/FlexDiv';
-import { IconButton } from '../../uikit/IconButton';
-import { Toast, ToastType } from '../../uikit/Toast';
+import { IconButton } from '../../components/IconButton';
+import { Toast, ToastType } from '../../components/Toast';
 
 const meta: Meta<typeof Toast> = {
 	title: 'Stores/Toast Store',

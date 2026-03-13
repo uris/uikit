@@ -1,0 +1,50 @@
+.wrapper {
+	composes: rowStart from "../../utils/styling/flexBox.module.css";
+}
+
+.label {
+	composes: rowStart from "../../utils/styling/flexBox.module.css";
+	composes: body-s-regular from "../../utils/styling/type.module.css";
+	color: var(--core-text-disabled);
+	padding-right: 4px;
+}
+
+.button {
+	composes: rowStart from "../../utils/styling/flexBox.module.css";
+	height: 32px;
+	gap: 0;
+	cursor: pointer;
+	background: var(--core-surface-primary);
+	color: var(--core-text-disabled);
+	&:last-child {
+		&:hover {
+			background: var(--core-surface-primary);
+		}
+	}
+	&:first-child {
+		&:hover {
+			background: var(--core-surface-primary);
+		}
+	}
+	&:hover {
+		background: var(--core-surface-primary);
+		color: var(--core-text-primary);
+	}
+}
+
+.selected {
+	background: var(--core-surface-primary);
+	color: var(--core-link-primary);
+}
+
+.divider {
+	display: block;
+	background: var(--core-outline-primary);
+	width: 1px;
+	height: 16px;
+	margin: 0 4px;
+}
+
+.last {
+	display: none;
+}

@@ -1,0 +1,18 @@
+.wrapper {
+	composes: row from "../../../utils/styling/flexBox.module.css";
+	height: var(--icon-height);
+	max-height: var(--icon-height);
+	width: var(--icon-width);
+	max-width: var(--icon-width);
+	overflow: visible;
+}
+
+.icon {
+	composes: row from "../../../utils/styling/flexBox.module.css";
+	height: var(--icon-height);
+	max-height: var(--icon-height);
+	width: var(--icon-width);
+	max-width: var(--icon-width);
+	scale: var(--icon-scale);
+	transition: var(--icon-transition);
+}

@@ -1,0 +1,79 @@
+.wrapper {
+	position: relative;
+	composes: rowStart from "../../utils/styling/flexBox.module.css";
+	padding: var(--tf-padding) !important;
+	gap: 8px;
+	overflow: visible;
+	width: var(--tf-width);
+	height: var(--tf-height);
+	border-radius: var(--tf-border-radius);
+	background: var(--tf-bg);
+	box-shadow: var(--tf-box-shadow);
+	transition: all var(--motion-water-duration) var(--motion-water) 0s;
+}
+
+.container {
+	composes: rowStart from "../../utils/styling/flexBox.module.css";
+	flex: 1;
+	height: 100%;
+	gap: 8px;
+}
+
+.label {
+	composes: rowStart from "../../utils/styling/flexBox.module.css";
+	color: var(--tf-label-color);
+	height: auto;
+	overflow: hidden;
+	white-space: nowrap;
+}
+
+.input {
+	color: var(--tf-text-color);
+	background-color: transparent;
+	box-sizing: border-box;
+	outline: none;
+	border: 0;
+	height: 100%;
+	width: 100%;
+	text-align: var(--tf-text-align);
+	&::placeholder {
+		color: var(--tf-placeholder-color);
+	}
+	&:focus::placeholder {
+		color: var(--tf-placeholder-color);
+	}
+	&:disabled {
+		color: var(--core-text-disabled);
+	}
+	&:-webkit-autofill,
+	&:-webkit-autofill:hover,
+	&:-webkit-autofill:focus,
+	&:-webkit-autofill:active {
+		box-shadow: 0 0 0 50px var(--core-button-disabled) inset !important;
+		-webkit-text-fill-color: var(--core-text-primary);
+	}
+}
+
+.showPassword {
+	composes: row from "../../utils/styling/flexBox.module.css";
+	min-height: 18px;
+	min-width: 18px;
+	max-height: 18px;
+	max-width: 18px;
+	opacity: var(--tf-show-opacity);
+	&:hover {
+		opacity: var(--tf-show-opacity-hover);
+	}
+}
+
+.s {
+	composes: body-s-regular from "../../utils/styling/type.module.css";
+}
+
+.m {
+	composes: body-m-regular from "../../utils/styling/type.module.css";
+}
+
+.l {
+	composes: body-l-regular from "../../utils/styling/type.module.css";
+}

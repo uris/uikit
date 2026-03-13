@@ -1,0 +1,40 @@
+.button {
+	composes: row from "../../utils/styling/flexBox.module.css";
+	position: relative;
+	background: var(--ib-bg);
+	border-radius: var(--ib-border-radius);
+	border: var(--ib-border) solid var(--core-outline-primary);
+	gap: 6px;
+	cursor: pointer;
+	&:hover {
+		background: var(--ib-bg-hover);
+	}
+}
+
+.label {
+	composes: row from "../../utils/styling/flexBox.module.css";
+	composes: body-l-regular from "../../utils/styling/type.module.css";
+	color: var(--ib-color);
+	text-overflow: ellipsis;
+	overflow: hidden;
+	word-break: break-all;
+	display: -webkit-box;
+	-webkit-line-clamp: 1;
+	-webkit-box-orient: vertical;
+}
+
+.icon {
+	composes: row from "../../utils/styling/flexBox.module.css";
+	min-height: var(--ib-icon-size);
+	height: var(--ib-icon-size);
+	min-width: var(--ib-icon-size);
+	width: var(--ib-icon-size);
+}
+
+.count {
+	composes: row from "../../utils/styling/flexBox.module.css";
+	position: absolute;
+	top: 0;
+	right: 0;
+	transform: translateX(5px) translateY(-2px);
+}

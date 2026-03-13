@@ -1,0 +1,117 @@
+import {Meta, Unstyled} from '@storybook/addon-docs/blocks';
+import {FlexDiv} from '../FlexDiv';
+import * as UploadAreaStories from './UploadArea.stories';
+import {RenderSource} from '../../../.storybook/RenderSource';
+
+<Meta of={UploadAreaStories} />
+
+<FlexDiv width={"fill"} height={"fill"} alignItems={"center"}>
+    <FlexDiv width={"fill"} maxWidth={760} height={"auto"}>
+        <Unstyled>
+        # UploadArea
+        Renders a drag-and-drop file upload surface with click-to-select fallback. It also supports optional rendering of a file list beneath the drop zone so users can see files currently uploading or already selected.
+
+        ## Base element
+        `HTMLDivElement`
+
+        ## Interface
+        `UploadAreaProps`
+
+        ## Props
+        <table style={{width: '100%'}}>
+          <colgroup>
+            <col style={{width: '1%'}} />
+            <col style={{width: '1%'}} />
+            <col style={{width: '1%'}} />
+            <col style={{width: '99%'}} />
+          </colgroup>
+          <thead>
+            <tr>
+              <th className={"left"}>Prop</th>
+              <th className={"left"}>Type</th>
+              <th className={"left"}>Default</th>
+              <th>Description</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td><code>icon</code></td><td><code>string</code></td><td><code>'upload'</code></td><td>Icon name used in the upload header.</td></tr>
+            <tr><td><code>iconSize</code></td><td><code>number</code></td><td><code>24</code></td><td>Sizing/layout setting for the icon.</td></tr>
+            <tr><td><code>iconColor</code></td><td><code>string</code></td><td><code>'var(--core-text-primary)'</code></td><td>Default icon color.</td></tr>
+            <tr><td><code>iconColorHover</code></td><td><code>string</code></td><td><code>'var(--core-text-special)'</code></td><td>Icon color while drag-hovering.</td></tr>
+            <tr><td><code>width</code></td><td><code>{`number | string`}</code></td><td><code>'100%'</code></td><td>Outer width of the upload area.</td></tr>
+            <tr><td><code>height</code></td><td><code>{`number | string`}</code></td><td><code>'auto'</code></td><td>Outer height of the upload area.</td></tr>
+            <tr><td><code>title</code></td><td><code>string</code></td><td><code>'Upload Files'</code></td><td>Title text shown in the upload surface.</td></tr>
+            <tr><td><code>message</code></td><td><code>string</code></td><td><code>'Drag and drop files here or click to upload'</code></td><td>Helper message shown under the title.</td></tr>
+            <tr><td><code>busyMessage</code></td><td><code>string</code></td><td><code>'Uploading in progress'</code></td><td>Message shown while <code>busy</code> is <code>true</code>.</td></tr>
+            <tr><td><code>textSize</code></td><td><code>{`'s' | 'm' | 'l'`}</code></td><td><code>'m'</code></td><td>Typography size preset for the message line.</td></tr>
+            <tr><td><code>border</code></td><td><code>number</code></td><td><code>1</code></td><td>Border width in pixels.</td></tr>
+            <tr><td><code>borderStyle</code></td><td><code>string</code></td><td><code>'dashed'</code></td><td>CSS border style for the drop area.</td></tr>
+            <tr><td><code>borderColor</code></td><td><code>string</code></td><td><code>'var(--core-outline-primary)'</code></td><td>Border color in idle state.</td></tr>
+            <tr><td><code>borderColorHover</code></td><td><code>string</code></td><td><code>'var(--core-outline-special)'</code></td><td>Border color during drag hover.</td></tr>
+            <tr><td><code>radius</code></td><td><code>{`number | string`}</code></td><td><code>8</code></td><td>Border radius of the upload surface.</td></tr>
+            <tr><td><code>padding</code></td><td><code>{`number | string`}</code></td><td><code>32</code></td><td>Inner spacing of the upload surface.</td></tr>
+            <tr><td><code>bgColor</code></td><td><code>string</code></td><td><code>'var(--core-surface-secondary)'</code></td><td>Background color in idle state.</td></tr>
+            <tr><td><code>bgColorHover</code></td><td><code>string</code></td><td><code>'var(--core-surface-special)'</code></td><td>Background color during drag hover.</td></tr>
+            <tr><td><code>acceptedTypes</code></td><td><code>string[]</code></td><td><code>allTypes</code></td><td>File extensions passed to the hidden file input <code>accept</code> attribute.</td></tr>
+            <tr><td><code>multiple</code></td><td><code>boolean</code></td><td><code>true</code></td><td>Allows selecting/dropping multiple files.</td></tr>
+            <tr><td><code>busy</code></td><td><code>boolean</code></td><td><code>false</code></td><td>Disables interactions and switches the component into uploading state.</td></tr>
+            <tr><td><code>showProgress</code></td><td><code>boolean</code></td><td><code>true</code></td><td>When busy, shows the inline progress spinner beside the busy message.</td></tr>
+            <tr><td><code>files</code></td><td><code>FileItem[]</code></td><td><code>[]</code></td><td>Optional files displayed below the drop area using <code>FileList</code>.</td></tr>
+            <tr><td><code>canRemove</code></td><td><code>boolean</code></td><td><code>true</code></td><td>Controls whether remove affordances are shown for rendered file items.</td></tr>
+            <tr><td><code>...divAttributes</code></td><td><code>{`HTMLAttributes<HTMLDivElement>`}</code></td><td><code>-</code></td><td>Native <code>div</code> props pass through (for example <code>id</code>, <code>data-testid</code>, <code>className</code>, <code>style</code>, <code>aria-*</code>).</td></tr>
+          </tbody>
+        </table>
+
+        ## Events
+        <table style={{width: '100%'}}>
+          <colgroup>
+            <col style={{width: '1%'}} />
+            <col style={{width: '1%'}} />
+            <col style={{width: '99%'}} />
+          </colgroup>
+          <thead>
+            <tr>
+              <th className={"left"}>Event</th>
+              <th className={"left"}>Type</th>
+              <th>Description</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td><code>onUpload</code></td><td><code>{`(files: File[]) => void`}</code></td><td>Fires after user selects files via picker or drops files onto the area.</td></tr>
+          </tbody>
+        </table>
+
+        ## Code Examples
+        </Unstyled>
+
+        <RenderSource language={"tsx"}>
+{`
+import { UploadArea } from '@apple-pie/slice/components/UploadArea';
+
+export function UploadAreaExample() {
+  return (
+    <UploadArea
+      title="Upload files"
+      message="Drag files here or click to browse"
+      acceptedTypes={['pdf', 'png', 'jpg']}
+      multiple
+      busy={false}
+      showProgress
+      files={[
+        { file: 'proposal.pdf', uploading: true, progress: 0.45 },
+        { file: 'brief.clipboard' },
+      ]}
+      canRemove
+      onUpload={(files) => {
+        console.log('Selected files:', files);
+      }}
+      id="upload-area"
+      data-testid="upload-area"
+      style={{ maxWidth: 520 }}
+    />
+  );
+}
+`}
+        </RenderSource>
+    </FlexDiv>
+</FlexDiv>

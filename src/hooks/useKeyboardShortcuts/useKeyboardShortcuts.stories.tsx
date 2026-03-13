@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { useState } from 'react';
-import { FlexDiv } from '../../uikit/FlexDiv';
+import { FlexDiv } from '../../components/FlexDiv';
 import { useWindow } from '../useWindow/useWindow';
 import {
 	type KeyboardShortcut,

@@ -110,7 +110,7 @@ Create `.bench.tsx` files for vitest-style benchmarks:
 ```typescript
 import { bench, describe } from 'vitest';
 import React from 'react';
-import { YourComponent } from '../../src/uikit/YourComponent';
+import { YourComponent } from '../../src/components/YourComponent';
 import { measureMountTime } from '../utils/benchmark';
 
 describe('YourComponent Performance Benchmarks', () => {

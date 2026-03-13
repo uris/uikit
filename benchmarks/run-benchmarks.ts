@@ -4,9 +4,9 @@
  */
 
 import React from 'react';
-import { Avatar } from '../src/uikit/Avatar/Avatar';
-import { Button } from '../src/uikit/Button/Button';
-import { FlexDiv } from '../src/uikit/FlexDiv/FlexDiv';
+import { Avatar } from '../src/components/Avatar/Avatar';
+import { Button } from '../src/components/Button/Button';
+import { FlexDiv } from '../src/components/FlexDiv/FlexDiv';
 import {
 	measureMountTime,
 	measureRerenderTime,
