@@ -10,7 +10,7 @@ Slice is a TypeScript-first React UI kit with theme tokens, utility hooks, optio
 
 ## What is included
 
-- 30+ reusable UI components (inputs, buttons, navigation, overlays, feedback, layout, icons, upload UI)
+- 30+ reusable UI components (inputs, buttons, navigation, overlays, feedback, layout, icons, upload UI, camera/stream UI)
 - Theme system with light/dark presets and typed theme tokens
 - React hooks for theme, window sizing, keyboard shortcuts, local storage, resize, and more
 - Optional Zustand-powered stores (`toast`, `tip`, `uploads`, `window`)
@@ -101,11 +101,50 @@ import { addOpacity, copyToClipboard, tintFromColor } from '@apple-pie/slice/uti
 ## Components
 
 - `Avatar`, `AvatarGroup`, `Badge`, `CheckBox`, `DivInput`, `Dot`, `DropDown`
+- `Camera`
 - `ErrorSummary`, `FileIcon`, `FileList`, `FlexDiv`, `Grouper`, `Icon`, `IconButton`
 - `PromptInput`, `Overlay`, `Pager`, `ProgressIndicator`, `DoneCheck`
 - `RadioButton`, `RadioButtonList`, `Slider`, `Spacer`, `Switch`, `TabBar`
 - `TextField`, `TextArea`, `Tip`, `Toast`, `Button`, `ButtonBar`
 - `Card`, `Chip`, `Label`, `DocIcons`, `DraggablePanel`, `UploadArea`
+
+Camera notes:
+
+- `Camera` exposes both `CameraProps` and an imperative `CameraElement` ref handle
+- Use the forwarded ref for low-level stream access (`stream`, `videoTrack`, `audioTrack`) and imperative controls such as `startCamera()`, `stopCamera()`, `toggleVideo()`, `toggleMic()`, and `snapshot()`
+- Preferred devices can be supplied through `sessionSettings.videoDeviceId` and `sessionSettings.micDeviceId`
+
+Example:
+
+```tsx
+import { useRef } from 'react';
+import { Camera } from '@apple-pie/slice';
+import type { CameraElement } from '@apple-pie/slice';
+
+export function CameraExample() {
+  const cameraRef = useRef<CameraElement | null>(null);
+
+  return (
+    <>
+      <Camera
+        ref={cameraRef}
+        width={400}
+        height={320}
+        sessionSettings={{
+          videoDeviceId: 'preferred-video-device-id',
+          micDeviceId: 'preferred-mic-device-id',
+        }}
+      />
+      <button onClick={() => cameraRef.current?.snapshot?.()}>
+        Take Snapshot
+      </button>
+      <button onClick={() => cameraRef.current?.toggleVideo?.()}>
+        Toggle Video
+      </button>
+    </>
+  );
+}
+```
 
 ## Hooks
 
