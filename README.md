@@ -10,7 +10,7 @@ Slice is a TypeScript-first React UI kit with theme tokens, utility hooks, optio
 
 ## What is included
 
-- 30+ reusable UI components (inputs, buttons, navigation, overlays, feedback, layout, icons, upload UI)
+- 30+ reusable UI components (inputs, buttons, navigation, overlays, feedback, layout, icons, upload UI, camera/stream UI)
 - Theme system with light/dark presets and typed theme tokens
 - React hooks for theme, window sizing, keyboard shortcuts, local storage, resize, and more
 - Optional Zustand-powered stores (`toast`, `tip`, `uploads`, `window`)
@@ -70,13 +70,14 @@ import { Avatar, useTheme, ThemeProvider } from '@apple-pie/slice';
 
 Subpath imports are also published:
 
-- `@apple-pie/slice/uikit/*`
+- `@apple-pie/slice/components/*`
 - `@apple-pie/slice/hooks`
 - `@apple-pie/slice/hooks/*`
 - `@apple-pie/slice/providers`
 - `@apple-pie/slice/providers/*`
 - `@apple-pie/slice/stores`
 - `@apple-pie/slice/stores/*`
+- `@apple-pie/slice/utils`
 - `@apple-pie/slice/workers/*`
 - `@apple-pie/slice/theme`
 - `@apple-pie/slice/theme/colors`
@@ -85,14 +86,65 @@ Subpath imports are also published:
 - `@apple-pie/slice/theme/type`
 - `@apple-pie/slice/theme/themes`
 
+## Utilities
+
+- Package utilities are published from `@apple-pie/slice/utils`
+- Internal utility source lives under `src/utils/functions/*`
+- Shared utility CSS modules live under `src/utils/styling/*`
+
+Example:
+
+```ts
+import { addOpacity, copyToClipboard, tintFromColor } from '@apple-pie/slice/utils';
+```
+
 ## Components
 
 - `Avatar`, `AvatarGroup`, `Badge`, `CheckBox`, `DivInput`, `Dot`, `DropDown`
+- `Camera`
 - `ErrorSummary`, `FileIcon`, `FileList`, `FlexDiv`, `Grouper`, `Icon`, `IconButton`
-- `Logos`, `PromptInput`, `Overlay`, `Pager`, `ProgressIndicator`, `DoneCheck`
+- `PromptInput`, `Overlay`, `Pager`, `ProgressIndicator`, `DoneCheck`
 - `RadioButton`, `RadioButtonList`, `Slider`, `Spacer`, `Switch`, `TabBar`
 - `TextField`, `TextArea`, `Tip`, `Toast`, `Button`, `ButtonBar`
 - `Card`, `Chip`, `Label`, `DocIcons`, `DraggablePanel`, `UploadArea`
+
+Camera notes:
+
+- `Camera` exposes both `CameraProps` and an imperative `CameraElement` ref handle
+- Use the forwarded ref for low-level stream access (`stream`, `videoTrack`, `audioTrack`) and imperative controls such as `startCamera()`, `stopCamera()`, `toggleVideo()`, `toggleMic()`, and `snapshot()`
+- Preferred devices can be supplied through `sessionSettings.videoDeviceId` and `sessionSettings.micDeviceId`
+
+Example:
+
+```tsx
+import { useRef } from 'react';
+import { Camera } from '@apple-pie/slice';
+import type { CameraElement } from '@apple-pie/slice';
+
+export function CameraExample() {
+  const cameraRef = useRef<CameraElement | null>(null);
+
+  return (
+    <>
+      <Camera
+        ref={cameraRef}
+        width={400}
+        height={320}
+        sessionSettings={{
+          videoDeviceId: 'preferred-video-device-id',
+          micDeviceId: 'preferred-mic-device-id',
+        }}
+      />
+      <button onClick={() => cameraRef.current?.snapshot?.()}>
+        Take Snapshot
+      </button>
+      <button onClick={() => cameraRef.current?.toggleVideo?.()}>
+        Toggle Video
+      </button>
+    </>
+  );
+}
+```
 
 ## Hooks
 
@@ -166,7 +218,7 @@ npm run lint              # Biome format + check
 
 Benchmark details: `benchmarks/GUIDE.md`
 
-Build architecture details: `devdocs/build-architecture.md`
+Build architecture details: `contributor-docs/build-architecture.md`
 
 ## Build outputs
 
@@ -180,5 +232,5 @@ Build architecture details: `devdocs/build-architecture.md`
 ## Notes
 
 - Styling is CSS-module based and published with CSS side effects enabled (`"**/*.css"`).
-- Storybook docs (`*.stories.*` and `src/stories/**`) are excluded from publishable type output.
+- Storybook docs (`*.stories.*` and `documentation/**`) are excluded from publishable type output.
 - Named media query aliases are compiled via PostCSS custom media. Definitions live in `src/theme/breakpoints/custom-media.css` and can be used in CSS as `@media (--bp-tablet) { ... }`.

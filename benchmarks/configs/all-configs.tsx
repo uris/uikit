@@ -19,7 +19,6 @@ import { Avatar,
 	Grouper,
 	Icon,
 	IconButton,
-	Logos,
 	Overlay,
 	Pager,
 	ProgressIndicator,
@@ -39,8 +38,8 @@ import { Avatar,
 	Chip,
 	Label
 } from '../../src';
-import { FileList } from '../../src/uikit/FileList';
-import { PromptInput } from '../../src/uikit/PromptInput/PromptInput';
+import { FileList } from '../../src/components/FileList';
+import { PromptInput } from '../../src/components/PromptInput/PromptInput';
 import { fireEvent } from '@testing-library/react';
 import {
 	measureMountTime,
@@ -900,34 +899,6 @@ export const iconButtonConfig: ComponentBenchmarkConfig = {
 			name: 'Memory',
 			type: 'memory',
 			fn: () => measureMemoryDelta(<IconButton icon="check" />, 10),
-		},
-	],
-};
-
-export const logosConfig: ComponentBenchmarkConfig = {
-	componentName: 'Logos',
-	tests: [
-		{
-			name: 'Mount Time',
-			type: 'mount',
-			fn: () => measureMountTime(<Logos image="apple" />, 50),
-		},
-		{
-			name: 'Re-render',
-			type: 'rerender',
-			fn: () =>
-				measureRerenderTime(
-					<Logos image="apple" />,
-					(container) => {
-						container.rerender(<Logos image="google" />);
-					},
-					50,
-				),
-		},
-		{
-			name: 'Memory',
-			type: 'memory',
-			fn: () => measureMemoryDelta(<Logos image="apple" />, 10),
 		},
 	],
 };

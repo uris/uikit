@@ -1,5 +1,5 @@
 import { useEffect, useRef } from 'react';
-import { debug } from '../../util/utils';
+import { debug } from '../../utils/functions/misc';
 
 /**
  * Hook to log component renders, mounts, and unmounts

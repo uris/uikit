@@ -1,8 +1,8 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { useState } from 'react';
-import { Button } from '../../uikit/Button';
-import { FlexDiv } from '../../uikit/FlexDiv';
-import { Spacer } from '../../uikit/Spacer';
+import { Button } from '../../components/Button';
+import { FlexDiv } from '../../components/FlexDiv';
+import { Spacer } from '../../components/Spacer';
 import { useDoubleClick } from './useDoubleClick';
 
 type UseDoubleClickDemoProps = {

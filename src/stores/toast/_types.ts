@@ -1,4 +1,4 @@
-import type { ToastType } from '../../uikit/Toast';
+import type { ToastType } from '../../components/Toast';
 
 export type Toast = {
 	message: string | null;

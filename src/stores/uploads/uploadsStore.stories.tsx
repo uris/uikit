@@ -1,9 +1,9 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import React, { useEffect } from 'react';
-import { Button } from '../../uikit/Button';
-import type { FileItem } from '../../uikit/FileList';
-import { FlexDiv } from '../../uikit/FlexDiv';
-import { UploadArea } from '../../uikit/UploadArea';
+import { Button } from '../../components/Button';
+import type { FileItem } from '../../components/FileList';
+import { FlexDiv } from '../../components/FlexDiv';
+import { UploadArea } from '../../components/UploadArea';
 import {
 	type ConfigurationOptions,
 	FileUploadStatus,

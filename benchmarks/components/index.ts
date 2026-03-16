@@ -20,7 +20,6 @@ export { flexDivBenchmarkConfig } from './FlexDiv.bench';
 export { grouperBenchmarkConfig } from './Grouper.bench';
 export { iconBenchmarkConfig } from './Icon.bench';
 export { iconButtonBenchmarkConfig } from './IconButton.bench';
-export { logosBenchmarkConfig } from './Logos.bench';
 export { overlayBenchmarkConfig } from './Overlay.bench';
 export { pagerBenchmarkConfig } from './Pager.bench';
 export { promptInputBenchmarkConfig } from './PromptInput.bench';

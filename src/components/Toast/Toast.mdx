@@ -1,0 +1,143 @@
+import {Meta, Unstyled} from '@storybook/addon-docs/blocks';
+import {FlexDiv} from '../FlexDiv';
+import * as ToastStories from './Toast.stories';
+import {RenderSource} from '../../../documentation/_components/RenderSource/RenderSource';
+
+<Meta of={ToastStories} />
+
+<FlexDiv width={"fill"} height={"fill"} alignItems={"center"}>
+    <FlexDiv width={"fill"} maxWidth={760} height={"auto"}>
+        <Unstyled>
+        # Toast
+        Renders transient status messaging with optional auto-dismiss and close action.
+
+        ## Singleton usage pattern
+        Add a single `Toast` instance for the app (or app shell), not one per component. Use shared state management to set `message` so that one toast handles notifications across the UI.
+
+        ## Base element
+        `motion.div`
+
+        ## Interface
+        `ReservedToastEvents = 'onMouseEnter' | 'onMouseLeave' | 'onFocus' | 'onBlur'`
+        `Omit<HTMLMotionProps<'div'>, keyof ToastBaseProps | ReservedToastEvents> & ToastBaseProps`
+
+        ## Props
+        <table style={{width: '100%'}}>
+          <colgroup>
+            <col style={{width: '1%'}} />
+            <col style={{width: '1%'}} />
+            <col style={{width: '1%'}} />
+            <col style={{width: '97%'}} />
+          </colgroup>
+          <thead>
+            <tr>
+              <th className={"left"}>Prop</th>
+              <th className={"left"}>Type</th>
+              <th className={"left"}>Default</th>
+              <th>Description</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td><code>border</code></td><td><code>boolean</code></td><td><code>true</code></td><td>When <code>true</code>, shows a border using the selected <code>type</code> color scheme.</td></tr>
+            <tr><td><code>close</code></td><td><code>boolean</code></td><td><code>true</code></td><td>When <code>true</code>, renders a close icon that dismisses the toast immediately.</td></tr>
+            <tr><td><code>duration</code></td><td><code>number | "Infinite"</code></td><td><code>5000</code></td><td>Auto-dismiss duration in milliseconds or "Infinite" with no auto-dismiss (forces close button to be visible).</td></tr>
+            <tr><td><code>message</code></td><td><code>string | null</code></td><td><code>null</code></td><td>Message content. Empty or <code>null</code> hides the toast.</td></tr>
+            <tr><td><code>offset</code></td><td><code>number</code></td><td><code>24</code></td><td>Distance in pixels from the top or bottom edge based on <code>position</code>.</td></tr>
+            <tr><td><code>padding</code></td><td><code>number | string</code></td><td><code>close ? '10px 12px 10px 16px' : '10px 16px'</code></td><td>Inner spacing for the toast container.</td></tr>
+            <tr><td><code>position</code></td><td><code>'top' | 'bottom'</code></td><td><code>'bottom'</code></td><td>Edge of the viewport used for anchored placement and enter/exit animation direction.</td></tr>
+            <tr><td><code>radius</code></td><td><code>number | string</code></td><td><code>8</code></td><td>Container border radius.</td></tr>
+            <tr><td><code>showDelay</code></td><td><code>number</code></td><td><code>0</code></td><td>Delay in milliseconds before a new toast message appears.</td></tr>
+            <tr><td><code>size</code></td><td><code>'s' | 'm' | 'l'</code></td><td><code>'m'</code></td><td>Typography size preset for the message text.</td></tr>
+            <tr><td><code>type</code></td><td><code>'success' | 'error' | 'warning' | 'info'</code></td><td><code>'info'</code></td><td>Visual status variant used for background, border, and text colors.</td></tr>
+            <tr><td><code>...divAttributes</code></td><td><code>HTMLMotionProps</code><br/><code>HTMLDivElement</code></td><td><code>-</code></td><td>Native/motion <code>div</code> props pass through to the wrapper (for example <code>id</code>, <code>data-testid</code>, <code>className</code>, <code>style</code>, <code>aria-*</code>). Internal hover/focus lifecycle handlers are reserved: <code>onMouseEnter</code>, <code>onMouseLeave</code>, <code>onFocus</code>, <code>onBlur</code>.</td></tr>
+          </tbody>
+        </table>
+
+        ## Events
+        <table style={{width: '100%'}}>
+          <colgroup>
+            <col style={{width: '1%'}} />
+            <col style={{width: '10%'}} />
+            <col style={{width: '50%'}} />
+          </colgroup>
+          <thead>
+            <tr>
+              <th className={"left"}>Event</th>
+              <th className={"left"}>Type</th>
+              <th className={"left"}>Description</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td><code>didHide</code></td><td><code>() =&gt; void</code></td><td>Triggered when toast animates out</td></tr>
+          </tbody>
+        </table>
+
+        ## Code Examples
+        </Unstyled>
+
+        <RenderSource language={"tsx"}>
+{`
+import { useState } from 'react';
+import { Toast, Button } from '@apple-pie/slice';
+
+export function ToastStatusExample() {
+  const [message, setMessage] = useState<string | null>(null);
+
+  return (
+    <>
+      <Button
+        label="Save profile"
+        onClick={() => setMessage('Profile saved successfully')}
+      />
+
+      <Toast
+        message={message}
+        type="success"
+        close={true}
+        position="bottom"
+        didHide={() => setMessage(null)}
+        id="profile-save-toast"
+        data-testid="profile-save-toast"
+        aria-live="polite"
+      />
+    </>
+  );
+}
+`}
+        </RenderSource>
+
+        <RenderSource language={"tsx"}>
+{`
+import { useState } from 'react';
+import { Toast, IconButton } from '@apple-pie/slice';
+
+export function DelayedWarningToast() {
+  const [message, setMessage] = useState<string | null>(null);
+
+  return (
+    <>
+      <IconButton
+        icon="alert-triangle"
+        tooltip="Trigger warning toast"
+        onClick={() => setMessage('Connection is unstable')}
+      />
+
+      <Toast
+        message={message}
+        type="warning"
+        showDelay={300}
+        duration={4000}
+        close={false}
+        position="top"
+        offset={20}
+        didHide={() => setMessage(null)}
+        className="network-toast"
+        style={{ maxWidth: 420 }}
+      />
+    </>
+  );
+}
+`}
+        </RenderSource>
+    </FlexDiv>
+</FlexDiv>

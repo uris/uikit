@@ -33,7 +33,7 @@ npm run benchmark:ui
 npm run benchmark:raw
 ```
 
-Results are saved to `benchmark-results.md` in the root directory.
+Results are saved to `reports/benchmark-results.md` in the project root.
 
 ---
 
@@ -110,7 +110,7 @@ Create `.bench.tsx` files for vitest-style benchmarks:
 ```typescript
 import { bench, describe } from 'vitest';
 import React from 'react';
-import { YourComponent } from '../../src/uikit/YourComponent';
+import { YourComponent } from '../../src/components/YourComponent';
 import { measureMountTime } from '../utils/benchmark';
 
 describe('YourComponent Performance Benchmarks', () => {
@@ -265,7 +265,7 @@ const result = await measureMemoryDelta(
 
 ### Markdown Report Table
 
-Generated in `benchmark-results.md`:
+Generated in `reports/benchmark-results.md`:
 
 ```markdown
 ## Performance Summary
@@ -330,13 +330,13 @@ Recommended performance targets by component complexity:
 ```bash
 # Save baseline
 npm run benchmark
-mv benchmark-results.md benchmark-baseline.md
+mv reports/benchmark-results.md reports/benchmark-baseline.md
 
 # Make optimization changes...
 
 # Run again and compare
 npm run benchmark
-diff benchmark-baseline.md benchmark-results.md
+diff reports/benchmark-baseline.md reports/benchmark-results.md
 ```
 
 ### 3. Benchmark Realistic Scenarios
@@ -455,7 +455,7 @@ A: Focus on frequently used components, complex components, and components with 
 A: `npm run benchmark` uses custom formatting and generates a markdown report. `npm run benchmark:raw` shows standard vitest output without custom formatting.
 
 **Q: Can I add benchmarks to CI/CD?**
-A: Yes! Add `npm run benchmark` to your CI pipeline and save the `benchmark-results.md` as an artifact.
+A: Yes! Add `npm run benchmark` to your CI pipeline and save `reports/benchmark-results.md` as an artifact.
 
 **Q: Why are animations mocked?**
 A: Motion/react animations are mocked in `benchmarks/setup.ts` to prevent animation overhead from skewing component performance measurements.

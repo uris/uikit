@@ -1,0 +1,37 @@
+.chip {
+	composes: row from "../../utils/styling/flexBox.module.css";
+	padding: var(--ui-chip-padding) !important;
+	width: min-content;
+	min-height: 30px;
+	gap: var(--ui-chip-gap);
+	background: var(--ui-chip-background);
+	line-height: 1em;
+	color: var(--ui-chip-color);
+	border: var(--ui-chip-border) solid var(--ui-chip-border-color);
+	border-radius: var(--ui-chip-border-radius);
+	transition: all var(--motion-water-duration) var(--motion-water) 0s;
+	cursor: pointer;
+	white-space: nowrap;
+	user-select: none;
+	-webkit-user-select: none;
+}
+
+.icon {
+	composes: row from "../../utils/styling/flexBox.module.css";
+	height: var(--ui-chip-icon-size);
+	min-height: var(--ui-chip-icon-size);
+	width: var(--ui-chip-icon-size);
+	min-width: var(--ui-chip-icon-size);
+}
+
+.s {
+	composes: body-s-regular from "../../utils/styling/type.module.css";
+}
+
+.m {
+	composes: body-m-regular from "../../utils/styling/type.module.css";
+}
+
+.l {
+	composes: body-l-regular from "../../utils/styling/type.module.css";
+}

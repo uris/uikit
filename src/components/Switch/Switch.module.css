@@ -1,0 +1,18 @@
+.wrapper {
+	composes: row from "../../utils/styling/flexBox.module.css";
+	padding: var(--switch-padding) !important;
+	width: var(--switch-width);
+	height: var(--switch-height);
+	border-radius: 100px;
+	cursor: pointer;
+	background: var(--switch-bg-color);
+	transition: background var(--motion-water-duration) var(--motion-water) 0s;
+}
+
+.knob {
+	composes: row from "../../utils/styling/flexBox.module.css";
+	width: var(--switch-knob-size);
+	height: var(--switch-knob-size);
+	background: var(--switch-knob-color);
+	border-radius: 100%;
+}

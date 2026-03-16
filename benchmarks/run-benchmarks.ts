@@ -4,9 +4,9 @@
  */
 
 import React from 'react';
-import { Avatar } from '../src/uikit/Avatar/Avatar';
-import { Button } from '../src/uikit/Button/Button';
-import { FlexDiv } from '../src/uikit/FlexDiv/FlexDiv';
+import { Avatar } from '../src/components/Avatar/Avatar';
+import { Button } from '../src/components/Button/Button';
+import { FlexDiv } from '../src/components/FlexDiv/FlexDiv';
 import {
 	measureMountTime,
 	measureRerenderTime,
@@ -124,7 +124,7 @@ async function runBenchmarks() {
 	console.log(reporter.generateConsoleReport());
 
 	// Save markdown report
-	reporter.saveToFile('benchmark-results.md');
+	reporter.saveToFile('reports/benchmark-results.md');
 
 	console.log('\n✅ Benchmarks complete!\n');
 }

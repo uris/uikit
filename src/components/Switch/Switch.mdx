@@ -1,0 +1,89 @@
+import {Meta, Unstyled} from '@storybook/addon-docs/blocks';
+import {FlexDiv} from '../FlexDiv';
+import * as SwitchStories from './Switch.stories';
+import {RenderSource} from '../../../documentation/_components/RenderSource/RenderSource';
+
+<Meta of={SwitchStories} />
+
+<FlexDiv width={"fill"} height={"fill"} alignItems={"center"}>
+    <FlexDiv width={"fill"} maxWidth={760} height={"auto"}>
+        <Unstyled>
+        # Switch
+        Renders a binary on/off control for toggling settings and preferences.
+
+        ## Base element
+        `HTMLDivElement`
+
+        ## Interface
+        `SwitchProps`
+
+        ## Props
+        <table style={{width: '100%'}}>
+          <colgroup>
+            <col style={{width: '1%'}} />
+            <col style={{width: '1%'}} />
+            <col style={{width: '1%'}} />
+            <col style={{width: '97%'}} />
+          </colgroup>
+          <thead>
+            <tr>
+              <th className={"left"}>Prop</th>
+              <th className={"left"}>Type</th>
+              <th className={"left"}>Default</th>
+              <th>Description</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td><code>bgColorOff</code></td><td><code>string</code></td><td><code>-</code></td><td>Color token/value for `bgColorOff`.</td></tr>
+            <tr><td><code>bgColorOn</code></td><td><code>string</code></td><td><code>-</code></td><td>Color token/value for `bgColorOn`.</td></tr>
+            <tr><td><code>height</code></td><td><code>number</code></td><td><code>-</code></td><td>Sizing/layout setting for `height`.</td></tr>
+            <tr><td><code>knobColor</code></td><td><code>string</code></td><td><code>-</code></td><td>Color token/value for `knobColor`.</td></tr>
+            <tr><td><code>padding</code></td><td><code>number</code></td><td><code>-</code></td><td>Sizing/layout setting for `padding`.</td></tr>
+            <tr><td><code>state</code></td><td><code>boolean</code></td><td><code>-</code></td><td>Boolean flag controlling `state`.</td></tr>
+            <tr><td><code>width</code></td><td><code>number</code></td><td><code>-</code></td><td>Sizing/layout setting for `width`.</td></tr>
+            <tr><td><code>...divAttributes</code></td><td><code>{`HTMLAttributes<HTMLDivElement>`}</code></td><td><code>-</code></td><td>Native `div` props pass through (for example `id`, `data-testid`, `className`, `style`, `aria-*`).</td></tr>
+          </tbody>
+        </table>
+
+        ## Events
+        <table style={{width: '100%'}}>
+          <colgroup>
+            <col style={{width: '1%'}} />
+            <col style={{width: '99%'}} />
+          </colgroup>
+          <thead>
+            <tr>
+              <th className={"left"}>Event</th>
+              <th className={"left"}>Type</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td><code>onChange</code></td><td><code>{`(state: boolean) => void`}</code></td></tr>
+          </tbody>
+        </table>
+
+        ## Code Examples
+        </Unstyled>
+
+        <RenderSource language={"tsx"}>
+{`
+import { Switch } from '@apple-pie/slice';
+
+export function SwitchExample() {
+  return (
+    <Switch
+      state={true}
+      width={42}
+      height={24}
+      onChange={(state) => console.log(state)}
+      id="switch-example"
+      data-testid="switch-example"
+      className="custom-wrapper"
+      style={{ marginTop: 8, maxWidth: 480 }}
+    />
+  );
+}
+`}
+        </RenderSource>
+    </FlexDiv>
+</FlexDiv>

@@ -1,0 +1,119 @@
+import { Meta, Unstyled } from '@storybook/addon-docs/blocks';
+import {FlexDiv} from "../src/components/FlexDiv";
+import {Spacer} from "../src/components/Spacer";
+import {RenderSource} from "./_components/RenderSource/RenderSource";
+
+<Meta title="Welcome/Quick Start" />
+
+<FlexDiv width={"fill"} height={"fill"} alignItems={"center"}>
+    <FlexDiv width={"fill"} maxWidth={760} height={"auto"}>
+        <Unstyled>
+            # Quick Start
+            Slice ships with a light and dark theme. To get set up, install Slice, wrap your app with the theme provider and use the included components.
+            The built in `useTheme` hook makes styling and managing themes easy.
+            
+            #### 1. Install Slice and Motion
+            Make sure Slice and [Motion](https://motion.dev) are installed in your project ...
+        </Unstyled>
+        <RenderSource language='bash'>
+            $ npm install @apple-pie/slice motion/react
+        </RenderSource>
+        <Unstyled>
+            #### 2. Wrap your app with the theme provider
+            Wrap your app (or where you plan to use Slice) with Slice's `ThemeProvider`. Set the system flag to true to have Slice automatically adopt the system color theme (dark / light mode)
+        </Unstyled>
+        <RenderSource language='jsx'>
+            ```
+            import { ThemeProvider } from '@apple-pie/slice';
+
+            // ...
+                  
+            <ThemeProvider system={true}>
+                <App />
+            </ThemeProvider>
+
+            // ...      
+            ```
+        </RenderSource>
+        <Unstyled>
+            #### 3. Use Slice components.
+            Now you can and use Slice components anywhere inside `<App />`.
+        </Unstyled>
+        <RenderSource language='jsx'>
+            ```
+            import { Avatar } from '@apple-pie/slice';
+
+            // ...
+
+            <Avatar size={32} first={"John"} last={"Appleseed"} />
+
+            // ...
+            ```
+        </RenderSource>
+        <Unstyled>
+            #### 4. Use the Slice theme in your own components.
+            Use the built in hook to grab the current theme and access tokens or values for use in your components. InteliSense will pick up all the available tokens as you type - no need to remeber them all.
+        </Unstyled>
+        <RenderSource language='jsx'>
+            ```
+            import { useTheme } from '@apple-pie/slice';
+        
+            // ...
+        
+            const {current, colors, colorClass} = useTheme();
+
+            // Use "colors[...]" to get the css var.
+            <a style={{color: colors["core-link-primary"]}}>
+                color value will be "var(--core-link-primary)"
+            </a>
+
+            // you can also use "colorClass[...]" for the class name
+            <a className={colorClass["core-link-primary"]}>
+                class names will include "core-link-primary"
+            </a>
+
+            // Omitting the "colorClass" prefix is ok but disables IntelliSense
+            <a className="core-link-primary">
+                class names will include "core-link-primary"
+            </a>
+            
+            // Use current.colors to use the color value from the active theme
+            // Note: re-renders when the active theme changes
+            <a style={{color: current.colors["core-link-primary"]}}>
+               color value will be "#0000ff" for light theme
+            </a>
+        
+            // ...
+            ```
+        </RenderSource>
+        <Unstyled>
+            There are a few options to styling your own components including using `className` to set styles.
+            Learn more about the useTheme hook here.
+            
+            #### 5. Toggle light / dark modes
+            The useTheme hook allows you to easily toggle or set the current theme.
+        </Unstyled>
+        <RenderSource language='jsx'>
+            ```
+            import { useTheme, lightTheme, Button } from '@apple-pie/slice';
+
+            // ...
+            
+            const theme = useTheme();
+            
+            // ...
+            
+            // toggle light / dark theme            
+            <Button label={"Toggle Theme"} onClick={() => theme.toggle()} />
+            
+            // set theme by name / object - pass "system" to use your PC theme              
+            <Button label={"Light Mode"} onClick={() => theme.set(lightTheme)} />
+            ```
+        </RenderSource>
+        <Unstyled>
+            <Spacer size={24} />
+            <p className={"note"}>Note: Slice uses css modules for styling and should play nice with other tools your project uses to manage styles. It also makes Slice compatible with mixed or server side architectures like [Next.js](https://nextjs.org) and [Remix](https://remix.run).</p>
+        </Unstyled>
+    </FlexDiv>
+
+</FlexDiv>

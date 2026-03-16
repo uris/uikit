@@ -61,7 +61,7 @@ export default defineConfig({
 	resolve: {
 		alias: {
 			'@': path.resolve(__dirname, './src'),
-			'@uikit': path.resolve(__dirname, './src/uikit'),
+			'@components': path.resolve(__dirname, './src/components'),
 		},
 	},
 });

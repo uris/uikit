@@ -1,6 +1,6 @@
 {
 	"name": "@apple-pie/slice",
-	"version": "0.0.9",
+	"version": "0.1.2",
 	"main": "dist/cjs/index.js",
 	"module": "dist/esm/index.mjs",
 	"exports": {
@@ -78,10 +78,15 @@
 			"import": "./dist/esm/theme/themes.mjs",
 			"require": "./dist/cjs/theme/themes.js"
 		},
-		"./uikit/*": {
-			"types": "./dist/types/uikit/*/index.d.ts",
-			"import": "./dist/esm/uikit/*/index.mjs",
-			"require": "./dist/cjs/uikit/*/index.js"
+		"./utils": {
+			"types": "./dist/types/utils/index.d.ts",
+			"import": "./dist/esm/utils/index.mjs",
+			"require": "./dist/cjs/utils/index.js"
+		},
+		"./components/*": {
+			"types": "./dist/types/components/*/index.d.ts",
+			"import": "./dist/esm/components/*/index.mjs",
+			"require": "./dist/cjs/components/*/index.js"
 		}
 	},
 	"files": ["dist", "README.md", "scripts/copy-assets.mjs"],
