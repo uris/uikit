@@ -1,5 +1,6 @@
 .container {
 	composes: rowStart from "../../../src/utils/styling/flexBox.module.css";
+	justify-content: space-between;
 	flex-wrap: wrap;
 	gap: 24px;
 }
@@ -40,4 +41,12 @@
 	padding: 16px 0 !important;
 	width: 100%;
 	gap: 16px;
+}
+
+.spacer {
+	flex: 1;
+	max-height: var(--icon-size);
+	min-height: var(--icon-size);
+	min-width: var(--icon-size);
+	max-width: var(--icon-size);
 }

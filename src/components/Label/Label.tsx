@@ -19,7 +19,7 @@ export function Label(props: Readonly<LabelProps>) {
 		color,
 		inline = true,
 		size = 'm',
-		onClick = () => null,
+		onClick,
 		...divAttributes
 	} = props;
 	const { id: divId, className, style, ...rest } = divAttributes;
@@ -28,7 +28,7 @@ export function Label(props: Readonly<LabelProps>) {
 
 	const handleClick = useCallback(
 		(e: React.MouseEvent<any>) => {
-			if (button) onClick(e);
+			if (button) onClick?.(e);
 		},
 		[button, onClick],
 	);
@@ -147,15 +147,17 @@ export function Label(props: Readonly<LabelProps>) {
 	/* END.DEBUG */
 
 	return (
-		<div
+		<span
 			id={divId}
 			className={`${classNames} ${css[size]}${divClass}`}
-			onKeyDown={() => null}
 			style={{ ...divStyle, ...cssVars }}
+			role={onClick ? 'button' : undefined}
+			aria-label={onClick ? 'Label button' : undefined}
 			onClick={handleClick}
+			onKeyDown={() => null}
 			{...rest}
 		>
 			{children}
-		</div>
+		</span>
 	);
 }

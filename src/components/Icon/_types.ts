@@ -20,6 +20,10 @@ export type IconProps = Omit<
 	IconBaseProps;
 
 export enum IconNames {
+	video = 'video',
+	mic = 'mic',
+	micMuted = 'mic muted',
+	camera = 'camera',
 	home = 'home',
 	inbox = 'inbox',
 	sparkle = 'sparkle',

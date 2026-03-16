@@ -1,0 +1,68 @@
+import type React from 'react';
+
+export interface ToolbarButtonProps {
+	icon: string;
+	iconActive?: string;
+	onClick: () => void;
+	active?: boolean;
+	label?: string;
+	disabled?: boolean;
+}
+
+export interface CameraElement {
+	container?: HTMLDivElement;
+	video?: HTMLVideoElement;
+	stream?: MediaStream;
+	videoTrack?: MediaStreamTrack;
+	audioTrack?: MediaStreamTrack;
+	snapshot?: (options?: CameraSnapshotOptions) => Blob | undefined;
+	startCamera?: () => Promise<MediaStream | Error>;
+	stopCamera?: () => Promise<boolean | Error>;
+	enableVideo?: () => MediaStream | Error;
+	disableVideo?: () => boolean | Error;
+	muteMic?: () => boolean | Error;
+	unmuteMic?: () => boolean | Error;
+	toggleVideo?: () => Promise<MediaStream | boolean | Error>;
+	toggleMic?: () => boolean | Error;
+	devices?: () => Promise<MediaDeviceInfo[] | Error>;
+}
+
+export interface CameraSnapshotOptions {
+	width?: number;
+	height?: number;
+	toggle?: boolean;
+}
+
+export interface Controls {
+	mic?: boolean;
+	camera?: boolean;
+	play?: boolean;
+	stop?: boolean;
+	pause?: boolean;
+	videoDevices?: boolean;
+	audioDevices?: boolean;
+	flipCamera?: boolean;
+}
+
+export interface BaseCameraProps {
+	width?: number | string;
+	height?: number | string;
+	posterImage?: string;
+	videoFit?: 'fill' | 'contain' | 'cover' | 'none' | 'scale-down';
+	startCameraOff?: boolean;
+	startAudioMuted?: boolean;
+	onVideoStream?: (stream: MediaStream) => void;
+	onSnapshot?: (blob: Blob | undefined) => void;
+	onNoVideo?: (reason?: string | Error) => void;
+	onNoAudio?: (reason?: string | Error) => void;
+	showControlBar?: boolean;
+	autoHideControlBar?: boolean;
+	controls?: Controls;
+	pipSnapshot?: boolean;
+}
+
+export type CameraProps = Omit<
+	React.HTMLAttributes<HTMLDivElement>,
+	keyof BaseCameraProps
+> &
+	BaseCameraProps;
