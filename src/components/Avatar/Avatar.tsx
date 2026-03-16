@@ -1,5 +1,12 @@
-import React, { useCallback, useMemo } from 'react';
+import React, {
+	useCallback,
+	useEffect,
+	useMemo,
+	useRef,
+	useState,
+} from 'react';
 import { useTrackRenders } from '../../hooks/useTrackRenders/useTrackRenders';
+import { normalizedPercent, setStyle } from '../../utils/functions/misc';
 import css from './Avatar.module.css';
 import type { AvatarProps } from './_types';
 
@@ -22,9 +29,11 @@ export const Avatar = React.memo((props: AvatarProps) => {
 		tabIndex = 0,
 		...divAttributes
 	} = props;
+	const [textSize, setTextSize] = useState<number | string>('inherit');
 	const { id: divId, className, style, ...rest } = divAttributes;
 	const divStyle = style ?? ({} as React.CSSProperties);
 	const divClass = className ? ` ${className}` : '';
+	const ref = useRef<HTMLDivElement>(null);
 
 	// memo initials computation
 	const initials = useMemo(
@@ -38,17 +47,34 @@ export const Avatar = React.memo((props: AvatarProps) => {
 		return image ? `url(${image})` : '';
 	}, [firstOnly, image]);
 
-	// calc and memo font size
-	const setFontSize = useMemo(() => {
-		if (fontSize === undefined) return 'inherit';
-		if (fontSize === 'auto') {
-			let fSize = Math.round(frame / 3);
-			fSize = Math.min(fSize, 24);
-			fSize = Math.max(fSize, 14);
-			return `${fSize}px`;
+	// set font size as absolute or percent of container
+	useEffect(() => {
+		if (fontSize === undefined) {
+			setTextSize('inherit');
+			return;
 		}
-		return `${fontSize}px`;
-	}, [frame, fontSize]);
+		if (
+			fontSize === 'auto' ||
+			(typeof fontSize === 'number' && fontSize <= 1)
+		) {
+			const parentHeight = ref.current?.offsetHeight;
+			if (!parentHeight) {
+				setTextSize('inherit');
+				return;
+			}
+			let size = 0.5;
+			if (typeof fontSize === 'number') size = fontSize;
+			const fSize = Math.round(parentHeight * size);
+			setTextSize(fSize);
+			return;
+		}
+		if (typeof fontSize === 'string' && fontSize.includes('%')) {
+			const normalized = normalizedPercent(fontSize);
+			setTextSize(normalized);
+			return;
+		}
+		setTextSize(fontSize);
+	}, [fontSize]);
 
 	// memo display content
 	const displayContent = useMemo(
@@ -73,16 +99,16 @@ export const Avatar = React.memo((props: AvatarProps) => {
 	// memo css vars
 	const avatarVars = useMemo(() => {
 		return {
-			'--avatar-size': `${size}px`,
-			'--avatar-frame': `${frame}px`,
+			'--avatar-size': setStyle(size),
+			'--avatar-frame': setStyle(frame),
 			'--avatar-border': `${border}px`,
 			'--avatar-color': color ?? 'var(--core-text-primary)',
 			'--avatar-bg-color': bgColor ?? 'var(--core-surface-secondary)',
 			'--avatar-border-color': borderColor ?? 'var(--core-surface-primary)',
 			'--avatar-bg-image': `${bgImage}`,
-			'--avatar-font-size': setFontSize,
+			'--avatar-font-size': setStyle(textSize),
 		} as React.CSSProperties;
-	}, [size, frame, border, color, bgColor, borderColor, bgImage, setFontSize]);
+	}, [size, frame, border, color, bgColor, borderColor, bgImage, textSize]);
 
 	// memo class names
 	const classNames = useMemo(() => {
@@ -107,7 +133,7 @@ export const Avatar = React.memo((props: AvatarProps) => {
 			aria-label={`User Avatar - ${first}`}
 			{...rest}
 		>
-			<div aria-hidden={true} className={css.user}>
+			<div ref={ref} aria-hidden={true} className={css.user}>
 				{displayContent}
 			</div>
 		</div>

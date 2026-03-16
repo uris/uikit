@@ -8,12 +8,14 @@ import React, {
 import { useTheme } from '../../hooks';
 import { addOpacity } from '../../utils';
 import { accessibleKeyDown } from '../../utils/functions/misc';
+import { Avatar } from '../Avatar';
 import { Icon } from '../Icon';
 import css from './Camera.module.css';
 import type {
 	CameraElement,
 	CameraProps,
 	CameraSnapshotOptions,
+	DefaultNoVideoPosterProps,
 	ToolbarButtonProps,
 } from './_types';
 
@@ -23,6 +25,7 @@ export const Camera = React.memo(
 		const containerElement = useRef<HTMLDivElement>(null);
 		const controlsTimer = useRef<NodeJS.Timeout | null>(null);
 		const {
+			noVideoPoster,
 			width,
 			height,
 			showControlBar = true,
@@ -30,6 +33,10 @@ export const Camera = React.memo(
 			startCameraOff = false,
 			startAudioMuted = false,
 			pipSnapshot = true,
+			userProfile,
+			sessionSettings,
+			onChangeProfile,
+			onChangeSettings,
 			onSnapshot,
 			onVideoStream,
 			onNoVideo,
@@ -46,14 +53,18 @@ export const Camera = React.memo(
 		const [cameraOn, setCameraOn] = useState<boolean>(false);
 		const [micMuted, setMicMuted] = useState<boolean>(startAudioMuted);
 		const [snapshot, setSnapshot] = useState<string | undefined>(undefined);
+		const [settings, setSettings] = useState<boolean>(false);
+		const [profile, setProfile] = useState<boolean>(false);
+		const [deviceList, setDeviceList] = useState<MediaDeviceInfo[] | Error>([]);
 
-		const constraints = useMemo(
-			() => ({
-				video: true,
-				audio: true,
-			}),
-			[],
-		);
+		const constraints = useMemo<MediaStreamConstraints>(() => {
+			const videoDeviceId = sessionSettings?.videoDeviceId;
+			const micDeviceId = sessionSettings?.micDeviceId;
+			return {
+				video: videoDeviceId ? { deviceId: { exact: videoDeviceId } } : true,
+				audio: micDeviceId ? { deviceId: { exact: micDeviceId } } : true,
+			};
+		}, [sessionSettings?.micDeviceId, sessionSettings?.videoDeviceId]);
 
 		const getStream = useCallback(() => {
 			const srcObject = videoElement.current?.srcObject;
@@ -71,7 +82,10 @@ export const Camera = React.memo(
 		);
 
 		const getMediaDevices = useCallback(async () => {
-			if (!navigator.mediaDevices?.enumerateDevices)
+			if (
+				typeof navigator === 'undefined' ||
+				!navigator.mediaDevices?.enumerateDevices
+			)
 				return new Error('Media devices not supported');
 			return await navigator.mediaDevices.enumerateDevices().catch((error) => {
 				const defaultError = new Error(
@@ -82,6 +96,7 @@ export const Camera = React.memo(
 		}, []);
 
 		const hasMediaSupport = useMemo(() => {
+			if (typeof navigator === 'undefined') return false;
 			return Boolean(navigator.mediaDevices?.getUserMedia);
 		}, []);
 
@@ -92,8 +107,8 @@ export const Camera = React.memo(
 			setCameraOn(
 				Boolean(videoTrack?.readyState === 'live' && videoTrack.enabled),
 			);
-			setMicMuted(audioTrack ? !audioTrack.enabled : false);
-		}, [getStream]);
+			setMicMuted(audioTrack ? !audioTrack.enabled : startAudioMuted);
+		}, [getStream, startAudioMuted]);
 
 		const takeSnapshot = useCallback((options?: CameraSnapshotOptions) => {
 			if (!videoElement.current) return undefined;
@@ -219,9 +234,23 @@ export const Camera = React.memo(
 				return existingStream;
 			}
 			try {
-				const stream = await navigator.mediaDevices.getUserMedia(constraints);
+				let stream: MediaStream;
+				try {
+					stream = await navigator.mediaDevices.getUserMedia(constraints);
+				} catch (error) {
+					const shouldRetry =
+						(error instanceof DOMException &&
+							error.name === 'OverconstrainedError') ||
+						(error instanceof DOMException && error.name === 'NotFoundError');
+					if (!shouldRetry) throw error;
+					stream = await navigator.mediaDevices.getUserMedia({
+						video: true,
+						audio: true,
+					});
+				}
 				const audioTrack = stream.getAudioTracks()[0];
 				const videoTrack = stream.getVideoTracks()[0];
+				const devices = await getMediaDevices();
 				if (!videoTrack) {
 					onNoVideo?.('No video track available');
 					for (const track of stream.getTracks()) {
@@ -236,6 +265,7 @@ export const Camera = React.memo(
 				onVideoStream?.(stream);
 				setCameraSupport(true);
 				setCameraError(undefined);
+				setDeviceList(devices);
 				syncMediaState();
 				return stream;
 			} catch (error) {
@@ -260,6 +290,7 @@ export const Camera = React.memo(
 			startAudioMuted,
 			getStream,
 			syncMediaState,
+			getMediaDevices,
 		]);
 
 		const toggleVideo = useCallback(async () => {
@@ -283,6 +314,7 @@ export const Camera = React.memo(
 				setCameraOn(false);
 				setMicMuted(startAudioMuted);
 				setCameraError(undefined);
+				setDeviceList([]);
 				return true;
 			} catch (error) {
 				const defaultError = new Error(
@@ -338,20 +370,33 @@ export const Camera = React.memo(
 			],
 		);
 
-		// styling setup
+		// memo showing poster element
+		const showPoster = useMemo(() => {
+			if (cameraError) return false;
+			if (cameraSupport === false) return true;
+			return !cameraOn;
+		}, [cameraError, cameraSupport, cameraOn]);
 
+		// memo show error message
+		const showError = useMemo(() => {
+			return Boolean(cameraError);
+		}, [cameraError]);
+
+		// memo control bar background
 		const controlsBg = useMemo(() => {
 			const bgColor = theme.current.colors['core-surface-primary'];
 			return addOpacity(bgColor, 0.75);
 		}, [theme.current]);
 
+		// show/hide control bar
 		const setControlBarVisible = useMemo(() => {
-			if (!showControlBar) return 'translateY(100%)';
 			if (!autoHideControlBar) return 'translateY(0%)';
+			if (!showControlBar) return 'translateY(100%)';
 			if (hovered) return 'translateY(0%)';
 			return 'translateY(100%)';
 		}, [autoHideControlBar, hovered, showControlBar]);
 
+		// memo css vars
 		const cssVars = useMemo(
 			() =>
 				({
@@ -363,8 +408,7 @@ export const Camera = React.memo(
 			[controlsBg, height, setControlBarVisible, width],
 		);
 
-		// methods
-
+		// mouse handlers to show/hide controls bar
 		const handleMouseEnter = () => {
 			if (controlsTimer.current) clearTimeout(controlsTimer.current);
 			setHovered(true);
@@ -395,7 +439,7 @@ export const Camera = React.memo(
 			startCamera().then(() => null);
 		}, [startCamera, startCameraOff, stopCamera]);
 
-		// clean up camer stream object
+		// clean up camera stream on onmount
 		useEffect(() => {
 			return () => {
 				if (controlsTimer.current) clearTimeout(controlsTimer.current);
@@ -449,14 +493,30 @@ export const Camera = React.memo(
 						<track kind={'captions'} src={undefined} />
 					</video>
 				)}
-				{cameraSupport === false && <div>Camera not supported</div>}
-				{cameraError && cameraSupport !== false && <div>{cameraError}</div>}
+				{showPoster && (
+					<div className={css.poster}>
+						{noVideoPoster ?? <DefaultNoVideoPoster user={userProfile} />}
+					</div>
+				)}
+				{showError && <div className={css.error}>{cameraError}</div>}
 				<div
 					className={css.controls}
 					onMouseEnter={handleControlsMouseEnter}
 					onMouseLeave={handleControlsMouseLeave}
 				>
-					<div className={css.controlsLeft} />
+					<div className={css.controlsLeft}>
+						<ToolbarButton
+							icon={'person'}
+							iconActive={'person'}
+							active={profile}
+							label={'User Info'}
+							disabled={false}
+							onClick={() => {
+								setProfile(!profile);
+								onChangeProfile?.(userProfile);
+							}}
+						/>
+					</div>
 					<div className={css.controlsCenter}>
 						<ToolbarButton
 							icon={'video'}
@@ -481,13 +541,28 @@ export const Camera = React.memo(
 							onClick={() => cameraOn && handleSnapshot({ toggle: true })}
 						/>
 					</div>
-					<div className={css.controlsRight} />
+					<div className={css.controlsRight}>
+						<ToolbarButton
+							icon={'more'}
+							iconActive={'more'}
+							active={settings}
+							label={'Settings'}
+							disabled={false}
+							onClick={() => {
+								setSettings(!settings);
+								onChangeSettings?.(sessionSettings, deviceList);
+							}}
+						/>
+					</div>
 				</div>
 			</div>
 		);
 	}),
 );
 
+/**
+ * Custom toolbar button with labels for controlling video / audio / etc.
+ */
 export function ToolbarButton(props: Readonly<ToolbarButtonProps>) {
 	const { icon, iconActive, active, label, disabled, onClick } = props;
 
@@ -503,7 +578,7 @@ export function ToolbarButton(props: Readonly<ToolbarButtonProps>) {
 
 	const cssVars = useMemo(() => {
 		return {
-			'--toolbar-button-size': '44px',
+			'--toolbar-button-size': '56px',
 			'--toolbar-button-border': 'none',
 			'--toolbar-button-bg-color': active
 				? 'var(--core-text-primary)'
@@ -527,9 +602,33 @@ export function ToolbarButton(props: Readonly<ToolbarButtonProps>) {
 			tabIndex={disabled ? -1 : 0}
 		>
 			<div className={css.buttonIcon}>
-				<Icon name={active ? iconActive : icon} strokeColor={iconColor} />
+				<Icon
+					size={24}
+					name={active ? iconActive : icon}
+					strokeColor={iconColor}
+				/>
 			</div>
 			<div className={css.buttonLabel}>{label}</div>
 		</div>
 	);
+}
+
+/**
+ * the default poster image when no video is available
+ */
+export function DefaultNoVideoPoster(
+	props: Readonly<DefaultNoVideoPosterProps>,
+) {
+	const { size = 0.75, user, message = 'Video is off' } = props;
+	if (user)
+		return (
+			<Avatar
+				image={user?.avatar}
+				first={user?.first}
+				last={user?.last}
+				size={'50%'}
+				fontSize={'25%'}
+			/>
+		);
+	return message;
 }

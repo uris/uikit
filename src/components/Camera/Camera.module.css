@@ -45,6 +45,28 @@
 	flex: 1;
 }
 
+.error {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	composes: row from "../../utils/styling/flexBox.module.css";
+	composes: body-m-regular from "../../utils/styling/type.module.css";
+	color: var(--feedback-warning);
+}
+
+.poster {
+	position: absolute;
+	aspect-ratio: 1 / 1;
+	top: 0;
+	bottom: 0;
+	left: 50%;
+	transform: translateX(-50%);
+	composes: row from "../../utils/styling/flexBox.module.css";
+	composes: body-m-regular from "../../utils/styling/type.module.css";
+	color: var(--core-text-primary);
+}
+
 .snapshotFrame {
 	position: absolute;
 	composes: row from "../../utils/styling/flexBox.module.css";

@@ -1,0 +1,191 @@
+import {Meta, Unstyled} from '@storybook/addon-docs/blocks';
+import {FlexDiv} from '../FlexDiv';
+import * as CameraStories from './Camera.stories';
+import {RenderSource} from '../../../documentation/_components/RenderSource/RenderSource';
+import {Spacer} from "../Spacer";
+
+<Meta of={CameraStories} />
+
+<FlexDiv width={"fill"} height={"fill"} alignItems={"center"}>
+    <FlexDiv width={"fill"} maxWidth={820} height={"auto"}>
+        <Unstyled>
+        # Camera
+        Renders a live camera preview with optional microphone access, inline capture controls, a poster fallback, and a picture-in-picture snapshot preview. This component is a special case in the library because it has both a prop interface and an imperative ref interface.
+
+        ## Base element
+        `HTMLDivElement`
+
+        The internal `HTMLVideoElement` is exposed through the forwarded ref as `CameraElement.video`.
+        
+        ## Base Interfaces
+        `CameraProps` and `CameraElement` (forwarded ref)
+
+        ## Why a ref API exists
+        Camera streams are inherently imperative browser objects. The component emits a few callbacks such as `onVideoStream` and `onSnapshot`, but it does not try to mirror every stream detail into React state or emit high-frequency state events. Instead, the forwarded ref is the primary way to:
+
+        - start or stop the stream
+        - toggle video or microphone tracks
+        - inspect the underlying `MediaStream`
+        - access raw `MediaStreamTrack` data
+        - capture snapshots on demand
+
+        ## Props
+        <table style={{width: '100%'}}>
+          <colgroup>
+            <col style={{width: '1%'}} />
+            <col style={{width: '1%'}} />
+            <col style={{width: '1%'}} />
+            <col style={{width: '97%'}} />
+          </colgroup>
+          <thead>
+            <tr>
+              <th className={"left"}>Prop</th>
+              <th className={"left"}>Type</th>
+              <th className={"left"}>Default</th>
+              <th>Description</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td><code>width</code></td><td><code>{`number | string`}</code></td><td><code>-</code></td><td>Outer width of the camera frame.</td></tr>
+            <tr><td><code>height</code></td><td><code>{`number | string`}</code></td><td><code>-</code></td><td>Outer height of the camera frame.</td></tr>
+            <tr><td><code>noVideoPoster</code></td><td><code>React.ReactNode</code></td><td><code>default poster</code></td><td>Fallback content shown when video is off or unsupported.</td></tr>
+            <tr><td><code>startCameraOff</code></td><td><code>boolean</code></td><td><code>false</code></td><td>Starts with no active media stream.</td></tr>
+            <tr><td><code>startAudioMuted</code></td><td><code>boolean</code></td><td><code>false</code></td><td>Disables the microphone track when the stream starts.</td></tr>
+            <tr><td><code>pipSnapshot</code></td><td><code>boolean</code></td><td><code>true</code></td><td>Shows the captured still image as a small overlay preview.</td></tr>
+            <tr><td><code>showControlBar</code></td><td><code>boolean</code></td><td><code>true</code></td><td>Controls whether the built-in control bar is rendered.</td></tr>
+            <tr><td><code>autoHideControlBar</code></td><td><code>boolean</code></td><td><code>true</code></td><td>When <code>false</code>, the control bar remains visible.</td></tr>
+            <tr><td><code>userProfile</code></td><td><code>{`{ first?: string; last?: string; avatar?: string }`}</code></td><td><code>-</code></td><td>Profile metadata used by the default no-video poster and profile action.</td></tr>
+            <tr><td><code>sessionSettings</code></td><td><code>{`{ micDeviceId?: string; micVolume?: number; videoDeviceId?: string }`}</code></td><td><code>-</code></td><td>Preferred device IDs used when requesting media streams. If the requested device is missing, the component falls back to default devices.</td></tr>
+            <tr><td><code>onVideoStream</code></td><td><code>{`(stream: MediaStream) => void`}</code></td><td><code>-</code></td><td>Fires when a media stream is successfully available.</td></tr>
+            <tr><td><code>onSnapshot</code></td><td><code>{`(blob: Blob | undefined) => void`}</code></td><td><code>-</code></td><td>Fires after a snapshot attempt with the captured image blob, if any.</td></tr>
+            <tr><td><code>onNoVideo</code></td><td><code>{`(reason?: string | Error) => void`}</code></td><td><code>-</code></td><td>Fires when video cannot be acquired.</td></tr>
+            <tr><td><code>onNoAudio</code></td><td><code>{`(reason?: string | Error) => void`}</code></td><td><code>-</code></td><td>Fires when audio cannot be acquired.</td></tr>
+            <tr><td><code>onChangeProfile</code></td><td><code>{`(profile?: UserProfile) => void`}</code></td><td><code>-</code></td><td>Fires when the profile action is triggered from the toolbar.</td></tr>
+            <tr><td><code>onChangeSettings</code></td><td><code>{`(settings?: Settings, devices?: MediaDeviceInfo[] | Error) => void`}</code></td><td><code>-</code></td><td>Fires when the settings action is triggered, including the current cached device list when available.</td></tr>
+            <tr><td><code>...divAttributes</code></td><td><code>{`HTMLAttributes<HTMLDivElement>`}</code></td><td><code>-</code></td><td>Native <code>div</code> props pass through to the wrapper.</td></tr>
+          </tbody>
+        </table>
+
+        ## Ref Handle
+        <table style={{width: '100%'}}>
+          <colgroup>
+            <col style={{width: '1%'}} />
+            <col style={{width: '1%'}} />
+            <col style={{width: '98%'}} />
+          </colgroup>
+          <thead>
+            <tr>
+              <th className={"left"}>Member</th>
+              <th className={"left"}>Type</th>
+              <th>Description</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td><code>container</code></td><td><code>HTMLDivElement | undefined</code></td><td>Wrapper element ref.</td></tr>
+            <tr><td><code>video</code></td><td><code>HTMLVideoElement | undefined</code></td><td>Underlying preview element.</td></tr>
+            <tr><td><code>stream</code></td><td><code>MediaStream | undefined</code></td><td>The current live media stream if available.</td></tr>
+            <tr><td><code>videoTrack</code></td><td><code>MediaStreamTrack | undefined</code></td><td>Current video track from the stream.</td></tr>
+            <tr><td><code>audioTrack</code></td><td><code>MediaStreamTrack | undefined</code></td><td>Current audio track from the stream.</td></tr>
+            <tr><td><code>startCamera()</code></td><td><code>{`() => Promise<MediaStream | Error>`}</code></td><td>Starts the stream or re-enables video on an existing live stream.</td></tr>
+            <tr><td><code>stopCamera()</code></td><td><code>{`() => Promise<boolean | Error>`}</code></td><td>Stops all active tracks and clears the stream.</td></tr>
+            <tr><td><code>enableVideo()</code></td><td><code>{`() => MediaStream | Error`}</code></td><td>Re-enables the current video track without recreating the stream.</td></tr>
+            <tr><td><code>disableVideo()</code></td><td><code>{`() => boolean | Error`}</code></td><td>Disables the current video track while leaving audio active.</td></tr>
+            <tr><td><code>toggleVideo()</code></td><td><code>{`() => Promise<MediaStream | boolean | Error>`}</code></td><td>Toggles the video track on an existing stream, or starts the stream if none exists.</td></tr>
+            <tr><td><code>muteMic()</code></td><td><code>{`() => boolean | Error`}</code></td><td>Disables the audio track.</td></tr>
+            <tr><td><code>unmuteMic()</code></td><td><code>{`() => boolean | Error`}</code></td><td>Re-enables the audio track.</td></tr>
+            <tr><td><code>toggleMic()</code></td><td><code>{`() => boolean | Error`}</code></td><td>Toggles the current audio track.</td></tr>
+            <tr><td><code>snapshot()</code></td><td><code>{`(options?: { width?: number; height?: number; toggle?: boolean }) => Blob | undefined`}</code></td><td>Captures a still image from the current video frame.</td></tr>
+            <tr><td><code>devices()</code></td><td><code>{`() => Promise<MediaDeviceInfo[] | Error>`}</code></td><td>Enumerates available media devices.</td></tr>
+          </tbody>
+        </table>
+
+        ## Using The Ref
+        Because stream details are not mirrored into React events, parent components should treat the camera ref as the source of truth for low-level media state.
+        </Unstyled>
+
+        <RenderSource language={"tsx"}>
+{`
+import { useEffect, useRef, useState } from 'react';
+import { Camera } from '@apple-pie/slice/components/Camera';
+import type { CameraElement } from '@apple-pie/slice/components/Camera';
+
+export function CameraRefExample() {
+  const cameraRef = useRef<CameraElement | null>(null);
+  const [streamId, setStreamId] = useState<string>('none');
+
+  const refreshInfo = () => {
+    setStreamId(cameraRef.current?.stream?.id ?? 'none');
+  };
+
+  useEffect(() => {
+    refreshInfo();
+  }, []);
+
+  return (
+    <>
+      <Camera
+        ref={cameraRef}
+        width={400}
+        height={320}
+        sessionSettings={{
+          videoDeviceId: 'preferred-video-device-id',
+          micDeviceId: 'preferred-mic-device-id',
+        }}
+      />
+      <button
+        onClick={async () => {
+          await cameraRef.current?.toggleVideo?.();
+          refreshInfo();
+        }}
+      >
+        Toggle Video
+      </button>
+      <button
+        onClick={() => {
+          cameraRef.current?.toggleMic?.();
+          refreshInfo();
+        }}
+      >
+        Toggle Mic
+      </button>
+      <button
+        onClick={() => {
+          cameraRef.current?.snapshot?.();
+          refreshInfo();
+        }}
+      >
+        Take Snapshot
+      </button>
+      <div>Current stream: {streamId}</div>
+    </>
+  );
+}
+`}
+        </RenderSource>
+
+        <Unstyled>
+        ## Changing Selected Devices
+        Device selection is controlled by the application, not `Camera`. `onChangeSettings` does not update device selection - it only a signals that the user triggered the settings action.
+
+        The expected flow is:
+            
+        #### 1. User clicks "settings" action button
+        This fires `onChangeSettings`, providing:
+        - the current `sessionSettings`
+        - the current cached device list as `MediaDeviceInfo[] | Error`
+
+        #### 2. App displays settings modal / UI
+        The app is responsible for using the information provided to display and update user selected devices.
+            
+        #### 3. App updated its internal state and settings prop
+        the app then updates it's internal state as needed and passes the selections to `Camera` via the settings prop.
+            
+        ## Notes
+        - The component requests preferred devices from `sessionSettings` up front using `getUserMedia` constraints.
+        - If a requested device ID is stale or unavailable, the component retries with default browser devices.
+        - Turning video off disables the video track instead of stopping the full stream, so audio can remain active.
+        - `stopCamera()` is the method that tears down the full stream.
+        </Unstyled>
+        <Spacer size={64}/>
+    </FlexDiv>
+</FlexDiv>

@@ -179,3 +179,12 @@ export const copyToClipboard = async (rawContent: string): Promise<boolean> => {
 		return false;
 	}
 };
+
+/**
+ * Get normalized percent value from number or string
+ */
+export function normalizedPercent(value: number | string): number {
+	if (typeof value === 'number') return value;
+	if (value.endsWith('%')) return Number.parseFloat(value);
+	return Number.parseFloat(value) / 100;
+}

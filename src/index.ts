@@ -44,6 +44,16 @@ export type { BadgeProps } from './components/Badge';
 export { IconButton } from './components/IconButton';
 export type { IconButtonProps } from './components/IconButton';
 
+export { Camera } from './components/Camera';
+export type {
+	CameraElement,
+	CameraProps,
+	CameraSnapshotOptions,
+	Controls,
+	UserProfile,
+	Settings,
+} from './components/Camera';
+
 export { CheckBox } from './components/CheckBox';
 export type { CheckBoxProps } from './components/CheckBox';
 

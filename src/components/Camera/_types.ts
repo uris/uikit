@@ -1,5 +1,11 @@
 import type React from 'react';
 
+export interface DefaultNoVideoPosterProps {
+	size?: number | string;
+	user?: UserProfile;
+	message?: string;
+}
+
 export interface ToolbarButtonProps {
 	icon: string;
 	iconActive?: string;
@@ -44,17 +50,36 @@ export interface Controls {
 	flipCamera?: boolean;
 }
 
+export interface UserProfile {
+	first?: string;
+	last?: string;
+	avatar?: string;
+}
+
+export interface Settings {
+	micDeviceId?: string;
+	micVolume?: number;
+	videoDeviceId?: string;
+}
+
 export interface BaseCameraProps {
 	width?: number | string;
 	height?: number | string;
-	posterImage?: string;
+	noVideoPoster?: React.ReactNode;
 	videoFit?: 'fill' | 'contain' | 'cover' | 'none' | 'scale-down';
 	startCameraOff?: boolean;
 	startAudioMuted?: boolean;
+	userProfile?: UserProfile;
+	sessionSettings?: Settings;
 	onVideoStream?: (stream: MediaStream) => void;
 	onSnapshot?: (blob: Blob | undefined) => void;
 	onNoVideo?: (reason?: string | Error) => void;
 	onNoAudio?: (reason?: string | Error) => void;
+	onChangeProfile?: (profile?: UserProfile) => void;
+	onChangeSettings?: (
+		settings?: Settings,
+		devices?: MediaDeviceInfo[] | Error,
+	) => void;
 	showControlBar?: boolean;
 	autoHideControlBar?: boolean;
 	controls?: Controls;

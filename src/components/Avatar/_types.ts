@@ -2,8 +2,8 @@ import type React from 'react';
 import type { ToolTip } from '../sharedTypes';
 
 export type AvatarBaseProps = {
-	size?: number;
-	frame?: number;
+	size?: number | string;
+	frame?: number | string;
 	first?: string;
 	last?: string;
 	image?: string;
@@ -12,7 +12,7 @@ export type AvatarBaseProps = {
 	borderColor?: string;
 	bgColor?: string;
 	firstOnly?: boolean;
-	fontSize?: number | 'auto';
+	fontSize?: number | string;
 	onToolTip?: (tip: ToolTip | null) => void;
 	onClick?: (e: React.MouseEvent<HTMLDivElement>) => void;
 	onKeyDown?: (e: React.KeyboardEvent<HTMLDivElement>) => void;
