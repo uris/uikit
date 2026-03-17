@@ -1,6 +1,6 @@
 import React, { useCallback, useMemo, useRef } from 'react';
-import type { ToolTip } from '../../../src/components/sharedTypes';
-import { copyToClipboard } from '../../../src/utils/functions/misc';
+import type { ToolTip } from 'src';
+import { copyToClipboard } from '../../../src/utils';
 import css from './ColorTile.module.css';
 import type { ColorTileProps } from './types';
 

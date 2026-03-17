@@ -1,5 +1,4 @@
-import type { ToolTip } from '../../../src/components/sharedTypes';
-import type { SliceTheme } from '../../../src/theme/themes';
+import type { SliceTheme, ToolTip } from 'src';
 
 export interface ColorTileProps {
 	token?: string;

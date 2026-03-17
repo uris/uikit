@@ -94,6 +94,8 @@
 	composes: columnStartCenter from "../../utils/styling/flexBox.module.css";
 	gap: 4px;
 	cursor: pointer;
+	user-select: none;
+	-webkit-user-select: none;
 }
 
 .buttonIcon {

@@ -1,9 +1,6 @@
 // biome-ignore lint/style/useImportType: <explanation>
 import React, { useEffect, useMemo, useRef, useState } from 'react';
-import { useObserveResize } from '../../../src';
-import { Icon } from '../../../src/components/Icon';
-import { Label } from '../../../src/components/Label';
-import { Slider } from '../../../src/components/Slider';
+import { Icon, Label, Slider, useObserveResize } from '../../../src';
 import css from './IconSampler.module.css';
 interface IconSamplerProps {
 	icons: string[];
@@ -55,7 +52,7 @@ export function IconSampler(props: Readonly<IconSamplerProps>) {
 				<Label>{iconSize.toFixed(0)}px</Label>
 			</div>
 			<div className={css.container} style={cssVars} ref={ref}>
-				{icons.map((icon, index) => {
+				{icons.sort().map((icon, index) => {
 					return (
 						<div
 							className={`${css.wrapper} slice_icon`}

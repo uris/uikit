@@ -1,6 +1,6 @@
 import { Source } from '@storybook/addon-docs/blocks';
 import React from 'react';
-import { useTheme } from '../../../src/hooks';
+import { useTheme } from 'src';
 
 export interface RenderSourceProps extends React.ComponentProps<typeof Source> {
 	children?: React.ReactNode;

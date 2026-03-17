@@ -1,8 +1,5 @@
 import { useState } from 'react';
-import { FlexDiv } from '../../../src/components/FlexDiv';
-import { Label } from '../../../src/components/Label';
-import { Slider } from '../../../src/components/Slider';
-import { TabBar, type TabOption } from '../../../src/components/TabBar';
+import { FlexDiv, Label, Slider, TabBar, type TabOption } from 'src';
 import css from './FunnelSans.module.css';
 
 const tabs: TabOption[] = [

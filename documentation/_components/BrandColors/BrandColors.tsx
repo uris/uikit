@@ -1,9 +1,5 @@
 import { useCallback, useRef, useState } from 'react';
-import { FlexDiv } from '../../../src/components/FlexDiv';
-import { Tip } from '../../../src/components/Tip';
-import { Toast } from '../../../src/components/Toast';
-import type { ToolTip } from '../../../src/components/sharedTypes';
-import { useToolTip } from '../../../src/hooks';
+import { FlexDiv, Tip, Toast, type ToolTip, useToolTip } from 'src';
 import { coreColors } from '../../../src/theme/colors/colors';
 import { ColorTile } from '../ColorTile/ColorTile';
 

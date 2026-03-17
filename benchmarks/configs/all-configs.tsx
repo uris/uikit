@@ -4,9 +4,11 @@
  */
 
 import React from 'react';
-import { Avatar,
+import {
+	Avatar,
 	AvatarGroup,
 	Badge,
+	Camera,
 	CheckBox,
 	DivInput,
 	DocIcons,
@@ -36,7 +38,7 @@ import { Avatar,
 	ButtonBar,
 	Card,
 	Chip,
-	Label
+	Label,
 } from '../../src';
 import { FileList } from '../../src/components/FileList';
 import { PromptInput } from '../../src/components/PromptInput/PromptInput';
@@ -145,6 +147,60 @@ export const badgeConfig: ComponentBenchmarkConfig = {
 			name: 'Memory',
 			type: 'memory',
 			fn: () => measureMemoryDelta(<Badge count={42} />, 10),
+		},
+	],
+};
+
+export const cameraConfig: ComponentBenchmarkConfig = {
+	componentName: 'Camera',
+	tests: [
+		{
+			name: 'Mount Time',
+			type: 'mount',
+			fn: () =>
+				measureMountTime(
+					<Camera
+						width={320}
+						height={240}
+						startCameraOff
+						userProfile={{ first: 'Jane', last: 'Appleseed' }}
+					/>,
+					25,
+				),
+		},
+		{
+			name: 'Re-render',
+			type: 'rerender',
+			fn: () =>
+				measureRerenderTime(
+					<Camera
+						width={320}
+						height={240}
+						startCameraOff
+						userProfile={{ first: 'Jane', last: 'Appleseed' }}
+					/>,
+					(container) => {
+						container.rerender(
+							<Camera
+								width={360}
+								height={280}
+								startCameraOff
+								showControlBar={false}
+								userProfile={{ first: 'John', last: 'Doe' }}
+							/>,
+						);
+					},
+					25,
+				),
+		},
+		{
+			name: 'Memory',
+			type: 'memory',
+			fn: () =>
+				measureMemoryDelta(
+					<Camera width={320} height={240} startCameraOff pipSnapshot={false} />,
+					10,
+				),
 		},
 	],
 };
@@ -1408,6 +1464,7 @@ export const allBenchmarkConfigs = [
 	avatarConfig,
 	avatarGroupConfig,
 	badgeConfig,
+	cameraConfig,
 	checkBoxConfig,
 	divInputConfig,
 	docIconConfig,
@@ -1421,7 +1478,6 @@ export const allBenchmarkConfigs = [
 	grouperConfig,
 	iconConfig,
 	iconButtonConfig,
-	logosConfig,
 	promptInputConfig,
 	overlayConfig,
 	pagerConfig,
