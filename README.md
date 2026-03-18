@@ -14,6 +14,7 @@ Slice is a TypeScript-first React UI kit with theme tokens, utility hooks, optio
 - Theme system with light/dark presets and typed theme tokens
 - React hooks for theme, window sizing, keyboard shortcuts, local storage, resize, and more
 - Optional Zustand-powered stores (`toast`, `tip`, `uploads`, `window`)
+- Utility functions and low-level objects such as `SSEConnection`
 - Rollup + TypeScript build pipeline for CJS, ESM, and declaration output
 - Component performance benchmarks powered by Vitest
 
@@ -78,6 +79,7 @@ Subpath imports are also published:
 - `@apple-pie/slice/stores`
 - `@apple-pie/slice/stores/*`
 - `@apple-pie/slice/utils`
+- `@apple-pie/slice/utils/objects`
 - `@apple-pie/slice/workers/*`
 - `@apple-pie/slice/theme`
 - `@apple-pie/slice/theme/colors`
@@ -85,18 +87,6 @@ Subpath imports are also published:
 - `@apple-pie/slice/theme/elevations`
 - `@apple-pie/slice/theme/type`
 - `@apple-pie/slice/theme/themes`
-
-## Utilities
-
-- Package utilities are published from `@apple-pie/slice/utils`
-- Internal utility source lives under `src/utils/functions/*`
-- Shared utility CSS modules live under `src/utils/styling/*`
-
-Example:
-
-```ts
-import { addOpacity, copyToClipboard, tintFromColor } from '@apple-pie/slice/utils';
-```
 
 ## Components
 
@@ -161,6 +151,7 @@ export function CameraExample() {
 
 - `toast` store: `useToast`, `useToastActions`, `toastActions`, `getToast`
 - `tip` store: `useTip`, `useTipActions`, `tipActions`, `getTip`
+- `SSE` store: `useSSEStore`, `useSSE`, `useMessage`, `useConnectionMessage`, `useConnectionClose`, `useIsConnected`
 - `window` store: `useWindowStore`, atomic viewport/runtime hooks, imperative viewport helpers
 - `uploads` store: `useUploadsStore`, `useUploads`, `useUploadsActions`, `createUploadsWorker`, `uploadsActions`
 
@@ -168,6 +159,34 @@ Example:
 
 ```ts
 import { useToast, useToastActions } from '@apple-pie/slice/stores/toast';
+```
+
+SSE store example:
+
+```tsx
+import { useEffect } from 'react';
+import {
+  useSSE,
+  useIsConnected,
+  useMessage,
+} from '@apple-pie/slice/stores/SSE';
+
+function StreamingExample() {
+  const { addConnection, removeConnection } = useSSE();
+  const connected = useIsConnected('assistant');
+  const text = useMessage<string>('message', 'assistant');
+
+  useEffect(() => {
+    addConnection('assistant', {
+      url: '/api/stream',
+      connectionClose: { message: 'eos' },
+    });
+
+    return () => removeConnection('assistant');
+  }, [addConnection, removeConnection]);
+
+  return <div>{connected ? text ?? 'streaming...' : 'disconnected'}</div>;
+}
 ```
 
 Uploads store example:
@@ -203,6 +222,40 @@ This worker URL pattern assumes modern frontend tooling such as Vite or similar 
 - Color tokens: `light`, `dark`
 - Elevation tokens: `elevations` / `Elevation`
 - Types: `SliceTheme`, `Colors`, `Type`, `Corners`, `Elevations`
+
+## Utilities
+
+- Package utilities are published from `@apple-pie/slice/utils`
+- Low-level utility objects such as `SSEConnection` are also published from `@apple-pie/slice/utils/objects`
+- Internal utility source lives under `src/utils/functions/*`
+- Shared utility CSS modules live under `src/utils/styling/*`
+
+Example:
+
+```ts
+import { addOpacity, copyToClipboard, tintFromColor } from '@apple-pie/slice/utils';
+```
+
+SSE utility example:
+
+```ts
+import { SSEConnection } from '@apple-pie/slice/utils/objects';
+
+const connection = new SSEConnection({
+  url: '/api/events',
+  unifiedOnMessage: true,
+  connectionClose: { message: 'eos' },
+  onMessageCallback: (message) => {
+    if (message.type === 'message') {
+      console.log(message.data);
+    }
+
+    if (message.type === 'close') {
+      console.log('stream closed');
+    }
+  },
+});
+```
 
 ## Development
 
