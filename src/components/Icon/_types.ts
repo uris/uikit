@@ -24,6 +24,7 @@ export enum IconNames {
 	mic = 'mic',
 	micMuted = 'mic muted',
 	camera = 'camera',
+	videoOff = 'video off',
 	home = 'home',
 	inbox = 'inbox',
 	sparkle = 'sparkle',

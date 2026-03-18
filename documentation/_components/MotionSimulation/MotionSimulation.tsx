@@ -2,9 +2,7 @@ import type React from 'react';
 import { useEffect } from 'react';
 import { useState } from 'react';
 import { useMemo } from 'react';
-import { FlexDiv } from '../../../src/components/FlexDiv';
-import { Label } from '../../../src/components/Label';
-import { Slider } from '../../../src/components/Slider';
+import { FlexDiv, Label, Slider } from 'src';
 import { accessibleKeyDown, setStyle } from '../../../src/utils/functions/misc';
 import css from './MotionSimulation.module.css';
 interface MotionSimulationProps {

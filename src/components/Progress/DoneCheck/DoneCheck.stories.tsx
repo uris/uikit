@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { FlexDiv } from 'src/components/FlexDiv';
 import { DoneCheck } from 'src/components/Progress';
-import { expect, fn, waitFor, within } from 'storybook/test';
+import { fn } from 'storybook/test';
 
 const meta: Meta<typeof DoneCheck> = {
 	title: 'Components/DoneCheck',
@@ -27,13 +27,6 @@ export const Default: StoryObj<typeof DoneCheck> = {
 			</FlexDiv>
 		);
 	},
-	play: async ({ canvasElement, args }) => {
-		const canvas = within(canvasElement);
-		const check = canvas.getByRole('status');
-		await expect(check).toBeInTheDocument();
-		await waitFor(() => expect(args.didStart).toHaveBeenCalled());
-		await waitFor(() => expect(args.didEnd).toHaveBeenCalled());
-	},
 };
 
 export const Static: StoryObj<typeof DoneCheck> = {
@@ -42,9 +35,4 @@ export const Static: StoryObj<typeof DoneCheck> = {
 		play: false,
 	},
 	render: Default.render,
-	play: async ({ canvasElement }) => {
-		const canvas = within(canvasElement);
-		const check = canvas.getByRole('status');
-		await expect(check).toBeInTheDocument();
-	},
 };

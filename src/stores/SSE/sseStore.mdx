@@ -1,0 +1,264 @@
+import {Meta, Unstyled} from '@storybook/addon-docs/blocks';
+import {RenderSource} from '../../../documentation/_components/RenderSource/RenderSource';
+import {FlexDiv} from '../../components/FlexDiv';
+import NoteSection from '../../../documentation/_components/Notice/Notice';
+
+<Meta title="Stores/SSE Store" />
+
+<FlexDiv width={'fill'} height={'fill'} alignItems={'center'}>
+    <FlexDiv width={'fill'} maxWidth={760} height={'auto'}>
+        <Unstyled>
+        <NoteSection>
+            Slice stores uses a module-level singleton pattern: each store is created once when the module is loaded - every import of the module shares the same store instance.
+        </NoteSection>
+
+        # SSEStore
+        Global store for handling SSE events from one or more connections, built with Zustand. The store manages named `SSEConnection` instances, emits and keeps a snapshot of the latest unified message, and exposes both reactive hooks and imperative helpers to read messages and manage connections.
+        
+        The Slice SSE store has a narrow goal: provide of a singleton global state for the last message received and emit that as state. Storing, persisting, accumulating and manipulating SSE message events is logic is left to the consuming app.
+            
+        ## Adding a new SSE connection
+        `addConnection` creates a new `SSEConnection` and saves it to state. If a connection with the same name already exists, the store closes the old connection before replacing it. The store always creates connections in unified mode, so the options you pass here are the `SSEConnection` options except for `unifiedOnMessage`, which the store manages internally.
+        A typical example might look like this:
+
+	        <RenderSource language={'tsx'}>
+	        ```
+	        import { useEffect, useRef } from 'react';
+	        import { useSSE, useIsConnected, useMessage, SSEStoreConnection } from '@apple-pie/slice/stores/SSE';
+	        
+	        // your Api's custom event types, if it emits any
+	        type Progress = number;
+            type UserCreated = { id: string; email: string };
+	            
+	        function AppActivityStream() {
+                // you can use a ref to avoid (re)adding the same connection on re-renders
+                const connectionRef = useRef<SSEStoreConnection | null>(null);
+                // use store hooks to add/remove connections and read event messages
+	            const { addConnection, removeConnection } = useSSE();
+	            const connected = useIsConnected('activity');
+	            const anyMessage = useMessage();
+	            const progressMessage = useMessage<Progress>('progress');
+	            const userCreatedMessage = useMessage<UserCreated>('userCreated');
+	                
+	            // add the new SEE connection
+	            useEffect(() => {
+                    if(connectionRef.current) return
+                    connectionRef.current = addConnection('activity', {
+                        url: '/api/events',
+                        options: { withCredentials: true },
+                        customEvents: [
+                            { name: 'progress' },
+                            { name: 'userCreated' },
+                        ],
+	                });
+                    // place the connection clean up where it makes sense for your app
+	                return () => {
+                        removeConnection('activity');
+                        connectionRef.current = null;
+                    }
+	            },[addConnection, removeConnection]);
+	            
+	            return (
+	                <div>
+	                    connected: {connected ? 'yes' : 'no'} -
+	                    progress: {progressMessage ?? 'waiting...'} - 
+	                    userCreated: {userCreatedMessage?.email ?? 'waiting...'} - 
+	                    last type: {anyMessage?.type ?? 'waiting...'}
+	                </div>
+	            );
+	        }
+	        ```
+	        </RenderSource>
+	        
+	        Note: Slice stores are singletons, which means you can safely import `useMessage` anywhere in your app and subscribe to the latest matching SSE update.
+            If you plan to make events available globally to your app, make sure to place your connection cleanup where it makes sense.
+
+        ## Removing a connection
+        Removing a connection always closes it first, then removes it from the store.
+
+        Note: `SSEConnection` also supports a self-cleanup path through its optional `connectionClose` setting. When that configured close condition is matched, the connection emits a synthetic `close` event and the store automatically removes it. Even with that built-in behavior, it is still good practice to explicitly close/remove connections in your own cleanup paths as well, since network errors, stalled streams, component unmounts, or unexpected backend behavior may prevent the normal self-close signal from ever arriving.
+
+        <RenderSource language={'tsx'}>
+            {`
+import { useSSEActions } from '@apple-pie/slice/stores/SSE';
+
+useSSEActions.removeConnection('activity');
+`}
+        </RenderSource>
+        
+	         ## React exports (reactive)
+	        React exports are reactive subscriptions for components updating automatically as SSE state changes.
+        <table style={{width: '100%'}}>
+          <colgroup>
+            <col style={{width: '1%'}} />
+            <col style={{width: '25%'}} />
+            <col style={{width: '98%'}} />
+          </colgroup>
+          <thead>
+            <tr>
+              <th className={'left'}>Export</th>
+              <th className={'left'}>Type</th>
+              <th className={'left'}>Description</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td><code>useSSEStore</code></td><td><code>Zustand store hook</code></td><td>Main store hook for custom selector usage.</td></tr>
+            <tr><td><code>useSSE</code></td><td><code>{`() => { addConnection, removeConnection }`}</code></td><td>Atomic hook selecting only the SSE actions object.</td></tr>
+            <tr><td><code>useConnectionClose</code></td><td><code>{`() => string | null`}</code></td><td>Returns the name of the most recently closed connection when an `SSEConnection` self-close event is processed by the store.</td></tr>
+            <tr><td><code>useConnectionMessage</code></td><td><code>{`(connection: string) => SSEUnifiedMessage | null`}</code></td><td>Returns the latest unified message for one named connection without requiring an event type filter.</td></tr>
+            <tr><td><code>useIsConnected</code></td><td><code>{`(connection?: string) => boolean`}</code></td><td>Returns whether a named connection is currently open. When no name is supplied, it returns true if any managed SSE connection is open.</td></tr>
+	            <tr><td><code>useMessage</code></td><td><code>{`() => SSEUnifiedMessage | null`}</code> or <code>{`(type: string, connection?: string) => payload | Event | null`}</code></td><td>Without arguments it returns the latest unified message. When a type is provided it returns the latest payload for that type, optionally scoped to a named connection.</td></tr>
+          </tbody>
+        </table>
+
+        ## Imperative exports (non-reactive)
+        These APIs call the same singleton store instance directly. Use them for bootstrapping, service layers, and other non-React code paths.
+        <table style={{width: '100%'}}>
+          <colgroup>
+            <col style={{width: '1%'}} />
+            <col style={{width: '25%'}} />
+            <col style={{width: '98%'}} />
+          </colgroup>
+          <thead>
+            <tr>
+              <th className={'left'}>Export</th>
+              <th className={'left'}>Type</th>
+              <th className={'left'}>Description</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td><code>useSSEActions</code></td><td><code>{`{ addConnection, removeConnection }`}</code></td><td>Imperative actions for creating and tearing down named SSE connections.</td></tr>
+            <tr><td><code>useLastSSEMessage</code></td><td><code>{`() => SSEUnifiedMessage | null`}</code></td><td>Imperative snapshot read of the latest unified SSE message captured by the store.</td></tr>
+          </tbody>
+        </table>
+
+	        ## Store state shape
+	        The store keeps two main pieces of state:
+
+        <table style={{width: '100%'}}>
+          <colgroup>
+            <col style={{width: '1%'}} />
+            <col style={{width: '25%'}} />
+            <col style={{width: '98%'}} />
+          </colgroup>
+          <thead>
+            <tr>
+              <th className={'left'}>Field</th>
+              <th className={'left'}>Type</th>
+              <th className={'left'}>Description</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td><code>connections</code></td><td><code>SSEStoreConnection[]</code></td><td>List of active named connections managed by the store.</td></tr>
+            <tr><td><code>message</code></td><td><code>SSEUnifiedMessage | null</code></td><td>The latest unified message observed from any managed connection.</td></tr>
+            <tr><td><code>closedConnection</code></td><td><code>string | null</code></td><td>The name of the most recently self-closed connection processed by the store.</td></tr>
+          </tbody>
+	        </table>
+
+	        ## Notes: useConnectionMessage
+	        `useConnectionMessage` returns the latest full unified message for one named connection:
+	        <table style={{width: '100%'}}>
+	          <colgroup>
+	            <col style={{width: '1%'}} />
+	            <col style={{width: '30%'}} />
+	            <col style={{width: '98%'}} />
+	          </colgroup>
+	          <thead>
+	            <tr>
+	              <th className={'left'}>Call</th>
+	              <th className={'left'}>Returns</th>
+	              <th className={'left'}>Description</th>
+	            </tr>
+	          </thead>
+	          <tbody>
+	            <tr><td><code>useConnectionMessage('activity')</code></td><td><code>SSEUnifiedMessage | null</code></td><td>Returns the latest store message while the named connection is currently registered in the store.</td></tr>
+	          </tbody>
+	        </table>
+
+            ## Notes: useConnectionClose
+	        `useConnectionClose` returns the name of the most recently closed connection after the store processes a synthetic `close` event:
+	        <table style={{width: '100%'}}>
+	          <colgroup>
+	            <col style={{width: '1%'}} />
+	            <col style={{width: '30%'}} />
+	            <col style={{width: '98%'}} />
+	          </colgroup>
+	          <thead>
+	            <tr>
+	              <th className={'left'}>Call</th>
+	              <th className={'left'}>Returns</th>
+	              <th className={'left'}>Description</th>
+	            </tr>
+	          </thead>
+	          <tbody>
+	            <tr><td><code>useConnectionClose()</code></td><td><code>string | null</code></td><td>Returns the name of the latest connection automatically removed after an `SSEConnection` self-close.</td></tr>
+	          </tbody>
+	        </table>
+
+            ## Notes: useMessage
+	        `useMessage` can be used to intercept all message types or narrow the messages to a specific type / connection:
+	        <table style={{width: '100%'}}>
+	          <colgroup>
+	            <col style={{width: '1%'}} />
+	            <col style={{width: '30%'}} />
+	            <col style={{width: '98%'}} />
+	          </colgroup>
+	          <thead>
+	            <tr>
+	              <th className={'left'}>Call</th>
+	              <th className={'left'}>Returns</th>
+	              <th className={'left'}>Description</th>
+	            </tr>
+	          </thead>
+	          <tbody>
+	            <tr><td><code>useMessage()</code></td><td><code>SSEUnifiedMessage | null</code></td><td>Returns the latest full unified message object from the store.</td></tr>
+	            <tr><td><code>useMessage('message')</code></td><td><code>unknown | string | null</code></td><td>Returns the latest default message payload.</td></tr>
+	            <tr><td><code>useMessage('open')</code></td><td><code>Event | null</code></td><td>Returns the latest open event object.</td></tr>
+	            <tr><td><code>useMessage('error')</code></td><td><code>Event | null</code></td><td>Returns the latest error event object.</td></tr>
+	            <tr><td><code>useMessage('close')</code></td><td><code>Event | null</code></td><td>Returns the latest synthetic close event object emitted by an `SSEConnection` self-close trigger.</td></tr>
+	            <tr><td><code>useMessage('customType')</code></td><td><code>payload | string | null</code></td><td>Returns the latest payload for that custom event type.</td></tr>
+	            <tr><td><code>useMessage('progress', 'activity')</code></td><td><code>payload | string | null</code></td><td>Returns the latest payload for that event type, only when the named connection exists.</td></tr>
+	          </tbody>
+	        </table>
+
+	        If a `connection` is supplied, a `type` must also be supplied.
+
+	        ## Notes: useIsConnected
+	        `useIsConnected` reads connection status from the underlying `SSEConnection.connected` property and if a named connection is not provided, true/false if any connection is in the open ready state.
+	        <table style={{width: '100%'}}>
+	          <colgroup>
+	            <col style={{width: '1%'}} />
+	            <col style={{width: '30%'}} />
+	            <col style={{width: '98%'}} />
+	          </colgroup>
+	          <thead>
+	            <tr>
+	              <th className={'left'}>Call</th>
+	              <th className={'left'}>Returns</th>
+	              <th className={'left'}>Description</th>
+	            </tr>
+	          </thead>
+	          <tbody>
+	            <tr><td><code>useIsConnected()</code></td><td><code>boolean</code></td><td>Returns true when any managed SSE connection is currently open.</td></tr>
+	            <tr><td><code>useIsConnected('activity')</code></td><td><code>boolean</code></td><td>Returns true when the named connection exists and its underlying EventSource is open.</td></tr>
+	          </tbody>
+	        </table>
+
+	        ## Imperative usage outside React
+        <RenderSource language={'tsx'}>
+{`
+import { useSSEActions, useLastSSEMessage } from '@apple-pie/slice/stores/SSE';
+
+useSSEActions.addConnection('system', {
+  url: '/api/system/events',
+  customEvents: [{ name: 'progress' }],
+});
+
+export function getLatestSSEType() {
+  return useLastSSEMessage()?.type ?? null;
+}
+`}
+        </RenderSource>
+        </Unstyled>
+    </FlexDiv>
+</FlexDiv>

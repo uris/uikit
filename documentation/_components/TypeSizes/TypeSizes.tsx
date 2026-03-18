@@ -1,5 +1,4 @@
-import { FlexDiv } from '../../../src/components/FlexDiv';
-import { Label } from '../../../src/components/Label';
+import { FlexDiv, Label } from 'src';
 import { typeStyles } from '../../../src/theme/type/type';
 import css from './TypeSizes.module.css';
 

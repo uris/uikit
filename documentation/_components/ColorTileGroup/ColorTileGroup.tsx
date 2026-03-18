@@ -1,8 +1,6 @@
 import React from 'react';
-import { FlexDiv } from '../../../src/components/FlexDiv';
+import { type Colors, FlexDiv, lightTheme } from 'src';
 import { colorClass, coreColors } from '../../../src/theme/colors/colors';
-import type { Colors } from '../../../src/theme/colors/types';
-import { lightTheme } from '../../../src/theme/themes';
 import { ColorTile } from '../ColorTile/ColorTile';
 import type { ColorTileGroupProps } from '../ColorTile/types';
 

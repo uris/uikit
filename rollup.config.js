@@ -23,6 +23,7 @@ const buildInputs = () => {
 		stores: 'src/stores/index.ts',
 		theme: 'src/theme/index.ts',
 		utils: 'src/utils/index.ts',
+		'utils/objects': 'src/utils/objects/index.ts',
 	};
 
 	const componentsDir = path.resolve('src/components');
@@ -108,6 +109,7 @@ const entryFileName = (format) => (chunkInfo) => {
 	const ext = format === 'esm' ? '.mjs' : '.js';
 	if (chunkInfo.name === 'index') return `index${ext}`;
 	if (chunkInfo.name === 'utils') return `utils/index${ext}`;
+	if (chunkInfo.name === 'utils/objects') return `utils/objects/index${ext}`;
 	if (chunkInfo.name.startsWith('components/'))
 		return `${chunkInfo.name}/index${ext}`;
 	if (chunkInfo.name.startsWith('workers/')) return `${chunkInfo.name}${ext}`;

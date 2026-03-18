@@ -13,6 +13,9 @@ export interface ToolbarButtonProps {
 	active?: boolean;
 	label?: string;
 	disabled?: boolean;
+	onMouseOver?: (
+		e: React.MouseEvent<HTMLDivElement> | React.FocusEvent<HTMLDivElement>,
+	) => void;
 }
 
 export interface CameraElement {

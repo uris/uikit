@@ -1,0 +1,312 @@
+import {Meta, Unstyled} from '@storybook/addon-docs/blocks';
+import {RenderSource} from '../../../../documentation/_components/RenderSource/RenderSource';
+import {FlexDiv} from '../../../components/FlexDiv';
+import NoteSection from '../../../../documentation/_components/Notice/Notice';
+
+<Meta title="Utils/SSEConnection" />
+
+<FlexDiv width={'fill'} height={'fill'} alignItems={'center'}>
+    <FlexDiv width={'fill'} maxWidth={760} height={'auto'}>
+        <Unstyled>
+        <NoteSection>
+            `SSEConnection` is a low-level browser utility around `EventSource`. Use it directly when you want to manage an individual stream yourself, and use the SSE store when you want named singleton connections plus a shared unified message snapshot.
+        </NoteSection>
+
+        # SSEConnection
+        Typed wrapper around the browser `EventSource` API. It supports:
+        - the default `message` event
+        - built-in `open`, `error`, and synthetic `close` lifecycle events
+        - custom named SSE events with event-specific payload types
+        - either standard message callbacks or unified callback mode
+
+        ## Import
+        <RenderSource language={'tsx'}>
+{`
+import { SSEConnection } from '@apple-pie/slice/utils/objects';
+`}
+        </RenderSource>
+
+        ## Generic type parameters
+        `SSEConnection` accepts two generic type parameters:
+        <table style={{width: '100%'}}>
+          <colgroup>
+            <col style={{width: '1%'}} />
+            <col style={{width: '25%'}} />
+            <col style={{width: '98%'}} />
+          </colgroup>
+          <thead>
+            <tr>
+              <th className={'left'}>Generic</th>
+              <th className={'left'}>Default</th>
+              <th className={'left'}>Description</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td><code>TMessage</code></td><td><code>unknown</code></td><td>Payload type for the default `message` event.</td></tr>
+            <tr><td><code>TCustomEvents</code></td><td><code>Record&lt;string, never&gt;</code></td><td>A map of custom event names to their payload types.</td></tr>
+          </tbody>
+        </table>
+
+        ## Connection options
+        <table style={{width: '100%'}}>
+          <colgroup>
+            <col style={{width: '1%'}} />
+            <col style={{width: '24%'}} />
+            <col style={{width: '98%'}} />
+          </colgroup>
+          <thead>
+            <tr>
+              <th className={'left'}>Option</th>
+              <th className={'left'}>Type</th>
+              <th className={'left'}>Description</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td><code>url</code></td><td><code>string</code></td><td>EventSource endpoint URL.</td></tr>
+            <tr><td><code>options</code></td><td><code>EventSourceInit</code></td><td>Native EventSource options such as <code>withCredentials</code>.</td></tr>
+            <tr><td><code>connectionClose</code></td><td><code>SSEConnectionCloseOption</code></td><td>Optional self-close trigger. You can configure a custom event name or a default message payload string that should automatically close the connection.</td></tr>
+            <tr><td><code>unifiedOnMessage</code></td><td><code>boolean</code></td><td>When <code>true</code>, built-in and custom events are routed through one discriminated callback object.</td></tr>
+            <tr><td><code>onMessageCallback</code></td><td><code>standard or unified callback</code></td><td>Message callback signature depends on the value of <code>unifiedOnMessage</code>.</td></tr>
+            <tr><td><code>onErrorCallback</code></td><td><code>{`(event: Event) => void`}</code></td><td>Optional low-level error listener.</td></tr>
+            <tr><td><code>onOpenCallback</code></td><td><code>{`(event: Event) => void`}</code></td><td>Optional low-level open listener.</td></tr>
+            <tr><td><code>onCloseCallback</code></td><td><code>{`(event: Event) => void`}</code></td><td>Optional low-level close listener fired when a configured self-close trigger is matched.</td></tr>
+            <tr><td><code>customEvents</code></td><td><code>SSECustomEvent | SSECustomEvent[]</code></td><td>Optional custom event declarations. Each event name is tied to its own payload type, and `handler` is optional.</td></tr>
+          </tbody>
+        </table>
+
+        ## Self-closing connection
+        `connectionClose` lets the SSE connection close itself automatically when one of two configured conditions is met:
+        <table style={{width: '100%'}}>
+          <colgroup>
+            <col style={{width: '1%'}} />
+            <col style={{width: '25%'}} />
+            <col style={{width: '98%'}} />
+          </colgroup>
+          <thead>
+            <tr>
+              <th className={'left'}>Field</th>
+              <th className={'left'}>Type</th>
+              <th className={'left'}>Description</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td><code>event</code></td><td><code>string</code></td><td>Closes the connection when a matching custom SSE event name is received.</td></tr>
+            <tr><td><code>message</code></td><td><code>string</code></td><td>Closes the connection when the default SSE <code>message</code> payload matches that string.</td></tr>
+          </tbody>
+        </table>
+
+        When a configured self-close trigger fires, `SSEConnection` emits a synthetic built-in `close` event through unified mode and calls `onCloseCallback`.
+
+        <RenderSource language={'tsx'}>
+{`
+const connection = new SSEConnection({
+  url: '/api/events',
+  unifiedOnMessage: true,
+  connectionClose: { message: 'eos' },
+  onCloseCallback: () => {
+    console.log('Stream closed itself');
+  },
+  onMessageCallback: (message) => {
+    if (message.type === 'close') {
+      console.log(message.event);
+    }
+  },
+});
+`}
+        </RenderSource>
+
+        ## Connection status
+        `SSEConnection` exposes two read-only properties for inspecting the underlying browser connection:
+        <table style={{width: '100%'}}>
+          <colgroup>
+            <col style={{width: '1%'}} />
+            <col style={{width: '25%'}} />
+            <col style={{width: '98%'}} />
+          </colgroup>
+          <thead>
+            <tr>
+              <th className={'left'}>Property</th>
+              <th className={'left'}>Type</th>
+              <th className={'left'}>Description</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td><code>connected</code></td><td><code>boolean</code></td><td>True when the underlying <code>EventSource</code> is currently open.</td></tr>
+            <tr><td><code>connection</code></td><td><code>EventSource | null</code></td><td>Direct access to the underlying raw browser <code>EventSource</code> instance.</td></tr>
+          </tbody>
+        </table>
+
+        <RenderSource language={'tsx'}>
+{`
+const connection = new SSEConnection({ url: '/api/events' });
+
+if (connection.connected) {
+  console.log('SSE stream is open');
+}
+
+console.log(connection.connection);
+`}
+        </RenderSource>
+
+        ## "Standard" mode
+        Standard mode is the default. Only the default `message` event is routed through `onMessageCallback` - in it's simplest form, just create the new connection and pass it a callback handler for message events. 
+
+        <RenderSource language={'tsx'}>
+```
+const connection = new SSEConnection({
+    url: '/api/events',
+    onMessageCallback: (data) => {
+        console.log(data);
+    },
+});
+```
+        </RenderSource>
+
+        Optionally, add the `open`, `error`, and self-close `close` callbacks if you need to handle these events as well...
+        <RenderSource language={'tsx'}>
+        ```
+const connection = new SSEConnection({
+            url: '/api/events',
+            onMessageCallback: (data) => console.log(data),
+            onOpenCallback: (event) => console.log(event),
+            onErrorCallback: (event) => console.log(event),
+            onCloseCallback: (event) => console.log(event),
+});
+```
+        </RenderSource>
+            
+        ## "Unified mode"
+        Unified mode routes all built-in and custom events through a single callback. The `type` field identifies the event type.
+
+        <RenderSource language={'tsx'}>
+        ```
+const connection = new SSEConnection({
+          url: '/api/events',
+          unifiedOnMessage: true, // set flag to enable unified mode
+          onMessageCallback: (message) => {
+            switch (message.type) {
+              case 'message':
+                console.log(message.data);
+                break;
+              case 'open':
+                console.log(message.event);
+                break;
+              case 'error':
+                console.log(message.event);
+                break;
+              case 'close':
+                console.log(message.event);
+                break;
+            }
+          },
+});
+```
+        </RenderSource>
+
+        ## Custom events
+        SSE allows defining and emitting custom events from your API/backend. With Slice SSE Connection, you define custom events as an event map. Each key of the map is the SSE event name (the same as emitted by your back end) and each value is the payload type for that event.
+
+        <RenderSource language={'tsx'}>
+        ```
+        // each key is the event name, and each value, the payload type
+        type SSECustomEvents = {
+            'progress': number;
+            'userCreated': { id: string };
+};
+```
+        </RenderSource>
+
+            Then, when creating a new connection, set the custom event type in the connection generics: `new SSEConnection<unknown, SSECustomEvents>`. Also pass in your custom events with a custom callback handler for each event.
+
+        <RenderSource language={'tsx'}>
+        ```
+        // note: use 'unknown' type for the default message payload type if it's type is not known
+        const connection = new SSEConnection<unknown, SSECustomEvents>({
+            url: '/api/events',
+            customEvents: [
+                {name: 'progress', handler: (progress) => console.log(progress)},
+                {name: 'userCreated', handler: (user) => console.log(user.id)},
+            ],
+});
+```
+        </RenderSource>
+
+        NOTE: The `handler` field of custom events is optional. If no handler is defined, custom event messages will still flow through unified callback mode when `unifiedOnMessage` is enabled:
+
+        <RenderSource language={'tsx'}>
+        ```
+const connection = new SSEConnection<unknown, { progress: number }>({
+            url: '/api/events',
+            unifiedOnMessage: true, // set flag to enable unified mode
+            customEvents: [{ name: 'progress' }],
+            onMessageCallback: (message) => {
+                if (message.type === 'progress') {
+                    console.log(message.data);
+                }
+            },
+});
+```
+        </RenderSource>
+
+        ## Unified message shapes
+        <table style={{width: '100%'}}>
+          <colgroup>
+            <col style={{width: '1%'}} />
+            <col style={{width: '25%'}} />
+            <col style={{width: '98%'}} />
+          </colgroup>
+          <thead>
+            <tr>
+              <th className={'left'}>Message type</th>
+              <th className={'left'}>Shape</th>
+              <th className={'left'}>Description</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td><code>message</code></td><td><code>{`{ type: 'message', data, event }`}</code></td><td>Default EventSource message event.</td></tr>
+            <tr><td><code>open</code></td><td><code>{`{ type: 'open', event }`}</code></td><td>Connection-open lifecycle event.</td></tr>
+            <tr><td><code>error</code></td><td><code>{`{ type: 'error', event }`}</code></td><td>Connection error lifecycle event.</td></tr>
+            <tr><td><code>close</code></td><td><code>{`{ type: 'close', event }`}</code></td><td>Synthetic close event emitted when a configured <code>connectionClose</code> rule closes the connection.</td></tr>
+            <tr><td><code>custom event</code></td><td><code>{`{ type: 'eventName', data, event }`}</code></td><td>Custom SSE event whose `data` type is tied to the declared event map entry.</td></tr>
+          </tbody>
+        </table>
+
+        ## Cleanup
+        Always call `close()` when you are done with the connection. This removes all attached listeners and closes the underlying `EventSource`.
+
+        You can also configure an optional self-cleanup rule with `connectionClose`. This is useful for streaming APIs that emit a known terminal message such as `eos`, or a custom event such as `close`, once the stream is finished.
+
+        <RenderSource language={'tsx'}>
+```
+const connection = new SSEConnection({
+    url: '/api/events',
+    connectionClose: { message: 'eos' },
+});
+```
+        </RenderSource>
+
+        Or close from a custom SSE event:
+
+        <RenderSource language={'tsx'}>
+```
+const connection = new SSEConnection<unknown, { close: string }>({
+    url: '/api/events',
+    customEvents: [{ name: 'close' }],
+    connectionClose: { event: 'close' },
+});
+```
+        </RenderSource>
+
+        Even with self-cleanup configured, it is still good practice to call `close()` directly in your normal cleanup paths. That protects you against hangs, unexpected backend behavior, or streams that never emit the expected terminal signal.
+
+        <RenderSource language={'tsx'}>
+```
+const connection = new SSEConnection({ url: '/api/events' });
+
+// later
+connection.close();
+```
+        </RenderSource>
+        </Unstyled>
+    </FlexDiv>
+</FlexDiv>
