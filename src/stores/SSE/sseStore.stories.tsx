@@ -61,7 +61,7 @@ function formatValue(value: unknown) {
 	try {
 		return JSON.stringify(value);
 	} catch {
-		return value;
+		return String(value);
 	}
 }
 
