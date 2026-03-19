@@ -61,7 +61,7 @@ function formatValue(value: unknown) {
 	try {
 		return JSON.stringify(value);
 	} catch {
-		return String(value);
+		return value;
 	}
 }
 
@@ -101,10 +101,11 @@ function SSEStoreDemo() {
 		if (!lastMessage) return;
 
 		const now = formatTimestamp(new Date());
+		
 		const value =
 			lastMessage.type === 'open' || lastMessage.type === 'error'
 				? '[Event]'
-				: formatValue(lastMessage.data);
+				: formatValue((lastMessage as any).data);
 
 		setEventLog((current) => [
 			{
