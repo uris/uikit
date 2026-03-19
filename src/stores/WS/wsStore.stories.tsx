@@ -4,18 +4,17 @@ import { Button } from '../../components/Button';
 import { FlexDiv } from '../../components/FlexDiv';
 import { Spacer } from '../../components/Spacer';
 import { TextField } from '../../components/Textfield';
-import { useIsConnected, useMessage, useSSE, useSSEStore } from './sseStore';
+import { useIsConnected, useMessage, useWS, useWSStore } from './wsStore';
 
-type SSELogEntry = {
+type WSLogEntry = {
 	id: string;
 	timestamp: string;
 	type: string;
 	value: string;
 };
 
-const CONNECTION_NAME = 'sse-test';
-const DEFAULT_SSE_TEST_URL = '';
-const DEFAULT_CUSTOM_EVENT = '';
+const CONNECTION_NAME = 'ws-test';
+const DEFAULT_WS_TEST_URL = '';
 
 function formatTimestamp(value: string | number | Date) {
 	const date = value instanceof Date ? value : new Date(value);
@@ -40,23 +39,11 @@ function formatValue(value: unknown) {
 	if (value instanceof Date) {
 		return formatTimestamp(value);
 	}
-	if (typeof value === 'object') {
-		const record = value as Record<string, unknown>;
-		const timestamp =
-			record.timestamp ?? record.timeStamp ?? record.time ?? record.date;
-		if (
-			typeof timestamp === 'string' ||
-			typeof timestamp === 'number' ||
-			timestamp instanceof Date
-		) {
-			return JSON.stringify({
-				...record,
-				[timestamp instanceof Date
-					? 'timestamp'
-					: (Object.keys(record).find((key) => record[key] === timestamp) ??
-						'timestamp')]: formatTimestamp(timestamp),
-			});
-		}
+	if (value instanceof Blob) {
+		return `[Blob ${value.type || 'application/octet-stream'} ${value.size}b]`;
+	}
+	if (value instanceof ArrayBuffer) {
+		return `[ArrayBuffer ${value.byteLength}b]`;
 	}
 	try {
 		return JSON.stringify(value);
@@ -65,31 +52,37 @@ function formatValue(value: unknown) {
 	}
 }
 
-function formatEventType(type: string) {
-	if (
-		type === 'open' ||
-		type === 'error' ||
-		type === 'close' ||
-		type === 'message'
-	)
-		return type;
-	if (type === 'disconnect') return 'disconnect';
-	return `${type} [Custom Event]`;
-}
-
-function SSEStoreDemo() {
-	const { addConnection, removeConnection } = useSSE();
-	const connections = useSSEStore((state) => state.connections);
+function WSStoreDemo() {
+	const { addConnection, removeConnection } = useWS();
+	const connections = useWSStore((state) => state.connections);
+	const connection = useWSStore((state) =>
+		state.connections.find((entry) => entry.name === CONNECTION_NAME),
+	);
 	const isConnected = useIsConnected(CONNECTION_NAME);
 	const lastMessage = useMessage();
-	const [url, setUrl] = useState(DEFAULT_SSE_TEST_URL);
-	const [customEventName, setCustomEventName] = useState(DEFAULT_CUSTOM_EVENT);
-	const [eventLog, setEventLog] = useState<SSELogEntry[]>([]);
+	const [url, setUrl] = useState(DEFAULT_WS_TEST_URL);
+	const [messageToSend, setMessageToSend] = useState('');
+	const [eventLog, setEventLog] = useState<WSLogEntry[]>([]);
+
+	const addLogEntry = (type: string, value: string) => {
+		setEventLog((current) => [
+			{
+				id: `${Date.now()}-${current.length}`,
+				timestamp: formatTimestamp(new Date()),
+				type,
+				value,
+			},
+			...current,
+		]);
+	};
 
 	const connect = () => {
 		addConnection(CONNECTION_NAME, {
 			url,
-			customEvents: customEventName ? [{ name: customEventName }] : undefined,
+			autoReconnect: true,
+			reconnectInterval: 1000,
+			reconnectAttempts: 5,
+			reconnectFalloff: true,
 		});
 	};
 
@@ -101,11 +94,12 @@ function SSEStoreDemo() {
 		if (!lastMessage) return;
 
 		const now = formatTimestamp(new Date());
-		
 		const value =
-			lastMessage.type === 'open' || lastMessage.type === 'error'
+			lastMessage.type === 'open' ||
+			lastMessage.type === 'error' ||
+			lastMessage.type === 'close'
 				? '[Event]'
-				: formatValue((lastMessage as any).data);
+				: formatValue(lastMessage.data);
 
 		setEventLog((current) => [
 			{
@@ -135,26 +129,42 @@ function SSEStoreDemo() {
 				padding={20}
 				border={'1px solid var(--core-outline-primary)'}
 			>
-				<h1>{`SEE Connection ${connections.length > 0 ? ': Active' : ''}`}</h1>
-				Slice does not provide a test SSE end point. You'll need to enter own
-				custom SSE enabled URL. If your endpoint supports it, you can also
-				provide 1 (one) optional custom event to listen for (event names are
-				case sensitive).
+				<h1>{`WS Connection ${connections.length > 0 ? ': Active' : ''}`}</h1>
+				Slice does not provide a test websocket end point. You'll need to enter
+				your own websocket URL.
 				<Spacer size={12} />
 				<TextField
 					label={'URL:'}
-					name={'sse-url'}
+					name={'ws-url'}
 					value={url}
-					placeholder={'https://www.example.com/api/sse/see-test'}
+					placeholder={'https://www.example.com/api/ws/ws-test'}
 					onChange={(value) => setUrl(value)}
 				/>
-				<TextField
-					label={'Custom event (optional):'}
-					name={'custom-event'}
-					value={customEventName}
-					placeholder={'Enter a custom event name'}
-					onChange={(value) => setCustomEventName(value)}
-				/>
+				<FlexDiv direction={'row'} gap={12}>
+					<TextField
+						label={'Test message:'}
+						name={'ws-test-message'}
+						value={messageToSend}
+						placeholder={'Enter text message to send'}
+						onChange={(value) => setMessageToSend(value)}
+						onSubmit={(value) => {
+							connection?.connection.send(value);
+							addLogEntry('send [Outbound Event]', value);
+							setMessageToSend('');
+						}}
+						disabled={!isConnected}
+					/>
+					<Button
+						round
+						onClick={() => {
+							connection?.connection.send(messageToSend);
+							addLogEntry('send [Outbound Event]', messageToSend);
+							setMessageToSend('');
+						}}
+						iconLeft={'arrow right'}
+						state={isConnected && messageToSend.trim() ? 'normal' : 'disabled'}
+					/>
+				</FlexDiv>
 				<FlexDiv gap={12} direction={'row'} background={'transparent'}>
 					<Button
 						variant={'solid'}
@@ -183,6 +193,7 @@ function SSEStoreDemo() {
 						}}
 						state={isConnected ? 'normal' : 'disabled'}
 					/>
+
 					<Button
 						label={'Clear log'}
 						onClick={() => setEventLog([])}
@@ -196,7 +207,7 @@ function SSEStoreDemo() {
 					) : (
 						eventLog.map((entry) => (
 							<div key={entry.id}>
-								{entry.timestamp} - {formatEventType(entry.type)}: {entry.value}
+								{entry.timestamp} - {entry.type}: {entry.value}
 							</div>
 						))
 					)}
@@ -206,9 +217,9 @@ function SSEStoreDemo() {
 	);
 }
 
-const meta: Meta<typeof SSEStoreDemo> = {
-	title: 'Stores/SSE Store',
-	component: SSEStoreDemo,
+const meta: Meta<typeof WSStoreDemo> = {
+	title: 'Stores/WS Store',
+	component: WSStoreDemo,
 	parameters: {
 		layout: 'fullscreen',
 	},
@@ -216,4 +227,4 @@ const meta: Meta<typeof SSEStoreDemo> = {
 
 export default meta;
 
-export const Demo: StoryObj<typeof SSEStoreDemo> = {};
+export const Demo: StoryObj<typeof WSStoreDemo> = {};

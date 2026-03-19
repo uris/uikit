@@ -1,0 +1,229 @@
+import {Meta, Unstyled} from '@storybook/addon-docs/blocks';
+import {RenderSource} from '../../../../documentation/_components/RenderSource/RenderSource';
+import {FlexDiv} from '../../../components/FlexDiv';
+import NoteSection from '../../../../documentation/_components/Notice/Notice';
+
+<Meta title="Utils/Web Socket Connection" />
+
+<FlexDiv width={'fill'} height={'fill'} alignItems={'center'}>
+    <FlexDiv width={'fill'} maxWidth={760} height={'auto'}>
+        <Unstyled>
+        <NoteSection>
+            `WSConnection` is a low-level browser utility around the native `WebSocket` API. Use it directly when you want to manage one socket connection yourself with typed callbacks, reconnect behavior, and optional unified event mode.
+        </NoteSection>
+
+        # WSConnection
+        Typed wrapper around the browser `WebSocket` API. It supports:
+        - standard message callbacks for parsed socket payloads
+        - unified callback mode for `open`, `message`, `error`, and `close`
+        - optional automatic reconnect on non-clean closes
+        - reconnect attempt limits with optional exponential falloff
+        - optional token handshake on open
+        - periodic `ping` keep-alive messages
+
+        ## Import
+        <RenderSource>
+```
+import { WSConnection } from '@apple-pie/slice/utils/objects';
+```
+        </RenderSource>
+
+        ## Generic type parameters
+        `WSConnection` accepts one generic type parameter:
+        <table style={{width: '100%'}}>
+          <colgroup>
+            <col style={{width: '1%'}} />
+            <col style={{width: '25%'}} />
+            <col style={{width: '98%'}} />
+          </colgroup>
+          <thead>
+            <tr>
+              <th className={'left'}>Generic</th>
+              <th className={'left'}>Default</th>
+              <th className={'left'}>Description</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td><code>TMessage</code></td><td><code>unknown</code></td><td>Optional payload type for parsed string socket messages.</td></tr>
+          </tbody>
+        </table>
+
+        ## Connection options
+        <table style={{width: '100%'}}>
+          <colgroup>
+            <col style={{width: '1%'}} />
+            <col style={{width: '24%'}} />
+            <col style={{width: '98%'}} />
+          </colgroup>
+          <thead>
+            <tr>
+              <th className={'left'}>Option</th>
+              <th className={'left'}>Type</th>
+              <th className={'left'}>Description</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td><code>url</code></td><td><code>string</code></td><td>WebSocket endpoint URL.</td></tr>
+            <tr><td><code>unifiedMessages</code></td><td><code>boolean</code></td><td>When <code>true</code>, all socket lifecycle and message events are routed through one discriminated callback object.</td></tr>
+            <tr><td><code>onMessageCallback</code></td><td><code>standard or unified callback</code></td><td>Callback signature depends on the value of <code>unifiedMessages</code>.</td></tr>
+            <tr><td><code>onOpenCallback</code></td><td><code>{`(event: Event) => void`}</code></td><td>Optional low-level open listener.</td></tr>
+            <tr><td><code>onCloseCallback</code></td><td><code>{`(event: CloseEvent) => void`}</code></td><td>Optional low-level close listener.</td></tr>
+            <tr><td><code>onErrorCallback</code></td><td><code>{`(event: ErrorEvent) => void`}</code></td><td>Optional low-level error listener.</td></tr>
+            <tr><td><code>token</code></td><td><code>string | () =&gt; Promise&lt;string&gt;</code></td><td>Optional auth token or async token provider. When present, the token is sent immediately after the socket opens.</td></tr>
+            <tr><td><code>keepAlive</code></td><td><code>boolean</code></td><td>When <code>true</code>, sends a periodic <code>'ping'</code> message while the socket is open.</td></tr>
+            <tr><td><code>keepAliveInterval</code></td><td><code>number</code></td><td>Milliseconds between keep-alive pings.</td></tr>
+            <tr><td><code>autoReconnect</code></td><td><code>boolean</code></td><td>When <code>true</code>, attempts reconnects after non-clean closes.</td></tr>
+            <tr><td><code>reconnectInterval</code></td><td><code>number</code></td><td>Base delay in milliseconds before reconnecting.</td></tr>
+            <tr><td><code>reconnectAttempts</code></td><td><code>number</code></td><td>Maximum reconnect attempts before giving up.</td></tr>
+            <tr><td><code>reconnectFalloff</code></td><td><code>boolean</code></td><td>When <code>true</code>, reconnect delay grows exponentially from the base interval.</td></tr>
+          </tbody>
+        </table>
+
+        ## Standard mode
+        Standard mode is the default. Only message payloads flow through `onMessageCallback`. Parsed JSON is returned as `TMessage`; unparsed string or binary frames are passed through as raw data.
+
+        <RenderSource>
+```
+// no typing is required, returns data as unknown
+const connection1 = new WSConnection({
+    url: 'wss://example.com/chat',
+    onMessageCallback: (data) => {
+        console.log(data);
+    },
+});
+            
+// optional type the message received before creating the connection
+type ChatMessage = {
+    id: string;
+    text: string;
+};
+
+const connection2 = new WSConnection<ChatMessage>({
+    url: 'wss://example.com/chat',
+    onMessageCallback: (data) => {
+        console.log(data.text);
+    },
+});
+```
+        </RenderSource>
+
+        ## Unified mode
+        Unified mode routes `open`, `message`, `error`, and `close` through one discriminated callback. The `type` field identifies the event kind.
+
+        <RenderSource>
+```
+const connection = new WSConnection<{ text: string }>({
+    url: 'wss://example.com/chat',
+    unifiedMessages: true,
+    onMessageCallback: (message) => {
+        switch (message.type) {
+            case 'open':
+                console.log(message.event);
+                break;
+            case 'message':
+                console.log(message.data);
+                break;
+            case 'error':
+                console.log(message.event);
+                break;
+            case 'close':
+                console.log(message.event);
+                break;
+        }
+    },
+});
+```
+        </RenderSource>
+
+        ## Unified message shapes
+        <table style={{width: '100%'}}>
+          <colgroup>
+            <col style={{width: '1%'}} />
+            <col style={{width: '25%'}} />
+            <col style={{width: '98%'}} />
+          </colgroup>
+          <thead>
+            <tr>
+              <th className={'left'}>Message type</th>
+              <th className={'left'}>Shape</th>
+              <th className={'left'}>Description</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td><code>open</code></td><td><code>{`{ type: 'open', event }`}</code></td><td>Socket open lifecycle event.</td></tr>
+            <tr><td><code>message</code></td><td><code>{`{ type: 'message', data, event }`}</code></td><td>Socket message event with parsed or raw payload.</td></tr>
+            <tr><td><code>error</code></td><td><code>{`{ type: 'error', event }`}</code></td><td>Socket error lifecycle event.</td></tr>
+            <tr><td><code>close</code></td><td><code>{`{ type: 'close', event }`}</code></td><td>Socket close lifecycle event.</td></tr>
+          </tbody>
+        </table>
+
+        ## Reconnect behavior
+        When `autoReconnect` is enabled, `WSConnection` attempts a reconnect after any non-clean close event. Reconnects stop after `reconnectAttempts` is reached.
+
+        If `reconnectFalloff` is enabled, the delay is exponential:
+        <RenderSource>
+```
+delay = reconnectInterval * 2 ** (attempt - 1)
+```
+        </RenderSource>
+
+        Example:
+        <RenderSource>
+```
+const connection = new WSConnection({
+    url: 'wss://example.com/chat',
+    autoReconnect: true,
+    reconnectInterval: 1000,
+    reconnectAttempts: 5,
+    reconnectFalloff: true,
+});
+```
+        </RenderSource>
+
+        Manual calls to `close()` are treated as intentional shutdown and do not trigger reconnect.
+
+        ## Token handshake
+        If a `token` is provided, it is sent as the first outbound message after the socket opens.
+
+        <RenderSource>
+```
+const connection = new WSConnection({
+    url: 'wss://example.com/chat',
+    token: async () => {
+        return await getAccessToken();
+    },
+});
+```
+        </RenderSource>
+
+        If token resolution fails, `WSConnection` emits an error event and closes the socket.
+
+        ## Keep alive
+        When `keepAlive` is enabled, the connection sends a literal `'ping'` string on the configured interval while the socket is open.
+
+        <RenderSource>
+```
+const connection = new WSConnection({
+    url: 'wss://example.com/chat',
+    keepAlive: true,
+    keepAliveInterval: 30000,
+});
+```
+        </RenderSource>
+
+        ## Cleanup
+        Always call `close()` when you are done with the connection. This clears timers, removes listeners, and closes the underlying socket.
+
+        <RenderSource>
+```
+const connection = new WSConnection({
+    url: 'wss://example.com/chat',
+});
+
+// later
+connection.close({ code: 1000, reason: 'Component unmounted' });
+```
+        </RenderSource>
+        </Unstyled>
+    </FlexDiv>
+</FlexDiv>

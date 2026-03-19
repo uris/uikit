@@ -21,6 +21,8 @@ export {
 	type KeyboardShortcut,
 	type KeyboardShortcuts,
 	type BreakPoints,
+	type WindowGeolocation,
+	type WindowGeolocationError,
 	useKeyboardShortcuts,
 	useTheme,
 	useObserveTheme,

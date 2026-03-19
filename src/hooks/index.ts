@@ -9,5 +9,11 @@ export {
 } from './useKeyboardShortcuts/useKeyboardShortcuts';
 export { useLastUpdated } from './useLastUpdated/useLastUpdated';
 export { useLocalStore } from './useLocalStore/useLocalStore';
-export { useWindow, FormFactor, type BreakPoints } from './useWindow/useWindow';
+export {
+	useWindow,
+	FormFactor,
+	type BreakPoints,
+	type WindowGeolocation,
+	type WindowGeolocationError,
+} from './useWindow/useWindow';
 export { useObserveResize } from './useObserveResize/useObserveResize';

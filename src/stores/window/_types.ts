@@ -1,3 +1,5 @@
+import type { WindowGeolocation } from '../../hooks/useWindow/useWindow';
+
 export type WindowStore = {
 	formFactor: FormFactor;
 	dpr: 1 | 2 | 3;
@@ -7,8 +9,12 @@ export type WindowStore = {
 	height: string;
 	viewportWidth: number;
 	viewportHeight: number;
+	location: WindowGeolocation | null;
+	locationError: Error | null;
+	gettingLocation: boolean;
 	actions: {
 		initialize: () => () => void;
+		getLocation: () => Promise<WindowGeolocation>;
 	};
 };
 

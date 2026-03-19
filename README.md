@@ -13,8 +13,8 @@ Slice is a TypeScript-first React UI kit with theme tokens, utility hooks, optio
 - 30+ reusable UI components (inputs, buttons, navigation, overlays, feedback, layout, icons, upload UI, camera/stream UI)
 - Theme system with light/dark presets and typed theme tokens
 - React hooks for theme, window sizing, keyboard shortcuts, local storage, resize, and more
-- Optional Zustand-powered stores (`toast`, `tip`, `uploads`, `window`)
-- Utility functions and low-level objects such as `SSEConnection`
+- Optional Zustand-powered stores (`tip`, `uploads`, `window`, `SSE`, `WS`)
+- Utility functions and low-level objects such as `SSEConnection` and `WSConnection`
 - Rollup + TypeScript build pipeline for CJS, ESM, and declaration output
 - Component performance benchmarks powered by Vitest
 
@@ -98,12 +98,6 @@ Subpath imports are also published:
 - `TextField`, `TextArea`, `Tip`, `Toast`, `Button`, `ButtonBar`
 - `Card`, `Chip`, `Label`, `DocIcons`, `DraggablePanel`, `UploadArea`
 
-Camera notes:
-
-- `Camera` exposes both `CameraProps` and an imperative `CameraElement` ref handle
-- Use the forwarded ref for low-level stream access (`stream`, `videoTrack`, `audioTrack`) and imperative controls such as `startCamera()`, `stopCamera()`, `toggleVideo()`, `toggleMic()`, and `snapshot()`
-- Preferred devices can be supplied through `sessionSettings.videoDeviceId` and `sessionSettings.micDeviceId`
-
 Example:
 
 ```tsx
@@ -144,64 +138,67 @@ export function CameraExample() {
 - `useToolTip`
 - `useLastUpdated`
 - `useLocalStore`
-- `useWindow`
+- `useWindow` with optional geolocation helpers (`geolocationSupported`, `location`, `locationError`, `gettingLocation`, `requestGeolocation`)
 - `useObserveResize`
 
 ## Stores (optional)
 
-- `toast` store: `useToast`, `useToastActions`, `toastActions`, `getToast`
 - `tip` store: `useTip`, `useTipActions`, `tipActions`, `getTip`
 - `SSE` store: `useSSEStore`, `useSSE`, `useMessage`, `useConnectionMessage`, `useConnectionClose`, `useIsConnected`
-- `window` store: `useWindowStore`, atomic viewport/runtime hooks, imperative viewport helpers
+- `WS` store: `useWSStore`, `useWS`, `useMessage`, `useConnectionMessage`, `useConnectionClose`, `useIsConnected`
+- `window` store: `useWindowStore`, atomic viewport/runtime hooks, imperative viewport helpers, and explicit location actions/selectors
 - `uploads` store: `useUploadsStore`, `useUploads`, `useUploadsActions`, `createUploadsWorker`, `uploadsActions`
-
-Example:
-
-```ts
-import { useToast, useToastActions } from '@apple-pie/slice/stores/toast';
-```
-
-SSE store example:
-
-```tsx
-import { useEffect } from 'react';
-import {
-  useSSE,
-  useIsConnected,
-  useMessage,
-} from '@apple-pie/slice/stores/SSE';
-
-function StreamingExample() {
-  const { addConnection, removeConnection } = useSSE();
-  const connected = useIsConnected('assistant');
-  const text = useMessage<string>('message', 'assistant');
-
-  useEffect(() => {
-    addConnection('assistant', {
-      url: '/api/stream',
-      connectionClose: { message: 'eos' },
-    });
-
-    return () => removeConnection('assistant');
-  }, [addConnection, removeConnection]);
-
-  return <div>{connected ? text ?? 'streaming...' : 'disconnected'}</div>;
-}
-```
 
 Uploads store example:
 
-```ts
+```tsx
+import { UploadArea } from '@apple-pie/slice';
 import {
   createUploadsWorker,
-  uploadsActions,
   useUploads,
   useUploadsActions,
+  useUploadsWorkerStatus,
 } from '@apple-pie/slice/stores/uploads';
+import { useEffect, useRef } from 'react';
 
-const worker = createUploadsWorker();
+function UploadsExample() {
+  const workerRef = useRef<Worker | null>(null);
+  const uploads = useUploads();
+  const workerStatus = useUploadsWorkerStatus();
+  const actions = useUploadsActions();
 
-uploadsActions.initialize({ uploadURL: '/api/uploads' }, worker);
+  useEffect(() => {
+    if (workerRef.current) return;
+    workerRef.current = createUploadsWorker();
+    actions.initialize({ uploadURL: '/api/uploads' }, workerRef.current);
+  }, [actions]);
+
+  return (
+    <div>
+      <UploadArea
+        busy={workerStatus === 'busy'}
+        files={uploads.map((upload) => ({
+          id: upload.id,
+          file: upload.file,
+          progress: upload.progress,
+          error: upload.error,
+        }))}
+        onUpload={(files) => actions.push(files)}
+        showProgress={true}
+        title={'Upload files'}
+        message={'Drag and drop files here or click to upload'}
+      />
+
+      <div>worker: {workerStatus}</div>
+
+      {uploads.map((upload) => (
+        <div key={upload.id}>
+          {upload.file.name} - {upload.status} - {upload.progress ?? 0}%
+        </div>
+      ))}
+    </div>
+  );
+}
 ```
 
 For consuming browser apps using a built worker asset, pass an explicit worker URL from your bundler:
@@ -226,36 +223,9 @@ This worker URL pattern assumes modern frontend tooling such as Vite or similar 
 ## Utilities
 
 - Package utilities are published from `@apple-pie/slice/utils`
-- Low-level utility objects such as `SSEConnection` are also published from `@apple-pie/slice/utils/objects`
+- Low-level utility objects such as `SSEConnection` and `WSConnection` are also published from `@apple-pie/slice/utils/objects`
 - Internal utility source lives under `src/utils/functions/*`
 - Shared utility CSS modules live under `src/utils/styling/*`
-
-Example:
-
-```ts
-import { addOpacity, copyToClipboard, tintFromColor } from '@apple-pie/slice/utils';
-```
-
-SSE utility example:
-
-```ts
-import { SSEConnection } from '@apple-pie/slice/utils/objects';
-
-const connection = new SSEConnection({
-  url: '/api/events',
-  unifiedOnMessage: true,
-  connectionClose: { message: 'eos' },
-  onMessageCallback: (message) => {
-    if (message.type === 'message') {
-      console.log(message.data);
-    }
-
-    if (message.type === 'close') {
-      console.log('stream closed');
-    }
-  },
-});
-```
 
 ## Development
 
