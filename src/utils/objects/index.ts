@@ -1,4 +1,5 @@
 export { SSEConnection } from './SSEConnection/SSEConnection';
+export { WSConnection } from './WSConnection/WSConnection';
 export type {
 	SSECustomEvent,
 	SSEConnectionCloseOption,
@@ -8,3 +9,7 @@ export type {
 	SSEUnifiedCustomMessage,
 	SSEUnifiedMessage,
 } from './SSEConnection/SSEConnection';
+export type {
+	UnifiedMessageEvent,
+	WSConnectionOptions,
+} from './WSConnection/WSConnection';

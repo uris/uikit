@@ -1,54 +1,54 @@
 import { create } from 'zustand';
-import {
-	SSEConnection,
-	type SSEEventMap,
-	type SSEUnifiedMessage,
-} from '../../utils';
-import type { SSEStore, SSEStoreConnectionOptions } from './_types';
+import { type UnifiedMessageEvent, WSConnection } from '../../utils';
+import type { WSStore, WSStoreConnectionOptions } from './_types';
 
-export const useSSEStore = create<SSEStore>((set, get) => ({
+export const useWSStore = create<WSStore>((set, get) => ({
 	connections: [],
 	message: null,
 	closedConnection: null,
 	actions: {
-		addConnection: (name: string, options: SSEStoreConnectionOptions) => {
+		addConnection: (name: string, options: WSStoreConnectionOptions) => {
 			const existingConnection = get().connections.find((c) => c.name === name);
-			existingConnection?.connection.close();
+			existingConnection?.connection.close({
+				code: 1000,
+				reason: 'Connection replaced',
+			});
 
 			const userOnMessageCallback = options.onMessageCallback;
-			const connection = new SSEConnection({
+			const connection = new WSConnection({
 				...options,
-				unifiedOnMessage: true,
+				unifiedMessages: true,
 				onMessageCallback: (message) => {
 					set({
-						message: message as SSEUnifiedMessage<unknown, SSEEventMap>,
+						message: message as UnifiedMessageEvent<unknown>,
 					});
 
-					userOnMessageCallback?.(
-						message as SSEUnifiedMessage<unknown, SSEEventMap>,
-					);
+					userOnMessageCallback?.(message as UnifiedMessageEvent<unknown>);
 
 					if (message.type === 'close') {
 						set({ closedConnection: name });
-						get().actions.removeConnection(name);
 					}
 				},
 			});
 
+			const nextConnection = { name, connection };
 			set((state) => ({
 				connections: [
 					...state.connections.filter((connection) => connection.name !== name),
-					{ name, connection },
+					nextConnection,
 				],
 			}));
 
-			return { name, connection };
+			return nextConnection;
 		},
 		removeConnection: (name: string) => {
 			const existingConnection = get().connections.find((c) => c.name === name);
 			if (!existingConnection) return;
 
-			existingConnection.connection.close();
+			existingConnection.connection.close({
+				code: 1000,
+				reason: 'Connection removed',
+			});
 			set((state) => ({
 				connections: state.connections.filter(
 					(connection) => connection.name !== name,
@@ -58,18 +58,18 @@ export const useSSEStore = create<SSEStore>((set, get) => ({
 	},
 }));
 
-// atomic hook exports for use in React components
-export const useSSE = () => useSSEStore((state) => state.actions);
+// reactive hook exports for React components
+export const useWS = () => useWSStore((state) => state.actions);
 export const useConnectionClose = () =>
-	useSSEStore((state) => state.closedConnection);
+	useWSStore((state) => state.closedConnection);
 export const useConnectionMessage = (connection: string) =>
-	useSSEStore((state) =>
+	useWSStore((state) =>
 		state.connections.some((entry) => entry.name === connection)
 			? state.message
 			: null,
 	);
 export const useIsConnected = (connection?: string) =>
-	useSSEStore((state) => {
+	useWSStore((state) => {
 		if (connection) {
 			return (
 				state.connections.find((entry) => entry.name === connection)?.connection
@@ -81,21 +81,21 @@ export const useIsConnected = (connection?: string) =>
 	});
 
 // reactive hook exports for reading the latest unified message state
-export function useMessage(): SSEUnifiedMessage<unknown, SSEEventMap> | null;
+export function useMessage(): UnifiedMessageEvent<unknown> | null;
 export function useMessage<T = unknown>(
 	type: 'message',
 	connection?: string,
-): T | string | null;
+): T | string | Blob | ArrayBuffer | null;
 export function useMessage(
 	type: 'open' | 'error' | 'close',
 	connection?: string,
-): Event | null;
+): Event | ErrorEvent | CloseEvent | null;
 export function useMessage<T = unknown>(
 	type: string,
 	connection?: string,
-): T | string | null;
+): T | string | Blob | ArrayBuffer | null;
 export function useMessage<T = unknown>(type?: string, connection?: string) {
-	return useSSEStore((state) => {
+	return useWSStore((state) => {
 		const sourceMessage =
 			connection && !state.connections.some((c) => c.name === connection)
 				? null
@@ -107,10 +107,12 @@ export function useMessage<T = unknown>(type?: string, connection?: string) {
 			return 'event' in sourceMessage ? sourceMessage.event : null;
 		}
 
-		return 'data' in sourceMessage ? (sourceMessage.data as T | string) : null;
+		return 'data' in sourceMessage
+			? (sourceMessage.data as T | string | Blob | ArrayBuffer)
+			: null;
 	});
 }
 
-// non-reactive imperative exports for use outside the React context
-export const useSSEActions = useSSEStore.getState().actions;
-export const useLastSSEMessage = () => useSSEStore.getState().message;
+// direct singleton access for non-React code
+export const useWSActions = useWSStore.getState().actions;
+export const useLastWSMessage = () => useWSStore.getState().message;

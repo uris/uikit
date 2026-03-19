@@ -1,6 +1,6 @@
 export { copyToClipboard } from './functions/misc';
 export { tintFromColor, addOpacity } from './functions/colors';
-export { SSEConnection } from './objects';
+export { SSEConnection, WSConnection } from './objects';
 export type {
 	SSECustomEvent,
 	SSEConnectionCloseOption,
@@ -9,4 +9,6 @@ export type {
 	SSEUnifiedBuiltInMessage,
 	SSEUnifiedCustomMessage,
 	SSEUnifiedMessage,
+	UnifiedMessageEvent,
+	WSConnectionOptions,
 } from './objects';

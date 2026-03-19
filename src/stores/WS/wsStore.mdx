@@ -1,0 +1,212 @@
+import {Meta, Unstyled} from '@storybook/addon-docs/blocks';
+import {RenderSource} from '../../../documentation/_components/RenderSource/RenderSource';
+import {FlexDiv} from '../../components/FlexDiv';
+import NoteSection from '../../../documentation/_components/Notice/Notice';
+
+<Meta title="Stores/WS Store" />
+
+<FlexDiv width={'fill'} height={'fill'} alignItems={'center'}>
+    <FlexDiv width={'fill'} maxWidth={760} height={'auto'}>
+        <Unstyled>
+        <NoteSection>
+            Slice stores uses a module-level singleton pattern: each store is created once when the module is loaded - every import of the module shares the same store instance.
+        </NoteSection>
+
+        # WSStore
+        Global store for handling websocket events from one or more connections, built with Zustand. The store manages named `WSConnection` instances, emits and keeps a snapshot of the latest unified message, and exposes both reactive hooks and imperative helpers to read messages and manage connections.
+        
+        The Slice websocket store has a narrow goal: provide a singleton global state for the last unified websocket event received and emit that as state. Storing, persisting, accumulating, and manipulating websocket message history is left to the consuming app.
+            
+        ## Adding a new websocket connection
+        `addConnection` creates a new `WSConnection` and saves it to state. If a connection with the same name already exists, the store closes the old connection before replacing it. The store always creates connections in unified mode, so the options you pass here are the `WSConnection` options except for `unifiedMessages`, which the store manages internally.
+        A typical example might look like this:
+
+	        <RenderSource language={'tsx'}>
+	        ```
+	        import { useEffect, useRef } from 'react';
+	        import { useWS, useIsConnected, useMessage, WSStoreConnection } from '@apple-pie/slice/stores/WS';
+	            
+	        type ChatMessage = { id: string; text: string };
+	            
+	        function AppSocket() {
+                const connectionRef = useRef<WSStoreConnection | null>(null);
+	            const { addConnection, removeConnection } = useWS();
+	            const connected = useIsConnected('chat');
+	            const anyMessage = useMessage();
+	            const lastPayload = useMessage<ChatMessage>('message', 'chat');
+	                
+	            useEffect(() => {
+                    if(connectionRef.current) return
+                    connectionRef.current = addConnection('chat', {
+                        url: 'wss://example.com/chat',
+                        autoReconnect: true,
+                        reconnectInterval: 1000,
+                        reconnectAttempts: 5,
+                        reconnectFalloff: true,
+	                });
+	                return () => {
+                        removeConnection('chat');
+                        connectionRef.current = null;
+                    }
+	            },[addConnection, removeConnection]);
+	            
+	            return (
+	                <div>
+	                    connected: {connected ? 'yes' : 'no'} -
+	                    message: {typeof lastPayload === 'object' && lastPayload ? lastPayload.text : 'waiting...'} -
+	                    last type: {anyMessage?.type ?? 'waiting...'}
+	                </div>
+	            );
+	        }
+	        ```
+	        </RenderSource>
+	        
+	        Note: Slice stores are singletons, which means you can safely import `useMessage` anywhere in your app and subscribe to the latest matching websocket update.
+            If you plan to make events available globally to your app, make sure to place your connection cleanup where it makes sense.
+
+        ## Removing a connection
+        Removing a connection always closes it first, then removes it from the store.
+
+        <RenderSource language={'tsx'}>
+            {`
+import { useWSActions } from '@apple-pie/slice/stores/WS';
+
+useWSActions.removeConnection('chat');
+`}
+        </RenderSource>
+        
+	    ## React exports (reactive)
+	    React exports are reactive subscriptions for components updating automatically as websocket state changes.
+        <table style={{width: '100%'}}>
+          <colgroup>
+            <col style={{width: '1%'}} />
+            <col style={{width: '25%'}} />
+            <col style={{width: '98%'}} />
+          </colgroup>
+          <thead>
+            <tr>
+              <th className={'left'}>Export</th>
+              <th className={'left'}>Type</th>
+              <th className={'left'}>Description</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td><code>useWSStore</code></td><td><code>Zustand store hook</code></td><td>Main store hook for custom selector usage.</td></tr>
+            <tr><td><code>useWS</code></td><td><code>{`() => { addConnection, removeConnection }`}</code></td><td>Atomic hook selecting only the websocket actions object.</td></tr>
+            <tr><td><code>useConnectionClose</code></td><td><code>{`() => string | null`}</code></td><td>Returns the name of the most recently closed websocket connection observed by the store.</td></tr>
+            <tr><td><code>useConnectionMessage</code></td><td><code>{`(connection: string) => UnifiedMessageEvent | null`}</code></td><td>Returns the latest unified message for one named connection without requiring an event type filter.</td></tr>
+            <tr><td><code>useIsConnected</code></td><td><code>{`(connection?: string) => boolean`}</code></td><td>Returns whether a named connection is currently open. When no name is supplied, it returns true if any managed websocket connection is open.</td></tr>
+	        <tr><td><code>useMessage</code></td><td><code>{`() => UnifiedMessageEvent | null`}</code> or <code>{`(type: string, connection?: string) => payload | Event | null`}</code></td><td>Without arguments it returns the latest unified message. When a type is provided it returns the latest payload for that type, optionally scoped to a named connection.</td></tr>
+          </tbody>
+        </table>
+
+        ## Imperative exports (non-reactive)
+        These APIs call the same singleton store instance directly. Use them for bootstrapping, service layers, and other non-React code paths.
+        <table style={{width: '100%'}}>
+          <colgroup>
+            <col style={{width: '1%'}} />
+            <col style={{width: '25%'}} />
+            <col style={{width: '98%'}} />
+          </colgroup>
+          <thead>
+            <tr>
+              <th className={'left'}>Export</th>
+              <th className={'left'}>Type</th>
+              <th className={'left'}>Description</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td><code>useWSActions</code></td><td><code>{`{ addConnection, removeConnection }`}</code></td><td>Imperative actions for creating and tearing down named websocket connections.</td></tr>
+            <tr><td><code>useLastWSMessage</code></td><td><code>{`() => UnifiedMessageEvent | null`}</code></td><td>Imperative snapshot read of the latest unified websocket message captured by the store.</td></tr>
+          </tbody>
+        </table>
+
+	    ## Store state shape
+	    The store keeps two main pieces of state:
+
+        <table style={{width: '100%'}}>
+          <colgroup>
+            <col style={{width: '1%'}} />
+            <col style={{width: '25%'}} />
+            <col style={{width: '98%'}} />
+          </colgroup>
+          <thead>
+            <tr>
+              <th className={'left'}>Field</th>
+              <th className={'left'}>Type</th>
+              <th className={'left'}>Description</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td><code>connections</code></td><td><code>WSStoreConnection[]</code></td><td>List of active named websocket connections managed by the store.</td></tr>
+            <tr><td><code>message</code></td><td><code>UnifiedMessageEvent | null</code></td><td>The latest unified message observed from any managed connection.</td></tr>
+            <tr><td><code>closedConnection</code></td><td><code>string | null</code></td><td>The name of the most recently closed connection observed by the store.</td></tr>
+          </tbody>
+	    </table>
+
+	    ## Notes: useMessage
+	    `useMessage` can be used to intercept all message types or narrow the messages to a specific type / connection:
+	    <table style={{width: '100%'}}>
+	      <colgroup>
+	        <col style={{width: '1%'}} />
+	        <col style={{width: '30%'}} />
+	        <col style={{width: '98%'}} />
+	      </colgroup>
+	      <thead>
+	        <tr>
+	          <th className={'left'}>Call</th>
+	          <th className={'left'}>Returns</th>
+	          <th className={'left'}>Description</th>
+	        </tr>
+	      </thead>
+	      <tbody>
+	        <tr><td><code>useMessage()</code></td><td><code>UnifiedMessageEvent | null</code></td><td>Returns the latest full unified websocket message object from the store.</td></tr>
+	        <tr><td><code>useMessage('message')</code></td><td><code>unknown | string | Blob | ArrayBuffer | null</code></td><td>Returns the latest websocket payload.</td></tr>
+	        <tr><td><code>useMessage('open')</code></td><td><code>Event | null</code></td><td>Returns the latest open event object.</td></tr>
+	        <tr><td><code>useMessage('error')</code></td><td><code>ErrorEvent | null</code></td><td>Returns the latest error event object.</td></tr>
+	        <tr><td><code>useMessage('close')</code></td><td><code>CloseEvent | null</code></td><td>Returns the latest close event object.</td></tr>
+	        <tr><td><code>useMessage('message', 'chat')</code></td><td><code>payload | string | Blob | ArrayBuffer | null</code></td><td>Returns the latest payload for the default websocket message type, only when the named connection exists.</td></tr>
+	      </tbody>
+	    </table>
+
+	    If a `connection` is supplied, a `type` must also be supplied.
+
+	    ## Notes: useIsConnected
+	    `useIsConnected` reads connection status from the underlying `WSConnection.connected` property and, if a named connection is not provided, returns true/false if any connection is in the open ready state.
+	    <table style={{width: '100%'}}>
+	      <colgroup>
+	        <col style={{width: '1%'}} />
+	        <col style={{width: '30%'}} />
+	        <col style={{width: '98%'}} />
+	      </colgroup>
+	      <thead>
+	        <tr>
+	          <th className={'left'}>Call</th>
+	          <th className={'left'}>Returns</th>
+	          <th className={'left'}>Description</th>
+	        </tr>
+	      </thead>
+	      <tbody>
+	        <tr><td><code>useIsConnected()</code></td><td><code>boolean</code></td><td>Returns true when any managed websocket connection is currently open.</td></tr>
+	        <tr><td><code>useIsConnected('chat')</code></td><td><code>boolean</code></td><td>Returns true when the named connection exists and its underlying websocket is open.</td></tr>
+	      </tbody>
+	    </table>
+
+	    ## Imperative usage outside React
+        <RenderSource language={'tsx'}>
+{`
+import { useWSActions, useLastWSMessage } from '@apple-pie/slice/stores/WS';
+
+useWSActions.addConnection('system', {
+  url: 'wss://example.com/system',
+  autoReconnect: true,
+});
+
+export function getLatestWSType() {
+  return useLastWSMessage()?.type ?? null;
+}
+`}
+        </RenderSource>
+        </Unstyled>
+    </FlexDiv>
+</FlexDiv>

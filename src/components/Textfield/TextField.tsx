@@ -61,7 +61,7 @@ export const TextField = React.memo(
 				error: 'var(--feedback-warning)',
 				placeholder: 'var(--core-text-disabled)',
 				disabled: 'var(--core-text-disabled)',
-				label: 'var(--core-text-tertiary)',
+				label: 'var(--core-text-primary)',
 			},
 			iconLeft = null,
 			clearButton = { size: 20 },
@@ -126,23 +126,26 @@ export const TextField = React.memo(
 		// memo handling value updates based on input
 		const handleValueChange = useCallback(
 			(newValue: string) => {
+				if (disabled) return;
 				setText(newValue);
 				onChange(newValue);
 				if (!valid) textIsValid(text);
 			},
-			[onChange, textIsValid, text, valid],
+			[onChange, textIsValid, text, valid, disabled],
 		);
 
 		// memo blur handler
 		const handleBlur = useCallback(() => {
+			if (disabled) return;
 			textIsValid(text);
 			setIsFocused(false);
 			onBlur(text);
-		}, [text, onBlur, textIsValid]);
+		}, [text, onBlur, textIsValid, disabled]);
 
 		// memo key stroke handling
 		const handleKeyDown = useCallback(
 			(e: React.KeyboardEvent) => {
+				if (disabled) return;
 				if (e.key === 'Enter') {
 					handleBlur();
 					onSubmit(text);
@@ -159,9 +162,10 @@ export const TextField = React.memo(
 
 		// memo handle focus
 		const handleFocus = useCallback(() => {
+			if (disabled) return;
 			setIsFocused(true);
 			onFocus(text);
-		}, [text, onFocus]);
+		}, [text, onFocus, disabled]);
 
 		// memo toggle show (for passwords)
 		const toggleShow = useCallback(() => {
@@ -254,7 +258,9 @@ export const TextField = React.memo(
 				'--tf-bg-color': setBackgroundColor,
 				'--tf-box-shadow': setBoxShadow,
 				'--tf-color': textColor,
-				'--tf-label-color': color.label ?? 'var(--core-text-disabled)',
+				'--tf-label-color': disabled
+					? 'var(--core-text-disabled)'
+					: color.label,
 				'--tf-text-align': setTextAlign,
 				'--tf-show-opacity': setShowOpacity,
 				'--tf-placeholder-color':
@@ -272,6 +278,7 @@ export const TextField = React.memo(
 			setTextAlign,
 			setShowOpacity,
 			color,
+			disabled,
 		]);
 
 		/* START.DEBUG */
@@ -315,7 +322,7 @@ export const TextField = React.memo(
 						onFocus={handleFocus}
 						onBlur={handleBlur}
 						onMouseDown={(e) => e.stopPropagation()}
-						disabled={!editable}
+						disabled={!editable || disabled}
 						maxLength={maxLength}
 					/>
 					<AnimatePresence initial={false}>
