@@ -17,6 +17,13 @@ import NoteSection from '../../../documentation/_components/Notice/Notice';
 
         ## Important!
             `window store` has an initialize action that sets a window 'resize' event listener, returning the clean up function. <b>You should only call this action once in your application</b>, or you'll end up with multiple window listeners that can collide.
+
+        ## SSR behavior
+        The store is safe to import during SSR. Browser-only values fall back to safe defaults on the server and are hydrated when you call <code>initialize()</code> in the browser.
+        <br />
+        Server defaults:
+        <br />
+        <code>viewportWidth = -1</code>, <code>viewportHeight = -1</code>, <code>height = '100vh'</code>, <code>dpr = 1</code>, device/runtime booleans = <code>false</code>.
             
         ## React exports (reactive)
         React exports are reactive subscriptions for components updating automatically as state changes.
@@ -43,6 +50,10 @@ import NoteSection from '../../../documentation/_components/Notice/Notice';
             <tr><td><code>useIsElectron</code></td><td><code>{`() => boolean`}</code></td><td>Atomic selector for Electron runtime.</td></tr>
             <tr><td><code>useIsAppleDevice</code></td><td><code>{`() => boolean`}</code></td><td>Atomic selector for Apple platform detection.</td></tr>
             <tr><td><code>useDpr</code></td><td><code>{`() => 1 | 2 | 3`}</code></td><td>Atomic selector for clamped pixel ratio.</td></tr>
+            <tr><td><code>useLocation</code></td><td><code>{`() => WindowGeolocation | null`}</code></td><td>Atomic selector for the last resolved geolocation.</td></tr>
+            <tr><td><code>useLocationError</code></td><td><code>{`() => Error | null`}</code></td><td>Atomic selector for the last geolocation failure.</td></tr>
+            <tr><td><code>useGettingLocation</code></td><td><code>{`() => boolean`}</code></td><td>Atomic selector for geolocation request progress.</td></tr>
+            <tr><td><code>useGetLocation</code></td><td><code>{`() => () => Promise&lt;WindowGeolocation&gt;`}</code></td><td>Returns the geolocation action for explicit browser-side location requests.</td></tr>
           </tbody>
         </table>
 
@@ -69,6 +80,9 @@ import NoteSection from '../../../documentation/_components/Notice/Notice';
             <tr><td><code>isElectron</code></td><td><code>{`() => boolean`}</code></td><td>Read Electron runtime flag outside React.</td></tr>
             <tr><td><code>isAppleDevice</code></td><td><code>{`() => boolean`}</code></td><td>Read Apple platform flag outside React.</td></tr>
             <tr><td><code>dpr</code></td><td><code>{`() => 1 | 2 | 3`}</code></td><td>Read clamped device pixel ratio outside React.</td></tr>
+            <tr><td><code>location</code></td><td><code>{`() => WindowGeolocation | null`}</code></td><td>Read the last resolved location outside React.</td></tr>
+            <tr><td><code>locationError</code></td><td><code>{`() => Error | null`}</code></td><td>Read the last geolocation error outside React.</td></tr>
+            <tr><td><code>gettingLocation</code></td><td><code>{`() => boolean`}</code></td><td>Read geolocation request progress outside React.</td></tr>
           </tbody>
         </table>
 
@@ -87,10 +101,15 @@ import {
   useIsElectron,
   useIsAppleDevice,
   useDpr,
+  useLocation,
+  useLocationError,
+  useGettingLocation,
+  useGetLocation,
 } from '@apple-pie/slice/stores/window';
 
 function ViewportBadge() {
   const initialize = useInitializeWindow();
+  const getLocation = useGetLocation();
   const formFactor = useFormFactor();
   const viewportWidth = useViewportWidth();
   const viewportHeight = useViewportHeight();
@@ -98,6 +117,9 @@ function ViewportBadge() {
   const isElectron = useIsElectron();
   const isAppleDevice = useIsAppleDevice();
   const dpr = useDpr();
+  const location = useLocation();
+  const locationError = useLocationError();
+  const gettingLocation = useGettingLocation();
 
   // Important! Call this only once in your application as it initializes.
   useEffect(() => initialize(), [initialize]);
@@ -107,6 +129,18 @@ function ViewportBadge() {
       {formFactor} • {viewportWidth} x {viewportHeight} • dpr:{dpr}
       <br />
       touch:{String(isTouchDevice)} electron:{String(isElectron)} apple:{String(isAppleDevice)}
+      <br />
+      location:{location ? \`\${location.latitude}, \${location.longitude}\` : 'not requested'}
+      <br />
+      {locationError ? locationError.message : null}
+      <br />
+      <button
+        type="button"
+        onClick={() => void getLocation().catch(() => {})}
+        disabled={gettingLocation}
+      >
+        {gettingLocation ? 'Requesting location...' : 'Request location'}
+      </button>
     </div>
   );
 }

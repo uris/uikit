@@ -10,7 +10,7 @@ import Notice from "../../../documentation/_components/Notice/Notice";
     <FlexDiv width={"fill"} maxWidth={760} height={"auto"}>
         <Unstyled>
         # useWindow
-        Tracks viewport size, form factor, touch capability, pixel ratio, and Electron runtime state.
+        Tracks viewport size, form factor, touch capability, pixel ratio, Electron runtime state, and optional geolocation requests.
 
         ## Signature
         `useWindow(breakpoints?: BreakPoints, top?: boolean)`
@@ -62,6 +62,11 @@ import Notice from "../../../documentation/_components/Notice/Notice";
             <tr><td><code>isAppleDevice</code></td><td><code>boolean</code></td><td><code>false</code></td><td>`true` when running in iOS/MacOS.</td></tr>
             <tr><td><code>formFactor</code></td><td><code>FormFactor</code></td><td><code>FormFactor.Desktop</code></td><td>Screen classification based on width breakpoints.</td></tr>
             <tr><td><code>dpr</code></td><td><code>number</code></td><td><code>1</code></td><td>Device pixel ratio clamped to `1 | 2 | 3`.</td></tr>
+            <tr><td><code>geolocationSupported</code></td><td><code>boolean</code></td><td><code>false</code></td><td>`true` when the browser exposes the Geolocation API.</td></tr>
+            <tr><td><code>location</code></td><td><code>WindowGeolocation | null</code></td><td><code>null</code></td><td>The last successfully resolved location returned by <code>requestGeolocation()</code>.</td></tr>
+            <tr><td><code>locationError</code></td><td><code>Error | null</code></td><td><code>null</code></td><td>The last geolocation error, including permission denial and timeout failures.</td></tr>
+            <tr><td><code>gettingLocation</code></td><td><code>boolean</code></td><td><code>false</code></td><td>`true` while a geolocation lookup is in progress.</td></tr>
+            <tr><td><code>requestGeolocation</code></td><td><code>() =&gt; void</code></td><td><code>-</code></td><td>Triggers an explicit browser geolocation request. This does not run automatically, so callers control when the permission prompt appears.</td></tr>
           </tbody>
         </table>
 
@@ -103,6 +108,30 @@ function ViewportBadgeWithCustomBreakpoints() {
     <div style={{ padding: 12, border: '1px solid var(--core-outline-primary)' }}>
       {win.formFactor} • {win.viewportWidth} x {win.viewportHeight}
     </div>
+  );
+}
+`}
+        </RenderSource>
+
+        <RenderSource language={"tsx"}>
+{`
+import { useWindow } from '@apple-pie/slice';
+
+function GeoLocationButton() {
+  const win = useWindow();
+
+  return (
+    <button
+      type="button"
+      onClick={win.requestGeolocation}
+      disabled={!win.geolocationSupported || win.gettingLocation}
+    >
+      {win.gettingLocation
+        ? 'Requesting location...'
+        : win.location
+          ? \`\${win.location.latitude}, \${win.location.longitude}\`
+          : 'Request location'}
+    </button>
   );
 }
 `}

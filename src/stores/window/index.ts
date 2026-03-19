@@ -1,6 +1,30 @@
-export { useWindowStore } from './windowStore';
 export {
-	FormFactor,
-	type BreakPoints,
-	type WindowStore,
-} from './_types';
+	useWindowStore,
+	useFormFactor,
+	useViewportWidth,
+	useViewportHeight,
+	useIsAppleDevice,
+	useIsTouchDevice,
+	useIsElectron,
+	useDpr,
+	useLocation,
+	useLocationError,
+	useGettingLocation,
+	useInitializeWindow,
+	useGetLocation,
+	formFactor,
+	viewportWidth,
+	viewportHeight,
+	isAppleDevice,
+	isTouchDevice,
+	isElectron,
+	dpr,
+	location,
+	locationError,
+	gettingLocation,
+} from './windowStore';
+export { FormFactor, type BreakPoints, type WindowStore } from './_types';
+export type {
+	WindowGeolocation,
+	WindowGeolocationError,
+} from '../../hooks/useWindow/useWindow';
