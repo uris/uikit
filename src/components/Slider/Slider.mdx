@@ -34,19 +34,17 @@ import {RenderSource} from '../../../documentation/_components/RenderSource/Rend
             </tr>
           </thead>
           <tbody>
-            <tr><td><code>cursor</code></td><td><code>{`'default' | 'grab' | 'grabbing' | 'pointer'`}</code></td><td><code>-</code></td><td>Controls `cursor`.</td></tr>
-            <tr><td><code>headColor</code></td><td><code>string</code></td><td><code>-</code></td><td>Color token/value for `headColor`.</td></tr>
-            <tr><td><code>headType</code></td><td><code>{`'round' | 'square' | 'none'`}</code></td><td><code>-</code></td><td>Controls `headType`.</td></tr>
-            <tr><td><code>height</code></td><td><code>{`number | string`}</code></td><td><code>-</code></td><td>Sizing/layout setting for `height`.</td></tr>
-            <tr><td><code>progressColor</code></td><td><code>string</code></td><td><code>-</code></td><td>Color token/value for `progressColor`.</td></tr>
-            <tr><td><code>scaleMax</code></td><td><code>number</code></td><td><code>-</code></td><td>Controls `scaleMax`.</td></tr>
-            <tr><td><code>scaleMin</code></td><td><code>number</code></td><td><code>-</code></td><td>Controls `scaleMin`.</td></tr>
-            <tr><td><code>touchHeight</code></td><td><code>{`number | string`}</code></td><td><code>-</code></td><td>Sizing/layout setting for `touchHeight`.</td></tr>
-            <tr><td><code>trackColor</code></td><td><code>string</code></td><td><code>-</code></td><td>Color token/value for `trackColor`.</td></tr>
-            <tr><td><code>trackHeadSize</code></td><td><code>{`number | null`}</code></td><td><code>-</code></td><td>Sizing/layout setting for `trackHeadSize`.</td></tr>
-            <tr><td><code>trackHeadWidth</code></td><td><code>{`number | null`}</code></td><td><code>-</code></td><td>Sizing/layout setting for `trackHeadWidth`.</td></tr>
-            <tr><td><code>value</code></td><td><code>number</code></td><td><code>-</code></td><td>Controls `value`.</td></tr>
-            <tr><td><code>width</code></td><td><code>{`number | string`}</code></td><td><code>-</code></td><td>Sizing/layout setting for `width`.</td></tr>
+            <tr><td><code>value</code></td><td><code>number</code></td><td><code>25</code></td><td>Current slider value.</td></tr>
+            <tr><td><code>scaleMin</code></td><td><code>number</code></td><td><code>0</code></td><td>Minimum selectable value.</td></tr>
+            <tr><td><code>scaleMax</code></td><td><code>number</code></td><td><code>100</code></td><td>Maximum selectable value.</td></tr>
+            <tr><td><code>width</code></td><td><code>{`number | string`}</code></td><td><code>100</code></td><td>Width of the slider. Numeric values are treated as pixels. Pass a string such as <code>'100%'</code> for responsive layouts.</td></tr>
+            <tr><td><code>height</code></td><td><code>{`number | string`}</code></td><td><code>2</code></td><td>Visual thickness of the slider track.</td></tr>
+            <tr><td><code>touchHeight</code></td><td><code>{`number | string`}</code></td><td><code>24</code></td><td>Interactive hit area height used for dragging.</td></tr>
+            <tr><td><code>trackHeadSize</code></td><td><code>{`number | null`}</code></td><td><code>7</code></td><td>Size of the draggable thumb. Set to <code>0</code> or <code>null</code> to visually hide it.</td></tr>
+            <tr><td><code>headColor</code></td><td><code>string</code></td><td><code>var(--core-text-primary)</code></td><td>Thumb color.</td></tr>
+            <tr><td><code>trackColor</code></td><td><code>string</code></td><td><code>var(--core-surface-secondary)</code></td><td>Background track color.</td></tr>
+            <tr><td><code>progressColor</code></td><td><code>string</code></td><td><code>var(--core-text-primary)</code></td><td>Filled progress color.</td></tr>
+            <tr><td><code>cursor</code></td><td><code>{`'default' | 'grab' | 'grabbing' | 'pointer'`}</code></td><td><code>default</code></td><td>Cursor shown while hovering or dragging the control.</td></tr>
             <tr><td><code>...divAttributes</code></td><td><code>{`HTMLAttributes<HTMLDivElement>`}</code></td><td><code>-</code></td><td>Native `div` props pass through (for example `id`, `data-testid`, `className`, `style`, `aria-*`).</td></tr>
           </tbody>
         </table>

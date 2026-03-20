@@ -8,8 +8,6 @@ type SliderBaseProps = {
 	height?: number | string;
 	touchHeight?: number | string;
 	trackHeadSize?: number | null;
-	trackHeadWidth?: number | null;
-	headType?: 'round' | 'square' | 'none';
 	headColor?: string;
 	trackColor?: string;
 	progressColor?: string;

@@ -101,7 +101,7 @@ function SSEStoreDemo() {
 		if (!lastMessage) return;
 
 		const now = formatTimestamp(new Date());
-		
+
 		const value =
 			lastMessage.type === 'open' || lastMessage.type === 'error'
 				? '[Event]'

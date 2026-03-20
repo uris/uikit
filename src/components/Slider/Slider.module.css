@@ -4,22 +4,32 @@
 	justify-content: flex-start;
 	align-items: center;
 	box-sizing: border-box;
-	padding: var(--slider-padding);
+	padding: 0 var(--slider-padding);
 	margin: 0;
 	width: var(--slider-width);
-	height: var(--slider-height);
+	height: auto;
 	min-height: var(--slider-touch-height);
 	cursor: var(--slider-cursor);
+	background: transparent;
+}
+
+.trackBg {
+	composes: rowStart from "../../utils/styling/flexBox.module.css";
+	position: relative;
+	width: 100%;
+	height: var(--slider-height);
+	background-color: var(--slider-track-color);
+	overflow: visible;
+	border-radius: 100px;
 }
 
 .track {
 	composes: rowStart from "../../utils/styling/flexBox.module.css";
 	position: relative;
 	width: 0;
-	height: 100%;
+	height: var(--slider-height);
 	background-color: var(--slider-progress-color);
 	overflow: visible;
-	pointer-events: none;
 	border-radius: 100px;
 }
 
@@ -27,7 +37,6 @@
 	position: absolute;
 	display: var(--slider-head-display);
 	background-color: var(--slider-head-color);
-	pointer-events: none;
 	border-radius: var(--slider-head-radius);
 	max-width: var(--slider-head-width);
 	max-height: var(--slider-head-size);
@@ -37,11 +46,13 @@
 	transform: translateY(-50%) translateX(-50%);
 }
 
-.trackBg {
+.trackWrapper {
+	position: relative;
 	composes: rowStart from "../../utils/styling/flexBox.module.css";
 	width: 100%;
 	height: var(--slider-height);
-	background-color: var(--slider-track-color);
-	pointer-events: none;
+	min-height: var(--slider-touch-height);
+	background-color: transparent;
 	border-radius: 100px;
+	overflow: visible;
 }

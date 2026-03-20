@@ -15,8 +15,6 @@ const meta: Meta<typeof Slider> = {
 		height: 2,
 		touchHeight: 24,
 		trackHeadSize: 12,
-		headType: 'round',
-		trackHeadWidth: 4,
 		cursor: 'default',
 		headColor: undefined,
 		progressColor: undefined,

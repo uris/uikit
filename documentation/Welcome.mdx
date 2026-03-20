@@ -1,13 +1,16 @@
 import { Meta, Unstyled } from '@storybook/addon-docs/blocks';
-import {FlexDiv} from "../src/components/FlexDiv";
-import {Spacer} from "../src/components/Spacer";
+import {FlexDiv} from "../src";
+import {Spacer} from "../src";
 import {RenderSource} from "./_components/RenderSource/RenderSource";
-import {Label} from "../src/components/Label";
+import {Label} from "../src";
+import {Logo} from "./_components/Images/Logo";
 
 <Meta title="Welcome/Welcome" />
 
 <FlexDiv width={"fill"} height={"fill"} justify={"start"} alignItems={"center"}>
     <FlexDiv width={"fill"} maxWidth={760} height={"auto"}>
+        <FlexDiv width={"fill"} alignItems={"center"}><Logo width={"80%"} /></FlexDiv>
+        <Spacer size={32} />
         <Unstyled>
             ✌️Welcome to **Slice** <Label inline>Beta</Label> - a free, flexible, and fast ui-kit for creating modern react apps (v18+). Start by adding it to your project:
         </Unstyled>

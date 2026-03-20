@@ -48,7 +48,7 @@ export function FunnelSans() {
 				<Slider
 					value={weight}
 					width={'100%'}
-					trackHeadSize={0}
+					trackHeadSize={16}
 					scaleMin={300}
 					scaleMax={800}
 					onChange={(v, _) => handleWeightChange(v)}

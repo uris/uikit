@@ -25,14 +25,10 @@ import {RenderSource} from "./_components/RenderSource/RenderSource";
         <RenderSource language='jsx'>
             ```
             import { ThemeProvider } from '@apple-pie/slice';
-
-            // ...
                   
             <ThemeProvider system={true}>
                 <App />
             </ThemeProvider>
-
-            // ...      
             ```
         </RenderSource>
         <Unstyled>
@@ -42,53 +38,47 @@ import {RenderSource} from "./_components/RenderSource/RenderSource";
         <RenderSource language='jsx'>
             ```
             import { Avatar } from '@apple-pie/slice';
-
-            // ...
-
-            <Avatar size={32} first={"John"} last={"Appleseed"} />
-
-            // ...
+            
+            export function UserProfile() {
+                return <Avatar size={32} first={"John"} last={"Appleseed"} />
+            }
             ```
         </RenderSource>
         <Unstyled>
-            #### 4. Use the Slice theme in your own components.
-            Use the built in hook to grab the current theme and access tokens or values for use in your components. InteliSense will pick up all the available tokens as you type - no need to remeber them all.
+            #### 4. Using the Slice theme in your own components.
+            
+            You can use Slice theme tokens directly in your component class names.
+        </Unstyled>
+        <RenderSource language='jsx'>
+            ```
+            <a className="core-link-primary">
+                class names will be colored as "core-link-primary"
+            </a>
+        }
+        ```
+        </RenderSource>
+        <Unstyled>
+            You can also use the `useTheme` hook to grab the current theme and access tokens or values with InteliSense.
         </Unstyled>
         <RenderSource language='jsx'>
             ```
             import { useTheme } from '@apple-pie/slice';
-        
-            // ...
-        
-            const {current, colors, colorClass} = useTheme();
-
-            // Use "colors[...]" to get the css var.
-            <a style={{color: colors["core-link-primary"]}}>
-                color value will be "var(--core-link-primary)"
-            </a>
-
-            // you can also use "colorClass[...]" for the class name
-            <a className={colorClass["core-link-primary"]}>
-                class names will include "core-link-primary"
-            </a>
-
-            // Omitting the "colorClass" prefix is ok but disables IntelliSense
-            <a className="core-link-primary">
-                class names will include "core-link-primary"
-            </a>
             
-            // Use current.colors to use the color value from the active theme
-            // Note: re-renders when the active theme changes
-            <a style={{color: current.colors["core-link-primary"]}}>
-               color value will be "#0000ff" for light theme
-            </a>
-        
-            // ...
+            export function MyComponent() {
+                const { colors } = useTheme();
+            
+                return (
+                    <a style={{color: colors["core-link-primary"]}}>
+                        color value will be "var(--core-link-primary)"
+                    </a>
+                );
+            
+            }
             ```
         </RenderSource>
         <Unstyled>
             There are a few options to styling your own components including using `className` to set styles.
-            Learn more about the useTheme hook here.
+            [Learn more about the useTheme hook](/docs/hooks-usetheme--docs) in the hooks section.
             
             #### 5. Toggle light / dark modes
             The useTheme hook allows you to easily toggle or set the current theme.

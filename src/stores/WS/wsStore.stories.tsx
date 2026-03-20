@@ -137,7 +137,7 @@ function WSStoreDemo() {
 					label={'URL:'}
 					name={'ws-url'}
 					value={url}
-					placeholder={'https://www.example.com/api/ws/ws-test'}
+					placeholder={'wss://www.example.com/api/ws/ws-test'}
 					onChange={(value) => setUrl(value)}
 				/>
 				<FlexDiv direction={'row'} gap={12}>

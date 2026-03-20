@@ -15,8 +15,6 @@ export const Slider = React.memo((props: SliderProps) => {
 		height = 2,
 		touchHeight = 24,
 		trackHeadSize = 7,
-		headType = 'round',
-		trackHeadWidth = 4,
 		cursor = 'default',
 		headColor = 'var(--core-text-primary)',
 		trackColor = 'var(--core-surface-secondary)',
@@ -50,27 +48,19 @@ export const Slider = React.memo((props: SliderProps) => {
 	// set padding based on head size since dragging the head all the way to the edge will move it
 	// such that half the head would be outside the track constraints
 	const padding = useMemo(() => {
-		if (headType === 'none' || !trackHeadSize) return 0;
-		return trackHeadSize / 2;
-	}, [headType, trackHeadSize]);
+		if (!trackHeadSize) return 0;
+		return Math.ceil(trackHeadSize / 2);
+	}, [trackHeadSize]);
 
 	// set the position of the track progress and track head
 	// based on the pixel position / adjust for half the size of the head (= padding)
-	const setTrackAndHead = useCallback(
-		(pixelPos: number, max = false) => {
-			const tr = track.current;
-			const hd = head.current;
-			let adjustment = 0;
-			if (pixelPos === 0) adjustment = padding;
-			if (max) adjustment = -padding;
-			if (tr && hd) {
-				tr.style.width = `${pixelPos}px`;
-				hd.style.left = `${pixelPos - padding + adjustment}px`;
-			}
-			didMount.current = true;
-		},
-		[padding],
-	);
+	const setTrackAndHead = useCallback((pixelPos: number) => {
+		const hd = head.current;
+		const tr = track.current;
+		if (hd) hd.style.left = `${pixelPos}px`;
+		if (tr) tr.style.width = `${pixelPos}px`;
+		didMount.current = true;
+	}, []);
 
 	// set the initial position of the slider absolute value within scale
 	const initialProgress = useCallback(
@@ -86,8 +76,7 @@ export const Slider = React.memo((props: SliderProps) => {
 			const pixelPos = normalized * sliderWidth;
 			absProgressRef.current = adjustedCurrent; // updated the progress value
 			relativeProgressRef.current = normalized; // updated the relative value
-			const max = relativeProgressRef.current === 1; // flag if at max value
-			setTrackAndHead(pixelPos, max);
+			setTrackAndHead(pixelPos);
 			didMount.current = true;
 		},
 		[scaleMax, scaleMin, setTrackAndHead],
@@ -115,15 +104,18 @@ export const Slider = React.memo((props: SliderProps) => {
 			const el = ref?.current;
 			if (!el) return 0;
 			const rect = el.getBoundingClientRect();
-			const sliderWidth = rect.width;
+			const sliderWidth = Math.floor(rect.width);
 			let pos: number = newPos - rect.x;
-			if (pos > sliderWidth - padding) pos = sliderWidth;
-			else if (pos < padding) pos = 0;
-			const max = pos === sliderWidth;
-			setTrackAndHead(pos, max);
+			if (pos > sliderWidth) {
+				pos = sliderWidth;
+			} else if (pos < 0) {
+				pos = 0;
+			}
+			setTrackAndHead(pos);
+			console.log({ pos });
 			return pos;
 		},
-		[setTrackAndHead, padding],
+		[setTrackAndHead],
 	);
 
 	// on mouse move, push slider to the updated mouse position and trigger the update events
@@ -175,6 +167,7 @@ export const Slider = React.memo((props: SliderProps) => {
 		(e: MouseEvent | TouchEvent) => {
 			e.preventDefault();
 			e.stopPropagation();
+			console.log('handleMouseDown');
 			globalThis.addEventListener('mousemove', handleMouseMove, false);
 			globalThis.addEventListener('touchmove', handleMouseMove, false);
 			globalThis.addEventListener('mouseup', handleMouseUp, false);
@@ -208,11 +201,16 @@ export const Slider = React.memo((props: SliderProps) => {
 	// set up slider
 	useEffect(() => {
 		const el = ref?.current;
+		const hl = head?.current;
 		el?.addEventListener('mousedown', handleMouseDown, false);
 		el?.addEventListener('touchstart', handleMouseDown, false);
+		hl?.addEventListener('mousedown', handleMouseDown, false);
+		hl?.addEventListener('touchstart', handleMouseDown, false);
 		return () => {
 			el?.removeEventListener('mousedown', handleMouseDown, false);
 			el?.removeEventListener('touchstart', handleMouseDown, false);
+			hl?.removeEventListener('mousedown', handleMouseDown, false);
+			hl?.removeEventListener('touchstart', handleMouseDown, false);
 		};
 	}, [handleMouseDown]);
 
@@ -221,27 +219,14 @@ export const Slider = React.memo((props: SliderProps) => {
 	useEffect(() => {
 		const sliderWidth = ref?.current?.offsetWidth;
 		if (!sliderWidth || size.width === 0) return;
-		const max = relativeProgressRef.current === 1;
-		setTrackAndHead(relativeProgressRef.current * sliderWidth, max);
+		setTrackAndHead(relativeProgressRef.current * sliderWidth);
 	}, [size.width, setTrackAndHead]);
 
 	// memo head color
 	const trackHeadColor = useMemo(() => {
-		if (headType === 'none') return 'transparent';
+		if (!trackHeadSize || trackHeadSize === 0) return 'transparent';
 		return headColor ?? 'var(--core-text-primary)';
-	}, [headColor, headType]);
-
-	// memo head height
-	const headSize = useMemo(() => {
-		if (headType === 'none') return height;
-		return trackHeadSize;
-	}, [trackHeadSize, headType, height]);
-
-	// memo head width
-	const headWidth = useMemo(() => {
-		if (headType === 'round') return trackHeadSize;
-		return trackHeadWidth;
-	}, [headType, trackHeadSize, trackHeadWidth]);
+	}, [headColor, trackHeadSize]);
 
 	// set container width
 	const setWidth = useMemo(() => {
@@ -261,9 +246,9 @@ export const Slider = React.memo((props: SliderProps) => {
 			'--slider-touch-height': `${touchHeight}px`,
 			'--slider-cursor': cursor,
 			'--slider-head-display': height ? 'block' : 'none',
-			'--slider-head-radius': headType === 'round' ? '100%' : '0px',
-			'--slider-head-size': `${headSize}px`,
-			'--slider-head-width': `${headWidth}px`,
+			'--slider-head-radius': '100%',
+			'--slider-head-size': `${trackHeadSize ?? 0}px`,
+			'--slider-head-width': `${trackHeadSize ?? 0}px`,
 			'--slider-head-color': trackHeadColor,
 			'--slider-progress-color': progressColor ?? 'var(--core-text-primary)',
 			'--slider-track-color': trackColor ?? 'var(--core-surface-secondary)',
@@ -273,12 +258,10 @@ export const Slider = React.memo((props: SliderProps) => {
 		height,
 		touchHeight,
 		cursor,
-		headWidth,
 		progressColor,
 		trackColor,
-		headSize,
+		trackHeadSize,
 		trackHeadColor,
-		headType,
 		setWidth,
 	]);
 
@@ -291,13 +274,13 @@ export const Slider = React.memo((props: SliderProps) => {
 			id={divId}
 			className={`${css.wrapper}${divClass}`}
 			style={{ ...divStyle, ...cssVars }}
-			ref={ref}
 			{...rest}
 		>
-			<div className={css.trackBg}>
-				<div className={css.track} ref={track}>
-					<div className={css.trackHead} ref={head} />
+			<div ref={ref} className={css.trackWrapper}>
+				<div className={css.trackBg}>
+					<div className={css.track} ref={track} />
 				</div>
+				<div className={css.trackHead} ref={head} />
 			</div>
 		</div>
 	);

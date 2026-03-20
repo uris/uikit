@@ -72,12 +72,12 @@ export function MotionSimulation(props: Readonly<MotionSimulationProps>) {
 			<div className={css.controls}>
 				<Label border={0}>Drag to adjust duration:</Label>
 				<Slider
-					scaleMin={0.1}
+					scaleMin={0}
 					scaleMax={5}
 					value={time}
 					onChange={(value, _) => setTime(value)}
 					width={'100%'}
-					trackHeadSize={0}
+					trackHeadSize={16}
 				/>
 				<Label>{time.toFixed(2)}s</Label>
 			</div>

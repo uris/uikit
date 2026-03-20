@@ -65,6 +65,7 @@ function ReferencedBrandColors(props: Readonly<{ mode: 'light' | 'dark' }>) {
 	}, []);
 
 	const handleToolTip = useCallback((tip: ToolTip | null) => {
+		console.log(tip);
 		setTip(tip);
 	}, []);
 
