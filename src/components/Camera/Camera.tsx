@@ -32,6 +32,7 @@ export const Camera = React.memo(
 			autoHideControlBar = true,
 			startCameraOff = false,
 			startAudioMuted = false,
+			playLocalAudio = false,
 			pipSnapshot = true,
 			userProfile,
 			sessionSettings,
@@ -277,6 +278,7 @@ export const Camera = React.memo(
 				if (!audioTrack) onNoAudio?.('No audio track available');
 				if (audioTrack) audioTrack.enabled = !startAudioMuted;
 				if (!videoElement.current) return new Error('Video element not found');
+				videoElement.current.muted = !playLocalAudio;
 				videoElement.current.srcObject = stream;
 				await videoElement.current.play();
 				onVideoStream?.(stream);
@@ -290,6 +292,7 @@ export const Camera = React.memo(
 				onNoAudio,
 				onNoVideo,
 				onVideoStream,
+				playLocalAudio,
 				startAudioMuted,
 			],
 		);
@@ -487,6 +490,12 @@ export const Camera = React.memo(
 			startCamera().then(() => null);
 		}, [startCamera, startCameraOff, stopCamera]);
 
+		// keep preview speaker output in sync with the current prop
+		useEffect(() => {
+			if (!videoElement.current) return;
+			videoElement.current.muted = !playLocalAudio;
+		}, [playLocalAudio]);
+
 		// clean up camera stream on onmount
 		useEffect(() => {
 			return () => {
@@ -537,7 +546,13 @@ export const Camera = React.memo(
 				)}
 				{cameraSupport !== false && (
 					// biome-ignore lint/a11y/useMediaCaption: Live camera preview has no caption source.
-					<video ref={videoElement} className={css.video} autoPlay playsInline>
+					<video
+						ref={videoElement}
+						className={css.video}
+						autoPlay
+						playsInline
+						muted={!playLocalAudio}
+					>
 						<track kind={'captions'} src={undefined} />
 					</video>
 				)}

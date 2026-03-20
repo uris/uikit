@@ -72,6 +72,7 @@ export interface BaseCameraProps {
 	videoFit?: 'fill' | 'contain' | 'cover' | 'none' | 'scale-down';
 	startCameraOff?: boolean;
 	startAudioMuted?: boolean;
+	playLocalAudio?: boolean;
 	userProfile?: UserProfile;
 	sessionSettings?: Settings;
 	onVideoStream?: (stream: MediaStream) => void;
