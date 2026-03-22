@@ -54,19 +54,19 @@ import {FlexDiv} from '../../components/FlexDiv';
 import { useTheme } from '@apple-pie/slice';
 
 function ThemeToggle() {
-  const theme = useTheme();
+	const theme = useTheme();
 
-  return (
-    <button
-      type="button"
-      className={theme.colorsClass['core-text-special']}
-      onClick={() => theme.toggle()}
-    >
-      Current: {theme.current.name}
-    </button>
-  );
+	return (
+		<button
+			type="button"
+			className={theme.colorsClass['core-text-special']}
+			onClick={() => theme.toggle()}
+		>
+			Current: {theme.current.name}
+		</button>
+	);
 }
 `}
-        </RenderSource>
+</RenderSource>
     </FlexDiv>
 </FlexDiv>

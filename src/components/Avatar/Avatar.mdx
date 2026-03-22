@@ -73,43 +73,43 @@ import {RenderSource} from '../../../documentation/_components/RenderSource/Rend
         </Unstyled>
 
         <RenderSource language={"tsx"}>
-{`
-import { Avatar } from '@apple-pie/slice';
-
-export function AvatarWithImage() {
-  return (
-    <Avatar
-      first="John"
-      last="Doe"
-      image="/images/profile-male-02.jpg"
-      size={40}
-      frame={40}
-    />
-  );
-}
-`}
+        ```
+        import { Avatar } from '@apple-pie/slice';
+        
+        export function AvatarWithImage() {
+            return (
+                <Avatar
+                    first="John"
+                    last="Doe"
+                    image="/images/profile-male-02.jpg"
+                    size={40}
+                    frame={40}
+                />
+            );
+        }
+        ```
         </RenderSource>
 
         <RenderSource language={"tsx"}>
-{`
-import { Avatar } from '@apple-pie/slice';
-
-export function AvatarWithDivProps() {
-  return (
-    <Avatar
-      first="Jane"
-      last="Smith"
-      image=""
-      firstOnly={false}
-      id="assignee-avatar"
-      data-testid="assignee-avatar"
-      aria-label="Assignee avatar"
-      onClick={() => {}}
-      onKeyDown={() => {}}
-    />
-  );
-}
-`}
+        ```
+        import { Avatar } from '@apple-pie/slice';
+        
+        export function AvatarWithDivProps() {
+            return (
+                <Avatar
+                    first="Jane"
+                    last="Smith"
+                    image=""
+                    firstOnly={false}
+                    id="assignee-avatar"
+                    data-testid="assignee-avatar"
+                    aria-label="Assignee avatar"
+                    onClick={() => {}}
+                    onKeyDown={() => {}}
+                />
+            );
+        }
+        ```
         </RenderSource>
     </FlexDiv>
 </FlexDiv>

@@ -94,25 +94,25 @@ import {RenderSource} from '../../../documentation/_components/RenderSource/Rend
         </Unstyled>
 
         <RenderSource language={"tsx"}>
-{`
+```
 import { TextField } from '@apple-pie/slice';
 
 export function TextFieldExample() {
-  return (
-    <TextField
-      name="email"
-      label="Work Email"
-      value="dev@example.com"
-      placeholder="name@company.com"
-      onChange={(value) => console.log(value)}
-      id="textfield-example"
-      data-testid="textfield-example"
-      className="custom-wrapper"
-      style={{ marginTop: 8, maxWidth: 480 }}
-    />
-  );
+    return (
+        <TextField
+            name="email"
+            label="Work Email"
+            value="dev@example.com"
+            placeholder="name@company.com"
+            onChange={(value) => console.log(value)}
+            id="textfield-example"
+            data-testid="textfield-example"
+            className="custom-wrapper"
+            style={{ marginTop: 8, maxWidth: 480 }}
+        />
+    );
 }
-`}
+```
         </RenderSource>
     </FlexDiv>
 </FlexDiv>

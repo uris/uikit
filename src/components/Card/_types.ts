@@ -10,7 +10,7 @@ type CardBaseProps = {
 };
 
 export type CardProps = Omit<
-	React.HTMLAttributes<HTMLDivElement>,
+	React.ButtonHTMLAttributes<HTMLButtonElement>,
 	keyof CardBaseProps
 > &
 	CardBaseProps;

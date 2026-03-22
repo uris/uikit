@@ -45,7 +45,7 @@ export const DivInput = React.memo((props: DivInputProps) => {
 	const [text, setText] = useState(innerText.current);
 	const [isPlaceholder, setIsPlaceholder] = useState<boolean>(false);
 
-	// Memoize setCursor function
+	// place the text cursor at the requested edge of the editable content
 	const setCursor = useCallback((to: 'start' | 'end', length = 1) => {
 		if (ref.current) {
 			const range = document.createRange();
@@ -57,7 +57,7 @@ export const DivInput = React.memo((props: DivInputProps) => {
 		}
 	}, []);
 
-	// Memoize handleSelectAll
+	// select the full editable value when focus is programmatically applied
 	const handleSelectAll = useCallback(() => {
 		if (!ref.current?.firstChild) return;
 		const range = document.createRange();
@@ -66,7 +66,7 @@ export const DivInput = React.memo((props: DivInputProps) => {
 		globalThis.getSelection()?.addRange(range);
 	}, []);
 
-	// Combined effect for related state updates
+	// sync editable state, focus, and displayed text from controlled props
 	useEffect(() => {
 		if (!ref.current) return;
 
@@ -88,14 +88,14 @@ export const DivInput = React.memo((props: DivInputProps) => {
 		setText(newText);
 	}, [value, placeholder, focus, isEditable, handleSelectAll]);
 
-	// Effect for placeholder state
+	// track whether the current content is displaying placeholder text
 	useEffect(() => {
 		if (placeholder) {
 			setIsPlaceholder(text === placeholder);
 		}
 	}, [placeholder, text]);
 
-	// Memoize handleSetValue
+	// normalize edited content and preserve placeholder behavior
 	const handleSetValue = useCallback(
 		(e: React.InputEvent<HTMLDivElement>) => {
 			let textString = '';
@@ -121,7 +121,7 @@ export const DivInput = React.memo((props: DivInputProps) => {
 		[placeholder, isPlaceholder, onChange, setCursor],
 	);
 
-	// Memoize handleKeyDown
+	// handle submit-on-enter and block unsupported angle-bracket input
 	const handleKeyDown = useCallback(
 		(e: React.KeyboardEvent<HTMLDivElement>) => {
 			// stop propagation to avoid conflicts with listeners to shortcuts while editing
@@ -142,7 +142,7 @@ export const DivInput = React.memo((props: DivInputProps) => {
 		[onChange, onSubmit],
 	);
 
-	// Memoize handlePaste
+	// sanitize pasted content before inserting it into the editable field
 	const handlePaste = useCallback(
 		(e: React.ClipboardEvent<HTMLDivElement>) => {
 			e.preventDefault();
@@ -163,7 +163,7 @@ export const DivInput = React.memo((props: DivInputProps) => {
 		[onChange],
 	);
 
-	// Memoize handleFocus
+	// update focus state and forward the focus event
 	const handleFocus = useCallback(
 		(e: React.FocusEvent<HTMLDivElement>) => {
 			setIsFocused(true);
@@ -172,7 +172,7 @@ export const DivInput = React.memo((props: DivInputProps) => {
 		[onFocus],
 	);
 
-	// Memoize handleBlur
+	// normalize content on blur and submit the final value
 	const handleBlur = useCallback(
 		(_e: React.FocusEvent<HTMLDivElement>) => {
 			if (!ref.current) return;
@@ -189,7 +189,7 @@ export const DivInput = React.memo((props: DivInputProps) => {
 		[placeholder, onChange, onSubmit, onBlur],
 	);
 
-	// Memoize handleClick
+	// keep cursor placement predictable when clicking placeholder content
 	const handleClick = useCallback(
 		(e: React.MouseEvent<HTMLDivElement>) => {
 			e.preventDefault();
@@ -200,13 +200,13 @@ export const DivInput = React.memo((props: DivInputProps) => {
 		[isPlaceholder, setCursor, onClick],
 	);
 
-	// calc css values as number / string
+	// normalize width values before applying them as CSS
 	const setWidth = useCallback((width: number | string) => {
 		if (typeof width === 'string') return width;
 		return `${width}px`;
 	}, []);
 
-	// memo cssVars
+	// compose CSS custom properties for layout, wrapping, and editing state
 	const cssVars = useMemo(() => {
 		return {
 			'--div-input-color': isPlaceholder
@@ -247,8 +247,7 @@ export const DivInput = React.memo((props: DivInputProps) => {
 	useTrackRenders(props, 'DivInput');
 	/* END.DEBUG */
 
-	// avoid issues with safari that refocuses editable divs on blur
-	// by wrapping it with a pointer events none
+	// wrap the editable div to avoid Safari refocus issues on blur
 	return (
 		<div
 			id={divId}

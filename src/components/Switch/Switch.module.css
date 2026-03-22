@@ -7,6 +7,10 @@
 	cursor: pointer;
 	background: var(--switch-bg-color);
 	transition: background var(--motion-water-duration) var(--motion-water) 0s;
+	appearance: none;
+	-webkit-appearance: none;
+	border: 0;
+	outline: none;
 }
 
 .knob {

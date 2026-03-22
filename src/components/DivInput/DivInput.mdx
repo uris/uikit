@@ -76,24 +76,24 @@ import {RenderSource} from '../../../documentation/_components/RenderSource/Rend
         </Unstyled>
 
         <RenderSource language={"tsx"}>
-{`
+```
 import { DivInput } from '@apple-pie/slice';
 
 export function DivInputExample() {
-  return (
-    <DivInput
-      name="Project Name"
-      value="Policy Review"
-      placeholder="Enter title"
-      onChange={(value) => console.log(value)}
-      id="divinput-example"
-      data-testid="divinput-example"
-      className="custom-wrapper"
-      style={{ marginTop: 8, maxWidth: 480 }}
-    />
-  );
+    return (
+        <DivInput
+            name="Project Name"
+            value="Policy Review"
+            placeholder="Enter title"
+            onChange={(value) => console.log(value)}
+            id="divinput-example"
+            data-testid="divinput-example"
+            className="custom-wrapper"
+            style={{ marginTop: 8, maxWidth: 480 }}
+        />
+    );
 }
-`}
+```
         </RenderSource>
     </FlexDiv>
 </FlexDiv>

@@ -82,24 +82,24 @@ import {RenderSource} from '../../../documentation/_components/RenderSource/Rend
         </Unstyled>
 
         <RenderSource language={"tsx"}>
-{`
+```
 import { DropDown } from '@apple-pie/slice';
 
 export function DropDownExample() {
-  return (
-    <DropDown
-      name="Jurisdiction"
-      options={[{ label: 'California', value: 'ca' }, { label: 'New York', value: 'ny' }]}
-      selectedIndex={0}
-      onChange={(index, option) => console.log(index, option)}
-      id="dropdown-example"
-      data-testid="dropdown-example"
-      className="custom-wrapper"
-      style={{ marginTop: 8, maxWidth: 480 }}
-    />
-  );
+    return (
+        <DropDown
+            name="Jurisdiction"
+            options={[{ label: 'California', value: 'ca' }, { label: 'New York', value: 'ny' }]}
+            selectedIndex={0}
+            onChange={(index, option) => console.log(index, option)}
+            id="dropdown-example"
+            data-testid="dropdown-example"
+            className="custom-wrapper"
+            style={{ marginTop: 8, maxWidth: 480 }}
+        />
+    );
 }
-`}
+```
         </RenderSource>
     </FlexDiv>
 </FlexDiv>

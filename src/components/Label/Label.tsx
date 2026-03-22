@@ -25,15 +25,16 @@ export function Label(props: Readonly<LabelProps>) {
 	const { id: divId, className, style, ...rest } = divAttributes;
 	const divStyle = style ?? ({} as React.CSSProperties);
 	const divClass = className ? ` ${className}` : '';
+	const isInteractive = Boolean(onClick);
 
 	const handleClick = useCallback(
 		(e: React.MouseEvent<any>) => {
-			if (button) onClick?.(e);
+			if (isInteractive) onClick?.(e);
 		},
-		[button, onClick],
+		[isInteractive, onClick],
 	);
 
-	// memo background color
+	// resolve the label background color from its state and fill mode
 	const backgroundColor = useMemo(() => {
 		if (noFill) return 'var(--core-surface-primary)';
 		switch (state) {
@@ -56,7 +57,7 @@ export function Label(props: Readonly<LabelProps>) {
 		}
 	}, [noFill, state, theme]);
 
-	// memo border colors
+	// resolve border colors for each supported label state
 	const borderColors = useMemo(() => {
 		const getBorderColor = (colorState: string) => {
 			switch (colorState) {
@@ -100,12 +101,13 @@ export function Label(props: Readonly<LabelProps>) {
 		};
 	}, [noFill, theme]);
 
+	// resolve the label padding from explicit and mode-based values
 	const setPadding = useMemo(() => {
 		if (padding) return setStyle(padding);
 		return button ? '6px 12px' : '4px 6px';
 	}, [padding, button]);
 
-	// memo css vars
+	// compose CSS custom properties for label layout and colors
 	const cssVars = useMemo(() => {
 		return {
 			'--label-padding': setPadding,
@@ -134,9 +136,10 @@ export function Label(props: Readonly<LabelProps>) {
 		inline,
 	]);
 
+	// compose the label class list from behavior, state, and size
 	const classNames = [
 		css.label,
-		button ? css.button : css.regular,
+		button || isInteractive ? css.button : css.regular,
 		state ? css[state] : '',
 	]
 		.filter(Boolean)
@@ -146,15 +149,27 @@ export function Label(props: Readonly<LabelProps>) {
 	useTrackRenders(props, 'Label');
 	/* END.DEBUG */
 
+	if (isInteractive) {
+		return (
+			<button
+				id={divId}
+				type="button"
+				className={`${classNames} ${css[size]}${divClass}`}
+				style={{ ...divStyle, ...cssVars }}
+				aria-label={'Label button'}
+				onClick={(e) => handleClick(e as any)}
+				{...rest}
+			>
+				{children}
+			</button>
+		);
+	}
+
 	return (
 		<span
 			id={divId}
 			className={`${classNames} ${css[size]}${divClass}`}
 			style={{ ...divStyle, ...cssVars }}
-			role={onClick ? 'button' : undefined}
-			aria-label={onClick ? 'Label button' : undefined}
-			onClick={handleClick}
-			onKeyDown={() => null}
 			{...rest}
 		>
 			{children}

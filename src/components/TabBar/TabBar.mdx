@@ -77,23 +77,23 @@ import {RenderSource} from '../../../documentation/_components/RenderSource/Rend
         </Unstyled>
 
         <RenderSource language={"tsx"}>
-{`
+```
 import { TabBar } from '@apple-pie/slice';
 
 export function TabBarExample() {
-  return (
-    <TabBar
-      options={[{ name: 'Overview', value: 'overview' }, { name: 'Settings', value: 'settings' }]}
-      selected={0}
-      onTabChange={(option) => console.log(option)}
-      id="tabbar-example"
-      data-testid="tabbar-example"
-      className="custom-wrapper"
-      style={{ marginTop: 8, maxWidth: 480 }}
-    />
-  );
+    return (
+        <TabBar
+            options={[{ name: 'Overview', value: 'overview' }, { name: 'Settings', value: 'settings' }]}
+            selected={0}
+            onTabChange={(option) => console.log(option)}
+            id="tabbar-example"
+            data-testid="tabbar-example"
+            className="custom-wrapper"
+            style={{ marginTop: 8, maxWidth: 480 }}
+        />
+    );
 }
-`}
+```
         </RenderSource>
     </FlexDiv>
 </FlexDiv>

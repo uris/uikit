@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useMemo, useState } from 'react';
+import React, { useCallback, useEffect, useId, useMemo, useState } from 'react';
 import { useTrackRenders } from '../../hooks/useTrackRenders/useTrackRenders';
 import { RadioButton, type RadioButtonOption } from '../RadioButton';
 import css from './RadioButtonList.module.css';
@@ -29,14 +29,14 @@ export const RadioButtonList = React.memo((props: RadioButtonListProps) => {
 	const { id: divId, className, style, ...rest } = divAttributes;
 	const divStyle = style ?? ({} as React.CSSProperties);
 	const divClass = className ? ` ${className}` : '';
+	const labelId = useId();
 
-	// internal array of selected indexes
 	const [selected, setSelected] = useState<number[] | null>(selectedIndexes);
 
-	// update indexes selected based on prop
+	// sync selected indexes from the controlled prop
 	useEffect(() => setSelected(selectedIndexes), [selectedIndexes]);
 
-	// update indexes selected if setting selections via field name / values
+	// derive selected indexes from the provided option field names
 	useEffect(() => {
 		if (!selectedOptions || !options) return;
 		const selections: number[] = [];
@@ -49,7 +49,7 @@ export const RadioButtonList = React.memo((props: RadioButtonListProps) => {
 		setSelected(selections);
 	}, [selectedOptions, options]);
 
-	// returns if a specific option index is selected
+	// report whether a given option index is currently selected
 	const isSelected = useCallback(
 		(index: number): boolean => {
 			if (!selected) return false;
@@ -58,6 +58,7 @@ export const RadioButtonList = React.memo((props: RadioButtonListProps) => {
 		[selected],
 	);
 
+	// update multiple selections while preserving the current selection set
 	const doMultiSelection = useCallback(
 		(selection: number, state: boolean) => {
 			// **** update the selected indexes
@@ -83,6 +84,7 @@ export const RadioButtonList = React.memo((props: RadioButtonListProps) => {
 		[selected, options, onChange],
 	);
 
+	// update the single active selection
 	const doSingleSelection = useCallback(
 		(selection: number, state: boolean) => {
 			onChange(state ? [options[selection]] : [], state ? [selection] : []);
@@ -91,6 +93,7 @@ export const RadioButtonList = React.memo((props: RadioButtonListProps) => {
 		[options, onChange],
 	);
 
+	// route selection changes through the appropriate selection mode
 	const handleChange = useCallback(
 		(selection: number, state: boolean) => {
 			// it not multiselect just pass the current selection
@@ -103,12 +106,14 @@ export const RadioButtonList = React.memo((props: RadioButtonListProps) => {
 		[multiSelect, doMultiSelection, doSingleSelection],
 	);
 
+	// derive the rendered radio buttons from the options list
 	const renderedOptions = useMemo(() => {
 		return options.map((option: RadioButtonOption, i: number) => {
 			return (
 				<RadioButton
 					option={option}
 					selected={isSelected(i)}
+					controlType={multiSelect ? 'checkbox' : 'radio'}
 					key={`${option.fieldName}_${i}`}
 					deselect={deselect}
 					wrap={wrap}
@@ -135,16 +140,17 @@ export const RadioButtonList = React.memo((props: RadioButtonListProps) => {
 		iconColor,
 		iconSelectedColor,
 		checkedIcon,
+		multiSelect,
 	]);
 
-	// memo margin
+	// resolve the bottom margin from the configured spacer mode
 	const margin = useMemo(() => {
 		if (spacer === 'none') return 0;
 		if (spacer === 'custom') return custom;
 		return 0;
 	}, [spacer, custom]);
 
-	// memo css vars
+	// compose CSS custom properties for layout and spacing
 	const cssVars = useMemo(() => {
 		return {
 			'--rb-list-flex-wrap': wrap ? 'wrap' : 'nowrap',
@@ -162,9 +168,11 @@ export const RadioButtonList = React.memo((props: RadioButtonListProps) => {
 			id={divId}
 			className={`${css.wrapper} ${noFrame ? css.column : css.row}${divClass}`}
 			style={{ ...divStyle, ...cssVars }}
+			role={multiSelect ? 'group' : 'radiogroup'}
+			aria-labelledby={label ? labelId : undefined}
 			{...rest}
 		>
-			{label}
+			{label && <div id={labelId}>{label}</div>}
 			{renderedOptions}
 		</div>
 	);

@@ -8,6 +8,8 @@ import css from './Grouper.module.css';
 import type { GrouperProps } from './_types';
 
 export const Grouper = React.memo((props: GrouperProps) => {
+	const theme = useTheme();
+
 	const {
 		title = 'Group Title',
 		toggle = true,
@@ -28,12 +30,13 @@ export const Grouper = React.memo((props: GrouperProps) => {
 	const { id: divId, className, style, ...rest } = divAttributes;
 	const divStyle = style ?? ({} as React.CSSProperties);
 	const divClass = className ? ` ${className}` : '';
-	const theme = useTheme();
 	const [state, setState] = useState<boolean>(open);
 	const [icon, animateIcon] = useAnimate();
 
+	// sync the local open state from the controlled prop
 	useEffect(() => setState(open), [open]);
 
+	// rotate the chevron icon to match the current open state
 	const animate = useCallback(
 		(state: boolean) => {
 			const animation = { rotate: state ? 0 : 180 };
@@ -46,6 +49,7 @@ export const Grouper = React.memo((props: GrouperProps) => {
 		[animateIcon, icon],
 	);
 
+	// toggle the group and notify listeners
 	const handleToggle = useCallback(() => {
 		if (!toggle) return;
 		onClick();
@@ -54,7 +58,7 @@ export const Grouper = React.memo((props: GrouperProps) => {
 		setState(!state);
 	}, [toggle, onClick, onChange, state, animate]);
 
-	// memo css vars
+	// compose CSS custom properties for grouper sizing
 	const cssVars = useMemo(() => {
 		return {
 			'--grouper-height': unframed ? 'auto' : `${frameSize}px`,
@@ -68,12 +72,13 @@ export const Grouper = React.memo((props: GrouperProps) => {
 	/* END.DEBUG */
 
 	return (
-		<div
+		<button
 			id={divId}
+			type="button"
 			className={`${css.header}${divClass}`}
 			style={{ ...divStyle, ...cssVars }}
 			onClick={handleToggle}
-			onKeyDown={handleToggle}
+			aria-expanded={state}
 			{...rest}
 		>
 			<div className={css.content}>
@@ -94,6 +99,6 @@ export const Grouper = React.memo((props: GrouperProps) => {
 					</div>
 				)}
 			</div>
-		</div>
+		</button>
 	);
 });

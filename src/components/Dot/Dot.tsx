@@ -22,7 +22,7 @@ export const Dot = React.memo((props: DotProps) => {
 	const divStyle = style ?? ({} as React.CSSProperties);
 	const divClass = className ? ` ${className}` : '';
 
-	// memo variants
+	// merge caller motion values into the default dot animation variants
 	const variants = useMemo(() => {
 		if (motionValues) {
 			return { ...DEFAULT_VARIANTS, ...motionValues };
@@ -30,7 +30,7 @@ export const Dot = React.memo((props: DotProps) => {
 		return DEFAULT_VARIANTS;
 	}, [motionValues]);
 
-	// memo transition
+	// merge caller transition overrides into the default transition
 	const trans = useMemo(() => {
 		if (transition) {
 			return { ...DEFAULT_TRANSITION, ...transition };
@@ -38,7 +38,7 @@ export const Dot = React.memo((props: DotProps) => {
 		return DEFAULT_TRANSITION;
 	}, [transition]);
 
-	// memo color
+	// resolve the dot color from explicit color or named state
 	const bgColor = useMemo(() => {
 		if (color) {
 			return color;
@@ -62,7 +62,7 @@ export const Dot = React.memo((props: DotProps) => {
 		return 'var(--core-text-special)';
 	}, [state, color]);
 
-	// memo css vars
+	// compose CSS custom properties for dot layout and color
 	const cssVars = useMemo(() => {
 		return {
 			'--dot-size': `${size}px`,

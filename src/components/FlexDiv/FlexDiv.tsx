@@ -4,7 +4,7 @@ import { useTrackRenders } from '../../hooks/useTrackRenders/useTrackRenders';
 import css from './FlexDiv.module.css';
 import type { FlexDivProps } from './_types';
 
-// Extract helper functions outside component
+// Normalize width and height values before applying them inline.
 function setSize(style: string | number, isHeight: boolean) {
 	if (typeof style === 'number') return `${style}px`;
 	if (style === 'grow') return 'unset';
@@ -14,11 +14,13 @@ function setSize(style: string | number, isHeight: boolean) {
 	return style;
 }
 
+// Normalize spacing values before applying them inline.
 function setBox(style: string | number) {
 	if (typeof style === 'number') return `${style}px`;
 	return style;
 }
 
+// Translate alignment shorthand into flexbox-compatible values.
 function setFlex(style: string) {
 	if (style === 'start' || style === 'top') return 'flex-start';
 	if (style === 'end' || style === 'bottom') return 'flex-end';
@@ -62,7 +64,7 @@ export const FlexDiv = React.memo(
 		const { id: divId, style: userStyle, ...rest } = divAttributes;
 		const wrapperStyle = userStyle ?? {};
 
-		// Memoize layout
+		// compose the inline layout styles for the wrapper
 		const style = useMemo(() => {
 			return {
 				display: 'flex',

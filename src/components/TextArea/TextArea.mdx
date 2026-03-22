@@ -85,24 +85,24 @@ import {RenderSource} from '../../../documentation/_components/RenderSource/Rend
         </Unstyled>
 
         <RenderSource language={"tsx"}>
-{`
+```
 import { TextArea } from '@apple-pie/slice';
 
 export function TextAreaExample() {
-  return (
-    <TextArea
-      name="comment"
-      value="Initial notes"
-      placeholder="Write your note"
-      onChange={(value) => console.log(value)}
-      id="textarea-example"
-      data-testid="textarea-example"
-      className="custom-wrapper"
-      style={{ marginTop: 8, maxWidth: 480 }}
-    />
-  );
+    return (
+        <TextArea
+            name="comment"
+            value="Initial notes"
+            placeholder="Write your note"
+            onChange={(value) => console.log(value)}
+            id="textarea-example"
+            data-testid="textarea-example"
+            className="custom-wrapper"
+            style={{ marginTop: 8, maxWidth: 480 }}
+        />
+    );
 }
-`}
+```
         </RenderSource>
     </FlexDiv>
 </FlexDiv>

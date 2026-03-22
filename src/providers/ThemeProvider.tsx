@@ -21,7 +21,7 @@ const darkModeMediaQuery = globalThis.matchMedia(
 export function ThemeProvider(props: Readonly<ThemeProviderProps>) {
 	const { children, theme, system } = props;
 
-	// update active theme based on theme prop
+	// sync the explicitly provided theme to the document root
 	useEffect(() => {
 		if (theme) {
 			const newTheme = theme.includes('dark') ? darkTheme : lightTheme;
@@ -29,9 +29,8 @@ export function ThemeProvider(props: Readonly<ThemeProviderProps>) {
 		}
 	}, [theme]);
 
-	// update then active theme based on system changes
+	// keep the document theme aligned with system preference when enabled
 	useEffect(() => {
-		// handler for the media query change
 		const handleSystemThemeChange = (e: MediaQueryListEvent) => {
 			if (system) {
 				const autoTheme = e.matches ? darkTheme : lightTheme;
@@ -39,16 +38,15 @@ export function ThemeProvider(props: Readonly<ThemeProviderProps>) {
 			}
 		};
 
-		// set the current system theme
+		// apply the current system theme on mount or when `system` changes
 		if (system) {
 			const autoTheme = darkModeMediaQuery.matches ? darkTheme : lightTheme;
 			document.documentElement.dataset.theme = autoTheme.name;
 		}
 
-		// set listener on media query
+		// subscribe to OS theme changes
 		darkModeMediaQuery.addEventListener('change', handleSystemThemeChange);
 
-		// clean up
 		return () => {
 			darkModeMediaQuery.removeEventListener('change', handleSystemThemeChange);
 		};

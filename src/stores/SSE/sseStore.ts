@@ -20,14 +20,8 @@ export const useSSEStore = create<SSEStore>((set, get) => ({
 				...options,
 				unifiedOnMessage: true,
 				onMessageCallback: (message) => {
-					set({
-						message: message as SSEUnifiedMessage<unknown, SSEEventMap>,
-					});
-
-					userOnMessageCallback?.(
-						message as SSEUnifiedMessage<unknown, SSEEventMap>,
-					);
-
+					set({ message });
+					userOnMessageCallback?.(message);
 					if (message.type === 'close') {
 						set({ closedConnection: name });
 						get().actions.removeConnection(name);

@@ -63,23 +63,23 @@ import {RenderSource} from '../../../documentation/_components/RenderSource/Rend
         </Unstyled>
 
         <RenderSource language={"tsx"}>
-{`
+```
 import { ButtonBar } from '@apple-pie/slice';
 
 export function ButtonBarExample() {
-  return (
-    <ButtonBar
-      label="Formatting"
-      options={[{ icon: 'bold', command: 'bold', tip: 'Bold' }, { icon: 'italic', command: 'italic', tip: 'Italic' }]}
-      onChange={(option) => console.log(option)}
-      id="buttonbar-example"
-      data-testid="buttonbar-example"
-      className="custom-wrapper"
-      style={{ marginTop: 8, maxWidth: 480 }}
-    />
-  );
+    return (
+        <ButtonBar
+            label="Formatting"
+            options={[{ icon: 'bold', command: 'bold', tip: 'Bold' }, { icon: 'italic', command: 'italic', tip: 'Italic' }]}
+            onChange={(option) => console.log(option)}
+            id="buttonbar-example"
+            data-testid="buttonbar-example"
+            className="custom-wrapper"
+            style={{ marginTop: 8, maxWidth: 480 }}
+        />
+    );
 }
-`}
+```
         </RenderSource>
     </FlexDiv>
 </FlexDiv>

@@ -103,48 +103,54 @@ export const DraggablePanel = React.memo((props: DraggablePanelProps) => {
 	const divHeight = useRef<number>(0);
 	const deltaWidth = useRef<number>(0);
 
-	// handle window resize call back - use the window object only if containerRef is undefined
+	// fall back to the window width when no container ref is provided
 	const handleWindowResize = useCallback(() => {
 		if (!containerRef?.current) setContWidth(window.innerWidth);
 	}, [containerRef]);
 
+	// track hover state over the resize handle
 	const handleMouseOver = useCallback(() => {
 		isOver.current = true;
 		setHighlight(true);
 	}, []);
 
+	// clear hover state when leaving the resize handle
 	const handleMouseOut = useCallback(() => {
 		isOver.current = false;
 		if (!isDragging) setHighlight(false);
 	}, [isDragging]);
 
+	// show handle feedback when the resize handle receives focus
 	const handleFocus = useCallback(() => {
 		isOver.current = true;
 		setHighlight(true);
 	}, []);
 
+	// clear focused handle feedback when focus leaves the resize handle
 	const handleBlur = useCallback(() => {
 		isOver.current = false;
 		if (!isDragging) setHighlight(false);
 	}, [isDragging]);
 
+	// show handle feedback on touch start
 	const handleTouchStart = useCallback(() => {
 		isOver.current = true;
 		setHighlight(true);
 	}, []);
 
+	// clear handle feedback on touch end
 	const handleTouchEnd = useCallback(() => {
 		isOver.current = false;
 		if (!isDragging) setHighlight(false);
 	}, [isDragging]);
 
-	// handle container resize - if continerRef and width more than 0 use this to set container size
+	// update the available container width from the observed container size
 	useEffect(() => {
 		if (!containerRef) return;
 		if (containerSize.width > 0) setContWidth(containerSize.width);
 	}, [containerSize, containerRef]);
 
-	// listen to then window resize event
+	// initialize and maintain the fallback container width from the window
 	// biome-ignore lint/correctness/useExhaustiveDependencies: on mount only
 	useEffect(() => {
 		if (!contWidth) setContWidth(window.innerWidth);
@@ -152,10 +158,10 @@ export const DraggablePanel = React.memo((props: DraggablePanelProps) => {
 		return () => globalThis.removeEventListener('resize', handleWindowResize);
 	}, []);
 
-	// close/open on prop change
+	// sync the closed state from the controlled prop
 	useEffect(() => setPanelClosed(isClosed), [isClosed]);
 
-	// on constraints update, check and adjust div width to not exceed max
+	// clamp the current panel width when new constraints tighten the max width
 	const adjustCurrentWidth = useCallback((relConst: Constraint) => {
 		if (div?.current && relConst.max) {
 			const currentWidth = div.current.offsetWidth;
@@ -167,7 +173,7 @@ export const DraggablePanel = React.memo((props: DraggablePanelProps) => {
 		}
 	}, []);
 
-	// reset constraints on prop changes
+	// normalize relative constraints and reapply them when inputs change
 	useEffect(() => {
 		if (!contWidth) return;
 		const { min, max, initial } = sizeConstraints;
@@ -185,7 +191,7 @@ export const DraggablePanel = React.memo((props: DraggablePanelProps) => {
 		adjustCurrentWidth(relativeConstraints);
 	}, [sizeConstraints, contWidth, adjustCurrentWidth]);
 
-	// callback for hilight when hovering over the resize handle
+	// debounce resize-handle highlighting for pointer and touch interactions
 	const setHighlight = useCallback(
 		(state: boolean | null) => {
 			if (timer.current) clearTimeout(timer.current);
@@ -201,12 +207,12 @@ export const DraggablePanel = React.memo((props: DraggablePanelProps) => {
 		[isTouchDevice],
 	);
 
-	// get the current mouse X position using touch or mouse event
+	// read the current pointer x-position from mouse or touch input
 	const getClientX = useCallback((e: MouseEvent | TouchEvent) => {
 		return pointerPosition(e);
 	}, []);
 
-	// calculate the drag amount based on starting point and new client x point
+	// convert the current pointer x-position into a new panel width
 	const getNewWidth = useCallback(
 		(clientX: number) => {
 			return dragsRight
@@ -216,7 +222,7 @@ export const DraggablePanel = React.memo((props: DraggablePanelProps) => {
 		[dragsRight],
 	);
 
-	// check constraints to prevent over dragging
+	// enforce min and max width constraints during drag
 	const canDrag = useCallback(
 		(newWidth: number, clientX: number) => {
 			if (constraints?.min) {
@@ -233,7 +239,7 @@ export const DraggablePanel = React.memo((props: DraggablePanelProps) => {
 		[constraints],
 	);
 
-	// process drag
+	// resize the panel while dragging and notify resize listeners
 	const doDrag = useCallback(
 		(e: MouseEvent | TouchEvent) => {
 			if (div?.current) {
@@ -258,7 +264,7 @@ export const DraggablePanel = React.memo((props: DraggablePanelProps) => {
 		[onResize, canDrag, getNewWidth, getClientX],
 	);
 
-	// handle stopping drag
+	// stop dragging, restore document selection, and emit final resize events
 	const stopDrag = useCallback(() => {
 		setIsDragging(false);
 		document.documentElement.removeEventListener('mousemove', doDrag, false);
@@ -285,13 +291,14 @@ export const DraggablePanel = React.memo((props: DraggablePanelProps) => {
 		if (!isOver.current) setHighlight(false);
 	}, [doDrag, onResizeEnd, onResize, setHighlight]);
 
+	// resolve the width transition from the most recent panel size
 	const transition = useMemo(() => {
 		if (lastWidth && lastWidth > 500)
 			return 'width var(--motion-magnet-duration) var(--motion-magnet)';
 		return 'width var(--motion-water-duration) var(--motion-water)';
 	}, [lastWidth]);
 
-	// handle starting drag
+	// capture the starting drag measurements and attach drag listeners
 	const initDrag = useCallback(
 		(e: any) => {
 			if (div?.current && document.defaultView) {
@@ -325,6 +332,7 @@ export const DraggablePanel = React.memo((props: DraggablePanelProps) => {
 		[doDrag, stopDrag, onResize, onResizeStart],
 	);
 
+	// attach or detach the low-level drag listeners on the resize handle
 	useEffect(() => {
 		const hl = handle?.current;
 		if (hl && drags) {
@@ -339,6 +347,7 @@ export const DraggablePanel = React.memo((props: DraggablePanelProps) => {
 		};
 	}, [drags, initDrag]);
 
+	// resolve the handle offset based on drag direction and touch mode
 	const leftRightStyle = useMemo(() => {
 		if (dragsRight) {
 			return { right: isTouchDevice ? -22 : -((gripper.width || 10) / 2) };
@@ -346,6 +355,7 @@ export const DraggablePanel = React.memo((props: DraggablePanelProps) => {
 		return { left: isTouchDevice ? -22 : -((gripper.width || 10) / 2) };
 	}, [dragsRight, isTouchDevice, gripper.width]);
 
+	// resolve the rendered panel width from drag state and constraints
 	const width = useMemo(() => {
 		if (!drags) return '100%';
 		if (panelClosed) return 0;
@@ -353,6 +363,7 @@ export const DraggablePanel = React.memo((props: DraggablePanelProps) => {
 		return constraints.initial;
 	}, [drags, panelClosed, lastWidth, constraints.initial]);
 
+	// compose CSS custom properties for the panel background
 	const cssVars = useMemo(() => {
 		return {
 			'--panel-bg': bgColor ?? 'transparent',
@@ -432,7 +443,7 @@ export const DraggablePanel = React.memo((props: DraggablePanelProps) => {
 	);
 });
 
-// customizable drag handle for "can drag" affordance
+// Customizable visual affordance for draggable resize handles.
 export type DragHandleProps = {
 	width?: number;
 	height?: number;
@@ -450,6 +461,7 @@ export const DragHandle = React.memo((props: Readonly<DragHandleProps>) => {
 		color = 'var(--core-surface-primary)',
 		strokeColor = 'var(--core-outline-primary)',
 	} = props;
+	// compose CSS custom properties for the drag handle dimensions and colors
 	const cssVars = useMemo(() => {
 		return {
 			'--drag-handle-width': `${width}px`,

@@ -15,7 +15,7 @@ type LabelBaseProps = {
 };
 
 export type LabelProps = Omit<
-	React.HTMLAttributes<HTMLDivElement>,
+	React.HTMLAttributes<HTMLElement>,
 	keyof LabelBaseProps
 > &
 	LabelBaseProps;

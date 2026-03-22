@@ -67,55 +67,55 @@ import {RenderSource} from '../../../documentation/_components/RenderSource/Rend
         </Unstyled>
 
         <RenderSource language={"tsx"}>
-{`
+```
 import { AvatarGroup } from '@apple-pie/slice';
 
 const avatars = [
-  {
-    first: 'John',
-    last: 'Appleseed',
-    image: '/images/profile-male-02.jpg',
-    email: 'john@email.com',
-  },
-  {
-    first: 'Jane',
-    last: 'Appleseed',
-    image: '',
-    email: 'jane@email.com',
-  },
+    {
+        first: 'John',
+        last: 'Appleseed',
+        image: '/images/profile-male-02.jpg',
+        email: 'john@email.com',
+    },
+    {
+        first: 'Jane',
+        last: 'Appleseed',
+        image: '',
+        email: 'jane@email.com',
+    },
 ];
 
 export function TeamAvatars() {
-  return <AvatarGroup avatars={avatars} size={38} overlap={8} border={3} />;
+    return <AvatarGroup avatars={avatars} size={38} overlap={8} border={3} />;
 }
-`}
+```
         </RenderSource>
 
         <RenderSource language={"tsx"}>
-{`
+```
 import { AvatarGroup } from '@apple-pie/slice';
 
 const compactAvatars = [
-  { first: 'A', last: 'User', email: 'a@email.com' },
-  { first: 'B', last: 'User', email: 'b@email.com' },
-  { first: 'C', last: 'User', email: 'c@email.com' },
+    { first: 'A', last: 'User', email: 'a@email.com' },
+    { first: 'B', last: 'User', email: 'b@email.com' },
+    { first: 'C', last: 'User', email: 'c@email.com' },
 ];
 
 export function InitialsOnlyGroup() {
-  return (
-    <AvatarGroup
-      avatars={compactAvatars}
-      firstOnly={true}
-      size={28}
-      overlap={10}
-      gap={0}
-      id="compact-avatar-group"
-      data-testid="compact-avatar-group"
-      className="participants"
-    />
-  );
+    return (
+        <AvatarGroup
+            avatars={compactAvatars}
+            firstOnly={true}
+            size={28}
+            overlap={10}
+            gap={0}
+            id="compact-avatar-group"
+            data-testid="compact-avatar-group"
+            className="participants"
+        />
+    );
 }
-`}
+```
         </RenderSource>
     </FlexDiv>
 </FlexDiv>

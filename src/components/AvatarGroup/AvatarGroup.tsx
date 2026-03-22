@@ -21,7 +21,7 @@ export const AvatarGroup = React.memo((props: AvatarGroupProps) => {
 	const divStyle = style ?? ({} as React.CSSProperties);
 	const divClass = className ? ` ${className}` : '';
 
-	// memo css vars
+	// compose CSS custom properties for spacing and overlap
 	const cssVars = useMemo(() => {
 		return {
 			'--ag-gap': `${gap ?? 0}px`,
@@ -30,7 +30,7 @@ export const AvatarGroup = React.memo((props: AvatarGroupProps) => {
 		} as React.CSSProperties;
 	}, [overlap, gap, margin]);
 
-	// memo rendered avatars list
+	// derive the rendered avatar list from the provided avatar data
 	const renderedAvatars = useMemo(() => {
 		if (!avatars) return null;
 		return avatars.map((avatar: AvatarInfo, index: number) => (
@@ -52,7 +52,7 @@ export const AvatarGroup = React.memo((props: AvatarGroupProps) => {
 		));
 	}, [avatars, size, border, borderColor, firstOnly, onToolTip]);
 
-	// memo class names
+	// compose wrapper class names
 	const classNames = useMemo(() => {
 		return `${css.wrapper}${divClass}`;
 	}, [divClass]);

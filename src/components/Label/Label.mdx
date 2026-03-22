@@ -12,7 +12,7 @@ import {RenderSource} from '../../../documentation/_components/RenderSource/Rend
         Renders a styled text label/pill for statuses, tags, and inline annotations.
 
         ## Base element
-        `HTMLDivElement`
+        `HTMLSpanElement | HTMLButtonElement`
 
         ## Interface
         `LabelProps`
@@ -41,8 +41,10 @@ import {RenderSource} from '../../../documentation/_components/RenderSource/Rend
             <tr><td><code>size</code></td><td><code>{`'s' | 'm' | 'l'`}</code></td><td><code>'m'</code></td><td>Controls label typography size.</td></tr>
             <tr><td><code>padding</code></td><td><code>number | string</code></td><td><code>-</code></td><td>Custom padding. Number values are converted to pixel units.</td></tr>
             <tr><td><code>border</code></td><td><code>number</code></td><td><code>1</code></td><td>Border width in pixels. Set to <code>0</code> to remove the border.</td></tr>
+            <tr><td><code>inline</code></td><td><code>boolean</code></td><td><code>true</code></td><td>Controls whether the label renders inline or as a block flex item.</td></tr>
+            <tr><td><code>color</code></td><td><code>string</code></td><td><code>-</code></td><td>Overrides the text color.</td></tr>
             <tr><td><code>state</code></td><td><code>{`'red' | 'yellow' | 'green' | 'blue' | 'grey' | 'lightgrey' | 'white'`}</code></td><td><code>-</code></td><td>Controls `state`.</td></tr>
-            <tr><td><code>...divAttributes</code></td><td><code>{`HTMLAttributes<HTMLDivElement>`}</code></td><td><code>-</code></td><td>Native `div` props pass through (for example `id`, `data-testid`, `className`, `style`, `aria-*`).</td></tr>
+            <tr><td><code>...elementAttributes</code></td><td><code>{`HTMLAttributes<HTMLElement>`}</code></td><td><code>-</code></td><td>Native element props pass through to the rendered root element.</td></tr>
           </tbody>
         </table>
 
@@ -67,27 +69,27 @@ import {RenderSource} from '../../../documentation/_components/RenderSource/Rend
         </Unstyled>
 
         <RenderSource language={"tsx"}>
-{`
+```
 import { Label } from '@apple-pie/slice';
 
 export function LabelExample() {
-  return (
-    <Label
-      size="m"
-      state="green"
-      border={1}
-      padding="4px 10px"
-      round={true}
-      id="label-example"
-      data-testid="label-example"
-      className="custom-wrapper"
-      style={{ marginTop: 8, maxWidth: 480 }}
-    >
-      Connected
-    </Label>
-  );
+    return (
+        <Label
+            size="m"
+            state="green"
+            border={1}
+            padding="4px 10px"
+            round={true}
+            id="label-example"
+            data-testid="label-example"
+            className="custom-wrapper"
+            style={{ marginTop: 8, maxWidth: 480 }}
+        >
+            Connected
+        </Label>
+    );
 }
-`}
+```
         </RenderSource>
     </FlexDiv>
 </FlexDiv>

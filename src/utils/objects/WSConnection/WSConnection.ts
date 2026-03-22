@@ -58,6 +58,9 @@ export type WSConnectionOptions<TMessage = unknown> =
 	| WSConnectionStandardOptions<TMessage>
 	| WSConnectionUnifiedOptions<TMessage>;
 
+/**
+ * Manage a WebSocket connection with optional unified events, retries, and keep-alive pings.
+ */
 export class WSConnection<TMessage = unknown> {
 	private readonly url: string;
 	private readonly autoReconnect: boolean;
@@ -80,14 +83,23 @@ export class WSConnection<TMessage = unknown> {
 	private reconnectAttemptsCount = 0;
 	private manuallyClosed = false;
 
+	/**
+	 * Report whether the underlying socket is currently open.
+	 */
 	public get connected() {
 		return this.socket?.readyState === WebSocket.OPEN;
 	}
 
+	/**
+	 * Expose the underlying WebSocket instance.
+	 */
 	public get connection() {
 		return this.socket;
 	}
 
+	/**
+	 * Initialize the socket connection and configure its runtime options.
+	 */
 	constructor(options: WSConnectionOptions<TMessage>) {
 		// set base props
 		this.url = options.url;
@@ -114,7 +126,7 @@ export class WSConnection<TMessage = unknown> {
 	}
 
 	/**
-	 * Gracefully handle sending messages
+	 * Send a string or JSON-serializable payload through the socket.
 	 */
 	public send(message: unknown) {
 		const data =
@@ -123,7 +135,7 @@ export class WSConnection<TMessage = unknown> {
 	}
 
 	/**
-	 * Gracefully expose socket close
+	 * Close the socket intentionally and stop any reconnect attempts.
 	 */
 	public close(closeEvent: { code: number; reason: string }) {
 		this.manuallyClosed = true;
@@ -133,7 +145,7 @@ export class WSConnection<TMessage = unknown> {
 	}
 
 	/**
-	 * Emit the parsed message content for standard mode
+	 * Emit parsed message data when standard callback mode is enabled.
 	 */
 	private emitParsedMessage(data: WSParsedData<TMessage>) {
 		if (this.unifiedMessages) return;
@@ -144,7 +156,7 @@ export class WSConnection<TMessage = unknown> {
 	}
 
 	/**
-	 * Emit a unified message if the unified flag is on
+	 * Emit a unified event object when unified callback mode is enabled.
 	 */
 	private emitUnifiedMessage(message: UnifiedMessageEvent<TMessage>) {
 		if (!this.unifiedMessages) return;
@@ -155,7 +167,7 @@ export class WSConnection<TMessage = unknown> {
 	}
 
 	/**
-	 * Emit error
+	 * Forward an error event through both direct and unified callbacks.
 	 */
 	private emitErrorEvent(error: ErrorEvent) {
 		this.onErrorCallback?.(error);
@@ -163,7 +175,7 @@ export class WSConnection<TMessage = unknown> {
 	}
 
 	/**
-	 * Safe JSON parse message content
+	 * Parse incoming message data, falling back to raw socket payloads when needed.
 	 */
 	private parseEventData(rawData: unknown) {
 		if (
@@ -189,7 +201,7 @@ export class WSConnection<TMessage = unknown> {
 	}
 
 	/**
-	 * Open handler
+	 * Initialize connection state after the socket opens.
 	 */
 	private readonly onOpen = async (event: Event) => {
 		this.clearReconnectTimer();
@@ -229,7 +241,7 @@ export class WSConnection<TMessage = unknown> {
 	};
 
 	/**
-	 * Message handler
+	 * Parse and emit each incoming socket message.
 	 */
 	private readonly onMessage = (event: MessageEvent) => {
 		const data = this.parseEventData(event.data);
@@ -239,7 +251,7 @@ export class WSConnection<TMessage = unknown> {
 	};
 
 	/**
-	 * Close handler with the reconnection logic as needed
+	 * Clean up the socket and trigger reconnect logic after unexpected closes.
 	 */
 	private readonly onClose = (event: CloseEvent) => {
 		this.onCloseCallback?.(event);
@@ -249,7 +261,7 @@ export class WSConnection<TMessage = unknown> {
 	};
 
 	/**
-	 * Error handler
+	 * Normalize socket errors before forwarding them to consumers.
 	 */
 	private readonly onError = (event: Event) => {
 		const error =
@@ -262,7 +274,7 @@ export class WSConnection<TMessage = unknown> {
 	};
 
 	/**
-	 * Attach socket listeners
+	 * Attach the connection lifecycle listeners to the current socket.
 	 */
 	private attachEventListeners() {
 		if (!this.socket) return;
@@ -273,7 +285,7 @@ export class WSConnection<TMessage = unknown> {
 	}
 
 	/**
-	 * set keep alive pings
+	 * Start periodic ping messages to keep the socket active.
 	 */
 	private setKeepAlive() {
 		if (!this.socket || !this.keepAlive) return;
@@ -286,7 +298,7 @@ export class WSConnection<TMessage = unknown> {
 	}
 
 	/**
-	 * Clear keep alive pings
+	 * Stop the active keep-alive timer if one is running.
 	 */
 	private clearKeepAliveTimer() {
 		if (!this.keepAliveTimer) return;
@@ -295,7 +307,7 @@ export class WSConnection<TMessage = unknown> {
 	}
 
 	/**
-	 * Clear reconnect timer
+	 * Stop the active reconnect timer if one is running.
 	 */
 	private clearReconnectTimer() {
 		if (!this.reconnectIntervalTimer) return;
@@ -304,7 +316,7 @@ export class WSConnection<TMessage = unknown> {
 	}
 
 	/**
-	 * detach all event listeners
+	 * Detach all lifecycle listeners from the current socket.
 	 */
 	private detachEventListeners() {
 		if (!this.socket) return;
@@ -315,7 +327,7 @@ export class WSConnection<TMessage = unknown> {
 	}
 
 	/**
-	 * Connect the socket
+	 * Open a new socket connection when one is not already active.
 	 */
 	private connect() {
 		if (
@@ -329,7 +341,7 @@ export class WSConnection<TMessage = unknown> {
 	}
 
 	/**
-	 * Reconnect logic
+	 * Schedule the next reconnect attempt when reconnects are allowed.
 	 */
 	private reconnect() {
 		if (!this.autoReconnect || this.manuallyClosed) return;
@@ -350,7 +362,7 @@ export class WSConnection<TMessage = unknown> {
 	}
 
 	/**
-	 * Calculate reconnect delay with fall off
+	 * Calculate the reconnect delay, optionally using exponential backoff.
 	 */
 	private getReconnectDelay(attempt: number) {
 		if (!this.reconnectFalloff) return this.reconnectInterval;
@@ -358,7 +370,7 @@ export class WSConnection<TMessage = unknown> {
 	}
 
 	/**
-	 * Determine if should reconnect based on the close event and props
+	 * Decide whether a close event should trigger a reconnect attempt.
 	 */
 	private shouldReconnect(event: CloseEvent) {
 		if (
@@ -370,7 +382,7 @@ export class WSConnection<TMessage = unknown> {
 	}
 
 	/**
-	 * Internal close socket - does not reset retry logic
+	 * Close the current socket instance and release its timers and listeners.
 	 */
 	private closeSocket(closeEvent: { code: number; reason: string }) {
 		if (!this.socket) return;

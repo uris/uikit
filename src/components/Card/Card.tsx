@@ -18,14 +18,14 @@ export const Card = React.memo(function Card(props: Readonly<CardProps>) {
 	const divStyle = style ?? ({} as React.CSSProperties);
 	const divClass = className ? ` ${className}` : '';
 
-	// set style value callback
+	// normalize width values into CSS-ready strings
 	const setStyle = useCallback((value: string | number | undefined) => {
 		if (value === undefined || value === 'fill') return 'unset';
 		if (typeof value === 'string') return value;
 		return `${value}px`;
 	}, []);
 
-	// memo css vars
+	// compose CSS custom properties for card sizing
 	const cssVars = useMemo(() => {
 		return {
 			'--card-width': setStyle(width),
@@ -38,12 +38,12 @@ export const Card = React.memo(function Card(props: Readonly<CardProps>) {
 	/* END.DEBUG */
 
 	return (
-		<div
+		<button
 			id={id}
+			type="button"
 			className={`${css.card}${divClass}`}
 			style={{ ...divStyle, ...cssVars }}
 			onClick={() => onCommand({ id, command })}
-			onKeyDown={() => onCommand({ id, command })}
 			{...rest}
 		>
 			{icon && (
@@ -52,6 +52,6 @@ export const Card = React.memo(function Card(props: Readonly<CardProps>) {
 				</div>
 			)}
 			{label && <div className={css.label}>{label}</div>}
-		</div>
+		</button>
 	);
 });

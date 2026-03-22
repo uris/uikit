@@ -12,7 +12,7 @@ type SwitchBaseProps = {
 };
 
 export type SwitchProps = Omit<
-	React.HTMLAttributes<HTMLDivElement>,
+	React.ButtonHTMLAttributes<HTMLButtonElement>,
 	keyof SwitchBaseProps
 > &
 	SwitchBaseProps;

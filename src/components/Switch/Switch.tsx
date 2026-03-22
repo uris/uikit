@@ -21,23 +21,24 @@ export const Switch = React.memo((props: SwitchProps) => {
 	const divClass = className ? ` ${className}` : '';
 	const [on, setOn] = useState<boolean>(state);
 
-	// Sync with prop changes
+	// sync external switch state into local UI state
 	useEffect(() => {
 		setOn(state);
 	}, [state]);
 
+	// toggle the switch and notify the consumer
 	const handleClick = useCallback(() => {
 		setOn(!on);
 		onChange(!on);
 	}, [on, onChange]);
 
-	// Memoize style object
+	// resolve knob alignment from the current switch state
 	const justify = useMemo(
 		() => ({ justifyContent: on ? 'flex-end' : 'flex-start' }),
 		[on],
 	);
 
-	// memo css vars
+	// compose CSS custom properties for the switch layout and colors
 	const cssVars = useMemo(() => {
 		return {
 			'--switch-width': `${width}px`,
@@ -54,14 +55,17 @@ export const Switch = React.memo((props: SwitchProps) => {
 	/* END.DEBUG */
 
 	return (
-		<motion.div
+		<motion.button
 			id={divId}
+			type="button"
 			className={`${css.wrapper}${divClass}`}
 			style={{ ...divStyle, ...justify, ...cssVars }}
 			onClick={handleClick}
+			role="switch"
+			aria-checked={on}
 			{...(rest as any)}
 		>
 			<motion.div className={css.knob} layout={'preserve-aspect'} />
-		</motion.div>
+		</motion.button>
 	);
 });

@@ -11,6 +11,10 @@
 	border: 1px solid var(--core-outline-primary);
 	cursor: pointer;
 	transition: all var(--motion-water-duration) var(--motion-water) 0s;
+	appearance: none;
+	-webkit-appearance: none;
+	background-image: none;
+	outline: none;
 	&:hover {
 		color: var(--core-button-primary);
 		border: 1px solid var(--core-button-primary);

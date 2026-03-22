@@ -30,13 +30,13 @@ import NoteSection from "../../../documentation/_components/Notice/Notice";
 {`
 // note: for SSR frameworks such as Next.js, create the worker only on the client.
 export function createUploadsWorker(workerUrl?: string | URL) {
-  return new Worker(
-    workerUrl ?? new URL('../../workers/uploads/uploads.ts', import.meta.url),
-    { type: 'module' },
-  );
+	return new Worker(
+		workerUrl ?? new URL('../../workers/uploads/uploads.ts', import.meta.url),
+		{ type: 'module' },
+	);
 }
 `}
-        </RenderSource>    
+</RenderSource>    
 
        Here's an example of how you might implement the uploads store with a singleton worker instance:
 
@@ -44,40 +44,43 @@ export function createUploadsWorker(workerUrl?: string | URL) {
 ```
 import React, { useEffect, useRef } from 'react';
 import {
-  createUploadsWorker,
-  useUploadsActions,
-  useUploadsWorkerStatus,
+	createUploadsWorker,
+	useUploadsActions,
+	useUploadsWorkerStatus,
 } from '@apple-pie/slice/stores/uploads';
 
 // setup uploads
 const config = {
-    uploadURL: '/api/uploads',
-    maxQueueSize: 10,
-    maxConcurrentUploads: 2,
+	uploadURL: '/api/uploads',
+	maxQueueSize: 10,
+	maxConcurrentUploads: 2,
 };
 
 // create a worker
 function getStoryWorker(): UploadsWorkerInstance | null {
-    const uploadsWorkerUrl = new URL('../../workers/uploads/uploads.ts', import.meta.url);
-    return createUploadsWorker(uploadsWorkerUrl);
+	const uploadsWorkerUrl = new URL(
+		'../../workers/uploads/uploads.ts',
+		import.meta.url,
+	);
+	return createUploadsWorker(uploadsWorkerUrl);
 }
 
 // initialize the store and use atomic hook throughout your app
 export function App() {
-    const actions = useUploadsActions();
-    const workerStatus = useUploadsWorkerStatus();
-    const workerRef = useRef<Worker | null>(null);
+	const actions = useUploadsActions();
+	const workerStatus = useUploadsWorkerStatus();
+	const workerRef = useRef<Worker | null>(null);
 
-    useEffect(() => {
-        if (workerRef.current) return;
-        workerRef.current = getStoryWorker();
-        workerRef.current && actions.initialize(storyOptions, workerRef.current);
-    }, [actions]);
+	useEffect(() => {
+		if (workerRef.current) return;
+		workerRef.current = getStoryWorker();
+		workerRef.current && actions.initialize(storyOptions, workerRef.current);
+	}, [actions]);
 
-    return <div>{workerStatus}</div>;
+	return <div>{workerStatus}</div>;
 }
 ```
-        </RenderSource>
+</RenderSource>
 
         ## Upload data shape
         Each item in uploads is an `Upload` object representing the current state of a single file as it moves through the upload process.
@@ -108,15 +111,15 @@ export function App() {
         <RenderSource language={"tsx"}>
 {`
 type Upload = {
-  id: string;
-  file: File;
-  uploadURL?: string;
-  status: FileUploadStatus;
-  error?: UploadError;
-  progress?: number;
+	id: string;
+	file: File;
+	uploadURL?: string;
+	status: FileUploadStatus;
+	error?: UploadError;
+	progress?: number;
 };
 `}
-        </RenderSource>
+</RenderSource>
 
         ## Pre-signed URLs
         Many applications upload directly to object storage using a pre-signed URL instead of sending every file to one shared endpoint. The uploads worker supports that by allowing each queued file to include an optional `uploadURL`.
@@ -146,44 +149,44 @@ type Upload = {
 import { useUploadsActions } from '@apple-pie/slice/stores/uploads';
 
 function PresignedUploadButton({
-  file,
-  presignedUrl,
+	file,
+	presignedUrl,
 }: {
-  file: File;
-  presignedUrl: string;
+	file: File;
+	presignedUrl: string;
 }) {
-  const actions = useUploadsActions();
+	const actions = useUploadsActions();
 
-  return (
-    <button
-      type="button"
-      onClick={() =>
-        actions.push({
-          file,
-          uploadURL: presignedUrl,
-        })
-      }
-    >
-      Upload with pre-signed URL
-    </button>
-  );
+	return (
+		<button
+			type="button"
+			onClick={() =>
+				actions.push({
+					file,
+					uploadURL: presignedUrl,
+				})
+			}
+		>
+			Upload with pre-signed URL
+		</button>
+	);
 }
 `}
-        </RenderSource>
+</RenderSource>
 
         You can also mix standard uploads and pre-signed uploads in the same queue:
 
         <RenderSource language={"tsx"}>
 {`
 actions.push([
-  regularFile,
-  {
-    file: presignedFile,
-    uploadURL: presignedUrl,
-  },
+	regularFile,
+	{
+		file: presignedFile,
+		uploadURL: presignedUrl,
+	},
 ]);
 `}
-        </RenderSource>
+</RenderSource>
 
         The current `UploadError` values cover both local validation failures and common server/network failures:
             
@@ -271,59 +274,59 @@ actions.push([
 {`
 import { useEffect } from 'react';
 import {
-  createUploadsWorker,
-  useUploads,
-  useUploadsActions,
-  useUploadsError,
-  useUploadsWorkerStatus,
+	createUploadsWorker,
+	useUploads,
+	useUploadsActions,
+	useUploadsError,
+	useUploadsWorkerStatus,
 } from '@apple-pie/slice/stores/uploads';
 
 // Create the uploads worker once for the lifetime of your app.
 const worker = createUploadsWorker();
 
 function UploadManager() {
-  const uploads = useUploads();
-  const workerStatus = useUploadsWorkerStatus();
-  const error = useUploadsError();
-  const actions = useUploadsActions();
+	const uploads = useUploads();
+	const workerStatus = useUploadsWorkerStatus();
+	const error = useUploadsError();
+	const actions = useUploadsActions();
 
-  useEffect(() => {
-    // Initialize the uploads store once so the singleton store and worker stay in sync.
-    actions.initialize(
-      {
-        uploadURL: '/api/uploads',
-        maxQueueSize: 20,
-        maxConcurrentUploads: 3,
-        accepted: ['image/png', 'image/jpeg', 'pdf'],
-      },
-      worker,
-    );
-  }, [actions]);
+	useEffect(() => {
+		// Initialize the uploads store once so the singleton store and worker stay in sync.
+		actions.initialize(
+			{
+				uploadURL: '/api/uploads',
+				maxQueueSize: 20,
+				maxConcurrentUploads: 3,
+				accepted: ['image/png', 'image/jpeg', 'pdf'],
+			},
+			worker,
+		);
+	}, [actions]);
 
-  return (
-    <div>
-      <div>status: {workerStatus}</div>
-      <div>error: {error ?? 'none'}</div>
-      <input
-        type="file"
-        multiple
-        onChange={(event) => {
-          if (!event.target.files) return;
-          actions.push(Array.from(event.target.files));
-        }}
-      />
-      <ul>
-        {uploads.map((upload) => (
-          <li key={upload.id}>
-            {upload.file.name} - {upload.status} - {upload.progress ?? 0}%
-          </li>
-        ))}
-      </ul>
-    </div>
-  );
+	return (
+		<div>
+			<div>status: {workerStatus}</div>
+			<div>error: {error ?? 'none'}</div>
+			<input
+				type="file"
+				multiple
+				onChange={(event) => {
+					if (!event.target.files) return;
+					actions.push(Array.from(event.target.files));
+				}}
+			/>
+			<ul>
+				{uploads.map((upload) => (
+					<li key={upload.id}>
+						{upload.file.name} - {upload.status} - {upload.progress ?? 0}%
+					</li>
+				))}
+			</ul>
+		</div>
+	);
 }
 `}
-        </RenderSource>
+</RenderSource>
 
         ## Consuming app usage with a built worker asset
         In consuming apps, the most reliable approach is to pass an explicit worker URL into `createUploadsWorker(workerUrl)`.
@@ -332,26 +335,32 @@ function UploadManager() {
 
         <RenderSource language={"tsx"}>
 {`
-import { createUploadsWorker, uploadsActions } from '@apple-pie/slice/stores/uploads';
+import {
+	createUploadsWorker,
+	uploadsActions,
+} from '@apple-pie/slice/stores/uploads';
 
 const worker = createUploadsWorker(new URL('./uploads.ts', import.meta.url));
 
 uploadsActions.initialize(
-  {
-    uploadURL: '/api/uploads',
-    maxQueueSize: 10,
-    maxConcurrentUploads: 2,
-  },
-  worker,
+	{
+		uploadURL: '/api/uploads',
+		maxQueueSize: 10,
+		maxConcurrentUploads: 2,
+	},
+	worker,
 );
 `}
-        </RenderSource>
+</RenderSource>
 
         Vite-style `?url` example:
 
         <RenderSource language={"tsx"}>
 {`
-import { createUploadsWorker, uploadsActions } from '@apple-pie/slice/stores/uploads';
+import {
+	createUploadsWorker,
+	uploadsActions,
+} from '@apple-pie/slice/stores/uploads';
 // @ts-expect-error Vite resolves ?url imports, but TypeScript needs an explicit declaration for them.
 import uploadsWorkerUrl from '@apple-pie/slice/workers/uploads/uploads?url';
 
@@ -360,15 +369,15 @@ const worker = createUploadsWorker(uploadsWorkerUrl);
 
 // Initialize the uploads store once with the shared worker instance.
 uploadsActions.initialize(
-  {
-    uploadURL: '/api/uploads',
-    maxQueueSize: 10,
-    maxConcurrentUploads: 2,
-  },
-  worker,
+	{
+		uploadURL: '/api/uploads',
+		maxQueueSize: 10,
+		maxConcurrentUploads: 2,
+	},
+	worker,
 );
 `}
-        </RenderSource>
+</RenderSource>
 
         ## Imperative usage outside React
         Use imperative helpers for app bootstrap, service layers, and non-component workflows.
@@ -376,36 +385,36 @@ uploadsActions.initialize(
         <RenderSource language={"tsx"}>
 {`
 import {
-  createUploadsWorker,
-  uploadsActions,
-  getUploads,
-  getUploadsWorkerStatus,
+	createUploadsWorker,
+	uploadsActions,
+	getUploads,
+	getUploadsWorkerStatus,
 } from '@apple-pie/slice/stores/uploads';
 
 // Create the uploads worker once for the lifetime of your app.
 const worker = createUploadsWorker();
 
 export function initializeUploadSystem() {
-  // Initialize the uploads store once during app bootstrap.
-  uploadsActions.initialize({ uploadURL: '/api/uploads' }, worker);
+	// Initialize the uploads store once during app bootstrap.
+	uploadsActions.initialize({ uploadURL: '/api/uploads' }, worker);
 }
 
 export function pushIncomingFiles(files: File[]) {
-  uploadsActions.push(files);
+	uploadsActions.push(files);
 }
 
 export function clearUploadActivity() {
-  uploadsActions.reset();
+	uploadsActions.reset();
 }
 
 export function getUploadSnapshot() {
-  return {
-    status: getUploadsWorkerStatus(),
-    uploads: getUploads(),
-  };
+	return {
+		status: getUploadsWorkerStatus(),
+		uploads: getUploads(),
+	};
 }
 `}
-        </RenderSource>
+</RenderSource>
         </Unstyled>
     </FlexDiv>
 </FlexDiv>

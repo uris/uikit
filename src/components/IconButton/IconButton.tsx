@@ -49,23 +49,26 @@ export const IconButton = React.memo((props: IconButtonProps) => {
 	const { id: divId, className, style, ...rest } = divAttributes;
 	const divStyle = style ?? ({} as React.CSSProperties);
 	const divClass = className ? ` ${className}` : '';
+	const ref = useRef<HTMLButtonElement>(null);
 	const [on, setOn] = useState<boolean>(isToggled);
-	const ref = useRef<HTMLDivElement>(null);
 
+	// sync the local toggle state from the controlled prop
 	useEffect(() => setOn(isToggled), [isToggled]);
 
+	// handle button clicks and keep tooltip state in sync
 	const handleClick = useCallback(
-		(e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
+		(e: React.MouseEvent<HTMLButtonElement, MouseEvent> | undefined) => {
 			if (disabled) return;
 			if (tooltip) onToolTip(null);
 			setOn(!on);
-			onClick(e);
+			onClick(e as any);
 		},
 		[disabled, tooltip, onToolTip, on, onClick],
 	);
 
+	// show the button tooltip using the current wrapper ref
 	const handleMouseEnter = useCallback(
-		(e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
+		(e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
 			if (!ref?.current || !tooltip) return;
 			const tip: ToolTip = {
 				type: ToolTipType.button,
@@ -78,36 +81,37 @@ export const IconButton = React.memo((props: IconButtonProps) => {
 		[tooltip, onToolTip],
 	);
 
+	// clear the tooltip when leaving the button
 	const handleMouseLeave = useCallback(() => {
 		if (tooltip) onToolTip(null);
 	}, [tooltip, onToolTip]);
 
-	// memo icon stroke color
+	// resolve the icon stroke color for the current visual state
 	const strokeColor = useMemo(
 		() => color || 'var(--core-icon-primary)',
 		[color],
 	);
 
-	// memo bg color
+	// resolve the resting background color
 	const bgColorNormal = useMemo(() => {
 		if (on && toggle) return bgColorOn;
 		return bgColor ?? 'var(--core-surface-secondary)';
 	}, [toggle, bgColorOn, bgColor, on]);
 
-	// memo bg color on hover
+	// resolve the hover background color
 	const bgHoverColor = useMemo(() => {
 		if (hover && on) return bgColorOn;
 		if (hover) return bgColorHover;
 		return bgColor ?? 'transparent';
 	}, [hover, bgColor, bgColorOn, bgColorHover, on]);
 
-	// memo text color selected / unselected
+	// resolve the label color for toggled and untoggled states
 	const textColor = useMemo(() => {
 		if (toggle && on) return colorOn;
 		return color ?? 'var(--core-text-primary)';
 	}, [toggle, on, colorOn, color]);
 
-	// memo css vars
+	// compose CSS custom properties for button sizing and colors
 	const cssVars = useMemo(() => {
 		return {
 			'--ib-bg': bgColorNormal,
@@ -124,11 +128,12 @@ export const IconButton = React.memo((props: IconButtonProps) => {
 	/* END.DEBUG */
 
 	return (
-		<motion.div
+		<motion.button
 			id={divId}
+			type="button"
 			className={`${css.button}${divClass}`}
 			style={{ ...divStyle, ...cssVars }}
-			onClick={handleClick}
+			onClick={(e) => handleClick(e)}
 			onMouseLeave={handleMouseLeave}
 			onMouseEnter={handleMouseEnter}
 			transition={transition}
@@ -136,6 +141,8 @@ export const IconButton = React.memo((props: IconButtonProps) => {
 			initial={initial}
 			animate={animate}
 			exit={exit}
+			disabled={disabled}
+			aria-disabled={disabled}
 			ref={ref}
 			{...(rest as any)}
 		>
@@ -157,6 +164,6 @@ export const IconButton = React.memo((props: IconButtonProps) => {
 					<Badge variant={'light'} count={count} hideNull />
 				</div>
 			)}
-		</motion.div>
+		</motion.button>
 	);
 });

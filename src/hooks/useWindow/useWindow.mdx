@@ -78,40 +78,44 @@ import Notice from "../../../documentation/_components/Notice/Notice";
 import { useWindow } from '@apple-pie/slice';
 
 function ViewportBadge() {
-  const win = useWindow();
+	const win = useWindow();
 
-  return (
-    <div style={{ padding: 12, border: '1px solid var(--core-outline-primary)' }}>
-      {win.formFactor} • {win.viewportWidth} x {win.viewportHeight}
-    </div>
-  );
+	return (
+		<div
+			style={{ padding: 12, border: '1px solid var(--core-outline-primary)' }}
+		>
+			{win.formFactor} • {win.viewportWidth} x {win.viewportHeight}
+		</div>
+	);
 }
 `}
-        </RenderSource>
+</RenderSource>
 
         <RenderSource language={"tsx"}>
 {`
 import { FormFactor, useWindow, type BreakPoints } from '@apple-pie/slice';
 
 const customBreakpoints: BreakPoints = {
-  [FormFactor.Mobile]: 600,
-  [FormFactor.Tablet]: 1024,
-  [FormFactor.Desktop]: 1280,
-  [FormFactor.DesktopL]: 1536,
-  [FormFactor.DesktopXL]: 1920,
+	[FormFactor.Mobile]: 600,
+	[FormFactor.Tablet]: 1024,
+	[FormFactor.Desktop]: 1280,
+	[FormFactor.DesktopL]: 1536,
+	[FormFactor.DesktopXL]: 1920,
 };
 
 function ViewportBadgeWithCustomBreakpoints() {
-  const win = useWindow(customBreakpoints);
+	const win = useWindow(customBreakpoints);
 
-  return (
-    <div style={{ padding: 12, border: '1px solid var(--core-outline-primary)' }}>
-      {win.formFactor} • {win.viewportWidth} x {win.viewportHeight}
-    </div>
-  );
+	return (
+		<div
+			style={{ padding: 12, border: '1px solid var(--core-outline-primary)' }}
+		>
+			{win.formFactor} • {win.viewportWidth} x {win.viewportHeight}
+		</div>
+	);
 }
 `}
-        </RenderSource>
+</RenderSource>
 
         <RenderSource language={"tsx"}>
 {`
@@ -135,7 +139,7 @@ function GeoLocationButton() {
   );
 }
 `}
-        </RenderSource>
+</RenderSource>
         <Spacer size={32} />
         <Notice>
             Note: Slice also implements and alternative (but optional) [`WindowStore`](/docs/stores-window-store--docs) that creates a Zustand singleton window state object you can efficiently access throughout your application.

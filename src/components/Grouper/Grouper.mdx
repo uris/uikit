@@ -12,7 +12,7 @@ import {RenderSource} from '../../../documentation/_components/RenderSource/Rend
         Renders a grouped selector row with optional icon, count, and active state handling.
 
         ## Base element
-        `HTMLDivElement`
+        `HTMLButtonElement`
 
         ## Interface
         `GrouperProps`
@@ -47,7 +47,7 @@ import {RenderSource} from '../../../documentation/_components/RenderSource/Rend
             <tr><td><code>toggle</code></td><td><code>boolean</code></td><td><code>-</code></td><td>Boolean flag controlling `toggle`.</td></tr>
             <tr><td><code>unframed</code></td><td><code>boolean</code></td><td><code>-</code></td><td>Boolean flag controlling `unframed`.</td></tr>
             <tr><td><code>variant</code></td><td><code>string</code></td><td><code>-</code></td><td>Text/value for `variant`.</td></tr>
-            <tr><td><code>...divAttributes</code></td><td><code>{`HTMLAttributes<HTMLDivElement>`}</code></td><td><code>-</code></td><td>Native `div` props pass through (for example `id`, `data-testid`, `className`, `style`, `aria-*`).</td></tr>
+            <tr><td><code>...buttonAttributes</code></td><td><code>{`ButtonHTMLAttributes<HTMLButtonElement>`}</code></td><td><code>-</code></td><td>Native `button` props pass through (for example `id`, `data-testid`, `className`, `style`, `aria-*`, `disabled`).</td></tr>
           </tbody>
         </table>
 
@@ -73,24 +73,24 @@ import {RenderSource} from '../../../documentation/_components/RenderSource/Rend
         </Unstyled>
 
         <RenderSource language={"tsx"}>
-{`
+```
 import { Grouper } from '@apple-pie/slice';
 
 export function GrouperExample() {
-  return (
-    <Grouper
-      title="Filters"
-      open={true}
-      toggle={true}
-      count={3}
-      id="grouper-example"
-      data-testid="grouper-example"
-      className="custom-wrapper"
-      style={{ marginTop: 8, maxWidth: 480 }}
-    />
-  );
+    return (
+        <Grouper
+            title="Filters"
+            open={true}
+            toggle={true}
+            count={3}
+            id="grouper-example"
+            data-testid="grouper-example"
+            className="custom-wrapper"
+            style={{ marginTop: 8, maxWidth: 480 }}
+        />
+    );
 }
-`}
+```
         </RenderSource>
     </FlexDiv>
 </FlexDiv>

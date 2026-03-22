@@ -68,24 +68,24 @@ import {RenderSource} from '../../../../documentation/_components/RenderSource/R
         </Unstyled>
 
         <RenderSource language={"tsx"}>
-{`
+```
 import { DoneCheck } from '@apple-pie/slice';
 
 export function DoneCheckExample() {
-  return (
-    <DoneCheck
-      play={true}
-      size={28}
-      color="var(--core-icon-special)"
-      didEnd={() => console.log('done')}
-      id="donecheck-example"
-      data-testid="donecheck-example"
-      className="custom-wrapper"
-      style={{ display: 'block', marginTop: 8 }}
-    />
-  );
+    return (
+        <DoneCheck
+            play={true}
+            size={28}
+            color="var(--core-icon-special)"
+            didEnd={() => console.log('done')}
+            id="donecheck-example"
+            data-testid="donecheck-example"
+            className="custom-wrapper"
+            style={{ display: 'block', marginTop: 8 }}
+        />
+    );
 }
-`}
+```
         </RenderSource>
     </FlexDiv>
 </FlexDiv>

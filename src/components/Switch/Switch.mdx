@@ -12,7 +12,7 @@ import {RenderSource} from '../../../documentation/_components/RenderSource/Rend
         Renders a binary on/off control for toggling settings and preferences.
 
         ## Base element
-        `HTMLDivElement`
+        `HTMLButtonElement`
 
         ## Interface
         `SwitchProps`
@@ -41,7 +41,7 @@ import {RenderSource} from '../../../documentation/_components/RenderSource/Rend
             <tr><td><code>padding</code></td><td><code>number</code></td><td><code>-</code></td><td>Sizing/layout setting for `padding`.</td></tr>
             <tr><td><code>state</code></td><td><code>boolean</code></td><td><code>-</code></td><td>Boolean flag controlling `state`.</td></tr>
             <tr><td><code>width</code></td><td><code>number</code></td><td><code>-</code></td><td>Sizing/layout setting for `width`.</td></tr>
-            <tr><td><code>...divAttributes</code></td><td><code>{`HTMLAttributes<HTMLDivElement>`}</code></td><td><code>-</code></td><td>Native `div` props pass through (for example `id`, `data-testid`, `className`, `style`, `aria-*`).</td></tr>
+            <tr><td><code>...buttonAttributes</code></td><td><code>{`ButtonHTMLAttributes<HTMLButtonElement>`}</code></td><td><code>-</code></td><td>Native `button` props pass through (for example `id`, `data-testid`, `className`, `style`, `aria-*`, `disabled`).</td></tr>
           </tbody>
         </table>
 
@@ -66,24 +66,24 @@ import {RenderSource} from '../../../documentation/_components/RenderSource/Rend
         </Unstyled>
 
         <RenderSource language={"tsx"}>
-{`
+```
 import { Switch } from '@apple-pie/slice';
 
 export function SwitchExample() {
-  return (
-    <Switch
-      state={true}
-      width={42}
-      height={24}
-      onChange={(state) => console.log(state)}
-      id="switch-example"
-      data-testid="switch-example"
-      className="custom-wrapper"
-      style={{ marginTop: 8, maxWidth: 480 }}
-    />
-  );
+    return (
+        <Switch
+            state={true}
+            width={42}
+            height={24}
+            onChange={(state) => console.log(state)}
+            id="switch-example"
+            data-testid="switch-example"
+            className="custom-wrapper"
+            style={{ marginTop: 8, maxWidth: 480 }}
+        />
+    );
 }
-`}
+```
         </RenderSource>
     </FlexDiv>
 </FlexDiv>

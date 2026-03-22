@@ -1,5 +1,8 @@
 import type React from 'react';
 
+/**
+ * Convert a numeric or string size into a CSS-ready size value.
+ */
 export function setSizeStyle(size: string | number | undefined): string {
 	if (!size) return 'auto';
 	if (typeof size === 'string') return size;
@@ -7,7 +10,7 @@ export function setSizeStyle(size: string | number | undefined): string {
 }
 
 /**
- * Clean up string with html
+ * Remove scripts, invisible characters, and optional HTML tags from a string.
  */
 export function cleanString(
 	input: string,
@@ -29,7 +32,7 @@ export function cleanString(
 }
 
 /**
- * Check set theme
+ * Check whether the active document theme is currently dark.
  */
 export function isDarkMode(): boolean {
 	const theme = document.documentElement.dataset.theme;
@@ -37,8 +40,7 @@ export function isDarkMode(): boolean {
 }
 
 /**
- * Debug component rendering
- * Code removed when built / deployed
+ * Log mount, unmount, and prop-change reasons for debug render tracking.
  */
 export function debug(previous: any, updated: any, name = 'component') {
 	if (process.env.NODE_ENV === 'test') return; // exit if running tests
@@ -71,6 +73,9 @@ export function debug(previous: any, updated: any, name = 'component') {
 	return { props: updated, mount: false, unmount: false };
 }
 
+/**
+ * Build a readable list of prop changes between two prop snapshots.
+ */
 export function createPropChangeArray(props: any, updated: any) {
 	const reasons = [];
 	for (const key of Object.keys(updated)) {
@@ -92,13 +97,16 @@ export function createPropChangeArray(props: any, updated: any) {
 	return reasons;
 }
 
+/**
+ * Capture props and lifecycle flags for the render debug helpers.
+ */
 export function setProps(props: any, mount = false, unmount = false) {
 	if (process.env.NODE_ENV === 'test') return; // exit if running tests
 	return { props, mount, unmount };
 }
 
 /**
- * convert hex to rgb
+ * Convert a hex color into an RGB string literal.
  */
 export const hexToRgb = (hex: string | undefined) => {
 	if (!hex) return undefined;
@@ -109,7 +117,7 @@ export const hexToRgb = (hex: string | undefined) => {
 };
 
 /**
- * Utility to accessibility - mimics click event with designated keys event
+ * Trigger a click-like callback when one of the configured keys is pressed.
  */
 export function accessibleKeyDown(
 	e: React.KeyboardEvent<any>,
@@ -125,7 +133,7 @@ export function accessibleKeyDown(
 }
 
 /**
- * Get the pointer position from a DOM touch or mouse event
+ * Read the horizontal pointer position from a mouse or touch event.
  */
 export function pointerPosition(e: MouseEvent | TouchEvent): number {
 	if (e.type.startsWith('touch')) {
@@ -137,7 +145,7 @@ export function pointerPosition(e: MouseEvent | TouchEvent): number {
 }
 
 /**
- * Filter and trim class name array
+ * Remove empty class names and join the remainder into one class string.
  */
 export function filterClasses(classNames: string[]): string {
 	return classNames
@@ -147,7 +155,7 @@ export function filterClasses(classNames: string[]): string {
 }
 
 /**
- * Takes a style string or number and returns a valid CSS style string
+ * Normalize a style value or fallback into a CSS-ready string.
  */
 export function setStyle(
 	value: string | number | undefined,
@@ -160,7 +168,7 @@ export function setStyle(
 }
 
 /**
- * Copy to clipboard
+ * Copy text to the clipboard using a temporary hidden textarea.
  */
 export const copyToClipboard = async (rawContent: string): Promise<boolean> => {
 	try {
@@ -181,7 +189,7 @@ export const copyToClipboard = async (rawContent: string): Promise<boolean> => {
 };
 
 /**
- * Get normalized percent value from number or string
+ * Convert numeric or string percentage input into a normalized number.
  */
 export function normalizedPercent(value: number | string): number {
 	if (typeof value === 'number') return value;

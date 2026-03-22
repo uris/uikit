@@ -43,9 +43,12 @@ export const Partial: StoryObj<typeof CheckBox> = {
 		...meta.args,
 		checked: 'mixed',
 	},
-	render: Default.render,
-	play: async ({ canvasElement, args }) => {
-		await runCheckBoxPlay({ canvasElement, args });
+	render: (args) => {
+		return (
+			<FlexDiv absolute justify={'center'} alignItems={'center'} padding={64}>
+				<CheckBox {...args} />
+			</FlexDiv>
+		);
 	},
 };
 

@@ -12,7 +12,7 @@ import {RenderSource} from '../../../documentation/_components/RenderSource/Rend
         Renders a versatile button supporting variants, icons, loading/progress, and interaction states.
 
         ## Base element
-        `HTMLDivElement`
+        `HTMLButtonElement`
 
         ## Interface
         `ButtonProps`
@@ -66,7 +66,7 @@ import {RenderSource} from '../../../documentation/_components/RenderSource/Rend
             <tr><td><code>variants</code></td><td><code>Variants</code></td><td><code>-</code></td><td>Controls `variants`.</td></tr>
             <tr><td><code>width</code></td><td><code>string</code></td><td><code>-</code></td><td>Sizing/layout setting for `width`.</td></tr>
             <tr><td><code>working</code></td><td><code>boolean</code></td><td><code>-</code></td><td>Boolean flag controlling `working`.</td></tr>
-            <tr><td><code>...divAttributes</code></td><td><code>{`HTMLAttributes<HTMLDivElement>`}</code></td><td><code>-</code></td><td>Native `div` props pass through (for example `id`, `data-testid`, `className`, `style`, `aria-*`).</td></tr>
+            <tr><td><code>...buttonAttributes</code></td><td><code>{`ButtonHTMLAttributes<HTMLButtonElement>`}</code></td><td><code>-</code></td><td>Native `button` props pass through (for example `id`, `data-testid`, `className`, `style`, `aria-*`, `disabled`).</td></tr>
           </tbody>
         </table>
 
@@ -84,7 +84,7 @@ import {RenderSource} from '../../../documentation/_components/RenderSource/Rend
           </thead>
           <tbody>
             <tr><td><code>onToolTip</code></td><td><code>{`(tip: ToolTip | null) => void`}</code></td></tr>
-            <tr><td><code>onClick</code></td><td><code>{`( e: React.MouseEvent<HTMLDivElement, MouseEvent> | undefined, ) => void`}</code></td></tr>
+            <tr><td><code>onClick</code></td><td><code>{`(e: React.MouseEvent<HTMLButtonElement, MouseEvent> | undefined) => void`}</code></td></tr>
           </tbody>
         </table>
 
@@ -92,24 +92,24 @@ import {RenderSource} from '../../../documentation/_components/RenderSource/Rend
         </Unstyled>
 
         <RenderSource language={"tsx"}>
-{`
+```
 import { Button } from '@apple-pie/slice';
 
 export function ButtonExample() {
-  return (
-    <Button
-      label="Save Changes"
-      variant="solid"
-      size="medium"
-      onClick={() => console.log('clicked')}
-      id="button-example"
-      data-testid="button-example"
-      className="custom-wrapper"
-      style={{ marginTop: 8, maxWidth: 480 }}
-    />
-  );
+    return (
+        <Button
+            label="Save Changes"
+            variant="solid"
+            size="medium"
+            onClick={() => console.log('clicked')}
+            id="button-example"
+            data-testid="button-example"
+            className="custom-wrapper"
+            style={{ marginTop: 8, maxWidth: 480 }}
+        />
+    );
 }
-`}
+```
         </RenderSource>
     </FlexDiv>
 </FlexDiv>

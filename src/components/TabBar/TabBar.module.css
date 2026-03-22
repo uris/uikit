@@ -21,6 +21,13 @@
 	cursor: var(--tab-bar-option-cursor);
 	-webkit-user-select: none;
 	user-select: none;
+	appearance: none;
+	-webkit-appearance: none;
+	background-image: none;
+	background-color: transparent;
+	border: 0;
+	outline: none;
+	text-align: left;
 }
 
 .icon {

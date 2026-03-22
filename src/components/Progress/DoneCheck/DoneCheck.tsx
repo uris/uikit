@@ -19,14 +19,15 @@ export const DoneCheck = React.memo((props: DoneCheckProps) => {
 	} = props;
 	const [playing, setPlaying] = useState<boolean>(false);
 
-	// update play with props
+	// sync the local animation state from the controlled play prop
 	useEffect(() => setPlaying(play), [play]);
 
+	// resolve the scale transition timing for the check animation
 	const transition = useMemo(() => {
 		return `scale ${duration}s var(--motion-spring) ${delay}s`;
 	}, [delay, duration]);
 
-	// css var memos
+	// compose CSS custom properties for the check size and animation state
 	const cssVars = useMemo(() => {
 		return {
 			'--icon-size': `${size}px`,

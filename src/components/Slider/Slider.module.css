@@ -19,15 +19,16 @@
 	width: 100%;
 	height: var(--slider-height);
 	background-color: var(--slider-track-color);
-	overflow: visible;
+	overflow: hidden;
 	border-radius: 100px;
 }
 
 .track {
 	composes: rowStart from "../../utils/styling/flexBox.module.css";
-	position: relative;
+	position: absolute;
+	top: 0;
+	bottom: 0;
 	width: 0;
-	height: var(--slider-height);
 	background-color: var(--slider-progress-color);
 	overflow: visible;
 	border-radius: 100px;
@@ -55,4 +56,10 @@
 	background-color: transparent;
 	border-radius: 100px;
 	overflow: visible;
+	outline: none;
+}
+
+.trackWrapper:focus-visible {
+	outline: 2px solid var(--core-link-primary);
+	outline-offset: 2px;
 }

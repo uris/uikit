@@ -8,6 +8,7 @@ import { STATIC_ICON_REGISTRY } from './iconRegistry';
 
 export const Icon = React.memo((props: IconProps) => {
 	const theme = useTheme();
+
 	const {
 		name = 'home',
 		size = 20,
@@ -22,23 +23,32 @@ export const Icon = React.memo((props: IconProps) => {
 		...svgAttributes
 	} = props;
 	const { id: svgId, className, style, ...rest } = svgAttributes;
+	const svgStyle = style ?? ({} as React.CSSProperties);
 
-	// memo cursor style
+	// derive the displayed icon shape from the requested variant
+	const variantKey = toggle ? 'lineOn' : 'line';
+	const iconVariant = STATIC_ICON_REGISTRY.get(name);
+	const shape = iconVariant?.[variantKey] ?? iconVariant?.line;
+
+	// resolve pointer behavior for the icon wrapper
 	const cursor = useMemo(() => {
 		if (disabled) return 'default';
 		return pointer ? 'pointer' : 'inherit';
 	}, [disabled, pointer]);
 
-	// memo icon style
+	// compose CSS custom properties for the icon wrapper
 	const iconStyle = useMemo(() => {
 		return {
 			'--cursor': cursor,
 		} as React.CSSProperties;
 	}, [cursor]);
 
-	const variantKey = toggle ? 'lineOn' : 'line';
-	const iconVariant = STATIC_ICON_REGISTRY.get(name);
-	const shape = iconVariant?.[variantKey] ?? iconVariant?.line;
+	// route keyboard activation through the same click callback
+	const handleKeyActivate = useMemo(
+		() => () =>
+			onClick(undefined as unknown as React.MouseEvent<SVGElement, MouseEvent>),
+		[onClick],
+	);
 
 	/* START.DEBUG */
 	useTrackRenders(props, 'Icon');
@@ -54,13 +64,13 @@ export const Icon = React.memo((props: IconProps) => {
 			width={size}
 			height={size}
 			viewBox="0 0 20 20"
-			style={{ ...(style ?? {}), ...iconStyle }}
+			style={{ ...svgStyle, ...iconStyle }}
 			onClick={(e) => onClick(e)}
 			fill={fillColor}
 			role="img"
 			aria-label={`${name} icon`}
 			tabIndex={pointer && !disabled ? 0 : -1}
-			onKeyDown={(e) => accessibleKeyDown(e, () => onClick)}
+			onKeyDown={(e) => accessibleKeyDown(e, handleKeyActivate)}
 			opacity={disabled ? 0.5 : 1}
 			{...rest}
 		>

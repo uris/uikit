@@ -1,5 +1,6 @@
-export { copyToClipboard } from './functions/misc';
-export { tintFromColor, addOpacity } from './functions/colors';
+export { copyToClipboard, hexToRgb } from './functions/misc';
+export { debounce } from './functions/debounce';
+export * from './functions/colors';
 export { SSEConnection, WSConnection } from './objects';
 export type {
 	SSECustomEvent,

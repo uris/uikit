@@ -39,6 +39,7 @@ import {RenderSource} from '../../../documentation/_components/RenderSource/Rend
             <tr><td><code>animate</code></td><td><code>any</code></td><td><code>-</code></td><td>Controls `animate`.</td></tr>
             <tr><td><code>background</code></td><td><code>string</code></td><td><code>-</code></td><td>Text/value for `background`.</td></tr>
             <tr><td><code>border</code></td><td><code>string</code></td><td><code>-</code></td><td>Sizing/layout setting for `border`.</td></tr>
+            <tr><td><code>borderRadius</code></td><td><code>number</code></td><td><code>-</code></td><td>Border radius applied to the wrapper.</td></tr>
             <tr><td><code>centerSelf</code></td><td><code>{`boolean | string`}</code></td><td><code>-</code></td><td>Boolean flag controlling `centerSelf`.</td></tr>
             <tr><td><code>children</code></td><td><code>any</code></td><td><code>-</code></td><td>Controls `children`.</td></tr>
             <tr><td><code>className</code></td><td><code>string</code></td><td><code>-</code></td><td>Text/value for `className`.</td></tr>
@@ -86,26 +87,26 @@ import {RenderSource} from '../../../documentation/_components/RenderSource/Rend
         </Unstyled>
 
         <RenderSource language={"tsx"}>
-{`
+```
 import { FlexDiv } from '@apple-pie/slice';
 
 export function FlexDivExample() {
-  return (
-    <FlexDiv
-      direction="column"
-      gap={12}
-      padding={16}
-      background="var(--core-surface-secondary)"
-      id="flexdiv-example"
-      data-testid="flexdiv-example"
-      className="custom-wrapper"
-      style={{ marginTop: 8, maxWidth: 480 }}
-    >
-      <div>Panel content</div>
-    </FlexDiv>
-  );
+    return (
+        <FlexDiv
+            direction="column"
+            gap={12}
+            padding={16}
+            background="var(--core-surface-secondary)"
+            id="flexdiv-example"
+            data-testid="flexdiv-example"
+            className="custom-wrapper"
+            style={{ marginTop: 8, maxWidth: 480 }}
+        >
+            <div>Panel content</div>
+        </FlexDiv>
+    );
 }
-`}
+```
         </RenderSource>
     </FlexDiv>
 </FlexDiv>

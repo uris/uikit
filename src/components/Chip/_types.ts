@@ -1,10 +1,9 @@
 import type React from 'react';
-import type { IconNames } from '../Icon/_types';
 import type { ToolTip } from '../sharedTypes';
 
 type ChipBaseProps = {
 	label?: string;
-	icon?: IconNames | string;
+	icon?: string;
 	disabled?: boolean;
 	focused?: boolean;
 	tooltip?: string;

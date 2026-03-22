@@ -68,24 +68,24 @@ import {RenderSource} from '../../../documentation/_components/RenderSource/Rend
         </Unstyled>
 
         <RenderSource language={"tsx"}>
-{`
+```
 import { Icon } from '@apple-pie/slice';
 
 export function IconExample() {
-  return (
-    <Icon
-      name="home"
-      size={20}
-      strokeColor="var(--core-icon-primary)"
-      onClick={() => console.log('clicked')}
-      id="icon-example"
-      data-testid="icon-example"
-      className="custom-wrapper"
-      style={{ display: 'block', marginTop: 8 }}
-    />
-  );
+    return (
+        <Icon
+            name="home"
+            size={20}
+            strokeColor="var(--core-icon-primary)"
+            onClick={() => console.log('clicked')}
+            id="icon-example"
+            data-testid="icon-example"
+            className="custom-wrapper"
+            style={{ display: 'block', marginTop: 8 }}
+        />
+    );
 }
-`}
+```
         </RenderSource>
     </FlexDiv>
 </FlexDiv>

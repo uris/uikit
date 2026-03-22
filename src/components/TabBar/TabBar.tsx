@@ -43,7 +43,9 @@ export const TabBar = React.memo((props: TabBarProps) => {
 	const divClass = className ? ` ${className}` : '';
 
 	const [index, setIndex] = useState<number>(selected);
+	const optionRefs = useRef<Array<HTMLButtonElement | null>>([]);
 
+	// sync the active tab from the controlled index or selected value
 	useEffect(() => {
 		let selectedIndex = 0;
 		if (selectedValue && options) {
@@ -56,7 +58,7 @@ export const TabBar = React.memo((props: TabBarProps) => {
 		}
 	}, [selected, selectedValue, options]);
 
-	// memo handleClick
+	// update the active tab and notify both tab change callbacks
 	const handleClick = useCallback(
 		(i: number) => {
 			setIndex(i);
@@ -66,7 +68,7 @@ export const TabBar = React.memo((props: TabBarProps) => {
 		[onChange, onTabChange, options],
 	);
 
-	// memo handleOptionClick
+	// clear any active tooltip before switching tabs
 	const handleOptionClick = useCallback(
 		(i: number) => {
 			onToolTip(null);
@@ -75,7 +77,41 @@ export const TabBar = React.memo((props: TabBarProps) => {
 		[onToolTip, handleClick],
 	);
 
-	// memo rendered options
+	const focusOption = useCallback((nextIndex: number) => {
+		optionRefs.current[nextIndex]?.focus();
+	}, []);
+
+	const handleOptionKeyDown = useCallback(
+		(event: React.KeyboardEvent<HTMLButtonElement>, optionIndex: number) => {
+			if (options.length < 1) return;
+			let nextIndex: number | null = null;
+			switch (event.key) {
+				case 'ArrowRight':
+				case 'ArrowDown':
+					nextIndex = (optionIndex + 1) % options.length;
+					break;
+				case 'ArrowLeft':
+				case 'ArrowUp':
+					nextIndex = (optionIndex - 1 + options.length) % options.length;
+					break;
+				case 'Home':
+					nextIndex = 0;
+					break;
+				case 'End':
+					nextIndex = options.length - 1;
+					break;
+				default:
+					break;
+			}
+			if (nextIndex === null) return;
+			event.preventDefault();
+			handleOptionClick(nextIndex);
+			focusOption(nextIndex);
+		},
+		[options.length, handleOptionClick, focusOption],
+	);
+
+	// derive the rendered tab options from the options list
 	const renderedOptions = useMemo(
 		() =>
 			options.map((option: TabOption, i: number) => (
@@ -92,9 +128,13 @@ export const TabBar = React.memo((props: TabBarProps) => {
 					disabled={disabled}
 					count={option.count}
 					onClick={handleOptionClick}
+					onKeyDown={handleOptionKeyDown}
 					onToolTip={onToolTip}
 					underline={underline}
 					tabWidth={tabWidth}
+					buttonRef={(element) => {
+						optionRefs.current[i] = element;
+					}}
 				/>
 			)),
 		[
@@ -108,14 +148,17 @@ export const TabBar = React.memo((props: TabBarProps) => {
 			tabWidth,
 			onToolTip,
 			handleOptionClick,
+			handleOptionKeyDown,
 		],
 	);
 
+	// normalize dimension values before applying them as CSS
 	const setStyle = useCallback((value: string | number) => {
 		if (typeof value === 'string') return value;
 		return `${value}px`;
 	}, []);
 
+	// compose CSS custom properties for tab bar layout and close control spacing
 	const cssVars = useMemo(() => {
 		return {
 			'--tab-bar-gap': `${tabGap}px`,
@@ -132,6 +175,8 @@ export const TabBar = React.memo((props: TabBarProps) => {
 			id={divId}
 			className={`${css.wrapper}${divClass}`}
 			style={{ ...divStyle, ...cssVars }}
+			role="tablist"
+			aria-orientation="horizontal"
 			{...rest}
 		>
 			{renderedOptions}
@@ -171,11 +216,12 @@ const Option = React.memo(
 			underline = true,
 			tabWidth = 'distribute',
 			count = 0,
+			onKeyDown = () => null,
+			buttonRef,
 		} = props;
+		const ref = useRef<HTMLButtonElement>(null);
 
-		const ref = useRef<HTMLDivElement>(null);
-
-		// memo icon color
+		// resolve the option icon color from selection and disabled state
 		const strokeColor = useMemo(() => {
 			if (!disabled && selected)
 				return theme.current.colors['core-text-special'];
@@ -183,7 +229,7 @@ const Option = React.memo(
 			return theme.current.colors['core-text-primary'];
 		}, [disabled, selected, theme]);
 
-		// memo handleMouseOver
+		// show the option tooltip when the pointer enters the option
 		const handleMouseOver = useCallback(
 			(e: React.MouseEvent) => {
 				onToolTip(null);
@@ -200,37 +246,38 @@ const Option = React.memo(
 			[showToolTip, onToolTip],
 		);
 
-		// memo handleMouseLeave
+		// clear tooltip state when the pointer leaves the option
 		const handleMouseLeave = useCallback(() => {
 			if (showToolTip) onToolTip(null);
 		}, [showToolTip, onToolTip]);
 
-		// memo color
+		// resolve the option text color from selection and disabled state
 		const textColor = useMemo(() => {
 			if (disabled) return 'var(--core-text-disabled)';
 			if (selected) return 'var(--core-text-special)';
 			return 'var(--core-text-primary)';
 		}, [disabled, selected]);
 
-		// memo tab width
+		// resolve the option width mode
 		const setTabWidth = useMemo(() => {
 			if (tabWidth === 'min-content') return 'min-content';
 			if (tabWidth === 'distribute') return 'unset';
 			return `${tabWidth}px`;
 		}, [tabWidth]);
 
-		// memo flex tab
+		// resolve the option flex mode
 		const setTabFlex = useMemo(() => {
 			if (tabWidth === 'distribute') return '1';
 			return 'unset';
 		}, [tabWidth]);
 
-		// memo underline
+		// resolve the underline visibility for the current option state
 		const setUnderline = useMemo(() => {
 			if (selected && underline && !disabled) return '1px';
 			return '0';
 		}, [underline, disabled, selected]);
 
+		// compose CSS custom properties for option spacing, sizing, and color
 		const cssVars = useMemo(() => {
 			return {
 				'--tab-bar-option-border': setUnderline,
@@ -258,15 +305,21 @@ const Option = React.memo(
 		/* END.DEBUG */
 
 		return (
-			<div
+			<button
+				type="button"
 				className={css.option}
 				style={cssVars}
-				ref={ref}
+				ref={(element) => {
+					ref.current = element;
+					buttonRef?.(element);
+				}}
+				role="tab"
 				aria-selected={selected}
+				tabIndex={selected ? 0 : -1}
 				onMouseEnter={handleMouseOver}
 				onMouseLeave={handleMouseLeave}
 				onClick={() => onClick(value)}
-				onKeyDown={() => onClick(value)}
+				onKeyDown={(e) => onKeyDown(e, value)}
 			>
 				{icon && (
 					<div className={css.icon}>
@@ -277,7 +330,7 @@ const Option = React.memo(
 				{count !== 0 && (
 					<Badge variant={'light'} hideNull={false} count={count} />
 				)}
-			</div>
+			</button>
 		);
 	},
 	(prevProps, nextProps) => {

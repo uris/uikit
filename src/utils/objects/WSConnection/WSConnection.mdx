@@ -26,7 +26,7 @@ import NoteSection from '../../../../documentation/_components/Notice/Notice';
 ```
 import { WSConnection } from '@apple-pie/slice/utils/objects';
 ```
-        </RenderSource>
+</RenderSource>
 
         ## Generic type parameters
         `WSConnection` accepts one generic type parameter:
@@ -86,26 +86,26 @@ import { WSConnection } from '@apple-pie/slice/utils/objects';
 ```
 // no typing is required, returns data as unknown
 const connection1 = new WSConnection({
-    url: 'wss://example.com/chat',
-    onMessageCallback: (data) => {
-        console.log(data);
-    },
+	url: 'wss://example.com/chat',
+	onMessageCallback: (data) => {
+		console.log(data);
+	},
 });
-            
+
 // optional type the message received before creating the connection
 type ChatMessage = {
-    id: string;
-    text: string;
+	id: string;
+	text: string;
 };
 
 const connection2 = new WSConnection<ChatMessage>({
-    url: 'wss://example.com/chat',
-    onMessageCallback: (data) => {
-        console.log(data.text);
-    },
+	url: 'wss://example.com/chat',
+	onMessageCallback: (data) => {
+		console.log(data.text);
+	},
 });
 ```
-        </RenderSource>
+</RenderSource>
 
         ## Unified mode
         Unified mode routes `open`, `message`, `error`, and `close` through one discriminated callback. The `type` field identifies the event kind.
@@ -113,27 +113,27 @@ const connection2 = new WSConnection<ChatMessage>({
         <RenderSource>
 ```
 const connection = new WSConnection<{ text: string }>({
-    url: 'wss://example.com/chat',
-    unifiedMessages: true,
-    onMessageCallback: (message) => {
-        switch (message.type) {
-            case 'open':
-                console.log(message.event);
-                break;
-            case 'message':
-                console.log(message.data);
-                break;
-            case 'error':
-                console.log(message.event);
-                break;
-            case 'close':
-                console.log(message.event);
-                break;
-        }
-    },
+	url: 'wss://example.com/chat',
+	unifiedMessages: true,
+	onMessageCallback: (message) => {
+		switch (message.type) {
+			case 'open':
+				console.log(message.event);
+				break;
+			case 'message':
+				console.log(message.data);
+				break;
+			case 'error':
+				console.log(message.event);
+				break;
+			case 'close':
+				console.log(message.event);
+				break;
+		}
+	},
 });
 ```
-        </RenderSource>
+</RenderSource>
 
         ## Unified message shapes
         <table style={{width: '100%'}}>
@@ -163,22 +163,22 @@ const connection = new WSConnection<{ text: string }>({
         If `reconnectFalloff` is enabled, the delay is exponential:
         <RenderSource>
 ```
-delay = reconnectInterval * 2 ** (attempt - 1)
+delay = reconnectInterval * 2 ** (attempt - 1);
 ```
-        </RenderSource>
+</RenderSource>
 
         Example:
         <RenderSource>
 ```
 const connection = new WSConnection({
-    url: 'wss://example.com/chat',
-    autoReconnect: true,
-    reconnectInterval: 1000,
-    reconnectAttempts: 5,
-    reconnectFalloff: true,
+	url: 'wss://example.com/chat',
+	autoReconnect: true,
+	reconnectInterval: 1000,
+	reconnectAttempts: 5,
+	reconnectFalloff: true,
 });
 ```
-        </RenderSource>
+</RenderSource>
 
         Manual calls to `close()` are treated as intentional shutdown and do not trigger reconnect.
 
@@ -188,13 +188,13 @@ const connection = new WSConnection({
         <RenderSource>
 ```
 const connection = new WSConnection({
-    url: 'wss://example.com/chat',
-    token: async () => {
-        return await getAccessToken();
-    },
+	url: 'wss://example.com/chat',
+	token: async () => {
+		return await getAccessToken();
+	},
 });
 ```
-        </RenderSource>
+</RenderSource>
 
         If token resolution fails, `WSConnection` emits an error event and closes the socket.
 
@@ -204,12 +204,12 @@ const connection = new WSConnection({
         <RenderSource>
 ```
 const connection = new WSConnection({
-    url: 'wss://example.com/chat',
-    keepAlive: true,
-    keepAliveInterval: 30000,
+	url: 'wss://example.com/chat',
+	keepAlive: true,
+	keepAliveInterval: 30000,
 });
 ```
-        </RenderSource>
+</RenderSource>
 
         ## Cleanup
         Always call `close()` when you are done with the connection. This clears timers, removes listeners, and closes the underlying socket.
@@ -217,13 +217,13 @@ const connection = new WSConnection({
         <RenderSource>
 ```
 const connection = new WSConnection({
-    url: 'wss://example.com/chat',
+	url: 'wss://example.com/chat',
 });
 
 // later
 connection.close({ code: 1000, reason: 'Component unmounted' });
 ```
-        </RenderSource>
+</RenderSource>
         </Unstyled>
     </FlexDiv>
 </FlexDiv>

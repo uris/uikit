@@ -37,12 +37,12 @@ type ButtonBaseProps = {
 	paddingLeft?: number;
 	onToolTip?: (tip: ToolTip | null) => void;
 	onClick?: (
-		e: React.MouseEvent<HTMLDivElement, MouseEvent> | undefined,
+		e: React.MouseEvent<HTMLButtonElement, MouseEvent> | undefined,
 	) => void;
 };
 
 export type ButtonProps = Omit<
-	React.HTMLAttributes<HTMLDivElement>,
+	React.ButtonHTMLAttributes<HTMLButtonElement>,
 	keyof ButtonBaseProps
 > &
 	ButtonBaseProps;

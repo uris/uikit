@@ -22,19 +22,16 @@ const TipBase = React.forwardRef<HTMLDivElement, ToolTipProps>((props, ref) => {
 		...divAttributes
 	} = props;
 
-	// div attributes to add
 	const { id: divId, className, style, ...rest } = divAttributes;
 	const divStyle = style ?? ({} as React.CSSProperties);
 	const divClass = className ? `${className}` : '';
 
-	// set tip position and display timer
-	// need the animate set only after the ready state is processed
 	const [pos, setPos] = useState<PosCoords>(tipBasePos);
 	const [ready, setReady] = useState<boolean>(false);
 	const [animate, setAnimate] = useState<boolean>(false);
 	const timer = useRef<ReturnType<typeof setTimeout> | null>(null);
 
-	// update position with delay and then auto remove
+	// position the tooltip after the show delay and clear it after the hide delay
 	useEffect(() => {
 		if (timer.current) clearTimeout(timer.current);
 		const { x, y } = coords ?? { x: 0, y: 0 };
@@ -59,10 +56,10 @@ const TipBase = React.forwardRef<HTMLDivElement, ToolTipProps>((props, ref) => {
 		};
 	}, [coords, showDelay, hideDelay]);
 
-	// when ready, visibility has taken effect and can now be animated
+	// enable the fade-in animation only after visibility has been applied
 	useEffect(() => setAnimate(ready), [ready]);
 
-	// memo css vars
+	// compose CSS custom properties for tooltip styling
 	const cssVars = useMemo(() => {
 		return {
 			'--tooltip-padding': padding ?? '3px 6px',
@@ -75,7 +72,7 @@ const TipBase = React.forwardRef<HTMLDivElement, ToolTipProps>((props, ref) => {
 		} as React.CSSProperties;
 	}, [padding, bgColor, color, border, borderColor, radius]);
 
-	// memo coords style
+	// resolve inline coordinates from the current tooltip position
 	const coordStyle = useMemo(() => {
 		const { left, top } = pos;
 		return {
@@ -84,7 +81,7 @@ const TipBase = React.forwardRef<HTMLDivElement, ToolTipProps>((props, ref) => {
 		} as React.CSSProperties;
 	}, [pos]);
 
-	// memo class names
+	// compose wrapper class names for size and caller overrides
 	const classNames = useMemo(() => {
 		return filterClasses([css.wrapper, css[size], divClass]);
 	}, [size, divClass]);

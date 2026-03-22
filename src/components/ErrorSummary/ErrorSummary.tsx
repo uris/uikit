@@ -12,7 +12,7 @@ export const ErrorSummary = React.memo((props: ErrorSummaryProps) => {
 	const divStyle = style ?? ({} as React.CSSProperties);
 	const divClass = className ? ` ${className}` : '';
 
-	// memo animation variants
+	// define the open and close animation states for the summary panel
 	const variants = useMemo(
 		() => ({
 			enter: { opacity: 0, maxHeight: 0 },
@@ -22,12 +22,13 @@ export const ErrorSummary = React.memo((props: ErrorSummaryProps) => {
 		[],
 	);
 
-	// memo trans
+	// keep the summary transition consistent across visibility changes
 	const transition: Transition = useMemo(
 		() => ({ ease: 'easeInOut', duration: 0.25 }),
 		[],
 	);
 
+	// derive the rendered error entries from the active error ids
 	const renderedErrors = useMemo(() => {
 		if (!entries) return null;
 		return entries.map((error: ErrorMessage, index: number) => {

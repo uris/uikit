@@ -9,6 +9,7 @@ export const RadioButton = React.memo((props: RadioButtonProps) => {
 	const {
 		option,
 		selected = false,
+		controlType = 'radio',
 		deselect = true,
 		tabIndex = 1,
 		wrap = false,
@@ -27,26 +28,17 @@ export const RadioButton = React.memo((props: RadioButtonProps) => {
 	const divClass = className ? ` ${className}` : '';
 	const [isSelected, setIsSelected] = useState<boolean>(selected);
 
+	// sync the local selection state from the controlled prop
 	useEffect(() => setIsSelected(selected), [selected]);
 
+	// toggle the radio button selection and notify the consumer
 	const handleChange = useCallback(() => {
 		if (isSelected && !deselect) return;
 		setIsSelected(!isSelected);
 		onChange(option, !isSelected);
 	}, [isSelected, deselect, onChange, option]);
 
-	const handleKeyDown = useCallback(
-		(e: React.KeyboardEvent) => {
-			if (e.code === 'Space') {
-				e.preventDefault();
-				e.stopPropagation();
-				handleChange();
-			}
-		},
-		[handleChange],
-	);
-
-	// memo icon color
+	// resolve the radio icon color from selection and icon settings
 	const setIconColor = useMemo(() => {
 		if (iconColor) return iconColor;
 		if (checkedIcon === 'circle fill') return 'var(--core-text-primary)';
@@ -55,19 +47,19 @@ export const RadioButton = React.memo((props: RadioButtonProps) => {
 			: 'var(--core-text-primary)';
 	}, [iconColor, toggleIcon, isSelected, checkedIcon]);
 
-	// memo icon name
+	// resolve which icon should be shown for the current selection state
 	const iconName = useMemo(
 		() => (toggleIcon && isSelected ? checkedIcon : 'circle'),
 		[toggleIcon, isSelected, checkedIcon],
 	);
 
-	// memo flex
+	// resolve wrapper flex behavior from list and wrap settings
 	const setFlex = useMemo(() => {
 		if (list) return 'unset';
 		return wrap ? '40%' : '1';
 	}, [list, wrap]);
 
-	// memo css vars
+	// compose CSS custom properties for layout and framing
 	const cssVars = useMemo(() => {
 		return {
 			'--rb-max-width': wrap ? '50%' : '100%',
@@ -87,15 +79,16 @@ export const RadioButton = React.memo((props: RadioButtonProps) => {
 	/* END.DEBUG */
 
 	return (
-		<div
+		<button
 			id={divId}
+			type="button"
 			className={`${css.wrapper}${divClass}`}
 			style={{ ...divStyle, ...cssVars }}
 			onClick={handleChange}
-			onKeyDown={handleKeyDown}
+			role={controlType}
 			tabIndex={tabIndex}
 			aria-label={option.title}
-			aria-selected={isSelected}
+			aria-checked={isSelected}
 			{...rest}
 		>
 			{option.icon && !hideRadio && (
@@ -109,6 +102,6 @@ export const RadioButton = React.memo((props: RadioButtonProps) => {
 					<div className={css.radioSummary}>{option.description}</div>
 				)}
 			</div>
-		</div>
+		</button>
 	);
 });

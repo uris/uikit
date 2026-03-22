@@ -11,6 +11,7 @@ interface MotionSimulationProps {
 	objectSize?: number;
 	padding?: number;
 	width?: number | string;
+	placeholder?: string;
 }
 
 export function MotionSimulation(props: Readonly<MotionSimulationProps>) {
@@ -20,6 +21,7 @@ export function MotionSimulation(props: Readonly<MotionSimulationProps>) {
 		objectSize = 50,
 		padding = 8,
 		width = '100%',
+		placeholder,
 	} = props;
 
 	const [animate, setAnimate] = useState<boolean>(false);
@@ -67,7 +69,9 @@ export function MotionSimulation(props: Readonly<MotionSimulationProps>) {
 				onKeyDown={(e) => accessibleKeyDown(e, () => setAnimate(!animate))}
 			>
 				<div className={css.object} />
-				<span className={css.instructions}>click to run animation</span>
+				<span className={css.instructions}>
+					{placeholder ?? 'click to run animation'}
+				</span>
 			</div>
 			<div className={css.controls}>
 				<Label border={0}>Drag to adjust duration:</Label>

@@ -1,5 +1,5 @@
 /**
- * Create a tint value from a hex color
+ * Lighten or darken a hex color by mixing it toward white or black.
  */
 export const tintFromColor = (hex: string, percent: number) => {
 	const normalizedHex = hex.trim().replace('#', '');
@@ -35,7 +35,7 @@ export const tintFromColor = (hex: string, percent: number) => {
 };
 
 /**
- * Adds the desired opacity level to a hex or RGB color string
+ * Convert a hex or RGB color into an RGBA string with the requested opacity.
  */
 export const addOpacity = (color: string, opacity: number) => {
 	if (!color) return '';

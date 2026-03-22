@@ -11,6 +11,9 @@
 	transition: all var(--motion-water-duration) var(--motion-water) 0s;
 	user-select: none;
 	-webkit-user-select: none;
+	appearance: none;
+	-webkit-appearance: none;
+	background-image: none;
 	outline: none;
 }
 

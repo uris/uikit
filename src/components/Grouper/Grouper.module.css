@@ -2,6 +2,13 @@
 	composes: rowBetween from "../../utils/styling/flexBox.module.css";
 	width: 100%;
 	cursor: pointer;
+	appearance: none;
+	-webkit-appearance: none;
+	background-image: none;
+	background-color: transparent;
+	border: 0;
+	outline: none;
+	padding: 0;
 }
 
 .title {

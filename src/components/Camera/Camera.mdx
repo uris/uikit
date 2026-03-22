@@ -105,63 +105,63 @@ import {Spacer} from "../Spacer";
         </Unstyled>
 
         <RenderSource language={"tsx"}>
-{`
+```
 import { useEffect, useRef, useState } from 'react';
-import { Camera } from '@apple-pie/slice/components/Camera';
-import type { CameraElement } from '@apple-pie/slice/components/Camera';
+import { Camera } from '@apple-pie/slice';
+import type { CameraElement } from '@apple-pie/slice';
 
 export function CameraRefExample() {
-  const cameraRef = useRef<CameraElement | null>(null);
-  const [streamId, setStreamId] = useState<string>('none');
+    const cameraRef = useRef<CameraElement | null>(null);
+    const [streamId, setStreamId] = useState<string>('none');
 
-  const refreshInfo = () => {
-    setStreamId(cameraRef.current?.stream?.id ?? 'none');
-  };
+    const refreshInfo = () => {
+        setStreamId(cameraRef.current?.stream?.id ?? 'none');
+    };
 
-  useEffect(() => {
-    refreshInfo();
-  }, []);
+    useEffect(() => {
+        refreshInfo();
+    }, []);
 
-  return (
-    <>
-      <Camera
-        ref={cameraRef}
-        width={400}
-        height={320}
-        sessionSettings={{
-          videoDeviceId: 'preferred-video-device-id',
-          micDeviceId: 'preferred-mic-device-id',
-        }}
-      />
-      <button
-        onClick={async () => {
-          await cameraRef.current?.toggleVideo?.();
-          refreshInfo();
-        }}
-      >
-        Toggle Video
-      </button>
-      <button
-        onClick={() => {
-          cameraRef.current?.toggleMic?.();
-          refreshInfo();
-        }}
-      >
-        Toggle Mic
-      </button>
-      <button
-        onClick={() => {
-          cameraRef.current?.snapshot?.();
-          refreshInfo();
-        }}
-      >
-        Take Snapshot
-      </button>
-      <div>Current stream: {streamId}</div>
-    </>
-  );
+    return (
+        <>
+            <Camera
+                ref={cameraRef}
+                width={400}
+                height={320}
+                sessionSettings={{
+                    videoDeviceId: 'preferred-video-device-id',
+                    micDeviceId: 'preferred-mic-device-id',
+                }}
+            />
+            <button
+                onClick={async () => {
+                    await cameraRef.current?.toggleVideo?.();
+                    refreshInfo();
+                }}
+            >
+                Toggle Video
+            </button>
+            <button
+                onClick={() => {
+                    cameraRef.current?.toggleMic?.();
+                    refreshInfo();
+                }}
+            >
+                Toggle Mic
+            </button>
+            <button
+                onClick={() => {
+                    cameraRef.current?.snapshot?.();
+                    refreshInfo();
+                }}
+            >
+                Take Snapshot
+            </button>
+            <div>Current stream: {streamId}</div>
+        </>
+    );
 }
-`}
+```
         </RenderSource>
 
         <Unstyled>
