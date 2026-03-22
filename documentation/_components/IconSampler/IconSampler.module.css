@@ -1,6 +1,16 @@
+.category {
+	composes: columnStart from "../../../src/utils/styling/flexBox.module.css";
+	width: 100%;
+	gap: 8px;
+}
+
+.categoryTitle {
+	text-transform: capitalize;
+}
+
 .container {
 	composes: rowStart from "../../../src/utils/styling/flexBox.module.css";
-	justify-content: space-between;
+	justify-content: start;
 	flex-wrap: wrap;
 	gap: 24px;
 }
@@ -38,7 +48,7 @@
 
 .controls {
 	composes: row from "../../../src/utils/styling/flexBox.module.css";
-	padding: 16px 0 !important;
+	padding: 0 !important;
 	width: 100%;
 	gap: 16px;
 }

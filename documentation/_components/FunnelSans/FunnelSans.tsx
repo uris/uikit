@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { FlexDiv, Label, Slider, TabBar, type TabOption } from 'src';
+import { FlexDiv, Label, Slider, TabBar, type TabOption, TextField } from 'src';
 import css from './FunnelSans.module.css';
 
 const tabs: TabOption[] = [
@@ -10,10 +10,15 @@ const tabs: TabOption[] = [
 export function FunnelSans() {
 	const [weight, setWeight] = useState(400);
 	const [style, setStyle] = useState('regular');
+	const [weightKey, setWeightKey] = useState<string>(crypto.randomUUID());
 
-	const handleWeightChange = (value: number) => {
+	const handleWeightChange = (value: number | string) => {
 		// set the weight to the nearest integer value
-		setWeight(Math.round(value));
+		const newWeight = Math.round(value === '' ? 400 : Number(value));
+		if (newWeight < 300 || newWeight > 800 || newWeight === 400) {
+			setWeightKey(crypto.randomUUID());
+			setWeight(400);
+		} else setWeight(Math.round(newWeight));
 	};
 
 	return (
@@ -53,9 +58,15 @@ export function FunnelSans() {
 					scaleMax={800}
 					onChange={(v, _) => handleWeightChange(v)}
 				/>
-				<Label size="l" padding={'4px 16px'}>
-					{weight}
-				</Label>
+				<TextField
+					value={weight.toString()}
+					onBlur={(v) => handleWeightChange(v)}
+					placeholder={'400'}
+					clearButton={null}
+					key={weightKey}
+					size={{ width: 75 }}
+					textAlign={'center'}
+				/>
 			</FlexDiv>
 		</FlexDiv>
 	);

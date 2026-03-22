@@ -9,14 +9,14 @@ export const Badge = React.memo((props: BadgeProps) => {
 	const divStyle = style ?? ({} as React.CSSProperties);
 	const divClass = className ? ` ${className}` : '';
 
-	// memo display count
+	// derive the display value shown inside the badge
 	const displayCount = useMemo(() => {
 		if (count === undefined) return '0';
 		if (typeof count === 'string') return count;
 		return count > 99 ? '99+' : count.toString();
 	}, [count]);
 
-	// memo css vars
+	// compose CSS custom properties for the badge colors
 	const cssVars = useMemo(() => {
 		return {
 			'--badge-color':

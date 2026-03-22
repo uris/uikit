@@ -66,25 +66,25 @@ import {FlexDiv} from '../../components/FlexDiv';
 import { useDoubleClick } from '@apple-pie/slice';
 
 function FileRow() {
-  const [didClick, didDblClick] = useDoubleClick<string, string>(
-    (id) => console.log('selected', id),
-    (id) => console.log('opened', id),
-    180,
-  );
+	const [didClick, didDblClick] = useDoubleClick<string, string>(
+		(id) => console.log('selected', id),
+		(id) => console.log('opened', id),
+		180,
+	);
 
-  return (
-    <div
-      role="button"
-      tabIndex={0}
-      onClick={() => didClick('file-17')}
-      onDoubleClick={() => didDblClick('file-17')}
-      style={{ padding: 12, border: '1px solid var(--core-outline-primary)' }}
-    >
-      Employee Handbook.pdf
-    </div>
-  );
+	return (
+		<div
+			role="button"
+			tabIndex={0}
+			onClick={() => didClick('file-17')}
+			onDoubleClick={() => didDblClick('file-17')}
+			style={{ padding: 12, border: '1px solid var(--core-outline-primary)' }}
+		>
+			Employee Handbook.pdf
+		</div>
+	);
 }
 `}
-        </RenderSource>
+</RenderSource>
     </FlexDiv>
 </FlexDiv>

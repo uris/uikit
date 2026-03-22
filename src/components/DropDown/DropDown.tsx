@@ -52,10 +52,10 @@ export const DropDown = React.memo((props: DropDownProps) => {
 	const [color, setColor] = useState<string>(iconColor);
 	const ref = useRef<HTMLSelectElement>(null);
 
+	// keep the chevron color aligned with the active theme
 	useEffect(() => setColor(theme.current.colors['core-icon-primary']), [theme]);
 
-	// validate selection and if there's a placeholder
-	// with a validate flag, set error state and event error
+	// validate the current selection once the field has been interacted with
 	useEffect(() => {
 		let valid = true;
 		if (validate && placeholder && index === 0) valid = false;
@@ -63,7 +63,7 @@ export const DropDown = React.memo((props: DropDownProps) => {
 		onValidate(valid);
 	}, [index, validate, placeholder, initiated, onValidate]);
 
-	// set focus
+	// trigger the native select interaction when focus is requested externally
 	useEffect(() => {
 		if (focused && ref?.current) {
 			setInitiated(true);
@@ -71,7 +71,7 @@ export const DropDown = React.memo((props: DropDownProps) => {
 		}
 	}, [focused]);
 
-	// set selected by index
+	// sync the selected option from the controlled index prop
 	useEffect(() => {
 		if (ref?.current) {
 			if (!options?.[selectedIndex]) return;
@@ -82,7 +82,7 @@ export const DropDown = React.memo((props: DropDownProps) => {
 		}
 	}, [selectedIndex, options]);
 
-	// set selected by value - FIXED: potential infinite loop
+	// sync the selected option from the controlled value prop
 	useEffect(() => {
 		if (!options || options.length === 0 || selectedValue === '') return;
 
@@ -103,7 +103,7 @@ export const DropDown = React.memo((props: DropDownProps) => {
 		}
 	}, [selectedValue, options]);
 
-	// memo on change
+	// update local selection state and notify consumers when the option changes
 	const handleChange = useCallback(
 		(i: number) => {
 			if (!options) return;
@@ -116,13 +116,13 @@ export const DropDown = React.memo((props: DropDownProps) => {
 		[options, index, onChange, onBlur],
 	);
 
-	// memo focus
+	// mark the field as initiated and notify focus listeners
 	const handleFocus = useCallback(() => {
 		setInitiated(true);
 		onFocus();
 	}, [onFocus]);
 
-	// Memoize renderOptions
+	// derive the rendered option elements from the options list
 	const renderedOptions = useMemo(() => {
 		if (!options) return null;
 		return options.map((option: DropDownOption, i: number) => (
@@ -136,13 +136,13 @@ export const DropDown = React.memo((props: DropDownProps) => {
 		));
 	}, [options, handleChange]);
 
-	// Memoize displayed text
+	// resolve the display label shown in the custom face element
 	const displayText = useMemo(
 		() => selectedText.replace('-- ', ''),
 		[selectedText],
 	);
 
-	// Memoize handleMouseDown
+	// block interaction when disabled and otherwise treat pointer down as focus
 	const handleMouseDown = useCallback(
 		(e: React.MouseEvent<HTMLSelectElement>) => {
 			if (disabled) e.preventDefault();
@@ -151,7 +151,7 @@ export const DropDown = React.memo((props: DropDownProps) => {
 		[disabled, handleFocus],
 	);
 
-	// Memoize onChange handler
+	// forward native select changes through the shared change handler
 	const handleSelectChange = useCallback(
 		(e: React.ChangeEvent<HTMLSelectElement>) => {
 			handleChange(e.target.selectedIndex);
@@ -159,11 +159,13 @@ export const DropDown = React.memo((props: DropDownProps) => {
 		[handleChange],
 	);
 
+	// normalize width and height values before applying them as CSS
 	const getSize = useCallback((value: string | number) => {
 		if (typeof value === 'string') return value;
 		return `${value}px`;
 	}, []);
 
+	// compose CSS custom properties for layout, spacing, and visual state
 	const cssVars = useMemo(() => {
 		return {
 			'--dd-gap': `${gap}px`,

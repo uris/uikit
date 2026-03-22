@@ -61,21 +61,21 @@ import {RenderSource} from '../../../documentation/_components/RenderSource/Rend
         </Unstyled>
 
         <RenderSource language={"tsx"}>
-{`
+```
 import { ErrorSummary } from '@apple-pie/slice';
 
 export function ErrorSummaryExample() {
-  return (
-    <ErrorSummary
-      entries={[{ id: 'name', title: 'Missing required field', bullets: ['Name is required'] }]}
-      id="errorsummary-example"
-      data-testid="errorsummary-example"
-      className="custom-wrapper"
-      style={{ marginTop: 8, maxWidth: 480 }}
-    />
-  );
+    return (
+        <ErrorSummary
+            entries={[{ id: 'name', title: 'Missing required field', bullets: ['Name is required'] }]}
+            id="errorsummary-example"
+            data-testid="errorsummary-example"
+            className="custom-wrapper"
+            style={{ marginTop: 8, maxWidth: 480 }}
+        />
+    );
 }
-`}
+```
         </RenderSource>
     </FlexDiv>
 </FlexDiv>

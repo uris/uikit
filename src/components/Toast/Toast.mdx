@@ -76,68 +76,68 @@ import {RenderSource} from '../../../documentation/_components/RenderSource/Rend
         </Unstyled>
 
         <RenderSource language={"tsx"}>
-{`
+```
 import { useState } from 'react';
 import { Toast, Button } from '@apple-pie/slice';
 
 export function ToastStatusExample() {
-  const [message, setMessage] = useState<string | null>(null);
+    const [message, setMessage] = useState<string | null>(null);
 
-  return (
-    <>
-      <Button
-        label="Save profile"
-        onClick={() => setMessage('Profile saved successfully')}
-      />
+    return (
+        <>
+            <Button
+                label="Save profile"
+                onClick={() => setMessage('Profile saved successfully')}
+            />
 
-      <Toast
-        message={message}
-        type="success"
-        close={true}
-        position="bottom"
-        didHide={() => setMessage(null)}
-        id="profile-save-toast"
-        data-testid="profile-save-toast"
-        aria-live="polite"
-      />
-    </>
-  );
+            <Toast
+                message={message}
+                type="success"
+                close={true}
+                position="bottom"
+                didHide={() => setMessage(null)}
+                id="profile-save-toast"
+                data-testid="profile-save-toast"
+                aria-live="polite"
+            />
+        </>
+    );
 }
-`}
+```
         </RenderSource>
 
         <RenderSource language={"tsx"}>
-{`
+```
 import { useState } from 'react';
 import { Toast, IconButton } from '@apple-pie/slice';
 
 export function DelayedWarningToast() {
-  const [message, setMessage] = useState<string | null>(null);
+    const [message, setMessage] = useState<string | null>(null);
 
-  return (
-    <>
-      <IconButton
-        icon="alert-triangle"
-        tooltip="Trigger warning toast"
-        onClick={() => setMessage('Connection is unstable')}
-      />
+    return (
+        <>
+            <IconButton
+                icon="alert-triangle"
+                tooltip="Trigger warning toast"
+                onClick={() => setMessage('Connection is unstable')}
+            />
 
-      <Toast
-        message={message}
-        type="warning"
-        showDelay={300}
-        duration={4000}
-        close={false}
-        position="top"
-        offset={20}
-        didHide={() => setMessage(null)}
-        className="network-toast"
-        style={{ maxWidth: 420 }}
-      />
-    </>
-  );
+            <Toast
+                message={message}
+                type="warning"
+                showDelay={300}
+                duration={4000}
+                close={false}
+                position="top"
+                offset={20}
+                didHide={() => setMessage(null)}
+                className="network-toast"
+                style={{ maxWidth: 420 }}
+            />
+        </>
+    );
 }
-`}
+```
         </RenderSource>
     </FlexDiv>
 </FlexDiv>

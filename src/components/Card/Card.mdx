@@ -12,7 +12,7 @@ import {RenderSource} from '../../../documentation/_components/RenderSource/Rend
         Renders a clickable content card with optional icon and command payload.
 
         ## Base element
-        `HTMLDivElement`
+        `HTMLButtonElement`
 
         ## Interface
         `CardProps`
@@ -39,7 +39,7 @@ import {RenderSource} from '../../../documentation/_components/RenderSource/Rend
             <tr><td><code>id</code></td><td><code>string</code></td><td><code>-</code></td><td>Text/value for `id`.</td></tr>
             <tr><td><code>label</code></td><td><code>string</code></td><td><code>-</code></td><td>Text/value for `label`.</td></tr>
             <tr><td><code>width</code></td><td><code>{`number | string`}</code></td><td><code>-</code></td><td>Sizing/layout setting for `width`.</td></tr>
-            <tr><td><code>...divAttributes</code></td><td><code>{`HTMLAttributes<HTMLDivElement>`}</code></td><td><code>-</code></td><td>Native `div` props pass through (for example `id`, `data-testid`, `className`, `style`, `aria-*`).</td></tr>
+            <tr><td><code>...buttonAttributes</code></td><td><code>{`ButtonHTMLAttributes<HTMLButtonElement>`}</code></td><td><code>-</code></td><td>Native `button` props pass through (for example `id`, `data-testid`, `className`, `style`, `aria-*`, `disabled`).</td></tr>
           </tbody>
         </table>
 
@@ -64,24 +64,23 @@ import {RenderSource} from '../../../documentation/_components/RenderSource/Rend
         </Unstyled>
 
         <RenderSource language={"tsx"}>
-{`
+```
 import { Card } from '@apple-pie/slice';
 
 export function CardExample() {
-  return (
-    <Card
-      id="integration-card"
-      icon="sparkle"
-      label="Workflow Automation"
-      onCommand={(command) => console.log(command)}
-      id="card-example"
-      data-testid="card-example"
-      className="custom-wrapper"
-      style={{ marginTop: 8, maxWidth: 480 }}
-    />
-  );
+    return (
+        <Card
+            icon="sparkle"
+            label="Workflow Automation"
+            onCommand={(command) => console.log(command)}
+            id="card-example"
+            data-testid="card-example"
+            className="custom-wrapper"
+            style={{ marginTop: 8, maxWidth: 480 }}
+        />
+    );
 }
-`}
+```
         </RenderSource>
     </FlexDiv>
 </FlexDiv>

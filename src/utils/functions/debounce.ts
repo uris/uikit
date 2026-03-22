@@ -5,8 +5,7 @@ export interface DebouncedFunction<T extends (...args: any[]) => any> {
 }
 
 /**
- * General debounce utility with delay setting and cancel/flush methods
- * to clear a "debounce" or immediately "execute" the debounced function
+ * Delay a function call until activity stops, with cancel and flush helpers.
  */
 export function debounce<T extends (...args: any[]) => any>(
 	func: T,

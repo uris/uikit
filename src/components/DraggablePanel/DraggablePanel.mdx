@@ -78,67 +78,67 @@ import {RenderSource} from '../../../documentation/_components/RenderSource/Rend
         </Unstyled>
 
         <RenderSource language={"tsx"}>
-{`
+```
 import { DraggablePanel, FlexDiv } from '@apple-pie/slice';
 
 export function DraggablePanelExample() {
-  return (
-    <FlexDiv width="fill" height={240} direction="row">
-      <DraggablePanel
-        // > 1 => pixels
-        sizeConstraints={{ initial: 320, min: 240, max: 560 }}
-        dragsRight={true}
-        bgColor="var(--core-surface-secondary)"
-        id="draggablepanel-example"
-        data-testid="draggablepanel-example"
-        className="custom-wrapper"
-      >
-        <div style={{ padding: 16 }}>Resizable panel content</div>
-      </DraggablePanel>
-      <div style={{ flex: 1, minWidth: 0, padding: 16 }}>
-        Main content area
-      </div>
-    </FlexDiv>
-  );
+    return (
+        <FlexDiv width="fill" height={240} direction="row">
+            <DraggablePanel
+                // > 1 => pixels
+                sizeConstraints={{ initial: 320, min: 240, max: 560 }}
+                dragsRight={true}
+                bgColor="var(--core-surface-secondary)"
+                id="draggablepanel-example"
+                data-testid="draggablepanel-example"
+                className="custom-wrapper"
+            >
+                <div style={{ padding: 16 }}>Resizable panel content</div>
+            </DraggablePanel>
+            <div style={{ flex: 1, minWidth: 0, padding: 16 }}>
+                Main content area
+            </div>
+        </FlexDiv>
+    );
 }
-`}
+```
         </RenderSource>
 
         <RenderSource language={"tsx"}>
-{`
+```
 import { useRef, useState } from 'react';
 import { DraggablePanel, FlexDiv } from '@apple-pie/slice';
 
 export function DraggablePanelControlled() {
-  const containerRef = useRef<HTMLDivElement>(null);
-  const [isClosed, setIsClosed] = useState(false);
-  const [width, setWidth] = useState<number | null>(null);
+    const containerRef = useRef<HTMLDivElement>(null);
+    const [isClosed, setIsClosed] = useState(false);
+    const [width, setWidth] = useState<number | null>(null);
 
-  // 1) Parent layout must be a horizontal row container.
-  return (
-    <FlexDiv ref={containerRef} width="viewport" height={360} direction="row">
-      {/* 2) Draggable panel is one child in the row. */}
-      <DraggablePanel
-        containerRef={containerRef}
-        isClosed={isClosed}
-        // 0..1 => percentage of container width, > 1 => pixels
-        sizeConstraints={{ initial: 0.28, min: 220, max: 560 }}
-        onResize={(info) => setWidth(info.divWidth)}
-      >
-        <div style={{ padding: 16 }}>
-          Panel width: {width ? Math.round(width) : '-'}px
-        </div>
-      </DraggablePanel>
-      {/* 3) Sibling content must use flex: 1 so it absorbs remaining width. */}
-      <div style={{ flex: 1, minWidth: 0, padding: 16 }}>
-        <button onClick={() => setIsClosed((prev) => !prev)}>
-          {isClosed ? 'Open' : 'Close'} panel
-        </button>
-      </div>
-    </FlexDiv>
-  );
+    // 1) Parent layout must be a horizontal row container.
+    return (
+        <FlexDiv ref={containerRef} width="viewport" height={360} direction="row">
+            {/* 2) Draggable panel is one child in the row. */}
+            <DraggablePanel
+                containerRef={containerRef}
+                isClosed={isClosed}
+                // 0..1 => percentage of container width, > 1 => pixels
+                sizeConstraints={{ initial: 0.28, min: 220, max: 560 }}
+                onResize={(info) => setWidth(info.divWidth)}
+            >
+                <div style={{ padding: 16 }}>
+                    Panel width: {width ? Math.round(width) : '-'}px
+                </div>
+            </DraggablePanel>
+            {/* 3) Sibling content must use flex: 1 so it absorbs remaining width. */}
+            <div style={{ flex: 1, minWidth: 0, padding: 16 }}>
+                <button onClick={() => setIsClosed((prev) => !prev)}>
+                    {isClosed ? 'Open' : 'Close'} panel
+                </button>
+            </div>
+        </FlexDiv>
+    );
 }
-`}
+```
         </RenderSource>
     </FlexDiv>
 </FlexDiv>

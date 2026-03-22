@@ -91,33 +91,33 @@ import {RenderSource} from '../../../documentation/_components/RenderSource/Rend
         </Unstyled>
 
         <RenderSource language={"tsx"}>
-{`
+```
 import { useState } from 'react';
-import { PromptInput } from '@apple-pie/slice/components/PromptInput/PromptInput';
+import { PromptInput } from '@apple-pie/slice';
 
 export function PromptInputExample() {
-  const [attachments, setAttachments] = useState([
-    { file: 'policy.pdf' },
-    { file: 'notes.txt' },
-  ]);
+    const [attachments, setAttachments] = useState([
+        { file: 'policy.pdf' },
+        { file: 'notes.txt' },
+    ]);
 
-  return (
-    <PromptInput
-      attachments={attachments}
-      value="Summarize this policy update"
-      placeholder="Ask the assistant anything ..."
-      borderStyle="gradient"
-      textSize="m"
-      onAttachmentsChange={(items) => setAttachments(items)}
-      onSubmit={(value) => console.log(value)}
-      id="promptinput-example"
-      data-testid="promptinput-example"
-      className="custom-wrapper"
-      style={{ marginTop: 8, maxWidth: 720 }}
-    />
-  );
+    return (
+        <PromptInput
+            attachments={attachments}
+            value="Summarize this policy update"
+            placeholder="Ask the assistant anything ..."
+            borderStyle="gradient"
+            textSize="m"
+            onAttachmentsChange={(items) => setAttachments(items)}
+            onSubmit={(value) => console.log(value)}
+            id="promptinput-example"
+            data-testid="promptinput-example"
+            className="custom-wrapper"
+            style={{ marginTop: 8, maxWidth: 720 }}
+        />
+    );
 }
-`}
+```
         </RenderSource>
 
         <Unstyled>
@@ -126,35 +126,35 @@ export function PromptInputExample() {
         </Unstyled>
 
         <RenderSource language={"tsx"}>
-{`
+```
 import { useState } from 'react';
-import { PromptInput } from '@apple-pie/slice/components/PromptInput/PromptInput';
+import { PromptInput } from '@apple-pie/slice';
 
 export function PromptInputWithModelSelector() {
-  const [model, setModel] = useState('gpt-4.1');
+    const [model, setModel] = useState('gpt-4.1');
 
-  return (
-    <PromptInput
-      placeholder="Ask a question..."
-      onSubmit={(value) => console.log({ value, model })}
-      toolbarGap={10}
-    >
-      <label style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
-        <span style={{ fontSize: 12 }}>Model</span>
-        <select
-          value={model}
-          onChange={(e) => setModel(e.target.value)}
-          style={{ height: 28 }}
+    return (
+        <PromptInput
+            placeholder="Ask a question..."
+            onSubmit={(value) => console.log({ value, model })}
+            toolbarGap={10}
         >
-          <option value="gpt-4.1">GPT-4.1</option>
-          <option value="gpt-4o-mini">GPT-4o mini</option>
-          <option value="gpt-4.1-mini">GPT-4.1 mini</option>
-        </select>
-      </label>
-    </PromptInput>
-  );
+            <label style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
+                <span style={{ fontSize: 12 }}>Model</span>
+                <select
+                    value={model}
+                    onChange={(e) => setModel(e.target.value)}
+                    style={{ height: 28 }}
+                >
+                    <option value="gpt-4.1">GPT-4.1</option>
+                    <option value="gpt-4o-mini">GPT-4o mini</option>
+                    <option value="gpt-4.1-mini">GPT-4.1 mini</option>
+                </select>
+            </label>
+        </PromptInput>
+    );
 }
-`}
+```
         </RenderSource>
     </FlexDiv>
 </FlexDiv>

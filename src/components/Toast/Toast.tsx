@@ -40,17 +40,15 @@ const ToastBase = React.forwardRef<HTMLDivElement, ToastProps>((props, ref) => {
 	} = props;
 	const theme = useTheme();
 
-	// div attributes to add
 	const { id: divId, className, style, ...rest } = divAttributes;
 	const divStyle = style ?? ({} as React.CSSProperties);
 	const divClass = className ? `${className}` : '';
 
-	// need the animate set only after the ready state is processed
 	const [ready, setReady] = useState<boolean>(false);
 	const [content, setContent] = useState<string | null>(null);
 	const timer = useRef<ReturnType<typeof setTimeout> | null>(null);
 
-	// update show and animation
+	// schedule toast visibility from the incoming message and duration
 	useEffect(() => {
 		if (timer.current) clearTimeout(timer.current);
 		const show = message && message.length > 0;
@@ -73,14 +71,15 @@ const ToastBase = React.forwardRef<HTMLDivElement, ToastProps>((props, ref) => {
 		};
 	}, [message, showDelay, duration]);
 
-	// ready to animate in/out
+	// enable animation once content has been set
 	useEffect(() => setReady(content !== null), [content]);
 
-	// set the default padding accommodating the close icon fix
+	// resolve the default padding based on whether the close affordance is shown
 	const defaultPadding = useMemo(() => {
 		return close ? '10px 12px 10px 16px' : '10px 16px';
 	}, [close]);
 
+	// resolve toast colors from the selected toast type
 	const colorScheme = useMemo(() => {
 		switch (type) {
 			case 'success':
@@ -110,7 +109,7 @@ const ToastBase = React.forwardRef<HTMLDivElement, ToastProps>((props, ref) => {
 		}
 	}, [type]);
 
-	// memo css vars
+	// compose CSS custom properties for spacing and color treatment
 	const cssVars = useMemo(() => {
 		return {
 			'--toast-padding': setStyle(padding, defaultPadding),
@@ -121,6 +120,7 @@ const ToastBase = React.forwardRef<HTMLDivElement, ToastProps>((props, ref) => {
 		} as React.CSSProperties;
 	}, [padding, border, colorScheme, radius, defaultPadding]);
 
+	// resolve entry and exit variants from the toast position
 	const variants = useMemo(() => {
 		const positionShow =
 			position === 'bottom' ? { bottom: offset } : { top: offset };
@@ -134,22 +134,22 @@ const ToastBase = React.forwardRef<HTMLDivElement, ToastProps>((props, ref) => {
 		} as Variants;
 	}, [position, offset]);
 
-	// memo class names
+	// compose wrapper class names from size and caller overrides
 	const classNames = useMemo(() => {
 		return filterClasses([css.wrapper, css[size], divClass]);
 	}, [size, divClass]);
 
-	// hide on close
+	// dismiss the toast immediately when the close affordance is used
 	const handleClose = useCallback(() => {
 		setReady(false);
 	}, []);
 
-	// prevent hide on hover / focus
+	// pause the auto-hide timer while the toast is hovered or focused
 	const handleMouseOver = useCallback(() => {
 		if (timer.current) clearTimeout(timer.current);
 	}, []);
 
-	// rest hide on mouse out / blur
+	// restart the auto-hide timer after hover or focus ends
 	const handleMouseOut = useCallback(() => {
 		if (timer.current) clearTimeout(timer.current);
 		if (duration !== 'Infinite') {
@@ -159,7 +159,7 @@ const ToastBase = React.forwardRef<HTMLDivElement, ToastProps>((props, ref) => {
 		}
 	}, [duration]);
 
-	// memo icon color based on type
+	// resolve the close icon color from the selected toast type
 	const iconColor = useMemo(() => {
 		switch (type) {
 			case ToastType.Error:

@@ -144,7 +144,7 @@ export type { ChipProps } from './components/Chip';
 export { FileIcon, FileIconNames } from './components/FileIcon';
 export type { FileIconProps } from './components/FileIcon/_types';
 
-export { Icon, IconNames } from './components/Icon';
+export { Icon, SliceIcons } from './components/Icon';
 export type { IconProps } from './components/Icon/_types';
 
 export { ButtonBar } from './components/ButtonBar';

@@ -66,23 +66,23 @@ import {RenderSource} from '../../../documentation/_components/RenderSource/Rend
         </Unstyled>
 
         <RenderSource language={"tsx"}>
-{`
+```
 import { Pager } from '@apple-pie/slice';
 
 export function PagerExample() {
-  return (
-    <Pager
-      pages={5}
-      index={2}
-      onChange={(idx) => console.log(idx)}
-      id="pager-example"
-      data-testid="pager-example"
-      className="custom-wrapper"
-      style={{ marginTop: 8, maxWidth: 480 }}
-    />
-  );
+    return (
+        <Pager
+            pages={5}
+            index={2}
+            onChange={(idx) => console.log(idx)}
+            id="pager-example"
+            data-testid="pager-example"
+            className="custom-wrapper"
+            style={{ marginTop: 8, maxWidth: 480 }}
+        />
+    );
 }
-`}
+```
         </RenderSource>
     </FlexDiv>
 </FlexDiv>

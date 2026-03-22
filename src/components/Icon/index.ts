@@ -1,2 +1,2 @@
 export { Icon } from './Icon';
-export { IconNames } from './_types';
+export { SliceIcons } from './_types';

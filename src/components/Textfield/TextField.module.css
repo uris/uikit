@@ -34,7 +34,8 @@
 	outline: none;
 	border: 0;
 	height: 100%;
-	width: 100%;
+	width: var(--tf-input-width);
+	field-sizing: var(--tf-field-size);
 	text-align: var(--tf-text-align);
 	&::placeholder {
 		color: var(--tf-placeholder-color);
@@ -64,6 +65,21 @@
 	&:hover {
 		opacity: var(--tf-show-opacity-hover);
 	}
+}
+
+.clearButton {
+	position: absolute;
+	composes: row from "../../utils/styling/flexBox.module.css";
+	right: 8px;
+	top: 50%;
+	border: 0;
+	transform: translateY(-50%);
+	background: transparent;
+	appearance: none;
+	-webkit-appearance: none;
+	outline: none;
+	cursor: pointer;
+	z-index: 1;
 }
 
 .s {

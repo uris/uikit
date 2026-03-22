@@ -71,24 +71,24 @@ import {RenderSource} from '../../../documentation/_components/RenderSource/Rend
         </Unstyled>
 
         <RenderSource language={"tsx"}>
-{`
+```
 import { Slider } from '@apple-pie/slice';
 
 export function SliderExample() {
-  return (
-    <Slider
-      value={42}
-      scaleMin={0}
-      scaleMax={100}
-      onChange={(value) => console.log(value)}
-      id="slider-example"
-      data-testid="slider-example"
-      className="custom-wrapper"
-      style={{ marginTop: 8, maxWidth: 480 }}
-    />
-  );
+    return (
+        <Slider
+            value={42}
+            scaleMin={0}
+            scaleMax={100}
+            onChange={(value) => console.log(value)}
+            id="slider-example"
+            data-testid="slider-example"
+            className="custom-wrapper"
+            style={{ marginTop: 8, maxWidth: 480 }}
+        />
+    );
 }
-`}
+```
         </RenderSource>
     </FlexDiv>
 </FlexDiv>

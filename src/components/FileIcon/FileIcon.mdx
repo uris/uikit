@@ -63,24 +63,24 @@ import {RenderSource} from '../../../documentation/_components/RenderSource/Rend
         </Unstyled>
 
         <RenderSource language={"tsx"}>
-{`
-import { FileIcon } from '@apple-pie/slice/components/FileIcon';
+```
+import { FileIcon } from '@apple-pie/slice';
 
 export function FileIconExample() {
-  return (
-    <FileIcon
-      name="pdf"
-      size={24}
-      pointer
-      onClick={() => console.log('clicked')}
-      id="fileicon-example"
-      data-testid="fileicon-example"
-      className="custom-wrapper"
-      style={{ display: 'block', marginTop: 8 }}
-    />
-  );
+    return (
+        <FileIcon
+            name="pdf"
+            size={24}
+            pointer
+            onClick={() => console.log('clicked')}
+            id="fileicon-example"
+            data-testid="fileicon-example"
+            className="custom-wrapper"
+            style={{ display: 'block', marginTop: 8 }}
+        />
+    );
 }
-`}
+```
         </RenderSource>
     </FlexDiv>
 </FlexDiv>

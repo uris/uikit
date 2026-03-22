@@ -85,33 +85,33 @@ import {RenderSource} from '../../../documentation/_components/RenderSource/Rend
         </Unstyled>
 
         <RenderSource language={"tsx"}>
-{`
-import { UploadArea } from '@apple-pie/slice/components/UploadArea';
+```
+import { UploadArea } from '@apple-pie/slice';
 
 export function UploadAreaExample() {
-  return (
-    <UploadArea
-      title="Upload files"
-      message="Drag files here or click to browse"
-      acceptedTypes={['pdf', 'png', 'jpg']}
-      multiple
-      busy={false}
-      showProgress
-      files={[
-        { file: 'proposal.pdf', uploading: true, progress: 0.45 },
-        { file: 'brief.clipboard' },
-      ]}
-      canRemove
-      onUpload={(files) => {
-        console.log('Selected files:', files);
-      }}
-      id="upload-area"
-      data-testid="upload-area"
-      style={{ maxWidth: 520 }}
-    />
-  );
+    return (
+        <UploadArea
+            title="Upload files"
+            message="Drag files here or click to browse"
+            acceptedTypes={['pdf', 'png', 'jpg']}
+            multiple
+            busy={false}
+            showProgress
+            files={[
+                { file: 'proposal.pdf', uploading: true, progress: 0.45 },
+                { file: 'brief.clipboard' },
+            ]}
+            canRemove
+            onUpload={(files) => {
+                console.log('Selected files:', files);
+            }}
+            id="upload-area"
+            data-testid="upload-area"
+            style={{ maxWidth: 520 }}
+        />
+    );
 }
-`}
+```
         </RenderSource>
     </FlexDiv>
 </FlexDiv>

@@ -9,8 +9,10 @@ import { useObserveTheme } from '../useObserveTheme/useObserveTheme';
  * Hook to manage Slice theming
  */
 export function useTheme() {
+	// observe the currently applied theme
 	const current = useObserveTheme();
 
+	// set the active theme from a theme object or supported theme name
 	const set = useCallback((newTheme: SliceTheme | string) => {
 		console.log('set theme', newTheme);
 		let theme: SliceTheme;
@@ -28,17 +30,20 @@ export function useTheme() {
 		document.documentElement.dataset.theme = theme.name;
 	}, []);
 
+	// toggle between the default light and dark themes
 	const toggle = () => {
 		const lightMode = current.name === lightTheme.name;
 		const newTheme = lightMode ? darkTheme : lightTheme;
 		document.documentElement.dataset.theme = newTheme.name;
 	};
 
+	// expose a convenient dark-mode flag for consumers
 	const isDark = useMemo(() => {
 		return current.name === darkTheme.name;
 	}, [current]);
 
 	return {
+		// default theme objects
 		/**
 		 * Slice's default dark theme
 		 */
@@ -51,6 +56,7 @@ export function useTheme() {
 		 * The currently active SliceTheme
 		 */
 		current,
+		// theme styling helpers
 		/**
 		 * CSS variables for theme colors
 		 */
@@ -67,6 +73,7 @@ export function useTheme() {
 		 * CSS typeface styles as inline style properties
 		 */
 		typeStyle: typeStyles,
+		// theme actions and derived state
 		/**
 		 * Set a new theme by name or passing in a SliceTheme object
 		 * @param newTheme

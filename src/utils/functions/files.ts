@@ -1,8 +1,14 @@
+/**
+ * Split a file name into its display name and extension.
+ */
 export function nameAndExtension(fileName: string) {
 	const ext = fileName.split('.').pop() ?? 'unknown';
 	return { name: fileName, ext };
 }
 
+/**
+ * Map a file extension to the corresponding file icon name.
+ */
 export function fileIconName(extension: string) {
 	switch (extension) {
 		case 'png':
@@ -48,7 +54,7 @@ export function fileIconName(extension: string) {
 }
 
 /**
- * Create a text file from clipboard content placing a clipboard file extension
+ * Create a clipboard-text file with a guaranteed `.clipboard` extension.
  */
 export function clipboardTextToFile(
 	content: string,

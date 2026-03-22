@@ -146,6 +146,9 @@ export type SSEConnectionOptions<
 	| SSEConnectionStandardOptions<TMessage, TCustomEvents>
 	| SSEConnectionUnifiedOptions<TMessage, TCustomEvents>;
 
+/**
+ * Manage an EventSource connection with optional unified callbacks and typed custom events.
+ */
 export class SSEConnection<
 	TMessage = unknown,
 	TCustomEvents extends SSEEventMap = Record<string, never>,
@@ -182,7 +185,7 @@ export class SSEConnection<
 	}
 
 	/**
-	 * Create an SEE connection instance
+	 * Create the EventSource connection and attach its initial listeners.
 	 */
 	constructor(options?: SSEConnectionOptions<TMessage, TCustomEvents>) {
 		this.url = options?.url ?? '';
@@ -216,7 +219,7 @@ export class SSEConnection<
 	}
 
 	/**
-	 * Attach default SEE events
+	 * Attach the default EventSource listeners for message, error, and open events.
 	 */
 	private attachDefaultEventListeners(connection: EventSource) {
 		connection.addEventListener('message', this.onMessage as EventListener);
@@ -224,6 +227,9 @@ export class SSEConnection<
 		connection.addEventListener('open', this.onOpen as EventListener);
 	}
 
+	/**
+	 * Emit parsed message data when standard callback mode is enabled.
+	 */
 	private emitParsedMessage(data: SSEParsedData<TMessage>) {
 		if (this.unifiedOnMessage) return;
 		(
@@ -231,6 +237,9 @@ export class SSEConnection<
 		)?.(data);
 	}
 
+	/**
+	 * Emit a unified message object when unified callback mode is enabled.
+	 */
 	private emitUnifiedMessage(
 		message: SSEUnifiedMessage<TMessage, TCustomEvents>,
 	) {
@@ -242,17 +251,26 @@ export class SSEConnection<
 		)?.(message);
 	}
 
+	/**
+	 * Emit the close callback and unified close event.
+	 */
 	private emitCloseEvent(event: Event) {
 		this.onCloseCallback?.(event);
 		this.emitUnifiedMessage({ type: 'close', event });
 	}
 
+	/**
+	 * Close the connection in response to an SSE-level close condition.
+	 */
 	private closeFromConnectionEvent() {
 		const closeEvent = new Event('close');
 		this.emitCloseEvent(closeEvent);
 		this.close();
 	}
 
+	/**
+	 * Check whether an incoming message should close the connection.
+	 */
 	private shouldCloseFromMessage(
 		rawData: string,
 		data: SSEParsedData<TMessage>,
@@ -264,6 +282,9 @@ export class SSEConnection<
 		);
 	}
 
+	/**
+	 * Emit one custom event through unified callback mode.
+	 */
 	private emitUnifiedCustomMessage<TName extends SSEEventName<TCustomEvents>>(
 		customEvent: SSECustomEvent<TCustomEvents, TName>,
 		data: SSEParsedData<TCustomEvents[TName]>,
@@ -277,7 +298,7 @@ export class SSEConnection<
 	}
 
 	/**
-	 * Attach custom event listeners to the SSE connection
+	 * Attach one typed custom event listener to the SSE connection.
 	 */
 	private attachCustomEventListener<TName extends SSEEventName<TCustomEvents>>(
 		customEvent: SSECustomEvent<TCustomEvents, TName>,
@@ -302,7 +323,7 @@ export class SSEConnection<
 	}
 
 	/**
-	 * Attach custom event listeners to the SSE connection
+	 * Attach all configured custom event listeners to the SSE connection.
 	 */
 	private attachCustomEventListeners(
 		customEvents:
@@ -316,7 +337,7 @@ export class SSEConnection<
 	}
 
 	/**
-	 * Clean up listeners
+	 * Detach every default and custom listener from the current EventSource.
 	 */
 	private detachAllEventListeners(connection: EventSource) {
 		// defaults
@@ -336,7 +357,7 @@ export class SSEConnection<
 	}
 
 	/**
-	 * One message received
+	 * Parse and emit the default `message` event payload.
 	 */
 	onMessage = (event: MessageEvent) => {
 		const data = this.parseEventData<TMessage>(event.data);
@@ -348,7 +369,7 @@ export class SSEConnection<
 	};
 
 	/**
-	 * On error event
+	 * Forward EventSource errors through the configured callbacks.
 	 */
 	onError = (event: Event) => {
 		this.onErrorCallback?.(event);
@@ -356,7 +377,7 @@ export class SSEConnection<
 	};
 
 	/**
-	 * On open event
+	 * Forward EventSource open events through the configured callbacks.
 	 */
 	onOpen = (event: Event) => {
 		this.onOpenCallback?.(event);

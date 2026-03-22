@@ -66,20 +66,22 @@ import NoteSection from "../../../documentation/_components/Notice/Notice";
 import { useToast, useToastActions } from '@apple-pie/slice/stores/toast';
 
 function ToastLauncher() {
-  const toast = useToast();
-  const actions = useToastActions();
+	const toast = useToast();
+	const actions = useToastActions();
 
-  return (
-    <button
-      type="button"
-      onClick={() => actions.push({ message: 'Saved', type: 'success', duration: 2500 })}
-    >
-      {toast?.message ?? 'Show toast'}
-    </button>
-  );
+	return (
+		<button
+			type="button"
+			onClick={() =>
+				actions.push({ message: 'Saved', type: 'success', duration: 2500 })
+			}
+		>
+			{toast?.message ?? 'Show toast'}
+		</button>
+	);
 }
 `}
-        </RenderSource>
+</RenderSource>
 
         ## Generic selector usage in React
         Use `useToastStore` directly when you need a custom selector.
@@ -89,11 +91,11 @@ function ToastLauncher() {
 import { useToastStore } from '@apple-pie/slice/stores/toast';
 
 function ToastTypeBadge() {
-  const toastType = useToastStore((state) => state.toast?.type ?? 'info');
-  return <span>{toastType}</span>;
+	const toastType = useToastStore((state) => state.toast?.type ?? 'info');
+	return <span>{toastType}</span>;
 }
 `}
-        </RenderSource>
+</RenderSource>
 
         ## Imperative usage outside React
         Use imperative helpers in utility modules, services, and non-component handlers.
@@ -104,19 +106,19 @@ function ToastTypeBadge() {
 import { toastActions, getToast } from '@apple-pie/slice/stores/toast';
 
 export async function saveData() {
-  try {
-    // ...request
-    toastActions.push({ message: 'Saved', type: 'success' });
-  } catch {
-    toastActions.push({ message: 'Save failed', type: 'error' });
-  }
+	try {
+		// ...request
+		toastActions.push({ message: 'Saved', type: 'success' });
+	} catch {
+		toastActions.push({ message: 'Save failed', type: 'error' });
+	}
 }
 
 export function getCurrentToastMessage() {
-  return getToast()?.message ?? null;
+	return getToast()?.message ?? null;
 }
 `}
-        </RenderSource>
+</RenderSource>
         </Unstyled>
     </FlexDiv>
 </FlexDiv>

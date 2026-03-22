@@ -12,7 +12,7 @@ import {RenderSource} from '../../../documentation/_components/RenderSource/Rend
         Renders a single radio option with label, checked state, and keyboard accessibility.
 
         ## Base element
-        `HTMLDivElement`
+        `HTMLButtonElement`
 
         ## Interface
         `RadioButtonProps`
@@ -34,7 +34,10 @@ import {RenderSource} from '../../../documentation/_components/RenderSource/Rend
             </tr>
           </thead>
           <tbody>
+            <tr><td><code>controlType</code></td><td><code>{`'radio' | 'checkbox'`}</code></td><td><code>'radio'</code></td><td>Controls the ARIA role exposed by the component.</td></tr>
             <tr><td><code>deselect</code></td><td><code>boolean</code></td><td><code>-</code></td><td>Boolean flag controlling `deselect`.</td></tr>
+            <tr><td><code>gap</code></td><td><code>number</code></td><td><code>6</code></td><td>Gap between the icon and the text content.</td></tr>
+            <tr><td><code>checkedIcon</code></td><td><code>{`'check circle' | 'circle fill'`}</code></td><td><code>'check circle'</code></td><td>Icon shown when the control is selected and `toggleIcon` is enabled.</td></tr>
             <tr><td><code>hideRadio</code></td><td><code>boolean</code></td><td><code>-</code></td><td>Boolean flag controlling `hideRadio`.</td></tr>
             <tr><td><code>iconColor</code></td><td><code>string</code></td><td><code>-</code></td><td>Color token/value for `iconColor`.</td></tr>
             <tr><td><code>list</code></td><td><code>boolean</code></td><td><code>-</code></td><td>Boolean flag controlling `list`.</td></tr>
@@ -44,7 +47,7 @@ import {RenderSource} from '../../../documentation/_components/RenderSource/Rend
             <tr><td><code>tabIndex</code></td><td><code>number</code></td><td><code>-</code></td><td>Controls `tabIndex`.</td></tr>
             <tr><td><code>toggleIcon</code></td><td><code>boolean</code></td><td><code>-</code></td><td>Boolean flag controlling `toggleIcon`.</td></tr>
             <tr><td><code>wrap</code></td><td><code>boolean</code></td><td><code>-</code></td><td>Boolean flag controlling `wrap`.</td></tr>
-            <tr><td><code>...divAttributes</code></td><td><code>{`HTMLAttributes<HTMLDivElement>`}</code></td><td><code>-</code></td><td>Native `div` props pass through (for example `id`, `data-testid`, `className`, `style`, `aria-*`).</td></tr>
+            <tr><td><code>...buttonAttributes</code></td><td><code>{`ButtonHTMLAttributes<HTMLButtonElement>`}</code></td><td><code>-</code></td><td>Native `button` props pass through (for example `id`, `data-testid`, `className`, `style`, `aria-*`, `disabled`).</td></tr>
           </tbody>
         </table>
 
@@ -69,23 +72,23 @@ import {RenderSource} from '../../../documentation/_components/RenderSource/Rend
         </Unstyled>
 
         <RenderSource language={"tsx"}>
-{`
+```
 import { RadioButton } from '@apple-pie/slice';
 
 export function RadioButtonExample() {
-  return (
-    <RadioButton
-      option={{ title: 'Email alerts', fieldName: 'alerts' }}
-      selected={true}
-      onChange={(option, state) => console.log(option, state)}
-      id="radiobutton-example"
-      data-testid="radiobutton-example"
-      className="custom-wrapper"
-      style={{ marginTop: 8, maxWidth: 480 }}
-    />
-  );
+    return (
+        <RadioButton
+            option={{ title: 'Email alerts', fieldName: 'alerts' }}
+            selected={true}
+            onChange={(option, state) => console.log(option, state)}
+            id="radiobutton-example"
+            data-testid="radiobutton-example"
+            className="custom-wrapper"
+            style={{ marginTop: 8, maxWidth: 480 }}
+        />
+    );
 }
-`}
+```
         </RenderSource>
     </FlexDiv>
 </FlexDiv>

@@ -60,19 +60,18 @@ export const FileList = React.memo((props: FileListProps) => {
 		...divAttributes
 	} = props;
 
-	// div attributes to add
 	const { id: divId, className, style, ...rest } = divAttributes;
 	const divStyle = style ?? ({} as React.CSSProperties);
 	const divClass = className ? ` ${className}` : '';
 
-	// convert file name to file item name, type
+	// derive display metadata from the raw file name
 	const fileNameToFileItem = useCallback((fileName: string) => {
 		const { ext, name } = nameAndExtension(fileName);
 		const icon = fileIconName(ext);
 		return { name, ext, icon };
 	}, []);
 
-	// memoize ready-to-render list
+	// derive the rendered file metadata list from the incoming files
 	const displayList = useMemo(() => {
 		return files.map((item, index) => {
 			const fileName = fileNameFromItem(item);
@@ -89,7 +88,7 @@ export const FileList = React.memo((props: FileListProps) => {
 		});
 	}, [files, fileNameToFileItem]);
 
-	// remove items from the list
+	// remove a file from the list and notify the consumer
 	const handleRemove = useCallback(
 		(index: number) => {
 			const updated = files.filter((_, itemIndex) => itemIndex !== index);
@@ -98,7 +97,7 @@ export const FileList = React.memo((props: FileListProps) => {
 		[files, onChange],
 	);
 
-	// show remove tooltip
+	// show the remove action tooltip on hover or focus
 	const handleMouseOver = useCallback(
 		(
 			e: React.MouseEvent<HTMLDivElement> | React.FocusEvent<HTMLDivElement>,
@@ -112,12 +111,12 @@ export const FileList = React.memo((props: FileListProps) => {
 		[onToolTip],
 	);
 
-	// hide remove tooltip
+	// clear the remove action tooltip
 	const handleMouseOut = useCallback(() => {
 		onToolTip?.(null);
 	}, [onToolTip]);
 
-	// memo style vars
+	// compose CSS custom properties for layout, spacing, and colors
 	const cssVars = useMemo(() => {
 		return {
 			'--file-max-width': direction === 'column' ? '100%' : setStyle(maxWidth),
@@ -133,7 +132,7 @@ export const FileList = React.memo((props: FileListProps) => {
 		} as React.CSSProperties;
 	}, [maxWidth, gap, direction, minWidth, padding, iconSize, bgColor]);
 
-	// CSS var for then progress of each file
+	// compose per-file CSS custom properties for progress and error state
 	const fileCSSVars = useCallback((progress: string, error?: string) => {
 		return {
 			'--file-progress': `${progress}`,

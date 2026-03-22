@@ -11,6 +11,7 @@ export type RadioButtonOption = {
 type RadioButtonBaseProps = {
 	selected?: boolean;
 	option: RadioButtonOption;
+	controlType?: 'radio' | 'checkbox';
 	deselect?: boolean;
 	tabIndex?: number;
 	wrap?: boolean;
@@ -25,7 +26,7 @@ type RadioButtonBaseProps = {
 };
 
 export type RadioButtonProps = Omit<
-	React.HTMLAttributes<HTMLDivElement>,
+	React.ButtonHTMLAttributes<HTMLButtonElement>,
 	keyof RadioButtonBaseProps
 > &
 	RadioButtonBaseProps;

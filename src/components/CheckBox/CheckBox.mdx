@@ -34,10 +34,10 @@ import {RenderSource} from '../../../documentation/_components/RenderSource/Rend
             </tr>
           </thead>
           <tbody>
-            <tr><td><code>checked</code></td><td><code>{`'mixed' | 'partial' | boolean`}</code></td><td><code>-</code></td><td>Boolean flag controlling `checked`.</td></tr>
+            <tr><td><code>children</code></td><td><code>{`React.ReactNode | string`}</code></td><td><code>-</code></td><td>Optional label content rendered next to the checkbox icon.</td></tr>
+            <tr><td><code>checked</code></td><td><code>{`'mixed' | boolean`}</code></td><td><code>-</code></td><td>Controls the checked state, including the mixed state.</td></tr>
             <tr><td><code>color</code></td><td><code>string</code></td><td><code>-</code></td><td>Color token/value for `color`.</td></tr>
             <tr><td><code>disabled</code></td><td><code>boolean</code></td><td><code>-</code></td><td>Boolean flag controlling `disabled`.</td></tr>
-            <tr><td><code>label</code></td><td><code>string</code></td><td><code>-</code></td><td>Text/value for `label`.</td></tr>
             <tr><td><code>size</code></td><td><code>number</code></td><td><code>-</code></td><td>Sizing/layout setting for `size`.</td></tr>
             <tr><td><code>...divAttributes</code></td><td><code>{`HTMLAttributes<HTMLDivElement>`}</code></td><td><code>-</code></td><td>Native `div` props pass through (for example `id`, `data-testid`, `className`, `style`, `aria-*`).</td></tr>
           </tbody>
@@ -64,23 +64,24 @@ import {RenderSource} from '../../../documentation/_components/RenderSource/Rend
         </Unstyled>
 
         <RenderSource language={"tsx"}>
-{`
+```
 import { CheckBox } from '@apple-pie/slice';
 
 export function CheckBoxExample() {
-  return (
-    <CheckBox
-      label="Enable notifications"
-      checked={true}
-      onChange={(state) => console.log(state)}
-      id="checkbox-example"
-      data-testid="checkbox-example"
-      className="custom-wrapper"
-      style={{ marginTop: 8, maxWidth: 480 }}
-    />
-  );
+    return (
+        <CheckBox
+            checked={true}
+            onChange={(state) => console.log(state)}
+            id="checkbox-example"
+            data-testid="checkbox-example"
+            className="custom-wrapper"
+            style={{ marginTop: 8, maxWidth: 480 }}
+        >
+            Enable notifications
+        </CheckBox>
+    );
 }
-`}
+```
         </RenderSource>
     </FlexDiv>
 </FlexDiv>

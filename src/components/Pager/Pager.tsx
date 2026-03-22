@@ -21,12 +21,15 @@ export const Pager = React.memo((props: PagerProps) => {
 	const divClass = className ? ` ${className}` : '';
 	const [selected, setSelected] = useState<number>(index);
 
+	// derive the page bullet ids from the total page count
 	const bullets = useMemo(() => {
 		return Array.from({ length: pages }, (_, i) => i);
 	}, [pages]);
 
+	// sync external page selection into local state
 	useEffect(() => setSelected(index), [index]);
 
+	// update local and external selection when a bullet is activated
 	const handleClick = useCallback(
 		(i: number) => {
 			setSelected(i);
@@ -35,7 +38,7 @@ export const Pager = React.memo((props: PagerProps) => {
 		[onChange],
 	);
 
-	// memo css vars
+	// compose CSS custom properties for pager spacing and colors
 	const cssVars = useMemo(() => {
 		return {
 			'--pager-gap': `${gap}px`,

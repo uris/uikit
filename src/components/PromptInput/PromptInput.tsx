@@ -51,21 +51,21 @@ const PromptInputBase = React.forwardRef<HTMLDivElement, PromptProps>(
 		const [textValue, setTextValue] = useState<string | undefined>(value);
 		const textAreaRef = useRef<HTMLTextAreaElement>(null);
 
-		// process focus callback
+		// focus the textarea and report the current prompt state
 		const handleFocus = useCallback(() => {
 			setIsFocused(true);
 			textAreaRef?.current?.focus();
 			onFocus?.(textAreaRef.current?.value, attachments);
 		}, [onFocus, attachments]);
 
-		// process blur callback
+		// blur the textarea and report the current prompt state
 		const handleBlur = useCallback(() => {
 			setIsFocused(false);
 			textAreaRef.current?.blur();
 			onBlur?.(textAreaRef.current?.value, attachments);
 		}, [onBlur, attachments]);
 
-		// handle attachments change
+		// forward attachment updates and keep the parent prompt state in sync
 		const handleAttachmentsChange = useCallback(
 			(newFiles: FileItem[]) => {
 				onAttachmentsChange?.(newFiles);
@@ -74,7 +74,7 @@ const PromptInputBase = React.forwardRef<HTMLDivElement, PromptProps>(
 			[onAttachmentsChange, onChange],
 		);
 
-		// callback to handle text change
+		// update local prompt text and notify the consumer
 		const handleChange = useCallback(
 			(e: React.ChangeEvent<HTMLTextAreaElement>) => {
 				const newValue = e.target.value;
@@ -84,7 +84,7 @@ const PromptInputBase = React.forwardRef<HTMLDivElement, PromptProps>(
 			[onChange, attachments],
 		);
 
-		// handle submit contents
+		// submit the current prompt when not already working or stopping
 		const handleSubmit = useCallback(() => {
 			if (isWorking || isStopEnabled) return;
 			const currentValue = textAreaRef.current?.value;
@@ -106,7 +106,7 @@ const PromptInputBase = React.forwardRef<HTMLDivElement, PromptProps>(
 			attachments,
 		]);
 
-		// handle stop working
+		// stop the current run and return focus to the textarea
 		const handleStop = useCallback(() => {
 			setIsWorking(false);
 			setIsStopEnabled(false);
@@ -114,7 +114,7 @@ const PromptInputBase = React.forwardRef<HTMLDivElement, PromptProps>(
 			handleFocus();
 		}, [onStop, handleFocus]);
 
-		// callback to handle keydown
+		// optionally submit on enter from the textarea
 		const handleKeyDown = useCallback(
 			(e: React.KeyboardEvent<HTMLTextAreaElement>) => {
 				if (e.key === 'Enter' && enterSubmits) {
@@ -126,9 +126,9 @@ const PromptInputBase = React.forwardRef<HTMLDivElement, PromptProps>(
 			[handleSubmit, isWorking, enterSubmits],
 		);
 
-		// callback to handle send button click
+		// route the send button to submit or stop based on the current state
 		const handleClickSend = useCallback(
-			(e: React.MouseEvent<HTMLDivElement>) => {
+			(e: React.MouseEvent<HTMLButtonElement>) => {
 				e.preventDefault();
 				e.stopPropagation();
 				if (isWorking && !isStopEnabled) return;
@@ -137,16 +137,16 @@ const PromptInputBase = React.forwardRef<HTMLDivElement, PromptProps>(
 			[handleSubmit, handleStop, isStopEnabled, isWorking],
 		);
 
-		// callback to handle submit click
+		// keep the attach button from stealing wrapper click behavior
 		const handleClickAttach = useCallback(
-			(e: React.MouseEvent<HTMLDivElement>) => {
+			(e: React.MouseEvent<HTMLButtonElement>) => {
 				e.preventDefault();
 				e.stopPropagation();
 			},
 			[],
 		);
 
-		// focus the text area when clicking on the button bar
+		// return focus to the textarea when the toolbar is clicked
 		const handleClickButtonBar = useCallback(
 			(e: React.MouseEvent<HTMLDivElement>) => {
 				e.preventDefault();
@@ -156,7 +156,7 @@ const PromptInputBase = React.forwardRef<HTMLDivElement, PromptProps>(
 			[handleFocus, isWorking],
 		);
 
-		// border color - gradient or solid color or none
+		// resolve the outer border treatment from style, focus, and working state
 		const setBorderColor = useMemo(() => {
 			if (borderStyle === 'gradient') {
 				const radial = isDark
@@ -182,52 +182,52 @@ const PromptInputBase = React.forwardRef<HTMLDivElement, PromptProps>(
 			isDark,
 		]);
 
-		// placeholder text
+		// resolve the placeholder text from the current working state
 		const setPlaceholder = useMemo(() => {
 			if (isWorking && placeholderWorking) return placeholderWorking;
 			return placeholder;
 		}, [isWorking, placeholder, placeholderWorking]);
 
-		// set send button icon color
+		// resolve the send button icon color from working and content state
 		const setSendIconColor = useMemo(() => {
 			if (isStopEnabled || isWorking) return 'var(--core-text-primary)';
 			if (textValue !== '') return 'var(--core-text-light)';
 			return 'var(--core-text-disabled)';
 		}, [textValue, isWorking, isStopEnabled]);
 
-		// set the state of the "send" button
+		// resolve the send button state from content and stop mode
 		const sendButtonState = useMemo(() => {
 			if (isStopEnabled) return 'normal';
 			return textValue === '' && !isWorking ? 'disabled' : 'normal';
 		}, [textValue, isStopEnabled, isWorking]);
 
-		// set attach icon color
+		// resolve the attach button state while work is in progress
 		const attachState = useMemo(() => {
 			if (!isWorking) return 'normal';
 			return 'disabled';
 		}, [isWorking]);
 
-		// update focused state
+		// sync focus requests from the controlled prop
 		useEffect(() => {
 			if (focused) textAreaRef.current?.focus();
 			else textAreaRef.current?.blur();
 		}, [focused]);
 
-		// update text value based on prop change
+		// sync the textarea value from the controlled prop
 		useEffect(() => {
 			const currentValue = textAreaRef.current?.value;
 			if (currentValue !== value) setTextValue(value);
 		}, [value]);
 
-		// update working state
+		// sync the local working state from the controlled prop
 		useEffect(() => {
 			if (working !== undefined) setIsWorking(working);
 		}, [working]);
 
-		// update stop enabled
+		// sync stop-mode availability from the controlled prop
 		useEffect(() => setIsStopEnabled(stopEnabled), [stopEnabled]);
 
-		// memo dynamic css vars
+		// compose CSS custom properties for border treatment and sizing
 		const cssVars = useMemo(() => {
 			return {
 				'--prompt-border-color': setBorderColor,

@@ -19,7 +19,7 @@ type GrouperBaseProps = {
 };
 
 export type GrouperProps = Omit<
-	React.HTMLAttributes<HTMLDivElement>,
+	React.ButtonHTMLAttributes<HTMLButtonElement>,
 	keyof GrouperBaseProps
 > &
 	GrouperBaseProps;

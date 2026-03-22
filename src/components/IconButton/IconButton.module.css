@@ -6,6 +6,10 @@
 	border: var(--ib-border) solid var(--core-outline-primary);
 	gap: 6px;
 	cursor: pointer;
+	appearance: none;
+	-webkit-appearance: none;
+	background-image: none;
+	outline: none;
 	&:hover {
 		background: var(--ib-bg-hover);
 	}

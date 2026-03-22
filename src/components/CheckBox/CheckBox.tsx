@@ -1,7 +1,7 @@
 import { motion } from 'motion/react';
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
-import { useTheme } from '../../hooks';
 import { useTrackRenders } from '../../hooks/useTrackRenders/useTrackRenders';
+import { accessibleKeyDown } from '../../utils/functions/misc';
 import { Icon } from '../Icon';
 import css from './CheckBox.module.css';
 import type { CheckBoxProps } from './_types';
@@ -20,36 +20,44 @@ export const CheckBox = React.memo((props: CheckBoxProps) => {
 	const divStyle = style ?? ({} as React.CSSProperties);
 	const divClass = className ? ` ${className}` : '';
 	const [state, setState] = useState<'mixed' | boolean>(checked);
-	const theme = useTheme();
 
+	// sync the local checkbox state from the controlled prop
 	useEffect(() => setState(checked), [checked]);
 
-	// memo icon name
+	// resolve which checkbox icon should be shown for the current state
 	const iconName = useMemo(() => {
 		if (state === true) return 'checkbox checked';
 		if (state === 'mixed') return 'checkbox partial';
 		return 'checkbox';
 	}, [state]);
 
-	// memo icon color
+	// resolve the checkbox icon color
 	const iconColor = useMemo(() => {
 		if (color) return color;
-		if (disabled) return theme.current.colors['core-icon-disabled'];
-		if (state === 'mixed') return theme.current.colors['core-icon-primary'];
-		if (!state) return theme.current.colors['core-icon-secondary'];
-		return theme.current.colors['core-text-special'];
-	}, [color, disabled, state, theme]);
+		if (disabled) return 'var(--core-icon-disabled)';
+		if (state === 'mixed') return 'var(--core-icon-primary)';
+		if (!state) return 'var(--core-icon-secondary';
+		return 'var(--core-text-special)';
+	}, [color, disabled, state]);
 
-	// memo style vars
+	// resolve label color
+	const labelColor = useMemo(() => {
+		if (color) return color;
+		if (disabled) return 'var(--core-text-disabled)';
+		return 'var(--core-text-primary)';
+	}, [color, disabled]);
+
+	// compose CSS custom properties for checkbox sizing and label color
 	const cssVars = useMemo(() => {
 		return {
 			'--cb-size': `${size}px`,
-			'--cb-label-color': `${color}`,
+			'--cb-label-color': labelColor,
 		} as React.CSSProperties;
-	}, [size, color]);
+	}, [size, labelColor]);
 
-	// handle toggle
+	// toggle the checkbox and report the updated value
 	const handleToggle = useCallback(() => {
+		if (disabled) return;
 		let newState = false;
 		switch (state) {
 			case true:
@@ -61,18 +69,7 @@ export const CheckBox = React.memo((props: CheckBoxProps) => {
 		}
 		setState(newState);
 		onChange(newState);
-	}, [state, onChange]);
-
-	// keyboard handler for accessibility
-	const handleKeyDown = useCallback(
-		(e: React.KeyboardEvent) => {
-			if (e.key === ' ' || e.key === 'Enter') {
-				e.preventDefault();
-				handleToggle();
-			}
-		},
-		[handleToggle],
-	);
+	}, [state, disabled, onChange]);
 
 	/* START.DEBUG */
 	useTrackRenders(props, 'Checkbox');
@@ -84,7 +81,7 @@ export const CheckBox = React.memo((props: CheckBoxProps) => {
 			className={`${css.wrapper}${divClass}`}
 			style={{ ...divStyle, ...cssVars }}
 			onClick={handleToggle}
-			onKeyDown={handleKeyDown}
+			onKeyDown={(e) => accessibleKeyDown(e, handleToggle)}
 			tabIndex={disabled ? -1 : 0}
 			role={'checkbox'}
 			aria-checked={state}

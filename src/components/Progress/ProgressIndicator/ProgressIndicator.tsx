@@ -26,6 +26,7 @@ export function ProgressIndicator(props: Readonly<ProgressIndicatorProps>) {
 	const [playing, setPlaying] = useState<boolean>(show);
 	const timer = useRef<any>(null);
 
+	// start and stop the spinner from the controlled show and duration props
 	useEffect(() => {
 		if (show) {
 			setPlaying(true);
@@ -45,6 +46,7 @@ export function ProgressIndicator(props: Readonly<ProgressIndicatorProps>) {
 		};
 	}, [show, didStart, didStop, duration]);
 
+	// compose CSS custom properties for spinner positioning and sizing
 	const cssVars = useMemo(() => {
 		return {
 			'--pi-position': inline ? 'relative' : 'absolute',
@@ -53,6 +55,7 @@ export function ProgressIndicator(props: Readonly<ProgressIndicatorProps>) {
 		} as React.CSSProperties;
 	}, [inline, size]);
 
+	// derive the spinner SVG from the active visual configuration
 	const openCircle = useMemo(() => {
 		return OpenCircle(size, secondsPerSpin, color, stroke, playing);
 	}, [size, secondsPerSpin, color, stroke, playing]);
@@ -87,6 +90,7 @@ export const OpenCircle = (
 	stroke = 1.5,
 	playing = false,
 ) => {
+	// render the animated open-circle spinner path
 	return (
 		<motion.svg
 			xmlns="http://www.w3.org/2000/svg"

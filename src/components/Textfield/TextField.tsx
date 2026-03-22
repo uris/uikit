@@ -36,7 +36,7 @@ export const TextField = React.memo(
 			onValidate = () => null,
 			actionButton = false,
 			maxLength = undefined,
-			size = { width: '100%', height: 'auto' },
+			size = { width: 'auto', height: 'auto' },
 			padding = '8px 16px',
 			borderRadius = 8,
 			editable = true,
@@ -80,7 +80,7 @@ export const TextField = React.memo(
 		const [valid, setValid] = useState<boolean>(isValid);
 		const [show, setShow] = useState<boolean>(false);
 
-		// update focused and blurred state on prop updates
+		// sync the input focus state from the controlled prop
 		useEffect(() => {
 			if (!input.current) return;
 			if (focused) {
@@ -91,17 +91,17 @@ export const TextField = React.memo(
 			setIsFocused(focused);
 		}, [focused]);
 
-		// update text value on prop change
+		// sync the input value from the controlled prop
 		useEffect(() => {
 			setText(value);
 		}, [value]);
 
-		// update valid on prop change
+		// sync the validation state from the controlled prop
 		useEffect(() => {
 			setValid(isValid);
 		}, [isValid]);
 
-		// callback to check if the text is valid
+		// validate the current text and notify consumers when the result changes
 		const textIsValid = useCallback(
 			(entry: string) => {
 				if (!validate) return;
@@ -112,7 +112,7 @@ export const TextField = React.memo(
 			[onValidate, valid, validate],
 		);
 
-		// memo clear text field contents
+		// clear the field value and optionally preserve focus
 		const handleClearTextField = useCallback(() => {
 			if (input?.current) {
 				if (!clearBlurs) input.current.focus();
@@ -123,7 +123,7 @@ export const TextField = React.memo(
 			onClear();
 		}, [clearBlurs, onChange, onClear, textIsValid]);
 
-		// memo handling value updates based on input
+		// update local and external state when the input value changes
 		const handleValueChange = useCallback(
 			(newValue: string) => {
 				if (disabled) return;
@@ -134,7 +134,7 @@ export const TextField = React.memo(
 			[onChange, textIsValid, text, valid, disabled],
 		);
 
-		// memo blur handler
+		// validate and report the final value when the input loses focus
 		const handleBlur = useCallback(() => {
 			if (disabled) return;
 			textIsValid(text);
@@ -142,7 +142,7 @@ export const TextField = React.memo(
 			onBlur(text);
 		}, [text, onBlur, textIsValid, disabled]);
 
-		// memo key stroke handling
+		// handle enter-key submission and forward keyboard events
 		const handleKeyDown = useCallback(
 			(e: React.KeyboardEvent) => {
 				if (disabled) return;
@@ -160,26 +160,26 @@ export const TextField = React.memo(
 			[text, disabled, onSubmit, onKeydown, handleBlur],
 		);
 
-		// memo handle focus
+		// update focus state and report the current value on focus
 		const handleFocus = useCallback(() => {
 			if (disabled) return;
 			setIsFocused(true);
 			onFocus(text);
 		}, [text, onFocus, disabled]);
 
-		// memo toggle show (for passwords)
+		// toggle password visibility when the show button is used
 		const toggleShow = useCallback(() => {
 			setShow((prev) => !prev);
 		}, []);
 
-		// memo icon style
+		// derive the left icon container dimensions from the icon config
 		const iconContainerStyle = useMemo(
 			() =>
 				iconLeft ? { width: iconLeft.size, height: iconLeft.size } : undefined,
 			[iconLeft],
 		);
 
-		// memo icon color
+		// resolve the left icon stroke color from the theme and icon config
 		const iconStrokeColor = useMemo(
 			() =>
 				iconLeft?.color
@@ -188,7 +188,7 @@ export const TextField = React.memo(
 			[iconLeft, theme],
 		);
 
-		// memo show clear button
+		// derive the clear-button dimensions from the button config
 		const clearButtonStyle = useMemo(
 			() =>
 				clearButton
@@ -197,21 +197,21 @@ export const TextField = React.memo(
 			[clearButton],
 		);
 
-		// process style values that are string, number or undefined
+		// normalize size and spacing values before applying them as CSS
 		const setStyleValue = useCallback((value: string | number | undefined) => {
 			if (value === undefined) return 'unset';
 			if (typeof value === 'string') return value;
 			return `${value}px`;
 		}, []);
 
-		// memo background color
+		// resolve the background color from inline and focus states
 		const setBackgroundColor = useMemo(() => {
 			if (inline) return 'unset';
 			if (isFocused) return backgroundColor.focused ?? 'transparent';
 			return backgroundColor.blurred ?? 'transparent';
 		}, [inline, isFocused, backgroundColor]);
 
-		// memo border color
+		// resolve the border color from focus and validation state
 		const setBorderColor = useMemo(() => {
 			if (borderType === 'none') return 'transparent';
 			if (validate && !valid)
@@ -221,35 +221,37 @@ export const TextField = React.memo(
 			return borderColor.blurred ?? 'transparent';
 		}, [borderType, valid, isFocused, borderColor, validate]);
 
-		// memo box shadow (border style)
+		// resolve the border rendering style for box and underline modes
 		const setBoxShadow = useMemo(() => {
 			if (borderType === 'none') return 'unset';
 			if (borderType === 'underline') return `0 1px 0 0 ${setBorderColor}`;
 			return `0 0 0 1px ${setBorderColor}`;
 		}, [borderType, setBorderColor]);
 
-		// memo text color
+		// resolve the input text color from validation and focus state
 		const textColor = useMemo(() => {
 			if (validate && !valid) return color.error ?? 'var(--core-text-primary)';
 			if (isFocused) return color.focused ?? 'var(--core-text-primary)';
 			return color.blurred ?? 'var(--core-text-primary)';
 		}, [isFocused, valid, color, validate]);
 
-		// memo text align
+		// resolve the text alignment fallback
 		const setTextAlign = useMemo(() => {
 			return textAlign ?? 'left';
 		}, [textAlign]);
 
-		// memo opacity password show / hide
+		// resolve the show-password control opacity from focus state
 		const setShowOpacity = useMemo(() => {
 			if (inputType !== 'password') return '0';
 			if (isFocused) return '1';
 			return '0.5';
 		}, [inputType, isFocused]);
 
-		// memo css vars
+		// compose CSS custom properties for layout, color, and interaction states
 		const cssVars = useMemo(() => {
 			return {
+				'--tf-input-width': size.width !== 'unset' && '100%',
+				'--tf-field-size': size.width === 'auto' ? 'content' : 'unset',
 				'--tf-width': setStyleValue(size.width),
 				'--tf-height': setStyleValue(size.height),
 				'--tf-padding': setStyleValue(padding),
@@ -327,7 +329,9 @@ export const TextField = React.memo(
 					/>
 					<AnimatePresence initial={false}>
 						{isFocused && clearButton && text !== '' && (
-							<motion.div
+							<motion.button
+								type="button"
+								aria-label="Clear text"
 								className={css.clearButton}
 								style={clearButtonStyle}
 								variants={MOTION_CONFIG.variants}
@@ -342,7 +346,7 @@ export const TextField = React.memo(
 									size={clearButton.size}
 									strokeColor={theme.current.colors['core-icon-secondary']}
 								/>
-							</motion.div>
+							</motion.button>
 						)}
 					</AnimatePresence>
 					<AnimatePresence initial={false}>

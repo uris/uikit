@@ -65,24 +65,24 @@ import {RenderSource} from '../../../documentation/_components/RenderSource/Rend
         </Unstyled>
 
         <RenderSource language={"tsx"}>
-{`
+```
 import { Overlay } from '@apple-pie/slice';
 
 export function OverlayExample() {
-  return (
-    <Overlay
-      overlay={true}
-      opacity={0.4}
-      type="dark"
-      onClick={() => console.log('overlay click')}
-      id="overlay-example"
-      data-testid="overlay-example"
-      className="custom-wrapper"
-      style={{ marginTop: 8, maxWidth: 480 }}
-    />
-  );
+    return (
+        <Overlay
+            overlay={true}
+            opacity={0.4}
+            type="dark"
+            onClick={() => console.log('overlay click')}
+            id="overlay-example"
+            data-testid="overlay-example"
+            className="custom-wrapper"
+            style={{ marginTop: 8, maxWidth: 480 }}
+        />
+    );
 }
-`}
+```
         </RenderSource>
     </FlexDiv>
 </FlexDiv>

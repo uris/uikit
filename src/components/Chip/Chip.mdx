@@ -72,24 +72,24 @@ import {RenderSource} from '../../../documentation/_components/RenderSource/Rend
         </Unstyled>
 
         <RenderSource language={"tsx"}>
-{`
+```
 import { Chip } from '@apple-pie/slice';
 
 export function ChipExample() {
-  return (
-    <Chip
-      label="In Review"
-      icon="clock"
-      variant="regular"
-      onClick={() => console.log('clicked')}
-      id="chip-example"
-      data-testid="chip-example"
-      className="custom-wrapper"
-      style={{ marginTop: 8, maxWidth: 480 }}
-    />
-  );
+    return (
+        <Chip
+            label="In Review"
+            icon="clock"
+            variant="regular"
+            onClick={() => console.log('clicked')}
+            id="chip-example"
+            data-testid="chip-example"
+            className="custom-wrapper"
+            style={{ marginTop: 8, maxWidth: 480 }}
+        />
+    );
 }
-`}
+```
         </RenderSource>
     </FlexDiv>
 </FlexDiv>

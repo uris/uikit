@@ -1,4 +1,4 @@
-import React, { useCallback, useMemo, useRef, useState } from 'react';
+import React, { useCallback, useId, useMemo, useRef, useState } from 'react';
 import { accessibleKeyDown, setStyle } from '../../utils/functions/misc';
 import { FileList } from '../FileList';
 import { Icon } from '../Icon';
@@ -38,20 +38,20 @@ const UploadAreaBase = React.forwardRef<HTMLDivElement, UploadAreaProps>(
 		const [hovered, setHovered] = useState<boolean>(false);
 		const inputRef = useRef<HTMLInputElement>(null);
 		const dragDepth = useRef(0);
+		const inputId = useId();
+		const titleId = useId();
+		const messageId = useId();
+		const isInteractive = !busy && files.length < 1;
 
-		// set uploading files
-
-		// *** select files
-
-		// callback to trigger click
+		// open the native file picker when the area is idle
 		const handleClickUpload = useCallback(() => {
-			if (busy || files.length > 0) return;
+			if (!isInteractive) return;
 			if (!inputRef?.current) return;
 			inputRef.current.value = '';
 			inputRef.current?.click();
-		}, [busy, files.length]);
+		}, [isInteractive]);
 
-		// call back on file change
+		// forward file selections from the hidden file input
 		const handleFileInputChange = useCallback(
 			(e: React.ChangeEvent<HTMLInputElement>) => {
 				if (busy) return;
@@ -61,14 +61,12 @@ const UploadAreaBase = React.forwardRef<HTMLDivElement, UploadAreaProps>(
 			[busy, onUpload],
 		);
 
-		// *** drag/drop
-
-		// check for files to light up hover
+		// detect whether the drag event currently contains files
 		const hasFilesInDrag = useCallback((e: React.DragEvent<HTMLDivElement>) => {
 			return Array.from(e.dataTransfer?.types ?? []).includes('Files');
 		}, []);
 
-		// use counters for responsive feedback
+		// track nested drag enter events so hover state stays stable
 		const handleDragEnter = useCallback(
 			(e: React.DragEvent<HTMLDivElement>) => {
 				e.preventDefault();
@@ -79,12 +77,12 @@ const UploadAreaBase = React.forwardRef<HTMLDivElement, UploadAreaProps>(
 			[busy, hasFilesInDrag],
 		);
 
-		// prevent default since "drop" happens when "over"
+		// prevent the browser from opening files on drag over
 		const handleDragOver = (e: React.DragEvent<HTMLDivElement>) => {
 			e.preventDefault();
 		};
 
-		// at 0 hover is over
+		// clear hover state once the drag stack fully leaves the area
 		const handleDragLeave = useCallback(
 			(e: React.DragEvent<HTMLDivElement>) => {
 				e.preventDefault();
@@ -95,7 +93,7 @@ const UploadAreaBase = React.forwardRef<HTMLDivElement, UploadAreaProps>(
 			[busy],
 		);
 
-		// handle drop
+		// accept dropped files and reset drag state
 		const handleDrop = useCallback(
 			(e: React.DragEvent<HTMLDivElement>) => {
 				e.preventDefault();
@@ -108,12 +106,13 @@ const UploadAreaBase = React.forwardRef<HTMLDivElement, UploadAreaProps>(
 			[busy, onUpload],
 		);
 
-		// icon color
+		// resolve the icon color from hover state
 		const iconStrokeColor = useMemo(() => {
 			if (hovered) return iconColorHover;
 			return iconColor;
 		}, [hovered, iconColor, iconColorHover]);
 
+		// compose CSS custom properties for layout, color, and interaction state
 		const cssVars = useMemo(() => {
 			return {
 				'--ua-border': `${border}px`,
@@ -149,11 +148,17 @@ const UploadAreaBase = React.forwardRef<HTMLDivElement, UploadAreaProps>(
 				className={css.wrapper}
 				style={cssVars}
 				ref={ref}
-				role={'button'}
-				aria-label={'Click to upload files'}
-				tabIndex={0}
-				onClick={handleClickUpload}
-				onKeyDown={(e) => accessibleKeyDown(e, () => handleClickUpload())}
+				role={isInteractive ? 'button' : undefined}
+				aria-label={isInteractive ? 'Click to upload files' : undefined}
+				aria-describedby={`${titleId} ${messageId}`}
+				aria-disabled={!isInteractive}
+				tabIndex={isInteractive ? 0 : -1}
+				onClick={isInteractive ? handleClickUpload : undefined}
+				onKeyDown={
+					isInteractive
+						? (e) => accessibleKeyDown(e, () => handleClickUpload())
+						: undefined
+				}
 				onDragEnter={handleDragEnter}
 				onDragOver={handleDragOver}
 				onDragLeave={handleDragLeave}
@@ -167,8 +172,10 @@ const UploadAreaBase = React.forwardRef<HTMLDivElement, UploadAreaProps>(
 						pointer={false}
 					/>
 				</div>
-				<div className={css.title}>{title}</div>
-				<div className={`${css.message} ${css[textSize]}`}>
+				<div id={titleId} className={css.title}>
+					{title}
+				</div>
+				<div id={messageId} className={`${css.message} ${css[textSize]}`}>
 					{busy && showProgress && (
 						<ProgressIndicator show size={20} inline color={iconStrokeColor} />
 					)}
@@ -189,6 +196,7 @@ const UploadAreaBase = React.forwardRef<HTMLDivElement, UploadAreaProps>(
 					</div>
 				)}
 				<input
+					id={inputId}
 					ref={inputRef}
 					type="file"
 					hidden={true}

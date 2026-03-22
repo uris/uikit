@@ -50,14 +50,14 @@ export const TextArea = React.memo((props: TextAreaProps) => {
 	const [initiated, setInitiated] = useState<boolean>(false);
 	const ref = useRef<HTMLTextAreaElement>(null);
 
-	// update text area height
+	// resize the textarea to fit its current content
 	const handleResize = useCallback(() => {
 		if (!ref?.current) return;
 		ref.current.style.height = 'auto';
 		ref.current.style.height = `${ref.current.scrollHeight}px`;
 	}, []);
 
-	// validate content
+	// validate the current content and report the result upstream
 	const runValidation = useCallback(
 		(content: string): boolean => {
 			let valid = true;
@@ -69,7 +69,7 @@ export const TextArea = React.memo((props: TextAreaProps) => {
 		[initiated, onValidate, validate],
 	);
 
-	// focus / blur field on prop change
+	// sync focus state from the controlled prop
 	useEffect(() => {
 		if (ref?.current) {
 			if (focused) ref.current.focus();
@@ -78,7 +78,7 @@ export const TextArea = React.memo((props: TextAreaProps) => {
 		}
 	}, [focused]);
 
-	// update value on prop change
+	// sync the textarea value from the controlled prop
 	useEffect(() => {
 		if (value) {
 			setText(value);
@@ -86,13 +86,13 @@ export const TextArea = React.memo((props: TextAreaProps) => {
 		}
 	}, [value, runValidation]);
 
-	// update height based on rows value
+	// re-measure the textarea when the configured row count changes
 	// biome-ignore lint/correctness/useExhaustiveDependencies: update heigt on rows change
 	useEffect(() => {
 		handleResize();
 	}, [rows]);
 
-	// update value
+	// update local state and validation when the text changes
 	const handleChange = useCallback(
 		(content: string) => {
 			onChange(content);
@@ -102,7 +102,7 @@ export const TextArea = React.memo((props: TextAreaProps) => {
 		[onChange, runValidation],
 	);
 
-	// set focus
+	// mark the field as active and notify focus listeners
 	const handleFocus = useCallback(() => {
 		if (ref?.current) ref.current.focus();
 		setInitiated(true);
@@ -110,7 +110,7 @@ export const TextArea = React.memo((props: TextAreaProps) => {
 		onFocus();
 	}, [onFocus]);
 
-	// set blur
+	// commit the latest value and notify blur listeners
 	const handleBlur = useCallback(
 		(content: any) => {
 			handleChange(content);
@@ -120,7 +120,7 @@ export const TextArea = React.memo((props: TextAreaProps) => {
 		[handleChange, onBlur],
 	);
 
-	// trigger submit as needed
+	// submit the current value and optionally clear the field
 	const handleSubmit = useCallback(
 		(e: React.MouseEvent<HTMLDivElement, MouseEvent> | undefined) => {
 			e?.preventDefault();
@@ -133,7 +133,7 @@ export const TextArea = React.memo((props: TextAreaProps) => {
 		[handleFocus, onSubmit, text, submitClears, handleResize],
 	);
 
-	// handle return key
+	// optionally treat the return key as submit
 	const handleKeyDownWrapper = useCallback(
 		(e: React.KeyboardEvent<HTMLTextAreaElement>) => {
 			if (returnSubmits && e.key === 'Enter') {
@@ -146,27 +146,27 @@ export const TextArea = React.memo((props: TextAreaProps) => {
 		[returnSubmits, handleSubmit, onKeyDown],
 	);
 
-	// set style value
+	// normalize dimension values before applying them as CSS
 	const setStyleValue = useCallback((value: string | number) => {
 		if (typeof value === 'string') return value;
 		return `${value}px`;
 	}, []);
 
-	// memo border color
+	// resolve the current border color from focus and validation state
 	const setBorderColor = useMemo(() => {
 		if (isFocused) return 'var(--core-link-primary)';
 		if (validate && invalid) return 'var(--feedback-warning)';
 		return border ? 'var(--core-outline-primary)' : 'transparent';
 	}, [isFocused, invalid, validate, border]);
 
-	// memo text size
+	// resolve the text size class for the textarea content
 	const textClassName = useMemo(() => {
 		if (textSize === 'l') return css.l;
 		if (textSize === 'm') return css.m;
 		return css.s;
 	}, [textSize]);
 
-	// memo css vars
+	// compose CSS custom properties for layout, colors, and send button placement
 	const cssVars = useMemo(() => {
 		return {
 			'--ta-border-radius': `${borderRadius}px`,

@@ -13,6 +13,10 @@
 
 .button {
 	composes: body-m-regular from "../../utils/styling/type.module.css";
+	appearance: none;
+	-webkit-appearance: none;
+	background-image: none;
+	outline: none;
 }
 
 .s {

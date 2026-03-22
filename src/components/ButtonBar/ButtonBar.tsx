@@ -6,6 +6,8 @@ import css from './ButtonBar.module.css';
 import type { BarButton, ButtonBarProps } from './_types';
 
 export function ButtonBar(props: Readonly<ButtonBarProps>) {
+	const theme = useTheme();
+
 	const {
 		options = [],
 		current = 0,
@@ -17,20 +19,23 @@ export function ButtonBar(props: Readonly<ButtonBarProps>) {
 	const { id: divId, className, style, ...rest } = divAttributes;
 	const divStyle = style ?? ({} as React.CSSProperties);
 	const divClass = className ? ` ${className}` : '';
-	const theme = useTheme();
 	const [hovered, setHovered] = useState<number>(-1);
 	const [currentPage, setCurrentPage] = useState<number>(current);
 
+	// sync the selected button index from the controlled prop
 	useEffect(() => setCurrentPage(current), [current]);
 
+	// track which button is currently hovered
 	const handleMouseEnter = useCallback((index: number) => {
 		setHovered(index);
 	}, []);
 
+	// clear the hovered button state
 	const handleMouseLeave = useCallback(() => {
 		setHovered(-1);
 	}, []);
 
+	// update the selected button and notify the consumer
 	const handleClick = useCallback(
 		(button: BarButton, index: number) => {
 			setCurrentPage(index);
@@ -39,7 +44,7 @@ export function ButtonBar(props: Readonly<ButtonBarProps>) {
 		[onChange],
 	);
 
-	// memo display
+	// determine whether the divider should be hidden for the last item
 	const display = useCallback(
 		(index: number) => {
 			return index === options.length - 1 ? css.last : '';
@@ -47,7 +52,7 @@ export function ButtonBar(props: Readonly<ButtonBarProps>) {
 		[options.length],
 	);
 
-	// memo selected
+	// determine whether a button is currently selected
 	const selected = useCallback(
 		(index: number) => {
 			return currentPage === index ? css.selected : '';
@@ -55,7 +60,7 @@ export function ButtonBar(props: Readonly<ButtonBarProps>) {
 		[currentPage],
 	);
 
-	// memo icon stroke color
+	// resolve icon colors from selected and hovered states
 	const iconColor = useCallback(
 		(index: number) => {
 			const isSelected = currentPage === index;
@@ -82,26 +87,21 @@ export function ButtonBar(props: Readonly<ButtonBarProps>) {
 			{options?.map((button: BarButton, index: number) => {
 				return (
 					<div
-						className={css.button}
+						className={`${css.button} ${selected(index)}`}
 						key={`button-bar-${button.icon}-${index}`}
 						onMouseEnter={() => handleMouseEnter(index)}
 						onMouseLeave={() => handleMouseLeave()}
 					>
-						<div
-							className={selected(index)}
+						<IconButton
+							icon={button.icon}
+							color={iconColor(index)}
+							label={button.label}
+							tooltip={button.tip}
+							onToolTip={onToolTip}
 							onClick={() => handleClick(button, index)}
-							onKeyDown={() => handleClick(button, index)}
-						>
-							<IconButton
-								icon={button.icon}
-								color={iconColor(index)}
-								label={button.label}
-								tooltip={button.tip}
-								onToolTip={onToolTip}
-								hover
-								toggle={false}
-							/>
-						</div>
+							hover
+							toggle={false}
+						/>
 						<div className={`${css.divider} ${display(index)}`} />
 					</div>
 				);

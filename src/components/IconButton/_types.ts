@@ -28,12 +28,12 @@ type IconButtonBaseProps = {
 	animate?: string;
 	exit?: string;
 	borderRadius?: number;
-	onClick?: (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => void;
+	onClick?: (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void;
 	onToolTip?: (tip: ToolTip | null) => void;
 };
 
 export type IconButtonProps = Omit<
-	React.HTMLAttributes<HTMLDivElement>,
+	React.ButtonHTMLAttributes<HTMLButtonElement>,
 	keyof IconButtonBaseProps
 > &
 	IconButtonBaseProps;

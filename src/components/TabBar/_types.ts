@@ -57,5 +57,10 @@ export interface TabOptionProps {
 	tabWidth?: 'min-content' | 'distribute' | number;
 	underline?: boolean;
 	onClick?: (value: number) => void;
+	onKeyDown?: (
+		event: React.KeyboardEvent<HTMLButtonElement>,
+		value: number,
+	) => void;
 	onToolTip?: (tip: ToolTip | null) => void;
+	buttonRef?: (element: HTMLButtonElement | null) => void;
 }

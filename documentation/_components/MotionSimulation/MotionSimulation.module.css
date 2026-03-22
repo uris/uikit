@@ -7,7 +7,7 @@
 	position: relative;
 	border-radius: 100px;
 	overflow: visible;
-	background: var(--core-surface-primary);
+	background: var(--core-surface-secondary);
 	border: 1px solid var(--core-outline-primary);
 	cursor: pointer;
 }

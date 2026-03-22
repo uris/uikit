@@ -145,22 +145,26 @@ function ViewportBadge() {
   );
 }
 `}
-        </RenderSource>
+</RenderSource>
 
         ## Imperative usage outside React
         <RenderSource language={'tsx'}>
 {`
-import { viewportWidth, viewportHeight, formFactor } from '@apple-pie/slice/stores/window';
+import {
+	viewportWidth,
+	viewportHeight,
+	formFactor,
+} from '@apple-pie/slice/stores/window';
 
 export function getWindowSnapshot() {
-  return {
-    formFactor: formFactor(),
-    width: viewportWidth(),
-    height: viewportHeight(),
-  };
+	return {
+		formFactor: formFactor(),
+		width: viewportWidth(),
+		height: viewportHeight(),
+	};
 }
 `}
-        </RenderSource>
+</RenderSource>
         </Unstyled>
     </FlexDiv>
 </FlexDiv>

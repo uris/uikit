@@ -68,27 +68,27 @@ import {RenderSource} from '../../documentation/_components/RenderSource/RenderS
 import { ThemeProvider } from '@apple-pie/slice';
 
 export function App() {
-  return (
-    <ThemeProvider theme="lightMode">
-      <YourApp />
-    </ThemeProvider>
-  );
+	return (
+		<ThemeProvider theme="lightMode">
+			<YourApp />
+		</ThemeProvider>
+	);
 }
 `}
-        </RenderSource>
+</RenderSource>
 
         <RenderSource language={"tsx"}>
 {`
 import { ThemeProvider } from '@apple-pie/slice';
 
 export function App() {
-  return (
-    <ThemeProvider system={true}>
-      <YourApp />
-    </ThemeProvider>
-  );
+	return (
+		<ThemeProvider system={true}>
+			<YourApp />
+		</ThemeProvider>
+	);
 }
 `}
-        </RenderSource>
+</RenderSource>
     </FlexDiv>
 </FlexDiv>

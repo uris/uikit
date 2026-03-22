@@ -4,12 +4,14 @@ import { useTrackRenders } from '../../hooks/useTrackRenders/useTrackRenders';
 import type { DocsProps } from './_types';
 
 export const DocIcons = React.memo((props: DocsProps) => {
+	const theme = useTheme();
+
 	const { type = 'pdf', height = 36, ...divAttributes } = props;
 	const { id: divId, className, style, ...rest } = divAttributes;
 	const divStyle = style ?? ({} as React.CSSProperties);
 	const divClass = className ? ` ${className}` : '';
-	const theme = useTheme();
 
+	// resolve the matching SVG document icon from the requested type
 	const renderIcon = useMemo(() => {
 		const images = [
 			{

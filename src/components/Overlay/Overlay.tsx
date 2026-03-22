@@ -6,22 +6,23 @@ import type { OverlayProps } from './_types';
 
 export const Overlay = React.memo((props: OverlayProps) => {
 	const {
-		onClick = () => null,
-		toggleOverlay = () => null,
-		opacity = 0,
-		color = 'rgb(0,0,0)',
 		type = 'clear',
 		global = false,
 		overlay,
+		color = 'rgb(0,0,0)',
+		opacity = 0,
+		onClick = () => null,
+		toggleOverlay = () => null,
 		...divAttributes
 	} = props;
 	const { id: divId, className, style, ...rest } = divAttributes;
 	const divStyle = style ?? ({} as React.CSSProperties);
 	const divClass = className ? ` ${className}` : '';
 
+	// derive whether the overlay should render at all
 	const show = !global || (global && overlay);
 
-	// Memoize computed opacity value
+	// resolve the visual opacity from the configured overlay type
 	const computedOpacity = useMemo(() => {
 		if (type === 'clear') return 0;
 		if (opacity !== undefined) return opacity;
@@ -29,15 +30,18 @@ export const Overlay = React.memo((props: OverlayProps) => {
 		return 0;
 	}, [type, opacity]);
 
+	// handle overlay clicks and close the global overlay when needed
 	const handleClick = useCallback(() => {
 		if (global) toggleOverlay(false);
 		onClick();
 	}, [global, toggleOverlay, onClick]);
 
+	// block the native context menu over the overlay surface
 	const handleContextMenu = useCallback((e: React.MouseEvent) => {
 		e.preventDefault();
 	}, []);
 
+	// compose CSS custom properties for the overlay color
 	const cssVars = useMemo(() => {
 		return {
 			'--overlay-color': color ?? 'rgb(0,0,0)',

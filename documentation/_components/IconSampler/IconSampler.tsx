@@ -1,42 +1,29 @@
 // biome-ignore lint/style/useImportType: <explanation>
-import React, { useEffect, useMemo, useRef, useState } from 'react';
-import { Icon, Label, Slider, useObserveResize } from '../../../src';
+import React, { useCallback, useMemo, useState } from 'react';
+import { Icon, SliceIcons, Slider, TextField } from '../../../src';
 import css from './IconSampler.module.css';
 interface IconSamplerProps {
-	icons: string[];
 	size?: number;
 }
 
 export function IconSampler(props: Readonly<IconSamplerProps>) {
-	const { icons = [], size = 100 } = props;
+	const { size = 100 } = props;
 	const [iconSize, setIconSize] = useState<number>(size);
-	const [spacers, setSpacers] = useState<string[]>([]);
-	const ref = useRef<HTMLDivElement>(null);
-	const wrapperSize = useObserveResize(ref, { ignore: 'height' });
+	const [sizeKey, setSizeKey] = useState<string>(crypto.randomUUID());
 
-	useEffect(() => {
-		if (!ref.current || !iconSize || !wrapperSize) return;
-		const items = ref.current.querySelectorAll('.slice_icon');
-		if (items?.length <= 0) return;
-		const topRowOffset = (items[0] as HTMLDivElement).offsetTop;
-		let rowItemCount = 0;
-		for (const item of items) {
-			if ((item as HTMLDivElement).offsetTop === topRowOffset) rowItemCount++;
-		}
-		const itemsPerRow = Math.ceil(icons.length / rowItemCount);
-		const spacerCount = rowItemCount * itemsPerRow - icons.length;
-		const spacerArray = [];
-		for (let i = 0; i < spacerCount; i++) {
-			spacerArray.push(`spacer_${i}`);
-		}
-		setSpacers(spacerArray);
-	}, [iconSize, icons, wrapperSize]);
+	const handleIconSizeChange = useCallback((size: number | string) => {
+		const newValue = Math.round(size === '' ? 64 : Number(size));
+		if (size === '') setSizeKey(crypto.randomUUID());
+		setIconSize(newValue);
+	}, []);
 
 	const cssVars = useMemo(() => {
 		return {
 			'--icon-size': `${iconSize + 16 * 2}px`,
 		} as React.CSSProperties;
 	}, [iconSize]);
+
+	const categories = Object.keys(SliceIcons) ?? [];
 
 	return (
 		<>
@@ -47,28 +34,53 @@ export function IconSampler(props: Readonly<IconSamplerProps>) {
 					value={iconSize}
 					onChange={(value, _) => setIconSize(value)}
 					width={'100%'}
-					trackHeadSize={0}
+					trackHeadSize={16}
 				/>
-				<Label>{iconSize.toFixed(0)}px</Label>
+				<TextField
+					value={iconSize.toFixed(0)}
+					onBlur={(v) => handleIconSizeChange(v)}
+					placeholder={'64'}
+					clearButton={null}
+					key={sizeKey}
+					size={{ width: 75 }}
+					textAlign={'center'}
+				/>
 			</div>
-			<div className={css.container} style={cssVars} ref={ref}>
-				{icons.sort().map((icon, index) => {
+			{categories
+				.toSorted((a, b) => a.localeCompare(b))
+				.map((category) => {
+					const categoryName = category as keyof typeof SliceIcons;
+					const categoryIcons = Object.keys(SliceIcons[categoryName]);
 					return (
 						<div
-							className={`${css.wrapper} slice_icon`}
-							key={`slice_icon_${icon}`}
+							className={css.category}
+							style={cssVars}
+							key={`category_${category}`}
 						>
-							<div className={css.icon}>
-								<Icon name={icon} size={iconSize} />
+							<h3 className={css.categoryTitle}>{category}</h3>
+							<div className={css.container}>
+								{categoryIcons
+									//.toSorted((a, b) => a.localeCompare(b))
+									.map((iconKey) => {
+										const key =
+											iconKey as keyof (typeof SliceIcons)[typeof categoryName];
+										const icon = SliceIcons[categoryName][key];
+										return (
+											<div
+												className={`${css.wrapper} slice_icon`}
+												key={`slice_icon_${icon}`}
+											>
+												<div className={css.icon}>
+													<Icon name={icon} size={iconSize} />
+												</div>
+												<div className={css.label}>{icon}</div>
+											</div>
+										);
+									})}
 							</div>
-							<div className={css.label}>{icon}</div>
 						</div>
 					);
 				})}
-				{spacers.map((spacer) => {
-					return <div className={css.spacer} key={spacer} />;
-				})}
-			</div>
 		</>
 	);
 }

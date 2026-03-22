@@ -68,8 +68,9 @@ const ButtonComponent = forwardRef<ButtonHandle, ButtonProps>(
 			undefined,
 		);
 		const [playing, setPlaying] = useState<boolean>(working);
-		const ref = useRef<HTMLDivElement | null>(null);
+		const ref = useRef<HTMLButtonElement | null>(null);
 
+		// handle clicks, trigger tooltip cleanup, and start progress mode when needed
 		const handleClick = useCallback(
 			(e: React.MouseEvent<any> | undefined) => {
 				onToolTip(null);
@@ -83,25 +84,30 @@ const ButtonComponent = forwardRef<ButtonHandle, ButtonProps>(
 			[onToolTip, btnState, progress, duration, onClick],
 		);
 
+		// sync the visual button state from the controlled prop
 		useEffect(() => setBtnState(state), [state]);
+
+		// sync the progress indicator from the controlled working flag
 		useEffect(() => setPlaying(working), [working]);
 
-		// memo button widths
+		// measure the button width for size variants that depend on content width
 		useEffect(() => {
 			if (!variant || !size || !labelSize) return;
 			if (ref?.current) setBtnWidth(ref.current.offsetWidth);
 			else setBtnWidth(width);
 		}, [width, variant, labelSize, size]);
 
+		// expose the click trigger through the forwarded ref
 		useImperativeHandle(buttonRef, () => ({
 			triggerClick: () => handleClick(undefined),
 		}));
 
+		// trigger a programmatic click when the trigger prop flips on
 		useEffect(() => {
 			if (trigger) handleClick(undefined);
 		}, [trigger, handleClick]);
 
-		// memo destructive check
+		// resolve destructive text and icon colors for the current state
 		const destructiveColor = useCallback(
 			(icon: boolean) => {
 				if (icon) {
@@ -114,7 +120,7 @@ const ButtonComponent = forwardRef<ButtonHandle, ButtonProps>(
 			[destructive, variant, btnState],
 		);
 
-		// memo solid styles
+		// resolve color tokens for the solid button variant
 		const solid = useMemo(() => {
 			return {
 				border: '0px',
@@ -158,7 +164,7 @@ const ButtonComponent = forwardRef<ButtonHandle, ButtonProps>(
 			iconColor,
 		]);
 
-		// memo outline styles
+		// resolve color tokens for the outline button variant
 		const outline = useMemo(() => {
 			return {
 				border: '1px',
@@ -204,7 +210,7 @@ const ButtonComponent = forwardRef<ButtonHandle, ButtonProps>(
 			iconColor,
 		]);
 
-		// memo text styles
+		// resolve color tokens for the text button variant
 		const text = useMemo(() => {
 			return {
 				border: '1px',
@@ -231,7 +237,7 @@ const ButtonComponent = forwardRef<ButtonHandle, ButtonProps>(
 			};
 		}, [destructiveColor, labelColor]);
 
-		// memo color styles
+		// group variant-specific color styles into a single lookup map
 		const colorStyles = useMemo(() => {
 			return {
 				solid,
@@ -240,7 +246,7 @@ const ButtonComponent = forwardRef<ButtonHandle, ButtonProps>(
 			};
 		}, [solid, outline, text]);
 
-		// Memoize sizing styles
+		// resolve side-specific padding based on shape and icon placement
 		const setPadding = useCallback(
 			(side: 'left' | 'right') => {
 				if (round) return 0;
@@ -251,6 +257,7 @@ const ButtonComponent = forwardRef<ButtonHandle, ButtonProps>(
 			[round, iconLeft, iconRight],
 		);
 
+		// resolve dimensions and spacing for each button size
 		const sizingStyles = useMemo(() => {
 			return {
 				large: {
@@ -283,9 +290,9 @@ const ButtonComponent = forwardRef<ButtonHandle, ButtonProps>(
 			};
 		}, [iconSize, btnWidth, round, borderRadius, setPadding]);
 
-		// Memoize handleMouseEnter
+		// update hover state and surface tooltip content on pointer entry
 		const handleMouseEnter = useCallback(
-			(e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
+			(e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
 				if (btnState !== 'disabled') setBtnState('hover');
 				if (!ref?.current || !tooltip) return;
 				const tip: ToolTip = {
@@ -299,25 +306,25 @@ const ButtonComponent = forwardRef<ButtonHandle, ButtonProps>(
 			[btnState, tooltip, onToolTip],
 		);
 
-		// Memoize handleMouseLeave
+		// restore the resting state and clear tooltip content on pointer exit
 		const handleMouseLeave = useCallback(() => {
 			if (btnState !== 'disabled') setBtnState('normal');
 			if (tooltip) onToolTip(null);
 		}, [btnState, tooltip, onToolTip]);
 
-		// Memoize handleDidStop
+		// finish progress mode and forward the completed click event
 		const handleDidStop = useCallback(() => {
 			setPlaying(false);
 			onClick(undefined);
 		}, [onClick]);
 
-		// Memoize showLabel
+		// hide the label only while a center progress indicator is shown
 		const shouldShowLabel = useMemo(
 			() => !(playing && !iconLeft && !iconRight) && Boolean(label),
 			[playing, iconLeft, iconRight, label],
 		);
 
-		// Memoize button styles
+		// compose the resolved inline styles for the active variant and size
 		const buttonStyle = useMemo(
 			() => ({
 				color: colorStyles[variant].color[btnState],
@@ -355,7 +362,7 @@ const ButtonComponent = forwardRef<ButtonHandle, ButtonProps>(
 			],
 		);
 
-		// memo progress color
+		// resolve the progress indicator color from variant and destructive state
 		const progressColor = useMemo(
 			() =>
 				destructive
@@ -364,17 +371,20 @@ const ButtonComponent = forwardRef<ButtonHandle, ButtonProps>(
 			[destructive, colorStyles, variant, btnState],
 		);
 
+		// normalize style values before applying them as CSS
 		const setStyle = useCallback((value: string | number | undefined) => {
 			if (value === undefined) return 'unset';
 			if (typeof value === 'number') return `${value}px`;
 			return value;
 		}, []);
 
+		// resolve the icon container size from the current shape and icon size
 		const iconDivSize = useMemo(() => {
 			if (round) return `${buttonStyle.minHeight}px`;
 			return iconSize ? setStyle(iconSize) : 'unset';
 		}, [round, iconSize, buttonStyle, setStyle]);
 
+		// compose CSS custom properties for decoration and icon sizing
 		const cssVars = useMemo(() => {
 			return {
 				'--ui-button-decoration': underline ? 'underline' : 'unset',
@@ -388,8 +398,9 @@ const ButtonComponent = forwardRef<ButtonHandle, ButtonProps>(
 		/* END.DEBUG */
 
 		return (
-			<motion.div
+			<motion.button
 				id={divId}
+				type="button"
 				className={`${css.button}${divClass}`}
 				ref={ref}
 				onMouseEnter={handleMouseEnter}
@@ -400,7 +411,9 @@ const ButtonComponent = forwardRef<ButtonHandle, ButtonProps>(
 				initial={initial}
 				animate={animate}
 				exit={exit}
-				onClick={handleClick}
+				onClick={(e) => handleClick(e)}
+				disabled={btnState === 'disabled'}
+				aria-disabled={btnState === 'disabled'}
 				{...(rest as any)}
 			>
 				{!playing && iconLeft && (
@@ -468,7 +481,7 @@ const ButtonComponent = forwardRef<ButtonHandle, ButtonProps>(
 						<Badge variant={'light'} count={Number(count)} />
 					</div>
 				)}
-			</motion.div>
+			</motion.button>
 		);
 	},
 );

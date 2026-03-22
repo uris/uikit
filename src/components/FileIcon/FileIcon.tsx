@@ -6,6 +6,8 @@ import type { FileIconProps } from './_types';
 import { STATIC_FILE_ICONS } from './fileIconRegistry';
 
 export const FileIcon = React.memo((props: FileIconProps) => {
+	const { isDark } = useTheme();
+
 	const {
 		name = 'pdf',
 		size = 24,
@@ -15,15 +17,15 @@ export const FileIcon = React.memo((props: FileIconProps) => {
 		...svgAttributes
 	} = props;
 	const { id: svgId, className, style, ...rest } = svgAttributes;
-	const { isDark } = useTheme();
+	const svgStyle = style ?? ({} as React.CSSProperties);
 
-	// memo cursor style
+	// resolve pointer behavior for the file icon wrapper
 	const cursor = useMemo(() => {
 		if (disabled) return 'default';
 		return pointer ? 'pointer' : 'inherit';
 	}, [disabled, pointer]);
 
-	// memo icon style
+	// compose inline interaction styles for the file icon wrapper
 	const iconStyle = useMemo(() => {
 		return {
 			cursor,
@@ -35,6 +37,7 @@ export const FileIcon = React.memo((props: FileIconProps) => {
 		} as React.CSSProperties;
 	}, [cursor]);
 
+	// forward click and keyboard activation while respecting the disabled state
 	const handleClick = useCallback(
 		(
 			e:
@@ -46,6 +49,7 @@ export const FileIcon = React.memo((props: FileIconProps) => {
 		[onClick, disabled],
 	);
 
+	// resolve the themed SVG paths for the requested file type
 	const definition = STATIC_FILE_ICONS.get(name);
 	const paths = definition?.paths(isDark ? 'dark' : 'light');
 
@@ -63,7 +67,7 @@ export const FileIcon = React.memo((props: FileIconProps) => {
 			width={size}
 			height={size}
 			viewBox="0 0 20 20"
-			style={{ ...style, ...iconStyle }}
+			style={{ ...svgStyle, ...iconStyle }}
 			onClick={handleClick}
 			role={pointer ? 'button' : 'img'}
 			aria-label={`${name} icon`}

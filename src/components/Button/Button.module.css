@@ -4,6 +4,10 @@
 	user-select: none;
 	min-width: var(--ui-button-min-width);
 	-webkit-user-select: none;
+	appearance: none;
+	-webkit-appearance: none;
+	background-image: none;
+	outline: none;
 }
 
 .label {

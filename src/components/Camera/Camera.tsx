@@ -32,6 +32,7 @@ export const Camera = React.memo(
 			autoHideControlBar = true,
 			startCameraOff = false,
 			startAudioMuted = false,
+			playLocalAudio = false,
 			pipSnapshot = true,
 			userProfile,
 			sessionSettings,
@@ -57,6 +58,7 @@ export const Camera = React.memo(
 		const [profile, setProfile] = useState<boolean>(false);
 		const [deviceList, setDeviceList] = useState<MediaDeviceInfo[] | Error>([]);
 
+		// resolve camera and microphone constraints from the current session settings
 		const constraints = useMemo<MediaStreamConstraints>(() => {
 			const videoDeviceId = sessionSettings?.videoDeviceId;
 			const micDeviceId = sessionSettings?.micDeviceId;
@@ -66,6 +68,7 @@ export const Camera = React.memo(
 			};
 		}, [sessionSettings?.micDeviceId, sessionSettings?.videoDeviceId]);
 
+		// read the current media stream from the video element when available
 		const getStream = useCallback(() => {
 			const srcObject = videoElement.current?.srcObject;
 			if (!srcObject) return undefined;
@@ -86,6 +89,7 @@ export const Camera = React.memo(
 			return undefined;
 		}, []);
 
+		// read the active video or audio track from the current stream
 		const getTrack = useCallback(
 			(type: 'video' | 'audio') => {
 				const stream = getStream();
@@ -96,6 +100,7 @@ export const Camera = React.memo(
 			[getStream],
 		);
 
+		// enumerate available media devices with a safe error fallback
 		const getMediaDevices = useCallback(async () => {
 			if (
 				typeof navigator === 'undefined' ||
@@ -110,11 +115,13 @@ export const Camera = React.memo(
 			});
 		}, []);
 
+		// determine whether the browser can access camera APIs at all
 		const hasMediaSupport = useMemo(() => {
 			if (typeof navigator === 'undefined') return false;
 			return Boolean(navigator.mediaDevices?.getUserMedia);
 		}, []);
 
+		// sync camera and microphone UI state from the active stream tracks
 		const syncMediaState = useCallback(() => {
 			const stream = getStream();
 			const videoTrack = stream?.getVideoTracks()[0];
@@ -125,6 +132,7 @@ export const Camera = React.memo(
 			setMicMuted(audioTrack ? !audioTrack.enabled : startAudioMuted);
 		}, [getStream, startAudioMuted]);
 
+		// capture the current video frame into a PNG blob
 		const takeSnapshot = useCallback((options?: CameraSnapshotOptions) => {
 			if (!videoElement.current) return undefined;
 			const width = options?.width ?? videoElement.current.videoWidth;
@@ -155,7 +163,7 @@ export const Camera = React.memo(
 			return new Blob([bytes], { type: mimeType });
 		}, []);
 
-		// helper function to take a snapshot and set state
+		// capture a snapshot, update local preview state, and notify consumers
 		const handleSnapshot = useCallback(
 			(options?: CameraSnapshotOptions) => {
 				if (options?.toggle && !!snapshot) {
@@ -173,7 +181,7 @@ export const Camera = React.memo(
 			[onSnapshot, takeSnapshot, snapshot],
 		);
 
-		// mute the mic
+		// disable the live microphone track
 		const muteMic = useCallback(() => {
 			const audioTrack = getTrack('audio');
 			if (!audioTrack) return new Error('No audio track found');
@@ -182,7 +190,7 @@ export const Camera = React.memo(
 			return true;
 		}, [getTrack]);
 
-		// unmute the mic
+		// enable the live microphone track
 		const unmuteMic = useCallback(() => {
 			const audioTrack = getTrack('audio');
 			if (!audioTrack) return new Error('No audio track found');
@@ -191,14 +199,14 @@ export const Camera = React.memo(
 			return true;
 		}, [getTrack]);
 
-		// helper to toggle mic on/off
+		// toggle the microphone between muted and unmuted states
 		const toggleMic = useCallback(() => {
 			const audioTrack = getTrack('audio');
 			if (!audioTrack) return new Error('No audio track found');
 			return audioTrack.enabled ? muteMic() : unmuteMic();
 		}, [getTrack, muteMic, unmuteMic]);
 
-		// disable video while keeping the stream and audio track alive
+		// disable video while keeping the existing stream alive
 		const disableVideo = useCallback(() => {
 			const videoTrack = getTrack('video');
 			if (!videoTrack) return new Error('No video track found');
@@ -207,7 +215,7 @@ export const Camera = React.memo(
 			return true;
 		}, [getTrack]);
 
-		// re-enable the existing video track without recreating the stream
+		// re-enable the current video track without requesting a new stream
 		const enableVideo = useCallback(() => {
 			const stream = getStream();
 			if (!stream) return new Error('No media stream found');
@@ -220,12 +228,14 @@ export const Camera = React.memo(
 			return stream;
 		}, [getStream, getTrack]);
 
+		// mark the camera as ready after a usable stream is attached
 		const markCameraReady = useCallback(() => {
 			setCameraSupport(true);
 			setCameraError(undefined);
 			syncMediaState();
 		}, [syncMediaState]);
 
+		// reuse an existing live stream instead of requesting a new one
 		const reuseExistingStream = useCallback(() => {
 			const existingStream = getStream();
 			const existingVideoTrack = existingStream?.getVideoTracks()[0];
@@ -246,6 +256,7 @@ export const Camera = React.memo(
 			return undefined;
 		}, [enableVideo, getStream, markCameraReady, onVideoStream]);
 
+		// request a media stream and fall back to generic constraints if needed
 		const requestMediaStream = useCallback(async () => {
 			try {
 				return await navigator.mediaDevices.getUserMedia(constraints);
@@ -262,6 +273,7 @@ export const Camera = React.memo(
 			}
 		}, [constraints]);
 
+		// attach a stream to the video element and sync device metadata
 		const attachStreamToVideo = useCallback(
 			async (stream: MediaStream) => {
 				const audioTrack = stream.getAudioTracks()[0];
@@ -277,6 +289,7 @@ export const Camera = React.memo(
 				if (!audioTrack) onNoAudio?.('No audio track available');
 				if (audioTrack) audioTrack.enabled = !startAudioMuted;
 				if (!videoElement.current) return new Error('Video element not found');
+				videoElement.current.muted = !playLocalAudio;
 				videoElement.current.srcObject = stream;
 				await videoElement.current.play();
 				onVideoStream?.(stream);
@@ -290,11 +303,12 @@ export const Camera = React.memo(
 				onNoAudio,
 				onNoVideo,
 				onVideoStream,
+				playLocalAudio,
 				startAudioMuted,
 			],
 		);
 
-		// start the camera stream
+		// start camera access, reusing an existing stream when possible
 		const startCamera = useCallback(async () => {
 			if (!videoElement.current) return new Error('Video element not found');
 			if (!hasMediaSupport) {
@@ -328,6 +342,7 @@ export const Camera = React.memo(
 			reuseExistingStream,
 		]);
 
+		// toggle video between enabled and disabled states
 		const toggleVideo = useCallback(async () => {
 			const stream = getStream();
 			if (!stream) return await startCamera();
@@ -336,7 +351,7 @@ export const Camera = React.memo(
 			return videoTrack.enabled ? disableVideo() : enableVideo();
 		}, [disableVideo, enableVideo, getStream, startCamera]);
 
-		// stop the camer stream
+		// stop the active camera stream and clear local media state
 		const stopCamera = useCallback(async () => {
 			if (!videoElement.current) return new Error('Video element not found');
 			try {
@@ -359,7 +374,7 @@ export const Camera = React.memo(
 			}
 		}, [getStream, startAudioMuted]);
 
-		// expose camera video/audio objects and methods via forwarded ref
+		// expose the live media elements and controls through the forwarded ref
 		React.useImperativeHandle(
 			ref,
 			() => ({
@@ -405,25 +420,25 @@ export const Camera = React.memo(
 			],
 		);
 
-		// memo showing poster element
+		// determine whether the poster should be shown instead of live video
 		const showPoster = useMemo(() => {
 			if (cameraError) return false;
 			if (cameraSupport === false) return true;
 			return !cameraOn;
 		}, [cameraError, cameraSupport, cameraOn]);
 
-		// memo show error message
+		// determine whether the camera error message should be shown
 		const showError = useMemo(() => {
 			return Boolean(cameraError);
 		}, [cameraError]);
 
-		// memo control bar background
+		// resolve the translucent controls background from the active theme
 		const controlsBg = useMemo(() => {
 			const bgColor = theme.current.colors['core-surface-primary'];
 			return addOpacity(bgColor, 0.75);
 		}, [theme.current]);
 
-		// show/hide control bar
+		// resolve the control bar transform from hover and auto-hide state
 		const setControlBarVisible = useMemo(() => {
 			if (!autoHideControlBar) return 'translateY(0%)';
 			if (!showControlBar) return 'translateY(100%)';
@@ -431,7 +446,7 @@ export const Camera = React.memo(
 			return 'translateY(100%)';
 		}, [autoHideControlBar, hovered, showControlBar]);
 
-		// memo css vars
+		// compose CSS custom properties for frame sizing and control visibility
 		const cssVars = useMemo(
 			() =>
 				({
@@ -443,6 +458,7 @@ export const Camera = React.memo(
 			[controlsBg, height, setControlBarVisible, width],
 		);
 
+		// surface the controls bar when the user moves within the preview
 		const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
 			if (hovered) return;
 			setHovered(true);
@@ -450,18 +466,20 @@ export const Camera = React.memo(
 			controlsTimer.current = setTimeout(() => setHovered(false), 3000);
 		};
 
-		// mouse handlers to show/hide controls bar
+		// show the controls while the pointer is inside the camera frame
 		const handleMouseEnter = () => {
 			if (controlsTimer.current) clearTimeout(controlsTimer.current);
 			setHovered(true);
 			controlsTimer.current = setTimeout(() => setHovered(false), 3000);
 		};
 
+		// hide the controls when the pointer leaves the camera frame
 		const handleMouseLeave = () => {
 			if (controlsTimer.current) clearTimeout(controlsTimer.current);
 			setHovered(false);
 		};
 
+		// keep the controls visible while the controls surface is active
 		const handleControlsMouseEnter = (
 			e: React.MouseEvent<HTMLDivElement> | React.FocusEvent<HTMLDivElement>,
 		) => {
@@ -470,6 +488,7 @@ export const Camera = React.memo(
 			setHovered(true);
 		};
 
+		// restart the controls hide timer after leaving the controls surface
 		const handleControlsMouseLeave = (
 			e: React.MouseEvent<HTMLDivElement> | React.FocusEvent<HTMLDivElement>,
 		) => {
@@ -478,7 +497,7 @@ export const Camera = React.memo(
 			controlsTimer.current = setTimeout(() => setHovered(false), 3000);
 		};
 
-		// trigger auto start camera based on prop changes
+		// start or stop the camera automatically from the startCameraOff prop
 		useEffect(() => {
 			if (startCameraOff) {
 				stopCamera().then(() => null);
@@ -487,7 +506,13 @@ export const Camera = React.memo(
 			startCamera().then(() => null);
 		}, [startCamera, startCameraOff, stopCamera]);
 
-		// clean up camera stream on onmount
+		// keep local preview audio output aligned with the current prop
+		useEffect(() => {
+			if (!videoElement.current) return;
+			videoElement.current.muted = !playLocalAudio;
+		}, [playLocalAudio]);
+
+		// clean up timers and active media tracks on unmount
 		useEffect(() => {
 			return () => {
 				if (controlsTimer.current) clearTimeout(controlsTimer.current);
@@ -500,7 +525,7 @@ export const Camera = React.memo(
 			};
 		}, [getStream]);
 
-		// clean up snapshot object url
+		// release the snapshot object URL when the preview changes or unmounts
 		useEffect(() => {
 			return () => {
 				if (snapshot) URL.revokeObjectURL(snapshot);
@@ -536,8 +561,13 @@ export const Camera = React.memo(
 					</div>
 				)}
 				{cameraSupport !== false && (
-					// biome-ignore lint/a11y/useMediaCaption: Live camera preview has no caption source.
-					<video ref={videoElement} className={css.video} autoPlay playsInline>
+					<video
+						ref={videoElement}
+						className={css.video}
+						autoPlay
+						playsInline
+						muted={!playLocalAudio}
+					>
 						<track kind={'captions'} src={undefined} />
 					</video>
 				)}
