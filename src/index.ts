@@ -62,9 +62,6 @@ export type { CheckBoxProps } from './components/CheckBox';
 export { DivInput } from './components/DivInput';
 export type { DivInputProps } from './components/DivInput';
 
-export { DocIcons } from './components/DocIcon';
-export type { DocsProps } from './components/DocIcon';
-
 export { Dot } from './components/Dot';
 export type { DotProps } from './components/Dot';
 
@@ -149,9 +146,6 @@ export type { IconProps } from './components/Icon/_types';
 
 export { ButtonBar } from './components/ButtonBar';
 export type { BarButton, ButtonBarProps } from './components/ButtonBar/_types';
-
-export { Card } from './components/Card';
-export type { CardProps } from './components/Card/_types';
 
 export { Label } from './components/Label';
 export type { LabelProps } from './components/Label';

@@ -6,16 +6,18 @@ import { runButtonBarPlay } from 'src/components/playHelpers';
 import { fn } from 'storybook/test';
 
 const listView: BarButton[] = [
-	{ icon: 'arrow right', command: 'list', tip: 'List View' },
-	{ icon: 'home', command: 'gallery', tip: 'Gallery View' },
+	{ icon: 'arrow left', action: 'list', tip: 'List View' },
+	{ icon: 'home', action: 'gallery', tip: 'Gallery View' },
+	{ icon: 'arrow right', action: 'gallery', tip: 'Gallery View' },
 ];
 
 const meta: Meta<typeof ButtonBar> = {
 	title: 'Components/ButtonBar',
 	component: ButtonBar,
 	args: {
-		options: listView,
-		current: 0,
+		buttons: listView,
+		selected: 0,
+		onClick: fn(),
 		onChange: fn(),
 		onToolTip: fn(),
 	},

@@ -8,12 +8,14 @@ export const AvatarGroup = React.memo((props: AvatarGroupProps) => {
 	const {
 		avatars = [],
 		size = 32,
-		border = 3,
+		borderSize = 3,
 		overlap = 8,
 		gap = 0,
-		borderColor = undefined,
+		borderColor,
+		borderColorHover,
+		outerBorderSize = 3,
+		outerBorderColor = 'var(--core-surface-primary)',
 		margin = 0,
-		firstOnly = false,
 		onToolTip = () => null,
 		...divAttributes
 	} = props;
@@ -36,21 +38,32 @@ export const AvatarGroup = React.memo((props: AvatarGroupProps) => {
 		return avatars.map((avatar: AvatarInfo, index: number) => (
 			<div className={css.avatar} key={`avatar_${avatar.email}_${index}`}>
 				<Avatar
-					first={avatar.first}
-					last={avatar.last}
+					name={`${avatar.first} ${avatar.last}`}
+					email={avatar.email}
 					image={avatar.image || avatar.avatar}
 					size={size}
 					frame={size}
-					border={border}
+					borderSize={borderSize}
 					borderColor={borderColor}
+					borderColorHover={borderColorHover}
+					outerBorderSize={outerBorderSize}
+					outerBorderColor={outerBorderColor}
 					color={avatar.color}
 					bgColor={avatar.bgColor}
-					firstOnly={firstOnly}
 					onToolTip={onToolTip}
 				/>
 			</div>
 		));
-	}, [avatars, size, border, borderColor, firstOnly, onToolTip]);
+	}, [
+		avatars,
+		size,
+		borderSize,
+		borderColor,
+		borderColorHover,
+		outerBorderSize,
+		outerBorderColor,
+		onToolTip,
+	]);
 
 	// compose wrapper class names
 	const classNames = useMemo(() => {

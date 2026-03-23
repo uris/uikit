@@ -8,11 +8,14 @@ const meta: Meta<typeof Avatar> = {
 	title: 'Components/Avatar',
 	component: Avatar,
 	args: {
-		first: 'John',
-		last: 'Doe',
+		name: 'John Doe',
+		email: 'john.doe@example.com',
 		image: 'https://www.slice-uikit.com/public/images/profile-male-02.jpg',
-		border: 0,
+		borderSize: 1,
 		borderColor: undefined,
+		borderColorHover: undefined,
+		outerBorderSize: undefined,
+		outerBorderColor: undefined,
 		bgColor: undefined,
 		fontSize: undefined,
 		onClick: fn(),
@@ -74,7 +77,7 @@ export const InteractiveWithInitials: StoryObj<typeof Avatar> = {
 	args: {
 		...meta.args,
 		image: undefined,
-		border: 2,
+		borderSize: 2,
 		fontSize: 15,
 		size: 38,
 	},
@@ -95,8 +98,8 @@ export const InteractiveWithInitials: StoryObj<typeof Avatar> = {
 			await expect(avatar).toBeInTheDocument();
 
 			// test for initials
-			if (args.first) {
-				await expect(avatar).toHaveTextContent(args.first.charAt(0));
+			if (args.name) {
+				await expect(avatar).toHaveTextContent(args.name.charAt(0));
 			}
 
 			// border hover color

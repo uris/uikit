@@ -21,6 +21,7 @@ import type { ButtonHandle, ButtonProps } from './_types';
 const ButtonComponent = forwardRef<ButtonHandle, ButtonProps>(
 	(props, buttonRef: React.Ref<ButtonHandle>) => {
 		const {
+			children,
 			size = 'medium',
 			variant = 'outline',
 			label = undefined,
@@ -64,11 +65,17 @@ const ButtonComponent = forwardRef<ButtonHandle, ButtonProps>(
 		const [btnState, setBtnState] = useState<'normal' | 'hover' | 'disabled'>(
 			state,
 		);
-		const [btnWidth, setBtnWidth] = useState<number | string | undefined>(
+		const [lockedWidth, setLockedWidth] = useState<number | undefined>(
 			undefined,
 		);
 		const [playing, setPlaying] = useState<boolean>(working);
 		const ref = useRef<HTMLButtonElement | null>(null);
+
+		// capture the rendered button width before swapping content during loading
+		const lockCurrentWidth = useCallback(() => {
+			if (!ref.current) return;
+			setLockedWidth(ref.current.offsetWidth);
+		}, []);
 
 		// handle clicks, trigger tooltip cleanup, and start progress mode when needed
 		const handleClick = useCallback(
@@ -76,26 +83,24 @@ const ButtonComponent = forwardRef<ButtonHandle, ButtonProps>(
 				onToolTip(null);
 				if (btnState === 'disabled') return;
 				if (progress && duration) {
+					lockCurrentWidth();
 					setPlaying(true);
 				} else {
 					onClick(e);
 				}
 			},
-			[onToolTip, btnState, progress, duration, onClick],
+			[onToolTip, btnState, progress, duration, lockCurrentWidth, onClick],
 		);
 
 		// sync the visual button state from the controlled prop
 		useEffect(() => setBtnState(state), [state]);
 
 		// sync the progress indicator from the controlled working flag
-		useEffect(() => setPlaying(working), [working]);
-
-		// measure the button width for size variants that depend on content width
 		useEffect(() => {
-			if (!variant || !size || !labelSize) return;
-			if (ref?.current) setBtnWidth(ref.current.offsetWidth);
-			else setBtnWidth(width);
-		}, [width, variant, labelSize, size]);
+			if (working) lockCurrentWidth();
+			else setLockedWidth(undefined);
+			setPlaying(working);
+		}, [working, lockCurrentWidth]);
 
 		// expose the click trigger through the forwarded ref
 		useImperativeHandle(buttonRef, () => ({
@@ -250,11 +255,14 @@ const ButtonComponent = forwardRef<ButtonHandle, ButtonProps>(
 		const setPadding = useCallback(
 			(side: 'left' | 'right') => {
 				if (round) return 0;
-				if (side === 'left' && iconLeft) return 20;
-				if (side === 'right' && iconRight) return 20;
-				return 24;
+				let padding = 20;
+				if (variant === 'text') padding = 0;
+				if (size === 'small') padding = 12;
+				if (side === 'left' && iconLeft) return padding;
+				if (side === 'right' && iconRight) return padding;
+				return padding + 4;
 			},
-			[round, iconLeft, iconRight],
+			[round, variant, size, iconLeft, iconRight],
 		);
 
 		// resolve dimensions and spacing for each button size
@@ -266,7 +274,8 @@ const ButtonComponent = forwardRef<ButtonHandle, ButtonProps>(
 					iconSize,
 					paddingLeft: setPadding('left'),
 					paddingRight: setPadding('right'),
-					width: round ? '48px' : btnWidth || 'auto',
+					paddingTop: 0,
+					paddingBottom: 0,
 					borderRadius: borderRadius ?? '500px',
 				},
 				medium: {
@@ -275,20 +284,22 @@ const ButtonComponent = forwardRef<ButtonHandle, ButtonProps>(
 					iconSize,
 					paddingLeft: setPadding('left'),
 					paddingRight: setPadding('right'),
-					width: round ? '36px' : btnWidth || 'auto',
+					paddingTop: 0,
+					paddingBottom: 0,
 					borderRadius: borderRadius ?? '500px',
 				},
-				text: {
-					height: 20,
+				small: {
+					height: 'auto',
 					gap: 8,
 					iconSize,
-					paddingLeft: 0,
-					paddingRight: 0,
-					btnWidth,
-					borderRadius: 0,
+					paddingLeft: setPadding('left'),
+					paddingRight: setPadding('right'),
+					paddingTop: 4,
+					paddingBottom: 4,
+					borderRadius: borderRadius ?? '500px',
 				},
 			};
-		}, [iconSize, btnWidth, round, borderRadius, setPadding]);
+		}, [iconSize, borderRadius, setPadding]);
 
 		// update hover state and surface tooltip content on pointer entry
 		const handleMouseEnter = useCallback(
@@ -315,14 +326,24 @@ const ButtonComponent = forwardRef<ButtonHandle, ButtonProps>(
 		// finish progress mode and forward the completed click event
 		const handleDidStop = useCallback(() => {
 			setPlaying(false);
+			setLockedWidth(undefined);
 			onClick(undefined);
 		}, [onClick]);
 
+		const buttonContent = children ?? label;
+
 		// hide the label only while a center progress indicator is shown
 		const shouldShowLabel = useMemo(
-			() => !(playing && !iconLeft && !iconRight) && Boolean(label),
-			[playing, iconLeft, iconRight, label],
+			() => !(playing && !iconLeft && !iconRight) && Boolean(buttonContent),
+			[playing, iconLeft, iconRight, buttonContent],
 		);
+
+		// normalize style values before applying them as CSS
+		const setStyle = useCallback((value: string | number | undefined) => {
+			if (value === undefined) return 'unset';
+			if (typeof value === 'number') return `${value}px`;
+			return value;
+		}, []);
 
 		// compose the resolved inline styles for the active variant and size
 		const buttonStyle = useMemo(
@@ -333,13 +354,26 @@ const ButtonComponent = forwardRef<ButtonHandle, ButtonProps>(
 					: colorStyles[variant].background[state],
 				paddingRight: paddingRight ?? sizingStyles[size].paddingRight,
 				paddingLeft: paddingLeft ?? sizingStyles[size].paddingLeft,
+				paddingTop: variant === 'text' ? 0 : sizingStyles[size].paddingTop,
+				paddingBottom:
+					variant === 'text' ? 0 : sizingStyles[size].paddingBottom,
 				borderRadius: sizingStyles[size].borderRadius,
 				height: sizingStyles[size].height,
 				maxHeight: sizingStyles[size].height,
 				minHeight: sizingStyles[size].height,
 				flex: width === 'fill' ? 1 : 'unset',
-				width: width && width !== 'fill' ? width : 'min-content',
-				maxWidth: width && width !== 'fill' ? width : 'min-content',
+				width:
+					playing && lockedWidth && width === 'min-content'
+						? setStyle(lockedWidth)
+						: width && width !== 'fill'
+							? width
+							: 'min-content',
+				maxWidth:
+					playing && lockedWidth && width === 'min-content'
+						? setStyle(lockedWidth)
+						: width && width !== 'fill'
+							? width
+							: 'min-content',
 				gap: sizingStyles[size].gap,
 				borderWidth: colorStyles[variant].border,
 				borderStyle: 'solid' as const,
@@ -358,6 +392,9 @@ const ButtonComponent = forwardRef<ButtonHandle, ButtonProps>(
 				paddingLeft,
 				sizingStyles,
 				size,
+				playing,
+				lockedWidth,
+				setStyle,
 				width,
 			],
 		);
@@ -371,13 +408,6 @@ const ButtonComponent = forwardRef<ButtonHandle, ButtonProps>(
 			[destructive, colorStyles, variant, btnState],
 		);
 
-		// normalize style values before applying them as CSS
-		const setStyle = useCallback((value: string | number | undefined) => {
-			if (value === undefined) return 'unset';
-			if (typeof value === 'number') return `${value}px`;
-			return value;
-		}, []);
-
 		// resolve the icon container size from the current shape and icon size
 		const iconDivSize = useMemo(() => {
 			if (round) return `${buttonStyle.minHeight}px`;
@@ -388,10 +418,9 @@ const ButtonComponent = forwardRef<ButtonHandle, ButtonProps>(
 		const cssVars = useMemo(() => {
 			return {
 				'--ui-button-decoration': underline ? 'underline' : 'unset',
-				'--ui-button-min-width': btnWidth ? setStyle(btnWidth) : 'unset',
 				'--ui-button-icon-size': iconDivSize,
 			} as React.CSSProperties;
-		}, [underline, btnWidth, setStyle, iconDivSize]);
+		}, [underline, iconDivSize]);
 
 		/* START.DEBUG */
 		useTrackRenders(props, 'Button');
@@ -401,7 +430,7 @@ const ButtonComponent = forwardRef<ButtonHandle, ButtonProps>(
 			<motion.button
 				id={divId}
 				type="button"
-				className={`${css.button}${divClass}`}
+				className={`${css.button}  ${css[labelSize]}${divClass}`}
 				ref={ref}
 				onMouseEnter={handleMouseEnter}
 				onMouseLeave={handleMouseLeave}
@@ -450,9 +479,7 @@ const ButtonComponent = forwardRef<ButtonHandle, ButtonProps>(
 						/>
 					</div>
 				)}
-				{shouldShowLabel && (
-					<div className={`${css.label} ${css[labelSize]}`}>{label}</div>
-				)}
+				{shouldShowLabel && <div className={css.label}>{buttonContent}</div>}
 				{playing && iconRight && (
 					<div className={css.icon}>
 						<ProgressIndicator

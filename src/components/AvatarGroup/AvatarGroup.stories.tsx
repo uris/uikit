@@ -25,7 +25,7 @@ const meta: Meta<typeof AvatarGroup> = {
 	args: {
 		avatars: avatars,
 		size: 38,
-		border: 3,
+		borderSize: 1,
 		overlap: 8,
 	},
 };

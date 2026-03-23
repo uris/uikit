@@ -2,7 +2,7 @@ import {Meta, Unstyled} from '@storybook/addon-docs/blocks';
 import {RenderSource} from '../../../documentation/_components/RenderSource/RenderSource';
 import {FlexDiv} from '../../components/FlexDiv';
 
-<Meta title="Utils/Functions" />
+<Meta title="Utils/Utility Functions" />
 
 <FlexDiv width={'fill'} height={'fill'} alignItems={'center'}>
     <FlexDiv width={'fill'} maxWidth={760} height={'auto'}>
@@ -11,78 +11,83 @@ import {FlexDiv} from '../../components/FlexDiv';
         Small browser and styling helpers exported from `@apple-pie/slice/utils`.
 
         ## Import
-        <RenderSource>
-```
-import {
-	addOpacity,
-	copyToClipboard,
-	debounce,
-	hexToRgb,
-	tintFromColor,
-} from '@apple-pie/slice/utils';
-```
-</RenderSource>
+        <RenderSource language={"tsx"}>
+        ```
+        import {
+            addOpacity,
+            copyToClipboard,
+            debounce,
+            hexToRgb,
+            tintFromColor,
+        } from '@apple-pie/slice/utils';
+        ```
+        </RenderSource>
 
-        ## `copyToClipboard`
+        ## General Utils.
+
+        ### `copyToClipboard`
         Copies a string into the system clipboard and resolves to `true` when the operation succeeds.
 
         <RenderSource language={'tsx'}>
-{`
-async function handleCopy() {
-	const ok = await copyToClipboard('Hello world');
-	console.log(ok);
-}
-`}
-</RenderSource>
+        ```
+        async function handleCopy() {
+            const ok = await copyToClipboard('Hello world');
+            console.log(ok);
+        }
+        ```
+        </RenderSource>
 
-        ## `hexToRgb`
-        Converts a hex color string into an RGB string literal.
-
-        <RenderSource language={'tsx'}>
-{`
-const color = hexToRgb('#336699');
-// "rgb(51, 102, 153)"
-`}
-</RenderSource>
-
-        ## `debounce`
+        ### `debounce`
         Delays a function call until input has stopped for the configured time. The returned function also supports `cancel()` and `flush()`.
 
         <RenderSource language={'tsx'}>
-{`
-const saveDraft = debounce((value: string) => {
-	console.log('saving', value);
-}, 250);
+        ```
+        const saveDraft = debounce((value: string) => {
+            console.log('saving', value);
+        }, 250);
+        
+        saveDraft('first');
+        saveDraft('second');
+        
+        saveDraft.cancel();
+        
+        saveDraft('third');
+        saveDraft.flush();
+        ```
+        </RenderSource>
 
-saveDraft('first');
-saveDraft('second');
+        ## Color Utils.
+        Helpers for converting or adjusting color values.
 
-saveDraft.cancel();
+        ### `hexToRgb`
+        Converts a hex color string into an RGB string literal.
 
-saveDraft('third');
-saveDraft.flush();
-`}
-</RenderSource>
+        <RenderSource language={'tsx'}>
+        ```
+        const color = hexToRgb('#336699');
+        // "rgb(51, 102, 153)"
+        ```
+        </RenderSource>
 
-        ## `tintFromColor`
+        ### `tintFromColor`
         Lightens or darkens a hex color by mixing it toward white or black.
 
         <RenderSource language={'tsx'}>
-{`
-const lighter = tintFromColor('#336699', 20);
-const darker = tintFromColor('#336699', -20);
-`}
-</RenderSource>
+        ```
+        const lighter = tintFromColor('#336699', 20);
+        const darker = tintFromColor('#336699', -20);
+        ```
+        </RenderSource>
 
-        ## `addOpacity`
+        ### `addOpacity`
         Applies an alpha value to a hex or RGB color and returns an `rgba(...)` string.
 
         <RenderSource language={'tsx'}>
-{`
-const overlay = addOpacity('#336699', 0.5);
-const muted = addOpacity('rgb(51, 102, 153)', 0.2);
-`}
-</RenderSource>
+        ```
+        const overlay = addOpacity('#336699', 0.5);
+        const muted = addOpacity('rgb(51, 102, 153)', 0.2);
+        ```
+        </RenderSource>
         </Unstyled>
     </FlexDiv>
 </FlexDiv>

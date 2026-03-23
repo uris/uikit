@@ -4,19 +4,21 @@ import type { ToolTip } from '../sharedTypes';
 export type AvatarBaseProps = {
 	size?: number | string;
 	frame?: number | string;
-	first?: string;
-	last?: string;
+	name?: string;
+	email?: string;
 	image?: string;
-	border?: number;
 	color?: string;
+	borderSize?: number;
 	borderColor?: string;
+	borderColorHover?: string;
 	bgColor?: string;
-	firstOnly?: boolean;
 	fontSize?: number | string;
 	onToolTip?: (tip: ToolTip | null) => void;
 	onClick?: (e: React.MouseEvent<HTMLDivElement>) => void;
 	onKeyDown?: (e: React.KeyboardEvent<HTMLDivElement>) => void;
 	tabIndex?: number;
+	outerBorderSize?: number;
+	outerBorderColor?: string;
 };
 
 export type AvatarProps = Omit<

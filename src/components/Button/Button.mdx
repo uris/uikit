@@ -11,6 +11,8 @@ import {RenderSource} from '../../../documentation/_components/RenderSource/Rend
         # Button
         Renders a versatile button supporting variants, icons, loading/progress, and interaction states.
 
+        Use `size="small"` for the compact button layout. `text` is a `variant`, not a `size`.
+
         ## Base element
         `HTMLButtonElement`
 
@@ -38,6 +40,7 @@ import {RenderSource} from '../../../documentation/_components/RenderSource/Rend
             <tr><td><code>bgColor</code></td><td><code>string</code></td><td><code>-</code></td><td>Color token/value for `bgColor`.</td></tr>
             <tr><td><code>bgColorDisabled</code></td><td><code>string</code></td><td><code>-</code></td><td>Color token/value for `bgColorDisabled`.</td></tr>
             <tr><td><code>borderRadius</code></td><td><code>number</code></td><td><code>-</code></td><td>Sizing/layout setting for `borderRadius`.</td></tr>
+            <tr><td><code>children</code></td><td><code>ReactNode</code></td><td><code>-</code></td><td>Optional inline button content. When provided, it is rendered instead of <code>label</code>.</td></tr>
             <tr><td><code>count</code></td><td><code>number</code></td><td><code>-</code></td><td>Controls `count`.</td></tr>
             <tr><td><code>destructive</code></td><td><code>boolean</code></td><td><code>-</code></td><td>Boolean flag controlling `destructive`.</td></tr>
             <tr><td><code>duration</code></td><td><code>number</code></td><td><code>-</code></td><td>Controls `duration`.</td></tr>
@@ -56,7 +59,7 @@ import {RenderSource} from '../../../documentation/_components/RenderSource/Rend
             <tr><td><code>progress</code></td><td><code>boolean</code></td><td><code>-</code></td><td>Boolean flag controlling `progress`.</td></tr>
             <tr><td><code>round</code></td><td><code>boolean</code></td><td><code>-</code></td><td>Boolean flag controlling `round`.</td></tr>
             <tr><td><code>showDot</code></td><td><code>boolean</code></td><td><code>-</code></td><td>Boolean flag controlling `showDot`.</td></tr>
-            <tr><td><code>size</code></td><td><code>{`'large' | 'medium' | 'text'`}</code></td><td><code>-</code></td><td>Sizing/layout setting for `size`.</td></tr>
+            <tr><td><code>size</code></td><td><code>{`'large' | 'medium' | 'small'`}</code></td><td><code>-</code></td><td>Sizing/layout setting for `size`.</td></tr>
             <tr><td><code>state</code></td><td><code>{`'normal' | 'hover' | 'disabled'`}</code></td><td><code>-</code></td><td>Controls `state`.</td></tr>
             <tr><td><code>tooltip</code></td><td><code>string</code></td><td><code>-</code></td><td>Text/value for `tooltip`.</td></tr>
             <tr><td><code>transition</code></td><td><code>Transition</code></td><td><code>-</code></td><td>Controls `transition`.</td></tr>
@@ -98,15 +101,16 @@ import { Button } from '@apple-pie/slice';
 export function ButtonExample() {
     return (
         <Button
-            label="Save Changes"
             variant="solid"
-            size="medium"
+            size="small"
             onClick={() => console.log('clicked')}
             id="button-example"
             data-testid="button-example"
             className="custom-wrapper"
             style={{ marginTop: 8, maxWidth: 480 }}
-        />
+        >
+            Save Changes
+        </Button>
     );
 }
 ```

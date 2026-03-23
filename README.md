@@ -96,7 +96,7 @@ Subpath imports are also published:
 - `PromptInput`, `Overlay`, `Pager`, `ProgressIndicator`, `DoneCheck`
 - `RadioButton`, `RadioButtonList`, `Slider`, `Spacer`, `Switch`, `TabBar`
 - `TextField`, `TextArea`, `Tip`, `Toast`, `Button`, `ButtonBar`
-- `Card`, `Chip`, `Label`, `DocIcons`, `DraggablePanel`, `UploadArea`
+- `Chip`, `Label`, `DraggablePanel`, `UploadArea`
 
 Example:
 

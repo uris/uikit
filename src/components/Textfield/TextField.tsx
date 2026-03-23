@@ -361,7 +361,7 @@ export const TextField = React.memo(
 								<Button
 									label={'Translate'}
 									variant={'text'}
-									size={'text'}
+									size={'small'}
 									state={text === '' ? 'disabled' : 'normal'}
 									labelColor={theme.current.colors['core-button-primary']}
 									onClick={onAction}

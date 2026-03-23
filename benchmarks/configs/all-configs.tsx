@@ -11,7 +11,6 @@ import {
 	Camera,
 	CheckBox,
 	DivInput,
-	DocIcons,
 	Dot,
 	DraggablePanel,
 	DropDown,
@@ -36,7 +35,6 @@ import {
 	Toast,
 	Button,
 	ButtonBar,
-	Card,
 	Chip,
 	Label,
 } from '../../src';
@@ -555,44 +553,6 @@ export const buttonBarConfig: ComponentBenchmarkConfig = {
 	],
 };
 
-export const cardConfig: ComponentBenchmarkConfig = {
-	componentName: 'Card',
-	tests: [
-		{
-			name: 'Mount Time',
-			type: 'mount',
-			fn: () =>
-				measureMountTime(
-					<Card label={"Card Content"} />,
-					50,
-				),
-		},
-		{
-			name: 'Re-render',
-			type: 'rerender',
-			fn: () =>
-				measureRerenderTime(
-					<Card label={"Card Content"} />,
-					(container) => {
-						container.rerender(
-							<Card label={"Card Content"} />,
-						);
-					},
-					50,
-				),
-		},
-		{
-			name: 'Memory',
-			type: 'memory',
-			fn: () =>
-				measureMemoryDelta(
-					<Card label={"Card Content"} />,
-					10,
-				),
-		},
-	],
-};
-
 export const chipConfig: ComponentBenchmarkConfig = {
 	componentName: 'Chip',
 	tests: [
@@ -699,34 +659,6 @@ export const divInputConfig: ComponentBenchmarkConfig = {
 			name: 'Memory',
 			type: 'memory',
 			fn: () => measureMemoryDelta(<DivInput value="Test Input" isEditable />, 10),
-		},
-	],
-};
-
-export const docIconConfig: ComponentBenchmarkConfig = {
-	componentName: 'DocIcon',
-	tests: [
-		{
-			name: 'Mount Time',
-			type: 'mount',
-			fn: () => measureMountTime(<DocIcons type="pdf" />, 50),
-		},
-		{
-			name: 'Re-render',
-			type: 'rerender',
-			fn: () =>
-				measureRerenderTime(
-					<DocIcons type="pdf" />,
-					(container) => {
-						container.rerender(<DocIcons type="docx" />);
-					},
-					50,
-				),
-		},
-		{
-			name: 'Memory',
-			type: 'memory',
-			fn: () => measureMemoryDelta(<DocIcons type="pdf" />, 10),
 		},
 	],
 };
@@ -1467,7 +1399,6 @@ export const allBenchmarkConfigs = [
 	cameraConfig,
 	checkBoxConfig,
 	divInputConfig,
-	docIconConfig,
 	dotConfig,
 	draggablePanelConfig,
 	dropDownConfig,
@@ -1494,7 +1425,6 @@ export const allBenchmarkConfigs = [
 	textFieldConfig,
 	buttonConfig,
 	buttonBarConfig,
-	cardConfig,
 	chipConfig,
 	labelConfig,
 ];

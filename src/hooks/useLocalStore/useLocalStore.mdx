@@ -61,22 +61,22 @@ import {FlexDiv} from '../../components/FlexDiv';
         </Unstyled>
 
         <RenderSource language={"tsx"}>
-{`
-import { useLocalStore } from '@apple-pie/slice';
-
-function ProfileName() {
-	const [name, setName] = useLocalStore<string>('profile-name', 'Jane Doe');
-
-	return (
-		<div>
-			<span>{name}</span>
-			<button type="button" onClick={() => setName('John Smith')}>
-				Save
-			</button>
-		</div>
-	);
-}
-`}
-</RenderSource>
+        ```
+        import { useLocalStore } from '@apple-pie/slice';
+        
+        function ProfileName() {
+            const [name, setName] = useLocalStore<string>('profile-name', 'Jane Doe');
+        
+            return (
+                <div>
+                    <span>{name}</span>
+                    <button type="button" onClick={() => setName('John Smith')}>
+                        Save
+                    </button>
+                </div>
+            );
+        }
+        ```
+        </RenderSource>
     </FlexDiv>
 </FlexDiv>

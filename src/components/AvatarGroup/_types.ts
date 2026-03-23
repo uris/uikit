@@ -15,11 +15,13 @@ export type AvatarGroupBaseProps = {
 	avatars?: AvatarInfo[] | null;
 	size?: number;
 	overlap?: number;
-	border?: number;
+	borderSize?: number;
 	borderColor?: string;
+	borderColorHover?: string;
 	gap?: number;
 	margin?: number;
-	firstOnly?: boolean;
+	outerBorderSize?: number;
+	outerBorderColor?: string;
 	onToolTip?: (tip: ToolTip | null) => void;
 };
 

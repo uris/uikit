@@ -62,19 +62,19 @@ import {FlexDiv} from '../../components/FlexDiv';
         </Unstyled>
 
         <RenderSource language={"tsx"}>
-{`
-import { useLastUpdated } from '@apple-pie/slice';
-
-function UpdatedAt({ timestamp }: { timestamp?: string }) {
-	const { lastUpdated } = useLastUpdated(timestamp, 'Updated ', 1);
-
-	return (
-		<span style={{ color: 'var(--core-text-secondary)' }}>
-			{lastUpdated || 'No updates yet'}
-		</span>
-	);
-}
-`}
-</RenderSource>
+        ```
+        import { useLastUpdated } from '@apple-pie/slice';
+        
+        function UpdatedAt({ timestamp }: { timestamp?: string }) {
+            const { lastUpdated } = useLastUpdated(timestamp, 'Updated ', 1);
+        
+            return (
+                <span style={{ color: 'var(--core-text-secondary)' }}>
+                    {lastUpdated || 'No updates yet'}
+                </span>
+            );
+        }
+        ```
+        </RenderSource>
     </FlexDiv>
 </FlexDiv>

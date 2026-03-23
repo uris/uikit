@@ -62,33 +62,33 @@ import {FlexDiv} from '../../components/FlexDiv';
         </Unstyled>
 
         <RenderSource language={"tsx"}>
-{`
-import { useWindow, useKeyboardShortcuts } from '@apple-pie/slice';
-import type { KeyboardShortcut, KeyboardShortcuts } from '@apple-pie/slice';
-
-const shortcuts: KeyboardShortcuts = [
-	{ key: 'b', name: 'Bold', metaPressed: true },
-	{ key: 's', name: 'Save', metaPressed: true },
-	{ key: 'k', name: 'Quick Open', metaPressed: true, shiftPressed: true },
-	{ key: 'd', name: 'Duplicate', altPressed: true },
-	{ key: 'a', name: 'A Pressed' },
-];
-
-function Shortcuts() {
-	const { isAppleDevice } = useWindow();
-	useKeyboardShortcuts(shortcuts, handleShortcut, isAppleDevice);
-
-	function handleShortcut(shortcut: KeyboardShortcut) {
-		console.log('shortcut', shortcut.name);
-	}
-
-	return (
-		<div>
-			Try Cmd/Ctrl + B, Cmd/Ctrl + S, Cmd/Ctrl + Shift + K, Alt/Option + D, or A
-		</div>
-	);
-}
-`}
-</RenderSource>
+        ```
+        import { useWindow, useKeyboardShortcuts } from '@apple-pie/slice';
+        import type { KeyboardShortcut, KeyboardShortcuts } from '@apple-pie/slice';
+        
+        const shortcuts: KeyboardShortcuts = [
+            { key: 'b', name: 'Bold', metaPressed: true },
+            { key: 's', name: 'Save', metaPressed: true },
+            { key: 'k', name: 'Quick Open', metaPressed: true, shiftPressed: true },
+            { key: 'd', name: 'Duplicate', altPressed: true },
+            { key: 'a', name: 'A Pressed' },
+        ];
+        
+        function Shortcuts() {
+            const { isAppleDevice } = useWindow();
+            useKeyboardShortcuts(shortcuts, handleShortcut, isAppleDevice);
+        
+            function handleShortcut(shortcut: KeyboardShortcut) {
+                console.log('shortcut', shortcut.name);
+            }
+        
+            return (
+                <div>
+                    Try Cmd/Ctrl + B, Cmd/Ctrl + S, Cmd/Ctrl + Shift + K, Alt/Option + D, or A
+                </div>
+            );
+        }
+        ```
+        </RenderSource>
     </FlexDiv>
 </FlexDiv>

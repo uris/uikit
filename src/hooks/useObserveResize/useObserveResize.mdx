@@ -58,22 +58,22 @@ import {FlexDiv} from '../../components/FlexDiv';
         </Unstyled>
 
         <RenderSource language={"tsx"}>
-{`
-import { useRef } from 'react';
-import { useObserveResize } from '@apple-pie/slice';
-
-function BoxInfo() {
-	const ref = useRef<HTMLDivElement>(null);
-	const size = useObserveResize(ref, { ignore: 'height' });
-
-	return (
-		<div>
-			<div ref={ref} style={{ width: 320, height: 120 }} />
-			<p>Width only updates: {size.width}</p>
-		</div>
-	);
-}
-`}
-</RenderSource>
+        ```
+        import { useRef } from 'react';
+        import { useObserveResize } from '@apple-pie/slice';
+        
+        function BoxInfo() {
+            const ref = useRef<HTMLDivElement>(null);
+            const size = useObserveResize(ref, { ignore: 'height' });
+        
+            return (
+                <div>
+                    <div ref={ref} style={{ width: 320, height: 120 }} />
+                    <p>Width only updates: {size.width}</p>
+                </div>
+            );
+        }
+        ```
+        </RenderSource>
 </FlexDiv>
 </FlexDiv>

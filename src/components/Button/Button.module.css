@@ -2,7 +2,6 @@
 	composes: row from "../../utils/styling/flexBox.module.css";
 	position: relative;
 	user-select: none;
-	min-width: var(--ui-button-min-width);
 	-webkit-user-select: none;
 	appearance: none;
 	-webkit-appearance: none;

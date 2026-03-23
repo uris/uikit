@@ -16,14 +16,16 @@ import type { AvatarProps } from './_types';
 
 export const Avatar = React.memo((props: AvatarProps) => {
 	const {
-		first = '',
-		last = '',
+		email,
+		name,
 		image = '',
-		border = 0,
+		borderSize = 0,
 		color = undefined,
 		borderColor = undefined,
+		borderColorHover = undefined,
+		outerBorderSize,
+		outerBorderColor,
 		bgColor = undefined,
-		firstOnly = false,
 		onClick = undefined,
 		onKeyDown = undefined,
 		fontSize = undefined,
@@ -40,16 +42,22 @@ export const Avatar = React.memo((props: AvatarProps) => {
 	const [textSize, setTextSize] = useState<number | string>('inherit');
 
 	// derive the fallback initials shown when no image is rendered
-	const initials = useMemo(
-		() => `${first?.charAt(0)}${firstOnly ? '' : last.charAt(0)}`,
-		[first, last, firstOnly],
-	);
+	const initials = useMemo(() => {
+		if (!name && !email) return '';
+		if (name) {
+			let last: string | undefined = undefined;
+			const parts = name.trim().split(' ');
+			const first = parts[0];
+			if (parts.length > 1) last = parts.at(-1);
+			return `${first.charAt(0)}${last ? last.charAt(0) : ''}`;
+		}
+		if (email) return email.charAt(0);
+	}, [name, email]);
 
 	// resolve the optional background image for the avatar frame
 	const bgImage = useMemo(() => {
-		if (firstOnly) return '';
 		return image ? `url(${image})` : '';
-	}, [firstOnly, image]);
+	}, [image]);
 
 	// sync the rendered font size from the configured size mode
 	useEffect(() => {
@@ -82,17 +90,17 @@ export const Avatar = React.memo((props: AvatarProps) => {
 
 	// derive whether the avatar should render initials or image-only content
 	const displayContent = useMemo(
-		() => (firstOnly || !image ? initials : null),
-		[firstOnly, image, initials],
+		() => (image ? null : initials),
+		[image, initials],
 	);
 
 	// forward tooltip payload on hover
 	const onMouseEnter = useCallback(
 		(event: React.MouseEvent<HTMLDivElement>) => {
-			const payload = { label: first };
+			const payload = { label: name ?? email ?? '' };
 			onToolTip({ payload, event });
 		},
-		[first, onToolTip],
+		[name, email, onToolTip],
 	);
 
 	// clear tooltip state when the pointer leaves the avatar
@@ -115,14 +123,31 @@ export const Avatar = React.memo((props: AvatarProps) => {
 		return {
 			'--avatar-size': setStyle(size),
 			'--avatar-frame': setStyle(frame),
-			'--avatar-border': `${border}px`,
+			'--avatar-border': `${borderSize}px`,
 			'--avatar-color': color ?? 'var(--core-text-primary)',
 			'--avatar-bg-color': bgColor ?? 'var(--core-surface-secondary)',
-			'--avatar-border-color': borderColor ?? 'var(--core-surface-primary)',
+			'--avatar-border-color': borderColor ?? 'var(--core-outline-primary)',
+			'--avatar-border-color-hover':
+				borderColorHover ?? 'var(--core-outline-special)',
 			'--avatar-bg-image': `${bgImage}`,
 			'--avatar-font-size': setStyle(textSize),
+			'--avatar-outer-border-size': setStyle(outerBorderSize),
+			'--avatar-outer-border-color':
+				outerBorderColor ?? 'var(--core-surface-primary)',
 		} as React.CSSProperties;
-	}, [size, frame, border, color, bgColor, borderColor, bgImage, textSize]);
+	}, [
+		size,
+		frame,
+		borderSize,
+		color,
+		bgColor,
+		borderColor,
+		borderColorHover,
+		bgImage,
+		textSize,
+		outerBorderSize,
+		outerBorderColor,
+	]);
 
 	// compose wrapper class names
 	const classNames = useMemo(() => {
@@ -144,7 +169,7 @@ export const Avatar = React.memo((props: AvatarProps) => {
 			onKeyDown={handleKeyDown}
 			role={onClick ? 'button' : 'img'}
 			tabIndex={onClick ? tabIndex : undefined}
-			aria-label={`User Avatar - ${first}`}
+			aria-label={`User Avatar - ${name ?? email ?? 'Unknown User'}`}
 			{...rest}
 		>
 			<div ref={ref} aria-hidden={true} className={css.user}>

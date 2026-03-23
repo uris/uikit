@@ -1,50 +1,43 @@
 .wrapper {
 	composes: rowStart from "../../utils/styling/flexBox.module.css";
+	border-radius: var(--bb-border-radius);
+	border: var(--bb-border-size) solid var(--bb-border-color);
+	overflow: hidden;
 }
 
 .label {
 	composes: rowStart from "../../utils/styling/flexBox.module.css";
-	composes: body-s-regular from "../../utils/styling/type.module.css";
-	color: var(--core-text-disabled);
+	color: var(--bb-label-color);
 	padding-right: 4px;
 }
 
 .button {
-	composes: rowStart from "../../utils/styling/flexBox.module.css";
-	height: 32px;
-	gap: 0;
+	composes: row from "../../utils/styling/flexBox.module.css";
+	height: var(--bb-button-size);
+	width: var(--bb-button-size);
+	min-height: var(--bb-button-size);
+	min-width: var(--bb-button-size);
 	cursor: pointer;
-	background: var(--core-surface-primary);
-	color: var(--core-text-disabled);
-	&:last-child {
-		&:hover {
-			background: var(--core-surface-primary);
-		}
-	}
+	background: var(--bb-bg-color);
+	border: 0;
+	border-right: var(--bb-border-size) solid var(--bb-border-color);
+	user-select: none;
+	-webkit-user-select: none;
+	appearance: none;
+	-webkit-appearance: none;
 	&:first-child {
-		&:hover {
-			background: var(--core-surface-primary);
-		}
+		padding-left: 4px;
+	}
+	&:last-child {
+		border-right: none;
+		padding-right: 4px;
 	}
 	&:hover {
-		background: var(--core-surface-primary);
-		color: var(--core-text-primary);
+		background: var(--bb-bg-color-hover);
 	}
 }
 
 .selected {
-	background: var(--core-surface-primary);
+	background: var(--bb-bg-color-active);
 	color: var(--core-link-primary);
-}
-
-.divider {
-	display: block;
-	background: var(--core-outline-primary);
-	width: 1px;
-	height: 16px;
-	margin: 0 4px;
-}
-
-.last {
-	display: none;
 }

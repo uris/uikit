@@ -57,3 +57,13 @@ export const Default: StoryObj<typeof Button> = {
 		await runButtonPlay({ canvasElement, args });
 	},
 };
+
+export const Small: StoryObj<typeof Button> = {
+	args: {
+		size: 'small',
+		label: 'Small Button',
+		iconRight: undefined,
+	},
+	render: Default.render,
+	play: Default.play,
+};

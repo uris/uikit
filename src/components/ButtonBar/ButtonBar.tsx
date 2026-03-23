@@ -1,18 +1,35 @@
-import { useCallback, useEffect, useState } from 'react';
-import { useTheme } from '../../hooks';
+import React, {
+	useCallback,
+	useEffect,
+	useMemo,
+	useRef,
+	useState,
+} from 'react';
 import { useTrackRenders } from '../../hooks/useTrackRenders/useTrackRenders';
-import { IconButton } from '../IconButton';
+import { setStyle } from '../../utils/functions/misc';
+import { Icon } from '../Icon';
+import type { ToolTip } from '../sharedTypes';
 import css from './ButtonBar.module.css';
-import type { BarButton, ButtonBarProps } from './_types';
+import type { BarButton as ButtonBarItem, ButtonBarProps } from './_types';
 
-export function ButtonBar(props: Readonly<ButtonBarProps>) {
-	const theme = useTheme();
-
+export const ButtonBar = React.memo(function ButtonBar(
+	props: Readonly<ButtonBarProps>,
+) {
 	const {
-		options = [],
-		current = 0,
-		label,
-		onChange = () => null,
+		buttons = [],
+		selected,
+		toggle = true,
+		buttonSize = 44,
+		iconSize = 20,
+		borderSize = 1,
+		borderRadius = 100,
+		borderColor = 'var(--core-outline-primary)',
+		bgColor = 'var(--core-surface-primary)',
+		bgColorHover = 'var(--core-surface-secondary)',
+		bgColorActive = 'var(--core-surface-secondary)',
+		labelColor = 'var(--core-text-primary)',
+		onClick = (button?: ButtonBarItem) => null,
+		onChange = (button?: ButtonBarItem) => null,
 		onToolTip = () => null,
 		...divAttributes
 	} = props;
@@ -20,10 +37,12 @@ export function ButtonBar(props: Readonly<ButtonBarProps>) {
 	const divStyle = style ?? ({} as React.CSSProperties);
 	const divClass = className ? ` ${className}` : '';
 	const [hovered, setHovered] = useState<number>(-1);
-	const [currentPage, setCurrentPage] = useState<number>(current);
+	const [selectedIndex, setSelectedIndex] = useState<number | undefined>(
+		selected,
+	);
 
 	// sync the selected button index from the controlled prop
-	useEffect(() => setCurrentPage(current), [current]);
+	useEffect(() => setSelectedIndex(selected), [selected]);
 
 	// track which button is currently hovered
 	const handleMouseEnter = useCallback((index: number) => {
@@ -37,39 +56,86 @@ export function ButtonBar(props: Readonly<ButtonBarProps>) {
 
 	// update the selected button and notify the consumer
 	const handleClick = useCallback(
-		(button: BarButton, index: number) => {
-			setCurrentPage(index);
-			onChange(button);
+		(button: ButtonBarItem, index: number) => {
+			onClick(button);
+			if (toggle) {
+				setSelectedIndex(index);
+				onChange(button);
+			}
 		},
-		[onChange],
-	);
-
-	// determine whether the divider should be hidden for the last item
-	const display = useCallback(
-		(index: number) => {
-			return index === options.length - 1 ? css.last : '';
-		},
-		[options.length],
+		[onChange, onClick, toggle],
 	);
 
 	// determine whether a button is currently selected
-	const selected = useCallback(
+	const buttonClass = useCallback(
 		(index: number) => {
-			return currentPage === index ? css.selected : '';
+			if (!toggle) return '';
+			return selectedIndex === index ? css.selected : '';
 		},
-		[currentPage],
+		[selectedIndex, toggle],
 	);
 
 	// resolve icon colors from selected and hovered states
 	const iconColor = useCallback(
 		(index: number) => {
-			const isSelected = currentPage === index;
+			const isSelected = selectedIndex === index;
 			const isHovered = hovered === index;
-			if (isSelected) return theme.current.colors['core-icon-primary'];
-			if (isHovered) return theme.current.colors['core-button-primary'];
-			return theme.current.colors['core-text-disabled'];
+			if (toggle && isSelected) return 'var(--core-text-special)';
+			if (isHovered) return 'var(--core-text-primary)';
+			return 'var(--core-text-secondary)';
 		},
-		[currentPage, hovered, theme],
+		[selectedIndex, hovered, toggle],
+	);
+
+	// compose CSS custom properties for button bar sizing and colors
+	const cssVars = useMemo(() => {
+		return {
+			'--bb-border-size': `${borderSize}px`,
+			'--bb-border-radius': setStyle(borderRadius),
+			'--bb-border-color': borderColor,
+			'--bb-bg-color': bgColor,
+			'--bb-bg-color-hover': bgColorHover,
+			'--bb-bg-color-active': bgColorActive,
+			'--bb-label-color': labelColor,
+			'--bb-button-size': `${buttonSize}px`,
+		} as React.CSSProperties;
+	}, [
+		borderSize,
+		borderRadius,
+		borderColor,
+		bgColor,
+		labelColor,
+		bgColorHover,
+		buttonSize,
+		bgColorActive,
+	]);
+
+	const barButtons = useMemo(
+		() =>
+			buttons?.map((button: ButtonBarItem, index: number) => (
+				<BarButton
+					classNames={`${css.button} ${buttonClass(index)}`}
+					key={`button-bar-${button.icon}-${index}`}
+					onMouseEnter={() => handleMouseEnter(index)}
+					onMouseLeave={handleMouseLeave}
+					onClick={() => handleClick(button, index)}
+					onToolTip={onToolTip}
+					toolTip={button.tip}
+					iconSize={iconSize}
+					icon={button.icon}
+					iconColor={iconColor(index)}
+				/>
+			)),
+		[
+			buttons,
+			buttonClass,
+			handleMouseEnter,
+			handleMouseLeave,
+			handleClick,
+			onToolTip,
+			iconSize,
+			iconColor,
+		],
 	);
 
 	/* START.DEBUG */
@@ -80,32 +146,75 @@ export function ButtonBar(props: Readonly<ButtonBarProps>) {
 		<div
 			id={divId}
 			className={`${css.wrapper}${divClass}`}
-			style={divStyle}
+			style={{ ...cssVars, ...divStyle }}
 			{...rest}
 		>
-			{label && <div className={css.label}>{label}</div>}
-			{options?.map((button: BarButton, index: number) => {
-				return (
-					<div
-						className={`${css.button} ${selected(index)}`}
-						key={`button-bar-${button.icon}-${index}`}
-						onMouseEnter={() => handleMouseEnter(index)}
-						onMouseLeave={() => handleMouseLeave()}
-					>
-						<IconButton
-							icon={button.icon}
-							color={iconColor(index)}
-							label={button.label}
-							tooltip={button.tip}
-							onToolTip={onToolTip}
-							onClick={() => handleClick(button, index)}
-							hover
-							toggle={false}
-						/>
-						<div className={`${css.divider} ${display(index)}`} />
-					</div>
-				);
-			})}
+			{barButtons}
 		</div>
 	);
+});
+
+interface ButtonProps {
+	classNames?: string;
+	icon?: string;
+	iconSize: number;
+	iconColor?: string;
+	onClick?: () => void;
+	onMouseEnter?: () => void;
+	onMouseLeave?: () => void;
+	toolTip?: string;
+	onToolTip?: (tip: ToolTip | null) => void;
 }
+
+export const BarButton = React.memo(function BarButton(
+	props: Readonly<ButtonProps>,
+) {
+	const {
+		classNames,
+		icon,
+		iconSize,
+		iconColor,
+		toolTip,
+		onClick,
+		onMouseEnter,
+		onMouseLeave,
+		onToolTip,
+	} = props;
+	const ref = useRef<HTMLButtonElement>(null);
+
+	const handleMouseEnter = useCallback(
+		(e: React.MouseEvent<HTMLButtonElement>) => {
+			const tip: ToolTip = {
+				payload: { label: toolTip ?? 'Button' },
+				ref,
+				event: e,
+			};
+			onMouseEnter?.();
+			onToolTip?.(tip);
+		},
+		[toolTip, onMouseEnter, onToolTip],
+	);
+
+	const handleMouseLeave = useCallback(() => {
+		onMouseLeave?.();
+		onToolTip?.(null);
+	}, [onMouseLeave, onToolTip]);
+
+	const handleClick = useCallback(() => {
+		onClick?.();
+		onToolTip?.(null);
+	}, [onClick, onToolTip]);
+
+	return (
+		<button
+			ref={ref}
+			type="button"
+			className={classNames}
+			onMouseEnter={handleMouseEnter}
+			onMouseLeave={handleMouseLeave}
+			onClick={handleClick}
+		>
+			<Icon name={icon} size={iconSize} strokeColor={iconColor} />
+		</button>
+	);
+});

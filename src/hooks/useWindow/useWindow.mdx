@@ -74,72 +74,72 @@ import Notice from "../../../documentation/_components/Notice/Notice";
         </Unstyled>
 
         <RenderSource language={"tsx"}>
-{`
-import { useWindow } from '@apple-pie/slice';
-
-function ViewportBadge() {
-	const win = useWindow();
-
-	return (
-		<div
-			style={{ padding: 12, border: '1px solid var(--core-outline-primary)' }}
-		>
-			{win.formFactor} • {win.viewportWidth} x {win.viewportHeight}
-		</div>
-	);
-}
-`}
-</RenderSource>
-
-        <RenderSource language={"tsx"}>
-{`
-import { FormFactor, useWindow, type BreakPoints } from '@apple-pie/slice';
-
-const customBreakpoints: BreakPoints = {
-	[FormFactor.Mobile]: 600,
-	[FormFactor.Tablet]: 1024,
-	[FormFactor.Desktop]: 1280,
-	[FormFactor.DesktopL]: 1536,
-	[FormFactor.DesktopXL]: 1920,
-};
-
-function ViewportBadgeWithCustomBreakpoints() {
-	const win = useWindow(customBreakpoints);
-
-	return (
-		<div
-			style={{ padding: 12, border: '1px solid var(--core-outline-primary)' }}
-		>
-			{win.formFactor} • {win.viewportWidth} x {win.viewportHeight}
-		</div>
-	);
-}
-`}
-</RenderSource>
+        ```
+        import { useWindow } from '@apple-pie/slice';
+        
+        function ViewportBadge() {
+            const win = useWindow();
+        
+            return (
+                <div
+                    style={{ padding: 12, border: '1px solid var(--core-outline-primary)' }}
+                >
+                    {win.formFactor} • {win.viewportWidth} x {win.viewportHeight}
+                </div>
+            );
+        }
+        ```
+        </RenderSource>
 
         <RenderSource language={"tsx"}>
-{`
-import { useWindow } from '@apple-pie/slice';
+        ```
+        import { FormFactor, useWindow, type BreakPoints } from '@apple-pie/slice';
+        
+        const customBreakpoints: BreakPoints = {
+            [FormFactor.Mobile]: 600,
+            [FormFactor.Tablet]: 1024,
+            [FormFactor.Desktop]: 1280,
+            [FormFactor.DesktopL]: 1536,
+            [FormFactor.DesktopXL]: 1920,
+        };
+        
+        function ViewportBadgeWithCustomBreakpoints() {
+            const win = useWindow(customBreakpoints);
+        
+            return (
+                <div
+                    style={{ padding: 12, border: '1px solid var(--core-outline-primary)' }}
+                >
+                    {win.formFactor} • {win.viewportWidth} x {win.viewportHeight}
+                </div>
+            );
+        }
+        ```
+        </RenderSource>
 
-function GeoLocationButton() {
-  const win = useWindow();
-
-  return (
-    <button
-      type="button"
-      onClick={win.requestGeolocation}
-      disabled={!win.geolocationSupported || win.gettingLocation}
-    >
-      {win.gettingLocation
-        ? 'Requesting location...'
-        : win.location
-          ? \`\${win.location.latitude}, \${win.location.longitude}\`
-          : 'Request location'}
-    </button>
-  );
-}
-`}
-</RenderSource>
+        <RenderSource language={"tsx"}>
+        ```
+        import { useWindow } from '@apple-pie/slice';
+        
+        function GeoLocationButton() {
+          const win = useWindow();
+        
+          return (
+            <button
+              type="button"
+              onClick={win.requestGeolocation}
+              disabled={!win.geolocationSupported || win.gettingLocation}
+            >
+              {win.gettingLocation
+                ? 'Requesting location...'
+                : win.location
+                  ? \`\${win.location.latitude}, \${win.location.longitude}\`
+                  : 'Request location'}
+            </button>
+          );
+        }
+        ```
+        </RenderSource>
         <Spacer size={32} />
         <Notice>
             Note: Slice also implements and alternative (but optional) [`WindowStore`](/docs/stores-window-store--docs) that creates a Zustand singleton window state object you can efficiently access throughout your application.

@@ -471,13 +471,21 @@ export async function runButtonBarPlay<TArgs>({
 	canvasElement,
 }: PlayContext<TArgs>) {
 	await expectCanvas(canvasElement);
+	const canvas = within(canvasElement);
 	const storyArgs = asArgs(args);
-	const icons = canvasElement.querySelectorAll('svg[role="img"]');
-	if (icons.length > 0) {
-		await userEvent.click(icons[0] as HTMLElement);
+	const buttons = canvas.getAllByRole('button');
+	if (buttons.length > 0) {
+		await userEvent.hover(buttons[0] as HTMLElement);
+		await userEvent.click(buttons[0] as HTMLElement);
+	}
+	if (isFn(storyArgs.onClick)) {
+		await expect(storyArgs.onClick).toHaveBeenCalled();
 	}
 	if (isFn(storyArgs.onChange)) {
 		await expect(storyArgs.onChange).toHaveBeenCalled();
+	}
+	if (isFn(storyArgs.onToolTip)) {
+		await expect(storyArgs.onToolTip).toHaveBeenCalled();
 	}
 }
 

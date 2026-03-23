@@ -41,14 +41,14 @@ import {FlexDiv} from '../../components/FlexDiv';
         </Unstyled>
 
         <RenderSource language={"tsx"}>
-{`
-import { useObserveTheme } from '@apple-pie/slice';
-
-function ThemeBadge() {
-	const theme = useObserveTheme();
-	return <span>Observed theme: {theme.name}</span>;
-}
-`}
-</RenderSource>
+        ```
+        import { useObserveTheme } from '@apple-pie/slice';
+        
+        function ThemeBadge() {
+            const theme = useObserveTheme();
+            return <span>Observed theme: {theme.name}</span>;
+        }
+        ```
+        </RenderSource>
     </FlexDiv>
 </FlexDiv>

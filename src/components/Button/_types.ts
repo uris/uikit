@@ -3,7 +3,8 @@ import type React from 'react';
 import type { ToolTip } from '../sharedTypes';
 
 type ButtonBaseProps = {
-	size?: 'large' | 'medium' | 'text';
+	children?: React.ReactNode;
+	size?: 'large' | 'medium' | 'small';
 	variant?: 'solid' | 'outline' | 'text';
 	state?: 'normal' | 'hover' | 'disabled';
 	width?: string;

@@ -335,7 +335,6 @@ Reason:
 Refactor simpler components first to make the pattern stick:
 
 - `Badge`
-- `Card`
 - `Dot`
 - `Pager`
 - `Switch`

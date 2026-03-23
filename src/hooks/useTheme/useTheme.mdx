@@ -50,23 +50,23 @@ import {FlexDiv} from '../../components/FlexDiv';
         </Unstyled>
 
         <RenderSource language={"tsx"}>
-{`
-import { useTheme } from '@apple-pie/slice';
-
-function ThemeToggle() {
-	const theme = useTheme();
-
-	return (
-		<button
-			type="button"
-			className={theme.colorsClass['core-text-special']}
-			onClick={() => theme.toggle()}
-		>
-			Current: {theme.current.name}
-		</button>
-	);
-}
-`}
-</RenderSource>
+        ```
+        import { useTheme } from '@apple-pie/slice';
+        
+        function ThemeToggle() {
+            const theme = useTheme();
+        
+            return (
+                <button
+                    type="button"
+                    className={theme.colorsClass['core-text-special']}
+                    onClick={() => theme.toggle()}
+                >
+                    Current: {theme.current.name}
+                </button>
+            );
+        }
+        ```
+        </RenderSource>
     </FlexDiv>
 </FlexDiv>

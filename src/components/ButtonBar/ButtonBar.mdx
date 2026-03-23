@@ -34,9 +34,18 @@ import {RenderSource} from '../../../documentation/_components/RenderSource/Rend
             </tr>
           </thead>
           <tbody>
-            <tr><td><code>current</code></td><td><code>number</code></td><td><code>-</code></td><td>Controls `current`.</td></tr>
-            <tr><td><code>label</code></td><td><code>string</code></td><td><code>-</code></td><td>Text/value for `label`.</td></tr>
-            <tr><td><code>options</code></td><td><code>BarButton[]</code></td><td><code>-</code></td><td>Controls `options`.</td></tr>
+            <tr><td><code>buttons</code></td><td><code>BarButton[]</code></td><td><code>[]</code></td><td>Button items rendered in the bar.</td></tr>
+            <tr><td><code>selected</code></td><td><code>number</code></td><td><code>-</code></td><td>Controlled selected button index.</td></tr>
+            <tr><td><code>toggle</code></td><td><code>boolean</code></td><td><code>true</code></td><td>When <code>true</code>, the clicked button becomes the active selection and <code>onChange</code> fires.</td></tr>
+            <tr><td><code>buttonSize</code></td><td><code>number</code></td><td><code>44</code></td><td>Square size for each button in pixels.</td></tr>
+            <tr><td><code>iconSize</code></td><td><code>number</code></td><td><code>20</code></td><td>Icon size in pixels.</td></tr>
+            <tr><td><code>borderSize</code></td><td><code>number</code></td><td><code>1</code></td><td>Border thickness in pixels.</td></tr>
+            <tr><td><code>borderRadius</code></td><td><code>number | string</code></td><td><code>100</code></td><td>Outer corner radius for the bar.</td></tr>
+            <tr><td><code>borderColor</code></td><td><code>string</code></td><td><code>'var(--core-outline-primary)'</code></td><td>Border color token or CSS value.</td></tr>
+            <tr><td><code>bgColor</code></td><td><code>string</code></td><td><code>'var(--core-surface-primary)'</code></td><td>Base button background color.</td></tr>
+            <tr><td><code>bgColorHover</code></td><td><code>string</code></td><td><code>'var(--core-surface-secondary)'</code></td><td>Hover background color.</td></tr>
+            <tr><td><code>bgColorActive</code></td><td><code>string</code></td><td><code>'var(--core-surface-secondary)'</code></td><td>Selected button background color.</td></tr>
+            <tr><td><code>labelColor</code></td><td><code>string</code></td><td><code>'var(--core-text-primary)'</code></td><td>Reserved label color token for bar styling.</td></tr>
             <tr><td><code>...divAttributes</code></td><td><code>{`HTMLAttributes<HTMLDivElement>`}</code></td><td><code>-</code></td><td>Native `div` props pass through (for example `id`, `data-testid`, `className`, `style`, `aria-*`).</td></tr>
           </tbody>
         </table>
@@ -54,6 +63,7 @@ import {RenderSource} from '../../../documentation/_components/RenderSource/Rend
             </tr>
           </thead>
           <tbody>
+            <tr><td><code>onClick</code></td><td><code>{`(button: BarButton) => void`}</code></td></tr>
             <tr><td><code>onChange</code></td><td><code>{`(option: BarButton) => void`}</code></td></tr>
             <tr><td><code>onToolTip</code></td><td><code>{`(tip: ToolTip | null) => void`}</code></td></tr>
           </tbody>
@@ -69,9 +79,13 @@ import { ButtonBar } from '@apple-pie/slice';
 export function ButtonBarExample() {
     return (
         <ButtonBar
-            label="Formatting"
-            options={[{ icon: 'bold', command: 'bold', tip: 'Bold' }, { icon: 'italic', command: 'italic', tip: 'Italic' }]}
-            onChange={(option) => console.log(option)}
+            buttons={[
+                { icon: 'copy', action: 'copy', tip: 'Copy' },
+                { icon: 'filter', action: 'filter', tip: 'Filter' },
+                { icon: 'more', action: 'more', tip: 'More actions' },
+            ]}
+            selected={0}
+            onChange={(button) => console.log(button)}
             id="buttonbar-example"
             data-testid="buttonbar-example"
             className="custom-wrapper"
