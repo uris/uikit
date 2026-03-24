@@ -1,11 +1,12 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { FlexDiv } from 'src/components/FlexDiv';
-import { IconNames } from 'src/components/Icon/_types';
+import { SliceIcons } from 'src/components/Icon/_types';
 import { IconButton } from 'src/components/IconButton';
 import { runIconButtonPlay } from 'src/components/playHelpers';
 import { fn } from 'storybook/test';
 
-const icons = Object.values(IconNames);
+const categories = Object.values(SliceIcons);
+const icons = categories.flatMap((category) => Object.values(category));
 const meta: Meta<typeof IconButton> = {
 	title: 'Components/IconButton',
 	component: IconButton,

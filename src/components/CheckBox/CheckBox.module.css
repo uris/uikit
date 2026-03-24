@@ -23,4 +23,5 @@
 .label {
 	composes: body-m-regular from "../../utils/styling/type.module.css";
 	color: var(--cb-label-color);
+	transition: color var(--motion-water-duration) var(--motion-water-easing) 0s;
 }

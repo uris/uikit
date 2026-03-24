@@ -509,7 +509,16 @@ export async function runChipPlay<TArgs>({
 	await expectCanvas(canvasElement);
 	const canvas = within(canvasElement);
 	const storyArgs = asArgs(args);
-	const chip = canvas.getByText('Chip Label');
+	const chipLabel =
+		typeof storyArgs.children === 'string' ||
+		typeof storyArgs.children === 'number'
+			? String(storyArgs.children)
+			: typeof storyArgs.label === 'string' ||
+					typeof storyArgs.label === 'number'
+				? String(storyArgs.label)
+				: null;
+	if (!chipLabel) return;
+	const chip = canvas.getByText(chipLabel);
 	await userEvent.hover(chip);
 	await userEvent.click(chip);
 	if (isFn(storyArgs.onClick)) {

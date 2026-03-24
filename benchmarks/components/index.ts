@@ -6,12 +6,12 @@
 export { avatarBenchmarkConfig } from './Avatar.bench';
 export { avatarGroupBenchmarkConfig } from './AvatarGroup.bench';
 export { badgeBenchmarkConfig } from './Badge.bench';
+export { cameraBenchmarkConfig } from './Camera.bench';
 export { checkBoxBenchmarkConfig } from './CheckBox.bench';
 export { divInputBenchmarkConfig } from './DivInput.bench';
 export { dotBenchmarkConfig } from './Dot.bench';
 export { draggablePanelBenchmarkConfig } from './DraggablePanel.bench';
 export { dropDownBenchmarkConfig } from './DropDown.bench';
-export { editorSummaryBenchmarkConfig } from './EditorSummary.bench';
 export { errorSummaryBenchmarkConfig } from './ErrorSummary.bench';
 export { fileIconBenchmarkConfig } from './FileIcon.bench';
 export { fileListBenchmarkConfig } from './FileList.bench';

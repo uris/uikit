@@ -29,37 +29,39 @@ $ npm install zustand
             - Imperative helpers read/write state directly and are meant for utilities, services, and other non-React paths.
         </Unstyled>
         <RenderSource language='tsx'>
-{`
-import { useToast, useToastActions } from '@apple-pie/slice/stores/toast';
-
-function SaveButton() {
-	const toast = useToast();
-	const actions = useToastActions();
-
-	return (
-		<button
-			type="button"
-			onClick={() => actions.push({ message: 'Saved', type: 'success' })}
-		>
-			{toast?.message ?? 'Save'}
-		</button>
-	);
-}
-`}
-</RenderSource>
+        ```
+        import { useToast, useToastActions } from '@apple-pie/slice/stores/toast';
+        
+        function SaveButton() {
+            const toast = useToast();
+            const actions = useToastActions();
+        
+            return (
+                <button
+                    type="button"
+                    onClick={() => actions.push({ message: 'Saved', type: 'success' })}
+                >
+                    {toast?.message ?? 'Save'}
+                </button>
+            );
+        }
+        ```
+        </RenderSource>
+    
         <RenderSource language='tsx'>
-{`
-import { toastActions, getToast } from '@apple-pie/slice/stores/toast';
-
-export function notifyError() {
-	toastActions.push({ message: 'Something failed', type: 'error' });
-}
-
-export function currentToastMessage() {
-	return getToast()?.message ?? null;
-}
-`}
-</RenderSource>
+        ```
+        import { toastActions, getToast } from '@apple-pie/slice/stores/toast';
+        
+        export function notifyError() {
+            toastActions.push({ message: 'Something failed', type: 'error' });
+        }
+        
+        export function currentToastMessage() {
+            return getToast()?.message ?? null;
+        }
+        ```
+        </RenderSource>
+    
         <Unstyled>
             <Spacer size={24} />
             <p className={"note"}>Tip: import store helpers from subpaths like `@apple-pie/slice/stores/toast` so bundlers can keep your app bundle focused on what you actually use.</p>

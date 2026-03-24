@@ -1,4 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
+import React, { useEffect } from 'react';
 import { FlexDiv } from 'src/components/FlexDiv';
 import { DoneCheck } from 'src/components/Progress';
 import { fn } from 'storybook/test';
@@ -27,12 +28,4 @@ export const Default: StoryObj<typeof DoneCheck> = {
 			</FlexDiv>
 		);
 	},
-};
-
-export const Static: StoryObj<typeof DoneCheck> = {
-	args: {
-		...meta.args,
-		play: false,
-	},
-	render: Default.render,
 };

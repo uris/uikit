@@ -12,15 +12,34 @@ export const DoneCheck = React.memo((props: DoneCheckProps) => {
 		stroke = 1.5,
 		color = theme.current.colors['feedback-positive'],
 		play = true,
-		delay = 0,
+		delay = 5,
 		duration = 1,
 		didStart,
 		didEnd,
 	} = props;
-	const [playing, setPlaying] = useState<boolean>(false);
+	const [playing, setPlaying] = useState<boolean>(!play);
 
-	// sync the local animation state from the controlled play prop
-	useEffect(() => setPlaying(play), [play]);
+	// stage the mount animation across paint frames so the scale transition can run
+	useEffect(() => {
+		let frameOne = 0;
+		let frameTwo = 0;
+
+		if (play) {
+			setPlaying(false);
+			frameOne = requestAnimationFrame(() => {
+				frameTwo = requestAnimationFrame(() => {
+					setPlaying(true);
+				});
+			});
+		} else {
+			setPlaying(true);
+		}
+
+		return () => {
+			if (frameOne) cancelAnimationFrame(frameOne);
+			if (frameTwo) cancelAnimationFrame(frameTwo);
+		};
+	}, [play]);
 
 	// resolve the scale transition timing for the check animation
 	const transition = useMemo(() => {
@@ -32,9 +51,9 @@ export const DoneCheck = React.memo((props: DoneCheckProps) => {
 		return {
 			'--icon-size': `${size}px`,
 			'--icon-scale': playing ? 1 : 0,
-			'--icon-transition': playing ? transition : 'unset',
+			'--icon-transition': play ? transition : 'unset',
 		} as React.CSSProperties;
-	}, [size, playing, transition]);
+	}, [size, playing, play, transition]);
 
 	/* START.DEBUG */
 	useTrackRenders(props, 'DoneCheck');

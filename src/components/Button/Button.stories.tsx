@@ -7,6 +7,13 @@ import { fn } from 'storybook/test';
 const meta: Meta<typeof Button> = {
 	title: 'Components/Button',
 	component: Button,
+	argTypes: {
+		children: {
+			table: {
+				disable: true,
+			},
+		},
+	},
 	args: {
 		size: 'large',
 		variant: 'solid',

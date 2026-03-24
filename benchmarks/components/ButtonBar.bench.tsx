@@ -1,6 +1,6 @@
-import { uiButtonBarConfig } from '../configs/all-configs';
+import { buttonBarConfig } from '../configs/all-configs';
 import { registerBenchConfig } from '../utils/registerBenchConfig';
 
-registerBenchConfig(uiButtonBarConfig);
+registerBenchConfig(buttonBarConfig);
 
-export const buttonBarBenchmarkConfig = uiButtonBarConfig;
+export const buttonBarBenchmarkConfig = buttonBarConfig;

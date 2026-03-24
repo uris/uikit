@@ -1,6 +1,6 @@
-import { uiLabelConfig } from '../configs/all-configs';
+import { labelConfig } from '../configs/all-configs';
 import { registerBenchConfig } from '../utils/registerBenchConfig';
 
-registerBenchConfig(uiLabelConfig);
+registerBenchConfig(labelConfig);
 
-export const labelBenchmarkConfig = uiLabelConfig;
+export const labelBenchmarkConfig = labelConfig;

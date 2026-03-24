@@ -1,8 +1,9 @@
 export { copyToClipboard, hexToRgb } from './functions/misc';
 export { debounce } from './functions/debounce';
 export * from './functions/colors';
-export { SSEConnection, WSConnection } from './objects';
+export { IndexedDB, SSEConnection, WSConnection } from './objects';
 export type {
+	IndexedDBOptions,
 	SSECustomEvent,
 	SSEConnectionCloseOption,
 	SSEConnectionOptions,

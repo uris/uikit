@@ -2,6 +2,7 @@ import {Meta, Unstyled} from '@storybook/addon-docs/blocks';
 import {FlexDiv} from '../FlexDiv';
 import * as ChipStories from './Chip.stories';
 import {RenderSource} from '../../../documentation/_components/RenderSource/RenderSource';
+import {Spacer} from "../Spacer";
 
 <Meta of={ChipStories} />
 
@@ -34,17 +35,29 @@ import {RenderSource} from '../../../documentation/_components/RenderSource/Rend
             </tr>
           </thead>
           <tbody>
-            <tr><td><code>background</code></td><td><code>string</code></td><td><code>-</code></td><td>Text/value for `background`.</td></tr>
-            <tr><td><code>disabled</code></td><td><code>boolean</code></td><td><code>-</code></td><td>Boolean flag controlling `disabled`.</td></tr>
-            <tr><td><code>focused</code></td><td><code>boolean</code></td><td><code>-</code></td><td>Boolean flag controlling `focused`.</td></tr>
-            <tr><td><code>icon</code></td><td><code>{`IconNames | string`}</code></td><td><code>-</code></td><td>Icon configuration for `icon`.</td></tr>
-            <tr><td><code>iconColor</code></td><td><code>string</code></td><td><code>-</code></td><td>Color token/value for `iconColor`.</td></tr>
-            <tr><td><code>iconRight</code></td><td><code>boolean</code></td><td><code>-</code></td><td>Boolean flag controlling `iconRight`.</td></tr>
-            <tr><td><code>label</code></td><td><code>string</code></td><td><code>-</code></td><td>Text/value for `label`.</td></tr>
-            <tr><td><code>labelSize</code></td><td><code>{`'s' | 'm' | 'l'`}</code></td><td><code>-</code></td><td>Sizing/layout setting for `labelSize`.</td></tr>
-            <tr><td><code>tooltip</code></td><td><code>string</code></td><td><code>-</code></td><td>Text/value for `tooltip`.</td></tr>
-            <tr><td><code>unframed</code></td><td><code>boolean</code></td><td><code>-</code></td><td>Boolean flag controlling `unframed`.</td></tr>
-            <tr><td><code>variant</code></td><td><code>{`'small' | 'regular'`}</code></td><td><code>-</code></td><td>Controls `variant`.</td></tr>
+            <tr><td><code>children</code></td><td><code>React.ReactNode</code></td><td><code>-</code></td><td>Optional custom content rendered instead of <code>label</code>.</td></tr>
+            <tr><td><code>label</code></td><td><code>string</code></td><td><code>-</code></td><td>Text rendered when <code>children</code> is not provided.</td></tr>
+            <tr><td><code>labelSize</code></td><td><code>{`'s' | 'm' | 'l'`}</code></td><td><code>'m'</code></td><td>Typography size applied to the chip label.</td></tr>
+            <tr><td><code>labelColor</code></td><td><code>string</code></td><td><code>'var(--core-text-primary)'</code></td><td>Label color in the default state.</td></tr>
+            <tr><td><code>labelColorHover</code></td><td><code>string</code></td><td><code>'var(--core-text-special)'</code></td><td>Label color while the chip is hovered.</td></tr>
+            <tr><td><code>icon</code></td><td><code>string</code></td><td><code>-</code></td><td>Optional icon name to render alongside the label.</td></tr>
+            <tr><td><code>iconSize</code></td><td><code>number</code></td><td><code>20</code></td><td>Pixel size passed to the icon renderer.</td></tr>
+            <tr><td><code>iconPosition</code></td><td><code>{`'left' | 'right'`}</code></td><td><code>'left'</code></td><td>Controls whether the icon renders before or after the label.</td></tr>
+            <tr><td><code>iconColor</code></td><td><code>string</code></td><td><code>'var(--core-text-primary)'</code></td><td>Icon color in the default state.</td></tr>
+            <tr><td><code>iconColorHover</code></td><td><code>string</code></td><td><code>'var(--core-text-special)'</code></td><td>Icon color while the chip is hovered.</td></tr>
+            <tr><td><code>bgColor</code></td><td><code>string</code></td><td><code>'transparent'</code></td><td>Background color in the default state.</td></tr>
+            <tr><td><code>bgColorHover</code></td><td><code>string</code></td><td><code>'var(--core-surface-secondary)'</code></td><td>Background color while the chip is hovered.</td></tr>
+            <tr><td><code>disabled</code></td><td><code>boolean</code></td><td><code>false</code></td><td>Disables click and mouse-down handlers and applies disabled colors.</td></tr>
+            <tr><td><code>focused</code></td><td><code>boolean</code></td><td><code>false</code></td><td>Focus-state flag exposed by the API.</td></tr>
+            <tr><td><code>tooltip</code></td><td><code>string</code></td><td><code>-</code></td><td>Tooltip label emitted through <code>onToolTip</code> on hover.</td></tr>
+            <tr><td><code>borderSize</code></td><td><code>number</code></td><td><code>1</code></td><td>Border width in pixels.</td></tr>
+            <tr><td><code>borderColor</code></td><td><code>string</code></td><td><code>'var(--core-text-primary)'</code></td><td>Border color in the default state.</td></tr>
+            <tr><td><code>borderColorHover</code></td><td><code>string</code></td><td><code>'var(--core-text-special)'</code></td><td>Border color while the chip is hovered.</td></tr>
+            <tr><td><code>borderColorDisabled</code></td><td><code>string</code></td><td><code>'var(--core-text-disabled)'</code></td><td>Border color used when <code>disabled</code> is true.</td></tr>
+            <tr><td><code>borderRadius</code></td><td><code>number</code></td><td><code>8</code></td><td>Corner radius in pixels.</td></tr>
+            <tr><td><code>gap</code></td><td><code>number</code></td><td><code>4</code></td><td>Spacing between the icon and label in pixels.</td></tr>
+            <tr><td><code>paddingTops</code></td><td><code>number</code></td><td><code>8</code></td><td>Vertical padding in pixels.</td></tr>
+            <tr><td><code>paddingSides</code></td><td><code>number</code></td><td><code>16</code></td><td>Horizontal padding in pixels.</td></tr>
             <tr><td><code>...divAttributes</code></td><td><code>{`HTMLAttributes<HTMLDivElement>`}</code></td><td><code>-</code></td><td>Native `div` props pass through (for example `id`, `data-testid`, `className`, `style`, `aria-*`).</td></tr>
           </tbody>
         </table>
@@ -64,32 +77,25 @@ import {RenderSource} from '../../../documentation/_components/RenderSource/Rend
           <tbody>
             <tr><td><code>onToolTip</code></td><td><code>{`(tip: ToolTip | null) => void`}</code></td></tr>
             <tr><td><code>onClick</code></td><td><code>{`(e: React.MouseEvent<HTMLDivElement> | undefined) => void`}</code></td></tr>
-            <tr><td><code>onMouseDown</code></td><td><code>{`(e: React.MouseEvent<HTMLDivElement> | undefined) => void`}</code></td></tr>
           </tbody>
         </table>
 
         ## Code Examples
         </Unstyled>
 
-        <RenderSource language={"tsx"}>
-```
-import { Chip } from '@apple-pie/slice';
-
-export function ChipExample() {
-    return (
-        <Chip
-            label="In Review"
-            icon="clock"
-            variant="regular"
-            onClick={() => console.log('clicked')}
-            id="chip-example"
-            data-testid="chip-example"
-            className="custom-wrapper"
-            style={{ marginTop: 8, maxWidth: 480 }}
-        />
-    );
-}
-```
+        <RenderSource>
+            ```
+            import { Chip } from '@apple-pie/slice';
+            
+            export function ChipExample() {
+                return (
+                    <Chip icon="clock" onClick={() => console.log('clicked')}>
+                        In Review
+                    </Chip>
+                );
+            }
+            ```
         </RenderSource>
+    <Spacer size={64} />
     </FlexDiv>
 </FlexDiv>

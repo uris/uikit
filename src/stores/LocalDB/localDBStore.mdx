@@ -1,0 +1,282 @@
+import {Meta, Unstyled} from '@storybook/addon-docs/blocks';
+import {RenderSource} from '../../../documentation/_components/RenderSource/RenderSource';
+import {FlexDiv} from '../../components/FlexDiv';
+import {Spacer} from '../../components/Spacer';
+import NoteSection from '../../../documentation/_components/Notice/Notice';
+
+<Meta title="Stores/Local DB Store" />
+
+<FlexDiv width={'fill'} height={'fill'} alignItems={'center'}>
+    <FlexDiv width={'fill'} maxWidth={760} height={'auto'}>
+        <Unstyled>
+        <NoteSection>
+            Slice stores use a module-level singleton pattern: each store is created once when the module is loaded, and every import of that module shares the same store instance.
+        </NoteSection>
+
+        # LocalDBStore
+        Slice's `localDBStore` is a global Zustand store that manages one or more `IndexedDB` connections and keeps a reactive in-memory snapshot of each store's records. IndexedDB stores have no size limit (other than available disk space) and can store complex objects like files, etc. that local store cannot.
+            
+        The goal is to simplify using the browser's local indexed database as state for your react apps. If you need full control over indexedDB, you can always use the `IndexedDB` class directly. 
+            
+        ## Adding an indexedDB store
+        To create or access an IndexedDB local store, call `addStore(name, options)`. If it does not exist, a new local store will be created. Otherwise, it will be connected and state will be refreshed.
+            
+        When you add a store, there are a couple of important options to keep in mind:
+        - `key?: string` - this key will be used to derive record keys from object values.
+        - `create?: boolean` - use this flag to prevent store creation when the database or object doesn't exist.
+
+        <RenderSource language={'tsx'}>
+        ```
+        import { useEffect, type ReactNode } from 'react';
+        import { useManageLocalDB } from '@apple-pie/slice/stores';
+            
+        export type User = {
+            id: string; // "id" will be used as the key for the DB adds, updates, etc.
+            name: string;
+            email: string;
+        };
+        
+        export function App({ children }: { children: ReactNode }) {
+            const { addStore } = useManageLocalDB();
+                    
+            useEffect(() => {
+                void addStore('users', { key: 'id' });
+            }, []);
+        
+            return children;
+        }
+        ```
+        </RenderSource>
+
+        ## Adding and removing values
+        
+        Once you have added the store, you can add, update, and remove values from anywhere in your app by calling the bound store actions.
+
+        <RenderSource language={'tsx'}>
+            ```
+            import { useLocalDB, useLocalDBValues } from '@apple-pie/slice/stores';
+
+            type User = {
+                id: string;
+                name: string;
+                email: string;
+            };
+
+            export function AddUsersExample() {
+                const users = useLocalDBValues<User>('users');
+                const { add, set, remove } = useLocalDB('users');
+
+                // add user(s) - if a key already exists, add will fail and generate an error
+                async function seedUsers() {
+                    const result = await add([
+                        { id: 'user-1', name: 'doe', email: 'doe@example.com' },
+                        { id: 'user-2', name: 'john', email: 'john@example.com' },
+                    ]);
+
+                    if (!result.ok) {
+                        console.error(result.error.message);
+                    }
+                }
+
+                // update user(s) - set uses IndexedDB put semantics, so it upserts
+                async function updateUser() {
+                    const result = await set({
+                        id: 'user-1',
+                        name: 'doe',
+                        email: 'updated@example.com',
+                    });
+
+                    if (!result.ok) {
+                        console.error(result.error.message);
+                    }
+                }
+
+                // remove user(s) - remove derives the key from the object value
+                async function deleteUser() {
+                    const result = await remove({
+                        id: 'user-1',
+                        name: 'doe',
+                        email: 'updated@example.com',
+                    });
+
+                    if (!result.ok) {
+                        console.error(result.error.message);
+                    }
+                }
+
+                return (
+                    <div>
+                        <button onClick={seedUsers}>Seed users</button>
+                        <button onClick={updateUser}>Update user-1</button>
+                        <button onClick={deleteUser}>Delete user-1</button>
+                        <div>Total users: {users.length}</div>
+                    </div>
+                );
+            }
+        ```
+        </RenderSource>
+
+        ## Accessing indexedDB store values
+    
+        Store values update every time an action is taken on the IndexedDB store. You can use `useLocalDBValues` anywhere in your app to read the latest cached values.
+
+        <RenderSource language={'tsx'}>
+            ```
+            import { useLocalDBValues } from '@apple-pie/slice/stores';
+
+            type User = {
+                id: string;
+                name: string;
+                email: string;
+            };
+    
+            export function ListUsers() {
+                const allUsers = useLocalDBValues<User>('users'); // the first parameter is always the store name
+                const allUsersNamedJohn = useLocalDBValues<User>('users', 'name', 'john');
+    
+                return (
+                    <>
+                        All users:
+                        { allUsers.map((user: User) => {
+                            return <div key={user.id}>{user.name}</div>
+                        })}
+                        Users named John
+                        { allUsersNamedJohn.map((user: User) => {
+                            return <div key={user.id}>{user.name}</div>
+                        })}
+                    </>
+                );
+            }
+        ```
+        </RenderSource>
+
+    ## Exports
+        <table style={{width: '100%'}}>
+          <colgroup>
+            <col style={{width: '1%'}} />
+            <col style={{width: '30%'}} />
+            <col style={{width: '69%'}} />
+          </colgroup>
+          <thead>
+            <tr>
+              <th className={'left'}>Export</th>
+              <th className={'left'}>Type</th>
+              <th className={'left'}>Description</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td><code>useLocalDBStore</code></td><td><code>Zustand store hook</code></td><td>Main store hook for custom selectors over the raw state.</td></tr>
+            <tr><td><code>useLocalDB(name)</code></td><td><code>{`() => { refresh, set, add, remove, clear, destroy }`}</code></td><td>Returns actions already bound to one named store.</td></tr>
+            <tr><td><code>useLocalDBValues(name)</code></td><td><code>{`(name: string) => TValue[]`}</code></td><td>Returns all cached values for the store.</td></tr>
+            <tr><td><code>useLocalDBValues(name, key)</code></td><td><code>{`(name: string, key: IDBValidKey) => TValue | null`}</code></td><td>Returns one cached value by record key.</td></tr>
+            <tr><td><code>useLocalDBValues(name, field, value)</code></td><td><code>{`(name: string, field: keyof TValue, value: TValue[keyof TValue]) => TValue[]`}</code></td><td>Returns cached values whose field strictly equals the provided value.</td></tr>
+            <tr><td><code>useLocalDBError(name)</code></td><td><code>{`(name: string) => string | null`}</code></td><td>Returns the latest stored error for that named store.</td></tr>
+            <tr><td><code>useManageLocalDB()</code></td><td><code>{`() => LocalDBActions`}</code></td><td>Returns the full LocalDB action set for creating, refreshing, mutating, clearing, and deleting named stores.</td></tr>
+            <tr><td><code>localDBActions</code></td><td><code>LocalDBActions</code></td><td>Deprecated compatibility alias for the same action set.</td></tr>
+            <tr><td><code>LocalDBActionResult</code></td><td><code>{`{ ok: true } | { ok: false, error: Error }`}</code></td><td>Named result type returned by non-value actions such as <code>addStore</code> and <code>removeValue</code>.</td></tr>
+            <tr><td><code>LocalDBActionValueResult&lt;T&gt;</code></td><td><code>{`{ ok: true, value: T } | { ok: false, error: Error }`}</code></td><td>Named result type returned by value-producing actions such as <code>addValue</code> and <code>setValue</code>.</td></tr>
+          </tbody>
+        </table>
+
+        ## Actions
+        <table style={{width: '100%'}}>
+          <colgroup>
+            <col style={{width: '1%'}} />
+            <col style={{width: '34%'}} />
+            <col style={{width: '65%'}} />
+          </colgroup>
+          <thead>
+            <tr>
+              <th className={'left'}>Action</th>
+              <th className={'left'}>Signature</th>
+              <th className={'left'}>Behavior</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td><code>addStore</code></td><td><code>{`(name, options?) => Promise<{ ok: true } | { ok: false, error: Error }>`}</code></td><td>Creates or reconnects a named store, reads its current contents, and caches them as `records`.</td></tr>
+            <tr><td><code>removeStore</code></td><td><code>{`(name) => Promise<{ ok: true } | { ok: false, error: Error }>`}</code></td><td>Closes the connection and removes the store from Zustand without deleting IndexedDB data.</td></tr>
+            <tr><td><code>refreshStore</code></td><td><code>{`(name) => Promise<{ ok: true } | { ok: false, error: Error }>`}</code></td><td>Re-reads keys and values from IndexedDB and replaces the cached `records` snapshot.</td></tr>
+            <tr><td><code>setValue</code></td><td><code>{`(name, value | value[]) => Promise<{ ok: true, value: IDBValidKey | IDBValidKey[] } | { ok: false, error: Error }>`}</code></td><td>Upserts one or many records using IndexedDB <code>put</code> semantics. Keys are derived from the configured store <code>key</code> field.</td></tr>
+            <tr><td><code>addValue</code></td><td><code>{`(name, value | value[]) => Promise<{ ok: true, value: IDBValidKey | IDBValidKey[] } | { ok: false, error: Error }>`}</code></td><td>Insert-only write using IndexedDB <code>add</code>. It does not derive a separate key in localDBStore.</td></tr>
+            <tr><td><code>removeValue</code></td><td><code>{`(name, value | value[]) => Promise<{ ok: true } | { ok: false, error: Error }>`}</code></td><td>Deletes one or many records by deriving the key from each provided object.</td></tr>
+            <tr><td><code>clearStore</code></td><td><code>{`(name) => Promise<{ ok: true } | { ok: false, error: Error }>`}</code></td><td>Clears all values from IndexedDB and empties the cached `records` array.</td></tr>
+            <tr><td><code>destroyStore</code></td><td><code>{`(name) => Promise<{ ok: true } | { ok: false, error: Error }>`}</code></td><td>Deletes the entire IndexedDB database and removes the store from Zustand.</td></tr>
+          </tbody>
+        </table>
+
+        ## State shape
+        The Zustand state has this top-level shape:
+        <table style={{width: '100%'}}>
+          <colgroup>
+            <col style={{width: '1%'}} />
+            <col style={{width: '30%'}} />
+            <col style={{width: '69%'}} />
+          </colgroup>
+          <thead>
+            <tr>
+              <th className={'left'}>Field</th>
+              <th className={'left'}>Type</th>
+              <th className={'left'}>Description</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td><code>stores</code></td><td><code>LocalDBConnection[]</code></td><td>Currently registered local DB stores.</td></tr>
+            <tr><td><code>actions</code></td><td><code>LocalDBActions</code></td><td>Imperative actions shared by hooks and non-React callers.</td></tr>
+          </tbody>
+        </table>
+
+        Each `LocalDBConnection` contains:
+        <table style={{width: '100%'}}>
+          <colgroup>
+            <col style={{width: '1%'}} />
+            <col style={{width: '30%'}} />
+            <col style={{width: '69%'}} />
+          </colgroup>
+          <thead>
+            <tr>
+              <th className={'left'}>Field</th>
+              <th className={'left'}>Type</th>
+              <th className={'left'}>Description</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td><code>name</code></td><td><code>string</code></td><td>Name of the localDB entry, database, and object store.</td></tr>
+            <tr><td><code>connection</code></td><td><code>IndexedDB&lt;TValue&gt;</code></td><td>Active low-level IndexedDB wrapper instance.</td></tr>
+            <tr><td><code>key</code></td><td><code>string | null</code></td><td>Configured field name used by value-derived actions.</td></tr>
+            <tr><td><code>records</code></td><td><code>LocalDBRecord&lt;TValue&gt;[]</code></td><td>Cached array of record objects shaped as <code>{`{ key, value }[]`}</code>.</td></tr>
+            <tr><td><code>initialized</code></td><td><code>boolean</code></td><td>Set to <code>true</code> after the store has been initialized and read successfully.</td></tr>
+            <tr><td><code>error</code></td><td><code>string | null</code></td><td>Latest captured mutation error for that store.</td></tr>
+          </tbody>
+        </table>
+
+        `LocalDBRecord<TValue>` is:
+        <RenderSource language={'ts'}>
+        ```
+        type LocalDBRecord<TValue = unknown> = {
+            key: IDBValidKey;
+            value: TValue;
+        };
+        ```
+        </RenderSource>
+
+        ## Runtime rules and edge cases
+        - `useLocalDBValues(...)` reads from the cached Zustand snapshot, not directly from IndexedDB on every render.
+        - `useLocalDBValues(name)` always returns an array.
+        - `useLocalDBValues(name, key)` compares keys with IndexedDB-aware equality logic, including arrays and `Date` keys.
+        - `useLocalDBValues(name, field, value)` filters cached values with strict equality.
+        - `setValue` and `removeValue` require `options.key` to be configured when the store is created.
+        - `setValue` and `removeValue` expect object values, because the key is derived from a field on each object.
+        - `setValue` uses IndexedDB `put`, so it can create or overwrite records.
+        - `addValue` uses IndexedDB `add`, so it is insert-only and rejects on duplicate keys.
+        - `addValue` does not derive a manual key in `localDBStore`; it relies on the underlying object store configuration such as key path or `autoIncrement`.
+        - After successful writes, deletes, or refreshes, the store re-reads all keys and values and replaces the cached `records`.
+        - Every Zustand store action returns a result object instead of throwing: either `{ ok: true }`, `{ ok: true, value }`, or `{ ok: false, error }`.
+        - All store-managed failures are written to the store `error` field as well as returned in the action result.
+        - `removeStore` only unregisters the Zustand entry. It does not delete the IndexedDB database.
+        - `destroyStore` deletes the whole IndexedDB database for that store name.
+        - The Storybook demo uses a dedicated database named `storybook-localdb-messages-v2` so older demo schemas do not interfere with current behavior.
+        </Unstyled>
+        
+        <Spacer size={64} />   
+    </FlexDiv>
+</FlexDiv>

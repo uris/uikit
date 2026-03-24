@@ -11,8 +11,8 @@ const meta: Meta<typeof Camera> = {
 	component: Camera,
 	args: {
 		userProfile: {
-			first: 'Jane',
-			last: 'Appleseed',
+			name: 'John Does',
+			email: 'john.doe@example.com',
 		},
 	},
 };

@@ -1,0 +1,222 @@
+import {Meta, Unstyled} from '@storybook/addon-docs/blocks';
+import {RenderSource} from '../../../../documentation/_components/RenderSource/RenderSource';
+import {FlexDiv} from '../../../components/FlexDiv';
+import NoteSection from '../../../../documentation/_components/Notice/Notice';
+import {Spacer} from '../../../components/Spacer';
+
+<Meta title="Utils/IndexedDB Class" />
+
+<FlexDiv width={'fill'} height={'fill'} alignItems={'center'}>
+    <FlexDiv width={'fill'} maxWidth={760} height={'auto'}>
+        <Unstyled>
+        <NoteSection>
+            `IndexedDB` is a low-level browser utility for reading and writing values in a named IndexedDB object store. Use it directly when you want explicit control over store creation, reads, writes, and database cleanup.
+        </NoteSection>
+
+        # IndexedDB Class
+        Typed wrapper around the browser `indexedDB` API. It supports:
+        - connecting to a named database and object store
+        - optionally creating the store during initialization
+        - reading one, all, or all keys
+        - insert-only writes with `add`
+        - upsert writes with `set` and `update`
+        - deleting records, clearing a store, and deleting the database
+
+        ## Import
+        <RenderSource language={'tsx'}>
+{`
+import { IndexedDB } from '@apple-pie/slice/utils/objects';
+`}
+</RenderSource>
+
+        ## Generic type parameter
+        `IndexedDB` accepts one generic type parameter:
+        <table style={{width: '100%'}}>
+          <colgroup>
+            <col style={{width: '1%'}} />
+            <col style={{width: '25%'}} />
+            <col style={{width: '98%'}} />
+          </colgroup>
+          <thead>
+            <tr>
+              <th className={'left'}>Generic</th>
+              <th className={'left'}>Default</th>
+              <th className={'left'}>Description</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td><code>T</code></td><td><code>unknown</code></td><td>Value type stored in the object store.</td></tr>
+          </tbody>
+        </table>
+
+        ## Constructor
+        `new IndexedDB(storeName, options)`
+
+        <table style={{width: '100%'}}>
+          <colgroup>
+            <col style={{width: '1%'}} />
+            <col style={{width: '24%'}} />
+            <col style={{width: '98%'}} />
+          </colgroup>
+          <thead>
+            <tr>
+              <th className={'left'}>Argument</th>
+              <th className={'left'}>Type</th>
+              <th className={'left'}>Description</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td><code>storeName</code></td><td><code>string</code></td><td>Name of the IndexedDB object store to use.</td></tr>
+            <tr><td><code>options.databaseName</code></td><td><code>string</code></td><td>Database name to open. Defaults to <code>storeName</code>.</td></tr>
+            <tr><td><code>options.version</code></td><td><code>number</code></td><td>IndexedDB database version. Defaults to <code>1</code>.</td></tr>
+            <tr><td><code>options.key</code></td><td><code>string</code></td><td>Optional object key field used when the store is created.</td></tr>
+            <tr><td><code>options.autoIncrement</code></td><td><code>boolean</code></td><td>When <code>true</code>, the store generates numeric keys for new records created without explicit keys.</td></tr>
+          </tbody>
+        </table>
+
+        <RenderSource language={'tsx'}>
+{`
+type User = {
+	id: string;
+	name: string;
+};
+
+const users = new IndexedDB<User>('users', {
+	key: 'id',
+	version: 1,
+});
+`}
+</RenderSource>
+
+        ## Initialization
+        Call `initialize()` before reading or writing. This opens the database connection and creates the store if it does not already exist.
+
+        <table style={{width: '100%'}}>
+          <colgroup>
+            <col style={{width: '1%'}} />
+            <col style={{width: '24%'}} />
+            <col style={{width: '98%'}} />
+          </colgroup>
+          <thead>
+            <tr>
+              <th className={'left'}>Method</th>
+              <th className={'left'}>Type</th>
+              <th className={'left'}>Description</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td><code>initialize(create?)</code></td><td><code>{`(create?: boolean) => Promise<void>`}</code></td><td>Opens the database. When <code>create</code> is <code>false</code>, initialization rejects instead of creating a missing store.</td></tr>
+          </tbody>
+        </table>
+
+        <RenderSource language={'tsx'}>
+{`
+await users.initialize();
+
+const existingUsers = new IndexedDB<User>('users');
+
+await existingUsers.initialize(false);
+`}
+</RenderSource>
+
+        ## Read methods
+        <table style={{width: '100%'}}>
+          <colgroup>
+            <col style={{width: '1%'}} />
+            <col style={{width: '24%'}} />
+            <col style={{width: '98%'}} />
+          </colgroup>
+          <thead>
+            <tr>
+              <th className={'left'}>Method</th>
+              <th className={'left'}>Type</th>
+              <th className={'left'}>Description</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td><code>get(key)</code></td><td><code>{`(key: IDBValidKey) => Promise<T | null>`}</code></td><td>Returns one record by key, or <code>null</code> when it is not found.</td></tr>
+            <tr><td><code>getAll()</code></td><td><code>{`() => Promise<T[]>`}</code></td><td>Returns all values from the object store.</td></tr>
+            <tr><td><code>getAllKeys()</code></td><td><code>{`() => Promise<IDBValidKey[]>`}</code></td><td>Returns all record keys from the object store.</td></tr>
+          </tbody>
+        </table>
+
+        <RenderSource language={'tsx'}>
+{`
+const user = await users.get('user-1');
+const allUsers = await users.getAll();
+const allKeys = await users.getAllKeys();
+`}
+</RenderSource>
+
+        ## Write methods
+        <table style={{width: '100%'}}>
+          <colgroup>
+            <col style={{width: '1%'}} />
+            <col style={{width: '24%'}} />
+            <col style={{width: '98%'}} />
+          </colgroup>
+          <thead>
+            <tr>
+              <th className={'left'}>Method</th>
+              <th className={'left'}>Type</th>
+              <th className={'left'}>Description</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td><code>set(key, value)</code></td><td><code>{`(key: IDBValidKey, value: T) => Promise<IDBValidKey>`}</code></td><td>Upserts a value. If the key exists, the record is replaced. If the key is missing, a new record is created.</td></tr>
+            <tr><td><code>add(value, key?)</code></td><td><code>{`(value: T, key?: IDBValidKey) => Promise<IDBValidKey>`}</code></td><td>Inserts a new value. Rejects when the provided key already exists.</td></tr>
+            <tr><td><code>update(key, value)</code></td><td><code>{`(key: IDBValidKey, value: T) => Promise<IDBValidKey>`}</code></td><td>Alias of <code>set</code>. Uses IndexedDB <code>put</code> semantics.</td></tr>
+            <tr><td><code>remove(key)</code></td><td><code>{`(key: IDBValidKey) => Promise<void>`}</code></td><td>Deletes a single record by key.</td></tr>
+            <tr><td><code>clear()</code></td><td><code>{`() => Promise<void>`}</code></td><td>Deletes every record from the object store.</td></tr>
+          </tbody>
+        </table>
+
+        <RenderSource language={'tsx'}>
+{`
+await users.set('user-1', { id: 'user-1', name: 'Uri' });
+await users.add({ id: 'user-2', name: 'Sam' });
+await users.update('user-1', { id: 'user-1', name: 'Updated Uri' });
+await users.remove('user-2');
+await users.clear();
+`}
+</RenderSource>
+
+        ## Lifecycle methods
+        <table style={{width: '100%'}}>
+          <colgroup>
+            <col style={{width: '1%'}} />
+            <col style={{width: '24%'}} />
+            <col style={{width: '98%'}} />
+          </colgroup>
+          <thead>
+            <tr>
+              <th className={'left'}>Method</th>
+              <th className={'left'}>Type</th>
+              <th className={'left'}>Description</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td><code>close()</code></td><td><code>{`() => Promise<void>`}</code></td><td>Closes the active database connection and clears the in-memory handle.</td></tr>
+            <tr><td><code>destroy()</code></td><td><code>{`() => Promise<void>`}</code></td><td>Deletes the whole IndexedDB database identified by <code>databaseName</code>.</td></tr>
+          </tbody>
+        </table>
+
+        <RenderSource language={'tsx'}>
+```
+await users.close();
+await users.destroy();
+```
+</RenderSource>
+
+        ## Notes
+        - `IndexedDB` is browser-only. It throws when `indexedDB` is not available.
+        - `key` is the field name used as the store key when the object store is created.
+        - `add` is insert-only and rejects on duplicate keys.
+        - `set` uses IndexedDB `put`, so it updates existing keys and creates missing ones.
+        - `update` is currently an alias of `set`.
+        - If the database exists but the store does not, creating that store requires an IndexedDB version upgrade.
+        </Unstyled>
+        
+        <Spacer size={64} />
+    </FlexDiv>
+</FlexDiv>

@@ -80,10 +80,8 @@ export const TextArea = React.memo((props: TextAreaProps) => {
 
 	// sync the textarea value from the controlled prop
 	useEffect(() => {
-		if (value) {
-			setText(value);
-			setInvalid(runValidation(value));
-		}
+		setText(value);
+		setInvalid(runValidation(value));
 	}, [value, runValidation]);
 
 	// re-measure the textarea when the configured row count changes

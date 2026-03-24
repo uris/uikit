@@ -12,6 +12,11 @@ const meta: Meta<typeof CheckBox> = {
 			control: { type: 'radio' }, // Dropdown selection
 			options: [true, false, 'mixed'], // Enum values as options
 		},
+		children: {
+			table: {
+				disable: true,
+			},
+		},
 	},
 	args: {
 		size: 20,

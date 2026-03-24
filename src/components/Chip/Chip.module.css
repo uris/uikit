@@ -4,16 +4,21 @@
 	width: min-content;
 	min-height: 30px;
 	gap: var(--ui-chip-gap);
-	background: var(--ui-chip-background);
+	background: var(--ui-chip-bg-color);
 	line-height: 1em;
-	color: var(--ui-chip-color);
-	border: var(--ui-chip-border) solid var(--ui-chip-border-color);
+	color: var(--ui-chip-label-color);
+	border: var(--ui-chip-border-size) solid var(--ui-chip-border-color);
 	border-radius: var(--ui-chip-border-radius);
 	transition: all var(--motion-water-duration) var(--motion-water) 0s;
-	cursor: pointer;
+	cursor: var(--ui-chip-cursor);
 	white-space: nowrap;
 	user-select: none;
 	-webkit-user-select: none;
+	&:hover {
+		border-color: var(--ui-chip-border-color-hover);
+		background: var(--ui-chip-bg-color-hover);
+		color: var(--ui-chip-label-color-hover);
+	}
 }
 
 .icon {

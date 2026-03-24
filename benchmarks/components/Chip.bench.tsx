@@ -1,6 +1,6 @@
-import { uiChipConfig } from '../configs/all-configs';
+import { chipConfig } from '../configs/all-configs';
 import { registerBenchConfig } from '../utils/registerBenchConfig';
 
-registerBenchConfig(uiChipConfig);
+registerBenchConfig(chipConfig);
 
-export const chipBenchmarkConfig = uiChipConfig;
+export const chipBenchmarkConfig = chipConfig;

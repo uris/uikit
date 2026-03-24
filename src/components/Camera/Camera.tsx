@@ -479,6 +479,11 @@ export const Camera = React.memo(
 			setHovered(false);
 		};
 
+		// handle click to remove controls bar from view
+		const handleMouseClick = useCallback(() => {
+			setHovered(false);
+		}, []);
+
 		// keep the controls visible while the controls surface is active
 		const handleControlsMouseEnter = (
 			e: React.MouseEvent<HTMLDivElement> | React.FocusEvent<HTMLDivElement>,
@@ -496,6 +501,18 @@ export const Camera = React.memo(
 			if (controlsTimer.current) clearTimeout(controlsTimer.current);
 			controlsTimer.current = setTimeout(() => setHovered(false), 3000);
 		};
+
+		// handle click on controls wrapper to prevent event bubbling to parent
+		const handleControlsClick = useCallback(
+			(
+				e:
+					| React.MouseEvent<HTMLDivElement>
+					| React.KeyboardEvent<HTMLDivElement>,
+			) => {
+				e.stopPropagation();
+			},
+			[],
+		);
 
 		// start or stop the camera automatically from the startCameraOff prop
 		useEffect(() => {
@@ -540,6 +557,8 @@ export const Camera = React.memo(
 				onMouseEnter={handleMouseEnter}
 				onMouseLeave={handleMouseLeave}
 				onMouseMove={handleMouseMove}
+				onClick={handleMouseClick}
+				onKeyDown={(e) => accessibleKeyDown(e, handleMouseClick)}
 			>
 				{pipSnapshot && snapshot && (
 					<div className={css.snapshotFrame}>
@@ -581,6 +600,8 @@ export const Camera = React.memo(
 					className={css.controls}
 					onMouseEnter={handleControlsMouseEnter}
 					onMouseLeave={handleControlsMouseLeave}
+					onClick={handleControlsClick}
+					onKeyDown={(e) => accessibleKeyDown(e, () => handleControlsClick)}
 				>
 					<div className={css.controlsLeft}>
 						<ToolbarButton
@@ -705,8 +726,8 @@ export function DefaultNoVideoPoster(
 		return (
 			<Avatar
 				image={user?.avatar}
-				first={user?.first}
-				last={user?.last}
+				name={`${user?.name}`}
+				email={`${user?.email}`}
 				size={'50%'}
 				fontSize={'25%'}
 			/>

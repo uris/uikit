@@ -7,13 +7,18 @@ import { fn } from 'storybook/test';
 const meta: Meta<typeof Chip> = {
 	title: 'Components/Chip',
 	component: Chip,
+	argTypes: {
+		children: {
+			table: {
+				disable: true,
+			},
+		},
+	},
 	args: {
 		label: 'Chip Label',
 		icon: 'wand',
 		disabled: false,
 		focused: false,
-		variant: 'regular',
-		unframed: false,
 		tooltip: 'Chip tooltip',
 		onClick: fn(),
 		onToolTip: fn(),

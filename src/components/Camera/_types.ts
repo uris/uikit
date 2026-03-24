@@ -54,8 +54,8 @@ export interface Controls {
 }
 
 export interface UserProfile {
-	first?: string;
-	last?: string;
+	name?: string;
+	email?: string;
 	avatar?: string;
 }
 

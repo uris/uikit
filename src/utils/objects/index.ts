@@ -1,3 +1,5 @@
+export { IndexedDB } from './IndexedDB/IndexedDB';
+export type { IndexedDBOptions } from './IndexedDB/IndexedDB';
 export { SSEConnection } from './SSEConnection/SSEConnection';
 export { WSConnection } from './WSConnection/WSConnection';
 export type {
