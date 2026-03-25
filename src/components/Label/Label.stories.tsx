@@ -8,16 +8,11 @@ const meta: Meta<typeof Label> = {
 	title: 'Components/Label',
 	component: Label,
 	args: {
-		children: 'Label',
-		state: 'red',
-		inline: false,
-		noFill: false,
-		button: false,
-		round: false,
-		size: 'm',
+		label: 'Label',
+		textSize: 'm',
+		bgColor: 'red',
 		padding: undefined,
-		border: 1,
-		onClick: fn(),
+		borderSize: 1,
 	},
 };
 
@@ -39,8 +34,8 @@ export const Default: StoryObj<typeof Label> = {
 export const ButtonLabel: StoryObj<typeof Label> = {
 	args: {
 		...meta.args,
-		button: true,
-		round: true,
+		label: 'Button Label',
+		onClick: fn(),
 	},
 	render: Default.render,
 	play: async ({ canvasElement, args }) => {

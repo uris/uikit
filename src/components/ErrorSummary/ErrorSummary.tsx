@@ -1,13 +1,23 @@
 import { AnimatePresence, type Transition, motion } from 'motion/react';
-import React, { useMemo } from 'react';
+import React, { useCallback, useMemo } from 'react';
+import { useTheme } from '../../hooks';
 import { useTrackRenders } from '../../hooks/useTrackRenders/useTrackRenders';
+import { addOpacity } from '../../utils';
 import css from './ErrorSummary.module.css';
 import type { ErrorMessage, ErrorSummaryProps } from './_types';
 
-export type { ErrorMessage };
-
 export const ErrorSummary = React.memo((props: ErrorSummaryProps) => {
-	const { entries, errors = [], ...divAttributes } = props;
+	const { current } = useTheme();
+	const warning = current.colors['feedback-warning'];
+	const bg = addOpacity(warning, 0.1);
+	const {
+		entries,
+		textSize = 'm',
+		textColor = warning,
+		bgColor = bg,
+		autoNumber = true,
+		...divAttributes
+	} = props;
 	const { id: divId, className, style, ...rest } = divAttributes;
 	const divStyle = style ?? ({} as React.CSSProperties);
 	const divClass = className ? ` ${className}` : '';
@@ -28,31 +38,49 @@ export const ErrorSummary = React.memo((props: ErrorSummaryProps) => {
 		[],
 	);
 
+	// recurse through error entries to render the error messages
+	const renderMessages = useCallback(
+		(messages: string[]) => {
+			if (!messages) return null;
+			return messages.map((message: string) => {
+				return (
+					<li className={`${css.li} ${css[textSize]}`} key={message}>
+						{message}
+					</li>
+				);
+			});
+		},
+		[textSize],
+	);
+
 	// derive the rendered error entries from the active error ids
 	const renderedErrors = useMemo(() => {
 		if (!entries) return null;
+		const addNumbers = autoNumber && entries.length > 1;
 		return entries.map((error: ErrorMessage, index: number) => {
-			if (errors.includes(index) || errors.includes(error.id)) {
-				return (
-					<div className={css.error} key={`${error.id}_${index}`}>
-						<p className={css.p}>
-							<strong className={css.strong}>{error.title}</strong>
-						</p>
-						<ul className={css.ul}>
-							{error.bullets?.map((bullet: string, index: number) => {
-								return (
-									<li className={css.li} key={`${error.title}_bullet_${index}`}>
-										{bullet}
-									</li>
-								);
-							})}
-						</ul>
-					</div>
-				);
-			}
-			return null;
+			let messages: string[] | undefined = undefined;
+			if (error.message)
+				messages = Array.isArray(error.message)
+					? error.message
+					: [error.message];
+			const number = addNumbers ? `${index + 1}. ` : '';
+			return (
+				<div className={css.error} key={`${error.title}_${index}`}>
+					<p className={`${css.p} ${css[textSize]}`}>
+						<strong>{`${number}${error.title}`}</strong>
+					</p>
+					{messages && <ul className={css.ul}>{renderMessages(messages)}</ul>}
+				</div>
+			);
 		});
-	}, [entries, errors]);
+	}, [entries, autoNumber, renderMessages, textSize]);
+
+	const cssVars = useMemo(() => {
+		return {
+			'--error-text-color': textColor,
+			'--error-bg-color': bgColor,
+		} as React.CSSProperties;
+	}, [textColor, bgColor]);
 
 	/* START.DEBUG */
 	useTrackRenders(props, 'ErrorSummary');
@@ -60,11 +88,11 @@ export const ErrorSummary = React.memo((props: ErrorSummaryProps) => {
 
 	return (
 		<AnimatePresence initial={false}>
-			{entries && errors && errors.length > 0 && (
+			{entries && entries.length > 0 && (
 				<motion.div
 					id={divId}
 					className={`${css.errorBox}${divClass}`}
-					style={divStyle}
+					style={{ ...divStyle, ...cssVars }}
 					initial={'enter'}
 					animate={'animate'}
 					exit={'exit'}

@@ -1,24 +1,30 @@
 import type React from 'react';
 import { useCallback, useMemo } from 'react';
-import { useTheme } from '../../hooks';
 import { useTrackRenders } from '../../hooks/useTrackRenders/useTrackRenders';
 import { setStyle } from '../../utils/functions/misc';
 import css from './Label.module.css';
-import type { LabelProps } from './_types';
+import { LabelBackground, type LabelProps } from './_types';
+
+function resolveSemanticBackground(
+	bgColor: LabelProps['bgColor'],
+): LabelBackground | undefined {
+	if (!bgColor || typeof bgColor !== 'string') return undefined;
+	const semanticKey = bgColor as keyof typeof LabelBackground;
+	if (LabelBackground[semanticKey]) return LabelBackground[semanticKey];
+	return Object.values(LabelBackground).find((value) => value === bgColor);
+}
 
 export function Label(props: Readonly<LabelProps>) {
-	const theme = useTheme();
 	const {
 		children,
-		state,
-		noFill = false,
-		button = false,
-		round = false,
-		border = 1,
+		label,
+		borderSize = 1,
+		borderColor = 'var(--core-outline-primary)',
+		bgColor = 'transparent',
+		borderRadius = 4,
 		padding,
-		color,
-		inline = true,
-		size = 'm',
+		textColor = 'var(--core-text-primary)',
+		textSize = 's',
 		onClick,
 		...divAttributes
 	} = props;
@@ -34,116 +40,78 @@ export function Label(props: Readonly<LabelProps>) {
 		[isInteractive, onClick],
 	);
 
-	// resolve the label background color from its state and fill mode
-	const backgroundColor = useMemo(() => {
-		if (noFill) return 'var(--core-surface-primary)';
-		switch (state) {
+	const setBgColor = useMemo(() => {
+		if (!bgColor) return 'transparent';
+		const fill = resolveSemanticBackground(bgColor);
+		if (!fill) return bgColor;
+		switch (fill) {
 			case 'red':
-				return theme.current.colors['feedback-warning'];
+				return 'var(--feedback-warning)';
 			case 'green':
-				return theme.current.colors['feedback-warning'];
+				return 'var(--feedback-positive)';
 			case 'yellow':
-				return theme.current.colors['array-yellow'];
+				return 'var(--array-yellow)';
 			case 'grey':
-				return theme.current.colors['core-surface-secondary'];
-			case 'lightgrey':
-				return theme.current.colors['core-button-disabled'];
+				return 'var(--core-surface-secondary)';
+			case 'lightGrey':
+				return 'var(--core-button-disabled)';
 			case 'white':
-				return theme.current.colors['core-surface-secondary'];
+				return 'var(--core-surface-secondary)';
 			case 'blue':
-				return theme.current.colors['core-button-primary'];
+				return 'var(--core-button-primary)';
 			default:
 				return 'var(--core-surface-primary)';
 		}
-	}, [noFill, state, theme]);
+	}, [bgColor]);
 
-	// resolve border colors for each supported label state
-	const borderColors = useMemo(() => {
-		const getBorderColor = (colorState: string) => {
-			switch (colorState) {
-				case 'red':
-					return theme.current.colors['core-button-disabled'];
-				case 'green':
-					return noFill
-						? theme.current.colors['feedback-positive']
-						: theme.current.colors['core-button-disabled'];
-				case 'yellow':
-					return theme.current.colors['array-yellow-label'];
-				case 'grey':
-					return noFill
-						? theme.current.colors['core-text-secondary']
-						: theme.current.colors['core-button-disabled'];
-				case 'lightgrey':
-					return noFill
-						? theme.current.colors['core-outline-primary']
-						: theme.current.colors['core-button-disabled'];
-				case 'white':
-					return noFill
-						? theme.current.colors['core-text-secondary']
-						: theme.current.colors['core-badge-secondary'];
-				case 'blue':
-					return noFill
-						? theme.current.colors['core-text-secondary']
-						: theme.current.colors['core-button-primary'];
-				default:
-					return 'var(--core-outline-primary)';
-			}
-		};
+	const setBorderColor = useMemo(() => {
+		if (!bgColor) return borderColor;
+		const fill = resolveSemanticBackground(bgColor);
+		if (!fill) return borderColor;
+		switch (fill) {
+			case 'red':
+				return 'var(--feedback-warning)';
+			case 'green':
+				return 'var(--feedback-positive)';
+			case 'yellow':
+				return 'var(--array-yellow-label)';
+			case 'grey':
+				return 'var(--core-outline-primary)';
+			case 'lightGrey':
+				return 'var(--core-outline-primary)';
+			case 'white':
+				return 'var(--core-outline-primary)';
+			case 'blue':
+				return 'var(--core-button-primary)';
+			default:
+				return 'var(--core-surface-primary)';
+		}
+	}, [bgColor, borderColor]);
 
-		return {
-			red: getBorderColor('red'),
-			green: getBorderColor('green'),
-			yellow: getBorderColor('yellow'),
-			grey: getBorderColor('grey'),
-			lightgrey: getBorderColor('lightgrey'),
-			white: getBorderColor('white'),
-			blue: getBorderColor('blue'),
-		};
-	}, [noFill, theme]);
-
-	// resolve the label padding from explicit and mode-based values
 	const setPadding = useMemo(() => {
 		if (padding) return setStyle(padding);
-		return button ? '6px 12px' : '4px 6px';
-	}, [padding, button]);
+		return '2px 4px';
+	}, [padding]);
 
-	// compose CSS custom properties for label layout and colors
 	const cssVars = useMemo(() => {
 		return {
 			'--label-padding': setPadding,
-			'--label-border-radius': round ? '100px' : '4px',
-			'--label-cursor': button ? 'pointer' : 'default',
-			'--label-color': color ?? 'var(--core-text-primary)',
-			'--label-background': backgroundColor,
-			'--label-border-size': border ? `${border}px` : '0',
-			'--label-border-color-red': borderColors.red,
-			'--label-border-color-green': borderColors.green,
-			'--label-border-color-yellow': borderColors.yellow,
-			'--label-border-color-grey': borderColors.grey,
-			'--label-border-color-lightgrey': borderColors.lightgrey,
-			'--label-border-color-white': borderColors.white,
-			'--label-border-color-blue': borderColors.blue,
-			'--label-inline': inline ? 'inline-flex' : 'flex',
+			'--label-border-radius': setStyle(borderRadius),
+			'--label-cursor': onClick ? 'pointer' : 'default',
+			'--label-color': textColor,
+			'--label-bg-color': setBgColor,
+			'--label-border-size': setStyle(borderSize),
+			'--label-border-color': setBorderColor,
 		} as React.CSSProperties;
 	}, [
-		button,
-		border,
-		round,
-		backgroundColor,
-		borderColors,
 		setPadding,
-		color,
-		inline,
+		borderRadius,
+		onClick,
+		textColor,
+		setBorderColor,
+		setBgColor,
+		borderSize,
 	]);
-
-	// compose the label class list from behavior, state, and size
-	const classNames = [
-		css.label,
-		button || isInteractive ? css.button : css.regular,
-		state ? css[state] : '',
-	]
-		.filter(Boolean)
-		.join(' ');
 
 	/* START.DEBUG */
 	useTrackRenders(props, 'Label');
@@ -154,13 +122,13 @@ export function Label(props: Readonly<LabelProps>) {
 			<button
 				id={divId}
 				type="button"
-				className={`${classNames} ${css[size]}${divClass}`}
+				className={`${css.button} ${css[textSize]}${divClass}`}
 				style={{ ...divStyle, ...cssVars }}
 				aria-label={'Label button'}
 				onClick={(e) => handleClick(e as any)}
 				{...rest}
 			>
-				{children}
+				{children ?? label}
 			</button>
 		);
 	}
@@ -168,11 +136,11 @@ export function Label(props: Readonly<LabelProps>) {
 	return (
 		<span
 			id={divId}
-			className={`${classNames} ${css[size]}${divClass}`}
+			className={`${css.label} ${css[textSize]}${divClass}`}
 			style={{ ...divStyle, ...cssVars }}
 			{...rest}
 		>
-			{children}
+			{children ?? label}
 		</span>
 	);
 }

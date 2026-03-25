@@ -12,6 +12,7 @@ import type {
 	LocalDBStoreState,
 } from './_types';
 
+// determine if a value is a valid IDB key
 function isValidIDBKey(key: unknown): key is IDBValidKey {
 	if (
 		typeof key === 'string' ||
@@ -25,10 +26,12 @@ function isValidIDBKey(key: unknown): key is IDBValidKey {
 	if (Array.isArray(key)) {
 		return key.every((entry) => isValidIDBKey(entry));
 	}
-
 	return ArrayBuffer.isView(key);
 }
 
+/**
+ * Determine if two keys are equal based on their value type
+ */
 function areKeysEqual(left: IDBValidKey, right: IDBValidKey): boolean {
 	if (left instanceof Date && right instanceof Date) {
 		return left.getTime() === right.getTime();
@@ -42,10 +45,16 @@ function areKeysEqual(left: IDBValidKey, right: IDBValidKey): boolean {
 	return left === right;
 }
 
+/**
+ * Normalize a value to an array of values
+ */
 function normalizeValues<TValue>(value: TValue | TValue[]): TValue[] {
 	return Array.isArray(value) ? value : [value];
 }
 
+/**
+ * Read and return all records from an IndexedDB connection
+ */
 async function readStoreRecords(
 	connection: IndexedDB<unknown>,
 ): Promise<LocalDBRecord<unknown>[]> {
@@ -60,6 +69,9 @@ async function readStoreRecords(
 	}));
 }
 
+/**
+ * Get the db connection for a given store name
+ */
 function getConnection(
 	stores: LocalDBConnection[],
 	name: string,
@@ -72,6 +84,9 @@ function getConnection(
 	return connection;
 }
 
+/**
+ * Apply a partial state patch to a connection
+ */
 function applyConnectionState(
 	name: string,
 	patch: Partial<LocalDBConnection<unknown>>,
@@ -83,46 +98,69 @@ function applyConnectionState(
 	}));
 }
 
+/**
+ * Apply error to to the connection state
+ */
 function applyStoreError(name: string, error: unknown) {
 	applyConnectionState(name, {
 		error: error instanceof Error ? error.message : String(error),
 	});
 }
 
+/**
+ * Helper to convert an error to an Error instance
+ */
 function toError(error: unknown): Error {
 	return error instanceof Error ? error : new Error(String(error));
 }
 
+/**
+ * Helper to create a success result value
+ */
 function successResult(): LocalDBActionResult {
 	return { ok: true };
 }
 
+/**
+ * Helper to create a failure result value
+ */
 function failureResult(error: unknown): LocalDBActionResult {
 	return { ok: false, error: toError(error) };
 }
 
+/**
+ * Helper to derive the success value from an op
+ */
 function successValueResult<TValue>(
 	value: TValue,
 ): LocalDBActionValueResult<TValue> {
 	return { ok: true, value };
 }
 
+/**
+ * Helper to derive the success value from an op
+ */
 function failureValueResult<TValue>(
 	error: unknown,
 ): LocalDBActionValueResult<TValue> {
 	return { ok: false, error: toError(error) };
 }
 
+/**
+ * Helper to indicate a key field is required for actions
+ */
 function requireStoreKey(store: LocalDBConnection<unknown>): string {
 	if (!store.key) {
 		throw new Error(
 			`IndexedDB store "${store.name}" requires a configured key field for value-driven actions.`,
 		);
 	}
-
 	return store.key;
 }
 
+/**
+ * Helper to get the a store key field from a value
+ */
 function deriveRecordKey(
 	store: LocalDBConnection<unknown>,
 	value: unknown,
@@ -159,6 +197,9 @@ function replaceConnection(connection: LocalDBConnection<unknown>) {
 	}));
 }
 
+/**
+ * Update connection with an error state
+ */
 function replaceConnectionWithError(
 	name: string,
 	connection: IndexedDB<unknown>,

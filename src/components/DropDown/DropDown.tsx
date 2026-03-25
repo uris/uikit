@@ -5,74 +5,59 @@ import React, {
 	useRef,
 	useState,
 } from 'react';
-import { useTheme } from '../../hooks';
 import { useTrackRenders } from '../../hooks/useTrackRenders/useTrackRenders';
+import { setStyle } from '../../utils/functions/misc';
 import { Icon } from '../Icon';
 import css from './DropDown.module.css';
 import type { DropDownOption, DropDownProps } from './_types';
 
-export type { DropDownOption };
+function resolveValueKey(value: unknown, valueKey?: string) {
+	if (!valueKey || !value || typeof value !== 'object') return undefined;
+	return (value as Record<string, unknown>)[valueKey];
+}
 
-export const DropDown = React.memo((props: DropDownProps) => {
-	const theme = useTheme();
+function DropDownComponent<T = string>(props: DropDownProps<T>) {
 	const {
-		name = 'Select',
+		name = 'drop-down-select',
+		label,
+		labelColor = 'var(--core-text-primary)',
+		size = 'm',
 		width = '100%',
 		height = 'auto',
-		selectedIndex = 0,
-		selectedValue = '',
+		selectedIndex,
+		selectedValue,
+		valueKey,
 		options = [],
 		placeholder = true,
-		validate = true,
 		borderRadius = 4,
 		bgColor = 'transparent',
-		iconColor = theme.current.colors['core-icon-primary'],
+		iconColor = 'var(--core-text-primary)',
+		textColor = 'var(--core-text-primary)',
+		borderSize = 1,
+		borderColor = 'var(--core-outline-primary)',
 		paddingLeft = '8px',
 		paddingRight = '12px',
-		paddingTops = '8px',
+		paddingTop = '8px',
+		paddingBottom = '8px',
+		borderStyle = 'box',
 		iconSize = 20,
 		disabled = false,
-		unframed = false,
-		focused = false,
-		gap = 0,
-		size = 'medium',
+		error = false,
+		gap = 8,
 		onChange = () => null,
-		onValidate = () => null,
-		onFocus = () => null,
-		onBlur = () => null,
 		...divAttributes
 	} = props;
 	const { id: divId, className, style, ...rest } = divAttributes;
 	const divStyle = style ?? ({} as React.CSSProperties);
 	const divClass = className ? ` ${className}` : '';
 
-	const [index, setIndex] = useState<number>(selectedIndex);
+	const [index, setIndex] = useState<number>(selectedIndex ?? 0);
 	const [selectedText, setSelectedText] = useState<string>('Select an option');
-	const [initiated, setInitiated] = useState<boolean>(false);
-	const [color, setColor] = useState<string>(iconColor);
 	const ref = useRef<HTMLSelectElement>(null);
-
-	// keep the chevron color aligned with the active theme
-	useEffect(() => setColor(theme.current.colors['core-icon-primary']), [theme]);
-
-	// validate the current selection once the field has been interacted with
-	useEffect(() => {
-		let valid = true;
-		if (validate && placeholder && index === 0) valid = false;
-		if (!initiated) valid = true;
-		onValidate(valid);
-	}, [index, validate, placeholder, initiated, onValidate]);
-
-	// trigger the native select interaction when focus is requested externally
-	useEffect(() => {
-		if (focused && ref?.current) {
-			setInitiated(true);
-			ref.current.click();
-		}
-	}, [focused]);
 
 	// sync the selected option from the controlled index prop
 	useEffect(() => {
+		if (selectedValue != null || selectedIndex === undefined) return;
 		if (ref?.current) {
 			if (!options?.[selectedIndex]) return;
 			const label = options[selectedIndex].label || 'Select an option';
@@ -80,19 +65,20 @@ export const DropDown = React.memo((props: DropDownProps) => {
 			setSelectedText(label);
 			ref.current.selectedIndex = selectedIndex;
 		}
-	}, [selectedIndex, options]);
+	}, [selectedIndex, options, selectedValue]);
 
 	// sync the selected option from the controlled value prop
 	useEffect(() => {
-		if (!options || options.length === 0 || selectedValue === '') return;
+		if (!options || options.length === 0 || selectedValue == null) return;
 
+		const selectedKey = resolveValueKey(selectedValue, valueKey);
 		const foundIndex = options.findIndex(
 			(option) =>
-				option?.value?.toLowerCase() ===
-					selectedValue.toString().toLowerCase() ||
-				option?.label?.toLowerCase() ===
-					selectedValue.toString().toLowerCase() ||
-				option?.alt?.toLowerCase() === selectedValue.toString().toLowerCase(),
+				option?.value === selectedValue ||
+				(selectedKey !== undefined &&
+					resolveValueKey(option?.value, valueKey) === selectedKey) ||
+				option?.label?.toLowerCase() === String(selectedValue).toLowerCase() ||
+				option?.alt?.toLowerCase() === String(selectedValue).toLowerCase(),
 		);
 
 		if (foundIndex !== -1) {
@@ -101,9 +87,9 @@ export const DropDown = React.memo((props: DropDownProps) => {
 			setIndex(foundIndex);
 			if (ref.current) ref.current.selectedIndex = foundIndex;
 		}
-	}, [selectedValue, options]);
+	}, [selectedValue, options, valueKey]);
 
-	// update local selection state and notify consumers when the option changes
+	// update the local selection state and notify consumers when the option changes
 	const handleChange = useCallback(
 		(i: number) => {
 			if (!options) return;
@@ -111,24 +97,17 @@ export const DropDown = React.memo((props: DropDownProps) => {
 			setIndex(i);
 			setSelectedText(label);
 			if (index !== i) onChange(i, options[i]);
-			onBlur(options[i].label || '');
 		},
-		[options, index, onChange, onBlur],
+		[options, index, onChange],
 	);
-
-	// mark the field as initiated and notify focus listeners
-	const handleFocus = useCallback(() => {
-		setInitiated(true);
-		onFocus();
-	}, [onFocus]);
 
 	// derive the rendered option elements from the options list
 	const renderedOptions = useMemo(() => {
 		if (!options) return null;
-		return options.map((option: DropDownOption, i: number) => (
+		return options.map((option: DropDownOption<T>, i: number) => (
 			<option
 				key={`${option?.value}_${i}`}
-				value={option?.value}
+				value={i}
 				onMouseUp={() => handleChange(i)}
 			>
 				{option?.label}
@@ -142,13 +121,12 @@ export const DropDown = React.memo((props: DropDownProps) => {
 		[selectedText],
 	);
 
-	// block interaction when disabled and otherwise treat pointer down as focus
+	// block interaction when disabled and otherwise treat the pointer down as focus
 	const handleMouseDown = useCallback(
 		(e: React.MouseEvent<HTMLSelectElement>) => {
 			if (disabled) e.preventDefault();
-			handleFocus();
 		},
-		[disabled, handleFocus],
+		[disabled],
 	);
 
 	// forward native select changes through the shared change handler
@@ -159,49 +137,90 @@ export const DropDown = React.memo((props: DropDownProps) => {
 		[handleChange],
 	);
 
-	// normalize width and height values before applying them as CSS
-	const getSize = useCallback((value: string | number) => {
-		if (typeof value === 'string') return value;
-		return `${value}px`;
-	}, []);
+	// set the color of text based on state
+	const setTextColor = useMemo(() => {
+		if (disabled) return 'var(--core-text-disabled)';
+		if (placeholder && index === 0) return 'var(--core-text-tertiary)';
+		return textColor;
+	}, [disabled, placeholder, index, textColor]);
+
+	// set the color of text based on state
+	const setLabelColor = useMemo(() => {
+		if (disabled) return 'var(--core-text-disabled)';
+		return labelColor;
+	}, [disabled, labelColor]);
+
+	// set the color of the icon based on state
+	const setIconColor = useMemo(() => {
+		if (disabled) return 'var(--core-text-disabled)';
+		return iconColor;
+	}, [disabled, iconColor]);
+
+	// set the color of the border based on state
+	const setBorderColor = useMemo(() => {
+		if (disabled) return 'var(--core-outline-primary)';
+		if (error) return 'var(--feedback-warning)';
+		return borderColor;
+	}, [disabled, error, borderColor]);
+
+	// set padding based on border style
+	const setPadding = useMemo(() => {
+		if (borderStyle === 'box')
+			return `${setStyle(paddingTop)} ${setStyle(paddingRight)} ${setStyle(paddingBottom)} ${setStyle(paddingLeft)}`;
+		return `0 0 ${setStyle(paddingBottom)} 0`;
+	}, [paddingTop, paddingRight, paddingBottom, paddingLeft, borderStyle]);
+
+	// set border
+	const setBorder = useMemo(() => {
+		if (borderStyle === 'box')
+			return `${setStyle(borderSize)} solid ${setStyle(borderColor)}`;
+		return 'unset';
+	}, [borderSize, borderColor, borderStyle]);
+
+	// set border bottom
+	const setBorderBottom = useMemo(() => {
+		if (borderStyle !== 'none')
+			return `${setStyle(borderSize)} solid ${setStyle(borderColor)}`;
+		return 'unset';
+	}, [borderSize, borderColor, borderStyle]);
+
+	// set border radius
+	const setBorderRadius = useMemo(() => {
+		if (borderStyle !== 'box') return 0;
+		return `${borderRadius}px`;
+	}, [borderStyle, borderRadius]);
 
 	// compose CSS custom properties for layout, spacing, and visual state
 	const cssVars = useMemo(() => {
 		return {
-			'--dd-gap': `${gap}px`,
-			'--dd-height': `${getSize(height)}`,
-			'--dd-width': `${getSize(width)}`,
+			'--dd-gap': setStyle(gap),
+			'--dd-height': setStyle(height),
+			'--dd-width': setStyle(width),
 			'--dd-margin': '8px',
-			'--dd-border-radius': borderRadius ? `${borderRadius}px` : '4px',
-			'--dd-box-shadow-size': unframed ? '0' : '1px',
-			'--dd-border-color': unframed
-				? 'transparent'
-				: 'var(--core-outline-primary)',
+			'--dd-border-radius': setBorderRadius,
+			'--dd-border': setBorder,
+			'--dd-border-bottom': setBorderBottom,
+			'--dd-color': setTextColor,
 			'--dd-bg-color': bgColor ?? 'transparent',
-			'--dd-padding-left': unframed ? '0' : `${getSize(paddingLeft)}`,
-			'--dd-padding-right': unframed ? '0' : `${getSize(paddingRight)}`,
-			'--dd-padding-tops': unframed ? '0' : `${getSize(paddingTops)}`,
+			'--dd-padding': setPadding,
 			'--dd-icon-size': `${iconSize}px`,
-			'--dd-color':
-				placeholder && index === 0
-					? 'var(--core-text-tertiary)'
-					: 'var(--core-text-primary)',
+			'--dd-label-color': setLabelColor,
 		} as React.CSSProperties;
 	}, [
 		gap,
 		height,
 		width,
-		borderRadius,
+		setBorderRadius,
+		setBorder,
+		setBorderBottom,
+		setTextColor,
 		bgColor,
-		paddingLeft,
-		paddingRight,
-		paddingTops,
-		unframed,
-		placeholder,
+		setPadding,
+		setLabelColor,
 		iconSize,
-		index,
-		getSize,
 	]);
+
+	console.log(setPadding);
 
 	/* START.DEBUG */
 	useTrackRenders(props, 'DropDown');
@@ -214,15 +233,15 @@ export const DropDown = React.memo((props: DropDownProps) => {
 			style={{ ...divStyle, ...cssVars }}
 			{...rest}
 		>
+			<div className={`${css.label} ${css[size]}`}>{label}</div>
 			<div className={`${css.face} ${css[size]}`}>{displayText}</div>
 			<div className={css.chevron}>
-				<Icon name="chevron down" size={iconSize} strokeColor={color} />
+				<Icon name="chevron down" size={iconSize} strokeColor={setIconColor} />
 			</div>
 			<select
 				className={css.select}
-				defaultValue={index}
+				value={index}
 				ref={ref}
-				onFocus={handleFocus}
 				onMouseDown={handleMouseDown}
 				onChange={handleSelectChange}
 				aria-label={name}
@@ -231,6 +250,10 @@ export const DropDown = React.memo((props: DropDownProps) => {
 			</select>
 		</div>
 	);
-});
+}
 
-DropDown.displayName = 'DropDown';
+DropDownComponent.displayName = 'DropDown';
+
+export const DropDown = React.memo(DropDownComponent) as <T = string>(
+	props: DropDownProps<T>,
+) => React.JSX.Element;

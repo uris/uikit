@@ -148,6 +148,7 @@ export { ButtonBar } from './components/ButtonBar';
 export type { BarButton, ButtonBarProps } from './components/ButtonBar/_types';
 
 export { Label } from './components/Label';
+export { LabelBackground } from './components/Label';
 export type { LabelProps } from './components/Label';
 
 export { UploadArea } from './components/UploadArea';

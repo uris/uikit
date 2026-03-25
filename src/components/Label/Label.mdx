@@ -1,7 +1,7 @@
-import {Meta, Unstyled} from '@storybook/addon-docs/blocks';
-import {FlexDiv} from '../FlexDiv';
+import { Meta, Unstyled } from '@storybook/addon-docs/blocks';
+import { FlexDiv } from '../FlexDiv';
 import * as LabelStories from './Label.stories';
-import {RenderSource} from '../../../documentation/_components/RenderSource/RenderSource';
+import { RenderSource } from '../../../documentation/_components/RenderSource/RenderSource';
 
 <Meta of={LabelStories} />
 
@@ -9,84 +9,100 @@ import {RenderSource} from '../../../documentation/_components/RenderSource/Rend
     <FlexDiv width={"fill"} maxWidth={760} height={"auto"}>
         <Unstyled>
         # Label
-        Renders a styled text label/pill for statuses, tags, and inline annotations.
+        Renders a compact text label for statuses, tags, and lightweight inline actions.
 
         ## Base element
         `HTMLSpanElement | HTMLButtonElement`
 
+        If `onClick` is provided, `Label` renders a `button`. Otherwise it renders a `span`.
+
         ## Interface
         `LabelProps`
 
+        ## Exports
+        `Label`
+
+        `LabelBackground`
+
+        `LabelProps`
+
         ## Props
-        <table style={{width: '100%'}}>
-          <colgroup>
-            <col style={{width: '1%'}} />
-            <col style={{width: '1%'}} />
-            <col style={{width: '1%'}} />
-            <col style={{width: '97%'}} />
-          </colgroup>
-          <thead>
-            <tr>
-              <th className={"left"}>Prop</th>
-              <th className={"left"}>Type</th>
-              <th className={"left"}>Default</th>
-              <th>Description</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr><td><code>button</code></td><td><code>boolean</code></td><td><code>-</code></td><td>Boolean flag controlling `button`.</td></tr>
-            <tr><td><code>children</code></td><td><code>React.ReactNode</code></td><td><code>-</code></td><td>Label content rendered inside the component.</td></tr>
-            <tr><td><code>noFill</code></td><td><code>boolean</code></td><td><code>-</code></td><td>Boolean flag controlling `noFill`.</td></tr>
-            <tr><td><code>round</code></td><td><code>boolean</code></td><td><code>-</code></td><td>Boolean flag controlling `round`.</td></tr>
-            <tr><td><code>size</code></td><td><code>{`'s' | 'm' | 'l'`}</code></td><td><code>'m'</code></td><td>Controls label typography size.</td></tr>
-            <tr><td><code>padding</code></td><td><code>number | string</code></td><td><code>-</code></td><td>Custom padding. Number values are converted to pixel units.</td></tr>
-            <tr><td><code>border</code></td><td><code>number</code></td><td><code>1</code></td><td>Border width in pixels. Set to <code>0</code> to remove the border.</td></tr>
-            <tr><td><code>inline</code></td><td><code>boolean</code></td><td><code>true</code></td><td>Controls whether the label renders inline or as a block flex item.</td></tr>
-            <tr><td><code>color</code></td><td><code>string</code></td><td><code>-</code></td><td>Overrides the text color.</td></tr>
-            <tr><td><code>state</code></td><td><code>{`'red' | 'yellow' | 'green' | 'blue' | 'grey' | 'lightgrey' | 'white'`}</code></td><td><code>-</code></td><td>Controls `state`.</td></tr>
-            <tr><td><code>...elementAttributes</code></td><td><code>{`HTMLAttributes<HTMLElement>`}</code></td><td><code>-</code></td><td>Native element props pass through to the rendered root element.</td></tr>
-          </tbody>
+        <table style={{ width: '100%' }}>
+            <colgroup>
+                <col style={{ width: '1%' }} />
+                <col style={{ width: '1%' }} />
+                <col style={{ width: '1%' }} />
+                <col style={{ width: '97%' }} />
+            </colgroup>
+            <thead>
+                <tr>
+                    <th className={"left"}>Prop</th>
+                    <th className={"left"}>Type</th>
+                    <th className={"left"}>Default</th>
+                    <th>Description</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr><td><code>children</code></td><td><code>React.ReactNode</code></td><td><code>-</code></td><td>Content rendered inside the label. Takes precedence over <code>label</code>.</td></tr>
+                <tr><td><code>label</code></td><td><code>string</code></td><td><code>-</code></td><td>Convenience text content when you do not need to pass children.</td></tr>
+                <tr><td><code>bgColor</code></td><td><code>LabelBackground | string</code></td><td><code>'transparent'</code></td><td>Background token or raw CSS color. Semantic enum values map to theme colors.</td></tr>
+                <tr><td><code>borderSize</code></td><td><code>number</code></td><td><code>1</code></td><td>Border width in pixels.</td></tr>
+                <tr><td><code>borderColor</code></td><td><code>string</code></td><td><code>'transparent'</code></td><td>Custom border color. Semantic <code>bgColor</code> values override this with matching theme borders.</td></tr>
+                <tr><td><code>borderRadius</code></td><td><code>number</code></td><td><code>4</code></td><td>Border radius in pixels.</td></tr>
+                <tr><td><code>padding</code></td><td><code>number | string</code></td><td><code>'4px 6px'</code></td><td>Custom padding. Number values are converted to pixel units.</td></tr>
+                <tr><td><code>textColor</code></td><td><code>string</code></td><td><code>'var(--core-text-primary)'</code></td><td>Text color override.</td></tr>
+                <tr><td><code>textSize</code></td><td><code>{`'xs' | 's' | 'm' | 'l'`}</code></td><td><code>'m'</code></td><td>Typography size token.</td></tr>
+                <tr><td><code>onClick</code></td><td><code>{`(e: React.MouseEvent<any>) => void`}</code></td><td><code>-</code></td><td>When supplied, the label becomes interactive and renders as a button.</td></tr>
+                <tr><td><code>...elementAttributes</code></td><td><code>{`HTMLAttributes<HTMLElement>`}</code></td><td><code>-</code></td><td>Standard element props applied to the rendered root.</td></tr>
+            </tbody>
         </table>
 
-        ## Events
-        <table style={{width: '100%'}}>
-          <colgroup>
-            <col style={{width: '1%'}} />
-            <col style={{width: '99%'}} />
-          </colgroup>
-          <thead>
-            <tr>
-              <th className={"left"}>Event</th>
-              <th className={"left"}>Type</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr><td><code>onClick</code></td><td><code>{`(e: React.MouseEvent<any>) => void`}</code></td></tr>
-          </tbody>
-        </table>
+        ## LabelBackground
+        `LabelBackground` includes the semantic values:
+
+        `red | yellow | green | blue | grey | lightGrey | white`
+
+        ## Notes
+        - Semantic `bgColor` values map both the background and border color to theme tokens.
+        - Passing a custom CSS color string to `bgColor` uses that value directly as the background.
+        - `children` overrides `label` when both are provided.
 
         ## Code Examples
         </Unstyled>
 
-        <RenderSource language={"tsx"}>
+        <RenderSource>
 ```
-import { Label } from '@apple-pie/slice';
+import { Label, LabelBackground } from '@apple-pie/slice';
 
 export function LabelExample() {
     return (
         <Label
-            size="m"
-            state="green"
-            border={1}
+            label="Connected"
+            bgColor={LabelBackground.green}
+            borderRadius={999}
             padding="4px 10px"
-            round={true}
+            textSize="s"
             id="label-example"
             data-testid="label-example"
-            className="custom-wrapper"
-            style={{ marginTop: 8, maxWidth: 480 }}
-        >
-            Connected
-        </Label>
+            style={{ marginTop: 8 }}
+        />
+    );
+}
+```
+        </RenderSource>
+
+        <RenderSource>
+```
+import { Label } from '@apple-pie/slice';
+
+export function InteractiveLabelExample() {
+    return (
+        <Label
+            label="Remove filter"
+            bgColor="var(--core-surface-secondary)"
+            borderColor="var(--core-outline-primary)"
+            onClick={() => console.log('clicked')}
+        />
     );
 }
 ```

@@ -6,6 +6,9 @@ type IconButtonBaseProps = {
 	frameSize?: number;
 	iconSize?: number;
 	icon?: string;
+	iconColor?: string;
+	iconColorOn?: string;
+	iconColorHover?: string;
 	tooltip?: string;
 	color?: string;
 	colorOn?: string;

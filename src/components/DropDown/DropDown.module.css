@@ -1,14 +1,14 @@
 .wrapper {
 	composes: rowStart from "../../utils/styling/flexBox.module.css";
 	position: relative;
+	padding: var(--dd-padding) !important;
 	gap: var(--dd-gap);
 	min-width: var(--dd-width);
 	width: var(--dd-width);
 	border-radius: var(--dd-border-radius);
 	background-color: var(--dd-bg-color);
-	box-shadow: 0 0 0 var(--dd-box-shadow-size) var(--dd-border-color);
-	padding: var(--dd-padding-tops) var(--dd-padding-left) var(--dd-padding-tops)
-		var(--dd-padding-right) !important;
+	border: var(--dd-border);
+	border-bottom: var(--dd-border-bottom);
 	transition: all var(--motion-water-duration) var(--motion-water) 0s;
 }
 
@@ -17,22 +17,37 @@
 	flex: 1;
 	overflow: hidden;
 	display: -webkit-box;
+	white-space: nowrap;
 	-webkit-line-clamp: 1;
 	-webkit-box-orient: vertical;
 	text-overflow: ellipsis;
 	word-break: break-all;
 	color: var(--dd-color);
+	line-height: 1em;
 }
 
-.small {
+.label {
+	composes: rowStart from "../../utils/styling/flexBox.module.css";
+	width: min-content;
+	overflow: hidden;
+	white-space: nowrap;
+	text-overflow: ellipsis;
+	color: var(--dd-label-color);
+}
+
+.xs {
+	composes: body-xs-regular from "../../utils/styling/type.module.css";
+}
+
+.s {
 	composes: body-s-regular from "../../utils/styling/type.module.css";
 }
 
-.medium {
+.m {
 	composes: body-m-regular from "../../utils/styling/type.module.css";
 }
 
-.large {
+.l {
 	composes: body-l-regular from "../../utils/styling/type.module.css";
 }
 

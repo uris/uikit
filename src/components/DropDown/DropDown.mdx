@@ -9,52 +9,82 @@ import {RenderSource} from '../../../documentation/_components/RenderSource/Rend
     <FlexDiv width={"fill"} maxWidth={760} height={"auto"}>
         <Unstyled>
         # DropDown
-        Renders a select dropdown with options, validation state, and change callbacks.
+        `DropDown` renders a styled select control with typed options, controlled selection by index or value, and a typed `onChange` callback.
 
         ## Base element
         `HTMLDivElement`
 
-        ## Interface
-        `DropDownProps`
+        ## Typing
+        `DropDown` is generic and defaults to string values:
+
+        <RenderSource language={"ts"}>
+        ```
+        type DropDownOption<T = string> = {
+            label?: string;
+            value?: T;
+            alt?: string;
+        };
+        
+        type DropDownProps<T = string> = {
+            label?: string;
+            labelColor?: string;
+            options?: DropDownOption<T>[];
+            selectedValue?: T;
+            valueKey?: string;
+            borderStyle?: 'bottom' | 'box' | 'none';
+            onChange?: (index: number, option: DropDownOption<T>) => void;
+            // ...other visual props
+        };
+        ```
+        </RenderSource>
+
+        Use string values when possible. If option values are objects, pass `valueKey` so `selectedValue` can match options by a simple field such as `id`.
 
         ## Props
         <table style={{width: '100%'}}>
           <colgroup>
             <col style={{width: '1%'}} />
-            <col style={{width: '1%'}} />
-            <col style={{width: '1%'}} />
-            <col style={{width: '97%'}} />
+            <col style={{width: '24%'}} />
+            <col style={{width: '15%'}} />
+            <col style={{width: '60%'}} />
           </colgroup>
           <thead>
             <tr>
               <th className={"left"}>Prop</th>
               <th className={"left"}>Type</th>
               <th className={"left"}>Default</th>
-              <th>Description</th>
+              <th className={"left"}>Description</th>
             </tr>
           </thead>
           <tbody>
-            <tr><td><code>bgColor</code></td><td><code>string</code></td><td><code>-</code></td><td>Color token/value for `bgColor`.</td></tr>
-            <tr><td><code>borderRadius</code></td><td><code>number</code></td><td><code>-</code></td><td>Sizing/layout setting for `borderRadius`.</td></tr>
-            <tr><td><code>disabled</code></td><td><code>boolean</code></td><td><code>-</code></td><td>Boolean flag controlling `disabled`.</td></tr>
-            <tr><td><code>focused</code></td><td><code>boolean</code></td><td><code>-</code></td><td>Boolean flag controlling `focused`.</td></tr>
-            <tr><td><code>gap</code></td><td><code>number</code></td><td><code>-</code></td><td>Sizing/layout setting for `gap`.</td></tr>
-            <tr><td><code>height</code></td><td><code>string</code></td><td><code>-</code></td><td>Sizing/layout setting for `height`.</td></tr>
-            <tr><td><code>iconColor</code></td><td><code>string</code></td><td><code>-</code></td><td>Color token/value for `iconColor`.</td></tr>
-            <tr><td><code>iconSize</code></td><td><code>number</code></td><td><code>-</code></td><td>Sizing/layout setting for `iconSize`.</td></tr>
-            <tr><td><code>name</code></td><td><code>string</code></td><td><code>-</code></td><td>Text/value for `name`.</td></tr>
-            <tr><td><code>options</code></td><td><code>DropDownOption[]</code></td><td><code>-</code></td><td>Controls `options`.</td></tr>
-            <tr><td><code>paddingLeft</code></td><td><code>{`number | string`}</code></td><td><code>-</code></td><td>Sizing/layout setting for `paddingLeft`.</td></tr>
-            <tr><td><code>paddingRight</code></td><td><code>{`number | string`}</code></td><td><code>-</code></td><td>Sizing/layout setting for `paddingRight`.</td></tr>
-            <tr><td><code>paddingTops</code></td><td><code>{`number | string`}</code></td><td><code>-</code></td><td>Sizing/layout setting for `paddingTops`.</td></tr>
-            <tr><td><code>placeholder</code></td><td><code>boolean</code></td><td><code>-</code></td><td>Boolean flag controlling `placeholder`.</td></tr>
-            <tr><td><code>selectedIndex</code></td><td><code>number</code></td><td><code>-</code></td><td>Controls `selectedIndex`.</td></tr>
-            <tr><td><code>selectedValue</code></td><td><code>string</code></td><td><code>-</code></td><td>Text/value for `selectedValue`.</td></tr>
-            <tr><td><code>size</code></td><td><code>{`'small' | 'medium' | 'large'`}</code></td><td><code>-</code></td><td>Sizing/layout setting for `size`.</td></tr>
-            <tr><td><code>unframed</code></td><td><code>boolean</code></td><td><code>-</code></td><td>Boolean flag controlling `unframed`.</td></tr>
-            <tr><td><code>validate</code></td><td><code>boolean</code></td><td><code>-</code></td><td>Boolean flag controlling `validate`.</td></tr>
-            <tr><td><code>width</code></td><td><code>string</code></td><td><code>-</code></td><td>Sizing/layout setting for `width`.</td></tr>
-            <tr><td><code>...divAttributes</code></td><td><code>{`HTMLAttributes<HTMLDivElement>`}</code></td><td><code>-</code></td><td>Native `div` props pass through (for example `id`, `data-testid`, `className`, `style`, `aria-*`).</td></tr>
+            <tr><td><code>name</code></td><td><code>string</code></td><td><code>'drop-down-select'</code></td><td>Accessible label passed to the underlying native <code>select</code>.</td></tr>
+            <tr><td><code>label</code></td><td><code>string</code></td><td><code>undefined</code></td><td>Optional visible label rendered above the dropdown face.</td></tr>
+            <tr><td><code>labelColor</code></td><td><code>string</code></td><td><code>'var(--core-text-primary)'</code></td><td>Label text color.</td></tr>
+            <tr><td><code>options</code></td><td><code>{`DropDownOption<T>[]`}</code></td><td><code>[]</code></td><td>Typed option list rendered into the dropdown.</td></tr>
+            <tr><td><code>selectedIndex</code></td><td><code>number</code></td><td><code>undefined</code></td><td>Controls selection by option index. If <code>selectedValue</code> is provided, value-based selection takes precedence.</td></tr>
+            <tr><td><code>selectedValue</code></td><td><code>T</code></td><td><code>undefined</code></td><td>Controls selection by option value.</td></tr>
+            <tr><td><code>valueKey</code></td><td><code>string</code></td><td><code>undefined</code></td><td>When option values are objects, compares <code>selectedValue[valueKey]</code> against each option value using the same key.</td></tr>
+            <tr><td><code>placeholder</code></td><td><code>boolean</code></td><td><code>true</code></td><td>Treats index <code>0</code> as a placeholder-style selection for text color purposes.</td></tr>
+            <tr><td><code>size</code></td><td><code>{`'xs' | 's' | 'm' | 'l'`}</code></td><td><code>'m'</code></td><td>Controls the face and label sizing preset.</td></tr>
+            <tr><td><code>disabled</code></td><td><code>boolean</code></td><td><code>false</code></td><td>Disables interaction and applies disabled styling.</td></tr>
+            <tr><td><code>error</code></td><td><code>boolean</code></td><td><code>false</code></td><td>Applies warning/error border styling.</td></tr>
+            <tr><td><code>width</code></td><td><code>string</code></td><td><code>'100%'</code></td><td>Wrapper width.</td></tr>
+            <tr><td><code>height</code></td><td><code>string</code></td><td><code>'auto'</code></td><td>Wrapper height.</td></tr>
+            <tr><td><code>gap</code></td><td><code>number</code></td><td><code>8</code></td><td>Wrapper gap token passed through CSS vars.</td></tr>
+            <tr><td><code>borderRadius</code></td><td><code>number</code></td><td><code>4</code></td><td>Border radius in pixels.</td></tr>
+            <tr><td><code>borderStyle</code></td><td><code>{`'bottom' | 'box' | 'none'`}</code></td><td><code>'box'</code></td><td>Controls whether the dropdown renders a full border, bottom-only border, or no border.</td></tr>
+            <tr><td><code>borderSize</code></td><td><code>number</code></td><td><code>1</code></td><td>Border thickness.</td></tr>
+            <tr><td><code>borderColor</code></td><td><code>string</code></td><td><code>'var(--core-outline-primary)'</code></td><td>Normal border color.</td></tr>
+            <tr><td><code>bgColor</code></td><td><code>string</code></td><td><code>'transparent'</code></td><td>Background color for the face element.</td></tr>
+            <tr><td><code>iconColor</code></td><td><code>string</code></td><td><code>'var(--core-text-primary)'</code></td><td>Chevron icon color.</td></tr>
+            <tr><td><code>textColor</code></td><td><code>string</code></td><td><code>'var(--core-text-primary)'</code></td><td>Selected text color when the control is not disabled and not showing the placeholder state.</td></tr>
+            <tr><td><code>iconSize</code></td><td><code>number</code></td><td><code>20</code></td><td>Chevron icon size in pixels.</td></tr>
+            <tr><td><code>paddingLeft</code></td><td><code>{`number | string`}</code></td><td><code>'8px'</code></td><td>Left padding.</td></tr>
+            <tr><td><code>paddingRight</code></td><td><code>{`number | string`}</code></td><td><code>'12px'</code></td><td>Right padding.</td></tr>
+            <tr><td><code>paddingTop</code></td><td><code>{`number | string`}</code></td><td><code>'8px'</code></td><td>Top padding token used by the component CSS vars.</td></tr>
+            <tr><td><code>paddingBottom</code></td><td><code>{`number | string`}</code></td><td><code>'8px'</code></td><td>Bottom padding token used by the component CSS vars.</td></tr>
+            <tr><td><code>validate</code></td><td><code>boolean</code></td><td><code>undefined</code></td><td>Declared prop type; not currently used by the component implementation.</td></tr>
+            <tr><td><code>...divAttributes</code></td><td><code>{`HTMLAttributes<HTMLDivElement>`}</code></td><td><code>-</code></td><td>Native wrapper <code>div</code> props such as <code>id</code>, <code>className</code>, <code>style</code>, and <code>aria-*</code>.</td></tr>
           </tbody>
         </table>
 
@@ -71,35 +101,76 @@ import {RenderSource} from '../../../documentation/_components/RenderSource/Rend
             </tr>
           </thead>
           <tbody>
-            <tr><td><code>onChange</code></td><td><code>{`(index: number, option: DropDownOption) => void`}</code></td></tr>
-            <tr><td><code>onBlur</code></td><td><code>{`(value: string) => void`}</code></td></tr>
-            <tr><td><code>onValidate</code></td><td><code>{`(state: boolean) => void`}</code></td></tr>
-            <tr><td><code>onFocus</code></td><td><code>{`() => void`}</code></td></tr>
+            <tr><td><code>onChange</code></td><td><code>{`(index: number, option: DropDownOption<T>) => void`}</code></td></tr>
           </tbody>
         </table>
 
-        ## Code Examples
+        ## Selection behavior
+        `DropDown` resolves selection in this order:
+        - If `selectedValue` is provided, it tries to match by direct value equality first.
+        - If `valueKey` is provided and the values are objects, it compares `option.value[valueKey]` to `selectedValue[valueKey]`.
+        - As a fallback, it compares the string form of `selectedValue` against `label` and `alt`.
+        - If `selectedValue` is not provided, `selectedIndex` controls the selection.
+        - If neither is provided, the component falls back to internal index state initialized from `selectedIndex ?? 0`.
+
+        ## Code examples
         </Unstyled>
 
         <RenderSource language={"tsx"}>
-```
-import { DropDown } from '@apple-pie/slice';
+        ```
+        import { DropDown } from '@apple-pie/slice';
+        
+        export function BasicDropDownExample() {
+            return (
+                <DropDown
+                    name="Jurisdiction"
+                    label="Jurisdiction"
+                    borderStyle="box"
+                    options={[
+                        { label: 'California', value: 'ca' },
+                        { label: 'New York', value: 'ny' },
+                    ]}
+                    selectedValue="ny"
+                    onChange={(index, option) => console.log(index, option.value)}
+                    id="dropdown-example"
+                    data-testid="dropdown-example"
+                    className="custom-wrapper"
+                    style={{ marginTop: 8, maxWidth: 480 }}
+                />
+            );
+        }
+        ```
+        </RenderSource>
 
-export function DropDownExample() {
-    return (
-        <DropDown
-            name="Jurisdiction"
-            options={[{ label: 'California', value: 'ca' }, { label: 'New York', value: 'ny' }]}
-            selectedIndex={0}
-            onChange={(index, option) => console.log(index, option)}
-            id="dropdown-example"
-            data-testid="dropdown-example"
-            className="custom-wrapper"
-            style={{ marginTop: 8, maxWidth: 480 }}
-        />
-    );
-}
-```
+        <RenderSource language={"tsx"}>
+        ```
+        import { DropDown, type DropDownOption } from '@apple-pie/slice';
+        
+        type UserOptionValue = {
+            id: number;
+            name: string;
+        };
+        
+        const options: DropDownOption<UserOptionValue>[] = [
+            { label: 'Alice', value: { id: 1, name: 'Alice' } },
+            { label: 'Bob', value: { id: 2, name: 'Bob' } },
+        ];
+        
+        export function ObjectValueDropDownExample() {
+            return (
+                <DropDown<UserOptionValue>
+                    name="User"
+                    label="User"
+                    options={options}
+                    valueKey="id"
+                    selectedValue={{ id: 2, name: 'Bob' }}
+                    onChange={(index, option) => {
+                        console.log(index, option.value?.id);
+                    }}
+                />
+            );
+        }
+        ```
         </RenderSource>
     </FlexDiv>
 </FlexDiv>

@@ -1,21 +1,24 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
-import {
-	type ErrorMessage,
-	ErrorSummary,
-} from 'src/components/ErrorSummary/ErrorSummary';
+import { type ErrorMessage, ErrorSummary } from 'src/components/ErrorSummary';
 import { FlexDiv } from 'src/components/FlexDiv/FlexDiv';
 import { runErrorSummaryPlay } from 'src/components/playHelpers';
 
 const errorMessages: ErrorMessage[] = [
-	{ id: '1', title: 'Error type 1', bullets: ['Bullet 1', 'Bullet 2'] },
-	{ id: '2', title: 'Error type 2', bullets: ['Bullet 1', 'Bullet 2'] },
+	{
+		title: 'Password Format',
+		message: [
+			'Needs at least one special character',
+			'Needs at least one number',
+		],
+	},
+	{ title: 'An email address is required' },
 ];
 const meta: Meta<typeof ErrorSummary> = {
 	title: 'Components/ErrorSummary',
 	component: ErrorSummary,
 	args: {
 		entries: errorMessages,
-		errors: [0, 1],
+		textSize: 'm',
 	},
 };
 

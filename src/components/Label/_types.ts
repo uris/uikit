@@ -1,16 +1,25 @@
 import type React from 'react';
 
+export enum LabelBackground {
+	red = 'red',
+	yellow = 'yellow',
+	green = 'green',
+	blue = 'blue',
+	grey = 'grey',
+	lightGrey = 'lightGrey',
+	white = 'white',
+}
+
 type LabelBaseProps = {
 	children?: React.ReactNode;
-	state?: 'red' | 'yellow' | 'green' | 'blue' | 'grey' | 'lightgrey' | 'white';
-	noFill?: boolean;
-	round?: boolean;
-	button?: boolean;
-	border?: number;
+	label?: string;
+	bgColor?: LabelBackground | string;
+	borderSize?: number;
+	borderColor?: string;
+	borderRadius?: number;
 	padding?: number | string;
-	inline?: boolean;
-	color?: string;
-	size?: 's' | 'm' | 'l';
+	textColor?: string;
+	textSize?: 'xs' | 's' | 'm' | 'l';
 	onClick?: (e: React.MouseEvent<any>) => void;
 };
 

@@ -21,12 +21,16 @@ export const IconButton = React.memo((props: IconButtonProps) => {
 		iconSize = 20,
 		icon = 'more',
 		borderRadius = 4,
+		border = false,
 		tooltip = undefined,
 		color = undefined,
 		colorOn = undefined,
 		bgColor = 'var(--core-surface-secondary)',
 		bgColorHover = 'var(--core-outline-primary)',
 		bgColorOn = 'var(--core-outline-primary)',
+		iconColor = 'var(--core-text-primary)',
+		iconColorOn = 'var(--core-text-primary)',
+		iconColorHover = 'var(--core-text-primary)',
 		transition = undefined,
 		variants = undefined,
 		initial = undefined,
@@ -41,7 +45,6 @@ export const IconButton = React.memo((props: IconButtonProps) => {
 		isToggled = false,
 		disabled = false,
 		showDot = false,
-		border = false,
 		onClick = () => null,
 		onToolTip = () => null,
 		...divAttributes
@@ -51,6 +54,7 @@ export const IconButton = React.memo((props: IconButtonProps) => {
 	const divClass = className ? ` ${className}` : '';
 	const ref = useRef<HTMLButtonElement>(null);
 	const [on, setOn] = useState<boolean>(isToggled);
+	const [hovered, setHovered] = useState<boolean>(false);
 
 	// sync the local toggle state from the controlled prop
 	useEffect(() => setOn(isToggled), [isToggled]);
@@ -60,15 +64,16 @@ export const IconButton = React.memo((props: IconButtonProps) => {
 		(e: React.MouseEvent<HTMLButtonElement, MouseEvent> | undefined) => {
 			if (disabled) return;
 			if (tooltip) onToolTip(null);
-			setOn(!on);
+			if (toggle) setOn(!on);
 			onClick(e as any);
 		},
-		[disabled, tooltip, onToolTip, on, onClick],
+		[disabled, tooltip, onToolTip, on, onClick, toggle],
 	);
 
 	// show the button tooltip using the current wrapper ref
 	const handleMouseEnter = useCallback(
 		(e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+			setHovered(true);
 			if (!ref?.current || !tooltip) return;
 			const tip: ToolTip = {
 				type: ToolTipType.button,
@@ -83,14 +88,9 @@ export const IconButton = React.memo((props: IconButtonProps) => {
 
 	// clear the tooltip when leaving the button
 	const handleMouseLeave = useCallback(() => {
+		setHovered(false);
 		if (tooltip) onToolTip(null);
 	}, [tooltip, onToolTip]);
-
-	// resolve the icon stroke color for the current visual state
-	const strokeColor = useMemo(
-		() => color || 'var(--core-icon-primary)',
-		[color],
-	);
 
 	// resolve the resting background color
 	const bgColorNormal = useMemo(() => {
@@ -111,11 +111,18 @@ export const IconButton = React.memo((props: IconButtonProps) => {
 		return color ?? 'var(--core-text-primary)';
 	}, [toggle, on, colorOn, color]);
 
+	// resolve the icon color based on states
+	const setIconColor = useMemo(() => {
+		if (toggle && on) return iconColorOn;
+		if (hovered) return iconColorHover;
+		return iconColor ?? 'var(--core-text-primary)';
+	}, [toggle, on, iconColorOn, iconColor, iconColorHover, hovered]);
+
 	// compose CSS custom properties for button sizing and colors
 	const cssVars = useMemo(() => {
 		return {
-			'--ib-bg': bgColorNormal,
-			'--ib-bg-hover': bgHoverColor,
+			'--ib-bg-color': bgColorNormal,
+			'--ib-bg-color-hover': bgHoverColor,
 			'--ib-icon-size': `${frameSize ?? 0}px`,
 			'--ib-border-radius': `${borderRadius ?? 0}px`,
 			'--ib-border': border ? '1px' : 0,
@@ -149,7 +156,7 @@ export const IconButton = React.memo((props: IconButtonProps) => {
 			<div className={css.icon} style={{ opacity: disabled ? 0.3 : 1 }}>
 				<Icon
 					name={icon}
-					strokeColor={strokeColor}
+					strokeColor={setIconColor}
 					fillColor={fillColor}
 					disabled={disabled}
 					size={iconSize}

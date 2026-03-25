@@ -1,40 +1,44 @@
 import type React from 'react';
 
-export type DropDownOption = {
+export type DropDownOption<T = string> = {
 	label?: string;
-	value?: string;
+	value?: T;
 	alt?: string;
 };
 
-type DropDownBaseProps = {
+type DropDownBaseProps<T = string> = {
 	name?: string;
-	options?: DropDownOption[];
+	label?: string;
+	labelColor?: string;
+	options?: DropDownOption<T>[];
 	selectedIndex?: number;
-	selectedValue?: string;
+	selectedValue?: T;
+	valueKey?: string;
 	placeholder?: boolean;
 	borderRadius?: number;
+	borderStyle?: 'bottom' | 'box' | 'none';
 	validate?: boolean;
 	iconColor?: string;
 	bgColor?: string;
+	textColor?: string;
+	borderColor?: string;
+	borderSize?: number;
 	width?: string;
 	height?: string;
 	paddingLeft?: number | string;
 	paddingRight?: number | string;
-	paddingTops?: number | string;
+	paddingTop?: number | string;
+	paddingBottom?: number | string;
 	iconSize?: number;
 	disabled?: boolean;
-	unframed?: boolean;
-	focused?: boolean;
+	error?: boolean;
 	gap?: number;
-	size?: 'small' | 'medium' | 'large';
-	onChange?: (index: number, option: DropDownOption) => void;
-	onBlur?: (value: string) => void;
-	onValidate?: (state: boolean) => void;
-	onFocus?: () => void;
+	size?: 'xs' | 's' | 'm' | 'l';
+	onChange?: (index: number, option: DropDownOption<T>) => void;
 };
 
-export type DropDownProps = Omit<
+export type DropDownProps<T = string> = Omit<
 	React.HTMLAttributes<HTMLDivElement>,
-	keyof DropDownBaseProps
+	keyof DropDownBaseProps<T>
 > &
-	DropDownBaseProps;
+	DropDownBaseProps<T>;

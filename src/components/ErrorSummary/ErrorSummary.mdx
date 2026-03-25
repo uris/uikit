@@ -9,7 +9,7 @@ import {RenderSource} from '../../../documentation/_components/RenderSource/Rend
     <FlexDiv width={"fill"} maxWidth={760} height={"auto"}>
         <Unstyled>
         # ErrorSummary
-        Renders a grouped summary of validation or processing errors in a scannable list.
+        `ErrorSummary` renders a grouped summary of errors with entry titles and one or more message lines per entry.
 
         ## Base element
         `HTMLDivElement`
@@ -17,65 +17,79 @@ import {RenderSource} from '../../../documentation/_components/RenderSource/Rend
         ## Interface
         `ErrorSummaryProps`
 
+        ## Typing
+        Error entries have the following shape:
+        <RenderSource language={"tsx"}>
+        ```
+        type ErrorMessage = {
+            title: string;
+            message?: string | string[];
+        };
+        ```
+        </RenderSource>
+
         ## Props
         <table style={{width: '100%'}}>
           <colgroup>
             <col style={{width: '1%'}} />
-            <col style={{width: '1%'}} />
-            <col style={{width: '1%'}} />
-            <col style={{width: '97%'}} />
+            <col style={{width: '24%'}} />
+            <col style={{width: '15%'}} />
+            <col style={{width: '60%'}} />
           </colgroup>
           <thead>
             <tr>
               <th className={"left"}>Prop</th>
               <th className={"left"}>Type</th>
               <th className={"left"}>Default</th>
-              <th>Description</th>
+              <th className={"left"}>Description</th>
             </tr>
           </thead>
           <tbody>
-            <tr><td><code>entries</code></td><td><code>ErrorMessage[]</code></td><td><code>-</code></td><td>Controls `entries`.</td></tr>
-            <tr><td><code>errors</code></td><td><code>any[]</code></td><td><code>-</code></td><td>Controls `errors`.</td></tr>
-            <tr><td><code>...divAttributes</code></td><td><code>{`HTMLAttributes<HTMLDivElement>`}</code></td><td><code>-</code></td><td>Native `div` props pass through (for example `id`, `data-testid`, `className`, `style`, `aria-*`).</td></tr>
+            <tr><td><code>entries</code></td><td><code>ErrorMessage[]</code></td><td><code>undefined</code></td><td>List of grouped error entries to render. When omitted or empty, nothing is rendered.</td></tr>
+            <tr><td><code>textColor</code></td><td><code>string</code></td><td><code>'var(--feedback-warning)'</code></td><td>Text color applied to the summary content through CSS variables.</td></tr>
+            <tr><td><code>bgColor</code></td><td><code>string</code></td><td><code>'transparent'</code></td><td>Background color applied to the summary container through CSS variables.</td></tr>
+            <tr><td><code>textSize</code></td><td><code>{`'xs' | 's' | 'm' | 'l'`}</code></td><td><code>'m'</code></td><td>Text size token applied to entry titles and message list items.</td></tr>
+            <tr><td><code>autoNumber</code></td><td><code>boolean</code></td><td><code>true</code></td><td>Automatically prefixes entry titles with `1.`, `2.`, etc. when more than one entry is present.</td></tr>
+            <tr><td><code>...divAttributes</code></td><td><code>{`HTMLAttributes<HTMLDivElement>`}</code></td><td><code>-</code></td><td>Native wrapper <code>div</code> props such as <code>id</code>, <code>className</code>, <code>style</code>, and <code>aria-*</code>.</td></tr>
           </tbody>
         </table>
 
         ## Events
-        <table style={{width: '100%'}}>
-          <colgroup>
-            <col style={{width: '1%'}} />
-            <col style={{width: '99%'}} />
-          </colgroup>
-          <thead>
-            <tr>
-              <th className={"left"}>Event</th>
-              <th className={"left"}>Type</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr><td><code>-</code></td><td><code>-</code></td></tr>
-          </tbody>
-        </table>
+        `ErrorSummary` does not expose component-specific callback props.
 
-        ## Code Examples
+        ## Rendering behavior
+        - The component only renders when `entries` exists and contains at least one item.
+        - Each entry renders its `title` in bold.
+        - If `message` exists, it is normalized into a list and rendered as bullet items.
+        - When `autoNumber` is `true` and there is more than one entry, titles are prefixed with their item number.
+        - `textSize`, `textColor`, and `bgColor` are applied through the component CSS variables.
+        - The summary uses motion-based enter/exit animation when it appears or disappears.
+
+        ## Code examples
         </Unstyled>
 
-        <RenderSource language={"tsx"}>
-```
-import { ErrorSummary } from '@apple-pie/slice';
-
-export function ErrorSummaryExample() {
-    return (
-        <ErrorSummary
-            entries={[{ id: 'name', title: 'Missing required field', bullets: ['Name is required'] }]}
-            id="errorsummary-example"
-            data-testid="errorsummary-example"
-            className="custom-wrapper"
-            style={{ marginTop: 8, maxWidth: 480 }}
-        />
-    );
-}
-```
+        <RenderSource>
+        ```
+        import { ErrorSummary } from '@apple-pie/slice';
+            
+        // error list
+        const errors = [
+            { title: 'Email is required' },
+            {
+                title: 'Invalid Password Format',
+                message: [
+                    'Password must be at least 8 characters',
+                    'Password must include a number',
+                ],
+            },
+        ]
+            
+        export function ErrorSummaryExample() {
+            return (
+                <ErrorSummary autoNumber={true} entries={errors} />
+            );
+        }
+        ```
         </RenderSource>
     </FlexDiv>
 </FlexDiv>

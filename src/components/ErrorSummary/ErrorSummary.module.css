@@ -1,41 +1,58 @@
 .errorBox {
 	composes: columnStart from "../../utils/styling/flexBox.module.css";
-	composes: body-m-regular from "../../utils/styling/type.module.css";
 	width: 100%;
-	background: var(--core-surface-secondary);
-	color: var(--feedback-warning);
-	border: 1px solid var(--feedback-warning);
+	background: var(--error-bg-color);
+	border: 1px solid var(--error-text-color);
 	border-radius: 4px;
-	padding: 0 16px 16px 16px !important;
+	padding: 16px !important;
 	overflow: hidden;
-	margin-bottom: 44px !important;
+	gap: 0;
 }
 
 .error {
 	composes: columnStart from "../../utils/styling/flexBox.module.css";
 	width: 100%;
+	margin: 0 !important;
+	padding: 0 !important;
+	margin-bottom: 4px !important;
+	&:last-child {
+		margin-bottom: 0 !important;
+	}
 }
 
 .p {
-	margin: 0;
-	padding: 16px 0 0 0;
-	composes: body-m-regular from "../../utils/styling/type.module.css";
-}
-
-.strong {
-	composes: body-m-bold from "../../utils/styling/type.module.css";
+	margin: 0 !important;
+	padding: 0 !important;
+	color: var(--error-text-color) !important;
 }
 
 .ul {
-	list-style-type: none;
-	list-style-position: outside;
-	margin: 0;
-	padding: 0;
+	padding: 0 !important;
+	margin: 0 !important;
 }
 
 .li {
-	composes: body-m-regular from "../../utils/styling/type.module.css";
-	margin: 3px 0 3px 0;
-	line-height: 1.2em;
+	color: var(--error-text-color) !important;
+	line-height: 1.5em !important;
 	padding: 0;
+}
+
+.xs {
+	composes: body-xs-regular from "../../utils/styling/type.module.css";
+	font-size: var(--font-size-xs) !important;
+}
+
+.s {
+	composes: body-s-regular from "../../utils/styling/type.module.css";
+	font-size: var(--font-size-s) !important;
+}
+
+.m {
+	composes: body-m-regular from "../../utils/styling/type.module.css";
+	font-size: var(--font-size-m) !important;
+}
+
+.l {
+	composes: body-l-regular from "../../utils/styling/type.module.css";
+	font-size: var(--font-size-l) !important;
 }

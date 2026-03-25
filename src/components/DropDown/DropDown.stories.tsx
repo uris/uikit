@@ -1,17 +1,17 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
-import {
-	DropDown,
-	type DropDownOption,
-} from 'src/components/DropDown/DropDown';
+// biome-ignore lint/style/useImportType: <explanation>
+import { DropDown, DropDownOption } from 'src/components/DropDown';
 import { FlexDiv } from 'src/components/FlexDiv/FlexDiv';
-import { runDropDownPlay } from 'src/components/playHelpers';
-import { lightTheme } from 'src/theme/themes';
 import { fn } from 'storybook/test';
 
-const optionsWPlace: DropDownOption[] = [
-	{ label: 'select an option', value: 'none' },
-	{ label: 'option 1', value: 'option-1' },
-	{ label: 'option 2', value: 'option-2' },
+type DropdownValueType = {
+	id: number;
+};
+
+const optionsWPlace: DropDownOption<DropdownValueType>[] = [
+	{ label: '-- select a user', value: { id: 0 } },
+	{ label: 'Jane Doe', value: { id: 1 } },
+	{ label: 'John Doe', value: { id: 2 } },
 ];
 
 const meta: Meta<typeof DropDown> = {
@@ -20,41 +20,42 @@ const meta: Meta<typeof DropDown> = {
 	args: {
 		width: '100%',
 		height: 'auto',
-		selectedIndex: 0,
-		selectedValue: '',
-		options: optionsWPlace,
+		label: undefined,
+		valueSize: 'm',
+		labelSize: 'm',
+		selectedIndex: undefined,
 		placeholder: true,
 		validate: true,
 		borderRadius: 4,
+		valueKey: 'id',
+		selectedValue: { id: 0 },
+		options: optionsWPlace,
 		bgColor: 'transparent',
-		iconColor: lightTheme.colors['core-text-primary'],
-		paddingLeft: undefined,
-		paddingRight: undefined,
-		paddingTops: undefined,
-		iconSize: 24,
+		iconColor: undefined,
+		borderStyle: 'box',
+		iconSize: 20,
 		disabled: false,
-		unframed: false,
-		focused: false,
-		gap: 0,
+		error: false,
 		size: 'medium',
 		onChange: fn(),
-		onValidate: fn(),
-		onFocus: fn(),
-		onBlur: fn(),
 	},
 };
 
 export default meta;
 
 export const Default: StoryObj<typeof DropDown> = {
+	args: {
+		error: false,
+	},
 	render: (args) => {
 		return (
 			<FlexDiv absolute justify={'center'} alignItems={'center'} padding={64}>
-				<DropDown {...args} />
+				<DropDown<DropdownValueType>
+					{...args}
+					selectedValue={args.selectedValue as DropdownValueType}
+					options={optionsWPlace}
+				/>
 			</FlexDiv>
 		);
-	},
-	play: async ({ canvasElement, args }) => {
-		await runDropDownPlay({ canvasElement, args });
 	},
 };

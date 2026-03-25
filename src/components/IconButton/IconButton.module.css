@@ -1,7 +1,7 @@
 .button {
 	composes: row from "../../utils/styling/flexBox.module.css";
 	position: relative;
-	background: var(--ib-bg);
+	background: var(--ib-bg-color);
 	border-radius: var(--ib-border-radius);
 	border: var(--ib-border) solid var(--core-outline-primary);
 	gap: 6px;
@@ -11,7 +11,7 @@
 	background-image: none;
 	outline: none;
 	&:hover {
-		background: var(--ib-bg-hover);
+		background: var(--ib-bg-color-hover);
 	}
 }
 

@@ -13,8 +13,8 @@ Slice is a TypeScript-first React UI kit with theme tokens, utility hooks, optio
 - 30+ reusable UI components (inputs, buttons, navigation, overlays, feedback, layout, icons, upload UI, camera/stream UI)
 - Theme system with light/dark presets and typed theme tokens
 - React hooks for theme, window sizing, keyboard shortcuts, local storage, resize, and more
-- Optional Zustand-powered stores (`tip`, `uploads`, `window`, `SSE`, `WS`)
-- Utility functions and low-level objects such as `SSEConnection` and `WSConnection`
+- Optional Zustand-powered stores (`tip`, `uploads`, `window`, `SSE`, `WS`, `LocalDB`)
+- Utility functions and low-level objects such as `IndexedDB`, `SSEConnection`, and `WSConnection`
 - Rollup + TypeScript build pipeline for CJS, ESM, and declaration output
 - Component performance benchmarks powered by Vitest
 
@@ -144,6 +144,7 @@ export function CameraExample() {
 ## Stores (optional)
 
 - `tip` store: `useTip`, `useTipActions`, `tipActions`, `getTip`
+- `LocalDB` store: `useLocalDBStore`, `useManageLocalDB`, `useLocalDB`, `useLocalDBValues`, `useLocalDBError`, `localDBActions`
 - `SSE` store: `useSSEStore`, `useSSE`, `useMessage`, `useConnectionMessage`, `useConnectionClose`, `useIsConnected`
 - `WS` store: `useWSStore`, `useWS`, `useMessage`, `useConnectionMessage`, `useConnectionClose`, `useIsConnected`
 - `window` store: `useWindowStore`, atomic viewport/runtime hooks, imperative viewport helpers, and explicit location actions/selectors
@@ -223,7 +224,7 @@ This worker URL pattern assumes modern frontend tooling such as Vite or similar 
 ## Utilities
 
 - Package utilities are published from `@apple-pie/slice/utils`
-- Low-level utility objects such as `SSEConnection` and `WSConnection` are also published from `@apple-pie/slice/utils/objects`
+- Low-level utility objects such as `IndexedDB`, `SSEConnection`, and `WSConnection` are also published from `@apple-pie/slice/utils/objects`
 - Internal utility source lives under `src/utils/functions/*`
 - Shared utility CSS modules live under `src/utils/styling/*`
 

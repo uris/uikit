@@ -156,12 +156,27 @@ export async function runDropDownPlay<TArgs>({
 }
 
 export async function runErrorSummaryPlay<TArgs>({
+	args,
 	canvasElement,
 }: PlayContext<TArgs>) {
 	await expectCanvas(canvasElement);
 	const canvas = within(canvasElement);
-	await expect(canvas.getByText('Error type 1')).toBeInTheDocument();
-	await expect(canvas.getByText('Error type 2')).toBeInTheDocument();
+	const storyArgs = asArgs(args);
+	const entries = Array.isArray(storyArgs.entries) ? storyArgs.entries : [];
+
+	for (const entry of entries) {
+		if (
+			entry &&
+			typeof entry === 'object' &&
+			'title' in entry &&
+			typeof (entry as { title?: unknown }).title === 'string'
+		) {
+			const title = (entry as { title: string }).title;
+			await expect(
+				canvas.getByText((content) => content.includes(title)),
+			).toBeInTheDocument();
+		}
+	}
 }
 
 export async function runFlexDivPlay<TArgs>({
@@ -550,17 +565,21 @@ export async function runLabelPlay<TArgs>({
 	await expectCanvas(canvasElement);
 	const canvas = within(canvasElement);
 	const storyArgs = asArgs(args);
-	if (
+	const labelText =
 		typeof storyArgs.children === 'string' ||
 		typeof storyArgs.children === 'number'
-	) {
-		const label = canvas.getByText(String(storyArgs.children));
-		await expect(label).toBeInTheDocument();
-		if (storyArgs.button === true) {
-			await userEvent.click(label);
-			if (isFn(storyArgs.onClick)) {
-				await expect(storyArgs.onClick).toHaveBeenCalled();
-			}
-		}
+			? String(storyArgs.children)
+			: typeof storyArgs.label === 'string'
+				? storyArgs.label
+				: null;
+
+	if (!labelText) return;
+
+	const label = canvas.getByText(labelText);
+	await expect(label).toBeInTheDocument();
+
+	if (isFn(storyArgs.onClick)) {
+		await userEvent.click(label);
+		await expect(storyArgs.onClick).toHaveBeenCalled();
 	}
 }

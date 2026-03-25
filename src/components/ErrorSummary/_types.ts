@@ -1,14 +1,16 @@
 import type React from 'react';
 
 export type ErrorMessage = {
-	id?: string;
-	title?: string;
-	bullets?: string[];
+	title: string;
+	message?: string | string[];
 };
 
 type ErrorSummaryBaseProps = {
 	entries?: ErrorMessage[];
-	errors?: any[];
+	textColor?: string;
+	autoNumber?: boolean;
+	bgColor?: string;
+	textSize?: 'xs' | 's' | 'm' | 'l';
 };
 
 export type ErrorSummaryProps = Omit<

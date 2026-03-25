@@ -36,7 +36,7 @@ const meta: Meta<typeof IconButton> = {
 		label: undefined,
 		hover: true,
 		count: 0,
-		toggle: true,
+		toggle: false,
 		toggleIcon: false,
 		isToggled: false,
 		disabled: false,
@@ -50,6 +50,17 @@ const meta: Meta<typeof IconButton> = {
 export default meta;
 
 export const Default: StoryObj<typeof IconButton> = {
+	render: (args) => {
+		return (
+			<FlexDiv absolute justify={'center'} alignItems={'center'} padding={64}>
+				<IconButton {...args} />
+			</FlexDiv>
+		);
+	},
+};
+
+export const Test: StoryObj<typeof IconButton> = {
+	tags: ['tests'],
 	render: (args) => {
 		return (
 			<FlexDiv absolute justify={'center'} alignItems={'center'} padding={64}>
