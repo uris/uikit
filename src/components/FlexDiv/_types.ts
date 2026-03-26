@@ -1,6 +1,14 @@
 import type { Transition } from 'motion/react';
 import type React from 'react';
 
+enum Size {
+	Grow = 'grow',
+	Fill = 'fill',
+	Fit = 'fit',
+	Viewport = 'viewport',
+	Auto = 'auto',
+}
+
 type FlexDivBaseProps = {
 	className?: string;
 	children?: any;
@@ -11,8 +19,8 @@ type FlexDivBaseProps = {
 	direction?: 'row' | 'column';
 	alignItems?: 'start' | 'center' | 'end' | 'between';
 	justify?: 'start' | 'top' | 'center' | 'end' | 'bottom' | 'between';
-	width?: number | 'grow' | 'fill' | 'fit' | 'viewport' | 'auto';
-	height?: number | 'grow' | 'fill' | 'fit' | 'viewport' | 'auto';
+	width?: number | Size | string;
+	height?: number | Size | string;
 	maxWidth?: number | string;
 	centerSelf?: boolean | string;
 	flex?: number;
