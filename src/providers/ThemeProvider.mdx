@@ -36,7 +36,7 @@ import {RenderSource} from '../../documentation/_components/RenderSource/RenderS
             <tr><td><code>children</code></td><td><code>React.ReactNode</code></td><td><code>undefined</code></td><td>Content rendered inside the provider.</td></tr>
             <tr><td><code>theme</code></td><td><code>string</code></td><td><code>undefined</code></td><td>Manual theme selector. Values containing <code>'dark'</code> resolve to Slice dark mode, otherwise Slice light mode.</td></tr>
             <tr><td><code>system</code></td><td><code>boolean</code></td><td><code>undefined</code></td><td>When <code>true</code>, uses `prefers-color-scheme` and updates automatically when the OS theme changes.</td></tr>
-            <tr><td><code>global</code></td><td><code>boolean</code></td><td><code>undefined</code></td><td>When <code>true</code>, also writes the active theme's <code>core-surface-primary</code> color to the root document element and <code>document.body</code> backgrounds.</td></tr>
+            <tr><td><code>global</code></td><td><code>boolean</code></td><td><code>undefined</code></td><td>When <code>true</code>, also writes the active theme's <code>core-surface-primary</code> color to the root document element and <code>document.body</code> backgrounds. This is useful for full-page theming, and in Safari it also drives the browser header color.</td></tr>
           </tbody>
         </table>
 

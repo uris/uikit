@@ -50,7 +50,7 @@ export default function App() {
 }
 ```
 
-`ThemeProvider` is the default theme bootstrap for the library. It sets the active `data-slice-theme` value on the document root, renders a `data-slice-theme-scope` wrapper, and pulls in the packaged theme CSS token files used by components and Storybook. When `global` is enabled, it also applies the active theme's `core-surface-primary` color to the root document element and `document.body` backgrounds.
+`ThemeProvider` is the default theme bootstrap for the library. It sets the active `data-slice-theme` value on the document root, renders a `data-slice-theme-scope` wrapper, and pulls in the packaged theme CSS token files used by components and Storybook. When `global` is enabled, it also applies the active theme's `core-surface-primary` color to the root document element and `document.body` backgrounds. In Safari, this also drives the browser header color.
 
 ## Package Surface
 
