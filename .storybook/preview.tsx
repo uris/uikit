@@ -28,7 +28,7 @@ const preview: Preview = {
 		(Story, context) => {
 			const theme = context.globals.theme;
 			return (
-				<ThemeProvider theme={theme} system={true}>
+				<ThemeProvider theme={theme} system={true} global={true}>
 					<Story />
 				</ThemeProvider>
 			);
@@ -41,7 +41,7 @@ const preview: Preview = {
 				const theme = context.store.userGlobals.globals.theme;
 				return (
 					<DocsContainer context={context}>
-						<ThemeProvider theme={theme} system={true}>
+						<ThemeProvider theme={theme} system={true} global={true}>
 							<FlexDiv
 								padding={'64px 88px'}
 								absolute={true}

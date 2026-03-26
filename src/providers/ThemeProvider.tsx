@@ -5,26 +5,38 @@ import '../theme/elevations/elevation.css';
 import '../theme/type/type.css';
 import '../theme/breakpoints/custom-media.css';
 import '../theme/motion/motion.css';
-import { darkTheme, lightTheme } from '../theme';
+import { type SliceTheme, darkTheme, lightTheme } from '../theme';
 
 interface ThemeProviderProps {
 	children?: React.ReactNode;
 	theme?: string;
 	system?: boolean;
+	global?: boolean;
 }
 
-// set up media query for system theme
+// set up a media query for system theme
 const darkModeMediaQuery = globalThis.matchMedia(
 	'(prefers-color-scheme: dark)',
 );
 
+function resolveTheme(
+	theme?: string,
+	system?: boolean,
+): SliceTheme | undefined {
+	if (system) return darkModeMediaQuery.matches ? darkTheme : lightTheme;
+	if (theme) return theme.includes('dark') ? darkTheme : lightTheme;
+
+	return undefined;
+}
+
 export function ThemeProvider(props: Readonly<ThemeProviderProps>) {
-	const { children, theme, system } = props;
+	const { children, theme, system, global } = props;
 
 	// sync the explicitly provided theme to the document root
 	useEffect(() => {
 		if (theme) {
-			const newTheme = theme.includes('dark') ? darkTheme : lightTheme;
+			const newTheme = resolveTheme(theme, false);
+			if (!newTheme) return;
 			document.documentElement.dataset.sliceTheme = newTheme.name;
 		}
 	}, [theme]);
@@ -51,6 +63,26 @@ export function ThemeProvider(props: Readonly<ThemeProviderProps>) {
 			darkModeMediaQuery.removeEventListener('change', handleSystemThemeChange);
 		};
 	}, [system]);
+
+	// optionally mirror the active Slice surface color onto the document body
+	useEffect(() => {
+		if (!global) {
+			document.documentElement.classList.remove(
+				'slice-global-background-color',
+			);
+			document.body.classList.remove('slice-global-background-color');
+			return;
+		}
+		document.documentElement.classList.add('slice-global-background-color');
+		document.body.classList.add('slice-global-background-color');
+
+		return () => {
+			document.documentElement.classList.remove(
+				'slice-global-background-color',
+			);
+			document.body.classList.remove('slice-global-background-color');
+		};
+	}, [global]);
 
 	return <div data-slice-theme-scope>{children}</div>;
 }

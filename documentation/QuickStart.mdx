@@ -21,13 +21,13 @@ $ npm install @apple-pie/slice motion/react
 </RenderSource>
         <Unstyled>
             #### 2. Wrap your app with the theme provider
-            Wrap your app (or where you plan to use Slice) with Slice's `ThemeProvider`. Set the system flag to true to have Slice automatically adopt the system color theme (dark / light mode)
+            Wrap your app (or where you plan to use Slice) with Slice's `ThemeProvider`. Set `system` to `true` to have Slice automatically adopt the system color theme (dark / light mode). Set `global` to `true` if you also want Slice to apply the active `core-surface-primary` color to the root document element and `body` backgrounds.
         </Unstyled>
         <RenderSource language='jsx'>
 ```
 import { ThemeProvider } from '@apple-pie/slice';
 
-<ThemeProvider system={true}>
+<ThemeProvider system={true} global={true}>
     <App />
 </ThemeProvider>;
 ```

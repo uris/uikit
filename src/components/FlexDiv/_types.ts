@@ -1,7 +1,7 @@
 import type { Transition } from 'motion/react';
 import type React from 'react';
 
-enum Size {
+export enum Size {
 	Grow = 'grow',
 	Fill = 'fill',
 	Fit = 'fit',

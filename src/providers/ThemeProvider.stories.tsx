@@ -8,6 +8,7 @@ import { ThemeProvider } from './ThemeProvider';
 type ThemeProviderDemoProps = {
 	theme?: string;
 	system?: boolean;
+	global?: boolean;
 };
 
 function ThemeProviderChildDemo() {
@@ -41,10 +42,10 @@ function ThemeProviderChildDemo() {
 }
 
 function ThemeProviderDemo(props: Readonly<ThemeProviderDemoProps>) {
-	const { theme, system } = props;
+	const { theme, system, global } = props;
 
 	return (
-		<ThemeProvider theme={theme} system={system}>
+		<ThemeProvider theme={theme} system={system} global={global}>
 			<ThemeProviderChildDemo />
 		</ThemeProvider>
 	);
@@ -59,6 +60,7 @@ const meta: Meta<typeof ThemeProviderDemo> = {
 	args: {
 		theme: 'lightMode',
 		system: false,
+		global: false,
 	},
 	argTypes: {
 		theme: {
@@ -66,6 +68,9 @@ const meta: Meta<typeof ThemeProviderDemo> = {
 			options: [undefined, 'lightMode', 'darkMode'],
 		},
 		system: {
+			control: { type: 'boolean' },
+		},
+		global: {
 			control: { type: 'boolean' },
 		},
 	},

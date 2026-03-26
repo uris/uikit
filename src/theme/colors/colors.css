@@ -109,6 +109,11 @@
 	--surface-shadow-strong-dark: 0px 4px 64px #0000007a;
 }
 
+/* Root-level token needed for global viewport backgrounds */
+:root[data-slice-theme="lightMode"] {
+	--core-surface-primary: #ffffff;
+}
+
 /* Light theme tokens */
 :root[data-slice-theme="lightMode"] [data-slice-theme-scope] {
 	--array-land: var(--brand-land-100);
@@ -180,6 +185,11 @@
 	--scroll-bar-hover: var(--scroll-bar-hover-light);
 	--surface-shadow-soft: var(--surface-shadow-soft-light);
 	--surface-shadow-strong: var(--surface-shadow-strong-light);
+}
+
+/* Root-level token needed for global viewport backgrounds */
+:root[data-slice-theme="darkMode"] {
+	--core-surface-primary: #1f262d;
 }
 
 /* Dark theme tokens */
@@ -474,4 +484,8 @@
 	border: 1px solid var(--core-outline-primary);
 	background: var(--core-surface-secondary);
 	color: var(--core-text-primary);
+}
+
+.slice-global-background-color {
+	background-color: var(--core-surface-primary);
 }

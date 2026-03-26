@@ -1,6 +1,6 @@
 {
 	"name": "@apple-pie/slice",
-	"version": "0.1.13",
+	"version": "0.1.19",
 	"main": "dist/cjs/index.js",
 	"module": "dist/esm/index.mjs",
 	"exports": {
