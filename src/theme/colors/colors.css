@@ -488,4 +488,6 @@
 
 .slice-global-background-color {
 	background-color: var(--core-surface-primary);
+	margin: 0;
+	padding: 0;
 }
