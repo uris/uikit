@@ -22,19 +22,19 @@
 }
 
 .icon {
-    composes: row from "../../utils/styling/flexBox.module.css";
-    height: var(--ui-chip-icon-size);
-    min-height: var(--ui-chip-icon-size);
-    width: var(--ui-chip-icon-size);
-    min-width: var(--ui-chip-icon-size);
+	composes: row from "../../utils/styling/flexBox.module.css";
+	height: var(--ui-chip-icon-size);
+	min-height: var(--ui-chip-icon-size);
+	width: var(--ui-chip-icon-size);
+	min-width: var(--ui-chip-icon-size);
 }
 
 .xs {
-    composes: body-xs-regular from "../../utils/styling/type.module.css";
+	composes: body-xs-regular from "../../utils/styling/type.module.css";
 }
 
 .s {
-    composes: body-s-regular from "../../utils/styling/type.module.css";
+	composes: body-s-regular from "../../utils/styling/type.module.css";
 }
 
 .m {

@@ -62,63 +62,63 @@ import NoteSection from "../../../documentation/_components/Notice/Notice";
         Use focused selectors so components only re-render when their selected slice changes.
 
         <RenderSource language={"tsx"}>
-{`
-import { useToast, useToastActions } from '@apple-pie/slice/stores/toast';
-
-function ToastLauncher() {
-	const toast = useToast();
-	const actions = useToastActions();
-
-	return (
-		<button
-			type="button"
-			onClick={() =>
-				actions.push({ message: 'Saved', type: 'success', duration: 2500 })
-			}
-		>
-			{toast?.message ?? 'Show toast'}
-		</button>
-	);
-}
-`}
-</RenderSource>
+        ```
+        import { useToast, useToastActions } from '@apple-pie/slice/stores/toast';
+        
+        function ToastLauncher() {
+            const toast = useToast();
+            const actions = useToastActions();
+        
+            return (
+                <button
+                    type="button"
+                    onClick={() =>
+                        actions.push({ message: 'Saved', type: 'success', duration: 2500 })
+                    }
+                >
+                    {toast?.message ?? 'Show toast'}
+                </button>
+            );
+        }
+        ```
+        </RenderSource>
 
         ## Generic selector usage in React
         Use `useToastStore` directly when you need a custom selector.
 
         <RenderSource language={"tsx"}>
-{`
-import { useToastStore } from '@apple-pie/slice/stores/toast';
-
-function ToastTypeBadge() {
-	const toastType = useToastStore((state) => state.toast?.type ?? 'info');
-	return <span>{toastType}</span>;
-}
-`}
-</RenderSource>
+        ```
+        import { useToastStore } from '@apple-pie/slice/stores/toast';
+        
+        function ToastTypeBadge() {
+            const toastType = useToastStore((state) => state.toast?.type ?? 'info');
+            return <span>{toastType}</span>;
+        }
+        ```
+        </RenderSource>
 
         ## Imperative usage outside React
         Use imperative helpers in utility modules, services, and non-component handlers.
         These are non-reactive reads/writes.
 
         <RenderSource language={"tsx"}>
-{`
-import { toastActions, getToast } from '@apple-pie/slice/stores/toast';
-
-export async function saveData() {
-	try {
-		// ...request
-		toastActions.push({ message: 'Saved', type: 'success' });
-	} catch {
-		toastActions.push({ message: 'Save failed', type: 'error' });
-	}
-}
-
-export function getCurrentToastMessage() {
-	return getToast()?.message ?? null;
-}
-`}
-</RenderSource>
+        ```
+        import { toastActions, getToast } from '@apple-pie/slice/stores/toast';
+        
+        export async function saveData() {
+            try {
+                // ...request
+                toastActions.push({ message: 'Saved', type: 'success' });
+            } catch {
+                toastActions.push({ message: 'Save failed', type: 'error' });
+            }
+        }
+        
+        export function getCurrentToastMessage() {
+            return getToast()?.message ?? null;
+        }
+        ```
+        </RenderSource>
         </Unstyled>
     </FlexDiv>
 </FlexDiv>

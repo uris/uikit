@@ -27,14 +27,14 @@ export const DivInput = React.memo((props: DivInputProps) => {
 		onSubmit = () => null,
 		onFocus = () => null,
 		onBlur = () => null,
-        onDblClick = () => null,
-        onClick = () => null,
-        borderRadius,
-        radius = 4,
-        backgroundColor,
-        bgColor = 'var(--core-surface-secondary)',
-        ...divAttributes
-    } = props;
+		onDblClick = () => null,
+		onClick = () => null,
+		borderRadius,
+		radius = 4,
+		backgroundColor,
+		bgColor = 'var(--core-surface-secondary)',
+		...divAttributes
+	} = props;
 	const { id: divId, className, style, ...rest } = divAttributes;
 	const divStyle = style ?? ({} as React.CSSProperties);
 	const divClass = className ? ` ${className}` : '';
@@ -43,11 +43,11 @@ export const DivInput = React.memo((props: DivInputProps) => {
 	const innerText = useRef<string>(
 		value === '' ? cleanString(placeholder) : cleanString(value),
 	);
-    const [isFocused, setIsFocused] = useState(focus);
-    const [text, setText] = useState(innerText.current);
-    const [isPlaceholder, setIsPlaceholder] = useState<boolean>(false);
-    const resolvedBorderRadius = borderRadius ?? radius;
-    const resolvedBackgroundColor = backgroundColor ?? bgColor;
+	const [isFocused, setIsFocused] = useState(focus);
+	const [text, setText] = useState(innerText.current);
+	const [isPlaceholder, setIsPlaceholder] = useState<boolean>(false);
+	const resolvedBorderRadius = borderRadius ?? radius;
+	const resolvedBackgroundColor = backgroundColor ?? bgColor;
 
 	// place the text cursor at the requested edge of the editable content
 	const setCursor = useCallback((to: 'start' | 'end', length = 1) => {
@@ -226,14 +226,14 @@ export const DivInput = React.memo((props: DivInputProps) => {
 			'--div-input-cursor': isEditable ? 'text' : 'default',
 			'--div-input-bg': isEditable
 				? (bgColor ?? 'var(--core-surface-secondary)')
-                : 'transparent',
-            '--div-input-wrapper-bg':
-                isEditable && isFocused
-                    ? (resolvedBackgroundColor ?? 'var(--core-surface-secondary)')
-                    : 'transparent',
-            '--div-input-border-radius': `${resolvedBorderRadius}px`,
-        } as React.CSSProperties;
-    }, [
+				: 'transparent',
+			'--div-input-wrapper-bg':
+				isEditable && isFocused
+					? (resolvedBackgroundColor ?? 'var(--core-surface-secondary)')
+					: 'transparent',
+			'--div-input-border-radius': `${resolvedBorderRadius}px`,
+		} as React.CSSProperties;
+	}, [
 		clamp,
 		wrap,
 		isEditable,
@@ -243,9 +243,10 @@ export const DivInput = React.memo((props: DivInputProps) => {
 		padding,
 		isPlaceholder,
 		setWidth,
-        resolvedBackgroundColor,
-        resolvedBorderRadius,
-    ]);
+		resolvedBackgroundColor,
+		resolvedBorderRadius,
+		bgColor,
+	]);
 
 	/* START.DEBUG */
 	useTrackRenders(props, 'DivInput');

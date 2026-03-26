@@ -23,14 +23,14 @@ export const TextArea = React.memo((props: TextAreaProps) => {
 		padding = '16px 4px 16px 16px',
 		error = false,
 		resizable = true,
-        hasSend = false,
-        sendOffset = { bottom: 10, right: 10 },
-        sendSize = 36,
-        returnSubmits = false,
-        backgroundColor,
-        bgColor = undefined,
-        minWidth = undefined,
-        textSize = 'm',
+		hasSend = false,
+		sendOffset = { bottom: 10, right: 10 },
+		sendSize = 36,
+		returnSubmits = false,
+		backgroundColor,
+		bgColor = undefined,
+		minWidth = undefined,
+		textSize = 'm',
 		disabled = false,
 		submitClears = true,
 		onChange = () => null,
@@ -41,9 +41,9 @@ export const TextArea = React.memo((props: TextAreaProps) => {
 		...divAttributes
 	} = props;
 	const { id: divId, className, style, ...rest } = divAttributes;
-    const divStyle = style ?? ({} as React.CSSProperties);
-    const divClass = className ? ` ${className}` : '';
-    const resolvedBackgroundColor = backgroundColor ?? bgColor;
+	const divStyle = style ?? ({} as React.CSSProperties);
+	const divClass = className ? ` ${className}` : '';
+	const resolvedBackgroundColor = backgroundColor ?? bgColor;
 
 	const [isFocused, setIsFocused] = useState<boolean>(focused);
 	const [text, setText] = useState<string>(value);
@@ -138,12 +138,12 @@ export const TextArea = React.memo((props: TextAreaProps) => {
 	}, [isFocused, error, border]);
 
 	// resolve the text size class for the textarea content
-    const textClassName = useMemo(() => {
-        if (textSize === 'xs') return css.xs;
-        if (textSize === 'l') return css.l;
-        if (textSize === 'm') return css.m;
-        return css.s;
-    }, [textSize]);
+	const textClassName = useMemo(() => {
+		if (textSize === 'xs') return css.xs;
+		if (textSize === 'l') return css.l;
+		if (textSize === 'm') return css.m;
+		return css.s;
+	}, [textSize]);
 
 	// compose CSS custom properties for layout, colors, and send button placement
 	const cssVars = useMemo(() => {
@@ -151,8 +151,8 @@ export const TextArea = React.memo((props: TextAreaProps) => {
 			'--ta-border-radius': `${borderRadius}px`,
 			'--ta-width': `${setStyleValue(width)}`,
 			'--ta-min-width': minWidth ? `${minWidth}px` : 'unset',
-            '--ta-bg-color':
-                resolvedBackgroundColor ?? 'var(--core-surface-secondary)',
+			'--ta-bg-color':
+				resolvedBackgroundColor ?? 'var(--core-surface-secondary)',
 			'--ta-border-color': setBorderColor,
 			'--ta-padding': `${setStyleValue(padding)}`,
 			'--ta-send-icon-offset-bottom': `${sendOffset.bottom}px`,
@@ -163,9 +163,9 @@ export const TextArea = React.memo((props: TextAreaProps) => {
 	}, [
 		width,
 		minWidth,
-        resolvedBackgroundColor,
-        setBorderColor,
-        padding,
+		resolvedBackgroundColor,
+		setBorderColor,
+		padding,
 		sendOffset,
 		sendSize,
 		setStyleValue,

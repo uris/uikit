@@ -22,51 +22,51 @@ import NoteSection from '../../../documentation/_components/Notice/Notice';
         A typical example might look like this:
 
             <RenderSource language={'tsx'}>
-```
-import { useEffect, useRef } from 'react';
-import {
-	useWS,
-	useIsConnected,
-	useMessage,
-	WSStoreConnection,
-} from '@apple-pie/slice/stores/WS';
-
-type ChatMessage = { id: string; text: string };
-
-function AppSocket() {
-	const connectionRef = useRef<WSStoreConnection | null>(null);
-	const { addConnection, removeConnection } = useWS();
-	const connected = useIsConnected('chat');
-	const anyMessage = useMessage();
-	const lastPayload = useMessage<ChatMessage>('message', 'chat');
-
-	useEffect(() => {
-		if (connectionRef.current) return;
-		connectionRef.current = addConnection('chat', {
-			url: 'wss://example.com/chat',
-			autoReconnect: true,
-			reconnectInterval: 1000,
-			reconnectAttempts: 5,
-			reconnectFalloff: true,
-		});
-		return () => {
-			removeConnection('chat');
-			connectionRef.current = null;
-		};
-	}, [addConnection, removeConnection]);
-
-	return (
-		<div>
-			connected: {connected ? 'yes' : 'no'} - message:{' '}
-			{typeof lastPayload === 'object' && lastPayload
-				? lastPayload.text
-				: 'waiting...'}{' '}
-			- last type: {anyMessage?.type ?? 'waiting...'}
-		</div>
-	);
-}
-```
-</RenderSource>
+            ```
+            import { useEffect, useRef } from 'react';
+            import {
+                useWS,
+                useIsConnected,
+                useMessage,
+                WSStoreConnection,
+            } from '@apple-pie/slice/stores/WS';
+            
+            type ChatMessage = { id: string; text: string };
+            
+            function AppSocket() {
+                const connectionRef = useRef<WSStoreConnection | null>(null);
+                const { addConnection, removeConnection } = useWS();
+                const connected = useIsConnected('chat');
+                const anyMessage = useMessage();
+                const lastPayload = useMessage<ChatMessage>('message', 'chat');
+            
+                useEffect(() => {
+                    if (connectionRef.current) return;
+                    connectionRef.current = addConnection('chat', {
+                        url: 'wss://example.com/chat',
+                        autoReconnect: true,
+                        reconnectInterval: 1000,
+                        reconnectAttempts: 5,
+                        reconnectFalloff: true,
+                    });
+                    return () => {
+                        removeConnection('chat');
+                        connectionRef.current = null;
+                    };
+                }, [addConnection, removeConnection]);
+            
+                return (
+                    <div>
+                        connected: {connected ? 'yes' : 'no'} - message:{' '}
+                        {typeof lastPayload === 'object' && lastPayload
+                            ? lastPayload.text
+                            : 'waiting...'}{' '}
+                        - last type: {anyMessage?.type ?? 'waiting...'}
+                    </div>
+                );
+            }
+            ```
+            </RenderSource>
             
             Note: Slice stores are singletons, which means you can safely import `useMessage` anywhere in your app and subscribe to the latest matching websocket update.
             If you plan to make events available globally to your app, make sure to place your connection cleanup where it makes sense.
@@ -201,19 +201,19 @@ useWSActions.removeConnection('chat');
 
         ## Imperative usage outside React
         <RenderSource language={'tsx'}>
-{`
-import { useWSActions, useLastWSMessage } from '@apple-pie/slice/stores/WS';
-
-useWSActions.addConnection('system', {
-	url: 'wss://example.com/system',
-	autoReconnect: true,
-});
-
-export function getLatestWSType() {
-	return useLastWSMessage()?.type ?? null;
-}
-`}
-</RenderSource>
+        ```
+        import { useWSActions, useLastWSMessage } from '@apple-pie/slice/stores/WS';
+        
+        useWSActions.addConnection('system', {
+            url: 'wss://example.com/system',
+            autoReconnect: true,
+        });
+        
+        export function getLatestWSType() {
+            return useLastWSMessage()?.type ?? null;
+        }
+        ```
+        </RenderSource>
         </Unstyled>
     </FlexDiv>
 </FlexDiv>

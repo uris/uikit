@@ -73,17 +73,17 @@
 }
 
 .send {
-    position: absolute;
-    bottom: var(--ta-send-icon-offset-bottom);
-    right: var(--ta-send-icon-offset-right);
+	position: absolute;
+	bottom: var(--ta-send-icon-offset-bottom);
+	right: var(--ta-send-icon-offset-right);
 }
 
 .xs {
-    composes: body-xs-regular from "../../utils/styling/type.module.css";
+	composes: body-xs-regular from "../../utils/styling/type.module.css";
 }
 
 .s {
-    composes: body-s-regular from "../../utils/styling/type.module.css";
+	composes: body-s-regular from "../../utils/styling/type.module.css";
 }
 
 .m {

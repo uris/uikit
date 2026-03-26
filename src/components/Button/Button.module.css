@@ -33,19 +33,19 @@
 }
 
 .icon {
-    composes: row from "../../utils/styling/flexBox.module.css";
-    min-width: var(--ui-button-icon-size);
-    min-height: var(--ui-button-icon-size);
-    height: var(--ui-button-icon-size);
-    width: var(--ui-button-icon-size);
+	composes: row from "../../utils/styling/flexBox.module.css";
+	min-width: var(--ui-button-icon-size);
+	min-height: var(--ui-button-icon-size);
+	height: var(--ui-button-icon-size);
+	width: var(--ui-button-icon-size);
 }
 
 .xs {
-    composes: body-xs-regular from "../../utils/styling/type.module.css";
+	composes: body-xs-regular from "../../utils/styling/type.module.css";
 }
 
 .m {
-    composes: body-m-regular from "../../utils/styling/type.module.css";
+	composes: body-m-regular from "../../utils/styling/type.module.css";
 }
 
 .l {

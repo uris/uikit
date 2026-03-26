@@ -19,35 +19,34 @@ export const Chip = React.memo((props: ChipProps) => {
 		labelSize = 'm',
 		labelColor = 'var(--core-text-primary)',
 		labelColorHover = 'var(--core-text-special)',
-        iconColor = 'var(--core-text-primary)',
-        iconColorHover = 'var(--core-text-special)',
-        backgroundColor,
-        backgroundColorHover,
-        borderWidth,
-        borderSize = 1,
-        borderColor = 'var(--core-text-primary)',
-        borderColorHover = 'var(--core-text-special)',
-        borderColorDisabled = 'var(--core-text-disabled)',
-        bgColor = 'transparent',
-        bgColorHover = 'var(--core-surface-secondary)',
-        borderRadius = 8,
-        paddingTop,
-        paddingTops = 8,
-        paddingSides = 16,
+		iconColor = 'var(--core-text-primary)',
+		iconColorHover = 'var(--core-text-special)',
+		backgroundColor,
+		backgroundColorHover,
+		borderWidth,
+		borderSize = 1,
+		borderColor = 'var(--core-text-primary)',
+		borderColorHover = 'var(--core-text-special)',
+		borderColorDisabled = 'var(--core-text-disabled)',
+		bgColor = 'transparent',
+		bgColorHover = 'var(--core-surface-secondary)',
+		borderRadius = 8,
+		paddingTop,
+		paddingTops = 8,
+		paddingSides = 16,
 		gap = 4,
 		onToolTip = () => null,
 		onClick = () => null,
 		...divAttributes
 	} = props;
 	const { id: divId, className, style, ...rest } = divAttributes;
-    const divStyle = style ?? ({} as React.CSSProperties);
-    const divClass = className ? ` ${className}` : '';
-    const [isHovered, setIsHovered] = useState<boolean>(false);
-    const resolvedBackgroundColor = backgroundColor ?? bgColor;
-    const resolvedBackgroundColorHover =
-        backgroundColorHover ?? bgColorHover;
-    const resolvedBorderWidth = borderWidth ?? borderSize;
-    const resolvedPaddingTop = paddingTop ?? paddingTops;
+	const divStyle = style ?? ({} as React.CSSProperties);
+	const divClass = className ? ` ${className}` : '';
+	const [isHovered, setIsHovered] = useState<boolean>(false);
+	const resolvedBackgroundColor = backgroundColor ?? bgColor;
+	const resolvedBackgroundColorHover = backgroundColorHover ?? bgColorHover;
+	const resolvedBorderWidth = borderWidth ?? borderSize;
+	const resolvedPaddingTop = paddingTop ?? paddingTops;
 
 	// forward click events while respecting the disabled state
 	const handleClick = useCallback(
@@ -81,13 +80,13 @@ export const Chip = React.memo((props: ChipProps) => {
 
 	// resolve chip padding adjusting for side icon is on
 	const padding = useMemo(() => {
-        if (!icon) return `${resolvedPaddingTop}px ${paddingSides}px`;
-        const paddingLeft =
-            iconPosition === 'right' ? paddingSides - 4 : paddingSides;
-        const paddingRight =
-            iconPosition === 'right' ? paddingSides : paddingSides - 4;
-        return `${resolvedPaddingTop}px ${paddingLeft}px ${resolvedPaddingTop}px ${paddingRight}px`;
-    }, [icon, iconPosition, resolvedPaddingTop, paddingSides]);
+		if (!icon) return `${resolvedPaddingTop}px ${paddingSides}px`;
+		const paddingLeft =
+			iconPosition === 'right' ? paddingSides - 4 : paddingSides;
+		const paddingRight =
+			iconPosition === 'right' ? paddingSides : paddingSides - 4;
+		return `${resolvedPaddingTop}px ${paddingLeft}px ${resolvedPaddingTop}px ${paddingRight}px`;
+	}, [icon, iconPosition, resolvedPaddingTop, paddingSides]);
 
 	// resolve the current icon color from theme and interaction state
 	const computedIconColor = useMemo(() => {
@@ -102,15 +101,15 @@ export const Chip = React.memo((props: ChipProps) => {
 			'--ui-chip-padding': padding,
 			'--ui-chip-gap': setStyle(gap),
 			'--ui-chip-border-radius': setStyle(borderRadius),
-            '--ui-chip-border-size': setStyle(resolvedBorderWidth),
+			'--ui-chip-border-size': setStyle(resolvedBorderWidth),
 			'--ui-chip-border-color': disabled ? borderColorDisabled : borderColor,
 			'--ui-chip-border-color-hover': disabled
 				? borderColorDisabled
 				: borderColorHover,
-            '--ui-chip-bg-color': resolvedBackgroundColor,
-            '--ui-chip-bg-color-hover': disabled
-                ? resolvedBackgroundColor
-                : resolvedBackgroundColorHover,
+			'--ui-chip-bg-color': resolvedBackgroundColor,
+			'--ui-chip-bg-color-hover': disabled
+				? resolvedBackgroundColor
+				: resolvedBackgroundColorHover,
 			'--ui-chip-label-color': disabled
 				? 'var(--core-text-disabled)'
 				: labelColor,
@@ -121,15 +120,15 @@ export const Chip = React.memo((props: ChipProps) => {
 		} as React.CSSProperties;
 	}, [
 		padding,
-        resolvedBackgroundColor,
-        borderColor,
-        borderColorDisabled,
-        borderColorHover,
-        resolvedBorderWidth,
-        resolvedBackgroundColorHover,
-        labelColorHover,
-        labelColor,
-        gap,
+		resolvedBackgroundColor,
+		borderColor,
+		borderColorDisabled,
+		borderColorHover,
+		resolvedBorderWidth,
+		resolvedBackgroundColorHover,
+		labelColorHover,
+		labelColor,
+		gap,
 		borderRadius,
 		disabled,
 	]);

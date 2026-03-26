@@ -27,14 +27,14 @@ export function useTheme() {
 				theme = newTheme === darkTheme.name ? darkTheme : lightTheme;
 			}
 		} else theme = newTheme;
-		document.documentElement.dataset.theme = theme.name;
+		document.documentElement.dataset.sliceTheme = theme.name;
 	}, []);
 
 	// toggle between the default light and dark themes
 	const toggle = () => {
 		const lightMode = current.name === lightTheme.name;
 		const newTheme = lightMode ? darkTheme : lightTheme;
-		document.documentElement.dataset.theme = newTheme.name;
+		document.documentElement.dataset.sliceTheme = newTheme.name;
 	};
 
 	// expose a convenient dark-mode flag for consumers

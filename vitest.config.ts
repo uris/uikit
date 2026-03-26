@@ -9,10 +9,25 @@ const dirname =
 		? __dirname
 		: path.dirname(fileURLToPath(import.meta.url));
 
+const coverageExclude = [
+	'node_modules/**',
+	'dist/**',
+	'coverage/**',
+	'storybook-static/**',
+	'reports/**',
+	'public/**',
+	'**/*.bench.{ts,tsx}',
+];
+
 // More info at: https://storybook.js.org/docs/next/writing-tests/integrations/vitest-addon
 export default defineConfig({
 	plugins: [react()],
 	test: {
+		coverage: {
+			provider: 'v8',
+			reporter: ['text', 'json', 'html'],
+			exclude: coverageExclude,
+		},
 		projects: [
 			{
 				test: {
@@ -24,11 +39,6 @@ export default defineConfig({
 					benchmark: {
 						include: ['**/*.bench.{ts,tsx}'],
 						exclude: ['node_modules', 'dist'],
-					},
-					coverage: {
-						provider: 'v8',
-						reporter: ['text', 'json', 'html'],
-						exclude: ['node_modules/', 'dist/', '**/*.bench.ts'],
 					},
 				},
 			},

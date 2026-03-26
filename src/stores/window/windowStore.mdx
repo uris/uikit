@@ -90,81 +90,81 @@ import NoteSection from '../../../documentation/_components/Notice/Notice';
         This pattern initializes listeners once per component mount and reads the same values that `useWindow()` previously returned.
 
         <RenderSource language={'tsx'}>
-{`
-import { useEffect } from 'react';
-import {
-  useInitializeWindow,
-  useFormFactor,
-  useViewportWidth,
-  useViewportHeight,
-  useIsTouchDevice,
-  useIsElectron,
-  useIsAppleDevice,
-  useDpr,
-  useLocation,
-  useLocationError,
-  useGettingLocation,
-  useGetLocation,
-} from '@apple-pie/slice/stores/window';
-
-function ViewportBadge() {
-  const initialize = useInitializeWindow();
-  const getLocation = useGetLocation();
-  const formFactor = useFormFactor();
-  const viewportWidth = useViewportWidth();
-  const viewportHeight = useViewportHeight();
-  const isTouchDevice = useIsTouchDevice();
-  const isElectron = useIsElectron();
-  const isAppleDevice = useIsAppleDevice();
-  const dpr = useDpr();
-  const location = useLocation();
-  const locationError = useLocationError();
-  const gettingLocation = useGettingLocation();
-
-  // Important! Call this only once in your application as it initializes.
-  useEffect(() => initialize(), [initialize]);
-
-  return (
-    <div style={{ padding: 12, border: '1px solid var(--core-outline-primary)' }}>
-      {formFactor} • {viewportWidth} x {viewportHeight} • dpr:{dpr}
-      <br />
-      touch:{String(isTouchDevice)} electron:{String(isElectron)} apple:{String(isAppleDevice)}
-      <br />
-      location:{location ? \`\${location.latitude}, \${location.longitude}\` : 'not requested'}
-      <br />
-      {locationError ? locationError.message : null}
-      <br />
-      <button
-        type="button"
-        onClick={() => void getLocation().catch(() => {})}
-        disabled={gettingLocation}
-      >
-        {gettingLocation ? 'Requesting location...' : 'Request location'}
-      </button>
-    </div>
-  );
-}
-`}
-</RenderSource>
+        ```
+        import { useEffect } from 'react';
+        import {
+          useInitializeWindow,
+          useFormFactor,
+          useViewportWidth,
+          useViewportHeight,
+          useIsTouchDevice,
+          useIsElectron,
+          useIsAppleDevice,
+          useDpr,
+          useLocation,
+          useLocationError,
+          useGettingLocation,
+          useGetLocation,
+        } from '@apple-pie/slice/stores/window';
+        
+        function ViewportBadge() {
+          const initialize = useInitializeWindow();
+          const getLocation = useGetLocation();
+          const formFactor = useFormFactor();
+          const viewportWidth = useViewportWidth();
+          const viewportHeight = useViewportHeight();
+          const isTouchDevice = useIsTouchDevice();
+          const isElectron = useIsElectron();
+          const isAppleDevice = useIsAppleDevice();
+          const dpr = useDpr();
+          const location = useLocation();
+          const locationError = useLocationError();
+          const gettingLocation = useGettingLocation();
+        
+          // Important! Call this only once in your application as it initializes.
+          useEffect(() => initialize(), [initialize]);
+        
+          return (
+            <div style={{ padding: 12, border: '1px solid var(--core-outline-primary)' }}>
+              {formFactor} • {viewportWidth} x {viewportHeight} • dpr:{dpr}
+              <br />
+              touch:{String(isTouchDevice)} electron:{String(isElectron)} apple:{String(isAppleDevice)}
+              <br />
+              location:{location ? \`\${location.latitude}, \${location.longitude}\` : 'not requested'}
+              <br />
+              {locationError ? locationError.message : null}
+              <br />
+              <button
+                type="button"
+                onClick={() => void getLocation().catch(() => {})}
+                disabled={gettingLocation}
+              >
+                {gettingLocation ? 'Requesting location...' : 'Request location'}
+              </button>
+            </div>
+          );
+        }
+        ```
+        </RenderSource>
 
         ## Imperative usage outside React
         <RenderSource language={'tsx'}>
-{`
-import {
-	viewportWidth,
-	viewportHeight,
-	formFactor,
-} from '@apple-pie/slice/stores/window';
-
-export function getWindowSnapshot() {
-	return {
-		formFactor: formFactor(),
-		width: viewportWidth(),
-		height: viewportHeight(),
-	};
-}
-`}
-</RenderSource>
+        ```
+        import {
+            viewportWidth,
+            viewportHeight,
+            formFactor,
+        } from '@apple-pie/slice/stores/window';
+        
+        export function getWindowSnapshot() {
+            return {
+                formFactor: formFactor(),
+                width: viewportWidth(),
+                height: viewportHeight(),
+            };
+        }
+        ```
+        </RenderSource>
         </Unstyled>
     </FlexDiv>
 </FlexDiv>

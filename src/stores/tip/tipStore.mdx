@@ -62,63 +62,63 @@ import NoteSection from "../../../documentation/_components/Notice/Notice";
         Use focused selectors so components only re-render when their selected slice changes.
 
         <RenderSource language={"tsx"}>
-{`
-import { useTip, useTipActions } from '@apple-pie/slice/stores/tip';
-
-function TipLauncher() {
-	const tip = useTip();
-	const actions = useTipActions();
-
-	return (
-		<button
-			type="button"
-			onMouseEnter={(event) =>
-				actions.push({ payload: { label: 'Go home' }, event })
-			}
-			onMouseLeave={() => actions.clear()}
-		>
-			{tip?.payload?.label ?? 'Hover me'}
-		</button>
-	);
-}
-`}
-</RenderSource>
+        ```
+        import { useTip, useTipActions } from '@apple-pie/slice/stores/tip';
+        
+        function TipLauncher() {
+            const tip = useTip();
+            const actions = useTipActions();
+        
+            return (
+                <button
+                    type="button"
+                    onMouseEnter={(event) =>
+                        actions.push({ payload: { label: 'Go home' }, event })
+                    }
+                    onMouseLeave={() => actions.clear()}
+                >
+                    {tip?.payload?.label ?? 'Hover me'}
+                </button>
+            );
+        }
+        ```
+        </RenderSource>
 
         ## Generic selector usage in React
         Use `useTipStore` directly when you need a custom selector.
 
         <RenderSource language={"tsx"}>
-{`
-import { useTipStore } from '@apple-pie/slice/stores/tip';
-
-function TipLabel() {
-	const label = useTipStore((state) => state.tip?.payload?.label ?? null);
-	return <span>{label ?? 'no tip'}</span>;
-}
-`}
-</RenderSource>
+        ```
+        import { useTipStore } from '@apple-pie/slice/stores/tip';
+        
+        function TipLabel() {
+            const label = useTipStore((state) => state.tip?.payload?.label ?? null);
+            return <span>{label ?? 'no tip'}</span>;
+        }
+        ```
+        </RenderSource>
 
         ## Imperative usage outside React
         Use imperative helpers in utility modules, services, and non-component handlers.
         These are non-reactive reads/writes.
 
         <RenderSource language={"tsx"}>
-{`
-import { tipActions, getTip } from '@apple-pie/slice/stores/tip';
-
-export function setGlobalTip(label: string) {
-	tipActions.push({ payload: { label } });
-}
-
-export function clearGlobalTip() {
-	tipActions.clear();
-}
-
-export function getCurrentTipLabel() {
-	return getTip()?.payload?.label ?? null;
-}
-`}
-</RenderSource>
+        ```
+        import { tipActions, getTip } from '@apple-pie/slice/stores/tip';
+        
+        export function setGlobalTip(label: string) {
+            tipActions.push({ payload: { label } });
+        }
+        
+        export function clearGlobalTip() {
+            tipActions.clear();
+        }
+        
+        export function getCurrentTipLabel() {
+            return getTip()?.payload?.label ?? null;
+        }
+        ```
+        </RenderSource>
         </Unstyled>
     </FlexDiv>
 </FlexDiv>

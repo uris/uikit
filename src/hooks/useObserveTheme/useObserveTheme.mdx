@@ -8,7 +8,7 @@ import {FlexDiv} from '../../components/FlexDiv';
     <FlexDiv width={"fill"} maxWidth={760} height={"auto"}>
         <Unstyled>
         # useObserveTheme
-        Observes <code>document.documentElement.dataset.theme</code> and returns the resolved Slice theme object.
+        Observes <code>document.documentElement.dataset.sliceTheme</code> and returns the resolved Slice theme object.
 
         ## Signature
         `useObserveTheme()`
@@ -33,7 +33,7 @@ import {FlexDiv} from '../../components/FlexDiv';
             </tr>
           </thead>
           <tbody>
-            <tr><td><code>theme</code></td><td><code>SliceTheme</code></td><td><code>lightTheme</code></td><td>Current observed theme from <code>data-theme</code>. Falls back to <code>lightTheme</code> when empty or unknown.</td></tr>
+            <tr><td><code>theme</code></td><td><code>SliceTheme</code></td><td><code>lightTheme</code></td><td>Current observed theme from <code>data-slice-theme</code>. Falls back to <code>lightTheme</code> when empty or unknown.</td></tr>
           </tbody>
         </table>
 

@@ -1,171 +1,279 @@
 # Build Architecture Guide
 
-This document explains how `@apple-pie/slice` is built and what to update when adding or changing components, hooks, themes, and providers.
+This document describes the current publish pipeline for `@apple-pie/slice` and the file/layout conventions that keep new APIs publishable.
 
-## Build Pipeline
+## Build Command
 
-`npm run build` runs three stages in order:
+`npm run build` runs these steps in order:
 
-1. `rollup -c --bundleConfigAsCjs`
-2. `tsc -p tsconfig.build.json`
-3. `./scripts/copy-css.sh`
+1. `prebuild`: `rm -rf dist`
+2. Rollup bundle build: `NODE_ENV=production rollup -c --bundleConfigAsCjs`
+3. Type declaration build: `tsc -p tsconfig.build.json`
+4. CSS copy step: `./scripts/copy-css.sh`
 
-### Stage 1: Rollup (JavaScript output)
+`npm run build:min` runs the same pipeline with `MINIFY=true`.
 
-Rollup config: `rollup.config.js`
+## Stage 1: Rollup Bundles
 
-- Build inputs are discovered automatically:
-  - Root entry: `src/index.ts`
-  - UI component entries: each `src/components/*/index.ts`
-  - Hooks: `src/hooks/index.ts` and each `src/hooks/<HookName>/<HookName>.ts(x)`
-  - Providers: `src/providers/index.ts` and each provider source file (for example `ThemeProvider.tsx`)
-  - Stores: `src/stores/index.ts` and each `src/stores/<StoreName>/index.ts`
-  - Theme: `src/theme/index.ts` plus `theme/colors`, `theme/corners`, `theme/type`, `theme/themes`
-  - Utilities: `src/utils/index.ts`
-- Outputs:
-  - CommonJS: `dist/cjs/**`
-  - ESM: `dist/esm/**`
-- Shared chunks are emitted into `dist/{cjs,esm}/chunks/**`.
+Build config: `rollup.config.js`
 
-Important plugins and behavior:
+Rollup discovers entrypoints automatically from `src`:
 
-- `@rollup/plugin-typescript` uses `tsconfig.rollup.json` (JS transpile only).
-- `rollup-plugin-postcss` handles CSS imports.
-- CSS is injected at runtime (via generated style injection helpers in JS chunks).
-- `@svgr/rollup` + `@rollup/plugin-url` handle SVG/image assets.
-- Story files are excluded from build inputs and TS plugin include patterns.
+- Package roots:
+  - `src/index.ts`
+  - `src/hooks/index.ts`
+  - `src/providers/index.ts`
+  - `src/stores/index.ts`
+  - `src/theme/index.ts`
+  - `src/utils/index.ts`
+  - `src/utils/objects/index.ts`
+- Components:
+  - every `src/components/<Name>/index.ts`
+- Hooks:
+  - every `src/hooks/<HookName>/<HookName>.ts` or `.tsx`
+- Providers:
+  - every non-story `.ts`/`.tsx` file in `src/providers`
+- Stores:
+  - every `src/stores/<StoreName>/index.ts`
+- Workers:
+  - `src/workers/<WorkerName>/<WorkerName>.ts`
+  - or `src/workers/<WorkerName>/<WorkerName>.worker.ts`
+  - or `src/workers/<WorkerName>/index.ts`
+- Theme subpaths:
+  - `src/theme/colors/colors.ts`
+  - `src/theme/corners/corners.ts`
+  - `src/theme/elevations/elevations.ts`
+  - `src/theme/motion/motion.ts`
+  - `src/theme/type/type.ts`
+  - `src/theme/themes.ts`
 
-### Stage 2: TypeScript declarations
+Output layout:
 
-Type config: `tsconfig.build.json`
+- CommonJS: `dist/cjs/**`
+- ESM: `dist/esm/**`
+- Shared chunks: `dist/cjs/chunks/**` and `dist/esm/chunks/**`
 
-- Runs declaration emit into `dist/types/**`.
-- Excludes Storybook files:
-  - `**/*.stories.ts`
-  - `**/*.stories.tsx`
-  - `documentation/**`
+Entry naming conventions in output:
 
-### Stage 3: CSS copy
+- Root entry: `dist/cjs/index.js`, `dist/esm/index.mjs`
+- Component subpaths: `dist/{cjs,esm}/components/<Name>/index.{js,mjs}`
+- Worker subpaths: `dist/{cjs,esm}/workers/<WorkerName>/<WorkerName>.{js,mjs}`
+- Utils objects: `dist/{cjs,esm}/utils/objects/index.{js,mjs}`
+
+Important plugin behavior:
+
+- `@rollup/plugin-typescript` uses `tsconfig.rollup.json` for transpile-only bundling
+- `rollup-plugin-postcss` turns CSS imports into runtime-injected styles
+- `@svgr/rollup` handles SVG React imports
+- `@rollup/plugin-url` emits SVG, PNG, JPG, and GIF assets into `dist/**/assets`
+- `rollup-plugin-peer-deps-external` keeps peer deps external
+- `@rollup/plugin-terser` runs for both normal and minified builds
+- `rollup-plugin-visualizer` writes `reports/package-size-visualizer.html`
+
+Externalized runtime deps:
+
+- `react`
+- `react-dom`
+- `motion`
+
+## Stage 2: Type Declarations
+
+Type build config: `tsconfig.build.json`
+
+Declaration output is written to `dist/types/**` via the base `tsconfig.json` settings:
+
+- `declaration: true`
+- `emitDeclarationOnly: true`
+- `declarationDir: dist/types`
+
+Included source:
+
+- `src/**/*`
+
+Excluded from declaration build:
+
+- `documentation/**`
+- `**/*.stories.ts`
+- `**/*.stories.tsx`
+
+Important note:
+
+- Story files stay out of the published type tree only if production source files do not import them. If a source file imports a story file, TypeScript will still pull that story into the declaration graph.
+
+## Stage 3: CSS Copy
 
 Script: `scripts/copy-css.sh`
 
-- Copies utility CSS modules to `dist/css/`:
-  - `flexBox.module.css`
-  - `type.module.css`
+Copied files:
+
+- `src/utils/styling/flexBox.module.css` -> `dist/css/flexBox.module.css`
+- `src/utils/styling/type.module.css` -> `dist/css/type.module.css`
+
+## Theme CSS Bootstrap
+
+`ThemeProvider` in `src/providers/ThemeProvider.tsx` is also a styling entrypoint.
+
+It imports these theme foundation files for side effects:
+
+- `src/theme/colors/colors.css`
+- `src/theme/elevations/elevation.css`
+- `src/theme/type/type.css`
+- `src/theme/breakpoints/custom-media.css`
+- `src/theme/motion/motion.css`
+
+Those imports are required for theme CSS variables, typography classes, custom media aliases, motion tokens, and elevation tokens to exist at runtime. The provider does not only set `document.documentElement.dataset.sliceTheme`; it also renders a `data-slice-theme-scope` wrapper and ensures the underlying CSS token files are included in the bundle.
+
+If those imports are removed, theming may appear to "work" from React state while Storybook or consuming apps fail at runtime because the CSS variables and utility classes are missing.
 
 ## Published Package Contract
 
-Package metadata in `package.json`:
+Package metadata lives in `package.json`.
+
+Top-level fields:
 
 - `main`: `dist/cjs/index.js`
-- `module`: `dist/esm/index.js`
+- `module`: `dist/esm/index.mjs`
 - `types`: `dist/types/index.d.ts`
-- `exports`:
-  - `.` (root)
-  - `./hooks`, `./hooks/*`
-  - `./providers`, `./providers/*`
-  - `./stores`, `./stores/*`
-  - `./utils`
-  - `./theme`, `./theme/colors`, `./theme/corners`, `./theme/type`, `./theme/themes`
-  - `./components/*` (subpath component imports)
-- `sideEffects`: `"**/*.css"`
+- `type`: `commonjs`
+- `sideEffects`: `["**/*.css"]`
 
-### Supported import patterns
+Published export map:
 
-- Root API: `import { ButtonLikeThing } from '@apple-pie/slice'`
-- Component subpath API: `import { Avatar } from '@apple-pie/slice/components/Avatar'`
-- Hook subpath API: `import { useTheme } from '@apple-pie/slice/hooks/useTheme'`
-- Provider subpath API: `import { ThemeProvider } from '@apple-pie/slice/providers/ThemeProvider'`
-- Store subpath API: `import { useToast } from '@apple-pie/slice/stores/toast'`
-- Utilities API: `import { addOpacity } from '@apple-pie/slice/utils'`
-- Theme subpath API: `import { lightTheme } from '@apple-pie/slice/theme/themes'`
+- `.`
+- `./components/*`
+- `./hooks`
+- `./hooks/*`
+- `./providers`
+- `./providers/*`
+- `./stores`
+- `./stores/*`
+- `./workers/*`
+- `./theme`
+- `./theme/colors`
+- `./theme/corners`
+- `./theme/elevations`
+- `./theme/motion`
+- `./theme/type`
+- `./theme/themes`
+- `./utils`
+- `./utils/objects`
 
-## Adding New UI Components
+Representative import patterns:
 
-When adding `src/components/NewComponent/*`:
+```ts
+import { Button } from '@apple-pie/slice';
+import { Avatar } from '@apple-pie/slice/components/Avatar';
+import { useTheme } from '@apple-pie/slice/hooks/useTheme';
+import { ThemeProvider } from '@apple-pie/slice/providers/ThemeProvider';
+import { useUploadsActions } from '@apple-pie/slice/stores/uploads';
+import uploadsWorkerUrl from '@apple-pie/slice/workers/uploads/uploads?url';
+import { lightTheme } from '@apple-pie/slice/theme/themes';
+import { IndexedDB } from '@apple-pie/slice/utils/objects';
+```
 
-1. Add `src/components/NewComponent/index.ts`.
-2. Export the component/types from that `index.ts`.
-3. (Optional but recommended) Re-export from `src/index.ts` for root import consumers.
-4. Ensure Storybook files are named `*.stories.tsx` so they stay excluded.
+## Adding New Public APIs
+
+### Components
+
+For `src/components/<Name>/...`:
+
+1. Add `src/components/<Name>/index.ts`.
+2. Export the component and public types from that `index.ts`.
+3. Re-export from `src/index.ts` if the component should be available from the package root.
+4. Keep Storybook files named `*.stories.tsx`.
 5. Run `npm run build`.
-6. Verify outputs exist:
-   - `dist/esm/components/NewComponent/index.mjs`
-   - `dist/cjs/components/NewComponent/index.js`
-   - `dist/types/components/NewComponent/index.d.ts`
+6. Verify:
+   - `dist/esm/components/<Name>/index.mjs`
+   - `dist/cjs/components/<Name>/index.js`
+   - `dist/types/components/<Name>/index.d.ts`
 
-No Rollup config change is needed for standard new components because inputs are auto-discovered.
+### Hooks
 
-## Adding New Hooks, Providers, Theme Utilities, and Package Utilities
+For a new hook subpath:
 
-For new hook/provider/theme/package utility API:
+1. Place it at `src/hooks/<HookName>/<HookName>.ts` or `.tsx`.
+2. Export from `src/hooks/index.ts` if it should also appear in `@apple-pie/slice/hooks`.
+3. Re-export from `src/index.ts` if it should also appear in the package root.
+4. Run `npm run build`.
 
-1. Add implementation under `src/hooks`, `src/providers`, `src/theme`, or `src/utils/functions`.
-2. Export from its local `index.ts` (if applicable).
-3. Export from `src/index.ts` to publish it on root API, or from `src/utils/index.ts` to publish it on the `./utils` subpath.
-4. For hook subpath auto-discovery, use folder/file convention:
-   - `src/hooks/<HookName>/<HookName>.ts` or `.tsx`
-5. For provider subpath auto-discovery, place provider file in `src/providers` (non-`index.ts`, non-story).
-6. For theme subpaths, update `themeEntries` in `rollup.config.js` if adding a new themed module family.
-7. For package utilities, export them from `src/utils/index.ts`.
-8. Run `npm run build` and verify type output in `dist/types/**`.
+### Providers
 
-## Adding New Stores
+For a new provider:
+
+1. Add the provider source file in `src/providers`.
+2. Export it from `src/providers/index.ts`.
+3. Re-export from `src/index.ts` if it belongs on the root API.
+4. Run `npm run build`.
+
+For `ThemeProvider` specifically:
+
+1. Keep the theme CSS side-effect imports in place unless the styling bootstrap is intentionally moved elsewhere.
+2. If you move that bootstrap, update both this document and the README usage guidance.
+
+### Stores
 
 For a new store:
 
-1. Add folder `src/stores/<StoreName>/`.
-2. Add implementation (for example `store.ts`) and local entry `src/stores/<StoreName>/index.ts`.
-3. Export from `src/stores/index.ts`.
+1. Add `src/stores/<StoreName>/index.ts`.
+2. Export the public store API from that folder.
+3. Export it from `src/stores/index.ts` only if it belongs in `@apple-pie/slice/stores`.
 4. Run `npm run build`.
-5. Verify outputs:
-   - `dist/esm/stores/<StoreName>.js`
+5. Verify:
+   - `dist/esm/stores/<StoreName>.mjs`
    - `dist/cjs/stores/<StoreName>.js`
    - `dist/types/stores/<StoreName>/index.d.ts`
 
-## CSS and Side Effects Guidance
+### Workers
 
-- CSS imports create side effects at module load time.
-- Keep `"sideEffects": ["**/*.css"]` unless you redesign styling to be side-effect free.
-- If introducing additional non-CSS side-effect modules, list them explicitly in `sideEffects`.
+For a new worker:
 
-## Storybook Separation Rules
+1. Add `src/workers/<WorkerName>/`.
+2. Use one of the recognized entry names:
+   - `<WorkerName>.ts`
+   - `<WorkerName>.worker.ts`
+   - `index.ts`
+3. Run `npm run build`.
+4. Verify the worker appears under `dist/{esm,cjs}/workers/<WorkerName>/`.
 
-To avoid polluting published artifacts:
+### Theme Modules
 
-- Keep Storybook-only docs and examples in:
-  - `documentation/**`
-  - or colocated `*.stories.ts(x)` files
-- Do not export story helpers from `src/index.ts`.
+For a new top-level theme subpath:
 
-## Troubleshooting
+1. Add the source module under `src/theme/...`.
+2. Add it to `themeEntries` in `rollup.config.js`.
+3. Add the corresponding `exports` entry in `package.json`.
+4. Export types and values from `src/theme/index.ts` as needed.
+5. Run `npm run build`.
 
-### New component is missing from `dist/esm/components`
+### Utilities
 
-- Confirm folder shape: `src/components/<Name>/index.ts`.
-- Confirm no TS compile errors in that component.
+For utilities:
 
-### Story types appear in `dist/types`
+1. Export package-level helpers from `src/utils/index.ts`.
+2. Export low-level object helpers from `src/utils/objects/index.ts`.
+3. If you need a new public utility subpath beyond the existing ones, update `package.json` `exports` and Rollup entry discovery accordingly.
 
-- Check naming/paths match exclusions in `tsconfig.build.json`.
-- Ensure story files use `.stories.ts` or `.stories.tsx` suffix.
+## Storybook Separation
 
-### Import path works locally but not for consumers
+Keep Storybook-only material in:
 
-- Verify the path is declared in `package.json` `exports`.
-- Use `npm pack --dry-run` to inspect what will be published.
+- `documentation/**`
+- colocated `*.stories.ts(x)`
+- colocated `*.mdx`
 
-## Release Verification Checklist
+Do not import story files into production code.
+
+## Release Verification
 
 Before publishing:
 
 1. Run `npm run build`.
 2. Run `npm pack --dry-run`.
-3. Confirm root artifacts:
+3. Confirm core artifacts exist:
    - `dist/cjs/index.js`
-   - `dist/esm/index.js`
+   - `dist/esm/index.mjs`
    - `dist/types/index.d.ts`
-4. Confirm new component artifacts exist in all three trees (`cjs`, `esm`, `types`).
-5. Confirm no story declaration files:
-   - `find dist/types -type f | rg 'stories|\.stories\.d\.ts'`
-6. Confirm `exports` covers intended public import paths.
+4. Confirm new API artifacts exist in `dist/cjs`, `dist/esm`, and `dist/types`.
+5. Confirm story files are not present in the type output:
+   - `rg 'stories\\.d\\.ts|\\.stories\\.' dist/types`
+6. Confirm `package.json` `exports` includes any new public import path.

@@ -40,7 +40,7 @@ export const WithTestingActions: StoryObj<typeof Slider> = {
 	tags: ['tests'],
 	render: (args) => {
 		return (
-			<FlexDiv justify={'center'} alignItems={'center'} padding={64}>
+			<FlexDiv absolute justify={'center'} alignItems={'center'} padding={64}>
 				<Slider {...args} />
 			</FlexDiv>
 		);

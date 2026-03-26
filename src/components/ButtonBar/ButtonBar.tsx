@@ -19,18 +19,18 @@ export const ButtonBar = React.memo(function ButtonBar(
 		buttons = [],
 		selected,
 		toggle = true,
-        buttonSize = 44,
-        iconSize = 20,
-        borderWidth,
-        borderSize = 1,
-        borderRadius = 100,
-        borderColor = 'var(--core-outline-primary)',
-        backgroundColor,
-        backgroundColorHover,
-        backgroundColorActive,
-        bgColor = 'var(--core-surface-primary)',
-        bgColorHover = 'var(--core-surface-secondary)',
-        bgColorActive = 'var(--core-surface-secondary)',
+		buttonSize = 44,
+		iconSize = 20,
+		borderWidth,
+		borderSize = 1,
+		borderRadius = 100,
+		borderColor = 'var(--core-outline-primary)',
+		backgroundColor,
+		backgroundColorHover,
+		backgroundColorActive,
+		bgColor = 'var(--core-surface-primary)',
+		bgColorHover = 'var(--core-surface-secondary)',
+		bgColorActive = 'var(--core-surface-secondary)',
 		labelColor = 'var(--core-text-primary)',
 		onClick = (button?: ButtonBarItem) => null,
 		onChange = (button?: ButtonBarItem) => null,
@@ -38,12 +38,12 @@ export const ButtonBar = React.memo(function ButtonBar(
 		...divAttributes
 	} = props;
 	const { id: divId, className, style, ...rest } = divAttributes;
-    const divStyle = style ?? ({} as React.CSSProperties);
-    const divClass = className ? ` ${className}` : '';
-    const resolvedBorderWidth = borderWidth ?? borderSize;
-    const resolvedBackgroundColor = backgroundColor ?? bgColor;
-    const resolvedBackgroundColorHover = backgroundColorHover ?? bgColorHover;
-    const resolvedBackgroundColorActive = backgroundColorActive ?? bgColorActive;
+	const divStyle = style ?? ({} as React.CSSProperties);
+	const divClass = className ? ` ${className}` : '';
+	const resolvedBorderWidth = borderWidth ?? borderSize;
+	const resolvedBackgroundColor = backgroundColor ?? bgColor;
+	const resolvedBackgroundColorHover = backgroundColorHover ?? bgColorHover;
+	const resolvedBackgroundColorActive = backgroundColorActive ?? bgColorActive;
 	const [hovered, setHovered] = useState<number>(-1);
 	const [selectedIndex, setSelectedIndex] = useState<number | undefined>(
 		selected,
@@ -97,26 +97,26 @@ export const ButtonBar = React.memo(function ButtonBar(
 
 	// compose CSS custom properties for button bar sizing and colors
 	const cssVars = useMemo(() => {
-        return {
-            '--bb-border-size': `${resolvedBorderWidth}px`,
-            '--bb-border-radius': setStyle(borderRadius),
-            '--bb-border-color': borderColor,
-            '--bb-bg-color': resolvedBackgroundColor,
-            '--bb-bg-color-hover': resolvedBackgroundColorHover,
-            '--bb-bg-color-active': resolvedBackgroundColorActive,
-            '--bb-label-color': labelColor,
-            '--bb-button-size': `${buttonSize}px`,
-        } as React.CSSProperties;
-    }, [
-        resolvedBorderWidth,
-        borderRadius,
-        borderColor,
-        resolvedBackgroundColor,
-        labelColor,
-        resolvedBackgroundColorHover,
-        buttonSize,
-        resolvedBackgroundColorActive,
-    ]);
+		return {
+			'--bb-border-size': `${resolvedBorderWidth}px`,
+			'--bb-border-radius': setStyle(borderRadius),
+			'--bb-border-color': borderColor,
+			'--bb-bg-color': resolvedBackgroundColor,
+			'--bb-bg-color-hover': resolvedBackgroundColorHover,
+			'--bb-bg-color-active': resolvedBackgroundColorActive,
+			'--bb-label-color': labelColor,
+			'--bb-button-size': `${buttonSize}px`,
+		} as React.CSSProperties;
+	}, [
+		resolvedBorderWidth,
+		borderRadius,
+		borderColor,
+		resolvedBackgroundColor,
+		labelColor,
+		resolvedBackgroundColorHover,
+		buttonSize,
+		resolvedBackgroundColorActive,
+	]);
 
 	const barButtons = useMemo(
 		() =>

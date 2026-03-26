@@ -15,22 +15,22 @@ const UploadAreaBase = React.forwardRef<HTMLDivElement, UploadAreaProps>(
 			title = 'Upload Files',
 			width = '100%',
 			height = 'auto',
-            message = 'Drag and drop files here or click to upload',
-            busyMessage = 'Uploading in progress',
-            iconSize = 24,
-            textSize = 'm',
-            borderWidth,
-            border = 1,
-            borderStyle = 'dashed',
-            borderColor = 'var(--core-outline-primary)',
-            borderColorHover = 'var(--core-outline-special)',
-            borderRadius,
-            radius = 8,
-            padding = 32,
-            backgroundColor,
-            backgroundColorHover,
-            bgColor = 'var(--core-surface-secondary)',
-            bgColorHover = 'var(--core-surface-special)',
+			message = 'Drag and drop files here or click to upload',
+			busyMessage = 'Uploading in progress',
+			iconSize = 24,
+			textSize = 'm',
+			borderWidth,
+			border = 1,
+			borderStyle = 'dashed',
+			borderColor = 'var(--core-outline-primary)',
+			borderColorHover = 'var(--core-outline-special)',
+			borderRadius,
+			radius = 8,
+			padding = 32,
+			backgroundColor,
+			backgroundColorHover,
+			bgColor = 'var(--core-surface-secondary)',
+			bgColorHover = 'var(--core-surface-special)',
 			acceptedTypes = allTypes,
 			multiple = true,
 			busy = false,
@@ -39,18 +39,17 @@ const UploadAreaBase = React.forwardRef<HTMLDivElement, UploadAreaProps>(
 			files = [],
 			onUpload,
 		} = props;
-        const [hovered, setHovered] = useState<boolean>(false);
-        const inputRef = useRef<HTMLInputElement>(null);
-        const dragDepth = useRef(0);
+		const [hovered, setHovered] = useState<boolean>(false);
+		const inputRef = useRef<HTMLInputElement>(null);
+		const dragDepth = useRef(0);
 		const inputId = useId();
 		const titleId = useId();
 		const messageId = useId();
-        const isInteractive = !busy && files.length < 1;
-        const resolvedBorderWidth = borderWidth ?? border;
-        const resolvedBorderRadius = borderRadius ?? radius;
-        const resolvedBackgroundColor = backgroundColor ?? bgColor;
-        const resolvedBackgroundColorHover =
-            backgroundColorHover ?? bgColorHover;
+		const isInteractive = !busy && files.length < 1;
+		const resolvedBorderWidth = borderWidth ?? border;
+		const resolvedBorderRadius = borderRadius ?? radius;
+		const resolvedBackgroundColor = backgroundColor ?? bgColor;
+		const resolvedBackgroundColorHover = backgroundColorHover ?? bgColorHover;
 
 		// open the native file picker when the area is idle
 		const handleClickUpload = useCallback(() => {
@@ -124,30 +123,30 @@ const UploadAreaBase = React.forwardRef<HTMLDivElement, UploadAreaProps>(
 		// compose CSS custom properties for layout, color, and interaction state
 		const cssVars = useMemo(() => {
 			return {
-                '--ua-border': `${resolvedBorderWidth}px`,
-                '--ua-border-style': borderStyle,
-                '--ua-border-color': hovered || busy ? borderColorHover : borderColor,
-                '--ua-radius': `${resolvedBorderRadius}px`,
-                '--ua-padding': setStyle(padding),
-                '--ua-bg-color': hovered
-                    ? resolvedBackgroundColorHover
-                    : resolvedBackgroundColor,
+				'--ua-border': `${resolvedBorderWidth}px`,
+				'--ua-border-style': borderStyle,
+				'--ua-border-color': hovered || busy ? borderColorHover : borderColor,
+				'--ua-radius': `${resolvedBorderRadius}px`,
+				'--ua-padding': setStyle(padding),
+				'--ua-bg-color': hovered
+					? resolvedBackgroundColorHover
+					: resolvedBackgroundColor,
 				'--ua-icon-size': `${iconSize}px`,
 				'--ua-cursor': busy || files.length > 0 ? 'default' : 'pointer',
 				'--ua-width': setStyle(width),
 				'--ua-height': setStyle(height),
 			} as React.CSSProperties;
 		}, [
-            resolvedBorderWidth,
-            borderStyle,
-            borderColor,
-            borderColorHover,
-            resolvedBorderRadius,
-            padding,
-            resolvedBackgroundColor,
-            resolvedBackgroundColorHover,
-            iconSize,
-            busy,
+			resolvedBorderWidth,
+			borderStyle,
+			borderColor,
+			borderColorHover,
+			resolvedBorderRadius,
+			padding,
+			resolvedBackgroundColor,
+			resolvedBackgroundColorHover,
+			iconSize,
+			busy,
 			hovered,
 			height,
 			files.length,

@@ -246,21 +246,21 @@ useSSEActions.removeConnection('activity');
               </tbody>
             </table>
 
-            ## Imperative usage outside React
+        ## Imperative usage outside React
         <RenderSource language={'tsx'}>
-{`
-import { useSSEActions, useLastSSEMessage } from '@apple-pie/slice/stores/SSE';
-
-useSSEActions.addConnection('system', {
-	url: '/api/system/events',
-	customEvents: [{ name: 'progress' }],
-});
-
-export function getLatestSSEType() {
-	return useLastSSEMessage()?.type ?? null;
-}
-`}
-</RenderSource>
+        ```
+        import { useSSEActions, useLastSSEMessage } from '@apple-pie/slice/stores/SSE';
+        
+        useSSEActions.addConnection('system', {
+            url: '/api/system/events',
+            customEvents: [{ name: 'progress' }],
+        });
+        
+        export function getLatestSSEType() {
+            return useLastSSEMessage()?.type ?? null;
+        }
+        ```
+        </RenderSource>
         </Unstyled>
     </FlexDiv>
 </FlexDiv>

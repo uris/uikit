@@ -1,5 +1,5 @@
 /* Core brand colors (un-themed) */
-:root {
+[data-slice-theme-scope] {
 	--brand-grey-50: #f4f7fa;
 	--brand-grey-100: #e5ecf3;
 	--brand-grey-200: #d5e0ea;
@@ -110,7 +110,7 @@
 }
 
 /* Light theme tokens */
-[data-theme="lightMode"] {
+:root[data-slice-theme="lightMode"] [data-slice-theme-scope] {
 	--array-land: var(--brand-land-100);
 	--array-land-label: var(--brand-land-600);
 	--array-magenta: var(--brand-magenta-100);
@@ -183,7 +183,7 @@
 }
 
 /* Dark theme tokens */
-[data-theme="darkMode"] {
+:root[data-slice-theme="darkMode"] [data-slice-theme-scope] {
 	--array-land: var(--brand-land-100);
 	--array-land-label: var(--brand-land-600);
 	--array-magenta: var(--brand-magenta-100);
@@ -256,221 +256,221 @@
 }
 
 /* Theme token text-color utility classes */
-.array-land {
+[data-slice-theme-scope] .array-land {
 	background: var(--array-land);
 }
-.array-land-label {
+[data-slice-theme-scope] .array-land-label {
 	color: var(--array-land-label);
 }
-.array-magenta {
+[data-slice-theme-scope] .array-magenta {
 	background: var(--array-magenta);
 }
-.array-magenta-label {
+[data-slice-theme-scope] .array-magenta-label {
 	color: var(--array-magenta-label);
 }
-.array-orange {
+[data-slice-theme-scope] .array-orange {
 	background: var(--array-orange);
 }
-.array-orange-label {
+[data-slice-theme-scope] .array-orange-label {
 	color: var(--array-orange-label);
 }
-.array-purple {
+[data-slice-theme-scope] .array-purple {
 	background: var(--array-purple);
 }
-.array-purple-label {
+[data-slice-theme-scope] .array-purple-label {
 	color: var(--array-purple-label);
 }
-.array-sea {
+[data-slice-theme-scope] .array-sea {
 	background: var(--array-sea);
 }
-.array-sea-label {
+[data-slice-theme-scope] .array-sea-label {
 	color: var(--array-sea-label);
 }
-.array-sky {
+[data-slice-theme-scope] .array-sky {
 	background: var(--array-sky);
 }
-.array-sky-label {
+[data-slice-theme-scope] .array-sky-label {
 	color: var(--array-sky-label);
 }
-.array-yellow {
+[data-slice-theme-scope] .array-yellow {
 	background: var(--array-yellow);
 }
-.array-yellow-label {
+[data-slice-theme-scope] .array-yellow-label {
 	color: var(--array-yellow-label);
 }
-.core-badge-primary {
+[data-slice-theme-scope] .core-badge-primary {
 	background: var(--core-badge-primary);
 }
-.core-badge-secondary {
+[data-slice-theme-scope] .core-badge-secondary {
 	background: var(--core-badge-secondary);
 }
-.core-button-disabled {
+[data-slice-theme-scope] .core-button-disabled {
 	background: var(--core-button-disabled);
 }
-.core-button-primary {
+[data-slice-theme-scope] .core-button-primary {
 	background: var(--core-button-primary);
 }
-.core-drop-shadow {
+[data-slice-theme-scope] .core-drop-shadow {
 	box-shadow: var(--core-drop-shadow);
 }
-.core-gp-logo-primary {
+[data-slice-theme-scope] .core-gp-logo-primary {
 	color: var(--core-gp-logo-primary);
 }
-.core-gp-logo-secondary {
+[data-slice-theme-scope] .core-gp-logo-secondary {
 	color: var(--core-gp-logo-secondary);
 }
-.core-icon-dark {
+[data-slice-theme-scope] .core-icon-dark {
 	color: var(--core-icon-dark);
 }
-.core-icon-disabled {
+[data-slice-theme-scope] .core-icon-disabled {
 	color: var(--core-icon-disabled);
 }
-.core-icon-error {
+[data-slice-theme-scope] .core-icon-error {
 	color: var(--core-icon-error);
 }
-.core-icon-light {
+[data-slice-theme-scope] .core-icon-light {
 	color: var(--core-icon-light);
 }
-.core-icon-primary {
+[data-slice-theme-scope] .core-icon-primary {
 	color: var(--core-icon-primary);
 }
-.core-icon-secondary {
+[data-slice-theme-scope] .core-icon-secondary {
 	color: var(--core-icon-secondary);
 }
-.core-icon-tertiary {
+[data-slice-theme-scope] .core-icon-tertiary {
 	color: var(--core-icon-tertiary);
 }
-.core-link-primary {
+[data-slice-theme-scope] .core-link-primary {
 	color: var(--core-link-primary);
 }
-.core-outline-primary {
+[data-slice-theme-scope] .core-outline-primary {
 	border-color: var(--core-outline-primary);
 }
-.core-outline-secondary {
+[data-slice-theme-scope] .core-outline-secondary {
 	border-color: var(--core-outline-secondary);
 }
-.core-outline-special {
+[data-slice-theme-scope] .core-outline-special {
 	border-color: var(--core-outline-special);
 }
-.core-outline-tertiary {
+[data-slice-theme-scope] .core-outline-tertiary {
 	border-color: var(--core-outline-tertiary);
 }
-.core-surface-coverup-translucent {
+[data-slice-theme-scope] .core-surface-coverup-translucent {
 	background: var(--core-surface-coverup-translucent);
 }
-.core-surface-overlay-translucent {
+[data-slice-theme-scope] .core-surface-overlay-translucent {
 	background: var(--core-surface-overlay-translucent);
 }
-.core-surface-primary {
+[data-slice-theme-scope] .core-surface-primary {
 	background: var(--core-surface-primary);
 }
-.core-surface-secondary {
+[data-slice-theme-scope] .core-surface-secondary {
 	background: var(--core-surface-secondary);
 }
-.core-surface-special {
+[data-slice-theme-scope] .core-surface-special {
 	background: var(--core-surface-special);
 }
-.core-text-dark {
+[data-slice-theme-scope] .core-text-dark {
 	color: var(--core-text-dark);
 }
-.core-text-disabled {
+[data-slice-theme-scope] .core-text-disabled {
 	color: var(--core-text-disabled);
 }
-.core-text-error {
+[data-slice-theme-scope] .core-text-error {
 	color: var(--core-text-error);
 }
-.core-text-light {
+[data-slice-theme-scope] .core-text-light {
 	color: var(--core-text-light);
 }
-.core-text-primary {
+[data-slice-theme-scope] .core-text-primary {
 	color: var(--core-text-primary);
 }
-.core-text-secondary {
+[data-slice-theme-scope] .core-text-secondary {
 	color: var(--core-text-secondary);
 }
-.core-text-special {
+[data-slice-theme-scope] .core-text-special {
 	color: var(--core-text-special);
 }
-.core-text-tertiary {
+[data-slice-theme-scope] .core-text-tertiary {
 	color: var(--core-text-tertiary);
 }
-.eor-tag-employee {
+[data-slice-theme-scope] .eor-tag-employee {
 	color: var(--eor-tag-employee);
 }
-.eor-tag-overdue {
+[data-slice-theme-scope] .eor-tag-overdue {
 	color: var(--eor-tag-overdue);
 }
-.eor-tag-paid {
+[data-slice-theme-scope] .eor-tag-paid {
 	color: var(--eor-tag-paid);
 }
-.eor-tag-pending {
+[data-slice-theme-scope] .eor-tag-pending {
 	color: var(--eor-tag-pending);
 }
-.eor-tag-professional {
+[data-slice-theme-scope] .eor-tag-professional {
 	color: var(--eor-tag-professional);
 }
-.feedback-attention {
+[data-slice-theme-scope] .feedback-attention {
 	color: var(--feedback-attention);
 }
-.feedback-informative {
+[data-slice-theme-scope] .feedback-informative {
 	color: var(--feedback-informative);
 }
-.feedback-positive {
+[data-slice-theme-scope] .feedback-positive {
 	color: var(--feedback-positive);
 }
-.feedback-urgency {
+[data-slice-theme-scope] .feedback-urgency {
 	color: var(--feedback-urgency);
 }
-.feedback-warning {
+[data-slice-theme-scope] .feedback-warning {
 	color: var(--feedback-warning);
 }
-.gia-tag-risk-high {
+[data-slice-theme-scope] .gia-tag-risk-high {
 	color: var(--gia-tag-risk-high);
 }
-.gia-tag-risk-low {
+[data-slice-theme-scope] .gia-tag-risk-low {
 	color: var(--gia-tag-risk-low);
 }
-.gia-tag-risk-moderate {
+[data-slice-theme-scope] .gia-tag-risk-moderate {
 	color: var(--gia-tag-risk-moderate);
 }
-.gia-text-excerpt-highlight {
+[data-slice-theme-scope] .gia-text-excerpt-highlight {
 	color: var(--gia-text-excerpt-highlight);
 }
-.gia-text-selection {
+[data-slice-theme-scope] .gia-text-selection {
 	color: var(--gia-text-selection);
 }
-.scroll-bar {
+[data-slice-theme-scope] .scroll-bar {
 	color: var(--scroll-bar);
 }
-.scroll-bar-hover {
+[data-slice-theme-scope] .scroll-bar-hover {
 	color: var(--scroll-bar-hover);
 }
-.surface-shadow-soft {
+[data-slice-theme-scope] .surface-shadow-soft {
 	color: var(--surface-shadow-soft);
 }
-.surface-shadow-strong {
+[data-slice-theme-scope] .surface-shadow-strong {
 	color: var(--surface-shadow-strong);
 }
 
-body {
+[data-slice-theme-scope] {
 	background: var(--core-surface-primary);
 }
 
-a {
+[data-slice-theme-scope] a {
 	color: var(--core-text-special);
 	text-decoration: underline;
 }
 
-a:visited {
+[data-slice-theme-scope] a:visited {
 	color: var(--core-text-special);
 	text-decoration: underline;
 }
 
-a:hover {
+[data-slice-theme-scope] a:hover {
 	text-decoration: none;
 }
 
-code {
+[data-slice-theme-scope] code {
 	border: 1px solid var(--core-outline-primary);
 	background: var(--core-surface-secondary);
 	color: var(--core-text-primary);

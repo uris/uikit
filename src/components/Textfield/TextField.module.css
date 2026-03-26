@@ -69,21 +69,21 @@
 }
 
 .clearButton {
-    composes: row from "../../utils/styling/flexBox.module.css";
-    border: 0;
-    background: transparent;
+	composes: row from "../../utils/styling/flexBox.module.css";
+	border: 0;
+	background: transparent;
 	appearance: none;
 	-webkit-appearance: none;
 	outline: none;
-    cursor: pointer;
+	cursor: pointer;
 }
 
 .xs {
-    composes: body-xs-regular from "../../utils/styling/type.module.css";
+	composes: body-xs-regular from "../../utils/styling/type.module.css";
 }
 
 .s {
-    composes: body-s-regular from "../../utils/styling/type.module.css";
+	composes: body-s-regular from "../../utils/styling/type.module.css";
 }
 
 .m {

@@ -82,6 +82,6 @@ export const SelectedByValue: StoryObj<typeof TabBar> = {
 	},
 	render: Default.render,
 	play: async ({ canvasElement }) => {
-		await expect(canvasElement).toHaveTextContent('Option 2');
+		await expect(canvasElement).toHaveTextContent('Dark');
 	},
 };

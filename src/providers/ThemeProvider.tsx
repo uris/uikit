@@ -25,7 +25,7 @@ export function ThemeProvider(props: Readonly<ThemeProviderProps>) {
 	useEffect(() => {
 		if (theme) {
 			const newTheme = theme.includes('dark') ? darkTheme : lightTheme;
-			document.documentElement.dataset.theme = newTheme.name;
+			document.documentElement.dataset.sliceTheme = newTheme.name;
 		}
 	}, [theme]);
 
@@ -34,14 +34,14 @@ export function ThemeProvider(props: Readonly<ThemeProviderProps>) {
 		const handleSystemThemeChange = (e: MediaQueryListEvent) => {
 			if (system) {
 				const autoTheme = e.matches ? darkTheme : lightTheme;
-				document.documentElement.dataset.theme = autoTheme.name;
+				document.documentElement.dataset.sliceTheme = autoTheme.name;
 			}
 		};
 
 		// apply the current system theme on mount or when `system` changes
 		if (system) {
 			const autoTheme = darkModeMediaQuery.matches ? darkTheme : lightTheme;
-			document.documentElement.dataset.theme = autoTheme.name;
+			document.documentElement.dataset.sliceTheme = autoTheme.name;
 		}
 
 		// subscribe to OS theme changes
@@ -52,5 +52,5 @@ export function ThemeProvider(props: Readonly<ThemeProviderProps>) {
 		};
 	}, [system]);
 
-	return children;
+	return <div data-slice-theme-scope>{children}</div>;
 }

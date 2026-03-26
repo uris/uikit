@@ -6,11 +6,11 @@ export type ErrorMessage = {
 };
 
 type ErrorSummaryBaseProps = {
-    entries?: ErrorMessage[];
-    textColor?: string;
-    autoNumber?: boolean;
-    backgroundColor?: string;
-    bgColor?: string;
+	entries?: ErrorMessage[];
+	textColor?: string;
+	autoNumber?: boolean;
+	backgroundColor?: string;
+	bgColor?: string;
 	textSize?: 'xs' | 's' | 'm' | 'l';
 };
 

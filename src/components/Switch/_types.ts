@@ -3,12 +3,12 @@ import type React from 'react';
 type SwitchBaseProps<T = string> = {
 	fieldName?: string;
 	state?: boolean;
-    height?: number;
-    width?: number;
-    backgroundColorOff?: string;
-    backgroundColorOn?: string;
-    bgColorOff?: string;
-    bgColorOn?: string;
+	height?: number;
+	width?: number;
+	backgroundColorOff?: string;
+	backgroundColorOn?: string;
+	bgColorOff?: string;
+	bgColorOn?: string;
 	knobColor?: string;
 	padding?: number;
 	value?: T;

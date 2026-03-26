@@ -228,8 +228,8 @@ export async function runIconButtonPlay<TArgs>({
 	await expectCanvas(canvasElement);
 	const canvas = within(canvasElement);
 	const storyArgs = asArgs(args);
-	const icon = canvas.getByRole('img');
-	await userEvent.click(icon);
+	const button = canvas.getByRole('button');
+	await userEvent.click(button);
 	if (isFn(storyArgs.onClick)) {
 		await expect(storyArgs.onClick).toHaveBeenCalled();
 	}
@@ -323,10 +323,9 @@ export async function runSliderPlay<TArgs>({
 	canvasElement,
 }: PlayContext<TArgs>) {
 	await expectCanvas(canvasElement);
+	const canvas = within(canvasElement);
 	const storyArgs = asArgs(args);
-	const slider = canvasElement.querySelector(
-		'[style*="--slider-width"]',
-	) as HTMLElement | null;
+	const slider = canvas.getByRole('slider');
 	if (slider) {
 		fireEvent.mouseDown(slider, { clientX: 20 });
 		fireEvent.mouseMove(document.documentElement, { clientX: 60 });
@@ -380,7 +379,7 @@ export async function runTabBarPlay<TArgs>({
 	await expectCanvas(canvasElement);
 	const canvas = within(canvasElement);
 	const storyArgs = asArgs(args);
-	await userEvent.click(canvas.getByText('Option 2'));
+	await userEvent.click(canvas.getByRole('tab', { name: /dark/i }));
 	if (isFn(storyArgs.onChange)) {
 		await expect(storyArgs.onChange).toHaveBeenCalled();
 	}
@@ -388,8 +387,8 @@ export async function runTabBarPlay<TArgs>({
 		await expect(storyArgs.onTabChange).toHaveBeenCalled();
 	}
 	if (storyArgs.hasClose && isFn(storyArgs.onClose)) {
-		const icons = canvas.getAllByRole('img');
-		await userEvent.click(icons[icons.length - 1]);
+		const buttons = canvas.getAllByRole('button');
+		await userEvent.click(buttons[buttons.length - 1]);
 		await expect(storyArgs.onClose).toHaveBeenCalled();
 	}
 }
@@ -460,10 +459,7 @@ export async function runTextFieldPlay<TArgs>({
 		}
 	}
 	if (storyArgs.inputType === 'password') {
-		const icons = canvas.getAllByRole('img');
-		if (icons.length > 0) {
-			await userEvent.click(icons[icons.length - 1]);
-		}
+		await userEvent.click(canvas.getByRole('button', { name: /view icon/i }));
 	}
 }
 
@@ -474,7 +470,7 @@ export async function runButtonPlay<TArgs>({
 	await expectCanvas(canvasElement);
 	const canvas = within(canvasElement);
 	const storyArgs = asArgs(args);
-	await userEvent.click(canvas.getByText('Button Label'));
+	await userEvent.click(canvas.getByRole('button'));
 	if (isFn(storyArgs.onClick)) {
 		await expect(storyArgs.onClick).toHaveBeenCalled();
 	}

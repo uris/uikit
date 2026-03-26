@@ -35,7 +35,7 @@ export function cleanString(
  * Check whether the active document theme is currently dark.
  */
 export function isDarkMode(): boolean {
-	const theme = document.documentElement.dataset.theme;
+	const theme = document.documentElement.dataset.sliceTheme;
 	return theme?.includes('dark') ?? false;
 }
 

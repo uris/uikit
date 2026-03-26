@@ -8,24 +8,24 @@ function SwitchComponent<T = string>(props: SwitchProps<T>) {
 	const {
 		fieldName,
 		state = false,
-        value,
-        height = 22,
-        width = 44,
-        padding = 3,
-        backgroundColorOn,
-        backgroundColorOff,
-        bgColorOn = 'var(--feedback-positive)',
-        bgColorOff = 'var(--core-text-disabled)',
+		value,
+		height = 22,
+		width = 44,
+		padding = 3,
+		backgroundColorOn,
+		backgroundColorOff,
+		bgColorOn = 'var(--feedback-positive)',
+		bgColorOff = 'var(--core-text-disabled)',
 		knobColor = 'var(--core-surface-primary)',
 		onChange = () => null,
 		...divAttributes
 	} = props;
 	const { id: divId, className, style, ...rest } = divAttributes;
-    const divStyle = style ?? ({} as React.CSSProperties);
-    const divClass = className ? ` ${className}` : '';
-    const [on, setOn] = useState<boolean>(state);
-    const resolvedBackgroundColorOn = backgroundColorOn ?? bgColorOn;
-    const resolvedBackgroundColorOff = backgroundColorOff ?? bgColorOff;
+	const divStyle = style ?? ({} as React.CSSProperties);
+	const divClass = className ? ` ${className}` : '';
+	const [on, setOn] = useState<boolean>(state);
+	const resolvedBackgroundColorOn = backgroundColorOn ?? bgColorOn;
+	const resolvedBackgroundColorOff = backgroundColorOff ?? bgColorOff;
 
 	useEffect(() => {
 		setOn(state);
@@ -43,19 +43,19 @@ function SwitchComponent<T = string>(props: SwitchProps<T>) {
 			'--switch-padding': `${padding}px`,
 			'--switch-knob-size': `${height - padding * 2}px`,
 			'--switch-knob-color': knobColor,
-            '--switch-bg-color': on
-                ? resolvedBackgroundColorOn
-                : resolvedBackgroundColorOff,
-        } as React.CSSProperties;
-    }, [
-        width,
-        height,
-        padding,
-        resolvedBackgroundColorOff,
-        resolvedBackgroundColorOn,
-        on,
-        knobColor,
-    ]);
+			'--switch-bg-color': on
+				? resolvedBackgroundColorOn
+				: resolvedBackgroundColorOff,
+		} as React.CSSProperties;
+	}, [
+		width,
+		height,
+		padding,
+		resolvedBackgroundColorOff,
+		resolvedBackgroundColorOn,
+		on,
+		knobColor,
+	]);
 
 	const justify = useMemo(
 		() => ({ justifyContent: on ? 'flex-end' : 'flex-start' }),

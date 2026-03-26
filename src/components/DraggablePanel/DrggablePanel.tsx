@@ -10,7 +10,6 @@ import { useTheme } from '../../hooks';
 import { useObserveResize } from '../../hooks/useObserveResize/useObserveResize';
 import { useTrackRenders } from '../../hooks/useTrackRenders/useTrackRenders';
 import { pointerPosition } from '../../utils/functions/misc';
-import switchStories from '../Switch/Switch.stories';
 import css from './DraggablePanel.module.css';
 import type { Constraint } from './_types';
 

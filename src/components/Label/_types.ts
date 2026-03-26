@@ -11,13 +11,13 @@ export enum LabelBackground {
 }
 
 type LabelBaseProps = {
-    children?: React.ReactNode;
-    label?: string;
-    backgroundColor?: LabelBackground | string;
-    bgColor?: LabelBackground | string;
-    borderWidth?: number;
-    borderSize?: number;
-    borderColor?: string;
+	children?: React.ReactNode;
+	label?: string;
+	backgroundColor?: LabelBackground | string;
+	bgColor?: LabelBackground | string;
+	borderWidth?: number;
+	borderSize?: number;
+	borderColor?: string;
 	borderRadius?: number;
 	padding?: number | string;
 	textColor?: string;

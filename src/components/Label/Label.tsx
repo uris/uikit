@@ -6,23 +6,25 @@ import css from './Label.module.css';
 import { LabelBackground, type LabelProps } from './_types';
 
 function resolveSemanticBackground(
-    backgroundColor: LabelProps['backgroundColor'],
+	backgroundColor: LabelProps['backgroundColor'],
 ): LabelBackground | undefined {
-    if (!backgroundColor || typeof backgroundColor !== 'string') return undefined;
-    const semanticKey = backgroundColor as keyof typeof LabelBackground;
-    if (LabelBackground[semanticKey]) return LabelBackground[semanticKey];
-    return Object.values(LabelBackground).find((value) => value === backgroundColor);
+	if (!backgroundColor || typeof backgroundColor !== 'string') return undefined;
+	const semanticKey = backgroundColor as keyof typeof LabelBackground;
+	if (LabelBackground[semanticKey]) return LabelBackground[semanticKey];
+	return Object.values(LabelBackground).find(
+		(value) => value === backgroundColor,
+	);
 }
 
 export function Label(props: Readonly<LabelProps>) {
 	const {
-        children,
-        label,
-        backgroundColor,
-        borderWidth,
-        borderSize = 1,
-        borderColor = 'var(--core-outline-primary)',
-        bgColor = 'transparent',
+		children,
+		label,
+		backgroundColor,
+		borderWidth,
+		borderSize = 1,
+		borderColor = 'var(--core-outline-primary)',
+		bgColor = 'transparent',
 		borderRadius = 4,
 		padding,
 		textColor = 'var(--core-text-primary)',
@@ -31,11 +33,11 @@ export function Label(props: Readonly<LabelProps>) {
 		...divAttributes
 	} = props;
 	const { id: divId, className, style, ...rest } = divAttributes;
-    const divStyle = style ?? ({} as React.CSSProperties);
-    const divClass = className ? ` ${className}` : '';
-    const isInteractive = Boolean(onClick);
-    const resolvedBackgroundColor = backgroundColor ?? bgColor;
-    const resolvedBorderWidth = borderWidth ?? borderSize;
+	const divStyle = style ?? ({} as React.CSSProperties);
+	const divClass = className ? ` ${className}` : '';
+	const isInteractive = Boolean(onClick);
+	const resolvedBackgroundColor = backgroundColor ?? bgColor;
+	const resolvedBorderWidth = borderWidth ?? borderSize;
 
 	const handleClick = useCallback(
 		(e: React.MouseEvent<any>) => {
@@ -45,9 +47,9 @@ export function Label(props: Readonly<LabelProps>) {
 	);
 
 	const setBgColor = useMemo(() => {
-        if (!resolvedBackgroundColor) return 'transparent';
-        const fill = resolveSemanticBackground(resolvedBackgroundColor);
-        if (!fill) return resolvedBackgroundColor;
+		if (!resolvedBackgroundColor) return 'transparent';
+		const fill = resolveSemanticBackground(resolvedBackgroundColor);
+		if (!fill) return resolvedBackgroundColor;
 		switch (fill) {
 			case 'red':
 				return 'var(--feedback-warning)';
@@ -66,12 +68,12 @@ export function Label(props: Readonly<LabelProps>) {
 			default:
 				return 'var(--core-surface-primary)';
 		}
-    }, [resolvedBackgroundColor]);
+	}, [resolvedBackgroundColor]);
 
 	const setBorderColor = useMemo(() => {
-        if (!resolvedBackgroundColor) return borderColor;
-        const fill = resolveSemanticBackground(resolvedBackgroundColor);
-        if (!fill) return borderColor;
+		if (!resolvedBackgroundColor) return borderColor;
+		const fill = resolveSemanticBackground(resolvedBackgroundColor);
+		if (!fill) return borderColor;
 		switch (fill) {
 			case 'red':
 				return 'var(--feedback-warning)';
@@ -90,7 +92,7 @@ export function Label(props: Readonly<LabelProps>) {
 			default:
 				return 'var(--core-surface-primary)';
 		}
-    }, [resolvedBackgroundColor, borderColor]);
+	}, [resolvedBackgroundColor, borderColor]);
 
 	const setPadding = useMemo(() => {
 		if (padding) return setStyle(padding);
@@ -104,7 +106,7 @@ export function Label(props: Readonly<LabelProps>) {
 			'--label-cursor': onClick ? 'pointer' : 'default',
 			'--label-color': textColor,
 			'--label-bg-color': setBgColor,
-            '--label-border-size': setStyle(resolvedBorderWidth),
+			'--label-border-size': setStyle(resolvedBorderWidth),
 			'--label-border-color': setBorderColor,
 		} as React.CSSProperties;
 	}, [
@@ -114,8 +116,8 @@ export function Label(props: Readonly<LabelProps>) {
 		textColor,
 		setBorderColor,
 		setBgColor,
-        resolvedBorderWidth,
-    ]);
+		resolvedBorderWidth,
+	]);
 
 	/* START.DEBUG */
 	useTrackRenders(props, 'Label');

@@ -1,4 +1,4 @@
-:root {
+[data-slice-theme-scope] {
 	--elevation-below-surface: -100;
 	--elevation-surface: 0;
 	--elevation-float: 100;

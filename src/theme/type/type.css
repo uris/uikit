@@ -1,6 +1,6 @@
 @import url("https://fonts.googleapis.com/css2?family=Funnel+Sans:ital,wght@0,300..800;1,300..800&display=swap");
 
-:root {
+[data-slice-theme-scope] {
 	--font-family: "Funnel Sans";
 	--font-weight-regular: 360;
 	--font-weight-medium: 420;
@@ -12,7 +12,7 @@
 	--font-size-xl: 17px;
 }
 
-.body-xs-regular {
+[data-slice-theme-scope] .body-xs-regular {
 	font-family: var(--font-family), sans-serif;
 	font-weight: var(--font-weight-regular);
 	font-size: var(--font-size-xs);
@@ -21,7 +21,7 @@
 	letter-spacing: 0.2px;
 }
 
-.body-xs-medium {
+[data-slice-theme-scope] .body-xs-medium {
 	font-family: var(--font-family), sans-serif;
 	font-weight: var(--font-weight-medium);
 	font-size: var(--font-size-xs);
@@ -30,7 +30,7 @@
 	letter-spacing: 0.2px;
 }
 
-.body-xs-bold {
+[data-slice-theme-scope] .body-xs-bold {
 	font-family: var(--font-family), sans-serif;
 	font-weight: var(--font-weight-bold);
 	font-size: var(--font-size-xs);
@@ -39,7 +39,7 @@
 	letter-spacing: 0.25px;
 }
 
-.body-s-regular {
+[data-slice-theme-scope] .body-s-regular {
 	font-family: var(--font-family), sans-serif;
 	font-weight: var(--font-weight-regular);
 	font-size: var(--font-size-s);
@@ -48,7 +48,7 @@
 	letter-spacing: 0.15px;
 }
 
-.body-s-medium {
+[data-slice-theme-scope] .body-s-medium {
 	font-family: var(--font-family), sans-serif;
 	font-weight: var(--font-weight-medium);
 	font-size: var(--font-size-s);
@@ -57,7 +57,7 @@
 	letter-spacing: 0.15px;
 }
 
-.body-s-bold {
+[data-slice-theme-scope] .body-s-bold {
 	font-family: var(--font-family), sans-serif;
 	font-weight: var(--font-weight-bold);
 	font-size: var(--font-size-s);
@@ -66,7 +66,7 @@
 	letter-spacing: 0.2px;
 }
 
-.body-m-regular {
+[data-slice-theme-scope] .body-m-regular {
 	font-family: var(--font-family), sans-serif;
 	font-weight: var(--font-weight-regular);
 	font-size: var(--font-size-m);
@@ -75,7 +75,7 @@
 	letter-spacing: 0.15px;
 }
 
-.body-m-medium {
+[data-slice-theme-scope] .body-m-medium {
 	font-family: var(--font-family), sans-serif;
 	font-weight: var(--font-weight-medium);
 	font-size: var(--font-size-m);
@@ -84,7 +84,7 @@
 	letter-spacing: 0.15px;
 }
 
-.body-m-bold {
+[data-slice-theme-scope] .body-m-bold {
 	font-family: var(--font-family), sans-serif;
 	font-weight: var(--font-weight-bold);
 	font-size: var(--font-size-m);
@@ -93,7 +93,7 @@
 	letter-spacing: 0.2px;
 }
 
-.body-l-regular {
+[data-slice-theme-scope] .body-l-regular {
 	font-family: var(--font-family), sans-serif;
 	font-weight: var(--font-weight-regular);
 	font-size: var(--font-size-l);
@@ -102,7 +102,7 @@
 	letter-spacing: 0.1px;
 }
 
-.body-l-medium {
+[data-slice-theme-scope] .body-l-medium {
 	font-family: var(--font-family), sans-serif;
 	font-weight: var(--font-weight-medium);
 	font-size: var(--font-size-l);
@@ -111,7 +111,7 @@
 	letter-spacing: 0.1px;
 }
 
-.body-l-bold {
+[data-slice-theme-scope] .body-l-bold {
 	font-family: var(--font-family), sans-serif;
 	font-weight: var(--font-weight-bold);
 	font-size: var(--font-size-l);
@@ -120,7 +120,7 @@
 	letter-spacing: 0.15px;
 }
 
-.body-xl-regular {
+[data-slice-theme-scope] .body-xl-regular {
 	font-family: var(--font-family), sans-serif;
 	font-weight: var(--font-weight-regular);
 	font-size: var(--font-size-xl);
@@ -129,7 +129,7 @@
 	letter-spacing: 0.1px;
 }
 
-.body-xl-medium {
+[data-slice-theme-scope] .body-xl-medium {
 	font-family: var(--font-family), sans-serif;
 	font-weight: var(--font-weight-medium);
 	font-size: var(--font-size-xl);
@@ -138,7 +138,7 @@
 	letter-spacing: 0.1px;
 }
 
-.body-xl-bold {
+[data-slice-theme-scope] .body-xl-bold {
 	font-family: var(--font-family), sans-serif;
 	font-weight: var(--font-weight-bold);
 	font-size: var(--font-size-xl);
@@ -147,7 +147,7 @@
 	letter-spacing: 0.15px;
 }
 
-.heading-s-medium {
+[data-slice-theme-scope] .heading-s-medium {
 	font-family: var(--font-family), sans-serif;
 	font-weight: 500;
 	font-size: 20px;
@@ -156,7 +156,7 @@
 	letter-spacing: 0.2px;
 }
 
-.heading-s-bold {
+[data-slice-theme-scope] .heading-s-bold {
 	font-family: var(--font-family), sans-serif;
 	font-weight: 600;
 	font-size: 20px;
@@ -165,7 +165,7 @@
 	letter-spacing: 0.2px;
 }
 
-.heading-m-medium {
+[data-slice-theme-scope] .heading-m-medium {
 	font-family: var(--font-family), sans-serif;
 	font-weight: 500;
 	font-size: 24px;
@@ -174,7 +174,7 @@
 	letter-spacing: 0.2px;
 }
 
-.heading-m-bold {
+[data-slice-theme-scope] .heading-m-bold {
 	font-family: var(--font-family), sans-serif;
 	font-weight: 600;
 	font-size: 24px;
@@ -183,7 +183,7 @@
 	letter-spacing: 0.2px;
 }
 
-.heading-l-medium {
+[data-slice-theme-scope] .heading-l-medium {
 	font-family: var(--font-family), sans-serif;
 	font-weight: 500;
 	font-size: 30px;
@@ -192,7 +192,7 @@
 	letter-spacing: 0.2px;
 }
 
-.heading-l-bold {
+[data-slice-theme-scope] .heading-l-bold {
 	font-family: var(--font-family), sans-serif;
 	font-weight: 600;
 	font-size: 30px;
@@ -201,7 +201,7 @@
 	letter-spacing: 0.2px;
 }
 
-.heading-xl-medium {
+[data-slice-theme-scope] .heading-xl-medium {
 	font-family: var(--font-family), sans-serif;
 	font-weight: 500;
 	font-size: 36px;
@@ -210,7 +210,7 @@
 	letter-spacing: 0.2px;
 }
 
-.heading-xl-bold {
+[data-slice-theme-scope] .heading-xl-bold {
 	font-family: var(--font-family), sans-serif;
 	font-weight: 600;
 	font-size: 36px;
@@ -219,7 +219,7 @@
 	letter-spacing: 0.2px;
 }
 
-body {
+[data-slice-theme-scope] {
 	font-family: var(--font-family), sans-serif;
 	font-weight: var(--font-weight-regular);
 	font-size: var(--font-size-m);
@@ -228,7 +228,7 @@ body {
 	letter-spacing: 0.15px;
 }
 
-h1 {
+[data-slice-theme-scope] h1 {
 	font-family: var(--font-family), sans-serif;
 	font-weight: 500;
 	font-size: 36px;
@@ -237,7 +237,7 @@ h1 {
 	letter-spacing: 0.2px;
 }
 
-h2 {
+[data-slice-theme-scope] h2 {
 	font-family: var(--font-family), sans-serif;
 	font-weight: 500;
 	font-size: 30px;
@@ -246,7 +246,7 @@ h2 {
 	letter-spacing: 0.2px;
 }
 
-h3 {
+[data-slice-theme-scope] h3 {
 	font-family: var(--font-family), sans-serif;
 	font-weight: 500;
 	font-size: 24px;
@@ -255,7 +255,7 @@ h3 {
 	letter-spacing: 0.2px;
 }
 
-h4 {
+[data-slice-theme-scope] h4 {
 	font-family: var(--font-family), sans-serif;
 	font-weight: 500;
 	font-size: 20px;
@@ -264,22 +264,22 @@ h4 {
 	letter-spacing: 0.2px;
 }
 
-h1,
-h2,
-h3,
-h4 {
+[data-slice-theme-scope] h1,
+[data-slice-theme-scope] h2,
+[data-slice-theme-scope] h3,
+[data-slice-theme-scope] h4 {
 	margin: 1.5em 0 0.6em 0;
 }
 
-h1:first-child {
+[data-slice-theme-scope] h1:first-child {
 	margin: 0 0 0.6em 0;
 }
 
-p {
+[data-slice-theme-scope] p {
 	margin: 0 0 1.5em 0;
 }
 
-b,
-strong {
+[data-slice-theme-scope] b,
+[data-slice-theme-scope] strong {
 	font-weight: var(--font-weight-bold);
 }
