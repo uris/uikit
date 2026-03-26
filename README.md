@@ -6,7 +6,7 @@ The package is currently in beta. Until `1.0.0`, breaking API changes may still 
 
 Docs and showcase: https://slice-uikit.com
 
-## Installation
+## Installation Test
 
 ```bash
 npm install @apple-pie/slice
