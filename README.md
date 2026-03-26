@@ -173,6 +173,30 @@ npm run lint
 - type declarations in `dist/types`
 - shared CSS modules in `dist/css`
 
+## Site Deployment
+
+The public `slice-uikit.com` site is deployed as a static Storybook build served from Docker with nginx.
+
+Production image build:
+
+```bash
+docker build -t slice-uikit-site .
+```
+
+Local container run:
+
+```bash
+docker run --rm -p 8090:80 slice-uikit-site
+```
+
+The GitHub Actions workflow at [`.github/workflows/deploy-site.yml`](./.github/workflows/deploy-site.yml) deploys using the same SSH-on-VM pattern as the existing website project: it connects to the VM, pulls or clones the repo, then rebuilds the `uikit` service from the shared `~/projects/docker-compose.yml` file on the VM.
+
+Configure these repository secrets before enabling it:
+
+- `VM_HOST`
+- `VM_USER`
+- `SSH_PRIVATE_KEY`
+
 ## Contributors
 
 Contribution setup and workflow: [CONTRIBUTING.md](./CONTRIBUTING.md)
