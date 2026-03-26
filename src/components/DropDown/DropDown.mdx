@@ -17,7 +17,7 @@ import {RenderSource} from '../../../documentation/_components/RenderSource/Rend
         ## Typing
         `DropDown` is generic and defaults to string values:
 
-        <RenderSource language={"ts"}>
+        <RenderSource>
         ```
         type DropDownOption<T = string> = {
             label?: string;
@@ -73,9 +73,9 @@ import {RenderSource} from '../../../documentation/_components/RenderSource/Rend
             <tr><td><code>gap</code></td><td><code>number</code></td><td><code>8</code></td><td>Wrapper gap token passed through CSS vars.</td></tr>
             <tr><td><code>borderRadius</code></td><td><code>number</code></td><td><code>4</code></td><td>Border radius in pixels.</td></tr>
             <tr><td><code>borderStyle</code></td><td><code>{`'bottom' | 'box' | 'none'`}</code></td><td><code>'box'</code></td><td>Controls whether the dropdown renders a full border, bottom-only border, or no border.</td></tr>
-            <tr><td><code>borderSize</code></td><td><code>number</code></td><td><code>1</code></td><td>Border thickness.</td></tr>
+            <tr><td><code>borderWidth</code></td><td><code>number</code></td><td><code>1</code></td><td>Border thickness.</td></tr>
             <tr><td><code>borderColor</code></td><td><code>string</code></td><td><code>'var(--core-outline-primary)'</code></td><td>Normal border color.</td></tr>
-            <tr><td><code>bgColor</code></td><td><code>string</code></td><td><code>'transparent'</code></td><td>Background color for the face element.</td></tr>
+            <tr><td><code>backgroundColor</code></td><td><code>string</code></td><td><code>'transparent'</code></td><td>Background color for the face element.</td></tr>
             <tr><td><code>iconColor</code></td><td><code>string</code></td><td><code>'var(--core-text-primary)'</code></td><td>Chevron icon color.</td></tr>
             <tr><td><code>textColor</code></td><td><code>string</code></td><td><code>'var(--core-text-primary)'</code></td><td>Selected text color when the control is not disabled and not showing the placeholder state.</td></tr>
             <tr><td><code>iconSize</code></td><td><code>number</code></td><td><code>20</code></td><td>Chevron icon size in pixels.</td></tr>
@@ -116,7 +116,7 @@ import {RenderSource} from '../../../documentation/_components/RenderSource/Rend
         ## Code examples
         </Unstyled>
 
-        <RenderSource language={"tsx"}>
+        <RenderSource>
         ```
         import { DropDown } from '@apple-pie/slice';
         
@@ -142,7 +142,7 @@ import {RenderSource} from '../../../documentation/_components/RenderSource/Rend
         ```
         </RenderSource>
 
-        <RenderSource language={"tsx"}>
+        <RenderSource>
         ```
         import { DropDown, type DropDownOption } from '@apple-pie/slice';
         

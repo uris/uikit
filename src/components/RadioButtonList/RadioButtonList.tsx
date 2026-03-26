@@ -1,11 +1,13 @@
 import React, { useCallback, useEffect, useId, useMemo, useState } from 'react';
 import { useTrackRenders } from '../../hooks/useTrackRenders/useTrackRenders';
+import { setStyle } from '../../utils/functions/misc';
 import { RadioButton, type RadioButtonOption } from '../RadioButton';
 import css from './RadioButtonList.module.css';
 import type { RadioButtonListProps } from './_types';
 
-export const RadioButtonList = React.memo((props: RadioButtonListProps) => {
+function RadioButtonListComponent<T = string>(props: RadioButtonListProps<T>) {
 	const {
+		width = 'min-content',
 		options = [],
 		selectedIndexes = null,
 		selectedOptions = null,
@@ -21,6 +23,7 @@ export const RadioButtonList = React.memo((props: RadioButtonListProps) => {
 		noFrame = true,
 		toggleIcon = true,
 		iconColor = undefined,
+		icon = 'circle',
 		checkedIcon = 'check circle',
 		iconSelectedColor = undefined,
 		onChange = () => null,
@@ -33,10 +36,8 @@ export const RadioButtonList = React.memo((props: RadioButtonListProps) => {
 
 	const [selected, setSelected] = useState<number[] | null>(selectedIndexes);
 
-	// sync selected indexes from the controlled prop
 	useEffect(() => setSelected(selectedIndexes), [selectedIndexes]);
 
-	// derive selected indexes from the provided option field names
 	useEffect(() => {
 		if (!selectedOptions || !options) return;
 		const selections: number[] = [];
@@ -49,7 +50,6 @@ export const RadioButtonList = React.memo((props: RadioButtonListProps) => {
 		setSelected(selections);
 	}, [selectedOptions, options]);
 
-	// report whether a given option index is currently selected
 	const isSelected = useCallback(
 		(index: number): boolean => {
 			if (!selected) return false;
@@ -58,12 +58,9 @@ export const RadioButtonList = React.memo((props: RadioButtonListProps) => {
 		[selected],
 	);
 
-	// update multiple selections while preserving the current selection set
 	const doMultiSelection = useCallback(
 		(selection: number, state: boolean) => {
-			// **** update the selected indexes
 			let indexesSelected: number[] = selected ? [...selected] : [];
-			// if deselecting and there are selections
 			if (!state && selected) {
 				const removeAt = indexesSelected.indexOf(selection);
 				indexesSelected.splice(removeAt, 1);
@@ -72,8 +69,7 @@ export const RadioButtonList = React.memo((props: RadioButtonListProps) => {
 				const exists = indexesSelected.includes(selection);
 				if (!exists) indexesSelected.push(selection);
 			}
-			// **** create an array of selected options
-			let updatedSelections: RadioButtonOption[] | null = [];
+			let updatedSelections: RadioButtonOption<T>[] | null = [];
 			for (const index of indexesSelected || []) {
 				if (updatedSelections) updatedSelections.push(options[index]);
 			}
@@ -84,7 +80,6 @@ export const RadioButtonList = React.memo((props: RadioButtonListProps) => {
 		[selected, options, onChange],
 	);
 
-	// update the single active selection
 	const doSingleSelection = useCallback(
 		(selection: number, state: boolean) => {
 			onChange(state ? [options[selection]] : [], state ? [selection] : []);
@@ -93,10 +88,8 @@ export const RadioButtonList = React.memo((props: RadioButtonListProps) => {
 		[options, onChange],
 	);
 
-	// route selection changes through the appropriate selection mode
 	const handleChange = useCallback(
 		(selection: number, state: boolean) => {
-			// it not multiselect just pass the current selection
 			if (multiSelect) {
 				doMultiSelection(selection, state);
 			} else {
@@ -106,12 +99,13 @@ export const RadioButtonList = React.memo((props: RadioButtonListProps) => {
 		[multiSelect, doMultiSelection, doSingleSelection],
 	);
 
-	// derive the rendered radio buttons from the options list
 	const renderedOptions = useMemo(() => {
-		return options.map((option: RadioButtonOption, i: number) => {
+		return options.map((option: RadioButtonOption<T>, i: number) => {
 			return (
 				<RadioButton
-					option={option}
+					label={option.label}
+					value={option.value}
+					fieldName={option.fieldName}
 					selected={isSelected(i)}
 					controlType={multiSelect ? 'checkbox' : 'radio'}
 					key={`${option.fieldName}_${i}`}
@@ -120,44 +114,44 @@ export const RadioButtonList = React.memo((props: RadioButtonListProps) => {
 					noFrame={noFrame}
 					hideRadio={hideRadio}
 					onChange={(_option, state) => handleChange(i, state)}
-					tabIndex={i + 1 + 100 * tabIndexSeed}
-					toggleIcon={toggleIcon}
+					tabIndex={tabIndexSeed ? tabIndexSeed + i : 0}
 					iconColor={isSelected(i) ? iconSelectedColor : iconColor}
 					checkedIcon={checkedIcon}
+					icon={icon}
+					list={true}
 				/>
 			);
 		});
 	}, [
 		options,
 		isSelected,
+		multiSelect,
 		deselect,
 		wrap,
 		noFrame,
 		hideRadio,
 		handleChange,
-		tabIndexSeed,
-		toggleIcon,
 		iconColor,
 		iconSelectedColor,
 		checkedIcon,
-		multiSelect,
+		tabIndexSeed,
+		icon,
 	]);
 
-	// resolve the bottom margin from the configured spacer mode
 	const margin = useMemo(() => {
 		if (spacer === 'none') return 0;
 		if (spacer === 'custom') return custom;
 		return 0;
 	}, [spacer, custom]);
 
-	// compose CSS custom properties for layout and spacing
 	const cssVars = useMemo(() => {
 		return {
 			'--rb-list-flex-wrap': wrap ? 'wrap' : 'nowrap',
 			'--rb-list-margin-bottom': noFrame ? 0 : `${margin}px`,
 			'--rb-gap': `${gap}px`,
+			'--rb-list-width': setStyle(width),
 		} as React.CSSProperties;
-	}, [wrap, margin, gap, noFrame]);
+	}, [wrap, margin, gap, noFrame, width]);
 
 	/* START.DEBUG */
 	useTrackRenders(props, 'Radio Button List');
@@ -176,4 +170,12 @@ export const RadioButtonList = React.memo((props: RadioButtonListProps) => {
 			{renderedOptions}
 		</div>
 	);
-});
+}
+
+RadioButtonListComponent.displayName = 'RadioButtonList';
+
+export const RadioButtonList = React.memo(RadioButtonListComponent) as <
+	T = string,
+>(
+	props: RadioButtonListProps<T>,
+) => React.JSX.Element;

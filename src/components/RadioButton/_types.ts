@@ -1,32 +1,33 @@
 import type React from 'react';
 
-export type RadioButtonOption = {
+export type RadioButtonOption<T = string> = {
 	fieldName?: string;
-	title?: string;
-	description?: string;
-	state?: boolean;
-	icon?: string;
+	label?: string;
+	value?: T;
 };
 
-type RadioButtonBaseProps = {
+type RadioButtonBaseProps<T = string> = {
+	children?: React.ReactNode;
+	label?: string;
+	fieldName?: string;
+	value?: T;
 	selected?: boolean;
-	option: RadioButtonOption;
 	controlType?: 'radio' | 'checkbox';
 	deselect?: boolean;
 	tabIndex?: number;
 	wrap?: boolean;
 	list?: boolean;
 	hideRadio?: boolean;
-	toggleIcon?: boolean;
 	iconColor?: string;
 	noFrame?: boolean;
 	gap?: number;
-	checkedIcon?: 'check circle' | 'circle fill';
-	onChange?: (option: RadioButtonOption, state: boolean) => void;
+	icon?: string;
+	checkedIcon?: string;
+	onChange?: (option: RadioButtonOption<T>, selected: boolean) => void;
 };
 
-export type RadioButtonProps = Omit<
+export type RadioButtonProps<T = string> = Omit<
 	React.ButtonHTMLAttributes<HTMLButtonElement>,
 	keyof RadioButtonBaseProps
 > &
-	RadioButtonBaseProps;
+	RadioButtonBaseProps<T>;

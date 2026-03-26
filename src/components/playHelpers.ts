@@ -295,10 +295,9 @@ export async function runRadioButtonPlay<TArgs>({
 	await expectCanvas(canvasElement);
 	const canvas = within(canvasElement);
 	const storyArgs = asArgs(args);
-	const optionTitle = (storyArgs.option as { title?: string } | undefined)
-		?.title;
-	if (typeof optionTitle === 'string') {
-		await userEvent.click(canvas.getByText(optionTitle));
+	const optionLabel = storyArgs.label ?? undefined;
+	if (typeof optionLabel === 'string') {
+		await userEvent.click(canvas.getByText(optionLabel));
 	}
 	if (isFn(storyArgs.onChange)) {
 		await expect(storyArgs.onChange).toHaveBeenCalled();

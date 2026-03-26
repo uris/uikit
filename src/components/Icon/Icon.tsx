@@ -19,7 +19,7 @@ export const Icon = React.memo((props: IconProps) => {
 		toggle = false,
 		pointer = false,
 		disabled = false,
-		onClick = () => null,
+		onClick,
 		...svgAttributes
 	} = props;
 	const { id: svgId, className, style, ...rest } = svgAttributes;
@@ -40,13 +40,16 @@ export const Icon = React.memo((props: IconProps) => {
 	const iconStyle = useMemo(() => {
 		return {
 			'--cursor': cursor,
+			'--pointer-events': onClick ? 'auto' : 'none',
 		} as React.CSSProperties;
-	}, [cursor]);
+	}, [cursor, onClick]);
 
 	// route keyboard activation through the same click callback
 	const handleKeyActivate = useMemo(
 		() => () =>
-			onClick(undefined as unknown as React.MouseEvent<SVGElement, MouseEvent>),
+			onClick?.(
+				undefined as unknown as React.MouseEvent<SVGElement, MouseEvent>,
+			),
 		[onClick],
 	);
 
@@ -65,7 +68,7 @@ export const Icon = React.memo((props: IconProps) => {
 			height={size}
 			viewBox="0 0 20 20"
 			style={{ ...svgStyle, ...iconStyle }}
-			onClick={(e) => onClick(e)}
+			onClick={(e) => onClick?.(e)}
 			fill={fillColor}
 			role="img"
 			aria-label={`${name} icon`}

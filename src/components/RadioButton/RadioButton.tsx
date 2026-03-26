@@ -5,18 +5,21 @@ import { Icon } from '../Icon';
 import css from './RadioButton.module.css';
 import type { RadioButtonProps } from './_types';
 
-export const RadioButton = React.memo((props: RadioButtonProps) => {
+function RadioButtonComponent<T = string>(props: RadioButtonProps<T>) {
 	const {
-		option,
+		label,
+		children,
+		fieldName,
+		value,
 		selected = false,
 		controlType = 'radio',
 		deselect = true,
-		tabIndex = 1,
+		tabIndex = 0,
 		wrap = false,
 		list = false,
 		hideRadio = false,
-		toggleIcon = true,
 		noFrame = true,
+		icon = 'circle',
 		checkedIcon = 'check circle',
 		iconColor,
 		gap = 6,
@@ -28,38 +31,42 @@ export const RadioButton = React.memo((props: RadioButtonProps) => {
 	const divClass = className ? ` ${className}` : '';
 	const [isSelected, setIsSelected] = useState<boolean>(selected);
 
-	// sync the local selection state from the controlled prop
 	useEffect(() => setIsSelected(selected), [selected]);
 
-	// toggle the radio button selection and notify the consumer
 	const handleChange = useCallback(() => {
 		if (isSelected && !deselect) return;
 		setIsSelected(!isSelected);
-		onChange(option, !isSelected);
-	}, [isSelected, deselect, onChange, option]);
+		onChange(
+			{
+				fieldName,
+				label,
+				value,
+			},
+			!isSelected,
+		);
+	}, [isSelected, deselect, onChange, fieldName, label, value]);
 
-	// resolve the radio icon color from selection and icon settings
+	const setAriaLabel = useMemo(() => {
+		if (label) return label;
+		if (children && typeof children === 'string') return children;
+		return 'Radio Button';
+	}, [label, children]);
+
 	const setIconColor = useMemo(() => {
 		if (iconColor) return iconColor;
-		if (checkedIcon === 'circle fill') return 'var(--core-text-primary)';
-		return toggleIcon && isSelected
-			? 'var(--core-text-special)'
-			: 'var(--core-text-primary)';
-	}, [iconColor, toggleIcon, isSelected, checkedIcon]);
+		return 'var(--core-text-primary)';
+	}, [iconColor]);
 
-	// resolve which icon should be shown for the current selection state
 	const iconName = useMemo(
-		() => (toggleIcon && isSelected ? checkedIcon : 'circle'),
-		[toggleIcon, isSelected, checkedIcon],
+		() => (isSelected ? checkedIcon : icon),
+		[isSelected, checkedIcon, icon],
 	);
 
-	// resolve wrapper flex behavior from list and wrap settings
 	const setFlex = useMemo(() => {
 		if (list) return 'unset';
 		return wrap ? '40%' : '1';
 	}, [list, wrap]);
 
-	// compose CSS custom properties for layout and framing
 	const cssVars = useMemo(() => {
 		return {
 			'--rb-max-width': wrap ? '50%' : '100%',
@@ -87,21 +94,24 @@ export const RadioButton = React.memo((props: RadioButtonProps) => {
 			onClick={handleChange}
 			role={controlType}
 			tabIndex={tabIndex}
-			aria-label={option.title}
+			aria-label={setAriaLabel}
 			aria-checked={isSelected}
 			{...rest}
 		>
-			{option.icon && !hideRadio && (
+			{!hideRadio && (
 				<div className={css.radioIcon}>
 					<Icon name={iconName} strokeColor={setIconColor} size={20} />
 				</div>
 			)}
 			<div className={css.radioContent}>
-				<div className={css.radioTitle}>{option.title}</div>
-				{option.description && option.description !== '' && (
-					<div className={css.radioSummary}>{option.description}</div>
-				)}
+				<div className={css.radioTitle}>{label ?? children}</div>
 			</div>
 		</button>
 	);
-});
+}
+
+RadioButtonComponent.displayName = 'RadioButton';
+
+export const RadioButton = React.memo(RadioButtonComponent) as <T = string>(
+	props: RadioButtonProps<T>,
+) => React.JSX.Element;

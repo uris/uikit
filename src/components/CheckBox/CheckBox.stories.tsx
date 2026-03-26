@@ -43,7 +43,22 @@ export const Default: StoryObj<typeof CheckBox> = {
 	},
 };
 
+export const DefaultCheckBox: StoryObj<typeof CheckBox> = {
+	tags: ['tests'],
+	render: (args) => {
+		return (
+			<FlexDiv absolute justify={'center'} alignItems={'center'} padding={64}>
+				<CheckBox {...args} />
+			</FlexDiv>
+		);
+	},
+	play: async ({ canvasElement, args }) => {
+		await runCheckBoxPlay({ canvasElement, args });
+	},
+};
+
 export const Partial: StoryObj<typeof CheckBox> = {
+	tags: ['tests'],
 	args: {
 		...meta.args,
 		checked: 'mixed',
@@ -58,6 +73,7 @@ export const Partial: StoryObj<typeof CheckBox> = {
 };
 
 export const Disabled: StoryObj<typeof CheckBox> = {
+	tags: ['tests'],
 	args: {
 		...meta.args,
 		disabled: true,

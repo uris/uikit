@@ -51,18 +51,20 @@ export const FileList = React.memo((props: FileListProps) => {
 		maxWidth,
 		minWidth,
 		direction = 'row',
-		padding,
-		gap = 10,
-		size = 's',
-		iconSize = 24,
-		bgColor,
-		canRemove = true,
+        padding,
+        gap = 10,
+        size = 's',
+        iconSize = 24,
+        backgroundColor,
+        bgColor,
+        canRemove = true,
 		...divAttributes
 	} = props;
 
-	const { id: divId, className, style, ...rest } = divAttributes;
-	const divStyle = style ?? ({} as React.CSSProperties);
-	const divClass = className ? ` ${className}` : '';
+    const { id: divId, className, style, ...rest } = divAttributes;
+    const divStyle = style ?? ({} as React.CSSProperties);
+    const divClass = className ? ` ${className}` : '';
+    const resolvedBackgroundColor = backgroundColor ?? bgColor;
 
 	// derive display metadata from the raw file name
 	const fileNameToFileItem = useCallback((fileName: string) => {
@@ -128,9 +130,18 @@ export const FileList = React.memo((props: FileListProps) => {
 			'--file-padding': padding ? setStyle(padding) : '4px 4px 4px 2px',
 			'--file-icon-size': setStyle(iconSize),
 			'--file-overflow': direction === 'column' ? 'unset' : 'hidden',
-			'--file-bg-color': bgColor ?? 'var(--core-surface-secondary)',
-		} as React.CSSProperties;
-	}, [maxWidth, gap, direction, minWidth, padding, iconSize, bgColor]);
+            '--file-bg-color':
+                resolvedBackgroundColor ?? 'var(--core-surface-secondary)',
+        } as React.CSSProperties;
+    }, [
+        maxWidth,
+        gap,
+        direction,
+        minWidth,
+        padding,
+        iconSize,
+        resolvedBackgroundColor,
+    ]);
 
 	// compose per-file CSS custom properties for progress and error state
 	const fileCSSVars = useCallback((progress: string, error?: string) => {

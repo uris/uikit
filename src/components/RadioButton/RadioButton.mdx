@@ -1,7 +1,7 @@
-import {Meta, Unstyled} from '@storybook/addon-docs/blocks';
-import {FlexDiv} from '../FlexDiv';
+import { Meta, Unstyled } from '@storybook/addon-docs/blocks';
+import { FlexDiv } from '../FlexDiv';
 import * as RadioButtonStories from './RadioButton.stories';
-import {RenderSource} from '../../../documentation/_components/RenderSource/RenderSource';
+import { RenderSource } from '../../../documentation/_components/RenderSource/RenderSource';
 
 <Meta of={RadioButtonStories} />
 
@@ -9,82 +9,109 @@ import {RenderSource} from '../../../documentation/_components/RenderSource/Rend
     <FlexDiv width={"fill"} maxWidth={760} height={"auto"}>
         <Unstyled>
         # RadioButton
-        Renders a single radio option with label, checked state, and keyboard accessibility.
+        Renders a single radio or checkbox-style option with typed value support.
 
         ## Base element
         `HTMLButtonElement`
 
         ## Interface
-        `RadioButtonProps`
+        `RadioButtonProps<T = string>`
+
+        ## Related types
+        `RadioButtonOption<T = string>`
+
+        ## Typing
+        `RadioButton` is generic. The `value` prop uses the same `T` that comes back through `onChange`.
+
+        `onChange` receives that same typed value:
+
+        `(option: RadioButtonOption<T>, selected: boolean) => void`
 
         ## Props
-        <table style={{width: '100%'}}>
-          <colgroup>
-            <col style={{width: '1%'}} />
-            <col style={{width: '1%'}} />
-            <col style={{width: '1%'}} />
-            <col style={{width: '97%'}} />
-          </colgroup>
-          <thead>
-            <tr>
-              <th className={"left"}>Prop</th>
-              <th className={"left"}>Type</th>
-              <th className={"left"}>Default</th>
-              <th>Description</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr><td><code>controlType</code></td><td><code>{`'radio' | 'checkbox'`}</code></td><td><code>'radio'</code></td><td>Controls the ARIA role exposed by the component.</td></tr>
-            <tr><td><code>deselect</code></td><td><code>boolean</code></td><td><code>-</code></td><td>Boolean flag controlling `deselect`.</td></tr>
-            <tr><td><code>gap</code></td><td><code>number</code></td><td><code>6</code></td><td>Gap between the icon and the text content.</td></tr>
-            <tr><td><code>checkedIcon</code></td><td><code>{`'check circle' | 'circle fill'`}</code></td><td><code>'check circle'</code></td><td>Icon shown when the control is selected and `toggleIcon` is enabled.</td></tr>
-            <tr><td><code>hideRadio</code></td><td><code>boolean</code></td><td><code>-</code></td><td>Boolean flag controlling `hideRadio`.</td></tr>
-            <tr><td><code>iconColor</code></td><td><code>string</code></td><td><code>-</code></td><td>Color token/value for `iconColor`.</td></tr>
-            <tr><td><code>list</code></td><td><code>boolean</code></td><td><code>-</code></td><td>Boolean flag controlling `list`.</td></tr>
-            <tr><td><code>noFrame</code></td><td><code>boolean</code></td><td><code>-</code></td><td>Boolean flag controlling `noFrame`.</td></tr>
-            <tr><td><code>option</code></td><td><code>RadioButtonOption</code></td><td><code>-</code></td><td>Controls `option`.</td></tr>
-            <tr><td><code>selected</code></td><td><code>boolean</code></td><td><code>-</code></td><td>Boolean flag controlling `selected`.</td></tr>
-            <tr><td><code>tabIndex</code></td><td><code>number</code></td><td><code>-</code></td><td>Controls `tabIndex`.</td></tr>
-            <tr><td><code>toggleIcon</code></td><td><code>boolean</code></td><td><code>-</code></td><td>Boolean flag controlling `toggleIcon`.</td></tr>
-            <tr><td><code>wrap</code></td><td><code>boolean</code></td><td><code>-</code></td><td>Boolean flag controlling `wrap`.</td></tr>
-            <tr><td><code>...buttonAttributes</code></td><td><code>{`ButtonHTMLAttributes<HTMLButtonElement>`}</code></td><td><code>-</code></td><td>Native `button` props pass through (for example `id`, `data-testid`, `className`, `style`, `aria-*`, `disabled`).</td></tr>
-          </tbody>
+        <table style={{ width: '100%' }}>
+            <colgroup>
+                <col style={{ width: '1%' }} />
+                <col style={{ width: '1%' }} />
+                <col style={{ width: '1%' }} />
+                <col style={{ width: '97%' }} />
+            </colgroup>
+            <thead>
+                <tr>
+                    <th className={"left"}>Prop</th>
+                    <th className={"left"}>Type</th>
+                    <th className={"left"}>Default</th>
+                    <th>Description</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr><td><code>children</code></td><td><code>React.ReactNode</code></td><td><code>-</code></td><td>Fallback content rendered when <code>label</code> is not provided.</td></tr>
+                <tr><td><code>label</code></td><td><code>string</code></td><td><code>-</code></td><td>Visible label text.</td></tr>
+                <tr><td><code>fieldName</code></td><td><code>string</code></td><td><code>-</code></td><td>Logical field identifier included in the <code>onChange</code> payload.</td></tr>
+                <tr><td><code>value</code></td><td><code>T</code></td><td><code>-</code></td><td>Typed option value included in the <code>onChange</code> payload.</td></tr>
+                <tr><td><code>selected</code></td><td><code>boolean</code></td><td><code>false</code></td><td>Controlled selected state.</td></tr>
+                <tr><td><code>controlType</code></td><td><code>{`'radio' | 'checkbox'`}</code></td><td><code>'radio'</code></td><td>ARIA role applied to the button.</td></tr>
+                <tr><td><code>deselect</code></td><td><code>boolean</code></td><td><code>true</code></td><td>Whether clicking an already selected control can clear it.</td></tr>
+                <tr><td><code>tabIndex</code></td><td><code>number</code></td><td><code>0</code></td><td>Tab index applied to the root button.</td></tr>
+                <tr><td><code>wrap</code></td><td><code>boolean</code></td><td><code>false</code></td><td>Adjusts layout so the control can wrap within a multi-column group.</td></tr>
+                <tr><td><code>list</code></td><td><code>boolean</code></td><td><code>false</code></td><td>Uses list-style layout sizing rather than wrapped tile sizing.</td></tr>
+                <tr><td><code>hideRadio</code></td><td><code>boolean</code></td><td><code>false</code></td><td>Hides the icon while preserving the selection behavior.</td></tr>
+                <tr><td><code>icon</code></td><td><code>string</code></td><td><code>'circle'</code></td><td>Icon shown when the control is not selected.</td></tr>
+                <tr><td><code>checkedIcon</code></td><td><code>string</code></td><td><code>'check circle'</code></td><td>Icon shown when the control is selected.</td></tr>
+                <tr><td><code>iconColor</code></td><td><code>string</code></td><td><code>-</code></td><td>Explicit icon color override.</td></tr>
+                <tr><td><code>noFrame</code></td><td><code>boolean</code></td><td><code>true</code></td><td>Removes the framed button styling when enabled.</td></tr>
+                <tr><td><code>gap</code></td><td><code>number</code></td><td><code>6</code></td><td>Gap between the icon and label content.</td></tr>
+                <tr><td><code>onChange</code></td><td><code>{`(option: RadioButtonOption<T>, selected: boolean) => void`}</code></td><td><code>-</code></td><td>Called when the control toggles. Returns the resolved typed option payload.</td></tr>
+                <tr><td><code>...buttonAttributes</code></td><td><code>{`ButtonHTMLAttributes<HTMLButtonElement>`}</code></td><td><code>-</code></td><td>Standard button props passed through to the root element.</td></tr>
+            </tbody>
         </table>
 
-        ## Events
-        <table style={{width: '100%'}}>
-          <colgroup>
-            <col style={{width: '1%'}} />
-            <col style={{width: '99%'}} />
-          </colgroup>
-          <thead>
-            <tr>
-              <th className={"left"}>Event</th>
-              <th className={"left"}>Type</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr><td><code>onChange</code></td><td><code>{`(option: RadioButtonOption, state: boolean) => void`}</code></td></tr>
-          </tbody>
-        </table>
+        ## Notes
+        - The component is generic, so `value` and `onChange` stay typed when you use `RadioButton<T>`.
+        - `icon` is the unchecked icon and `checkedIcon` is the selected icon.
 
         ## Code Examples
         </Unstyled>
 
-        <RenderSource language={"tsx"}>
+        <RenderSource>
 ```
 import { RadioButton } from '@apple-pie/slice';
 
 export function RadioButtonExample() {
     return (
         <RadioButton
-            option={{ title: 'Email alerts', fieldName: 'alerts' }}
+            label="Email alerts"
+            fieldName="alerts"
+            value="email-alerts"
             selected={true}
-            onChange={(option, state) => console.log(option, state)}
+            onChange={(option, selected) => console.log(option, selected)}
             id="radiobutton-example"
             data-testid="radiobutton-example"
             className="custom-wrapper"
             style={{ marginTop: 8, maxWidth: 480 }}
+        />
+    );
+}
+```
+        </RenderSource>
+
+        <RenderSource>
+```
+import { RadioButton } from '@apple-pie/slice';
+
+type DeliveryValue = {
+    id: number;
+    method: 'email' | 'sms';
+};
+
+export function TypedRadioButtonExample() {
+    return (
+        <RadioButton<DeliveryValue>
+            label="Email"
+            fieldName="delivery"
+            value={{ id: 1, method: 'email' }}
+            onChange={(nextOption, selected) => {
+                console.log(nextOption.value?.method, selected);
+            }}
         />
     );
 }

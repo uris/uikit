@@ -21,33 +21,32 @@ export const TextArea = React.memo((props: TextAreaProps) => {
 		border = false,
 		borderRadius = 4,
 		padding = '16px 4px 16px 16px',
-		validate = false,
+		error = false,
 		resizable = true,
-		hasSend = false,
-		sendOffset = { bottom: 6, right: 6 },
-		sendSize = 36,
-		returnSubmits = false,
-		bgColor = undefined,
-		minWidth = undefined,
-		textSize = 'm',
+        hasSend = false,
+        sendOffset = { bottom: 10, right: 10 },
+        sendSize = 36,
+        returnSubmits = false,
+        backgroundColor,
+        bgColor = undefined,
+        minWidth = undefined,
+        textSize = 'm',
 		disabled = false,
 		submitClears = true,
 		onChange = () => null,
 		onFocus = () => null,
 		onBlur = () => null,
-		onValidate = () => null,
 		onSubmit = () => null,
 		onKeyDown = () => null,
 		...divAttributes
 	} = props;
 	const { id: divId, className, style, ...rest } = divAttributes;
-	const divStyle = style ?? ({} as React.CSSProperties);
-	const divClass = className ? ` ${className}` : '';
+    const divStyle = style ?? ({} as React.CSSProperties);
+    const divClass = className ? ` ${className}` : '';
+    const resolvedBackgroundColor = backgroundColor ?? bgColor;
 
 	const [isFocused, setIsFocused] = useState<boolean>(focused);
-	const [invalid, setInvalid] = useState<boolean>(false);
 	const [text, setText] = useState<string>(value);
-	const [initiated, setInitiated] = useState<boolean>(false);
 	const ref = useRef<HTMLTextAreaElement>(null);
 
 	// resize the textarea to fit its current content
@@ -56,18 +55,6 @@ export const TextArea = React.memo((props: TextAreaProps) => {
 		ref.current.style.height = 'auto';
 		ref.current.style.height = `${ref.current.scrollHeight}px`;
 	}, []);
-
-	// validate the current content and report the result upstream
-	const runValidation = useCallback(
-		(content: string): boolean => {
-			let valid = true;
-			if (validate && content.length < 1) valid = false;
-			if (!initiated) valid = true;
-			onValidate(valid);
-			return !valid;
-		},
-		[initiated, onValidate, validate],
-	);
 
 	// sync focus state from the controlled prop
 	useEffect(() => {
@@ -79,33 +66,26 @@ export const TextArea = React.memo((props: TextAreaProps) => {
 	}, [focused]);
 
 	// sync the textarea value from the controlled prop
-	useEffect(() => {
-		setText(value);
-		setInvalid(runValidation(value));
-	}, [value, runValidation]);
+	useEffect(() => setText(value), [value]);
 
 	// re-measure the textarea when the configured row count changes
-	// biome-ignore lint/correctness/useExhaustiveDependencies: update heigt on rows change
-	useEffect(() => {
-		handleResize();
-	}, [rows]);
+	// biome-ignore lint/correctness/useExhaustiveDependencies: update height on rows change
+	useEffect(() => handleResize(), [rows]);
 
 	// update local state and validation when the text changes
 	const handleChange = useCallback(
 		(content: string) => {
 			onChange(content);
 			setText(content);
-			setInvalid(runValidation(content));
 		},
-		[onChange, runValidation],
+		[onChange],
 	);
 
 	// mark the field as active and notify focus listeners
 	const handleFocus = useCallback(() => {
 		if (ref?.current) ref.current.focus();
-		setInitiated(true);
 		setIsFocused(true);
-		onFocus();
+		onFocus(ref.current?.value ?? '');
 	}, [onFocus]);
 
 	// commit the latest value and notify blur listeners
@@ -113,7 +93,7 @@ export const TextArea = React.memo((props: TextAreaProps) => {
 		(content: any) => {
 			handleChange(content);
 			setIsFocused(false);
-			onBlur();
+			onBlur(ref.current?.value ?? '');
 		},
 		[handleChange, onBlur],
 	);
@@ -153,16 +133,17 @@ export const TextArea = React.memo((props: TextAreaProps) => {
 	// resolve the current border color from focus and validation state
 	const setBorderColor = useMemo(() => {
 		if (isFocused) return 'var(--core-link-primary)';
-		if (validate && invalid) return 'var(--feedback-warning)';
+		if (error) return 'var(--feedback-warning)';
 		return border ? 'var(--core-outline-primary)' : 'transparent';
-	}, [isFocused, invalid, validate, border]);
+	}, [isFocused, error, border]);
 
 	// resolve the text size class for the textarea content
-	const textClassName = useMemo(() => {
-		if (textSize === 'l') return css.l;
-		if (textSize === 'm') return css.m;
-		return css.s;
-	}, [textSize]);
+    const textClassName = useMemo(() => {
+        if (textSize === 'xs') return css.xs;
+        if (textSize === 'l') return css.l;
+        if (textSize === 'm') return css.m;
+        return css.s;
+    }, [textSize]);
 
 	// compose CSS custom properties for layout, colors, and send button placement
 	const cssVars = useMemo(() => {
@@ -170,7 +151,8 @@ export const TextArea = React.memo((props: TextAreaProps) => {
 			'--ta-border-radius': `${borderRadius}px`,
 			'--ta-width': `${setStyleValue(width)}`,
 			'--ta-min-width': minWidth ? `${minWidth}px` : 'unset',
-			'--ta-bg-color': bgColor ?? 'var(--core-surface-secondary)',
+            '--ta-bg-color':
+                resolvedBackgroundColor ?? 'var(--core-surface-secondary)',
 			'--ta-border-color': setBorderColor,
 			'--ta-padding': `${setStyleValue(padding)}`,
 			'--ta-send-icon-offset-bottom': `${sendOffset.bottom}px`,
@@ -181,9 +163,9 @@ export const TextArea = React.memo((props: TextAreaProps) => {
 	}, [
 		width,
 		minWidth,
-		bgColor,
-		setBorderColor,
-		padding,
+        resolvedBackgroundColor,
+        setBorderColor,
+        padding,
 		sendOffset,
 		sendSize,
 		setStyleValue,

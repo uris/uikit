@@ -8,15 +8,13 @@ import { fn } from 'storybook/test';
 const options: RadioButtonOption[] = [
 	{
 		fieldName: 'option',
-		title: 'Option 1',
-		state: false,
-		icon: 'circle',
+		value: 'option1',
+		label: 'Option 1',
 	},
 	{
 		fieldName: 'option',
-		title: 'Option 2',
-		state: false,
-		icon: 'circle',
+		value: 'option2',
+		label: 'Option 2',
 	},
 ];
 
@@ -39,7 +37,7 @@ const meta: Meta<typeof RadioButtonList> = {
 		noFrame: true,
 		toggleIcon: true,
 		iconColor: undefined,
-		checkedIcon: 'circle check',
+		checkedIcon: 'check circle',
 		iconSelectedColor: undefined,
 		onChange: fn(),
 	},
@@ -62,12 +60,31 @@ export const Default: StoryObj<typeof RadioButtonList> = {
 			</FlexDiv>
 		);
 	},
+};
+
+export const SingleSelect: StoryObj<typeof RadioButtonList> = {
+	tags: ['tests'],
+	render: (args) => {
+		return (
+			<FlexDiv
+				absolute
+				justify={'center'}
+				alignItems={'center'}
+				padding={64}
+				width={'fill'}
+				height={'fit'}
+			>
+				<RadioButtonList {...args} />
+			</FlexDiv>
+		);
+	},
 	play: async ({ canvasElement, args }) => {
 		await runRadioButtonListPlay({ canvasElement, args });
 	},
 };
 
 export const MultiSelect: StoryObj<typeof RadioButtonList> = {
+	tags: ['tests'],
 	args: {
 		...meta.args,
 		multiSelect: true,

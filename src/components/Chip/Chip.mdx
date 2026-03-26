@@ -37,7 +37,7 @@ import {Spacer} from "../Spacer";
           <tbody>
             <tr><td><code>children</code></td><td><code>React.ReactNode</code></td><td><code>-</code></td><td>Optional custom content rendered instead of <code>label</code>.</td></tr>
             <tr><td><code>label</code></td><td><code>string</code></td><td><code>-</code></td><td>Text rendered when <code>children</code> is not provided.</td></tr>
-            <tr><td><code>labelSize</code></td><td><code>{`'s' | 'm' | 'l'`}</code></td><td><code>'m'</code></td><td>Typography size applied to the chip label.</td></tr>
+            <tr><td><code>labelSize</code></td><td><code>{`'xs' | 's' | 'm' | 'l'`}</code></td><td><code>'m'</code></td><td>Typography size applied to the chip label.</td></tr>
             <tr><td><code>labelColor</code></td><td><code>string</code></td><td><code>'var(--core-text-primary)'</code></td><td>Label color in the default state.</td></tr>
             <tr><td><code>labelColorHover</code></td><td><code>string</code></td><td><code>'var(--core-text-special)'</code></td><td>Label color while the chip is hovered.</td></tr>
             <tr><td><code>icon</code></td><td><code>string</code></td><td><code>-</code></td><td>Optional icon name to render alongside the label.</td></tr>
@@ -45,18 +45,18 @@ import {Spacer} from "../Spacer";
             <tr><td><code>iconPosition</code></td><td><code>{`'left' | 'right'`}</code></td><td><code>'left'</code></td><td>Controls whether the icon renders before or after the label.</td></tr>
             <tr><td><code>iconColor</code></td><td><code>string</code></td><td><code>'var(--core-text-primary)'</code></td><td>Icon color in the default state.</td></tr>
             <tr><td><code>iconColorHover</code></td><td><code>string</code></td><td><code>'var(--core-text-special)'</code></td><td>Icon color while the chip is hovered.</td></tr>
-            <tr><td><code>bgColor</code></td><td><code>string</code></td><td><code>'transparent'</code></td><td>Background color in the default state.</td></tr>
-            <tr><td><code>bgColorHover</code></td><td><code>string</code></td><td><code>'var(--core-surface-secondary)'</code></td><td>Background color while the chip is hovered.</td></tr>
+            <tr><td><code>backgroundColor</code></td><td><code>string</code></td><td><code>'transparent'</code></td><td>Background color in the default state.</td></tr>
+            <tr><td><code>backgroundColorHover</code></td><td><code>string</code></td><td><code>'var(--core-surface-secondary)'</code></td><td>Background color while the chip is hovered.</td></tr>
             <tr><td><code>disabled</code></td><td><code>boolean</code></td><td><code>false</code></td><td>Disables click and mouse-down handlers and applies disabled colors.</td></tr>
             <tr><td><code>focused</code></td><td><code>boolean</code></td><td><code>false</code></td><td>Focus-state flag exposed by the API.</td></tr>
             <tr><td><code>tooltip</code></td><td><code>string</code></td><td><code>-</code></td><td>Tooltip label emitted through <code>onToolTip</code> on hover.</td></tr>
-            <tr><td><code>borderSize</code></td><td><code>number</code></td><td><code>1</code></td><td>Border width in pixels.</td></tr>
+            <tr><td><code>borderWidth</code></td><td><code>number</code></td><td><code>1</code></td><td>Border width in pixels.</td></tr>
             <tr><td><code>borderColor</code></td><td><code>string</code></td><td><code>'var(--core-text-primary)'</code></td><td>Border color in the default state.</td></tr>
             <tr><td><code>borderColorHover</code></td><td><code>string</code></td><td><code>'var(--core-text-special)'</code></td><td>Border color while the chip is hovered.</td></tr>
             <tr><td><code>borderColorDisabled</code></td><td><code>string</code></td><td><code>'var(--core-text-disabled)'</code></td><td>Border color used when <code>disabled</code> is true.</td></tr>
             <tr><td><code>borderRadius</code></td><td><code>number</code></td><td><code>8</code></td><td>Corner radius in pixels.</td></tr>
             <tr><td><code>gap</code></td><td><code>number</code></td><td><code>4</code></td><td>Spacing between the icon and label in pixels.</td></tr>
-            <tr><td><code>paddingTops</code></td><td><code>number</code></td><td><code>8</code></td><td>Vertical padding in pixels.</td></tr>
+            <tr><td><code>paddingTop</code></td><td><code>number</code></td><td><code>8</code></td><td>Vertical padding in pixels.</td></tr>
             <tr><td><code>paddingSides</code></td><td><code>number</code></td><td><code>16</code></td><td>Horizontal padding in pixels.</td></tr>
             <tr><td><code>...divAttributes</code></td><td><code>{`HTMLAttributes<HTMLDivElement>`}</code></td><td><code>-</code></td><td>Native `div` props pass through (for example `id`, `data-testid`, `className`, `style`, `aria-*`).</td></tr>
           </tbody>

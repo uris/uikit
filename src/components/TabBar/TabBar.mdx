@@ -1,7 +1,7 @@
-import {Meta, Unstyled} from '@storybook/addon-docs/blocks';
-import {FlexDiv} from '../FlexDiv';
+import { Meta, Unstyled } from '@storybook/addon-docs/blocks';
+import { FlexDiv } from '../FlexDiv';
 import * as TabBarStories from './TabBar.stories';
-import {RenderSource} from '../../../documentation/_components/RenderSource/RenderSource';
+import { RenderSource } from '../../../documentation/_components/RenderSource/RenderSource';
 
 <Meta of={TabBarStories} />
 
@@ -17,79 +17,109 @@ import {RenderSource} from '../../../documentation/_components/RenderSource/Rend
         ## Interface
         `TabBarProps`
 
+        ## Related types
+        `TabOption`
+
         ## Props
-        <table style={{width: '100%'}}>
-          <colgroup>
-            <col style={{width: '1%'}} />
-            <col style={{width: '1%'}} />
-            <col style={{width: '1%'}} />
-            <col style={{width: '97%'}} />
-          </colgroup>
-          <thead>
-            <tr>
-              <th className={"left"}>Prop</th>
-              <th className={"left"}>Type</th>
-              <th className={"left"}>Default</th>
-              <th>Description</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr><td><code>border</code></td><td><code>boolean</code></td><td><code>-</code></td><td>Sizing/layout setting for `border`.</td></tr>
-            <tr><td><code>closeWidth</code></td><td><code>{`number | string`}</code></td><td><code>-</code></td><td>Sizing/layout setting for `closeWidth`.</td></tr>
-            <tr><td><code>disabled</code></td><td><code>boolean</code></td><td><code>-</code></td><td>Boolean flag controlling `disabled`.</td></tr>
-            <tr><td><code>hasClose</code></td><td><code>boolean</code></td><td><code>-</code></td><td>Boolean flag controlling `hasClose`.</td></tr>
-            <tr><td><code>height</code></td><td><code>{`number | string`}</code></td><td><code>-</code></td><td>Sizing/layout setting for `height`.</td></tr>
-            <tr><td><code>iconGap</code></td><td><code>number</code></td><td><code>-</code></td><td>Sizing/layout setting for `iconGap`.</td></tr>
-            <tr><td><code>iconSize</code></td><td><code>number</code></td><td><code>-</code></td><td>Sizing/layout setting for `iconSize`.</td></tr>
-            <tr><td><code>options</code></td><td><code>TabOption[]</code></td><td><code>-</code></td><td>Controls `options`.</td></tr>
-            <tr><td><code>padding</code></td><td><code>{`number | string`}</code></td><td><code>-</code></td><td>Sizing/layout setting for `padding`.</td></tr>
-            <tr><td><code>selected</code></td><td><code>number</code></td><td><code>-</code></td><td>Controls `selected`.</td></tr>
-            <tr><td><code>selectedValue</code></td><td><code>string</code></td><td><code>-</code></td><td>Text/value for `selectedValue`.</td></tr>
-            <tr><td><code>tabGap</code></td><td><code>number</code></td><td><code>-</code></td><td>Sizing/layout setting for `tabGap`.</td></tr>
-            <tr><td><code>tabWidth</code></td><td><code>{`'min-content' | 'distribute' | number`}</code></td><td><code>-</code></td><td>Sizing/layout setting for `tabWidth`.</td></tr>
-            <tr><td><code>underline</code></td><td><code>boolean</code></td><td><code>-</code></td><td>Boolean flag controlling `underline`.</td></tr>
-            <tr><td><code>width</code></td><td><code>{`number | string`}</code></td><td><code>-</code></td><td>Sizing/layout setting for `width`.</td></tr>
-            <tr><td><code>...divAttributes</code></td><td><code>{`HTMLAttributes<HTMLDivElement>`}</code></td><td><code>-</code></td><td>Native `div` props pass through (for example `id`, `data-testid`, `className`, `style`, `aria-*`).</td></tr>
-          </tbody>
+        <table style={{ width: '100%' }}>
+            <colgroup>
+                <col style={{ width: '1%' }} />
+                <col style={{ width: '1%' }} />
+                <col style={{ width: '1%' }} />
+                <col style={{ width: '97%' }} />
+            </colgroup>
+            <thead>
+                <tr>
+                    <th className={"left"}>Prop</th>
+                    <th className={"left"}>Type</th>
+                    <th className={"left"}>Default</th>
+                    <th>Description</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr><td><code>options</code></td><td><code>TabOption[]</code></td><td><code>placeholderOptions</code></td><td>Tab definitions rendered by the bar.</td></tr>
+                <tr><td><code>selected</code></td><td><code>number</code></td><td><code>0</code></td><td>Controlled selected tab index.</td></tr>
+                <tr><td><code>selectedValue</code></td><td><code>string</code></td><td><code>-</code></td><td>Alternative controlled selection by matching <code>option.value</code>.</td></tr>
+                <tr><td><code>underline</code></td><td><code>boolean</code></td><td><code>true</code></td><td>Shows an underline on the selected tab.</td></tr>
+                <tr><td><code>border</code></td><td><code>boolean</code></td><td><code>true</code></td><td>Shows the bottom border for the tab bar.</td></tr>
+                <tr><td><code>height</code></td><td><code>{`number | string`}</code></td><td><code>'100%'</code></td><td>Overall bar height.</td></tr>
+                <tr><td><code>width</code></td><td><code>{`number | string`}</code></td><td><code>'100%'</code></td><td>Overall bar width.</td></tr>
+                <tr><td><code>tabWidth</code></td><td><code>{`'compact' | 'fill' | number`}</code></td><td><code>'fill'</code></td><td>Controls each tab width. Use <code>'compact'</code> for content-sized tabs, <code>'fill'</code> to distribute tabs, or a number for a fixed pixel width.</td></tr>
+                <tr><td><code>closeWidth</code></td><td><code>{`number | string`}</code></td><td><code>'auto'</code></td><td>Width reserved for the optional close action area.</td></tr>
+                <tr><td><code>padding</code></td><td><code>{`number | string`}</code></td><td><code>8</code></td><td>Horizontal and vertical tab padding.</td></tr>
+                <tr><td><code>iconSize</code></td><td><code>number</code></td><td><code>20</code></td><td>Icon size for tab icons and the close button.</td></tr>
+                <tr><td><code>iconGap</code></td><td><code>number</code></td><td><code>8</code></td><td>Gap between the icon and tab label.</td></tr>
+                <tr><td><code>tabGap</code></td><td><code>number</code></td><td><code>0</code></td><td>Gap between rendered tab options.</td></tr>
+                <tr><td><code>disabled</code></td><td><code>boolean</code></td><td><code>false</code></td><td>Disables interaction for all tabs.</td></tr>
+                <tr><td><code>hasClose</code></td><td><code>boolean</code></td><td><code>false</code></td><td>Shows a trailing close button.</td></tr>
+                <tr><td><code>onToolTip</code></td><td><code>{`(tip: ToolTip | null) => void`}</code></td><td><code>-</code></td><td>Receives tooltip state when a tab exposes a tooltip.</td></tr>
+                <tr><td><code>onChange</code></td><td><code>{`(index: number) => void`}</code></td><td><code>-</code></td><td>Called with the selected tab index.</td></tr>
+                <tr><td><code>onTabChange</code></td><td><code>{`(option: TabOption) => void`}</code></td><td><code>-</code></td><td>Called with the selected option object.</td></tr>
+                <tr><td><code>onClose</code></td><td><code>{`() => void`}</code></td><td><code>-</code></td><td>Called when the optional close button is pressed.</td></tr>
+                <tr><td><code>...divAttributes</code></td><td><code>{`HTMLAttributes<HTMLDivElement>`}</code></td><td><code>-</code></td><td>Standard div props passed through to the root element.</td></tr>
+            </tbody>
         </table>
 
-        ## Events
-        <table style={{width: '100%'}}>
-          <colgroup>
-            <col style={{width: '1%'}} />
-            <col style={{width: '99%'}} />
-          </colgroup>
-          <thead>
-            <tr>
-              <th className={"left"}>Event</th>
-              <th className={"left"}>Type</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr><td><code>onToolTip</code></td><td><code>{`(tip: ToolTip | null) => void`}</code></td></tr>
-            <tr><td><code>onChange</code></td><td><code>{`(index: number) => void`}</code></td></tr>
-            <tr><td><code>onTabChange</code></td><td><code>{`(option: TabOption) => void`}</code></td></tr>
-            <tr><td><code>onClose</code></td><td><code>{`() => void`}</code></td></tr>
-          </tbody>
-        </table>
+        ## TabOption
+        `TabOption` supports:
+
+        `name?: string`
+
+        `value?: any`
+
+        `icon?: string | null`
+
+        `toolTip?: string`
+
+        `count?: number`
+
+        `component?: any`
+
+        ## Notes
+        - `selectedValue` takes precedence when it matches an option value. Otherwise the component falls back to `selected`.
+        - `tabWidth="fill"` makes tabs flex across the available space.
+        - `tabWidth="compact"` makes each tab size to its content.
+        - `tabWidth={number}` applies a fixed pixel width to each tab.
 
         ## Code Examples
         </Unstyled>
 
-        <RenderSource language={"tsx"}>
+        <RenderSource>
 ```
 import { TabBar } from '@apple-pie/slice';
 
 export function TabBarExample() {
     return (
         <TabBar
-            options={[{ name: 'Overview', value: 'overview' }, { name: 'Settings', value: 'settings' }]}
+            options={[
+                { name: 'Overview', value: 'overview' },
+                { name: 'Settings', value: 'settings' },
+            ]}
             selected={0}
             onTabChange={(option) => console.log(option)}
             id="tabbar-example"
             data-testid="tabbar-example"
             className="custom-wrapper"
             style={{ marginTop: 8, maxWidth: 480 }}
+        />
+    );
+}
+```
+        </RenderSource>
+
+        <RenderSource>
+```
+import { TabBar } from '@apple-pie/slice';
+
+export function FixedWidthTabBarExample() {
+    return (
+        <TabBar
+            tabWidth={200}
+            options={[
+                { name: 'Light', value: 'light', icon: 'circle' },
+                { name: 'Dark', value: 'dark', icon: 'target' },
+            ]}
+            selectedValue="dark"
         />
     );
 }

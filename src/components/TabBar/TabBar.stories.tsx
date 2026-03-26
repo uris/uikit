@@ -8,6 +8,12 @@ import { expect, fn } from 'storybook/test';
 const meta: Meta<typeof TabBar> = {
 	title: 'Components/TabBar',
 	component: TabBar,
+	argTypes: {
+		tabWidth: {
+			control: { type: 'radio' },
+			options: ['fill', 'compact'],
+		},
+	},
 	args: {
 		options: placeholderOptions,
 		selected: 0,
@@ -22,7 +28,7 @@ const meta: Meta<typeof TabBar> = {
 		disabled: false,
 		hasClose: false,
 		closeWidth: 'auto',
-		tabWidth: 'distribute',
+		tabWidth: 'fill',
 		onChange: fn(),
 		onTabChange: fn(),
 		onClose: fn(),
@@ -40,12 +46,24 @@ export const Default: StoryObj<typeof TabBar> = {
 			</FlexDiv>
 		);
 	},
+};
+
+export const DefaultTabBar: StoryObj<typeof TabBar> = {
+	tags: ['tests'],
+	render: (args) => {
+		return (
+			<FlexDiv absolute justify={'center'} alignItems={'center'} padding={64}>
+				<TabBar {...args} />
+			</FlexDiv>
+		);
+	},
 	play: async ({ canvasElement, args }) => {
 		await runTabBarPlay({ canvasElement, args });
 	},
 };
 
 export const WithClose: StoryObj<typeof TabBar> = {
+	tags: ['tests'],
 	args: {
 		...meta.args,
 		hasClose: true,
@@ -57,6 +75,7 @@ export const WithClose: StoryObj<typeof TabBar> = {
 };
 
 export const SelectedByValue: StoryObj<typeof TabBar> = {
+	tags: ['tests'],
 	args: {
 		...meta.args,
 		selectedValue: 'Option 2',

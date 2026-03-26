@@ -23,7 +23,7 @@ export const TabBar = React.memo((props: TabBarProps) => {
 		underline = true,
 		height = '100%',
 		width = '100%',
-		tabWidth = 'distribute',
+		tabWidth = 'fill',
 		padding = 8,
 		iconSize = 20,
 		iconGap = 8,
@@ -214,7 +214,7 @@ const Option = React.memo(
 			disabled = false,
 			showToolTip = null,
 			underline = true,
-			tabWidth = 'distribute',
+			tabWidth = 'fill',
 			count = 0,
 			onKeyDown = () => null,
 			buttonRef,
@@ -260,14 +260,14 @@ const Option = React.memo(
 
 		// resolve the option width mode
 		const setTabWidth = useMemo(() => {
-			if (tabWidth === 'min-content') return 'min-content';
-			if (tabWidth === 'distribute') return 'unset';
+			if (tabWidth === 'compact') return 'min-content';
+			if (tabWidth === 'fill') return 'unset';
 			return `${tabWidth}px`;
 		}, [tabWidth]);
 
 		// resolve the option flex mode
 		const setTabFlex = useMemo(() => {
-			if (tabWidth === 'distribute') return '1';
+			if (tabWidth === 'fill') return '1';
 			return 'unset';
 		}, [tabWidth]);
 

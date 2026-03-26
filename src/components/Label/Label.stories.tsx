@@ -26,18 +26,33 @@ export const Default: StoryObj<typeof Label> = {
 			</FlexDiv>
 		);
 	},
-	play: async ({ canvasElement, args }) => {
-		await runLabelPlay({ canvasElement, args });
+};
+
+export const Button: StoryObj<typeof Label> = {
+	render: (args) => {
+		return (
+			<FlexDiv absolute justify={'center'} alignItems={'center'} padding={64}>
+				<Label {...args} onClick={fn()} />
+			</FlexDiv>
+		);
 	},
 };
 
+// *** TESTS ONLY *** //
 export const ButtonLabel: StoryObj<typeof Label> = {
+	tags: ['tests'],
 	args: {
 		...meta.args,
 		label: 'Button Label',
 		onClick: fn(),
 	},
-	render: Default.render,
+	render: (args) => {
+		return (
+			<FlexDiv absolute justify={'center'} alignItems={'center'} padding={64}>
+				<Label {...args} />
+			</FlexDiv>
+		);
+	},
 	play: async ({ canvasElement, args }) => {
 		await runLabelPlay({ canvasElement, args });
 	},

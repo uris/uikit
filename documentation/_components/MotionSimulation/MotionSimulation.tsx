@@ -74,7 +74,7 @@ export function MotionSimulation(props: Readonly<MotionSimulationProps>) {
 				</span>
 			</div>
 			<div className={css.controls}>
-				<Label border={0}>Drag to adjust duration:</Label>
+				<Label borderSize={0}>Drag to adjust duration:</Label>
 				<Slider
 					scaleMin={0}
 					scaleMax={5}

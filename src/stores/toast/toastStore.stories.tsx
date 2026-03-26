@@ -54,6 +54,8 @@ export const Demo: StoryObj<typeof Toast> = {
 					icon={'home'}
 					tooltip={'Go Home'}
 					onClick={() => handleToast('Thank you for clicking!')}
+					toggle={false}
+					hover={true}
 				/>
 				<Toast
 					{...args}

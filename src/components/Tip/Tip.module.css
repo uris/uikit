@@ -1,15 +1,19 @@
 .wrapper {
-	composes: rowStart from "../../utils/styling/flexBox.module.css";
-	padding: var(--tooltip-padding) !important;
-	position: fixed;
+    composes: rowStart from "../../utils/styling/flexBox.module.css";
+    padding: var(--tooltip-padding) !important;
+    position: fixed;
 	border: var(--tooltip-border);
 	border-radius: var(--tooltip-border-radius);
 	background: var(--tooltip-background);
-	z-index: var(--elevation-describe);
+    z-index: var(--elevation-describe);
+}
+
+.xs {
+    composes: body-xs-regular from "../../utils/styling/type.module.css";
 }
 
 .s {
-	composes: body-s-regular from "../../utils/styling/type.module.css";
+    composes: body-s-regular from "../../utils/styling/type.module.css";
 }
 
 .m {

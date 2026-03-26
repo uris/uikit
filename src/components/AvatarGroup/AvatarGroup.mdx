@@ -34,10 +34,10 @@ import {RenderSource} from '../../../documentation/_components/RenderSource/Rend
             </tr>
           </thead>
           <tbody>
-            <tr><td><code>avatars</code></td><td><code>AvatarInfo[] | null</code></td><td><code>[]</code></td><td>List of avatar records rendered in order. Each item supports <code>first</code>, <code>last</code>, <code>email</code>, <code>image</code>, <code>avatar</code>, <code>color</code>, and <code>bgColor</code>.</td></tr>
+            <tr><td><code>avatars</code></td><td><code>AvatarInfo[] | null</code></td><td><code>[]</code></td><td>List of avatar records rendered in order. Each item supports <code>first</code>, <code>last</code>, <code>email</code>, <code>image</code>, <code>avatar</code>, <code>textColor</code>, and <code>backgroundColor</code>.</td></tr>
             <tr><td><code>borderColor</code></td><td><code>string</code></td><td><code>undefined</code></td><td>Optional inner border color override passed to each child avatar.</td></tr>
             <tr><td><code>borderColorHover</code></td><td><code>string</code></td><td><code>undefined</code></td><td>Optional hover border color override passed to each child avatar.</td></tr>
-            <tr><td><code>borderSize</code></td><td><code>number</code></td><td><code>3</code></td><td>Inner border width applied to each child avatar.</td></tr>
+            <tr><td><code>borderWidth</code></td><td><code>number</code></td><td><code>3</code></td><td>Inner border width applied to each child avatar.</td></tr>
             <tr><td><code>gap</code></td><td><code>number</code></td><td><code>0</code></td><td>Additional spacing between avatar wrappers.</td></tr>
             <tr><td><code>margin</code></td><td><code>number</code></td><td><code>0</code></td><td>Outer margin value for the group layout token.</td></tr>
             <tr><td><code>overlap</code></td><td><code>number</code></td><td><code>8</code></td><td>Horizontal overlap amount between adjacent avatars. Positive values create tighter stacking.</td></tr>
@@ -68,7 +68,7 @@ import {RenderSource} from '../../../documentation/_components/RenderSource/Rend
         ## Code Examples
         </Unstyled>
 
-        <RenderSource language={"tsx"}>
+        <RenderSource>
 ```
 import { AvatarGroup } from '@apple-pie/slice';
 
@@ -83,7 +83,7 @@ const avatars = [
         first: 'Jane',
         last: 'Appleseed',
         email: 'jane@email.com',
-        bgColor: 'var(--core-surface-tertiary)',
+        backgroundColor: 'var(--core-surface-tertiary)',
     },
 ];
 
@@ -93,7 +93,7 @@ export function TeamAvatars() {
             avatars={avatars}
             size={38}
             overlap={8}
-            borderSize={3}
+            borderWidth={3}
             outerBorderSize={3}
         />
     );
@@ -101,7 +101,7 @@ export function TeamAvatars() {
 ```
         </RenderSource>
 
-        <RenderSource language={"tsx"}>
+        <RenderSource>
 ```
 import { AvatarGroup } from '@apple-pie/slice';
 
@@ -118,7 +118,7 @@ export function CompactGroup() {
             size={28}
             overlap={10}
             gap={0}
-            borderSize={1}
+            borderWidth={1}
             outerBorderSize={2}
             id="compact-avatar-group"
             data-testid="compact-avatar-group"

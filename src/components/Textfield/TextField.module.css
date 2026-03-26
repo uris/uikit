@@ -2,6 +2,7 @@
 	position: relative;
 	composes: rowStart from "../../utils/styling/flexBox.module.css";
 	padding: var(--tf-padding) !important;
+	padding-right: var(--tf-padding-right) !important;
 	gap: 8px;
 	overflow: visible;
 	width: var(--tf-width);
@@ -68,22 +69,21 @@
 }
 
 .clearButton {
-	position: absolute;
-	composes: row from "../../utils/styling/flexBox.module.css";
-	right: 8px;
-	top: 50%;
-	border: 0;
-	transform: translateY(-50%);
-	background: transparent;
+    composes: row from "../../utils/styling/flexBox.module.css";
+    border: 0;
+    background: transparent;
 	appearance: none;
 	-webkit-appearance: none;
 	outline: none;
-	cursor: pointer;
-	z-index: 1;
+    cursor: pointer;
+}
+
+.xs {
+    composes: body-xs-regular from "../../utils/styling/type.module.css";
 }
 
 .s {
-	composes: body-s-regular from "../../utils/styling/type.module.css";
+    composes: body-s-regular from "../../utils/styling/type.module.css";
 }
 
 .m {
