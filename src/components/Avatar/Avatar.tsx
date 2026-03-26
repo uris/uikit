@@ -16,16 +16,19 @@ import type { AvatarProps } from './_types';
 
 export const Avatar = React.memo((props: AvatarProps) => {
 	const {
-		email,
-		name,
-		image = '',
-		borderSize = 0,
-		color = undefined,
-		borderColor = undefined,
-		borderColorHover = undefined,
-		outerBorderSize,
-		outerBorderColor,
-		bgColor = undefined,
+        email,
+        name,
+        image = '',
+        textColor,
+        borderWidth,
+        borderSize = 0,
+        color = undefined,
+        borderColor = undefined,
+        borderColorHover = undefined,
+        outerBorderSize,
+        outerBorderColor,
+        backgroundColor,
+        bgColor = undefined,
 		onClick = undefined,
 		onKeyDown = undefined,
 		fontSize = undefined,
@@ -36,10 +39,13 @@ export const Avatar = React.memo((props: AvatarProps) => {
 		...divAttributes
 	} = props;
 	const { id: divId, className, style, ...rest } = divAttributes;
-	const divStyle = style ?? ({} as React.CSSProperties);
-	const divClass = className ? ` ${className}` : '';
-	const ref = useRef<HTMLDivElement>(null);
-	const [textSize, setTextSize] = useState<number | string>('inherit');
+    const divStyle = style ?? ({} as React.CSSProperties);
+    const divClass = className ? ` ${className}` : '';
+    const ref = useRef<HTMLDivElement>(null);
+    const [textSize, setTextSize] = useState<number | string>('inherit');
+    const resolvedTextColor = textColor ?? color;
+    const resolvedBorderWidth = borderWidth ?? borderSize;
+    const resolvedBackgroundColor = backgroundColor ?? bgColor;
 
 	// derive the fallback initials shown when no image is rendered
 	const initials = useMemo(() => {
@@ -123,9 +129,10 @@ export const Avatar = React.memo((props: AvatarProps) => {
 		return {
 			'--avatar-size': setStyle(size),
 			'--avatar-frame': setStyle(frame),
-			'--avatar-border': `${borderSize}px`,
-			'--avatar-color': color ?? 'var(--core-text-primary)',
-			'--avatar-bg-color': bgColor ?? 'var(--core-surface-secondary)',
+            '--avatar-border': `${resolvedBorderWidth}px`,
+            '--avatar-color': resolvedTextColor ?? 'var(--core-text-primary)',
+            '--avatar-bg-color':
+                resolvedBackgroundColor ?? 'var(--core-surface-secondary)',
 			'--avatar-border-color': borderColor ?? 'var(--core-outline-primary)',
 			'--avatar-border-color-hover':
 				borderColorHover ?? 'var(--core-outline-special)',
@@ -138,11 +145,11 @@ export const Avatar = React.memo((props: AvatarProps) => {
 	}, [
 		size,
 		frame,
-		borderSize,
-		color,
-		bgColor,
-		borderColor,
-		borderColorHover,
+        resolvedBorderWidth,
+        resolvedTextColor,
+        resolvedBackgroundColor,
+        borderColor,
+        borderColorHover,
 		bgImage,
 		textSize,
 		outerBorderSize,

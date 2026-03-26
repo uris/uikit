@@ -10,6 +10,7 @@ const meta: Meta<typeof TextField> = {
 	args: {
 		name: 'text_field',
 		value: '',
+		size: { width: '50%', height: 'auto' },
 		borderType: 'box',
 		textSize: 'm',
 		labelSize: 'm',
@@ -35,12 +36,24 @@ export const Default: StoryObj<typeof TextField> = {
 			</FlexDiv>
 		);
 	},
+};
+
+export const DefaultTextField: StoryObj<typeof TextField> = {
+	tags: ['tests'],
+	render: (args) => {
+		return (
+			<FlexDiv absolute justify={'center'} alignItems={'center'} padding={64}>
+				<TextField {...args} />
+			</FlexDiv>
+		);
+	},
 	play: async ({ canvasElement, args }) => {
 		await runTextFieldPlay({ canvasElement, args });
 	},
 };
 
 export const PasswordWithAction: StoryObj<typeof TextField> = {
+	tags: ['tests'],
 	args: {
 		...meta.args,
 		placeholder: 'Enter password',

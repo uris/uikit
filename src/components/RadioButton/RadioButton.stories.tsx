@@ -4,23 +4,21 @@ import { RadioButton } from 'src/components/RadioButton/RadioButton';
 import { runRadioButtonPlay } from 'src/components/playHelpers';
 import { fn } from 'storybook/test';
 
+type RadioValue = { id: string; name: string };
+const value = { id: '123', name: 'Uris' };
+
 const meta: Meta<typeof RadioButton> = {
 	title: 'Components/RadioButton',
 	component: RadioButton,
 	args: {
-		option: {
-			fieldName: 'option',
-			title: 'Option',
-			state: false,
-			icon: 'circle',
-		},
+		fieldName: 'option',
+		label: 'Option',
+		value: undefined,
 		selected: false,
 		deselect: true,
-		tabIndex: 1,
 		wrap: false,
 		list: true,
 		hideRadio: false,
-		toggleIcon: true,
 		noFrame: true,
 		iconColor: undefined,
 		checkedIcon: 'check circle',
@@ -32,6 +30,7 @@ export default meta;
 
 export const Default: StoryObj<typeof RadioButton> = {
 	render: (args) => {
+		const value = { id: '123', name: 'Uris' };
 		return (
 			<FlexDiv
 				absolute
@@ -42,11 +41,34 @@ export const Default: StoryObj<typeof RadioButton> = {
 				height={'fit'}
 				padding={64}
 			>
-				<RadioButton {...args} />
+				<RadioButton<RadioValue>
+					{...args}
+					value={value}
+					onChange={(o, s) => console.log(o.value?.name, s)}
+				/>
+			</FlexDiv>
+		);
+	},
+};
+
+export const RadioButtonTest: StoryObj<typeof RadioButton> = {
+	tags: ['tests'],
+	render: (args) => {
+		return (
+			<FlexDiv
+				absolute
+				direction={'row'}
+				justify={'center'}
+				alignItems={'center'}
+				width={'fill'}
+				height={'fit'}
+				padding={64}
+			>
+				<RadioButton<RadioValue> {...args} value={value} />
 			</FlexDiv>
 		);
 	},
 	play: async ({ canvasElement, args }) => {
-		await runRadioButtonPlay({ canvasElement, args });
+		await runRadioButtonPlay({ canvasElement, args: { ...args, value } });
 	},
 };

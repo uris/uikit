@@ -10,17 +10,19 @@ export const ErrorSummary = React.memo((props: ErrorSummaryProps) => {
 	const { current } = useTheme();
 	const warning = current.colors['feedback-warning'];
 	const bg = addOpacity(warning, 0.1);
-	const {
-		entries,
-		textSize = 'm',
-		textColor = warning,
-		bgColor = bg,
-		autoNumber = true,
-		...divAttributes
-	} = props;
-	const { id: divId, className, style, ...rest } = divAttributes;
-	const divStyle = style ?? ({} as React.CSSProperties);
-	const divClass = className ? ` ${className}` : '';
+    const {
+        entries,
+        textSize = 'm',
+        textColor = warning,
+        backgroundColor,
+        bgColor = bg,
+        autoNumber = true,
+        ...divAttributes
+    } = props;
+    const { id: divId, className, style, ...rest } = divAttributes;
+    const divStyle = style ?? ({} as React.CSSProperties);
+    const divClass = className ? ` ${className}` : '';
+    const resolvedBackgroundColor = backgroundColor ?? bgColor;
 
 	// define the open and close animation states for the summary panel
 	const variants = useMemo(
@@ -76,11 +78,11 @@ export const ErrorSummary = React.memo((props: ErrorSummaryProps) => {
 	}, [entries, autoNumber, renderMessages, textSize]);
 
 	const cssVars = useMemo(() => {
-		return {
-			'--error-text-color': textColor,
-			'--error-bg-color': bgColor,
-		} as React.CSSProperties;
-	}, [textColor, bgColor]);
+        return {
+            '--error-text-color': textColor,
+            '--error-bg-color': resolvedBackgroundColor,
+        } as React.CSSProperties;
+    }, [textColor, resolvedBackgroundColor]);
 
 	/* START.DEBUG */
 	useTrackRenders(props, 'ErrorSummary');

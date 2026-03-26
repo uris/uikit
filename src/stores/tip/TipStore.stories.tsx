@@ -44,6 +44,8 @@ export const Demo: StoryObj<typeof Tip> = {
 					icon={'home'}
 					tooltip={'Home Button'}
 					onToolTip={actions.push}
+					toggle={false}
+					hover={true}
 				/>
 				<Tip {...args} coords={coords} tip={tip} ref={tipRef} />
 			</FlexDiv>

@@ -37,11 +37,13 @@ const ButtonComponent = forwardRef<ButtonHandle, ButtonProps>(
 			iconSize = props.iconSize === undefined ? 20 : Number(props.iconSize),
 			width = 'min-content',
 			underline = false,
-			borderRadius = undefined,
-			iconColor = undefined,
-			bgColor = undefined,
-			bgColorDisabled = undefined,
-			labelColor = undefined,
+            borderRadius = undefined,
+            iconColor = undefined,
+            backgroundColor = undefined,
+            backgroundColorDisabled = undefined,
+            bgColor = undefined,
+            bgColorDisabled = undefined,
+            labelColor = undefined,
 			transition = undefined,
 			variants = undefined,
 			initial = undefined,
@@ -59,8 +61,11 @@ const ButtonComponent = forwardRef<ButtonHandle, ButtonProps>(
 			...divAttributes
 		} = props;
 		const { id: divId, className, style, ...rest } = divAttributes;
-		const divStyle = style ?? ({} as React.CSSProperties);
-		const divClass = className ? ` ${className}` : '';
+        const divStyle = style ?? ({} as React.CSSProperties);
+        const divClass = className ? ` ${className}` : '';
+        const resolvedBackgroundColor = backgroundColor ?? bgColor;
+        const resolvedBackgroundColorDisabled =
+            backgroundColorDisabled ?? bgColorDisabled;
 
 		const [btnState, setBtnState] = useState<'normal' | 'hover' | 'disabled'>(
 			state,
@@ -136,16 +141,17 @@ const ButtonComponent = forwardRef<ButtonHandle, ButtonProps>(
 				},
 				background: {
 					normal:
-						bgColor ||
+                        resolvedBackgroundColor ||
 						(destructive
 							? 'var(--feedback-warning)'
 							: 'var(--core-button-primary)'),
 					hover:
-						bgColor ||
+                        resolvedBackgroundColor ||
 						(destructive
 							? 'var(--feedback-warning)'
 							: 'var(--core-button-primary)'),
-					disabled: bgColorDisabled || 'var(--core-button-disabled)',
+                    disabled:
+                        resolvedBackgroundColorDisabled || 'var(--core-button-disabled)',
 				},
 				borderColor: {
 					normal: 'transparent',
@@ -164,9 +170,9 @@ const ButtonComponent = forwardRef<ButtonHandle, ButtonProps>(
 			labelColor,
 			destructive,
 			destructiveColor,
-			bgColor,
-			bgColorDisabled,
-			iconColor,
+            resolvedBackgroundColor,
+            resolvedBackgroundColorDisabled,
+            iconColor,
 		]);
 
 		// resolve color tokens for the outline button variant
@@ -179,9 +185,10 @@ const ButtonComponent = forwardRef<ButtonHandle, ButtonProps>(
 					disabled: iconColor || destructiveColor(true),
 				},
 				background: {
-					normal: bgColor || 'var(--core-surface-primary)',
-					hover: bgColor || 'var(--core-surface-primary)',
-					disabled: bgColorDisabled || 'var(--core-surface-primary)',
+                    normal: resolvedBackgroundColor || 'var(--core-surface-primary)',
+                    hover: resolvedBackgroundColor || 'var(--core-surface-primary)',
+                    disabled:
+                        resolvedBackgroundColorDisabled || 'var(--core-surface-primary)',
 				},
 				borderColor: {
 					normal: destructive
@@ -210,9 +217,9 @@ const ButtonComponent = forwardRef<ButtonHandle, ButtonProps>(
 			labelColor,
 			destructive,
 			destructiveColor,
-			bgColor,
-			bgColorDisabled,
-			iconColor,
+            resolvedBackgroundColor,
+            resolvedBackgroundColorDisabled,
+            iconColor,
 		]);
 
 		// resolve color tokens for the text button variant

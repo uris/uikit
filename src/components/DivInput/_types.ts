@@ -15,10 +15,12 @@ type DivInputBaseProps = {
 	focus?: boolean;
 	width?: number | string;
 	textAlign?: 'left' | 'center' | 'right';
-	clamp?: number;
-	padding?: string;
-	radius?: number;
-	bgColor?: string;
+    clamp?: number;
+    padding?: string;
+    borderRadius?: number;
+    radius?: number;
+    backgroundColor?: string;
+    bgColor?: string;
 };
 
 export type DivInputProps = Omit<

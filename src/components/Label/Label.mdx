@@ -45,9 +45,9 @@ import { RenderSource } from '../../../documentation/_components/RenderSource/Re
             <tbody>
                 <tr><td><code>children</code></td><td><code>React.ReactNode</code></td><td><code>-</code></td><td>Content rendered inside the label. Takes precedence over <code>label</code>.</td></tr>
                 <tr><td><code>label</code></td><td><code>string</code></td><td><code>-</code></td><td>Convenience text content when you do not need to pass children.</td></tr>
-                <tr><td><code>bgColor</code></td><td><code>LabelBackground | string</code></td><td><code>'transparent'</code></td><td>Background token or raw CSS color. Semantic enum values map to theme colors.</td></tr>
-                <tr><td><code>borderSize</code></td><td><code>number</code></td><td><code>1</code></td><td>Border width in pixels.</td></tr>
-                <tr><td><code>borderColor</code></td><td><code>string</code></td><td><code>'transparent'</code></td><td>Custom border color. Semantic <code>bgColor</code> values override this with matching theme borders.</td></tr>
+                <tr><td><code>backgroundColor</code></td><td><code>LabelBackground | string</code></td><td><code>'transparent'</code></td><td>Background token or raw CSS color. Semantic enum values map to theme colors.</td></tr>
+                <tr><td><code>borderWidth</code></td><td><code>number</code></td><td><code>1</code></td><td>Border width in pixels.</td></tr>
+                <tr><td><code>borderColor</code></td><td><code>string</code></td><td><code>'transparent'</code></td><td>Custom border color. Semantic <code>backgroundColor</code> values override this with matching theme borders.</td></tr>
                 <tr><td><code>borderRadius</code></td><td><code>number</code></td><td><code>4</code></td><td>Border radius in pixels.</td></tr>
                 <tr><td><code>padding</code></td><td><code>number | string</code></td><td><code>'4px 6px'</code></td><td>Custom padding. Number values are converted to pixel units.</td></tr>
                 <tr><td><code>textColor</code></td><td><code>string</code></td><td><code>'var(--core-text-primary)'</code></td><td>Text color override.</td></tr>
@@ -63,8 +63,8 @@ import { RenderSource } from '../../../documentation/_components/RenderSource/Re
         `red | yellow | green | blue | grey | lightGrey | white`
 
         ## Notes
-        - Semantic `bgColor` values map both the background and border color to theme tokens.
-        - Passing a custom CSS color string to `bgColor` uses that value directly as the background.
+        - Semantic `backgroundColor` values map both the background and border color to theme tokens.
+        - Passing a custom CSS color string to `backgroundColor` uses that value directly as the background.
         - `children` overrides `label` when both are provided.
 
         ## Code Examples
@@ -78,7 +78,7 @@ export function LabelExample() {
     return (
         <Label
             label="Connected"
-            bgColor={LabelBackground.green}
+            backgroundColor={LabelBackground.green}
             borderRadius={999}
             padding="4px 10px"
             textSize="s"
@@ -99,7 +99,7 @@ export function InteractiveLabelExample() {
     return (
         <Label
             label="Remove filter"
-            bgColor="var(--core-surface-secondary)"
+            backgroundColor="var(--core-surface-secondary)"
             borderColor="var(--core-outline-primary)"
             onClick={() => console.log('clicked')}
         />

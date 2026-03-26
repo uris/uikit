@@ -18,11 +18,13 @@ type ButtonBaseProps = {
 	tooltip?: string;
 	iconSize?: number;
 	borderRadius?: number;
-	iconColor?: string;
-	bgColor?: string;
-	bgColorDisabled?: string;
-	labelColor?: string;
-	labelSize?: 's' | 'm' | 'l';
+    iconColor?: string;
+    backgroundColor?: string;
+    backgroundColorDisabled?: string;
+    bgColor?: string;
+    bgColorDisabled?: string;
+    labelColor?: string;
+    labelSize?: 'xs' | 's' | 'm' | 'l';
 	transition?: Transition;
 	variants?: Variants;
 	initial?: string;

@@ -7,15 +7,18 @@ import css from './Tip.module.css';
 import { type PosCoords, type ToolTipProps, tipBasePos } from './_types';
 
 const TipBase = React.forwardRef<HTMLDivElement, ToolTipProps>((props, ref) => {
-	const {
-		tip,
-		size = 's',
-		bgColor,
-		color,
-		border = true,
-		borderColor,
-		padding,
-		radius,
+    const {
+        tip,
+        size = 's',
+        backgroundColor,
+        bgColor,
+        textColor,
+        color,
+        border = true,
+        borderColor,
+        padding,
+        borderRadius,
+        radius,
 		coords,
 		showDelay = 500,
 		hideDelay = 2500,
@@ -27,9 +30,12 @@ const TipBase = React.forwardRef<HTMLDivElement, ToolTipProps>((props, ref) => {
 	const divClass = className ? `${className}` : '';
 
 	const [pos, setPos] = useState<PosCoords>(tipBasePos);
-	const [ready, setReady] = useState<boolean>(false);
-	const [animate, setAnimate] = useState<boolean>(false);
-	const timer = useRef<ReturnType<typeof setTimeout> | null>(null);
+    const [ready, setReady] = useState<boolean>(false);
+    const [animate, setAnimate] = useState<boolean>(false);
+    const timer = useRef<ReturnType<typeof setTimeout> | null>(null);
+    const resolvedBackgroundColor = backgroundColor ?? bgColor;
+    const resolvedTextColor = textColor ?? color;
+    const resolvedBorderRadius = borderRadius ?? radius;
 
 	// position the tooltip after the show delay and clear it after the hide delay
 	useEffect(() => {
@@ -62,15 +68,23 @@ const TipBase = React.forwardRef<HTMLDivElement, ToolTipProps>((props, ref) => {
 	// compose CSS custom properties for tooltip styling
 	const cssVars = useMemo(() => {
 		return {
-			'--tooltip-padding': padding ?? '3px 6px',
-			'--tooltip-background': bgColor ?? 'var(--core-surface-secondary)',
-			'--tooltip-color': color ?? 'var(--core-text-primary)',
-			'--tooltip-border': border
-				? `1px solid ${borderColor ?? 'var(--core-outline-primary)'}`
-				: 'unset',
-			'--tooltip-border-radius': radius ?? '4px',
-		} as React.CSSProperties;
-	}, [padding, bgColor, color, border, borderColor, radius]);
+            '--tooltip-padding': padding ?? '3px 6px',
+            '--tooltip-background':
+                resolvedBackgroundColor ?? 'var(--core-surface-secondary)',
+            '--tooltip-color': resolvedTextColor ?? 'var(--core-text-primary)',
+            '--tooltip-border': border
+                ? `1px solid ${borderColor ?? 'var(--core-outline-primary)'}`
+                : 'unset',
+            '--tooltip-border-radius': resolvedBorderRadius ?? '4px',
+        } as React.CSSProperties;
+    }, [
+        padding,
+        resolvedBackgroundColor,
+        resolvedTextColor,
+        border,
+        borderColor,
+        resolvedBorderRadius,
+    ]);
 
 	// resolve inline coordinates from the current tooltip position
 	const coordStyle = useMemo(() => {

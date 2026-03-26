@@ -15,6 +15,7 @@
 	border-radius: 100%;
 	border: 0;
 	cursor: pointer;
+	outline: none;
 	transition: background var(--motion-water-duration) var(--motion-water) 0s;
 	&:hover {
 		background: var(--pager-colorHover);

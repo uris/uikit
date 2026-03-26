@@ -1,7 +1,7 @@
-import {Meta, Unstyled} from '@storybook/addon-docs/blocks';
-import {FlexDiv} from '../FlexDiv';
+import { Meta, Unstyled } from '@storybook/addon-docs/blocks';
+import { FlexDiv } from '../FlexDiv';
 import * as SwitchStories from './Switch.stories';
-import {RenderSource} from '../../../documentation/_components/RenderSource/RenderSource';
+import { RenderSource } from '../../../documentation/_components/RenderSource/RenderSource';
 
 <Meta of={SwitchStories} />
 
@@ -15,75 +15,96 @@ import {RenderSource} from '../../../documentation/_components/RenderSource/Rend
         `HTMLButtonElement`
 
         ## Interface
-        `SwitchProps`
+        `SwitchProps<T = string>`
+
+        ## Typing
+        `Switch` is generic. The `value` prop uses the same `T` that comes back through `onChange`.
+
+        `onChange` receives:
+
+        `(value?: T, state: boolean) => void`
 
         ## Props
-        <table style={{width: '100%'}}>
-          <colgroup>
-            <col style={{width: '1%'}} />
-            <col style={{width: '1%'}} />
-            <col style={{width: '1%'}} />
-            <col style={{width: '97%'}} />
-          </colgroup>
-          <thead>
-            <tr>
-              <th className={"left"}>Prop</th>
-              <th className={"left"}>Type</th>
-              <th className={"left"}>Default</th>
-              <th>Description</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr><td><code>bgColorOff</code></td><td><code>string</code></td><td><code>-</code></td><td>Color token/value for `bgColorOff`.</td></tr>
-            <tr><td><code>bgColorOn</code></td><td><code>string</code></td><td><code>-</code></td><td>Color token/value for `bgColorOn`.</td></tr>
-            <tr><td><code>height</code></td><td><code>number</code></td><td><code>-</code></td><td>Sizing/layout setting for `height`.</td></tr>
-            <tr><td><code>knobColor</code></td><td><code>string</code></td><td><code>-</code></td><td>Color token/value for `knobColor`.</td></tr>
-            <tr><td><code>padding</code></td><td><code>number</code></td><td><code>-</code></td><td>Sizing/layout setting for `padding`.</td></tr>
-            <tr><td><code>state</code></td><td><code>boolean</code></td><td><code>-</code></td><td>Boolean flag controlling `state`.</td></tr>
-            <tr><td><code>width</code></td><td><code>number</code></td><td><code>-</code></td><td>Sizing/layout setting for `width`.</td></tr>
-            <tr><td><code>...buttonAttributes</code></td><td><code>{`ButtonHTMLAttributes<HTMLButtonElement>`}</code></td><td><code>-</code></td><td>Native `button` props pass through (for example `id`, `data-testid`, `className`, `style`, `aria-*`, `disabled`).</td></tr>
-          </tbody>
+        <table style={{ width: '100%' }}>
+            <colgroup>
+                <col style={{ width: '1%' }} />
+                <col style={{ width: '1%' }} />
+                <col style={{ width: '1%' }} />
+                <col style={{ width: '97%' }} />
+            </colgroup>
+            <thead>
+                <tr>
+                    <th className={"left"}>Prop</th>
+                    <th className={"left"}>Type</th>
+                    <th className={"left"}>Default</th>
+                    <th>Description</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr><td><code>fieldName</code></td><td><code>string</code></td><td><code>-</code></td><td>Used as the accessible label fallback when no explicit aria label is provided.</td></tr>
+                <tr><td><code>state</code></td><td><code>boolean</code></td><td><code>false</code></td><td>Controlled checked state.</td></tr>
+                <tr><td><code>value</code></td><td><code>T</code></td><td><code>-</code></td><td>Typed value returned in the <code>onChange</code> payload.</td></tr>
+                <tr><td><code>height</code></td><td><code>number</code></td><td><code>22</code></td><td>Track height in pixels.</td></tr>
+                <tr><td><code>width</code></td><td><code>number</code></td><td><code>44</code></td><td>Track width in pixels.</td></tr>
+                <tr><td><code>padding</code></td><td><code>number</code></td><td><code>3</code></td><td>Inner track padding in pixels.</td></tr>
+                <tr><td><code>bgColorOff</code></td><td><code>string</code></td><td><code>'var(--core-text-disabled)'</code></td><td>Track background color when unchecked.</td></tr>
+                <tr><td><code>bgColorOn</code></td><td><code>string</code></td><td><code>'var(--feedback-positive)'</code></td><td>Track background color when checked.</td></tr>
+                <tr><td><code>knobColor</code></td><td><code>string</code></td><td><code>'var(--core-surface-primary)'</code></td><td>Knob color.</td></tr>
+                <tr><td><code>onChange</code></td><td><code>{`(option: { value?: T; state: boolean }) => void`}</code></td><td><code>-</code></td><td>Called when the checked state changes.</td></tr>
+                <tr><td><code>...buttonAttributes</code></td><td><code>{`ButtonHTMLAttributes<HTMLButtonElement>`}</code></td><td><code>-</code></td><td>Standard button props passed through to the root element.</td></tr>
+            </tbody>
         </table>
 
-        ## Events
-        <table style={{width: '100%'}}>
-          <colgroup>
-            <col style={{width: '1%'}} />
-            <col style={{width: '99%'}} />
-          </colgroup>
-          <thead>
-            <tr>
-              <th className={"left"}>Event</th>
-              <th className={"left"}>Type</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr><td><code>onChange</code></td><td><code>{`(state: boolean) => void`}</code></td></tr>
-          </tbody>
-        </table>
+        ## Notes
+        - `Switch<string>` is the default if you do not provide a generic.
+        - Use `Switch<T>` when the switch should carry a typed value object or non-string identifier.
+        - `state` controls the visual on/off state, and `value` is the optional typed payload returned in `onChange`.
 
         ## Code Examples
         </Unstyled>
 
-        <RenderSource language={"tsx"}>
-```
-import { Switch } from '@apple-pie/slice';
+        <RenderSource>
+        ```
+        import { Switch } from '@apple-pie/slice';
+        
+        export function SwitchExample() {
+            return (
+                <Switch
+                    state={true}
+                    width={42}
+                    height={24}
+                    onChange={(value, state) => console.log(value, state)}
+                    id="switch-example"
+                    data-testid="switch-example"
+                    className="custom-wrapper"
+                    style={{ marginTop: 8, maxWidth: 480 }}
+                />
+            );
+        }
+        ```
+        </RenderSource>
 
-export function SwitchExample() {
-    return (
-        <Switch
-            state={true}
-            width={42}
-            height={24}
-            onChange={(state) => console.log(state)}
-            id="switch-example"
-            data-testid="switch-example"
-            className="custom-wrapper"
-            style={{ marginTop: 8, maxWidth: 480 }}
-        />
-    );
-}
-```
+        <RenderSource>
+        ```
+        import { Switch } from '@apple-pie/slice';
+        
+        type FeatureValue = {
+            id: number;
+        };
+        
+        export function TypedSwitchExample() {
+            return (
+                <Switch<FeatureValue>
+                    fieldName="Auto Save"
+                    value={{ id: 1 }}
+                    state={false}
+                    onChange={(value, state) => {
+                        console.log(value?.id, state);
+                    }}
+                />
+            );
+        }
+        ```
         </RenderSource>
     </FlexDiv>
 </FlexDiv>

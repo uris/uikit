@@ -29,6 +29,18 @@ export const Default: StoryObj<typeof Pager> = {
 			</FlexDiv>
 		);
 	},
+};
+
+// **** TESTS ONLY **** //
+export const DefaultTest: StoryObj<typeof Pager> = {
+	tags: ['tests'],
+	render: (args) => {
+		return (
+			<FlexDiv absolute justify={'center'} alignItems={'center'} padding={64}>
+				<Pager {...args} />
+			</FlexDiv>
+		);
+	},
 	play: async ({ canvasElement, args }) => {
 		await runPagerPlay({ canvasElement, args });
 	},

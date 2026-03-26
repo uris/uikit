@@ -1,8 +1,8 @@
 import type React from 'react';
-import type { RadioButtonOption } from '../RadioButton/_types';
+import type { RadioButtonOption } from '../RadioButton';
 
-type RadioButtonListBaseProps = {
-	options?: RadioButtonOption[];
+type RadioButtonListBaseProps<T = string> = {
+	options?: RadioButtonOption<T>[];
 	selectedIndexes?: number[] | null;
 	selectedOptions?: string[] | null;
 	label?: string | null;
@@ -18,15 +18,17 @@ type RadioButtonListBaseProps = {
 	iconColor?: string;
 	iconSelectedColor?: string;
 	noFrame?: boolean;
-	checkedIcon?: 'check circle' | 'circle fill';
+	icon?: string;
+	checkedIcon?: string;
+	width?: number | string;
 	onChange?: (
-		options: RadioButtonOption[] | null,
+		options: RadioButtonOption<T>[] | null,
 		indexes: number[] | null,
 	) => void;
 };
 
-export type RadioButtonListProps = Omit<
+export type RadioButtonListProps<T = string> = Omit<
 	React.HTMLAttributes<HTMLDivElement>,
 	keyof RadioButtonListBaseProps
 > &
-	RadioButtonListBaseProps;
+	RadioButtonListBaseProps<T>;

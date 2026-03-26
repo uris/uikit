@@ -16,10 +16,10 @@ const meta: Meta<typeof TextArea> = {
 		placeholder: 'Enter your text here',
 		rows: 6,
 		padding: '16px 4px 16px 16px',
-		validate: false,
+		error: false,
 		resizable: false,
 		hasSend: false,
-		sendOffset: { bottom: 6, right: 6 },
+		sendOffset: { bottom: 10, right: 10 },
 		sendSize: 36,
 		bgColor: undefined,
 		border: undefined,
@@ -28,7 +28,6 @@ const meta: Meta<typeof TextArea> = {
 		onChange: fn(),
 		onFocus: fn(),
 		onBlur: fn(),
-		onValidate: fn(),
 		onSubmit: fn(),
 		onKeyDown: fn(),
 	},
@@ -44,12 +43,24 @@ export const Default: StoryObj<typeof TextArea> = {
 			</FlexDiv>
 		);
 	},
+};
+
+export const DefaultTextArea: StoryObj<typeof TextArea> = {
+	tags: ['tests'],
+	render: (args) => {
+		return (
+			<FlexDiv absolute justify={'center'} alignItems={'center'} padding={64}>
+				<TextArea {...args} />
+			</FlexDiv>
+		);
+	},
 	play: async ({ canvasElement, args }) => {
 		await runTextAreaPlay({ canvasElement, args });
 	},
 };
 
 export const ReturnSubmits: StoryObj<typeof TextArea> = {
+	tags: ['tests'],
 	args: {
 		...meta.args,
 		returnSubmits: true,
@@ -61,6 +72,7 @@ export const ReturnSubmits: StoryObj<typeof TextArea> = {
 };
 
 export const WithSendButton: StoryObj<typeof TextArea> = {
+	tags: ['tests'],
 	args: {
 		...meta.args,
 		hasSend: true,

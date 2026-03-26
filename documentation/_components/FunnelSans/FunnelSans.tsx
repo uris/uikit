@@ -47,8 +47,8 @@ export function FunnelSans() {
 				alignItems={'center'}
 				gap={16}
 			>
-				<Label border={0} size="l">
-					Variable Weight
+				<Label borderSize={0}>
+					Adjust Font Weight
 				</Label>
 				<Slider
 					value={weight}

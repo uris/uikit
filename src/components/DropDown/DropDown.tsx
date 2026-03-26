@@ -28,13 +28,15 @@ function DropDownComponent<T = string>(props: DropDownProps<T>) {
 		selectedValue,
 		valueKey,
 		options = [],
-		placeholder = true,
-		borderRadius = 4,
-		bgColor = 'transparent',
-		iconColor = 'var(--core-text-primary)',
-		textColor = 'var(--core-text-primary)',
-		borderSize = 1,
-		borderColor = 'var(--core-outline-primary)',
+        placeholder = true,
+        borderRadius = 4,
+        backgroundColor,
+        bgColor = 'transparent',
+        iconColor = 'var(--core-text-primary)',
+        textColor = 'var(--core-text-primary)',
+        borderWidth,
+        borderSize = 1,
+        borderColor = 'var(--core-outline-primary)',
 		paddingLeft = '8px',
 		paddingRight = '12px',
 		paddingTop = '8px',
@@ -48,8 +50,10 @@ function DropDownComponent<T = string>(props: DropDownProps<T>) {
 		...divAttributes
 	} = props;
 	const { id: divId, className, style, ...rest } = divAttributes;
-	const divStyle = style ?? ({} as React.CSSProperties);
-	const divClass = className ? ` ${className}` : '';
+    const divStyle = style ?? ({} as React.CSSProperties);
+    const divClass = className ? ` ${className}` : '';
+    const resolvedBackgroundColor = backgroundColor ?? bgColor;
+    const resolvedBorderWidth = borderWidth ?? borderSize;
 
 	const [index, setIndex] = useState<number>(selectedIndex ?? 0);
 	const [selectedText, setSelectedText] = useState<string>('Select an option');
@@ -172,17 +176,17 @@ function DropDownComponent<T = string>(props: DropDownProps<T>) {
 
 	// set border
 	const setBorder = useMemo(() => {
-		if (borderStyle === 'box')
-			return `${setStyle(borderSize)} solid ${setStyle(borderColor)}`;
-		return 'unset';
-	}, [borderSize, borderColor, borderStyle]);
+        if (borderStyle === 'box')
+            return `${setStyle(resolvedBorderWidth)} solid ${setStyle(borderColor)}`;
+        return 'unset';
+    }, [resolvedBorderWidth, borderColor, borderStyle]);
 
 	// set border bottom
 	const setBorderBottom = useMemo(() => {
-		if (borderStyle !== 'none')
-			return `${setStyle(borderSize)} solid ${setStyle(borderColor)}`;
-		return 'unset';
-	}, [borderSize, borderColor, borderStyle]);
+        if (borderStyle !== 'none')
+            return `${setStyle(resolvedBorderWidth)} solid ${setStyle(borderColor)}`;
+        return 'unset';
+    }, [resolvedBorderWidth, borderColor, borderStyle]);
 
 	// set border radius
 	const setBorderRadius = useMemo(() => {
@@ -201,7 +205,7 @@ function DropDownComponent<T = string>(props: DropDownProps<T>) {
 			'--dd-border': setBorder,
 			'--dd-border-bottom': setBorderBottom,
 			'--dd-color': setTextColor,
-			'--dd-bg-color': bgColor ?? 'transparent',
+            '--dd-bg-color': resolvedBackgroundColor ?? 'transparent',
 			'--dd-padding': setPadding,
 			'--dd-icon-size': `${iconSize}px`,
 			'--dd-label-color': setLabelColor,
@@ -214,13 +218,11 @@ function DropDownComponent<T = string>(props: DropDownProps<T>) {
 		setBorder,
 		setBorderBottom,
 		setTextColor,
-		bgColor,
-		setPadding,
-		setLabelColor,
-		iconSize,
-	]);
-
-	console.log(setPadding);
+        resolvedBackgroundColor,
+        setPadding,
+        setLabelColor,
+        iconSize,
+    ]);
 
 	/* START.DEBUG */
 	useTrackRenders(props, 'DropDown');

@@ -44,12 +44,24 @@ export const Default: StoryObj<typeof DivInput> = {
 			</FlexDiv>
 		);
 	},
+};
+
+export const DefaultDivInput: StoryObj<typeof DivInput> = {
+	tags: ['tests'],
+	render: (args) => {
+		return (
+			<FlexDiv absolute justify={'center'} alignItems={'center'} padding={64}>
+				<DivInput {...args} />
+			</FlexDiv>
+		);
+	},
 	play: async ({ canvasElement, args }) => {
 		await runDivInputPlay({ canvasElement, args });
 	},
 };
 
 export const Focused: StoryObj<typeof DivInput> = {
+	tags: ['tests'],
 	args: {
 		...meta.args,
 		value: 'Focus me',
@@ -62,6 +74,7 @@ export const Focused: StoryObj<typeof DivInput> = {
 };
 
 export const ReadOnly: StoryObj<typeof DivInput> = {
+	tags: ['tests'],
 	args: {
 		...meta.args,
 		isEditable: false,

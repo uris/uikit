@@ -30,9 +30,7 @@ export function TypeSizes(
 				return (
 					<div className={css.wrapper} key={entry.name}>
 						<Label
-							size="l"
-							border={0}
-							padding={'0'}
+							padding={'4px 8px'}
 							color={'var(--core-text-disabled)'}
 						>
 							{`${entry.name}: Size: ${entry.props.fontSize}, Weight: ${entry.props.fontWeight}, Line Height: ${entry.props.lineHeight}, Letter Spacing: ${entry.props.letterSpacing}`}

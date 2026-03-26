@@ -37,16 +37,16 @@ import {RenderSource} from '../../../documentation/_components/RenderSource/Rend
             </tr>
           </thead>
           <tbody>
-            <tr><td><code>bgColor</code></td><td><code>string</code></td><td><code>var(--core-surface-secondary)</code></td><td>Tooltip background color token/value.</td></tr>
+            <tr><td><code>backgroundColor</code></td><td><code>string</code></td><td><code>var(--core-surface-secondary)</code></td><td>Tooltip background color token/value.</td></tr>
             <tr><td><code>border</code></td><td><code>boolean</code></td><td><code>true</code></td><td>Whether a border is shown around the tooltip.</td></tr>
             <tr><td><code>borderColor</code></td><td><code>string</code></td><td><code>var(--core-outline-primary)</code></td><td>Tooltip border color token/value.</td></tr>
-            <tr><td><code>color</code></td><td><code>string</code></td><td><code>var(--core-text-primary)</code></td><td>Text color token/value.</td></tr>
+            <tr><td><code>textColor</code></td><td><code>string</code></td><td><code>var(--core-text-primary)</code></td><td>Text color token/value.</td></tr>
             <tr><td><code>coords</code></td><td><code>{`{ x: number; y: number }`}</code></td><td><code>{`{ x: 0, y: 0 }`}</code></td><td>Coordinates used to place the tooltip.</td></tr>
             <tr><td><code>hideDelay</code></td><td><code>number</code></td><td><code>2500</code></td><td>Delay in ms before the tooltip auto-hides.</td></tr>
             <tr><td><code>padding</code></td><td><code>number | string</code></td><td><code>3px 6px</code></td><td>Tooltip padding.</td></tr>
-            <tr><td><code>radius</code></td><td><code>number</code></td><td><code>4</code></td><td>Tooltip border radius in px.</td></tr>
+            <tr><td><code>borderRadius</code></td><td><code>number</code></td><td><code>4</code></td><td>Tooltip border radius in px.</td></tr>
             <tr><td><code>showDelay</code></td><td><code>number</code></td><td><code>500</code></td><td>Delay in ms before the tooltip appears.</td></tr>
-            <tr><td><code>size</code></td><td><code>{`'s' | 'm' | 'l'`}</code></td><td><code>'s'</code></td><td>Typography size variant.</td></tr>
+            <tr><td><code>size</code></td><td><code>{`'xs' | 's' | 'm' | 'l'`}</code></td><td><code>'s'</code></td><td>Typography size variant.</td></tr>
             <tr><td><code>tip</code></td><td><code>ToolTip | null</code></td><td><code>undefined</code></td><td>Tooltip payload containing label and anchor metadata.</td></tr>
             <tr><td><code>...motionDivAttributes</code></td><td><code>{`HTMLMotionProps<'div'>`}</code></td><td><code>-</code></td><td>Native and motion props passed through to the root <code>motion.div</code>.</td></tr>
           </tbody>
@@ -58,7 +58,7 @@ import {RenderSource} from '../../../documentation/_components/RenderSource/Rend
         ## Code Examples
         </Unstyled>
 
-        <RenderSource language={"tsx"}>
+        <RenderSource>
 ```
 import { useRef, useState } from 'react';
 import { IconButton, Tip, useToolTip } from '@apple-pie/slice';

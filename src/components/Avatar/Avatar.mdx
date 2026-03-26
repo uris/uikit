@@ -34,11 +34,11 @@ import {RenderSource} from '../../../documentation/_components/RenderSource/Rend
             </tr>
           </thead>
           <tbody>
-            <tr><td><code>bgColor</code></td><td><code>string</code></td><td><code>var(--core-surface-secondary)</code></td><td>Background color token/value.</td></tr>
+            <tr><td><code>backgroundColor</code></td><td><code>string</code></td><td><code>var(--core-surface-secondary)</code></td><td>Background color token/value.</td></tr>
             <tr><td><code>borderColor</code></td><td><code>string</code></td><td><code>var(--core-outline-primary)</code></td><td>Inner border color token/value.</td></tr>
             <tr><td><code>borderColorHover</code></td><td><code>string</code></td><td><code>var(--core-outline-special)</code></td><td>Inner border color token/value applied on hover.</td></tr>
-            <tr><td><code>borderSize</code></td><td><code>number</code></td><td><code>0</code></td><td>Inner border width in pixels.</td></tr>
-            <tr><td><code>color</code></td><td><code>string</code></td><td><code>var(--core-text-primary)</code></td><td>Text color for initials.</td></tr>
+            <tr><td><code>borderWidth</code></td><td><code>number</code></td><td><code>0</code></td><td>Inner border width in pixels.</td></tr>
+            <tr><td><code>textColor</code></td><td><code>string</code></td><td><code>var(--core-text-primary)</code></td><td>Text color for initials.</td></tr>
             <tr><td><code>email</code></td><td><code>string</code></td><td><code>undefined</code></td><td>Email fallback used for the tooltip label and first-character initial when <code>name</code> is not provided.</td></tr>
             <tr><td><code>fontSize</code></td><td><code>number | string</code></td><td><code>undefined</code></td><td>Font size in px or CSS units. Use <code>'auto'</code> or a number less than or equal to <code>1</code> to derive size from the rendered frame.</td></tr>
             <tr><td><code>frame</code></td><td><code>number | string</code></td><td><code>34</code></td><td>Inner frame size used for layout and derived font sizing.</td></tr>
@@ -74,7 +74,7 @@ import {RenderSource} from '../../../documentation/_components/RenderSource/Rend
         ## Code Examples
         </Unstyled>
 
-        <RenderSource language={"tsx"}>
+        <RenderSource>
         ```
         import { Avatar } from '@apple-pie/slice';
         
@@ -91,7 +91,7 @@ import {RenderSource} from '../../../documentation/_components/RenderSource/Rend
         ```
         </RenderSource>
 
-        <RenderSource language={"tsx"}>
+        <RenderSource>
         ```
         import { Avatar } from '@apple-pie/slice';
         
@@ -101,7 +101,7 @@ import {RenderSource} from '../../../documentation/_components/RenderSource/Rend
                     name="Jane Smith"
                     email="jane.smith@example.com"
                     image=""
-                    borderSize={1}
+                    borderWidth={1}
                     id="assignee-avatar"
                     data-testid="assignee-avatar"
                     aria-label="Assignee avatar"

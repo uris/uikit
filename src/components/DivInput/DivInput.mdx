@@ -34,14 +34,14 @@ import {RenderSource} from '../../../documentation/_components/RenderSource/Rend
             </tr>
           </thead>
           <tbody>
-            <tr><td><code>bgColor</code></td><td><code>string</code></td><td><code>-</code></td><td>Color token/value for `bgColor`.</td></tr>
+            <tr><td><code>backgroundColor</code></td><td><code>string</code></td><td><code>-</code></td><td>Background color override for the editable surface.</td></tr>
             <tr><td><code>clamp</code></td><td><code>number</code></td><td><code>-</code></td><td>Controls `clamp`.</td></tr>
             <tr><td><code>focus</code></td><td><code>boolean</code></td><td><code>-</code></td><td>Boolean flag controlling `focus`.</td></tr>
             <tr><td><code>isEditable</code></td><td><code>boolean</code></td><td><code>-</code></td><td>Boolean flag controlling `isEditable`.</td></tr>
             <tr><td><code>name</code></td><td><code>string</code></td><td><code>-</code></td><td>Text/value for `name`.</td></tr>
             <tr><td><code>padding</code></td><td><code>string</code></td><td><code>-</code></td><td>Sizing/layout setting for `padding`.</td></tr>
             <tr><td><code>placeholder</code></td><td><code>string</code></td><td><code>-</code></td><td>Text/value for `placeholder`.</td></tr>
-            <tr><td><code>radius</code></td><td><code>number</code></td><td><code>-</code></td><td>Sizing/layout setting for `radius`.</td></tr>
+            <tr><td><code>borderRadius</code></td><td><code>number</code></td><td><code>-</code></td><td>Corner radius for the editable surface.</td></tr>
             <tr><td><code>textAlign</code></td><td><code>{`'left' | 'center' | 'right'`}</code></td><td><code>-</code></td><td>Controls `textAlign`.</td></tr>
             <tr><td><code>value</code></td><td><code>string</code></td><td><code>-</code></td><td>Text/value for `value`.</td></tr>
             <tr><td><code>width</code></td><td><code>{`number | string`}</code></td><td><code>-</code></td><td>Sizing/layout setting for `width`.</td></tr>
@@ -75,7 +75,7 @@ import {RenderSource} from '../../../documentation/_components/RenderSource/Rend
         ## Code Examples
         </Unstyled>
 
-        <RenderSource language={"tsx"}>
+        <RenderSource>
 ```
 import { DivInput } from '@apple-pie/slice';
 

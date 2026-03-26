@@ -1,7 +1,7 @@
-import {Meta, Unstyled} from '@storybook/addon-docs/blocks';
-import {FlexDiv} from '../FlexDiv';
+import { Meta, Unstyled } from '@storybook/addon-docs/blocks';
+import { FlexDiv } from '../FlexDiv';
 import * as TextAreaStories from './TextArea.stories';
-import {RenderSource} from '../../../documentation/_components/RenderSource/RenderSource';
+import { RenderSource } from '../../../documentation/_components/RenderSource/RenderSource';
 
 <Meta of={TextAreaStories} />
 
@@ -9,82 +9,75 @@ import {RenderSource} from '../../../documentation/_components/RenderSource/Rend
     <FlexDiv width={"fill"} maxWidth={760} height={"auto"}>
         <Unstyled>
         # TextArea
-        Renders a multi-line text input with label, validation, and optional action controls.
+        Renders a multi-line text input with optional send/submit behavior.
 
         ## Base element
         `HTMLDivElement`
 
+        The component renders a styled wrapper around a native `textarea`.
+
         ## Interface
         `TextAreaProps`
 
+        ## Related types
+        `Tip`
+
         ## Props
-        <table style={{width: '100%'}}>
-          <colgroup>
-            <col style={{width: '1%'}} />
-            <col style={{width: '1%'}} />
-            <col style={{width: '1%'}} />
-            <col style={{width: '97%'}} />
-          </colgroup>
-          <thead>
-            <tr>
-              <th className={"left"}>Prop</th>
-              <th className={"left"}>Type</th>
-              <th className={"left"}>Default</th>
-              <th>Description</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr><td><code>bgColor</code></td><td><code>string</code></td><td><code>-</code></td><td>Color token/value for `bgColor`.</td></tr>
-            <tr><td><code>border</code></td><td><code>boolean</code></td><td><code>-</code></td><td>Sizing/layout setting for `border`.</td></tr>
-            <tr><td><code>borderRadius</code></td><td><code>number</code></td><td><code>-</code></td><td>Sizing/layout setting for `borderRadius`.</td></tr>
-            <tr><td><code>disabled</code></td><td><code>boolean</code></td><td><code>-</code></td><td>Boolean flag controlling `disabled`.</td></tr>
-            <tr><td><code>focused</code></td><td><code>boolean</code></td><td><code>-</code></td><td>Boolean flag controlling `focused`.</td></tr>
-            <tr><td><code>hasSend</code></td><td><code>boolean</code></td><td><code>-</code></td><td>Boolean flag controlling `hasSend`.</td></tr>
-            <tr><td><code>height</code></td><td><code>{`number | string`}</code></td><td><code>-</code></td><td>Sizing/layout setting for `height`.</td></tr>
-            <tr><td><code>minWidth</code></td><td><code>{`number | string`}</code></td><td><code>-</code></td><td>Sizing/layout setting for `minWidth`.</td></tr>
-            <tr><td><code>name</code></td><td><code>string</code></td><td><code>-</code></td><td>Text/value for `name`.</td></tr>
-            <tr><td><code>padding</code></td><td><code>{`number | string`}</code></td><td><code>-</code></td><td>Sizing/layout setting for `padding`.</td></tr>
-            <tr><td><code>placeholder</code></td><td><code>string</code></td><td><code>-</code></td><td>Text/value for `placeholder`.</td></tr>
-            <tr><td><code>resizable</code></td><td><code>boolean</code></td><td><code>-</code></td><td>Boolean flag controlling `resizable`.</td></tr>
-            <tr><td><code>returnSubmits</code></td><td><code>boolean</code></td><td><code>-</code></td><td>Boolean flag controlling `returnSubmits`.</td></tr>
-            <tr><td><code>rows</code></td><td><code>number</code></td><td><code>-</code></td><td>Controls `rows`.</td></tr>
-            <tr><td><code>sendOffset</code></td><td><code>{`{ bottom: number; right: number }`}</code></td><td><code>-</code></td><td>Controls `sendOffset`.</td></tr>
-            <tr><td><code>sendSize</code></td><td><code>number</code></td><td><code>-</code></td><td>Sizing/layout setting for `sendSize`.</td></tr>
-            <tr><td><code>submitClears</code></td><td><code>boolean</code></td><td><code>-</code></td><td>Boolean flag controlling `submitClears`.</td></tr>
-            <tr><td><code>textSize</code></td><td><code>{`'s' | 'm' | 'l'`}</code></td><td><code>-</code></td><td>Sizing/layout setting for `textSize`.</td></tr>
-            <tr><td><code>validate</code></td><td><code>boolean</code></td><td><code>-</code></td><td>Boolean flag controlling `validate`.</td></tr>
-            <tr><td><code>value</code></td><td><code>string</code></td><td><code>-</code></td><td>Text/value for `value`.</td></tr>
-            <tr><td><code>width</code></td><td><code>{`number | string`}</code></td><td><code>-</code></td><td>Sizing/layout setting for `width`.</td></tr>
-            <tr><td><code>...divAttributes</code></td><td><code>{`HTMLAttributes<HTMLDivElement>`}</code></td><td><code>-</code></td><td>Native `div` props pass through (for example `id`, `data-testid`, `className`, `style`, `aria-*`).</td></tr>
-          </tbody>
+        <table style={{ width: '100%' }}>
+            <colgroup>
+                <col style={{ width: '1%' }} />
+                <col style={{ width: '1%' }} />
+                <col style={{ width: '1%' }} />
+                <col style={{ width: '97%' }} />
+            </colgroup>
+            <thead>
+                <tr>
+                    <th className={"left"}>Prop</th>
+                    <th className={"left"}>Type</th>
+                    <th className={"left"}>Default</th>
+                    <th>Description</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr><td><code>value</code></td><td><code>string</code></td><td><code>''</code></td><td>Controlled textarea value.</td></tr>
+                <tr><td><code>name</code></td><td><code>string</code></td><td><code>'text_area'</code></td><td>Name applied to the native textarea.</td></tr>
+                <tr><td><code>width</code></td><td><code>{`number | string`}</code></td><td><code>'100%'</code></td><td>Wrapper width.</td></tr>
+                <tr><td><code>minWidth</code></td><td><code>{`number | string`}</code></td><td><code>-</code></td><td>Minimum wrapper width.</td></tr>
+                <tr><td><code>rows</code></td><td><code>number</code></td><td><code>6</code></td><td>Initial visible row count before auto-resizing.</td></tr>
+                <tr><td><code>focused</code></td><td><code>boolean</code></td><td><code>false</code></td><td>Programmatically focuses or blurs the textarea.</td></tr>
+                <tr><td><code>placeholder</code></td><td><code>string</code></td><td><code>'Enter text here...'</code></td><td>Placeholder text shown when empty.</td></tr>
+                <tr><td><code>padding</code></td><td><code>{`number | string`}</code></td><td><code>'16px 4px 16px 16px'</code></td><td>Inner padding for the textarea area.</td></tr>
+                <tr><td><code>error</code></td><td><code>boolean</code></td><td><code>false</code></td><td>Shows the warning border state when not focused.</td></tr>
+                <tr><td><code>border</code></td><td><code>boolean</code></td><td><code>false</code></td><td>Shows the standard outline border when there is no error and the field is not focused.</td></tr>
+                <tr><td><code>resizable</code></td><td><code>boolean</code></td><td><code>true</code></td><td>Controls whether the textarea can be manually resized.</td></tr>
+                <tr><td><code>hasSend</code></td><td><code>boolean</code></td><td><code>false</code></td><td>Shows the send button overlay.</td></tr>
+                <tr><td><code>sendOffset</code></td><td><code>{`{ bottom: number; right: number }`}</code></td><td><code>{`{ bottom: 6, right: 6 }`}</code></td><td>Offsets the send button from the bottom-right corner.</td></tr>
+                <tr><td><code>sendSize</code></td><td><code>number</code></td><td><code>36</code></td><td>Size of the send button container.</td></tr>
+                <tr><td><code>backgroundColor</code></td><td><code>string</code></td><td><code>'var(--core-surface-secondary)'</code></td><td>Background color override.</td></tr>
+                <tr><td><code>borderRadius</code></td><td><code>number</code></td><td><code>4</code></td><td>Wrapper border radius in pixels.</td></tr>
+                <tr><td><code>returnSubmits</code></td><td><code>boolean</code></td><td><code>false</code></td><td>Submits on Enter instead of inserting a newline.</td></tr>
+                <tr><td><code>textSize</code></td><td><code>{`'xs' | 's' | 'm' | 'l'`}</code></td><td><code>'m'</code></td><td>Textarea text size token.</td></tr>
+                <tr><td><code>disabled</code></td><td><code>boolean</code></td><td><code>false</code></td><td>Disables editing and submit interaction.</td></tr>
+                <tr><td><code>submitClears</code></td><td><code>boolean</code></td><td><code>true</code></td><td>Clears the textarea after submit.</td></tr>
+                <tr><td><code>onChange</code></td><td><code>{`(value: string) => void`}</code></td><td><code>-</code></td><td>Called whenever the textarea value changes.</td></tr>
+                <tr><td><code>onSubmit</code></td><td><code>{`(value: string) => void`}</code></td><td><code>-</code></td><td>Called when the send action runs or Enter submits.</td></tr>
+                <tr><td><code>onFocus</code></td><td><code>{`(value: string) => void`}</code></td><td><code>-</code></td><td>Called with the current textarea value when the field receives focus.</td></tr>
+                <tr><td><code>onBlur</code></td><td><code>{`(value: string) => void`}</code></td><td><code>-</code></td><td>Called with the current textarea value when the field loses focus.</td></tr>
+                <tr><td><code>onKeyDown</code></td><td><code>{`(e: React.KeyboardEvent<HTMLTextAreaElement>) => void`}</code></td><td><code>-</code></td><td>Called for textarea keydown events after internal submit handling.</td></tr>
+                <tr><td><code>...divAttributes</code></td><td><code>{`HTMLAttributes<HTMLDivElement>`}</code></td><td><code>-</code></td><td>Standard div props passed through to the wrapper element.</td></tr>
+            </tbody>
         </table>
 
-        ## Events
-        <table style={{width: '100%'}}>
-          <colgroup>
-            <col style={{width: '1%'}} />
-            <col style={{width: '99%'}} />
-          </colgroup>
-          <thead>
-            <tr>
-              <th className={"left"}>Event</th>
-              <th className={"left"}>Type</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr><td><code>onChange</code></td><td><code>{`(value: string) => void`}</code></td></tr>
-            <tr><td><code>onSubmit</code></td><td><code>{`(value: string) => void`}</code></td></tr>
-            <tr><td><code>onFocus</code></td><td><code>{`() => void`}</code></td></tr>
-            <tr><td><code>onBlur</code></td><td><code>{`() => void`}</code></td></tr>
-            <tr><td><code>onValidate</code></td><td><code>{`(state: boolean) => void`}</code></td></tr>
-            <tr><td><code>onKeyDown</code></td><td><code>{`(e: React.KeyboardEvent<HTMLTextAreaElement>) => void`}</code></td></tr>
-          </tbody>
-        </table>
+        ## Notes
+        - The component auto-resizes to fit its content as the user types.
+        - Focus state takes precedence over `error` for border color.
+        - When `returnSubmits` is enabled, pressing Enter triggers `onSubmit` and prevents a newline.
+        - When `submitClears` is enabled, the local textarea state is reset after submit.
 
         ## Code Examples
         </Unstyled>
 
-        <RenderSource language={"tsx"}>
+        <RenderSource>
 ```
 import { TextArea } from '@apple-pie/slice';
 
@@ -99,6 +92,24 @@ export function TextAreaExample() {
             data-testid="textarea-example"
             className="custom-wrapper"
             style={{ marginTop: 8, maxWidth: 480 }}
+        />
+    );
+}
+```
+        </RenderSource>
+
+        <RenderSource>
+```
+import { TextArea } from '@apple-pie/slice';
+
+export function MessageTextAreaExample() {
+    return (
+        <TextArea
+            hasSend
+            returnSubmits
+            submitClears
+            placeholder="Write a message"
+            onSubmit={(value) => console.log('submitted:', value)}
         />
     );
 }

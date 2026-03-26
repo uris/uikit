@@ -1,6 +1,7 @@
 .icon {
 	cursor: var(--cursor);
 	user-select: none;
+	pointer-events: var(--pointer-events);
 	--webkit-user-select: none;
 	-webkit-tap-highlight-color: transparent;
 	outline: none;
