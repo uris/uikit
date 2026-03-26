@@ -33,7 +33,7 @@ export default meta;
 export const Default: StoryObj<typeof CheckBox> = {
 	render: (args) => {
 		return (
-			<FlexDiv absolute justify={'center'} alignItems={'center'} padding={64}>
+			<FlexDiv absolute justify={'center'} align={'center'} padding={64}>
 				<CheckBox {...args} />
 			</FlexDiv>
 		);
@@ -47,7 +47,7 @@ export const DefaultCheckBox: StoryObj<typeof CheckBox> = {
 	tags: ['tests'],
 	render: (args) => {
 		return (
-			<FlexDiv absolute justify={'center'} alignItems={'center'} padding={64}>
+			<FlexDiv absolute justify={'center'} align={'center'} padding={64}>
 				<CheckBox {...args} />
 			</FlexDiv>
 		);
@@ -65,7 +65,7 @@ export const Partial: StoryObj<typeof CheckBox> = {
 	},
 	render: (args) => {
 		return (
-			<FlexDiv absolute justify={'center'} alignItems={'center'} padding={64}>
+			<FlexDiv absolute justify={'center'} align={'center'} padding={64}>
 				<CheckBox {...args} />
 			</FlexDiv>
 		);

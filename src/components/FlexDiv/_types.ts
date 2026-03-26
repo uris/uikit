@@ -17,7 +17,7 @@ type FlexDivBaseProps = {
 	absolute?: boolean;
 	background?: string;
 	direction?: 'row' | 'column';
-	alignItems?: 'start' | 'center' | 'end' | 'between';
+	align?: 'start' | 'center' | 'end' | 'between';
 	justify?: 'start' | 'top' | 'center' | 'end' | 'bottom' | 'between';
 	width?: number | Size | string;
 	height?: number | Size | string;

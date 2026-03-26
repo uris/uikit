@@ -32,7 +32,7 @@ function UseDoubleClickDemo(props: Readonly<UseDoubleClickDemoProps>) {
 		<FlexDiv
 			absolute
 			justify={'center'}
-			alignItems={'center'}
+			align={'center'}
 			direction={'column'}
 		>
 			<Button

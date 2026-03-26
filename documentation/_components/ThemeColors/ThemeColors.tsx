@@ -75,7 +75,7 @@ function ReferencedBrandColors(props: Readonly<{ mode: 'light' | 'dark' }>) {
 			height={'fit'}
 			gap={16}
 			justify={'start'}
-			alignItems={'start'}
+			align={'start'}
 			scrollY
 			padding={'0 0 32px 0'}
 		>

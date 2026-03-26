@@ -34,7 +34,7 @@ const meta: Meta<typeof FlexDiv> = {
 		scrollX: false,
 		background: lightTheme.colors['core-surface-secondary'],
 		direction: 'column',
-		alignItems: 'center',
+		align: 'center',
 		justify: 'start',
 		height: 300,
 		width: 300,
@@ -59,7 +59,7 @@ export default meta;
 export const Default: StoryObj<typeof FlexDiv> = {
 	render: (args) => {
 		return (
-			<FlexDiv absolute justify={'center'} alignItems={'center'} padding={64}>
+			<FlexDiv absolute justify={'center'} align={'center'} padding={64}>
 				<FlexDiv {...args} background={'var(--core-surface-secondary)'}>
 					Here's the latest • War with Iran: There could be more US casualties
 					as part of the military operations against Iran, President Donald

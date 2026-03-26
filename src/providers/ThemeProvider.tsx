@@ -5,6 +5,7 @@ import '../theme/elevations/elevation.css';
 import '../theme/type/type.css';
 import '../theme/breakpoints/custom-media.css';
 import '../theme/motion/motion.css';
+import '../theme/global/global.css';
 import { type SliceTheme, darkTheme, lightTheme } from '../theme';
 
 interface ThemeProviderProps {
@@ -67,20 +68,13 @@ export function ThemeProvider(props: Readonly<ThemeProviderProps>) {
 	// optionally mirror the active Slice surface color onto the document body
 	useEffect(() => {
 		if (!global) {
-			document.documentElement.classList.remove(
-				'slice-global-background-color',
-			);
-			document.body.classList.remove('slice-global-background-color');
+			document.body.classList.remove('slice-global-body');
 			return;
 		}
-		document.documentElement.classList.add('slice-global-background-color');
-		document.body.classList.add('slice-global-background-color');
+		document.body.classList.add('slice-global-body');
 
 		return () => {
-			document.documentElement.classList.remove(
-				'slice-global-background-color',
-			);
-			document.body.classList.remove('slice-global-background-color');
+			document.body.classList.remove('slice-global-body');
 		};
 	}, [global]);
 

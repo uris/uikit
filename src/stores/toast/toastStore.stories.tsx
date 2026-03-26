@@ -45,7 +45,7 @@ export const Demo: StoryObj<typeof Toast> = {
 			<FlexDiv
 				absolute
 				justify={'center'}
-				alignItems={'center'}
+				align={'center'}
 				padding={64}
 				gap={16}
 			>

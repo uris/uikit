@@ -117,7 +117,7 @@ function WSStoreDemo() {
 			absolute
 			width={'fill'}
 			height={'fill'}
-			alignItems={'center'}
+			align={'center'}
 			justify={'start'}
 			padding={24}
 		>

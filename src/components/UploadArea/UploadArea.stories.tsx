@@ -51,7 +51,7 @@ export const Default: StoryObj<typeof UploadArea> = {
 			<FlexDiv
 				absolute
 				justify={'center'}
-				alignItems={'center'}
+				align={'center'}
 				padding={64}
 				gap={16}
 			>
@@ -67,7 +67,7 @@ export const Busy: StoryObj<typeof UploadArea> = {
 			<FlexDiv
 				absolute
 				justify={'center'}
-				alignItems={'center'}
+				align={'center'}
 				padding={64}
 				gap={16}
 			>

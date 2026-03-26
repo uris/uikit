@@ -48,7 +48,7 @@ export const Default: StoryObj<typeof PromptInput> = {
 			<FlexDiv
 				direction={'row'}
 				justify={'center'}
-				alignItems={'center'}
+				align={'center'}
 				absolute
 				padding={64}
 			>
@@ -64,7 +64,7 @@ export const Prompt: StoryObj<typeof PromptInput> = {
 			<FlexDiv
 				direction={'row'}
 				justify={'center'}
-				alignItems={'center'}
+				align={'center'}
 				absolute
 				padding={64}
 			>
@@ -84,7 +84,7 @@ export const Working: StoryObj<typeof PromptInput> = {
 			<FlexDiv
 				direction={'row'}
 				justify={'center'}
-				alignItems={'center'}
+				align={'center'}
 				absolute
 				padding={64}
 			>

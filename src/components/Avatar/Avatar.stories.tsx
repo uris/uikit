@@ -30,7 +30,7 @@ export default meta;
 export const Demo: StoryObj<typeof Avatar> = {
 	render: (args) => {
 		return (
-			<FlexDiv absolute justify={'center'} alignItems={'center'} padding={64}>
+			<FlexDiv absolute justify={'center'} align={'center'} padding={64}>
 				<Avatar {...args} />
 			</FlexDiv>
 		);
@@ -83,7 +83,7 @@ export const InteractiveWithInitials: StoryObj<typeof Avatar> = {
 	},
 	render: (args) => {
 		return (
-			<FlexDiv justify={'center'} alignItems={'center'} padding={64}>
+			<FlexDiv justify={'center'} align={'center'} padding={64}>
 				<Avatar {...args} />
 			</FlexDiv>
 		);
@@ -137,7 +137,7 @@ export const AutoSizingInitials: StoryObj<typeof Avatar> = {
 	},
 	render: (args) => {
 		return (
-			<FlexDiv justify={'center'} alignItems={'center'} padding={64}>
+			<FlexDiv justify={'center'} align={'center'} padding={64}>
 				<Avatar {...args} />
 			</FlexDiv>
 		);

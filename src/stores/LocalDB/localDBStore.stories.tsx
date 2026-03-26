@@ -51,7 +51,7 @@ function LocalDBStoreDemo() {
 			absolute
 			width={'fill'}
 			height={'fill'}
-			alignItems={'center'}
+			align={'center'}
 			justify={'center'}
 			padding={24}
 		>
@@ -60,7 +60,7 @@ function LocalDBStoreDemo() {
 				Add up to {MAX_MESSAGES} short messages. The list is stored in IndexedDB
 				called '{STORE_NAME}' and survives page refreshes. Note: inspect the
 				browser dev tools to see the IndexedDB store.
-				<FlexDiv width={'fill'} gap={8} alignItems={'end'}>
+				<FlexDiv width={'fill'} gap={8} align={'end'}>
 					<TextArea
 						name={'message'}
 						value={draft}
@@ -96,7 +96,7 @@ function LocalDBStoreDemo() {
 								width={'fill'}
 								justify={'between'}
 								direction={'row'}
-								alignItems={'center'}
+								align={'center'}
 								gap={12}
 								padding={'8px 8px 8px 16px'}
 								border={'1px solid var(--core-outline-primary)'}

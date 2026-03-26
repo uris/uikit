@@ -51,7 +51,7 @@ export const Default: StoryObj<typeof RadioButtonList> = {
 			<FlexDiv
 				absolute
 				justify={'center'}
-				alignItems={'center'}
+				align={'center'}
 				padding={64}
 				width={'fill'}
 				height={'fit'}
@@ -69,7 +69,7 @@ export const SingleSelect: StoryObj<typeof RadioButtonList> = {
 			<FlexDiv
 				absolute
 				justify={'center'}
-				alignItems={'center'}
+				align={'center'}
 				padding={64}
 				width={'fill'}
 				height={'fit'}

@@ -16,7 +16,7 @@ export default meta;
 export const Default: StoryObj<typeof Spacer> = {
 	render: (args) => {
 		return (
-			<FlexDiv absolute justify={'center'} alignItems={'center'} padding={64}>
+			<FlexDiv absolute justify={'center'} align={'center'} padding={64}>
 				<Spacer {...args} />
 			</FlexDiv>
 		);

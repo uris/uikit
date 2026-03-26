@@ -10,7 +10,7 @@ function UseObserveThemeDemo() {
 			absolute
 			direction={'column'}
 			padding={24}
-			alignItems={'center'}
+			align={'center'}
 			justify={'center'}
 		>
 			<h3>

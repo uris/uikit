@@ -25,7 +25,7 @@ export function FunnelSans() {
 		<FlexDiv
 			width={'fill'}
 			height={'fit'}
-			alignItems={'start'}
+			align={'start'}
 			justify={'start'}
 		>
 			<TabBar
@@ -44,7 +44,7 @@ export function FunnelSans() {
 				height={'fit'}
 				direction={'row'}
 				justify={'between'}
-				alignItems={'center'}
+				align={'center'}
 				gap={16}
 			>
 				<Label borderSize={0}>Adjust Font Weight</Label>

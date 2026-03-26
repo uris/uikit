@@ -13,7 +13,7 @@ function UseThemeDemo() {
 			absolute
 			width={'fill'}
 			height={'fill'}
-			alignItems={'center'}
+			align={'center'}
 			justify={'center'}
 			direction={'column'}
 		>
@@ -27,7 +27,7 @@ function UseThemeDemo() {
 				width={'fill'}
 				height={'auto'}
 				direction={'column'}
-				alignItems={'center'}
+				align={'center'}
 				justify={'center'}
 				gap={12}
 			>

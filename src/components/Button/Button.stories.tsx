@@ -55,7 +55,7 @@ export default meta;
 export const Default: StoryObj<typeof Button> = {
 	render: (args) => {
 		return (
-			<FlexDiv absolute justify={'center'} alignItems={'center'} padding={64}>
+			<FlexDiv absolute justify={'center'} align={'center'} padding={64}>
 				<Button {...args} />
 			</FlexDiv>
 		);

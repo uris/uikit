@@ -31,7 +31,7 @@ function UseKeyboardShortcutsDemo() {
 			absolute
 			width={'fill'}
 			height={'fill'}
-			alignItems={'center'}
+			align={'center'}
 			justify={'center'}
 			padding={24}
 		>

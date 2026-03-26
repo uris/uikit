@@ -21,7 +21,7 @@ export default meta;
 export const Default: StoryObj<typeof Label> = {
 	render: (args) => {
 		return (
-			<FlexDiv absolute justify={'center'} alignItems={'center'} padding={64}>
+			<FlexDiv absolute justify={'center'} align={'center'} padding={64}>
 				<Label {...args} />
 			</FlexDiv>
 		);
@@ -31,7 +31,7 @@ export const Default: StoryObj<typeof Label> = {
 export const Button: StoryObj<typeof Label> = {
 	render: (args) => {
 		return (
-			<FlexDiv absolute justify={'center'} alignItems={'center'} padding={64}>
+			<FlexDiv absolute justify={'center'} align={'center'} padding={64}>
 				<Label {...args} onClick={fn()} />
 			</FlexDiv>
 		);
@@ -48,7 +48,7 @@ export const ButtonLabel: StoryObj<typeof Label> = {
 	},
 	render: (args) => {
 		return (
-			<FlexDiv absolute justify={'center'} alignItems={'center'} padding={64}>
+			<FlexDiv absolute justify={'center'} align={'center'} padding={64}>
 				<Label {...args} />
 			</FlexDiv>
 		);

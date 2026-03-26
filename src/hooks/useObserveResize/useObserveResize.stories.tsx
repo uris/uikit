@@ -19,7 +19,7 @@ function UseObserveResizeDemo(props: Readonly<ResizeDemoProps>) {
 
 	return (
 		<FlexDiv
-			alignItems={'center'}
+			align={'center'}
 			justify={'center'}
 			padding={24}
 			absolute
@@ -28,7 +28,7 @@ function UseObserveResizeDemo(props: Readonly<ResizeDemoProps>) {
 		>
 			<FlexDiv
 				direction={'column'}
-				alignItems={'center'}
+				align={'center'}
 				height={'auto'}
 				gap={12}
 			>
@@ -55,7 +55,7 @@ function UseObserveResizeDemo(props: Readonly<ResizeDemoProps>) {
 				ref={boxRef}
 				width={width}
 				height={height}
-				alignItems={'center'}
+				align={'center'}
 				justify={'center'}
 				border={'1px solid var(--core-outline-primary)'}
 				background={'var(--core-surface-secondary)'}

@@ -56,7 +56,7 @@ export function MotionSimulation(props: Readonly<MotionSimulationProps>) {
 		<FlexDiv
 			width={'fill'}
 			height={'fit'}
-			alignItems={'start'}
+			align={'start'}
 			justify={'start'}
 		>
 			<div

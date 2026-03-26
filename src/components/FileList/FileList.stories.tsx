@@ -36,7 +36,7 @@ export const Default: StoryObj<typeof FileList> = {
 		return (
 			<FlexDiv
 				justify={'center'}
-				alignItems={'center'}
+				align={'center'}
 				padding={'0px 64px'}
 				style={{ overflow: 'hidden' }}
 				width={'fill'}

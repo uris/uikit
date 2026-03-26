@@ -36,7 +36,7 @@ export const Default: StoryObj<typeof RadioButton> = {
 				absolute
 				direction={'row'}
 				justify={'center'}
-				alignItems={'center'}
+				align={'center'}
 				width={'fill'}
 				height={'fit'}
 				padding={64}
@@ -59,7 +59,7 @@ export const RadioButtonTest: StoryObj<typeof RadioButton> = {
 				absolute
 				direction={'row'}
 				justify={'center'}
-				alignItems={'center'}
+				align={'center'}
 				width={'fill'}
 				height={'fit'}
 				padding={64}

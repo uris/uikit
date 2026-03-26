@@ -54,7 +54,7 @@ function CameraDemo(args: any) {
 
 	return (
 		<FlexDiv width={'fill'} height={'fill'} padding={32} gap={24}>
-			<FlexDiv direction={'row'} width={'fill'} gap={24} alignItems={'start'}>
+			<FlexDiv direction={'row'} width={'fill'} gap={24} align={'start'}>
 				<FlexDiv width={460} height={460}>
 					<Camera {...args} ref={cameraRef} onVideoStream={refreshStreamInfo} />
 				</FlexDiv>

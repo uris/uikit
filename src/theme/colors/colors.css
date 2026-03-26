@@ -485,9 +485,3 @@
 	background: var(--core-surface-secondary);
 	color: var(--core-text-primary);
 }
-
-.slice-global-background-color {
-	background-color: var(--core-surface-primary);
-	margin: 0;
-	padding: 0;
-}

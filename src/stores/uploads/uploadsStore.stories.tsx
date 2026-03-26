@@ -67,7 +67,7 @@ const WorkerDemo = () => {
 			absolute
 			direction={'column'}
 			justify={'center'}
-			alignItems={'center'}
+			align={'center'}
 			padding={48}
 			gap={16}
 		>
@@ -75,7 +75,7 @@ const WorkerDemo = () => {
 				direction={'column'}
 				width={'fill'}
 				justify={'center'}
-				alignItems={'center'}
+				align={'center'}
 				gap={8}
 			>
 				<div>Uploads Worker Initialized: {initialized ? 'yes' : 'no'}</div>
@@ -99,7 +99,7 @@ const WorkerDemo = () => {
 				gap={12}
 				width={'fill'}
 				direction={'column'}
-				alignItems={'center'}
+				align={'center'}
 				justify={'center'}
 			>
 				{!initialized && (

@@ -52,7 +52,7 @@ export default meta;
 export const Default: StoryObj<typeof IconButton> = {
 	render: (args) => {
 		return (
-			<FlexDiv absolute justify={'center'} alignItems={'center'} padding={64}>
+			<FlexDiv absolute justify={'center'} align={'center'} padding={64}>
 				<IconButton {...args} />
 			</FlexDiv>
 		);
@@ -63,7 +63,7 @@ export const Test: StoryObj<typeof IconButton> = {
 	tags: ['tests'],
 	render: (args) => {
 		return (
-			<FlexDiv absolute justify={'center'} alignItems={'center'} padding={64}>
+			<FlexDiv absolute justify={'center'} align={'center'} padding={64}>
 				<IconButton {...args} />
 			</FlexDiv>
 		);

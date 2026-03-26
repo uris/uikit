@@ -23,7 +23,7 @@ export function TypeSizes(
 		<FlexDiv
 			width={'fill'}
 			height={'fit'}
-			alignItems={'start'}
+			align={'start'}
 			justify={'start'}
 		>
 			{types.map((entry) => {

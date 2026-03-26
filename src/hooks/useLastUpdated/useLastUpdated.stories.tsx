@@ -21,7 +21,7 @@ function UseLastUpdatedDemo(props: Readonly<UseLastUpdatedDemoProps>) {
 			absolute
 			width={'fill'}
 			height={'fill'}
-			alignItems={'center'}
+			align={'center'}
 			justify={'center'}
 			padding={24}
 		>
@@ -33,7 +33,7 @@ function UseLastUpdatedDemo(props: Readonly<UseLastUpdatedDemoProps>) {
 				padding={16}
 				border={'1px solid var(--core-outline-primary)'}
 				background={'var(--core-surface-secondary)'}
-				alignItems={'center'}
+				align={'center'}
 			>
 				<span>Time: {timestamp}</span>
 				<FlexDiv
@@ -41,7 +41,7 @@ function UseLastUpdatedDemo(props: Readonly<UseLastUpdatedDemoProps>) {
 					height={'auto'}
 					gap={8}
 					background={'none'}
-					alignItems={'center'}
+					align={'center'}
 				>
 					<Button
 						label={'Set Time Now'}

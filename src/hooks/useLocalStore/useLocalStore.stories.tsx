@@ -19,7 +19,7 @@ function UseLocalStoreDemo(props: Readonly<UseLocalStoreDemoProps>) {
 			absolute
 			width={'fill'}
 			height={'fill'}
-			alignItems={'center'}
+			align={'center'}
 			justify={'center'}
 			padding={24}
 		>
@@ -31,7 +31,7 @@ function UseLocalStoreDemo(props: Readonly<UseLocalStoreDemoProps>) {
 				padding={16}
 				border={'1px solid var(--core-outline-primary)'}
 				background={'none'}
-				alignItems={'center'}
+				align={'center'}
 			>
 				<strong>Key: {storageKey}</strong>
 				<span>Persisted value: {name}</span>

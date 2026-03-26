@@ -49,7 +49,7 @@ export const Default: StoryObj<typeof DropDown> = {
 	},
 	render: (args) => {
 		return (
-			<FlexDiv absolute justify={'center'} alignItems={'center'} padding={64}>
+			<FlexDiv absolute justify={'center'} align={'center'} padding={64}>
 				<DropDown<DropdownValueType>
 					{...args}
 					selectedValue={args.selectedValue as DropdownValueType}

@@ -41,7 +41,7 @@ export default meta;
 export const Default: StoryObj<typeof TabBar> = {
 	render: (args) => {
 		return (
-			<FlexDiv absolute justify={'center'} alignItems={'center'} padding={64}>
+			<FlexDiv absolute justify={'center'} align={'center'} padding={64}>
 				<TabBar {...args} />
 			</FlexDiv>
 		);
@@ -52,7 +52,7 @@ export const DefaultTabBar: StoryObj<typeof TabBar> = {
 	tags: ['tests'],
 	render: (args) => {
 		return (
-			<FlexDiv absolute justify={'center'} alignItems={'center'} padding={64}>
+			<FlexDiv absolute justify={'center'} align={'center'} padding={64}>
 				<TabBar {...args} />
 			</FlexDiv>
 		);

@@ -18,7 +18,7 @@ function ThemeProviderChildDemo() {
 		<FlexDiv
 			width={'fill'}
 			height={'auto'}
-			alignItems={'center'}
+			align={'center'}
 			justify={'center'}
 			direction={'column'}
 			absolute
