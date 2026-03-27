@@ -20,16 +20,15 @@ export function TypeSizes(
 	}
 
 	return (
-		<FlexDiv
-			width={'fill'}
-			height={'fit'}
-			align={'start'}
-			justify={'start'}
-		>
+		<FlexDiv width={'fill'} height={'fit'} align={'start'} justify={'start'}>
 			{types.map((entry) => {
 				return (
 					<div className={css.wrapper} key={entry.name}>
-						<Label padding={'4px 8px'} color={'var(--core-text-disabled)'}>
+						<Label
+							padding={'4px 8px'}
+							color={'var(--core-text-disabled)'}
+							backgroundColor={'var(--core-surface-secondary)'}
+						>
 							{`${entry.name}: Size: ${entry.props.fontSize}, Weight: ${entry.props.fontWeight}, Line Height: ${entry.props.lineHeight}, Letter Spacing: ${entry.props.letterSpacing}`}
 						</Label>
 						<div className={`${css.sample} ${entry.name}`}>{sample}</div>

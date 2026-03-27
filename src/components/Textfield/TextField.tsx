@@ -34,7 +34,6 @@ export const TextField = React.memo(
 			onAction = () => null,
 			onPaste = () => null,
 			onClear = () => null,
-			onValidate = () => null,
 			actionButton = false,
 			maxLength = undefined,
 			size = { width: '100%', height: 'auto' },
@@ -42,11 +41,10 @@ export const TextField = React.memo(
 			borderRadius = 8,
 			editable = true,
 			textAlign = 'left',
-			isValid = true,
 			inline = false,
 			noShow = false,
 			borderType = 'box',
-			validate = true,
+			error = false,
 			borderColorFocused = 'var(--core-link-primary)',
 			borderColorBlurred = 'var(--core-outline-primary)',
 			borderColorError = 'var(--feedback-warning)',
@@ -72,7 +70,6 @@ export const TextField = React.memo(
 		const input = useRef<HTMLInputElement>(null);
 		const [text, setText] = useState<string>(value);
 		const [isFocused, setIsFocused] = useState<boolean>(focused);
-		const [valid, setValid] = useState<boolean>(isValid);
 		const [show, setShow] = useState<boolean>(false);
 
 		// sync the input focus state from the controlled prop
@@ -91,33 +88,16 @@ export const TextField = React.memo(
 			setText(value);
 		}, [value]);
 
-		// sync the validation state from the controlled prop
-		useEffect(() => {
-			setValid(isValid);
-		}, [isValid]);
-
-		// validate the current text and notify consumers when the result changes
-		const textIsValid = useCallback(
-			(entry: string) => {
-				if (!validate) return;
-				const ok = entry.length > 1 || entry === '';
-				setValid(ok);
-				if (valid !== ok) onValidate(ok);
-			},
-			[onValidate, valid, validate],
-		);
-
 		// clear the field value and optionally preserve focus
 		const handleClearTextField = useCallback(() => {
 			if (disabled || input.current?.value === '') return;
 			if (input?.current) {
 				if (!clearBlurs) input.current.focus();
 				setText('');
-				textIsValid('');
 			}
 			onChange('');
 			onClear();
-		}, [disabled, clearBlurs, onChange, onClear, textIsValid]);
+		}, [disabled, clearBlurs, onChange, onClear]);
 
 		// update local and external state when the input value changes
 		const handleValueChange = useCallback(
@@ -125,18 +105,16 @@ export const TextField = React.memo(
 				if (disabled) return;
 				setText(newValue);
 				onChange(newValue);
-				if (!valid) textIsValid(text);
 			},
-			[onChange, textIsValid, text, valid, disabled],
+			[onChange, disabled],
 		);
 
 		// validate and report the final value when the input loses focus
 		const handleBlur = useCallback(() => {
 			if (disabled) return;
-			textIsValid(text);
 			setIsFocused(false);
 			onBlur(text);
-		}, [text, onBlur, textIsValid, disabled]);
+		}, [text, onBlur, disabled]);
 
 		// handle enter-key submission and forward keyboard events
 		const handleKeyDown = useCallback(
@@ -203,19 +181,17 @@ export const TextField = React.memo(
 		// resolve the border color from focus and validation state
 		const setBorderColor = useMemo(() => {
 			if (borderType === 'none') return 'transparent';
-			if (validate && !valid)
-				return borderColorError ?? borderColorBlurred ?? 'transparent';
+			if (error) return borderColorError ?? borderColorBlurred ?? 'transparent';
 			if (isFocused)
 				return borderColorFocused ?? borderColorBlurred ?? 'transparent';
 			return borderColorBlurred ?? 'transparent';
 		}, [
 			borderType,
-			valid,
+			error,
 			isFocused,
 			borderColorError,
 			borderColorFocused,
 			borderColorBlurred,
-			validate,
 		]);
 
 		// resolve the border rendering style for box and underline modes
@@ -227,18 +203,10 @@ export const TextField = React.memo(
 
 		// resolve the input text color from validation and focus state
 		const textColor = useMemo(() => {
-			if (validate && !valid)
-				return textColorError ?? 'var(--core-text-primary)';
+			if (error) return textColorError ?? 'var(--core-text-primary)';
 			if (isFocused) return textColorFocused ?? 'var(--core-text-primary)';
 			return textColorBlurred ?? 'var(--core-text-primary)';
-		}, [
-			isFocused,
-			valid,
-			textColorError,
-			textColorFocused,
-			textColorBlurred,
-			validate,
-		]);
+		}, [isFocused, error, textColorError, textColorFocused, textColorBlurred]);
 
 		// resolve the text alignment fallback
 		const setTextAlign = useMemo(() => {
@@ -422,8 +390,7 @@ export const TextField = React.memo(
 			prevProps.labelColor === nextProps.labelColor &&
 			prevProps.labelSize === nextProps.labelSize &&
 			prevProps.focused === nextProps.focused &&
-			prevProps.isValid === nextProps.isValid &&
-			prevProps.validate === nextProps.validate &&
+			prevProps.error === nextProps.error &&
 			prevProps.disabled === nextProps.disabled &&
 			prevProps.label === nextProps.label &&
 			prevProps.inputType === nextProps.inputType &&

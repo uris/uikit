@@ -31,6 +31,15 @@ export default defineConfig({
 		projects: [
 			{
 				test: {
+					name: 'unit',
+					environment: 'jsdom',
+					globals: true,
+					include: ['src/**/*.test.{ts,tsx}', 'src/**/*.spec.{ts,tsx}'],
+					exclude: ['**/*.stories.{ts,tsx}', '**/*.bench.{ts,tsx}', '**/*.mdx'],
+				},
+			},
+			{
+				test: {
 					name: 'benchmarks',
 					environment: 'jsdom',
 					globals: true,

@@ -22,12 +22,7 @@ export function FunnelSans() {
 	};
 
 	return (
-		<FlexDiv
-			width={'fill'}
-			height={'fit'}
-			align={'start'}
-			justify={'start'}
-		>
+		<FlexDiv width={'fill'} height={'fit'} align={'start'} justify={'start'}>
 			<TabBar
 				options={tabs}
 				selectedValue={style}

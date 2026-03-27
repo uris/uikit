@@ -19,6 +19,7 @@
 	border: var(--label-border-size) solid var(--label-border-color);
 	width: min-content;
 	cursor: pointer;
+	white-space: nowrap;
 	appearance: none;
 	-webkit-appearance: none;
 	background-image: none;

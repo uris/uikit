@@ -1,5 +1,11 @@
 export { IndexedDB } from './IndexedDB/IndexedDB';
 export type { IndexedDBOptions } from './IndexedDB/IndexedDB';
+export { MdBuffer } from './MDStreamBuffer/MdStreamBuffer';
+export type {
+	MarkdownAutoCloseRule,
+	MarkdownStreamBufferOptions,
+	MarkdownStreamBufferSnapshot,
+} from './MDStreamBuffer/_types';
 export { SSEConnection } from './SSEConnection/SSEConnection';
 export { WSConnection } from './WSConnection/WSConnection';
 export type {

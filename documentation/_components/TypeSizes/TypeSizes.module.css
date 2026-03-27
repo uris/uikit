@@ -1,6 +1,6 @@
 .wrapper {
 	composes: columnStart from "../../../src/utils/styling/flexBox.module.css";
-	border-top: 1px solid var(--core-outline-primary);
+	border-top: 0px solid var(--core-outline-primary);
 	width: 100%;
 	gap: 8px;
 	padding: 8px 0 0 0 !important;

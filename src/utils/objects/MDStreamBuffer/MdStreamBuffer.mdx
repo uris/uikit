@@ -1,0 +1,168 @@
+import {Meta, Unstyled} from '@storybook/addon-docs/blocks';
+import {RenderSource} from '../../../../documentation/_components/RenderSource/RenderSource';
+import {FlexDiv} from '../../../components/FlexDiv';
+import NoteSection from '../../../../documentation/_components/Notice/Notice';
+
+<Meta title="Utils/Markdown Buffer Class" />
+
+<FlexDiv width={'fill'} height={'fill'} align={'center'}>
+	<FlexDiv width={'fill'} maxWidth={760} height={'auto'}>
+		<Unstyled>
+			<NoteSection>
+				`MdBuffer` is a low-level utility for streamed markdown. It buffers raw chunks, emits parser-safe "healthy" markdown on animation frames, and can optimistically complete partial markdown structures while withholding ambiguous ones.
+			</NoteSection>
+
+			# MdBuffer Class
+			Use `MdBuffer` when markdown streams in and you want to render structurally complete jsx/html avoiding ui "jitter".
+
+			## Import
+			<RenderSource language={'tsx'}>
+            ```
+            import { MdBuffer } from '@apple-pie/slice/utils/objects';
+            ```
+			</RenderSource>
+
+			## What it does
+			- stores the raw markdown stream
+			- emits "healthy" markdown snapshots through `onFlush`
+			- batches normal updates on `requestAnimationFrame`
+			- commits stable line-based prefixes so only the active tail keeps being reparsed
+			- supports optional link/image handling
+			- supports optional HTML passthrough or best-effort stripping
+			- can auto-complete and clean itself up when an end-of-stream token is received
+
+            ## Performance note
+            #### Parsing
+            `MdBuffer` does not keep reparsing the full stream. When the active tail is healthy and ends on a newline boundary, the buffer promotes a stable prefix internally and only keeps parsing the remaining tail. This keeps parsing streams cheap.
+            #### Rendering
+            `MdBuffer` use `requestAnimationFrame` to trigger buffer flushes meaning renders will be clamped to a max of 60 per second. Flushing the buffer only happens when the buffer receives new content that has not been flushed.
+            
+            
+            ## Constructor options
+			<table style={{width: '100%'}}>
+				<colgroup>
+					<col style={{width: '1%'}} />
+					<col style={{width: '24%'}} />
+					<col style={{width: '98%'}} />
+				</colgroup>
+				<thead>
+					<tr>
+						<th className={'left'}>Option</th>
+						<th className={'left'}>Type</th>
+						<th className={'left'}>Description</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr><td><code>endOfStreamToken</code></td><td><code>string</code></td><td>Optional token that, when received in `append()`, is discarded before the buffer auto-completes, flushes, and resets itself.</td></tr>
+					<tr><td><code>htmlHandling</code></td><td><code>'ignore' | 'strip'</code></td><td>HTML handling mode. `ignore` passes tags through untouched. `strip` removes tag-shaped HTML from the healthy output.</td></tr>
+					<tr><td><code>includeLinksAndImages</code></td><td><code>boolean</code></td><td>When `true`, applies the built-in link and image ambiguity rules.</td></tr>
+					<tr><td><code>onFlush</code></td><td><code>{`(snapshot) => void`}</code></td><td>Called whenever the buffer emits a raw/healthy snapshot.</td></tr>
+					<tr><td><code>requestFrame</code></td><td><code>{`(callback) => number`}</code></td><td>Optional requestAnimationFrame override.</td></tr>
+					<tr><td><code>cancelFrame</code></td><td><code>{`(handle) => void`}</code></td><td>Optional cancelAnimationFrame override.</td></tr>
+					<tr><td><code>watchedMarkers</code></td><td><code>MarkdownAutoCloseRule[]</code></td><td>Optional custom marker rules. Defaults cover headings, lists, task lists, blockquotes, horizontal rules, emphasis, code, and similar markdown structures.</td></tr>
+				</tbody>
+			</table>
+
+			## Snapshot shape
+			Each flush emits:
+			<table style={{width: '100%'}}>
+				<colgroup>
+					<col style={{width: '1%'}} />
+					<col style={{width: '22%'}} />
+					<col style={{width: '98%'}} />
+				</colgroup>
+				<thead>
+					<tr>
+						<th className={'left'}>Field</th>
+						<th className={'left'}>Type</th>
+						<th className={'left'}>Description</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr><td><code>raw</code></td><td><code>string</code></td><td>The full raw buffered markdown.</td></tr>
+					<tr><td><code>healthy</code></td><td><code>string</code></td><td>The parser-safe markdown output derived from the current raw buffer.</td></tr>
+					<tr><td><code>reason</code></td><td><code>'raf' | 'manual' | 'complete'</code></td><td>Why the snapshot was emitted.</td></tr>
+					<tr><td><code>isComplete</code></td><td><code>boolean</code></td><td>True after the buffer has been completed.</td></tr>
+				</tbody>
+			</table>
+
+			## Basic usage
+			<RenderSource language={'tsx'}>
+            ```
+            import { useEffect, useRef, useState } from 'react';
+            import { useMessage } from '@apple-pie/slice/stores';
+            import { MdBuffer } from '@apple-pie/slice/utils/objects';
+
+            function fakeParseMarkdown(markdown: string) {
+                // your app would replace this with react-markdown or another renderer
+                return markdown;
+            }
+
+            export function StreamingMarkdownView() {
+                const message = useMessage<string>('message');
+                const bufferRef = useRef<MdBuffer | null>(null);
+                const [rendered, setRendered] = useState('');
+
+                useEffect(() => {
+                    bufferRef.current = new MdBuffer({
+                        includeLinksAndImages: true,
+                        onFlush: ({ healthy }) => {
+                            setRendered(fakeParseMarkdown(healthy));
+                        },
+                    });
+
+                    return () => {
+                        bufferRef.current.dispose();
+                        bufferRef.current = null;
+                    };
+                }, []);
+
+                useEffect(() => {
+                    bufferRef.current?.append(message);
+                }, [message]);
+
+                return <div>{rendered}</div>;
+            }
+            ```
+			</RenderSource>
+
+			## Manual flush and completion
+			Use `flush()` to emit immediately without completing the stream, and `complete()` to emit a final snapshot.
+
+			<RenderSource language={'tsx'}>
+            ```
+            buffer.append('This is **par');
+            buffer.flush(); // emits now
+            
+            buffer.append('tial');
+            buffer.complete(); // emits final snapshot
+            ```
+			</RenderSource>
+
+			## End of stream token
+			If `endOfStreamToken` is set, `append()` checks for it before normal buffering. The token is removed, the buffer completes, emits its final snapshot, and then resets itself.
+
+			<RenderSource language={'tsx'}>
+            ```
+            const buffer = new MdBuffer({
+                endOfStreamToken: '<eos>',
+                onFlush: ({ healthy, isComplete }) => {
+                    console.log(healthy, isComplete);
+                },
+            });
+            
+            buffer.append('Hello **wor<eos>');
+            ```
+			</RenderSource>
+
+			## Cleanup
+			Call `dispose()` when you are done with the buffer. This clears buffered state and cancels any pending animation-frame flush.
+
+			<RenderSource language={'tsx'}>
+            ```
+            buffer.dispose();
+            ```
+			</RenderSource>
+		</Unstyled>
+	</FlexDiv>
+</FlexDiv>

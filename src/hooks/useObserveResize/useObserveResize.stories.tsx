@@ -26,12 +26,7 @@ function UseObserveResizeDemo(props: Readonly<ResizeDemoProps>) {
 			direction={'column'}
 			gap={12}
 		>
-			<FlexDiv
-				direction={'column'}
-				align={'center'}
-				height={'auto'}
-				gap={12}
-			>
+			<FlexDiv direction={'column'} align={'center'} height={'auto'} gap={12}>
 				Change Width
 				<Slider
 					width={width}

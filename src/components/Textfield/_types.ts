@@ -18,8 +18,7 @@ type TextFieldBaseProps = {
 	onPaste?: (value: React.ClipboardEvent<HTMLInputElement>) => void;
 	onClear?: () => void;
 	onAction?: () => void;
-	onValidate?: (state: boolean) => void;
-	isValid?: boolean;
+	error?: boolean;
 	inline?: boolean;
 	maxLength?: number;
 	size?: { width?: number | string; height?: number | string };
@@ -37,7 +36,6 @@ type TextFieldBaseProps = {
 	textColorPlaceholder?: string;
 	textColorDisabled?: string;
 	labelColor?: string;
-	validate?: boolean;
 	iconLeft?: { name?: string; size?: number; color?: string };
 	clearButton?: { size?: number } | null;
 	clearBlurs?: boolean;

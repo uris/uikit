@@ -89,14 +89,10 @@ export const TextArea = React.memo((props: TextAreaProps) => {
 	}, [onFocus]);
 
 	// commit the latest value and notify blur listeners
-	const handleBlur = useCallback(
-		(content: any) => {
-			handleChange(content);
-			setIsFocused(false);
-			onBlur(ref.current?.value ?? '');
-		},
-		[handleChange, onBlur],
-	);
+	const handleBlur = useCallback(() => {
+		setIsFocused(false);
+		onBlur(ref.current?.value ?? '');
+	}, [onBlur]);
 
 	// submit the current value and optionally clear the field
 	const handleSubmit = useCallback(
@@ -130,10 +126,10 @@ export const TextArea = React.memo((props: TextAreaProps) => {
 		return `${value}px`;
 	}, []);
 
-	// resolve the current border color from focus and validation state
+	// resolve the current border color from focus and error state
 	const setBorderColor = useMemo(() => {
-		if (isFocused) return 'var(--core-link-primary)';
-		if (error) return 'var(--feedback-warning)';
+		if (border && isFocused) return 'var(--core-link-primary)';
+		if (border && error) return 'var(--feedback-warning)';
 		return border ? 'var(--core-outline-primary)' : 'transparent';
 	}, [isFocused, error, border]);
 
@@ -182,7 +178,7 @@ export const TextArea = React.memo((props: TextAreaProps) => {
 			id={divId}
 			className={`${css.wrapper}${divClass}`}
 			style={{ ...divStyle, ...cssVars }}
-			onBlur={() => handleBlur(text)}
+			onBlur={() => handleBlur()}
 			onFocus={() => handleFocus()}
 			{...rest}
 		>
