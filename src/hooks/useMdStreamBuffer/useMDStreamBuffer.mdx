@@ -1,0 +1,88 @@
+import {Meta, Unstyled} from '@storybook/addon-docs/blocks';
+import {RenderSource} from '../../../documentation/_components/RenderSource/RenderSource';
+import {FlexDiv} from '../../components/FlexDiv';
+
+<Meta title="Hooks/useMdStreamBuffer" />
+
+<FlexDiv width={"fill"} height={"fill"} align={"center"}>
+    <FlexDiv width={"fill"} maxWidth={760} height={"auto"}>
+        <Unstyled>
+        # useMDStreamBuffer
+        React hook wrapper around `MdBuffer`. The `MdBuffer` utility transforms partial markdown streams into "healthy" markdown ready for rendering without re-render flickers. The hook manages the buffer lifecycle for you and exposes the current healthy markdown output plus the core buffer actions.
+            
+        ## Not a Parser
+        `MdBuffer` is not a markdown to react parser. It simply feeds a parser like [react-marked](https://www.npmjs.com/package/react-markdown) or [marked](https://www.npmjs.com/package/marked) "healthy" markdown for efficient parsing and rendering. See [MdBuffer](/docs/utils-markdown-buffer-class--docs) class for more details.
+            
+        ## Signature
+        `useMDStreamBuffer(options?)`
+
+        ## Parameters
+        <table style={{width: '100%'}}>
+          <colgroup>
+              <col style={{width: '1%'}} />
+              <col style={{width: 'auto'}} />
+              <col style={{width: '1%'}} />
+              <col style={{width: '50%'}} />
+          </colgroup>
+          <thead>
+            <tr>
+              <th>Param</th>
+              <th>Type</th>
+              <th>Default</th>
+              <th>Description</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td><code>options</code></td><td><code>MarkdownStreamBufferOptions</code></td><td><code>{`{}`}</code></td><td>Passed through to the underlying `MdBuffer` when the hook mounts.</td></tr>
+          </tbody>
+        </table>
+
+        ## Returns
+        <table style={{width: '100%'}}>
+          <colgroup>
+              <col style={{width: '1%'}} />
+              <col style={{width: 'auto'}} />
+              <col style={{width: '50%'}} />
+          </colgroup>
+          <thead>
+            <tr>
+              <th>Return</th>
+              <th>Type</th>
+              <th>Description</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td><code>raw</code></td><td><code>string</code></td><td>Current raw markdown accumulated by the buffer.</td></tr>
+            <tr><td><code>healthy</code></td><td><code>string</code></td><td>Current parser-safe markdown output.</td></tr>
+            <tr><td><code>isComplete</code></td><td><code>boolean</code></td><td>Whether the current stream has been completed.</td></tr>
+            <tr><td><code>append</code></td><td><code>{`(value: string) => void`}</code></td><td>Appends the next raw markdown chunk.</td></tr>
+            <tr><td><code>flush</code></td><td><code>{`() => MarkdownStreamBufferSnapshot | undefined`}</code></td><td>Forces an immediate flush.</td></tr>
+            <tr><td><code>complete</code></td><td><code>{`() => MarkdownStreamBufferSnapshot | undefined`}</code></td><td>Completes the stream and emits the final snapshot.</td></tr>
+            <tr><td><code>reset</code></td><td><code>{`() => void`}</code></td><td>Clears the current buffer state.</td></tr>
+          </tbody>
+        </table>
+
+        ## Basic example
+        </Unstyled>
+
+        <RenderSource language={"tsx"}>
+        ```
+        import { useEffect } from 'react';
+        import { useMDStreamBuffer } from '@apple-pie/slice';
+
+        function StreamingMarkdown({ chunk }: { chunk: string }) {
+            const { healthy, append } = useMDStreamBuffer({
+                includeLinksAndImages: true,
+            });
+
+            useEffect(() => {
+                if (!chunk) return;
+                append(chunk);
+            }, [chunk, append]);
+
+            return <div>{healthy}</div>;
+        }
+        ```
+        </RenderSource>
+    </FlexDiv>
+</FlexDiv>

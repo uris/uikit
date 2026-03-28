@@ -9,6 +9,7 @@ export {
 } from './useKeyboardShortcuts/useKeyboardShortcuts';
 export { useLastUpdated } from './useLastUpdated/useLastUpdated';
 export { useLocalStore } from './useLocalStore/useLocalStore';
+export { useMDStreamBuffer } from './useMdStreamBuffer/useMdStreamBuffer';
 export {
 	useWindow,
 	FormFactor,
