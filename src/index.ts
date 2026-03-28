@@ -29,6 +29,7 @@ export {
 	useToolTip,
 	useLastUpdated,
 	useLocalStore,
+	useMDStreamBuffer,
 	useWindow,
 	useDoubleClick,
 	useObserveResize,

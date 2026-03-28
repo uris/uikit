@@ -53,12 +53,7 @@ export function MotionSimulation(props: Readonly<MotionSimulationProps>) {
 	}, [objectSize, transition, padding, animate, time, width]);
 
 	return (
-		<FlexDiv
-			width={'fill'}
-			height={'fit'}
-			align={'start'}
-			justify={'start'}
-		>
+		<FlexDiv width={'fill'} height={'fit'} align={'start'} justify={'start'}>
 			<div
 				className={css.wrapper}
 				style={cssVars}

@@ -12,10 +12,10 @@
 	composes: body-l-regular from "../../../src/utils/styling/type.module.css";
 	font-family: "Funnel Sans", sans-serif !important;
 	font-size: 56px !important;
-	letter-spacing: 0.1em;
-	line-height: 1em;
+	letter-spacing: 0.1em !important;
+	line-height: 1em !important;
 	margin-bottom: 6px !important;
-	font-weight: 300;
+	font-weight: 400;
 	color: var(--core-text-special);
 	width: 100%;
 	word-break: break-all;

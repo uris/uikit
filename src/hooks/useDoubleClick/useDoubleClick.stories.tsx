@@ -29,12 +29,7 @@ function UseDoubleClickDemo(props: Readonly<UseDoubleClickDemoProps>) {
 	}
 
 	return (
-		<FlexDiv
-			absolute
-			justify={'center'}
-			align={'center'}
-			direction={'column'}
-		>
+		<FlexDiv absolute justify={'center'} align={'center'} direction={'column'}>
 			<Button
 				label={'Click Or Double Click Me'}
 				variant={'solid'}
