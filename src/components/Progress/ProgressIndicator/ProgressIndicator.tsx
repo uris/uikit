@@ -52,6 +52,7 @@ export function ProgressIndicator(props: Readonly<ProgressIndicatorProps>) {
 			'--pi-position': inline ? 'relative' : 'absolute',
 			'--pi-inset': inline ? 'unset' : '0',
 			'--pi-icon-size': `${size ?? 0}px`,
+			'--pi-display': inline ? 'inline-flex' : 'flex',
 		} as React.CSSProperties;
 	}, [inline, size]);
 

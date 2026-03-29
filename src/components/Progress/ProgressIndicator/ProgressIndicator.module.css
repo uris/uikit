@@ -1,5 +1,6 @@
 .container {
 	composes: column from "../../../utils/styling/flexBox.module.css";
+	display: var(--pi-display) !important;
 	position: var(--pi-position);
 	top: var(--pi-inset);
 	bottom: var(--pi-inset);

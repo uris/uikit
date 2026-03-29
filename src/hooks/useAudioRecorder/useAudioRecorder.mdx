@@ -1,0 +1,111 @@
+import {Meta, Unstyled} from '@storybook/addon-docs/blocks';
+import {RenderSource} from '../../../documentation/_components/RenderSource/RenderSource';
+import {FlexDiv} from '../../components/FlexDiv';
+
+<Meta title="Hooks/useAudioRecorder" />
+
+<FlexDiv width={"fill"} height={"fill"} align={"center"}>
+    <FlexDiv width={"fill"} maxWidth={760} height={"auto"}>
+        <Unstyled>
+        # useAudioRecorder
+        Records audio from a `MediaStream` or a single `MediaStreamTrack` using `MediaRecorder` and returns the finished audio blob plus simple recording state.
+
+        ## Behavior
+        The hook does not request microphone access itself. It records whatever stream or track is passed in, which makes it pair naturally with `useMicrophone`.
+
+        ## Signature
+        `useAudioRecorder(audioStream)`
+
+        ## Parameters
+        <table style={{width: '100%'}}>
+          <colgroup>
+              <col style={{width: '1%'}} />
+              <col style={{width: 'auto'}} />
+              <col style={{width: '1%'}} />
+              <col style={{width: '50%'}} />
+          </colgroup>
+          <thead>
+            <tr>
+              <th>Param</th>
+              <th>Type</th>
+              <th>Default</th>
+              <th>Description</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td><code>audioStream</code></td><td><code>MediaStream | MediaStreamTrack | null | undefined</code></td><td><code>undefined</code></td><td>Audio source to record. A single track is wrapped into a `MediaStream` automatically.</td></tr>
+          </tbody>
+        </table>
+
+        ## Returns
+        <table style={{width: '100%'}}>
+          <colgroup>
+              <col style={{width: '1%'}} />
+              <col style={{width: 'auto'}} />
+              <col style={{width: '50%'}} />
+          </colgroup>
+          <thead>
+            <tr>
+              <th>Return</th>
+              <th>Type</th>
+              <th>Description</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td><code>audioBlob</code></td><td><code>RefObject&lt;Blob | null&gt;</code></td><td>Completed recording blob after `stopRecording()` finishes.</td></tr>
+            <tr><td><code>error</code></td><td><code>Error | null</code></td><td>Last recording error.</td></tr>
+            <tr><td><code>isRecording</code></td><td><code>boolean</code></td><td>Whether recording is currently active.</td></tr>
+            <tr><td><code>recordingSizeMb</code></td><td><code>number</code></td><td>Accumulated recording size in megabytes while recording.</td></tr>
+            <tr><td><code>mimeType</code></td><td><code>string | null</code></td><td>Selected recorder mime type for the current recording.</td></tr>
+            <tr><td><code>resetRecording</code></td><td><code>{`() => void`}</code></td><td>Clears the current recording blob and resets recorder state.</td></tr>
+            <tr><td><code>startRecording</code></td><td><code>{`() => void`}</code></td><td>Starts a new audio recording.</td></tr>
+            <tr><td><code>stopRecording</code></td><td><code>{`() => Promise&lt;Blob | null&gt;`}</code></td><td>Stops the recording and resolves with the finished audio blob.</td></tr>
+          </tbody>
+        </table>
+
+        ## Basic example
+        </Unstyled>
+
+        <RenderSource language={"tsx"}>
+        ```
+        import { useEffect, useState } from 'react';
+        import { useMicrophone, useAudioRecorder } from '@apple-pie/slice';
+
+        function AudioCapture() {
+            const { micStream } = useMicrophone(false);
+            const { isRecording, startRecording, stopRecording } = useAudioRecorder(
+                micStream.current,
+            );
+            const [audioUrl, setAudioUrl] = useState<string | null>(null);
+
+            useEffect(() => {
+                return () => {
+                    if (audioUrl) URL.revokeObjectURL(audioUrl);
+                };
+            }, [audioUrl]);
+
+            return (
+                <div>
+                    <div>Recording: {String(isRecording)}</div>
+                    <button type="button" onClick={() => startRecording()}>
+                        Start
+                    </button>
+                    <button
+                        type="button"
+                        onClick={async () => {
+                            const blob = await stopRecording();
+                            if (!blob) return;
+                            if (audioUrl) URL.revokeObjectURL(audioUrl);
+                            setAudioUrl(URL.createObjectURL(blob));
+                        }}
+                    >
+                        Stop
+                    </button>
+                    {audioUrl && <audio controls src={audioUrl} />}
+                </div>
+            );
+        }
+        ```
+        </RenderSource>
+    </FlexDiv>
+</FlexDiv>

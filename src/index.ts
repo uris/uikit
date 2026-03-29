@@ -30,6 +30,8 @@ export {
 	useLastUpdated,
 	useLocalStore,
 	useMDStreamBuffer,
+	useAudioRecorder,
+	useMicrophone,
 	useWindow,
 	useDoubleClick,
 	useObserveResize,
