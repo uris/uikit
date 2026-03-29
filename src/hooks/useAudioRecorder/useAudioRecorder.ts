@@ -54,7 +54,9 @@ const resolveAudioSource = (audioStream: AudioRecorderSource) => {
 	return audioStream;
 };
 
-const toMediaStream = (audioStream: AudioRecorderSource): MediaStream | null => {
+const toMediaStream = (
+	audioStream: AudioRecorderSource,
+): MediaStream | null => {
 	const source = resolveAudioSource(audioStream);
 	if (!source) return null;
 	if (typeof MediaStream === 'undefined') return null;

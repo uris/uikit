@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import { Button } from '../../components/Button';
 import { FlexDiv } from '../../components/FlexDiv';
 import { Label } from '../../components/Label';
@@ -16,6 +16,7 @@ function UseAudioRecorderDemo(props: Readonly<UseAudioRecorderDemoProps>) {
 	const { microphoneDeviceId, startMuted } = props;
 	const [selectedDeviceId, setSelectedDeviceId] = useState(microphoneDeviceId);
 	const [audioUrl, setAudioUrl] = useState<string | null>(null);
+	const audioUrlRef = useRef<string | null>(null);
 	const {
 		micStream,
 		muted,
@@ -47,19 +48,13 @@ function UseAudioRecorderDemo(props: Readonly<UseAudioRecorderDemoProps>) {
 	}, [refreshMicrophones]);
 
 	useEffect(() => {
-		const blob = audioBlob.current;
-		if (!blob) {
-			setAudioUrl(null);
-			return;
-		}
-
-		const nextAudioUrl = URL.createObjectURL(blob);
-		setAudioUrl(nextAudioUrl);
-
 		return () => {
-			URL.revokeObjectURL(nextAudioUrl);
+			if (audioUrlRef.current) {
+				URL.revokeObjectURL(audioUrlRef.current);
+				audioUrlRef.current = null;
+			}
 		};
-	}, [audioBlob]);
+	}, []);
 
 	const selectedMicLabel = useMemo(() => {
 		const selected = microphones.find(
@@ -160,7 +155,14 @@ function UseAudioRecorderDemo(props: Readonly<UseAudioRecorderDemoProps>) {
 				<Button
 					label={'Stop Recording'}
 					onClick={async () => {
-						await stopRecording();
+						const blob = await stopRecording();
+						if (!blob) return;
+						if (audioUrlRef.current) {
+							URL.revokeObjectURL(audioUrlRef.current);
+						}
+						const nextAudioUrl = URL.createObjectURL(blob);
+						audioUrlRef.current = nextAudioUrl;
+						setAudioUrl(nextAudioUrl);
 					}}
 					state={isRecording ? 'normal' : 'disabled'}
 				/>
@@ -168,6 +170,10 @@ function UseAudioRecorderDemo(props: Readonly<UseAudioRecorderDemoProps>) {
 					label={'Reset Recording'}
 					onClick={() => {
 						resetRecording();
+						if (audioUrlRef.current) {
+							URL.revokeObjectURL(audioUrlRef.current);
+							audioUrlRef.current = null;
+						}
 						setAudioUrl(null);
 					}}
 					state={audioUrl ? 'normal' : 'disabled'}
