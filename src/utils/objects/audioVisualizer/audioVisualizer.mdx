@@ -1,0 +1,132 @@
+import {Meta, Unstyled} from '@storybook/addon-docs/blocks';
+import {RenderSource} from '../../../../documentation/_components/RenderSource/RenderSource';
+import {FlexDiv} from '../../../components/FlexDiv';
+import NoteSection from '../../../../documentation/_components/Notice/Notice';
+
+<Meta title="Utils/AudioVisualizer" />
+
+<FlexDiv width={'fill'} height={'fill'} align={'center'}>
+	<FlexDiv width={'fill'} maxWidth={760} height={'auto'}>
+		<Unstyled>
+			<NoteSection>
+				`AudioVisualizer` watches a live audio stream or track, estimates how strong the audio is, and turns that into a smooth value you can use to scale or animate UI.
+			</NoteSection>
+
+			# AudioVisualizer
+			Use `AudioVisualizer` when you want a microphone bubble, speaking indicator, or any other audio-reactive effect without building your own analyser loop.
+
+			## Import
+			<RenderSource language={'tsx'}>
+            ```
+            import { AudioVisualizer } from '@apple-pie/slice/utils/objects';
+            ```
+			</RenderSource>
+
+			## What it does
+			- accepts a `MediaStream` or `MediaStreamTrack`
+			- samples the incoming audio with Web Audio
+			- turns that into a normalized intensity value between `0` and `1`
+			- maps the intensity into a scale between `minScale` and `maxScale`
+			- updates on every `requestAnimationFrame`
+			- eases between values so the visual does not snap down immediately when someone stops speaking
+
+			## Constructor options
+			<table style={{width: '100%'}}>
+				<colgroup>
+					<col style={{width: '1%'}} />
+					<col style={{width: '24%'}} />
+					<col style={{width: '98%'}} />
+				</colgroup>
+				<thead>
+					<tr>
+						<th className={'left'}>Option</th>
+						<th className={'left'}>Type</th>
+						<th className={'left'}>Description</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr><td><code>fftSize</code></td><td><code>number</code></td><td>How much audio data gets sampled each frame. You usually will not need to touch this unless you are tuning the analyser itself.</td></tr>
+					<tr><td><code>intensityMultiplier</code></td><td><code>number</code></td><td>A simple gain knob. Turn it up if the bubble feels too quiet. Turn it down if it feels too eager.</td></tr>
+					<tr><td><code>peakIntensity</code></td><td><code>number</code></td><td>The level you want to treat as "full" speaking volume. Lower values make `maxScale` easier to reach.</td></tr>
+					<tr><td><code>minScale</code></td><td><code>number</code></td><td>The smallest scale the visual should sit at when there is little or no audio.</td></tr>
+					<tr><td><code>maxScale</code></td><td><code>number</code></td><td>The largest scale the visual should grow to when audio gets strong enough.</td></tr>
+					<tr><td><code>risePerSecond</code></td><td><code>number</code></td><td>How quickly the visual grows when the audio gets louder. Higher feels more reactive. Lower feels smoother.</td></tr>
+					<tr><td><code>releasePerSecond</code></td><td><code>number</code></td><td>How quickly the visual falls back down after the audio drops. Lower values give you a softer, less jittery decay.</td></tr>
+					<tr><td><code>onUpdate</code></td><td><code>{`({ intensity, scale }) => void`}</code></td><td>Called every frame with the latest smoothed intensity and scale values.</td></tr>
+				</tbody>
+			</table>
+
+			## Basic usage
+			<RenderSource language={'tsx'}>
+            ```
+            import { useEffect, useRef, useState } from 'react';
+            import { AudioVisualizer } from '@apple-pie/slice/utils/objects';
+            import { useMicrophone } from '@apple-pie/slice/hooks';
+
+            export function VoiceBubble() {
+                const { micStream } = useMicrophone(false);
+                const visualizerRef = useRef<AudioVisualizer | null>(null);
+                const [scale, setScale] = useState(1);
+
+                useEffect(() => {
+                    if (!micStream.current) return;
+
+                    const visualizer = new AudioVisualizer(micStream.current, {
+                        minScale: 1,
+                        maxScale: 2,
+                        peakIntensity: 0.2,
+                        releasePerSecond: 1.2,
+                        risePerSecond: 4,
+                        onUpdate: ({ scale }) => {
+                            setScale(scale);
+                        },
+                    });
+
+                    visualizerRef.current = visualizer;
+                    visualizer.start();
+
+                    return () => {
+                        visualizer.dispose();
+                        visualizerRef.current = null;
+                    };
+                }, [micStream]);
+
+                return (
+                    <div
+                        style={{
+                            width: 96,
+                            height: 96,
+                            borderRadius: 999,
+                            background: '#fff',
+                            transform: `scale(${scale})`,
+                            boxShadow: '0 18px 48px rgba(255, 92, 61, 0.28)',
+                        }}
+                    />
+                );
+            }
+            ```
+			</RenderSource>
+
+			## Start, stop, and cleanup
+			Use `start()` to begin the analyser loop, `stop()` to pause it, and `dispose()` when you are fully done.
+
+			<RenderSource language={'tsx'}>
+            ```
+            visualizer.start();
+            visualizer.stop();
+            visualizer.dispose();
+            ```
+			</RenderSource>
+
+			## Reading values directly
+			If you do not want to use `onUpdate`, you can read the latest values directly.
+
+			<RenderSource language={'tsx'}>
+            ```
+            const intensity = visualizer.getIntensity();
+            const scale = visualizer.getScale();
+            ```
+			</RenderSource>
+		</Unstyled>
+	</FlexDiv>
+</FlexDiv>

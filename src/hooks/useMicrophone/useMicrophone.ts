@@ -156,7 +156,6 @@ export function useMicrophone(
 			micTrack.current.enabled = !mutedRef.current;
 			return micStream.current;
 		} finally {
-			console.log('finally request');
 			setIsRequesting(false);
 		}
 	}, [
@@ -206,7 +205,6 @@ export function useMicrophone(
 				);
 				console.warn('Error switching microphone:', err);
 			} finally {
-				console.log('finally set');
 				setIsRequesting(false);
 			}
 		},

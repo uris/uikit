@@ -37,6 +37,9 @@ export {
 	useObserveResize,
 } from './hooks';
 
+export { AudioBubble } from './components/AudioBubble/index';
+export type { AudioBubbleProps } from './components/AudioBubble/index';
+
 export { Avatar } from './components/Avatar/index';
 export type { AvatarProps } from './components/Avatar/index';
 

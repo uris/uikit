@@ -1,0 +1,82 @@
+import {Meta, Unstyled} from '@storybook/addon-docs/blocks';
+import {FlexDiv} from '../FlexDiv';
+import * as AudioBubbleStories from './AudioBubble.stories';
+import {RenderSource} from '../../../documentation/_components/RenderSource/RenderSource';
+
+<Meta of={AudioBubbleStories} />
+
+<FlexDiv width={"fill"} height={"fill"} align={"center"}>
+    <FlexDiv width={"fill"} maxWidth={760} height={"auto"}>
+        <Unstyled>
+        # AudioBubble
+        Renders a simple circular bubble that reacts to live audio using the `AudioVisualizer` utility.
+        It is meant for speaking indicators, voice orbs, or other UI that should react to audio activity.
+
+        ## Base element
+        `HTMLDivElement`
+
+        ## Interface
+        `AudioBubbleProps`
+
+        ## Props
+        <table style={{width: '100%'}}>
+          <colgroup>
+            <col style={{width: '1%'}} />
+            <col style={{width: '1%'}} />
+            <col style={{width: '1%'}} />
+            <col style={{width: '97%'}} />
+          </colgroup>
+          <thead>
+            <tr>
+              <th className={"left"}>Prop</th>
+              <th className={"left"}>Type</th>
+              <th className={"left"}>Default</th>
+              <th>Description</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td><code>audioStream</code></td><td><code>{`MediaStream | MediaStreamTrack | null`}</code></td><td><code>undefined</code></td><td>The live audio source to watch. Pass a stream or a single track.</td></tr>
+            <tr><td><code>playing</code></td><td><code>boolean</code></td><td><code>true</code></td><td>Turns the pulsing behavior on or off.</td></tr>
+            <tr><td><code>size</code></td><td><code>number</code></td><td><code>64</code></td><td>The base size of the bubble in pixels.</td></tr>
+            <tr><td><code>backgroundColor</code></td><td><code>string</code></td><td><code>theme text light</code></td><td>The fill color of the bubble.</td></tr>
+            <tr><td><code>glow</code></td><td><code>boolean</code></td><td><code>true</code></td><td>Whether to show the soft outer glow.</td></tr>
+            <tr><td><code>glowColor</code></td><td><code>string</code></td><td><code>light theme color with opacity</code></td><td>The color used for the glow shadow.</td></tr>
+            <tr><td><code>glowSize</code></td><td><code>number</code></td><td><code>48</code></td><td>How large the glow should feel around the bubble.</td></tr>
+            <tr><td><code>minScale</code></td><td><code>number</code></td><td><code>1</code></td><td>The resting scale when the audio is quiet.</td></tr>
+            <tr><td><code>maxScale</code></td><td><code>number</code></td><td><code>2</code></td><td>The largest size the bubble should reach.</td></tr>
+            <tr><td><code>intensity</code></td><td><code>number</code></td><td><code>2.2</code></td><td>A simple sensitivity knob. Higher values make the bubble react more strongly.</td></tr>
+            <tr><td><code>peakIntensity</code></td><td><code>number</code></td><td><code>0.2</code></td><td>The audio level you want to treat as "full" speaking volume. Lower values make max scale easier to hit.</td></tr>
+            <tr><td><code>risePerSeconds</code></td><td><code>number</code></td><td><code>4</code></td><td>How quickly the bubble grows when audio gets louder.</td></tr>
+            <tr><td><code>ReleasePerSeconds</code></td><td><code>number</code></td><td><code>1.5</code></td><td>How quickly the bubble settles back down after the audio drops.</td></tr>
+            <tr><td><code>...divAttributes</code></td><td><code>{`HTMLAttributes<HTMLDivElement>`}</code></td><td><code>-</code></td><td>Native `div` props pass through, including `className`, `style`, `id`, and `data-*` attributes.</td></tr>
+          </tbody>
+        </table>
+
+        ## Code Example
+        </Unstyled>
+
+        <RenderSource language={"tsx"}>
+```
+import { AudioBubble } from '@apple-pie/slice';
+import { useMicrophone } from '@apple-pie/slice/hooks';
+
+export function AudioBubbleExample() {
+    const { micStream } = useMicrophone(false);
+
+    return (
+        <AudioBubble
+            audioStream={micStream.current}
+            playing={true}
+            size={72}
+            backgroundColor="#ffffff"
+            glowColor="rgba(255, 92, 61, 0.28)"
+            minScale={1}
+            maxScale={2}
+            peakIntensity={0.2}
+        />
+    );
+}
+```
+        </RenderSource>
+    </FlexDiv>
+</FlexDiv>

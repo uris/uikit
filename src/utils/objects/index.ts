@@ -1,5 +1,10 @@
 export { IndexedDB } from './IndexedDB/IndexedDB';
 export type { IndexedDBOptions } from './IndexedDB/IndexedDB';
+export { AudioVisualizer } from './audioVisualizer/audioVisualizer';
+export type {
+	AudioVisualizerOptions,
+	AudioVisualizerSource,
+} from './audioVisualizer/audioVisualizer';
 export { MdBuffer } from './MDStreamBuffer/MdStreamBuffer';
 export type {
 	MarkdownAutoCloseRule,

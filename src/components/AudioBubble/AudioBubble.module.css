@@ -1,0 +1,20 @@
+.wrapper {
+	composes: row from "../../utils/styling/flexBox.module.css";
+	min-height: var(--ab-size);
+	min-width: var(--ab-size);
+	height: var(--ab-size);
+	width: var(--ab-size);
+	overflow: visible;
+}
+
+.bubble {
+	composes: row from "../../utils/styling/flexBox.module.css";
+	min-height: var(--ab-size);
+	min-width: var(--ab-size);
+	height: var(--ab-size);
+	width: var(--ab-size);
+	border-radius: 100%;
+	background: var(--ab-bg-color);
+	box-shadow: var(--ab-box-shadow);
+	transition: transform 40ms linear 0s;
+}
