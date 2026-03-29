@@ -12,6 +12,13 @@ type UseStreamToMp3Return = {
 	stopRecording: () => Promise<Blob | null>;
 };
 
+type AudioRecorderSource =
+	| MediaStream
+	| MediaStreamTrack
+	| RefObject<MediaStream | MediaStreamTrack | null>
+	| null
+	| undefined;
+
 /**
  * Get supported audio mime type - perfer mpeg
  */
@@ -39,17 +46,24 @@ const getSupportedAudioMimeType = (): string | null => {
 /**
  * Create a reliable stream from a track or stream
  */
-const toMediaStream = (
-	audioStream: MediaStream | MediaStreamTrack | null | undefined,
-): MediaStream | null => {
+const resolveAudioSource = (audioStream: AudioRecorderSource) => {
 	if (!audioStream) return null;
+	if (typeof audioStream === 'object' && 'current' in audioStream) {
+		return audioStream.current;
+	}
+	return audioStream;
+};
+
+const toMediaStream = (audioStream: AudioRecorderSource): MediaStream | null => {
+	const source = resolveAudioSource(audioStream);
+	if (!source) return null;
 	if (typeof MediaStream === 'undefined') return null;
-	if (audioStream instanceof MediaStream) return audioStream;
-	return new MediaStream([audioStream]);
+	if (source instanceof MediaStream) return source;
+	return new MediaStream([source]);
 };
 
 export function useAudioRecorder(
-	audioStream: MediaStream | MediaStreamTrack | null | undefined,
+	audioStream: AudioRecorderSource,
 ): UseStreamToMp3Return {
 	const audioBlob = useRef<Blob | null>(null);
 	const mediaRecorderRef = useRef<MediaRecorder | null>(null);

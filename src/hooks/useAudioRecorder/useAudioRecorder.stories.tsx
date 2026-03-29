@@ -36,7 +36,7 @@ function UseAudioRecorderDemo(props: Readonly<UseAudioRecorderDemoProps>) {
 		resetRecording,
 		startRecording,
 		stopRecording,
-	} = useAudioRecorder(micStream.current);
+	} = useAudioRecorder(micStream);
 
 	useEffect(() => {
 		setSelectedDeviceId(microphoneDeviceId);
