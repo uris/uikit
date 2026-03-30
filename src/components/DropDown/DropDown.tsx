@@ -30,8 +30,8 @@ function DropDownComponent<T = string>(props: DropDownProps<T>) {
 		options = [],
 		placeholder = true,
 		borderRadius = 4,
-		backgroundColor,
-		bgColor = 'transparent',
+		backgroundColor = 'var(--core-surface-secondary)',
+		bgColor = 'var(--core-surface-secondary)',
 		iconColor = 'var(--core-text-primary)',
 		textColor = 'var(--core-text-primary)',
 		borderWidth,
@@ -47,6 +47,7 @@ function DropDownComponent<T = string>(props: DropDownProps<T>) {
 		error = false,
 		gap = 8,
 		onChange = () => null,
+		onOption = () => null,
 		...divAttributes
 	} = props;
 	const { id: divId, className, style, ...rest } = divAttributes;
@@ -100,9 +101,12 @@ function DropDownComponent<T = string>(props: DropDownProps<T>) {
 			const label = options[i].label || 'Select an option';
 			setIndex(i);
 			setSelectedText(label);
-			if (index !== i) onChange(i, options[i]);
+			if (index !== i) {
+				onChange(i, options[i]);
+				onOption(options[i]);
+			}
 		},
-		[options, index, onChange],
+		[options, index, onChange, onOption],
 	);
 
 	// derive the rendered option elements from the options list

@@ -37,6 +37,7 @@ type DropDownBaseProps<T = string> = {
 	gap?: number;
 	size?: 'xs' | 's' | 'm' | 'l';
 	onChange?: (index: number, option: DropDownOption<T>) => void;
+	onOption?: (option: DropDownOption<T>) => void;
 };
 
 export type DropDownProps<T = string> = Omit<

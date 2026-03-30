@@ -1,7 +1,10 @@
 import type { RefObject } from 'react';
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import type { DropDownOption } from '../../components/DropDown';
 
-type UseMicrophoneReturn = {
+export type MicOption = { id: string };
+
+export type UseMicrophoneReturn = {
 	micStream: RefObject<MediaStream | null>;
 	micTrack: RefObject<MediaStreamTrack | null>;
 	muted: boolean;
@@ -9,13 +12,16 @@ type UseMicrophoneReturn = {
 	isRequesting: boolean;
 	error: Error | null;
 	microphones: MediaDeviceInfo[];
+	micOptions: DropDownOption<MicOption>[];
 	requestMicrophone: () => Promise<MediaStream | null>;
 	stopMicrophone: () => void;
 	muteMic: () => boolean;
 	unmuteMic: () => boolean;
 	toggleMute: () => void;
 	refreshMicrophones: () => Promise<MediaDeviceInfo[]>;
-	setMicrophone: (deviceId: string) => Promise<void>;
+	setMicrophone: (
+		deviceId: string | DropDownOption<MicOption>,
+	) => Promise<void>;
 };
 
 export function useMicrophone(
@@ -28,6 +34,7 @@ export function useMicrophone(
 	const mountedRef = useRef<boolean>(true);
 	const initializedRef = useRef<boolean>(false);
 	const [microphones, setMicrophones] = useState<MediaDeviceInfo[]>([]);
+	const [micOptions, setMicOptions] = useState<DropDownOption<MicOption>[]>([]);
 	const [muted, setMuted] = useState<boolean>(startMuted);
 	const [isRequesting, setIsRequesting] = useState<boolean>(false);
 	const [error, setError] = useState<Error | null>(null);
@@ -100,8 +107,10 @@ export function useMicrophone(
 
 	// constraint to microphone and specific device if any
 	const constraints = useCallback(
-		(deviceId?: string) => {
-			const id = deviceId ?? microphoneDeviceId ?? undefined;
+		(deviceId?: string, usePreferredDevice = true) => {
+			const id = usePreferredDevice
+				? (deviceId ?? microphoneDeviceId ?? undefined)
+				: deviceId;
 			return {
 				audio: {
 					deviceId: id ? { exact: id } : undefined,
@@ -109,6 +118,22 @@ export function useMicrophone(
 			};
 		},
 		[microphoneDeviceId],
+	);
+
+	// shared request path so the hook can explicitly switch to the default device when needed
+	const requestStream = useCallback(
+		async (deviceId?: string, usePreferredDevice = true) => {
+			micStream.current = await navigator.mediaDevices.getUserMedia(
+				constraints(deviceId, usePreferredDevice),
+			);
+			micTrack.current = getMicTrack();
+			micTrack.current.enabled = !mutedRef.current;
+			if (!mutedRef.current) {
+				await waitForTrackToBecomeActive(micTrack.current);
+			}
+			return micStream.current;
+		},
+		[constraints, getMicTrack, waitForTrackToBecomeActive],
 	);
 
 	// request a media stream and fall back to generic constraints if needed
@@ -127,15 +152,7 @@ export function useMicrophone(
 		stopMicStream();
 
 		try {
-			micStream.current = await navigator.mediaDevices.getUserMedia(
-				constraints(),
-			);
-			micTrack.current = getMicTrack();
-			micTrack.current.enabled = !mutedRef.current;
-			if (!mutedRef.current) {
-				await waitForTrackToBecomeActive(micTrack.current);
-			}
-			return micStream.current;
+			return await requestStream();
 		} catch (error) {
 			const shouldRetry =
 				(error instanceof DOMException &&
@@ -149,23 +166,11 @@ export function useMicrophone(
 				setError(nextError);
 				throw nextError;
 			}
-			micStream.current = await navigator.mediaDevices.getUserMedia({
-				audio: true,
-			});
-			micTrack.current = getMicTrack();
-			micTrack.current.enabled = !mutedRef.current;
-			return micStream.current;
+			return await requestStream(undefined, false);
 		} finally {
 			setIsRequesting(false);
 		}
-	}, [
-		constraints,
-		getMicTrack,
-		hasMediaSupport,
-		stopMicStream,
-		waitForPaint,
-		waitForTrackToBecomeActive,
-	]);
+	}, [hasMediaSupport, requestStream, stopMicStream, waitForPaint]);
 
 	// get a list of available microphones
 	const refreshMicrophones = useCallback(async () => {
@@ -173,32 +178,31 @@ export function useMicrophone(
 		try {
 			const devices = await navigator.mediaDevices.enumerateDevices();
 			const mics = devices.filter((device) => device.kind === 'audioinput');
+			const options: DropDownOption<MicOption>[] = mics.map((mic) => ({
+				value: { id: mic.deviceId },
+				label: mic.label,
+			}));
 			setMicrophones(mics);
+			setMicOptions(options);
 			return devices.filter((device) => device.kind === 'audioinput');
 		} catch (error) {
 			console.warn('Error getting microphone devices:', error);
 			setMicrophones([]);
+			setMicOptions([]);
 			return [];
 		}
 	}, [hasMediaSupport]);
 
 	// switch microphones
 	const setMicrophone = useCallback(
-		async (deviceId: string) => {
+		async (deviceId: string | DropDownOption<MicOption>) => {
 			setIsRequesting(true);
 			await waitForPaint(); // make sure isRequesting registers
+			const id = typeof deviceId === 'string' ? deviceId : deviceId.value?.id;
 			try {
-				if (!deviceId) return;
 				setError(null);
 				stopMicStream();
-				micStream.current = await navigator.mediaDevices.getUserMedia(
-					constraints(deviceId),
-				);
-				micTrack.current = getMicTrack();
-				micTrack.current.enabled = !mutedRef.current;
-				if (!mutedRef.current) {
-					await waitForTrackToBecomeActive(micTrack.current);
-				}
+				await requestStream(id, false);
 			} catch (err) {
 				setError(
 					err instanceof Error ? err : new Error('Error switching microphone'),
@@ -208,13 +212,7 @@ export function useMicrophone(
 				setIsRequesting(false);
 			}
 		},
-		[
-			constraints,
-			getMicTrack,
-			stopMicStream,
-			waitForPaint,
-			waitForTrackToBecomeActive,
-		],
+		[requestStream, stopMicStream, waitForPaint],
 	);
 
 	// toggle mic mute on/off
@@ -253,7 +251,16 @@ export function useMicrophone(
 		void refreshMicrophones();
 
 		const handleDeviceChange = () => {
-			void refreshMicrophones();
+			void refreshMicrophones().then((nextMicrophones) => {
+				const currentDeviceId = micTrack.current?.getSettings().deviceId;
+				const selectedDeviceId = microphoneDeviceId ?? currentDeviceId;
+				if (!selectedDeviceId) return;
+				const stillAvailable = nextMicrophones.some(
+					(mic) => mic.deviceId === selectedDeviceId,
+				);
+				if (stillAvailable) return;
+				void requestMicrophone();
+			});
 		};
 
 		navigator.mediaDevices.addEventListener('devicechange', handleDeviceChange);
@@ -264,7 +271,12 @@ export function useMicrophone(
 				handleDeviceChange,
 			);
 		};
-	}, [hasMediaSupport, refreshMicrophones]);
+	}, [
+		hasMediaSupport,
+		microphoneDeviceId,
+		refreshMicrophones,
+		requestMicrophone,
+	]);
 
 	return {
 		micStream,
@@ -274,6 +286,7 @@ export function useMicrophone(
 		isRequesting,
 		error,
 		microphones,
+		micOptions,
 		requestMicrophone,
 		stopMicrophone: stopMicStream,
 		muteMic,

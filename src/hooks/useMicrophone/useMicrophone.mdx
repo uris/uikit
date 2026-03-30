@@ -11,7 +11,7 @@ import {FlexDiv} from '../../components/FlexDiv';
         Requests microphone access, keeps a live microphone stream in refs, and exposes simple controls for muting, switching devices, refreshing available devices, and stopping the stream.
 
         ## Behavior
-        The hook requests microphone access on mount. It also listens for `navigator.mediaDevices` `devicechange` events and refreshes the available microphone list when devices come online or disconnect.
+        The hook requests microphone access on mount. It also listens for `navigator.mediaDevices` `devicechange` events, refreshes the available microphone list when devices come online or disconnect, and falls back to the default device if the currently selected microphone disappears.
 
         ## Signature
         `useMicrophone(startMuted?, microphoneDeviceId?)`
@@ -56,9 +56,10 @@ import {FlexDiv} from '../../components/FlexDiv';
             <tr><td><code>micStream</code></td><td><code>RefObject&lt;MediaStream | null&gt;</code></td><td>Live microphone stream ref.</td></tr>
             <tr><td><code>micTrack</code></td><td><code>RefObject&lt;MediaStreamTrack | null&gt;</code></td><td>Live microphone track ref.</td></tr>
             <tr><td><code>microphones</code></td><td><code>MediaDeviceInfo[]</code></td><td>Current list of available audio input devices.</td></tr>
+            <tr><td><code>micOptions</code></td><td><code>{`DropDownOption<MicOption>[]`}</code></td><td>Ready-to-use dropdown options built from the current microphone list.</td></tr>
             <tr><td><code>muted</code></td><td><code>boolean</code></td><td>Current mute state of the microphone track.</td></tr>
             <tr><td><code>isSupported</code></td><td><code>boolean</code></td><td>Whether the current browser supports microphone capture.</td></tr>
-            <tr><td><code>isRequesting</code></td><td><code>boolean</code></td><td>Whether the hook is currently requesting microphone access or switching to a different microphone.</td></tr>
+            <tr><td><code>isRequesting</code></td><td><code>boolean</code></td><td>Whether the hook is currently requesting microphone access, switching microphones, or recovering from a removed device.</td></tr>
             <tr><td><code>error</code></td><td><code>Error | null</code></td><td>Last microphone access or device-switching error.</td></tr>
             <tr><td><code>requestMicrophone</code></td><td><code>{`() => Promise&lt;MediaStream | null&gt;`}</code></td><td>Requests or re-requests microphone access.</td></tr>
             <tr><td><code>stopMicrophone</code></td><td><code>{`() => void`}</code></td><td>Stops the active microphone stream and releases its tracks.</td></tr>
@@ -66,9 +67,14 @@ import {FlexDiv} from '../../components/FlexDiv';
             <tr><td><code>unmuteMic</code></td><td><code>{`() => boolean`}</code></td><td>Enables the active microphone track.</td></tr>
             <tr><td><code>toggleMute</code></td><td><code>{`() => void`}</code></td><td>Toggles the current microphone mute state.</td></tr>
             <tr><td><code>refreshMicrophones</code></td><td><code>{`() => Promise&lt;MediaDeviceInfo[]&gt;`}</code></td><td>Refreshes and returns the available audio input devices.</td></tr>
-            <tr><td><code>setMicrophone</code></td><td><code>{`(deviceId: string) => Promise<void>`}</code></td><td>Switches to a different input device.</td></tr>
+            <tr><td><code>setMicrophone</code></td><td><code>{`(deviceId: string | DropDownOption<MicOption>) => Promise<void>`}</code></td><td>Switches to a different input device by raw device id or a dropdown option object.</td></tr>
           </tbody>
         </table>
+
+        ## Notes
+        - `micStream` and `micTrack` are refs on purpose. They hold live media objects and do not force rerenders when the underlying stream changes.
+        - If a preferred device cannot be found during a request, the hook retries against the browser's default microphone.
+        - If the active microphone is unplugged or removed, the hook refreshes devices and reconnects to the default input.
 
         ## Basic example
         </Unstyled>
@@ -78,12 +84,13 @@ import {FlexDiv} from '../../components/FlexDiv';
         import { useMicrophone } from '@apple-pie/slice';
 
         function MicrophoneStatus() {
-            const { muted, toggleMute, micTrack, microphones } = useMicrophone(true);
+            const { muted, toggleMute, micTrack, micOptions, isRequesting } = useMicrophone(false);
 
             return (
                 <div>
+                    <div>Requesting: {String(isRequesting)}</div>
                     <div>Track ready: {String(micTrack.current?.readyState === 'live')}</div>
-                    <div>Available mics: {microphones.length}</div>
+                    <div>Available mics: {micOptions.length}</div>
                     <div>Muted: {String(muted)}</div>
                     <button type="button" onClick={() => toggleMute()}>
                         Toggle Mic

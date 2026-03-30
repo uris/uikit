@@ -18,7 +18,7 @@ export const TextArea = React.memo((props: TextAreaProps) => {
 		focused = false,
 		placeholder = 'Enter text here...',
 		rows = 6,
-		border = false,
+		border = true,
 		borderRadius = 4,
 		padding = '16px 4px 16px 16px',
 		error = false,

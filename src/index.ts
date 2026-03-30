@@ -23,6 +23,8 @@ export {
 	type BreakPoints,
 	type WindowGeolocation,
 	type WindowGeolocationError,
+	type MicOption,
+	type UseMicrophoneReturn,
 	useKeyboardShortcuts,
 	useTheme,
 	useObserveTheme,

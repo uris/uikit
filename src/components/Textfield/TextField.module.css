@@ -8,7 +8,7 @@
 	width: var(--tf-width);
 	height: var(--tf-height);
 	border-radius: var(--tf-border-radius);
-	background: var(--tf-bg);
+	background: var(--tf-bg-color);
 	box-shadow: var(--tf-box-shadow);
 	transition: all var(--motion-water-duration) var(--motion-water) 0s;
 }

@@ -21,8 +21,6 @@ const meta: Meta<typeof DropDown> = {
 		width: '100%',
 		height: 'auto',
 		label: undefined,
-		valueSize: 'm',
-		labelSize: 'm',
 		selectedIndex: undefined,
 		placeholder: true,
 		validate: true,
@@ -36,8 +34,9 @@ const meta: Meta<typeof DropDown> = {
 		iconSize: 20,
 		disabled: false,
 		error: false,
-		size: 'medium',
+		size: 'm',
 		onChange: fn(),
+		onOption: fn(),
 	},
 };
 

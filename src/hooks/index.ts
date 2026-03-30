@@ -11,6 +11,10 @@ export { useLastUpdated } from './useLastUpdated/useLastUpdated';
 export { useLocalStore } from './useLocalStore/useLocalStore';
 export { useMDStreamBuffer } from './useMdStreamBuffer/useMdStreamBuffer';
 export { useMicrophone } from './useMicrophone/useMicrophone';
+export type {
+	MicOption,
+	UseMicrophoneReturn,
+} from './useMicrophone/useMicrophone';
 export { useAudioRecorder } from './useAudioRecorder/useAudioRecorder';
 export {
 	useWindow,
