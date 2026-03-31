@@ -13,6 +13,8 @@ import {RenderSource} from '../../../documentation/_components/RenderSource/Rend
 
         ## Singleton usage pattern
         Add a single `Tip` instance for the app (or app shell), not one per component. Use shared state management to set `tip` and `coords` from any element emitting tooltip events, so one global `Tip` handles show/hide across the full UI.
+
+        When paired with `useToolTip`, the tooltip is centered to its anchor, clamped within the viewport horizontally, and moved above the anchor if there is not enough room below.
             
         ## Base element
         `HTMLDivElement`

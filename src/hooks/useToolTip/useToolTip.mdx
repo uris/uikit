@@ -9,6 +9,7 @@ import {FlexDiv} from '../../components/FlexDiv';
         <Unstyled>
         # useToolTip
         Computes tooltip coordinates from an anchor ref and the rendered tooltip rectangle.
+        The resolved position stays within the viewport with a 10px inset, and flips above the anchor when there is not enough space below.
 
         ## Signature
         `useToolTip(toolTip, tipElement)`
@@ -31,7 +32,7 @@ import {FlexDiv} from '../../components/FlexDiv';
           </thead>
           <tbody>
             <tr><td><code>toolTip</code></td><td><code>ToolTip | null</code></td><td><code>-</code></td><td>Tooltip payload object that includes the anchor <code>ref</code>.</td></tr>
-            <tr><td><code>tipElement</code></td><td><code>{`RefObject<HTMLDivElement | null>`}</code></td><td><code>-</code></td><td>Ref to the rendered tooltip element used for width measurement.</td></tr>
+            <tr><td><code>tipElement</code></td><td><code>{`RefObject<HTMLDivElement | null>`}</code></td><td><code>-</code></td><td>Ref to the rendered tooltip element used for width and height measurement.</td></tr>
           </tbody>
         </table>
 
@@ -52,9 +53,14 @@ import {FlexDiv} from '../../components/FlexDiv';
             </tr>
           </thead>
           <tbody>
-            <tr><td><code>coords</code></td><td><code>{`{ x: number; y: number }`}</code></td><td><code>{`{ x: 0, y: 0 }`}</code></td><td>Viewport coordinates where the tooltip should be placed.</td></tr>
+            <tr><td><code>coords</code></td><td><code>{`{ x: number; y: number }`}</code></td><td><code>{`{ x: 0, y: 0 }`}</code></td><td>Viewport coordinates where the tooltip should be placed. Returns <code>{`{ x: 0, y: 0 }`}</code> when the tooltip is inactive or cannot be measured.</td></tr>
           </tbody>
         </table>
+
+        ## Behavior
+        - Centers the tooltip beneath the anchor by default.
+        - Clamps horizontal placement so the tooltip remains within the viewport with a 10px margin.
+        - Repositions the tooltip above the anchor when showing below would overflow the viewport bottom edge.
 
         ## Code Examples
         </Unstyled>

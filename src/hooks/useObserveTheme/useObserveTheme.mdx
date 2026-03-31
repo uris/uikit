@@ -1,6 +1,7 @@
 import {Meta, Unstyled} from '@storybook/addon-docs/blocks';
 import {RenderSource} from '../../../documentation/_components/RenderSource/RenderSource';
 import {FlexDiv} from '../../components/FlexDiv';
+import {Spacer} from '../../components/Spacer';
 
 <Meta title="Hooks/useObserveTheme" />
 
@@ -8,8 +9,8 @@ import {FlexDiv} from '../../components/FlexDiv';
     <FlexDiv width={"fill"} maxWidth={760} height={"auto"}>
         <Unstyled>
         # useObserveTheme
-        Observes <code>document.documentElement.dataset.sliceTheme</code> and returns the resolved Slice theme object.
-
+        Observes `document.documentElement.dataset.sliceTheme` and returns the resolved Slice theme object.
+            
         ## Signature
         `useObserveTheme()`
 
@@ -38,7 +39,7 @@ import {FlexDiv} from '../../components/FlexDiv';
         </table>
 
         ## Code Examples
-        </Unstyled>
+        
 
         <RenderSource language={"tsx"}>
         ```
@@ -50,5 +51,10 @@ import {FlexDiv} from '../../components/FlexDiv';
         }
         ```
         </RenderSource>
+    
+        ## SSR Notes
+        This hook reads from the `ThemeProvider` context for it's initial theme, keeping server side rendering in sync. Learn more about [Slice's ThemeServer](/docs/providers-themeserver-ssr--docs).
+        </Unstyled>
+        <Spacer size={64} />
     </FlexDiv>
 </FlexDiv>

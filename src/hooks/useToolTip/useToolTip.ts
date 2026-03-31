@@ -1,7 +1,7 @@
 'use client';
 
 import type React from 'react';
-import { useLayoutEffect, useState } from 'react';
+import { useCallback, useLayoutEffect, useState } from 'react';
 import type { ToolTip } from '../../components/sharedTypes';
 
 const hiddenCoords = { x: 0, y: 0 };
@@ -12,6 +12,30 @@ export function useToolTip(
 ) {
 	const [coords, setCoords] = useState<{ x: number; y: number } | undefined>(
 		hiddenCoords,
+	);
+
+	const adjustX = useCallback((x: number) => {
+		if (x < 10) return 10;
+		const maxWidth = globalThis.innerWidth - 10;
+		if (x > maxWidth) {
+			const overflow = x - maxWidth;
+			return x - overflow;
+		}
+		return x;
+	}, []);
+
+	const adjustY = useCallback(
+		(y: number, parentY: number) => {
+			if (y < 10) return 10;
+			const tipHeight = tipElement.current?.offsetHeight ?? 0;
+			const endY = y + tipHeight;
+			const maxHeight = globalThis.innerHeight - 10;
+			if (endY > maxHeight) {
+				return parentY - tipHeight - 10;
+			}
+			return y;
+		},
+		[tipElement],
 	);
 
 	useLayoutEffect(() => {
@@ -46,8 +70,8 @@ export function useToolTip(
 		const y = parentY + parentHeight + 10;
 
 		// set the coords
-		setCoords({ x, y });
-	}, [toolTip, tipElement]);
+		setCoords({ x: adjustX(x), y: adjustY(y, parentY) });
+	}, [toolTip, tipElement, adjustX, adjustY]);
 
 	return coords;
 }

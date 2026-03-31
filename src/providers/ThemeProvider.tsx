@@ -1,7 +1,8 @@
 'use client';
 
 import type React from 'react';
-import { useEffect } from 'react';
+import { useMemo } from 'react';
+import { createContext, useContext, useEffect } from 'react';
 import '../theme/colors/colors.css';
 import '../theme/elevations/elevation.css';
 import '../theme/type/type.css';
@@ -16,6 +17,18 @@ interface ThemeProviderProps {
 	initialTheme?: string;
 	system?: boolean;
 	global?: boolean;
+}
+
+type ThemeContextValue = {
+	initialTheme: string;
+};
+
+const ThemeContext = createContext<ThemeContextValue>({
+	initialTheme: lightTheme.name,
+});
+
+export function useThemeContext() {
+	return useContext(ThemeContext);
 }
 
 // set up a media query for system theme
@@ -42,10 +55,18 @@ function resolveTheme(
 function setDocumentTheme(name: string) {
 	if (typeof document === 'undefined') return;
 	document.documentElement.dataset.sliceTheme = name;
+	document.cookie = `slice-theme=${encodeURIComponent(name)}; path=/; max-age=31536000; samesite=lax`;
 }
 
 export function ThemeProvider(props: Readonly<ThemeProviderProps>) {
 	const { children, theme, system, global, initialTheme } = props;
+
+	// memo innitial context value
+	const contextValue = useMemo(() => {
+		return {
+			initialTheme: initialTheme ?? lightTheme.name,
+		};
+	}, [initialTheme]);
 
 	// sync the explicitly provided theme to the document root
 	useEffect(() => {
@@ -65,14 +86,14 @@ export function ThemeProvider(props: Readonly<ThemeProviderProps>) {
 		const handleSystemThemeChange = (e: MediaQueryListEvent) => {
 			if (system) {
 				const autoTheme = e.matches ? darkTheme : lightTheme;
-				document.documentElement.dataset.sliceTheme = autoTheme.name;
+				setDocumentTheme(autoTheme.name);
 			}
 		};
 
 		// apply the current system theme on mount or when `system` changes
 		if (system) {
 			const autoTheme = darkModeMediaQuery.matches ? darkTheme : lightTheme;
-			document.documentElement.dataset.sliceTheme = autoTheme.name;
+			setDocumentTheme(autoTheme.name);
 		}
 
 		// subscribe to OS theme changes
@@ -86,9 +107,11 @@ export function ThemeProvider(props: Readonly<ThemeProviderProps>) {
 	// optionally mirror the active Slice surface color onto the document body
 	useEffect(() => {
 		if (!global) {
+			if (typeof document === 'undefined') return;
 			document.body.classList.remove('slice-global-body');
 			return;
 		}
+		if (typeof document === 'undefined') return;
 		document.body.classList.add('slice-global-body');
 
 		return () => {
@@ -96,5 +119,9 @@ export function ThemeProvider(props: Readonly<ThemeProviderProps>) {
 		};
 	}, [global]);
 
-	return <div data-slice-theme-scope>{children}</div>;
+	return (
+		<ThemeContext.Provider value={contextValue}>
+			<div data-slice-theme-scope>{children}</div>
+		</ThemeContext.Provider>
+	);
 }

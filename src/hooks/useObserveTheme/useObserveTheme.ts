@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+import { useThemeContext } from '../../providers/ThemeProvider';
 import { type SliceTheme, darkTheme, lightTheme } from '../../theme';
 
 function resolveTheme(themeName: string | undefined): SliceTheme {
@@ -11,14 +12,20 @@ function resolveTheme(themeName: string | undefined): SliceTheme {
 }
 
 export function useObserveTheme() {
+	const { initialTheme } = useThemeContext();
+
 	const [theme, setTheme] = useState<SliceTheme>(() => {
-		if (typeof document === 'undefined') return lightTheme;
-		return resolveTheme(document.documentElement.dataset.sliceTheme);
+		if (typeof document === 'undefined') return resolveTheme(initialTheme);
+		return resolveTheme(
+			document.documentElement.dataset.sliceTheme || initialTheme,
+		);
 	});
 
 	useEffect(() => {
 		// Sync once on mount in case the theme was set before this hook subscribed.
-		setTheme(resolveTheme(document.documentElement.dataset.sliceTheme));
+		setTheme(
+			resolveTheme(document.documentElement.dataset.sliceTheme || initialTheme),
+		);
 
 		const observer = new MutationObserver((mutations) => {
 			for (const mutation of mutations) {
@@ -27,7 +34,7 @@ export function useObserveTheme() {
 					mutation.attributeName === 'data-slice-theme'
 				) {
 					const newTheme = document.documentElement.dataset.sliceTheme;
-					setTheme(resolveTheme(newTheme));
+					setTheme(resolveTheme(newTheme || initialTheme));
 				}
 			}
 		});
@@ -38,7 +45,7 @@ export function useObserveTheme() {
 		});
 
 		return () => observer.disconnect();
-	}, []);
+	}, [initialTheme]);
 
 	return theme;
 }

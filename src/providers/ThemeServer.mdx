@@ -1,5 +1,6 @@
 import {Meta, Unstyled} from '@storybook/addon-docs/blocks';
 import {FlexDiv} from '../components/FlexDiv';
+import {Spacer} from '../components/Spacer';
 import {RenderSource} from '../../documentation/_components/RenderSource/RenderSource';
 
 <Meta title="Providers/ThemeServer (SSR)" />
@@ -9,6 +10,7 @@ import {RenderSource} from '../../documentation/_components/RenderSource/RenderS
         <Unstyled>
         # ThemeServer
         Server-safe helpers for SSR-enabled environments such as Next.js. These helpers resolve a startup theme before hydration and provide the root HTML attributes needed for first-paint theming.
+        They are designed to pair with the `slice-theme` cookie written by `ThemeProvider` on the client.
 
         ## Exports
         <table style={{width: '100%'}}>
@@ -25,7 +27,7 @@ import {RenderSource} from '../../documentation/_components/RenderSource/RenderS
             </tr>
           </thead>
           <tbody>
-            <tr><td><code>resolveInitialTheme</code></td><td><code>function</code></td><td>Resolves the initial Slice theme from an explicit theme value, cookie value, or fallback theme.</td></tr>
+            <tr><td><code>resolveInitialTheme</code></td><td><code>function</code></td><td>Resolves the initial Slice theme from an explicit theme value, cookie value, or fallback theme. This is the main entry point for reading the <code>slice-theme</code> cookie during SSR.</td></tr>
             <tr><td><code>getThemeHtmlAttributes</code></td><td><code>function</code></td><td>Returns the root HTML attributes needed to render the resolved theme before hydration.</td></tr>
             <tr><td><code>SliceThemeName</code></td><td><code>type</code></td><td>The supported built-in theme names: <code>'lightMode'</code> and <code>'darkMode'</code>.</td></tr>
           </tbody>
@@ -39,6 +41,20 @@ import {RenderSource} from '../../documentation/_components/RenderSource/RenderS
         Use the client runtime provider from:
 
         `@apple-pie/slice/providers/ThemeProvider`
+
+        ## Recommended SSR flow
+        - Read the `slice-theme` cookie on the server.
+        - Pass that value into `resolveInitialTheme()`.
+        - Spread `getThemeHtmlAttributes(initialTheme)` onto the root `html` element.
+        - Pass the same `initialTheme` into `ThemeProvider` on the client.
+        - Let `ThemeProvider` refresh the cookie after hydration so future requests keep the same theme.
+
+        ## Cookie behavior
+        - Cookie name: `slice-theme`
+        - Cookie value: the resolved Slice theme name such as `lightMode` or `darkMode`
+        - Cookie attributes: `path=/`, `max-age=31536000`, `SameSite=Lax`
+        - Intended use: lets SSR code read the last client-selected theme and render the correct root theme attribute before hydration
+
 
         ## Next.js Example
         </Unstyled>
@@ -74,14 +90,16 @@ import {RenderSource} from '../../documentation/_components/RenderSource/RenderS
                 </html>
             );
         }
-                ```
+        ```
         </RenderSource>
 
         <Unstyled>
         ## Notes
         - `ThemeProvider` remains the client-side runtime piece.
         - The server helpers exist to make the first HTML response theme-aware before React hydration begins.
-        - If you only set the theme in a client effect, the first paint may occur before the theme attribute is applied.
+        - The expected cookie name is `slice-theme`.
+        - If you only set the theme in a client effect, the first paint may occur before the theme attribute is applied and you get a UI flicker.
         </Unstyled>
+        <Spacer size={64} />
     </FlexDiv>
 </FlexDiv>

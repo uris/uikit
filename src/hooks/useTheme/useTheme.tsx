@@ -16,7 +16,6 @@ export function useTheme() {
 
 	// set the active theme from a theme object or supported theme name
 	const set = useCallback((newTheme: SliceTheme | string) => {
-		console.log('set theme', newTheme);
 		let theme: SliceTheme;
 		if (typeof newTheme === 'string') {
 			if (newTheme === 'system') {
