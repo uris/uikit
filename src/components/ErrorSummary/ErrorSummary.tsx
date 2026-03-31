@@ -1,3 +1,5 @@
+'use client';
+
 import { AnimatePresence, type Transition, motion } from 'motion/react';
 import React, { useCallback, useMemo } from 'react';
 import { useTheme } from '../../hooks';

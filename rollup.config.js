@@ -10,10 +10,13 @@ import svgr from '@svgr/rollup';
 import peerDepsExternal from 'rollup-plugin-peer-deps-external';
 import postcss from 'rollup-plugin-postcss';
 import stripCode from 'rollup-plugin-strip-code';
+import preserveDirectivesPlugin from 'rollup-preserve-directives';
 
 const shouldMinify = process.env.MINIFY === 'true';
 const keepJsDocComments = (_node, comment) =>
 	comment.type === 'comment2' && comment.value.startsWith('*');
+const preserveDirectives =
+	preserveDirectivesPlugin.default ?? preserveDirectivesPlugin;
 
 const buildInputs = () => {
 	const inputs = {
@@ -203,6 +206,7 @@ const rollup = async () => {
 				gzipSize: true,
 				brotliSize: true,
 			}),
+			preserveDirectives(),
 		],
 	};
 };

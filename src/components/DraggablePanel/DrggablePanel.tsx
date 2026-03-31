@@ -1,3 +1,5 @@
+'use client';
+
 import React, {
 	type RefObject,
 	useCallback,
@@ -54,6 +56,45 @@ export type DraggablePanelProps = Omit<
 
 const MIN_SIZE = 50;
 
+function normalizeConstraintValue(
+	value: number,
+	containerWidth: number | undefined,
+	fallback: number,
+) {
+	let normalized = value;
+	if (normalized <= 1 && normalized >= 0) {
+		normalized = containerWidth ? containerWidth * normalized : fallback;
+	}
+	if (normalized > 1 && normalized < MIN_SIZE) normalized = MIN_SIZE;
+	return normalized;
+}
+
+function resolveConstraints(
+	sizeConstraints: Constraint,
+	containerWidth?: number,
+) {
+	const initial = normalizeConstraintValue(
+		sizeConstraints.initial,
+		containerWidth,
+		MIN_SIZE,
+	);
+	const min = normalizeConstraintValue(
+		sizeConstraints.min,
+		containerWidth,
+		initial,
+	);
+	const max = normalizeConstraintValue(
+		sizeConstraints.max,
+		containerWidth,
+		initial,
+	);
+	return {
+		initial: min > initial ? min : initial,
+		min,
+		max,
+	};
+}
+
 export const DraggablePanel = React.memo((props: DraggablePanelProps) => {
 	const theme = useTheme();
 	const {
@@ -89,12 +130,16 @@ export const DraggablePanel = React.memo((props: DraggablePanelProps) => {
 	const isOver = useRef<boolean>(false);
 	const gripper = { ...resizeHandle };
 	const containerSize = useObserveResize(containerRef);
+	const panelSize = useObserveResize(div);
 	const [handleHighlight, setHandleHighlight] = useState(false);
 	const [lastWidth, setLastWidth] = useState<number | null>(null);
 	const [panelClosed, setPanelClosed] = useState<boolean>(isClosed);
-	const [constraints, setConstraints] = useState<Constraint>(sizeConstraints);
+	const [constraints, setConstraints] = useState<Constraint>(() =>
+		resolveConstraints(sizeConstraints),
+	);
 	const [contWidth, setContWidth] = useState<number | undefined>(undefined);
 	const timer = useRef<any>(null);
+	const closed = panelSize.width <= 1;
 
 	const startX = useRef<number>(0);
 	const startWidth = useRef<number>(0);
@@ -175,17 +220,7 @@ export const DraggablePanel = React.memo((props: DraggablePanelProps) => {
 	// normalize relative constraints and reapply them when inputs change
 	useEffect(() => {
 		if (!contWidth) return;
-		const { min, max, initial } = sizeConstraints;
-		const relativeConstraints: Constraint = { min, max, initial };
-		for (const [key, value] of Object.entries(sizeConstraints)) {
-			let calc = value;
-			if (calc <= 1 && calc >= 0) calc = contWidth * value; // handle "percent" values
-			if (calc > 1 && calc < MIN_SIZE) calc = MIN_SIZE; // ensure values no smaller than MIN_SIZE
-			relativeConstraints[key as keyof Constraint] = calc;
-		}
-		if (relativeConstraints.min < relativeConstraints.initial) {
-			relativeConstraints.initial = relativeConstraints.min; // ensure "initial" is not smaller than "min"
-		}
+		const relativeConstraints = resolveConstraints(sizeConstraints, contWidth);
 		setConstraints(relativeConstraints);
 		adjustCurrentWidth(relativeConstraints);
 	}, [sizeConstraints, contWidth, adjustCurrentWidth]);
@@ -390,9 +425,8 @@ export const DraggablePanel = React.memo((props: DraggablePanelProps) => {
 				height: '100%',
 				maxWidth: drags ? constraints.max : 'unset',
 				transition: isDragging ? '' : transition,
-				borderRight:
-					panelClosed || !borderRight || !drags ? 'none' : borderRight,
-				borderLeft: panelClosed || !borderLeft || !drags ? 'none' : borderLeft,
+				borderRight: closed || !borderRight || !drags ? 'none' : borderRight,
+				borderLeft: closed || !borderLeft || !drags ? 'none' : borderLeft,
 			}}
 			{...rest}
 		>
@@ -401,7 +435,7 @@ export const DraggablePanel = React.memo((props: DraggablePanelProps) => {
 				style={{
 					position: 'absolute',
 					boxSizing: 'border-box',
-					display: panelClosed || !drags ? 'none' : 'flex',
+					display: closed || !drags ? 'none' : 'flex',
 					alignItems: 'center',
 					justifyContent: 'center',
 					zIndex: 1,
@@ -420,9 +454,7 @@ export const DraggablePanel = React.memo((props: DraggablePanelProps) => {
 				onTouchStart={handleTouchStart}
 				onTouchEnd={handleTouchEnd}
 			>
-				{dragHandle && !panelClosed && (
-					<DragHandle {...(dragHandleStyle ?? {})} />
-				)}
+				{dragHandle && !closed && <DragHandle {...(dragHandleStyle ?? {})} />}
 				<div
 					style={{
 						backgroundColor: handleHighlight

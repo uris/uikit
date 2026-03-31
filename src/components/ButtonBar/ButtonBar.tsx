@@ -1,3 +1,5 @@
+'use client';
+
 import React, {
 	useCallback,
 	useEffect,
@@ -19,18 +21,19 @@ export const ButtonBar = React.memo(function ButtonBar(
 		buttons = [],
 		selected,
 		toggle = true,
-		buttonSize = 44,
+		buttonSize = 'm',
+		frameSize = 36,
 		iconSize = 20,
 		borderWidth,
-		borderSize = 1,
+		borderSize = 0,
 		borderRadius = 100,
 		borderColor = 'var(--core-outline-primary)',
 		backgroundColor,
 		backgroundColorHover,
 		backgroundColorActive,
-		bgColor = 'var(--core-surface-primary)',
-		bgColorHover = 'var(--core-surface-secondary)',
-		bgColorActive = 'var(--core-surface-secondary)',
+		bgColor = 'var(--core-surface-secondary)',
+		bgColorHover = 'var(--core-outline-primary)',
+		bgColorActive = 'var(--core-outline-primary)',
 		labelColor = 'var(--core-text-primary)',
 		onClick = (button?: ButtonBarItem) => null,
 		onChange = (button?: ButtonBarItem) => null,
@@ -95,6 +98,15 @@ export const ButtonBar = React.memo(function ButtonBar(
 		[selectedIndex, hovered, toggle],
 	);
 
+	// resolve icon button size
+	const size = useMemo(() => {
+		if (!buttonSize) return frameSize;
+		if (buttonSize === 's') return 24;
+		if (buttonSize === 'm') return 36;
+		if (buttonSize === 'l') return 44;
+		if (buttonSize === 'xl') return 56;
+	}, [frameSize, buttonSize]);
+
 	// compose CSS custom properties for button bar sizing and colors
 	const cssVars = useMemo(() => {
 		return {
@@ -105,7 +117,7 @@ export const ButtonBar = React.memo(function ButtonBar(
 			'--bb-bg-color-hover': resolvedBackgroundColorHover,
 			'--bb-bg-color-active': resolvedBackgroundColorActive,
 			'--bb-label-color': labelColor,
-			'--bb-button-size': `${buttonSize}px`,
+			'--bb-button-size': `${size}px`,
 		} as React.CSSProperties;
 	}, [
 		resolvedBorderWidth,
@@ -114,7 +126,7 @@ export const ButtonBar = React.memo(function ButtonBar(
 		resolvedBackgroundColor,
 		labelColor,
 		resolvedBackgroundColorHover,
-		buttonSize,
+		size,
 		resolvedBackgroundColorActive,
 	]);
 

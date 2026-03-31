@@ -4,7 +4,7 @@ import type { JSX } from 'react';
 export interface IconRenderProps {
 	stroke: number;
 	strokeColor: string;
-	fillColor: string;
+	fillColor: number;
 	coverUp: string;
 }
 
@@ -20,6 +20,29 @@ export interface IconDefinition {
  * Each entry stores only icon line content renderers.
  */
 export const STATIC_ICON_REGISTRY = new Map<string, IconDefinition>([
+	[
+		'sidebar',
+		{
+			line: ({ strokeColor, fillColor }) => (
+				<>
+					<rect
+						x="10"
+						y="4.5"
+						width="8"
+						height="11"
+						rx="1"
+						ry="1"
+						opacity={fillColor}
+						fill={strokeColor}
+					/>
+					<path
+						d="M17,3.75H3c-.96,0-1.75.78-1.75,1.75v9c0,.96.78,1.75,1.75,1.75h14c.96,0,1.75-.78,1.75-1.75V5.5c0-.96-.78-1.75-1.75-1.75ZM2.75,14.5V5.5c0-.14.11-.25.25-.25h6.25v9.5H3c-.14,0-.25-.11-.25-.25ZM17.25,14.5c0,.14-.11.25-.25.25h-6.25V5.25h6.25c.14,0,.25.11.25.25v9Z"
+						fill={strokeColor}
+					/>
+				</>
+			),
+		},
+	],
 	[
 		'target',
 		{

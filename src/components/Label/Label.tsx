@@ -1,3 +1,5 @@
+'use client';
+
 import type React from 'react';
 import { useCallback, useMemo } from 'react';
 import { useTrackRenders } from '../../hooks/useTrackRenders/useTrackRenders';

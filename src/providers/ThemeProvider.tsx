@@ -1,3 +1,5 @@
+'use client';
+
 import type React from 'react';
 import { useEffect } from 'react';
 import '../theme/colors/colors.css';
@@ -11,39 +13,55 @@ import { type SliceTheme, darkTheme, lightTheme } from '../theme';
 interface ThemeProviderProps {
 	children?: React.ReactNode;
 	theme?: string;
+	initialTheme?: string;
 	system?: boolean;
 	global?: boolean;
 }
 
 // set up a media query for system theme
-const darkModeMediaQuery = globalThis.matchMedia(
-	'(prefers-color-scheme: dark)',
-);
+function getDarkModeMediaQuery() {
+	if (
+		typeof globalThis === 'undefined' ||
+		typeof globalThis.matchMedia !== 'function'
+	) {
+		return null;
+	}
+	return globalThis.matchMedia('(prefers-color-scheme: dark)');
+}
 
 function resolveTheme(
 	theme?: string,
 	system?: boolean,
 ): SliceTheme | undefined {
-	if (system) return darkModeMediaQuery.matches ? darkTheme : lightTheme;
+	if (system) return getDarkModeMediaQuery()?.matches ? darkTheme : lightTheme;
 	if (theme) return theme.includes('dark') ? darkTheme : lightTheme;
 
 	return undefined;
 }
 
+function setDocumentTheme(name: string) {
+	if (typeof document === 'undefined') return;
+	document.documentElement.dataset.sliceTheme = name;
+}
+
 export function ThemeProvider(props: Readonly<ThemeProviderProps>) {
-	const { children, theme, system, global } = props;
+	const { children, theme, system, global, initialTheme } = props;
 
 	// sync the explicitly provided theme to the document root
 	useEffect(() => {
-		if (theme) {
-			const newTheme = resolveTheme(theme, false);
+		if (theme || initialTheme) {
+			const newTheme = resolveTheme(theme ?? initialTheme, false);
 			if (!newTheme) return;
-			document.documentElement.dataset.sliceTheme = newTheme.name;
+			setDocumentTheme(newTheme.name);
 		}
-	}, [theme]);
+	}, [theme, initialTheme]);
 
 	// keep the document theme aligned with system preference when enabled
 	useEffect(() => {
+		if (!system) return;
+
+		const darkModeMediaQuery = getDarkModeMediaQuery();
+		if (!darkModeMediaQuery) return;
 		const handleSystemThemeChange = (e: MediaQueryListEvent) => {
 			if (system) {
 				const autoTheme = e.matches ? darkTheme : lightTheme;

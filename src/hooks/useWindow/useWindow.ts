@@ -1,3 +1,5 @@
+'use client';
+
 import { useCallback, useEffect, useState } from 'react';
 
 /**
@@ -142,6 +144,7 @@ export function useWindow(breakpoints = bootstrapBreakPoints, top = true) {
 	}, [geolocationSupported]);
 
 	function handleResize() {
+		if (!isBrowser) return;
 		const windowWidth = top
 			? (window.top?.innerWidth ?? window.innerWidth)
 			: window.innerWidth;

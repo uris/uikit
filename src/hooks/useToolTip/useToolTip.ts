@@ -1,3 +1,5 @@
+'use client';
+
 import type React from 'react';
 import { useLayoutEffect, useState } from 'react';
 import type { ToolTip } from '../../components/sharedTypes';

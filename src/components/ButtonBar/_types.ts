@@ -10,7 +10,7 @@ export type BarButton = {
 
 type ButtonBarBaseProps = {
 	buttons?: BarButton[];
-	buttonSize?: number;
+	frameSize?: number;
 	iconSize?: number;
 	toggle?: boolean;
 	selected?: number;
@@ -25,6 +25,7 @@ type ButtonBarBaseProps = {
 	bgColorHover?: string;
 	bgColorActive?: string;
 	labelColor?: string;
+	buttonSize?: 's' | 'm' | 'l' | 'xl';
 	onClick?: (button: BarButton) => void;
 	onChange?: (option: BarButton) => void;
 	onToolTip?: (tip: ToolTip | null) => void;

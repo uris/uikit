@@ -3,6 +3,7 @@ import type React from 'react';
 import type { ToolTip } from '../sharedTypes';
 
 type IconButtonBaseProps = {
+	round?: boolean;
 	frameSize?: number;
 	iconSize?: number;
 	icon?: string;
@@ -12,7 +13,7 @@ type IconButtonBaseProps = {
 	tooltip?: string;
 	color?: string;
 	colorOn?: string;
-	fillColor?: string;
+	fillColor?: number;
 	disabled?: boolean;
 	bgColor?: string;
 	bgColorOn?: string;
@@ -33,6 +34,7 @@ type IconButtonBaseProps = {
 	borderRadius?: number;
 	onClick?: (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void;
 	onToolTip?: (tip: ToolTip | null) => void;
+	buttonSize?: 's' | 'm' | 'l' | 'xl';
 };
 
 export type IconButtonProps = Omit<

@@ -1,3 +1,5 @@
+'use client';
+
 import React, { useCallback, useId, useMemo, useRef, useState } from 'react';
 import { accessibleKeyDown, setStyle } from '../../utils/functions/misc';
 import { FileList } from '../FileList';

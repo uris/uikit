@@ -91,7 +91,7 @@ export type { GrouperProps } from './components/Grouper';
 export { Overlay } from './components/Overlay';
 export type { OverlayProps } from './components/Overlay';
 
-export { FlexDiv, Size } from './components/FlexDiv';
+export { FlexDiv, Size, Preset } from './components/FlexDiv';
 export type { FlexDivProps } from './components/FlexDiv';
 
 export { Pager } from './components/Pager';

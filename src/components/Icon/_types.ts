@@ -5,7 +5,7 @@ type IconBaseProps = {
 	size?: number;
 	stroke?: number;
 	strokeColor?: string;
-	fillColor?: string;
+	fillColor?: number;
 	coverUp?: string;
 	toggle?: boolean;
 	pointer?: boolean;
@@ -132,6 +132,7 @@ export const SliceIcons = {
 		home: 'home',
 		menu: 'menu',
 		more: 'more',
+		sidebar: 'sidebar',
 		x: 'x',
 	},
 } as const;

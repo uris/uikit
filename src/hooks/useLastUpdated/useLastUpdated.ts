@@ -1,3 +1,5 @@
+'use client';
+
 import { useEffect, useState } from 'react';
 
 function getTimeDifference(date: Date | string, labelPrefix: string) {

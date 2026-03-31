@@ -1,3 +1,5 @@
+'use client';
+
 import React, { useMemo } from 'react';
 import { useTheme } from '../../hooks';
 import { useTrackRenders } from '../../hooks/useTrackRenders/useTrackRenders';
@@ -14,7 +16,7 @@ export const Icon = React.memo((props: IconProps) => {
 		size = 20,
 		stroke = 1.5,
 		strokeColor = theme.current.colors['core-icon-primary'],
-		fillColor = 'transparent',
+		fillColor = 0.2,
 		coverUp = theme.current.colors['core-surface-primary'],
 		toggle = false,
 		pointer = false,
@@ -69,7 +71,7 @@ export const Icon = React.memo((props: IconProps) => {
 			viewBox="0 0 20 20"
 			style={{ ...svgStyle, ...iconStyle }}
 			onClick={(e) => onClick?.(e)}
-			fill={fillColor}
+			fill={'transparent'}
 			role="img"
 			aria-label={`${name} icon`}
 			tabIndex={pointer && !disabled ? 0 : -1}

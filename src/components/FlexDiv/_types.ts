@@ -9,9 +9,88 @@ export enum Size {
 	Auto = 'auto',
 }
 
+export enum Preset {
+	FillScroll = 'fill-scroll',
+	FillCenter = 'fill-center',
+	Window = 'window',
+	Row = 'row',
+	RowBetween = 'row-between',
+	Column = 'fill-column',
+	Default = 'default',
+	Draggable = 'draggable',
+}
+
+export const layoutSets = {
+	[Preset.FillScroll]: {
+		width: 'fill',
+		height: 'fill',
+		justify: 'start',
+		align: 'start',
+		scrollY: true,
+		direction: 'column',
+	},
+	[Preset.FillCenter]: {
+		width: 'fill',
+		height: 'fill',
+		justify: 'center',
+		align: 'center',
+		scrollY: false,
+		direction: 'column',
+	},
+	[Preset.Window]: {
+		width: 'viewport',
+		height: 'viewport',
+		justify: 'start',
+		align: 'start',
+		scrollY: false,
+		direction: 'row',
+	},
+	[Preset.Row]: {
+		width: 'fill',
+		height: 'fit',
+		justify: 'start',
+		align: 'center',
+		scrollY: false,
+		direction: 'row',
+	},
+	[Preset.RowBetween]: {
+		width: 'fill',
+		height: 'fit',
+		justify: 'between',
+		align: 'center',
+		scrollY: false,
+		direction: 'row',
+	},
+	[Preset.Column]: {
+		width: 'fill',
+		height: 'fit',
+		justify: 'start',
+		align: 'center',
+		scrollY: false,
+		direction: 'column',
+	},
+	[Preset.Default]: {
+		width: 'fill',
+		height: 'fit',
+		justify: 'start',
+		align: 'start',
+		scrollY: false,
+		direction: 'column',
+	},
+	[Preset.Draggable]: {
+		width: 'auto',
+		height: 'fill',
+		justify: 'start',
+		align: 'start',
+		scrollY: false,
+		direction: 'column',
+	},
+};
+
 type FlexDivBaseProps = {
 	className?: string;
 	children?: any;
+	preset?: Preset;
 	scrollY?: boolean;
 	scrollX?: boolean;
 	absolute?: boolean;

@@ -1,3 +1,5 @@
+'use client';
+
 import { motion } from 'motion/react';
 import React, {
 	useCallback,
@@ -19,6 +21,7 @@ export const IconButton = React.memo((props: IconButtonProps) => {
 	const {
 		frameSize = 36,
 		iconSize = 20,
+		round = true,
 		icon = 'more',
 		borderRadius = 4,
 		border = false,
@@ -45,6 +48,7 @@ export const IconButton = React.memo((props: IconButtonProps) => {
 		isToggled = false,
 		disabled = false,
 		showDot = false,
+		buttonSize = 'm',
 		onClick = () => null,
 		onToolTip = () => null,
 		...divAttributes
@@ -118,17 +122,33 @@ export const IconButton = React.memo((props: IconButtonProps) => {
 		return iconColor ?? 'var(--core-text-primary)';
 	}, [toggle, on, iconColorOn, iconColor, iconColorHover, hovered]);
 
+	const size = useMemo(() => {
+		if (!buttonSize) return frameSize;
+		if (buttonSize === 's') return 24;
+		if (buttonSize === 'm') return 36;
+		if (buttonSize === 'l') return 44;
+		if (buttonSize === 'xl') return 56;
+	}, [frameSize, buttonSize]);
+
 	// compose CSS custom properties for button sizing and colors
 	const cssVars = useMemo(() => {
 		return {
 			'--ib-bg-color': bgColorNormal,
 			'--ib-bg-color-hover': bgHoverColor,
-			'--ib-icon-size': `${frameSize ?? 0}px`,
-			'--ib-border-radius': `${borderRadius ?? 0}px`,
+			'--ib-icon-size': `${size ?? 0}px`,
+			'--ib-border-radius': round ? '100%' : `${borderRadius ?? 0}px`,
 			'--ib-border': border ? '1px' : 0,
 			'--ib-color': textColor,
 		} as React.CSSProperties;
-	}, [bgColorNormal, bgHoverColor, textColor, border, frameSize, borderRadius]);
+	}, [
+		bgColorNormal,
+		bgHoverColor,
+		textColor,
+		border,
+		size,
+		borderRadius,
+		round,
+	]);
 
 	/* START.DEBUG */
 	useTrackRenders(props, 'IconButton');

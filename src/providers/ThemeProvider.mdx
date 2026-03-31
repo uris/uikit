@@ -35,6 +35,7 @@ import {RenderSource} from '../../documentation/_components/RenderSource/RenderS
           <tbody>
             <tr><td><code>children</code></td><td><code>React.ReactNode</code></td><td><code>undefined</code></td><td>Content rendered inside the provider.</td></tr>
             <tr><td><code>theme</code></td><td><code>string</code></td><td><code>undefined</code></td><td>Manual theme selector. Values containing <code>'dark'</code> resolve to Slice dark mode, otherwise Slice light mode.</td></tr>
+            <tr><td><code>initialTheme</code></td><td><code>string</code></td><td><code>undefined</code></td><td>Initial client-side theme value to sync after hydration. In SSR environments, use the ThemeServer helpers to write the same theme onto the root HTML element during server render.</td></tr>
             <tr><td><code>system</code></td><td><code>boolean</code></td><td><code>undefined</code></td><td>When <code>true</code>, uses `prefers-color-scheme` and updates automatically when the OS theme changes.</td></tr>
             <tr><td><code>global</code></td><td><code>boolean</code></td><td><code>undefined</code></td><td>When <code>true</code>, also writes the active theme's <code>core-surface-primary</code> color to the root document element and <code>document.body</code> backgrounds. This is useful for full-page theming, and in Safari it also drives the browser header color.</td></tr>
           </tbody>
@@ -66,7 +67,7 @@ import {RenderSource} from '../../documentation/_components/RenderSource/RenderS
 
         <RenderSource language={"tsx"}>
         ```
-        import { ThemeProvider } from '@apple-pie/slice';
+        import { ThemeProvider } from '@apple-pie/slice/providers/ThemeProvider';
         
         export function App() {
             return (
@@ -80,7 +81,7 @@ import {RenderSource} from '../../documentation/_components/RenderSource/RenderS
 
         <RenderSource language={"tsx"}>
         ```
-        import { ThemeProvider } from '@apple-pie/slice';
+        import { ThemeProvider } from '@apple-pie/slice/providers/ThemeProvider';
         
         export function App() {
             return (
@@ -91,5 +92,9 @@ import {RenderSource} from '../../documentation/_components/RenderSource/RenderS
         }
         ```
         </RenderSource>
+
+        <Unstyled>
+        For SSR-enabled environments, see <code>Providers/ThemeServer</code> for server-side theme helpers.
+        </Unstyled>
     </FlexDiv>
 </FlexDiv>

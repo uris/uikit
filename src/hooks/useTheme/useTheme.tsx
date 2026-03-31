@@ -1,3 +1,5 @@
+'use client';
+
 import { useCallback, useMemo } from 'react';
 import type { SliceTheme } from '../../theme';
 import { darkTheme, lightTheme } from '../../theme';

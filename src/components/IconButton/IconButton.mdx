@@ -38,6 +38,7 @@ import {RenderSource} from '../../../documentation/_components/RenderSource/Rend
             <tr><td><code>bgColor</code></td><td><code>string</code></td><td><code>-</code></td><td>Color token/value for `bgColor`.</td></tr>
             <tr><td><code>bgColorHover</code></td><td><code>string</code></td><td><code>-</code></td><td>Color token/value for `bgColorHover`.</td></tr>
             <tr><td><code>bgColorOn</code></td><td><code>string</code></td><td><code>-</code></td><td>Color token/value for `bgColorOn`.</td></tr>
+            <tr><td><code>buttonSize</code></td><td><code>{`'s' | 'm' | 'l' | 'xl'`}</code></td><td><code>'m'</code></td><td>Named size preset for the button frame. When omitted, <code>frameSize</code> is used as the fallback pixel size.</td></tr>
             <tr><td><code>border</code></td><td><code>boolean</code></td><td><code>-</code></td><td>Sizing/layout setting for `border`.</td></tr>
             <tr><td><code>borderRadius</code></td><td><code>number</code></td><td><code>-</code></td><td>Sizing/layout setting for `borderRadius`.</td></tr>
             <tr><td><code>color</code></td><td><code>string</code></td><td><code>-</code></td><td>Color token/value for `color`.</td></tr>
@@ -45,14 +46,15 @@ import {RenderSource} from '../../../documentation/_components/RenderSource/Rend
             <tr><td><code>count</code></td><td><code>number</code></td><td><code>-</code></td><td>Controls `count`.</td></tr>
             <tr><td><code>disabled</code></td><td><code>boolean</code></td><td><code>-</code></td><td>Boolean flag controlling `disabled`.</td></tr>
             <tr><td><code>exit</code></td><td><code>string</code></td><td><code>-</code></td><td>Text/value for `exit`.</td></tr>
-            <tr><td><code>fillColor</code></td><td><code>string</code></td><td><code>-</code></td><td>Color token/value for `fillColor`.</td></tr>
-            <tr><td><code>frameSize</code></td><td><code>number</code></td><td><code>-</code></td><td>Sizing/layout setting for `frameSize`.</td></tr>
+            <tr><td><code>fillColor</code></td><td><code>number</code></td><td><code>-</code></td><td>Opacity value used for filled portions of the rendered icon.</td></tr>
+            <tr><td><code>frameSize</code></td><td><code>number</code></td><td><code>36</code></td><td>Fallback square frame size in pixels when no <code>buttonSize</code> preset is provided.</td></tr>
             <tr><td><code>hover</code></td><td><code>boolean</code></td><td><code>-</code></td><td>Boolean flag controlling `hover`.</td></tr>
             <tr><td><code>icon</code></td><td><code>string</code></td><td><code>-</code></td><td>Icon configuration for `icon`.</td></tr>
             <tr><td><code>iconSize</code></td><td><code>number</code></td><td><code>-</code></td><td>Sizing/layout setting for `iconSize`.</td></tr>
             <tr><td><code>initial</code></td><td><code>string</code></td><td><code>-</code></td><td>Text/value for `initial`.</td></tr>
             <tr><td><code>isToggled</code></td><td><code>boolean</code></td><td><code>-</code></td><td>Boolean flag controlling `isToggled`.</td></tr>
             <tr><td><code>label</code></td><td><code>string</code></td><td><code>-</code></td><td>Text/value for `label`.</td></tr>
+            <tr><td><code>round</code></td><td><code>boolean</code></td><td><code>true</code></td><td>When <code>true</code>, the button renders as a circle and ignores the numeric <code>borderRadius</code>.</td></tr>
             <tr><td><code>showDot</code></td><td><code>boolean</code></td><td><code>-</code></td><td>Boolean flag controlling `showDot`.</td></tr>
             <tr><td><code>toggle</code></td><td><code>boolean</code></td><td><code>-</code></td><td>Boolean flag controlling `toggle`.</td></tr>
             <tr><td><code>toggleIcon</code></td><td><code>boolean</code></td><td><code>-</code></td><td>Boolean flag controlling `toggleIcon`.</td></tr>

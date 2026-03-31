@@ -1,8 +1,9 @@
+'use client';
+
 import { motion } from 'motion/react';
 import React, { useMemo } from 'react';
-import { useTrackRenders } from '../../hooks/useTrackRenders/useTrackRenders';
 import css from './FlexDiv.module.css';
-import type { FlexDivProps } from './_types';
+import { type FlexDivProps, layoutSets } from './_types';
 
 // Normalize width and height values before applying them inline.
 function setSize(style: string | number, isHeight: boolean) {
@@ -32,14 +33,15 @@ export const FlexDiv = React.memo(
 	React.forwardRef<HTMLDivElement, FlexDivProps>((props, ref) => {
 		const {
 			children,
-			scrollY = false,
+			preset = 'default',
+			scrollY = layoutSets[preset].scrollY,
 			scrollX = false,
 			background = 'var(--core-surface-primary)',
-			direction = 'column',
-			align = 'start',
-			justify = 'start',
-			height = 'fit',
-			width = 'fill',
+			direction = layoutSets[preset].direction,
+			align = layoutSets[preset].align,
+			justify = layoutSets[preset].justify,
+			height = layoutSets[preset].height,
+			width = layoutSets[preset].width,
 			maxWidth = undefined,
 			centerSelf = undefined,
 			wrap = false,
@@ -120,16 +122,12 @@ export const FlexDiv = React.memo(
 			borderRadius,
 		]);
 
-		/* START.DEBUG */
-		// useTrackRenders(props, 'FlexDiv');
-		/* END.DEBUG */
-
 		return (
 			<motion.div
 				id={divId}
 				ref={ref}
 				className={`${css.flexDiv} ${className ?? ''}`}
-				style={{ ...wrapperStyle, ...style }}
+				style={{ ...style, ...wrapperStyle }}
 				transition={transition}
 				variants={variants}
 				initial={enter}
