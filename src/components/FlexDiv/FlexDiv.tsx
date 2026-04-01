@@ -1,7 +1,7 @@
 'use client';
 
 import { motion } from 'motion/react';
-import React, { useMemo } from 'react';
+import React, { useCallback, useMemo } from 'react';
 import css from './FlexDiv.module.css';
 import { type FlexDivProps, layoutSets } from './_types';
 
@@ -21,6 +21,19 @@ function setBox(style: string | number) {
 	return style;
 }
 
+function setPaddingRight(
+	padding: string | number | undefined,
+	scrollBox: boolean | undefined,
+	pad = 4,
+) {
+	if (padding) {
+		if (typeof padding === 'number') return `${padding}px`;
+		return padding;
+	}
+	if (scrollBox) return `${pad}px`;
+	return 'unset';
+}
+
 // Translate alignment shorthand into flexbox-compatible values.
 function setFlex(style: string) {
 	if (style === 'start' || style === 'top') return 'flex-start';
@@ -34,14 +47,15 @@ export const FlexDiv = React.memo(
 		const {
 			children,
 			preset = 'default',
-			scrollY = layoutSets[preset].scrollY,
-			scrollX = false,
-			background = 'var(--core-surface-primary)',
-			direction = layoutSets[preset].direction,
-			align = layoutSets[preset].align,
-			justify = layoutSets[preset].justify,
-			height = layoutSets[preset].height,
-			width = layoutSets[preset].width,
+			scrollY = undefined,
+			scrollX = undefined,
+			scrollBox = false,
+			background = 'transparent',
+			direction = undefined,
+			align = undefined,
+			justify = undefined,
+			height = undefined,
+			width = undefined,
 			maxWidth = undefined,
 			centerSelf = undefined,
 			wrap = false,
@@ -66,20 +80,39 @@ export const FlexDiv = React.memo(
 		const { id: divId, style: userStyle, ...rest } = divAttributes;
 		const wrapperStyle = userStyle ?? {};
 
+		const presets = useMemo(() => {
+			return {
+				width: width ?? layoutSets[preset].width,
+				height: height ?? layoutSets[preset].height,
+				direction: direction ?? layoutSets[preset].direction,
+				align: align ?? layoutSets[preset].align,
+				justify: justify ?? layoutSets[preset].justify,
+				scrollY: scrollY ?? layoutSets[preset].scrollY,
+				scrollX: scrollX ?? layoutSets[preset].scrollX,
+				overflow: layoutSets[preset].overflow,
+			};
+		}, [preset, width, height, direction, align, justify, scrollY, scrollX]);
+
+		const setScroll = useCallback((value: boolean | undefined) => {
+			if (value === undefined) return 'unset';
+			return value ? 'auto' : 'hidden';
+		}, []);
+
 		// compose the inline layout styles for the wrapper
 		const style = useMemo(() => {
 			return {
 				display: 'flex',
 				position: `${absolute ? 'absolute' : 'relative'}`,
-				flexDirection: `${direction}${reverse ? '-reverse' : ''}`,
+				flexDirection: `${presets.direction}${reverse ? '-reverse' : ''}`,
 				flexWrap: `${wrap ? 'wrap' : 'nowrap'}`,
-				justifyContent: `${setFlex(justify)}`,
-				alignItems: `${setFlex(align)}`,
+				justifyContent: `${setFlex(presets.justify)}`,
+				alignItems: `${setFlex(presets.align)}`,
 				boxSizing: 'border-box',
 				padding: `${setBox(padding)}`,
+				paddingRight: setPaddingRight(padding, scrollBox),
 				margin: centerSelf ? '0 auto' : `${setBox(margin)}`,
-				width: `${absolute ? 'unset' : setSize(width, false)}`,
-				height: `${absolute ? 'unset' : setSize(height, true)}`,
+				width: `${absolute ? 'unset' : setSize(presets.width, false)}`,
+				height: `${absolute ? 'unset' : setSize(presets.height, true)}`,
 				maxWidth: `${maxWidth ? setSize(maxWidth, false) : 'unset'}`,
 				flex: `${absolute ? 'unset' : (flex ?? 'unset')}`,
 				top: `${absolute ? '0' : 'unset'}`,
@@ -89,9 +122,9 @@ export const FlexDiv = React.memo(
 				gap: gap ? `${gap}px` : 'unset',
 				border: `${border ?? 'unset'}`,
 				background: `${background ?? 'transparent'}`,
-				overflow: 'hidden',
-				overflowY: `${scrollY ? 'auto' : 'unset'}`,
-				overflowX: `${scrollX ? 'auto' : 'unset'}`,
+				overflow: presets.overflow,
+				overflowY: setScroll(presets.scrollY),
+				overflowX: setScroll(presets.scrollX),
 				borderRadius: borderRadius ? `${borderRadius}px` : 'unset',
 				color: 'var(--core-text-primary)',
 				'--flex-div-scroll-border': `${background ?? 'transparent'}`,
@@ -100,26 +133,22 @@ export const FlexDiv = React.memo(
 			} as React.CSSProperties;
 		}, [
 			absolute,
-			direction,
 			reverse,
 			wrap,
-			justify,
-			align,
 			padding,
 			margin,
-			width,
-			height,
 			flex,
 			gap,
 			border,
 			background,
-			scrollY,
-			scrollX,
 			centerSelf,
 			maxWidth,
 			scrollHandle,
 			scrollHandleHover,
 			borderRadius,
+			setScroll,
+			presets,
+			scrollBox,
 		]);
 
 		return (

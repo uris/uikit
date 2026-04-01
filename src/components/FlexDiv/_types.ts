@@ -12,10 +12,11 @@ export enum Size {
 export enum Preset {
 	FillScroll = 'fill-scroll',
 	FillCenter = 'fill-center',
+	FillStart = 'fill-start',
 	Window = 'window',
 	Row = 'row',
 	RowBetween = 'row-between',
-	Column = 'fill-column',
+	Column = 'column',
 	Default = 'default',
 	Draggable = 'draggable',
 }
@@ -27,6 +28,8 @@ export const layoutSets = {
 		justify: 'start',
 		align: 'start',
 		scrollY: true,
+		scrollX: false,
+		overflow: 'hidden',
 		direction: 'column',
 	},
 	[Preset.FillCenter]: {
@@ -35,6 +38,18 @@ export const layoutSets = {
 		justify: 'center',
 		align: 'center',
 		scrollY: false,
+		scrollX: false,
+		overflow: 'hidden',
+		direction: 'column',
+	},
+	[Preset.FillStart]: {
+		width: 'fill',
+		height: 'fill',
+		justify: 'start',
+		align: 'start',
+		scrollY: false,
+		scrollX: false,
+		overflow: 'hidden',
 		direction: 'column',
 	},
 	[Preset.Window]: {
@@ -43,6 +58,8 @@ export const layoutSets = {
 		justify: 'start',
 		align: 'start',
 		scrollY: false,
+		scrollX: false,
+		overflow: 'hidden',
 		direction: 'row',
 	},
 	[Preset.Row]: {
@@ -50,7 +67,9 @@ export const layoutSets = {
 		height: 'fit',
 		justify: 'start',
 		align: 'center',
-		scrollY: false,
+		scrollY: undefined,
+		scrollX: undefined,
+		overflow: 'hidden',
 		direction: 'row',
 	},
 	[Preset.RowBetween]: {
@@ -58,15 +77,19 @@ export const layoutSets = {
 		height: 'fit',
 		justify: 'between',
 		align: 'center',
-		scrollY: false,
+		scrollY: undefined,
+		scrollX: undefined,
+		overflow: 'hidden',
 		direction: 'row',
 	},
 	[Preset.Column]: {
 		width: 'fill',
 		height: 'fit',
 		justify: 'start',
-		align: 'center',
-		scrollY: false,
+		align: 'start',
+		scrollY: undefined,
+		scrollX: undefined,
+		overflow: 'hidden',
 		direction: 'column',
 	},
 	[Preset.Default]: {
@@ -74,7 +97,9 @@ export const layoutSets = {
 		height: 'fit',
 		justify: 'start',
 		align: 'start',
-		scrollY: false,
+		scrollY: undefined,
+		scrollX: undefined,
+		overflow: 'hidden',
 		direction: 'column',
 	},
 	[Preset.Draggable]: {
@@ -82,7 +107,9 @@ export const layoutSets = {
 		height: 'fill',
 		justify: 'start',
 		align: 'start',
-		scrollY: false,
+		scrollY: undefined,
+		scrollX: undefined,
+		overflow: 'visible',
 		direction: 'column',
 	},
 };
@@ -91,6 +118,7 @@ type FlexDivBaseProps = {
 	className?: string;
 	children?: any;
 	preset?: Preset;
+	scrollBox?: boolean;
 	scrollY?: boolean;
 	scrollX?: boolean;
 	absolute?: boolean;

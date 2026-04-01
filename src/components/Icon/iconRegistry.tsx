@@ -21,6 +21,28 @@ export interface IconDefinition {
  */
 export const STATIC_ICON_REGISTRY = new Map<string, IconDefinition>([
 	[
+		'keyboard',
+		{
+			line: ({ strokeColor }) => (
+				<>
+					<path
+						d="M17.26,16.46H2.75c-.96,0-1.75-.85-1.75-1.89V5.88c0-1.04.79-1.89,1.75-1.89h14.51c.96,0,1.75.85,1.75,1.89v8.69c0,1.04-.79,1.89-1.75,1.89ZM2.75,5.61c-.14,0-.25.12-.25.27v8.69c0,.15.11.27.25.27h14.51c.14,0,.25-.12.25-.27V5.88c0-.15-.11-.27-.25-.27H2.75Z"
+						fill={strokeColor}
+					/>
+					<circle cx="5.52" cy="8.52" r=".97" fill={strokeColor} />
+					<circle cx="8.53" cy="8.52" r=".97" fill={strokeColor} />
+					<circle cx="11.52" cy="8.52" r=".97" fill={strokeColor} />
+					<circle cx="14.48" cy="8.52" r=".97" fill={strokeColor} />
+					<circle cx="14.48" cy="11.97" r=".97" fill={strokeColor} />
+					<path
+						d="M11.52,11h-6c-.54,0-.97.44-.97.97s.44.97.97.97h6c.54,0,.97-.44.97-.97s-.44-.97-.97-.97Z"
+						fill={strokeColor}
+					/>
+				</>
+			),
+		},
+	],
+	[
 		'sidebar',
 		{
 			line: ({ strokeColor, fillColor }) => (

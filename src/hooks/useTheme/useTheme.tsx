@@ -1,11 +1,19 @@
 'use client';
 
 import { useCallback, useMemo } from 'react';
+import { useThemeContext } from '../../providers/ThemeProvider';
 import type { SliceTheme } from '../../theme';
 import { darkTheme, lightTheme } from '../../theme';
 import { colorClass, colorCssVars } from '../../theme/colors/colors';
 import { typeCssClasses, typeStyles } from '../../theme/type/type';
 import { useObserveTheme } from '../useObserveTheme/useObserveTheme';
+
+function setDocumentTheme(name: string, system: boolean) {
+	if (typeof document === 'undefined') return;
+	document.documentElement.dataset.sliceTheme = name;
+	document.cookie = `slice-theme=${encodeURIComponent(name)}; path=/; max-age=31536000; samesite=lax`;
+	document.cookie = `slice-system-theme=${encodeURIComponent(system)}; path=/; max-age=31536000; samesite=lax`;
+}
 
 /**
  * Hook to manage Slice theming
@@ -13,30 +21,38 @@ import { useObserveTheme } from '../useObserveTheme/useObserveTheme';
 export function useTheme() {
 	// observe the currently applied theme
 	const current = useObserveTheme();
+	const { systemTheme, setSystemTheme } = useThemeContext();
 
 	// set the active theme from a theme object or supported theme name
-	const set = useCallback((newTheme: SliceTheme | string) => {
-		let theme: SliceTheme;
-		if (typeof newTheme === 'string') {
-			if (newTheme === 'system') {
-				const darkModeMediaQuery = globalThis.matchMedia(
-					'(prefers-color-scheme: dark)',
-				);
-				const isDark = darkModeMediaQuery.matches;
-				theme = isDark ? darkTheme : lightTheme;
-			} else {
-				theme = newTheme === darkTheme.name ? darkTheme : lightTheme;
-			}
-		} else theme = newTheme;
-		document.documentElement.dataset.sliceTheme = theme.name;
-	}, []);
+	const set = useCallback(
+		(newTheme: SliceTheme | string) => {
+			let theme: SliceTheme;
+			let system = false;
+			if (typeof newTheme === 'string') {
+				if (newTheme === 'system') {
+					system = true;
+					const darkModeMediaQuery = globalThis.matchMedia(
+						'(prefers-color-scheme: dark)',
+					);
+					const isDark = darkModeMediaQuery.matches;
+					theme = isDark ? darkTheme : lightTheme;
+				} else {
+					theme = newTheme === darkTheme.name ? darkTheme : lightTheme;
+				}
+			} else theme = newTheme;
+			setSystemTheme(system);
+			setDocumentTheme(theme.name, system);
+		},
+		[setSystemTheme],
+	);
 
 	// toggle between the default light and dark themes
-	const toggle = () => {
+	const toggle = useCallback(() => {
 		const lightMode = current.name === lightTheme.name;
 		const newTheme = lightMode ? darkTheme : lightTheme;
-		document.documentElement.dataset.sliceTheme = newTheme.name;
-	};
+		setSystemTheme(false);
+		setDocumentTheme(newTheme.name, false);
+	}, [current.name, setSystemTheme]);
 
 	// expose a convenient dark-mode flag for consumers
 	const isDark = useMemo(() => {
@@ -81,12 +97,16 @@ export function useTheme() {
 		 */
 		set,
 		/**
-		 * Toggle between light and dark themes
+		 * Togglebetween light and dark themes
 		 */
 		toggle,
 		/**
 		 * If the currently active theme is the Slice's default dark theme'
 		 */
 		isDark,
+		/**
+		 * True when the current theme is still being derived from the OS preference
+		 */
+		systemTheme,
 	};
 }

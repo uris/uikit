@@ -14,20 +14,33 @@ export function useToolTip(
 		hiddenCoords,
 	);
 
-	const adjustX = useCallback((x: number) => {
-		if (x < 10) return 10;
-		const maxWidth = globalThis.innerWidth - 10;
-		if (x > maxWidth) {
-			const overflow = x - maxWidth;
-			return x - overflow;
-		}
-		return x;
-	}, []);
+	// keep the tooltip within the viewport
+	const adjustX = useCallback(
+		(x: number) => {
+			if (x < 10) return 10;
+			if (!tipElement.current) return x;
+			const maxWidth = globalThis.innerWidth - 10;
+			const tipWdithStyle =
+				globalThis.getComputedStyle(tipElement.current).width ?? 0;
+			const tipWidth = Number.parseInt(tipWdithStyle.replace('px', ''));
+			const endX = x + tipWidth;
+			if (endX > maxWidth) {
+				const overflow = endX - maxWidth;
+				return x - overflow;
+			}
+			return x;
+		},
+		[tipElement],
+	);
 
+	// keep the tooltip within the viewport
 	const adjustY = useCallback(
 		(y: number, parentY: number) => {
 			if (y < 10) return 10;
-			const tipHeight = tipElement.current?.offsetHeight ?? 0;
+			if (!tipElement.current) return y;
+			const tipHeightStyle =
+				globalThis.getComputedStyle(tipElement.current).height ?? 0;
+			const tipHeight = Number.parseInt(tipHeightStyle.replace('px', ''));
 			const endY = y + tipHeight;
 			const maxHeight = globalThis.innerHeight - 10;
 			if (endY > maxHeight) {

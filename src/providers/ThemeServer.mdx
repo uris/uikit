@@ -47,13 +47,13 @@ import {RenderSource} from '../../documentation/_components/RenderSource/RenderS
         - Pass that value into `resolveInitialTheme()`.
         - Spread `getThemeHtmlAttributes(initialTheme)` onto the root `html` element.
         - Pass the same `initialTheme` into `ThemeProvider` on the client.
-        - Let `ThemeProvider` refresh the cookie after hydration so future requests keep the same theme.
+        - Let `ThemeProvider` refresh the cookie after hydration so future requests keep the same resolved theme.
 
         ## Cookie behavior
         - Cookie name: `slice-theme`
         - Cookie value: the resolved Slice theme name such as `lightMode` or `darkMode`
         - Cookie attributes: `path=/`, `max-age=31536000`, `SameSite=Lax`
-        - Intended use: lets SSR code read the last client-selected theme and render the correct root theme attribute before hydration
+        - Intended use: lets SSR code read the last resolved client theme and render the correct root theme attribute before hydration
 
 
         ## Next.js Example
@@ -97,6 +97,7 @@ import {RenderSource} from '../../documentation/_components/RenderSource/RenderS
         ## Notes
         - `ThemeProvider` remains the client-side runtime piece.
         - The server helpers exist to make the first HTML response theme-aware before React hydration begins.
+        - `ThemeProvider` passes the same `initialTheme` value into Slice's internal theme context so `useTheme()` and `useObserveTheme()` match the server render during hydration.
         - The expected cookie name is `slice-theme`.
         - If you only set the theme in a client effect, the first paint may occur before the theme attribute is applied and you get a UI flicker.
         </Unstyled>

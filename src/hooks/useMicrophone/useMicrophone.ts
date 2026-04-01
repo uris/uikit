@@ -9,6 +9,7 @@ export type MicOption = { id: string };
 export type UseMicrophoneReturn = {
 	micStream: RefObject<MediaStream | null>;
 	micTrack: RefObject<MediaStreamTrack | null>;
+	isActive: boolean;
 	muted: boolean;
 	isSupported: boolean;
 	isRequesting: boolean;
@@ -29,6 +30,7 @@ export type UseMicrophoneReturn = {
 export function useMicrophone(
 	startMuted = true,
 	microphoneDeviceId?: string,
+	autoRequest = true,
 ): UseMicrophoneReturn {
 	const micStream = useRef<MediaStream | null>(null);
 	const micTrack = useRef<MediaStreamTrack | null>(null);
@@ -37,6 +39,7 @@ export function useMicrophone(
 	const initializedRef = useRef<boolean>(false);
 	const [microphones, setMicrophones] = useState<MediaDeviceInfo[]>([]);
 	const [micOptions, setMicOptions] = useState<DropDownOption<MicOption>[]>([]);
+	const [isActive, setIsActive] = useState<boolean>(false);
 	const [muted, setMuted] = useState<boolean>(startMuted);
 	const [isRequesting, setIsRequesting] = useState<boolean>(false);
 	const [error, setError] = useState<Error | null>(null);
@@ -73,6 +76,7 @@ export function useMicrophone(
 		}
 		micStream.current = null;
 		micTrack.current = null;
+		setIsActive(false);
 	}, []);
 
 	// determine whether the browser can access media devices at all
@@ -87,6 +91,12 @@ export function useMicrophone(
 		const audioTrack = micStream.current.getAudioTracks()[0];
 		if (!audioTrack) throw new Error('No audio track found');
 		return audioTrack;
+	}, []);
+
+	// determine whether there is already a live microphone stream
+	const hasActiveStream = useCallback(() => {
+		if (!micStream.current || !micTrack.current) return false;
+		return micTrack.current.readyState === 'live';
 	}, []);
 
 	// disable the live microphone track
@@ -133,6 +143,7 @@ export function useMicrophone(
 			if (!mutedRef.current) {
 				await waitForTrackToBecomeActive(micTrack.current);
 			}
+			setIsActive(Boolean(micTrack.current.readyState === 'live'));
 			return micStream.current;
 		},
 		[constraints, getMicTrack, waitForTrackToBecomeActive],
@@ -140,12 +151,19 @@ export function useMicrophone(
 
 	// request a media stream and fall back to generic constraints if needed
 	const requestMicrophone = useCallback(async () => {
+		if (hasActiveStream()) {
+			setIsActive(true);
+			setError(null);
+			return micStream.current;
+		}
+
 		setIsRequesting(true);
 		await waitForPaint();
 
 		if (!hasMediaSupport) {
 			const nextError = new Error('Microphone access is not supported');
 			setError(nextError);
+			setIsActive(false);
 			if (mountedRef.current) setIsRequesting(false);
 			return null;
 		}
@@ -166,13 +184,20 @@ export function useMicrophone(
 						? error
 						: new Error('Failed to access microphone');
 				setError(nextError);
+				setIsActive(false);
 				throw nextError;
 			}
 			return await requestStream(undefined, false);
 		} finally {
 			setIsRequesting(false);
 		}
-	}, [hasMediaSupport, requestStream, stopMicStream, waitForPaint]);
+	}, [
+		hasActiveStream,
+		hasMediaSupport,
+		requestStream,
+		stopMicStream,
+		waitForPaint,
+	]);
 
 	// get a list of available microphones
 	const refreshMicrophones = useCallback(async () => {
@@ -206,6 +231,7 @@ export function useMicrophone(
 				stopMicStream();
 				await requestStream(id, false);
 			} catch (err) {
+				setIsActive(false);
 				setError(
 					err instanceof Error ? err : new Error('Error switching microphone'),
 				);
@@ -234,6 +260,13 @@ export function useMicrophone(
 		if (!hasMediaSupport) return;
 		if (initializedRef.current) return;
 		initializedRef.current = true;
+		if (!autoRequest) {
+			void refreshMicrophones();
+			return () => {
+				mountedRef.current = false;
+				stopMicStream();
+			};
+		}
 		void requestMicrophone()
 			.then(() => {
 				if (startMuted) muteMic();
@@ -245,7 +278,15 @@ export function useMicrophone(
 			mountedRef.current = false;
 			stopMicStream();
 		};
-	}, [hasMediaSupport, requestMicrophone, startMuted, muteMic, stopMicStream]);
+	}, [
+		autoRequest,
+		hasMediaSupport,
+		refreshMicrophones,
+		requestMicrophone,
+		startMuted,
+		muteMic,
+		stopMicStream,
+	]);
 
 	// keep microphone devices fresh as hardware becomes available/unavailable
 	useEffect(() => {
@@ -283,6 +324,7 @@ export function useMicrophone(
 	return {
 		micStream,
 		micTrack,
+		isActive,
 		muted,
 		isSupported: hasMediaSupport,
 		isRequesting,

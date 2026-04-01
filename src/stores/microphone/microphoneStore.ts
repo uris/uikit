@@ -1,0 +1,195 @@
+'use client';
+
+import type { RefObject } from 'react';
+import { useEffect } from 'react';
+import { create } from 'zustand';
+import type { DropDownOption } from '../../components/DropDown';
+import type { MicOption, UseMicrophoneReturn } from '../../hooks';
+import type {
+	MicrophoneStore,
+	MicrophoneStoreActions,
+	MicrophoneStoreState,
+} from './_types';
+
+const emptyMicStreamRef = { current: null } as RefObject<MediaStream | null>;
+const emptyMicTrackRef = {
+	current: null,
+} as RefObject<MediaStreamTrack | null>;
+
+// default empty state for the store
+function createEmptyState(): MicrophoneStoreState {
+	return {
+		micStream: emptyMicStreamRef,
+		micTrack: emptyMicTrackRef,
+		isActive: false,
+		muted: true,
+		isSupported: false,
+		isRequesting: false,
+		error: null,
+		microphones: [],
+		micOptions: [],
+	};
+}
+
+// create the state for the store based on the microphone object
+function toStoreState(
+	microphone: UseMicrophoneReturn | null,
+): MicrophoneStoreState {
+	if (!microphone) return createEmptyState();
+
+	return {
+		micStream: microphone.micStream,
+		micTrack: microphone.micTrack,
+		isActive: microphone.isActive,
+		muted: microphone.muted,
+		isSupported: microphone.isSupported,
+		isRequesting: microphone.isRequesting,
+		error: microphone.error,
+		microphones: microphone.microphones,
+		micOptions: microphone.micOptions,
+	};
+}
+
+// create the actions for the store based on the microphone object
+function createBoundActions(
+	microphone: UseMicrophoneReturn | null,
+	clearState: () => void,
+): Omit<MicrophoneStoreActions, 'sync' | 'clear'> {
+	return {
+		requestMicrophone: async () => microphone?.requestMicrophone() ?? null,
+		stopMicrophone: () => {
+			microphone?.stopMicrophone();
+			if (!microphone) clearState();
+		},
+		muteMic: () => microphone?.muteMic() ?? false,
+		unmuteMic: () => microphone?.unmuteMic() ?? false,
+		toggleMute: () => microphone?.toggleMute(),
+		refreshMicrophones: async () => microphone?.refreshMicrophones() ?? [],
+		setMicrophone: async (deviceId: string | DropDownOption<MicOption>) => {
+			await microphone?.setMicrophone(deviceId);
+		},
+	};
+}
+
+/**
+ * Store factory that creates the store state based on a sync or a clear
+ */
+export const useMicrophoneStore = create<MicrophoneStore>((set) => {
+	const clearState = () => {
+		set((state) => ({
+			...createEmptyState(),
+			actions: {
+				...state.actions,
+				...createBoundActions(null, clearState),
+			},
+		}));
+	};
+
+	return {
+		...createEmptyState(),
+		actions: {
+			sync: (microphone: UseMicrophoneReturn | null) => {
+				set((state) => ({
+					...toStoreState(microphone),
+					actions: {
+						...state.actions,
+						...createBoundActions(microphone, clearState),
+					},
+				}));
+			},
+			clear: clearState,
+			...createBoundActions(null, clearState),
+		},
+	};
+});
+
+/**
+ * Bind the value of useMicrophone hook to the useMicrophoneStore. Use this to update the store with a new mic object.
+ */
+export function useSyncMicrophoneStore(microphone: UseMicrophoneReturn | null) {
+	const sync = useMicrophoneStore((state) => state.actions.sync);
+	const hasMicrophone = microphone !== null;
+	const micStream = microphone?.micStream ?? emptyMicStreamRef;
+	const micTrack = microphone?.micTrack ?? emptyMicTrackRef;
+	const isActive = microphone?.isActive ?? false;
+	const muted = microphone?.muted ?? true;
+	const isSupported = microphone?.isSupported ?? false;
+	const isRequesting = microphone?.isRequesting ?? false;
+	const error = microphone?.error ?? null;
+	const microphones = microphone?.microphones ?? [];
+	const micOptions = microphone?.micOptions ?? [];
+	const requestMicrophone = microphone?.requestMicrophone;
+	const stopMicrophone = microphone?.stopMicrophone;
+	const muteMic = microphone?.muteMic;
+	const unmuteMic = microphone?.unmuteMic;
+	const toggleMute = microphone?.toggleMute;
+	const refreshMicrophones = microphone?.refreshMicrophones;
+	const setMicrophone = microphone?.setMicrophone;
+
+	useEffect(() => {
+		if (!hasMicrophone) {
+			sync(null);
+			return;
+		}
+
+		sync({
+			micStream,
+			micTrack,
+			isActive,
+			muted,
+			isSupported,
+			isRequesting,
+			error,
+			microphones,
+			micOptions,
+			requestMicrophone: requestMicrophone ?? (async () => null),
+			stopMicrophone: stopMicrophone ?? (() => null),
+			muteMic: muteMic ?? (() => false),
+			unmuteMic: unmuteMic ?? (() => false),
+			toggleMute: toggleMute ?? (() => null),
+			refreshMicrophones: refreshMicrophones ?? (async () => []),
+			setMicrophone: setMicrophone ?? (async () => {}),
+		});
+	}, [
+		sync,
+		hasMicrophone,
+		micStream,
+		micTrack,
+		isActive,
+		muted,
+		isSupported,
+		isRequesting,
+		error,
+		microphones,
+		micOptions,
+		requestMicrophone,
+		stopMicrophone,
+		muteMic,
+		unmuteMic,
+		toggleMute,
+		refreshMicrophones,
+		setMicrophone,
+	]);
+}
+
+// atomic hook exports for use in React components
+export const useMicStream = () =>
+	useMicrophoneStore((state) => state.micStream);
+export const useMicTrack = () => useMicrophoneStore((state) => state.micTrack);
+export const useMicActive = () => useMicrophoneStore((state) => state.isActive);
+export const useMicMuted = () => useMicrophoneStore((state) => state.muted);
+export const useMicSupported = () =>
+	useMicrophoneStore((state) => state.isSupported);
+export const useMicRequesting = () =>
+	useMicrophoneStore((state) => state.isRequesting);
+export const useMicError = () => useMicrophoneStore((state) => state.error);
+export const useMicrophones = () =>
+	useMicrophoneStore((state) => state.microphones);
+export const useMicOptions = () =>
+	useMicrophoneStore((state) => state.micOptions);
+export const useMicrophoneStoreActions = () =>
+	useMicrophoneStore((state) => state.actions);
+
+// non-reactive imperative exports for use outside the React context
+export const microphoneActions = useMicrophoneStore.getState().actions;
+export const getMicrophoneState = () => useMicrophoneStore.getState();

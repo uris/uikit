@@ -1,8 +1,7 @@
 'use client';
 
 import type React from 'react';
-import { useMemo } from 'react';
-import { createContext, useContext, useEffect } from 'react';
+import { createContext, useContext, useEffect, useMemo, useState } from 'react';
 import '../theme/colors/colors.css';
 import '../theme/elevations/elevation.css';
 import '../theme/type/type.css';
@@ -21,10 +20,14 @@ interface ThemeProviderProps {
 
 type ThemeContextValue = {
 	initialTheme: string;
+	systemTheme: boolean;
+	setSystemTheme: (value: boolean) => void;
 };
 
 const ThemeContext = createContext<ThemeContextValue>({
 	initialTheme: lightTheme.name,
+	systemTheme: true,
+	setSystemTheme: () => undefined,
 });
 
 export function useThemeContext() {
@@ -52,48 +55,65 @@ function resolveTheme(
 	return undefined;
 }
 
-function setDocumentTheme(name: string) {
+function setDocumentTheme(name: string, system: boolean) {
 	if (typeof document === 'undefined') return;
 	document.documentElement.dataset.sliceTheme = name;
 	document.cookie = `slice-theme=${encodeURIComponent(name)}; path=/; max-age=31536000; samesite=lax`;
+	document.cookie = `slice-system-theme=${encodeURIComponent(system)}; path=/; max-age=31536000; samesite=lax`;
 }
 
 export function ThemeProvider(props: Readonly<ThemeProviderProps>) {
 	const { children, theme, system, global, initialTheme } = props;
+	const [systemTheme, setSystemTheme] = useState<boolean>(system ?? true);
 
-	// memo innitial context value
+	// keep local system-theme state aligned with controlled provider props
+	useEffect(() => {
+		setSystemTheme(system ?? true);
+	}, [system]);
+
+	// memo provider context value
 	const contextValue = useMemo(() => {
 		return {
 			initialTheme: initialTheme ?? lightTheme.name,
+			systemTheme,
+			setSystemTheme,
 		};
-	}, [initialTheme]);
+	}, [initialTheme, systemTheme]);
 
 	// sync the explicitly provided theme to the document root
 	useEffect(() => {
-		if (theme || initialTheme) {
+		if (theme) {
+			setSystemTheme(false);
+			const newTheme = resolveTheme(theme, false);
+			if (!newTheme) return;
+			setDocumentTheme(newTheme.name, false);
+			return;
+		}
+
+		if (initialTheme && !systemTheme) {
 			const newTheme = resolveTheme(theme ?? initialTheme, false);
 			if (!newTheme) return;
-			setDocumentTheme(newTheme.name);
+			setDocumentTheme(newTheme.name, false);
 		}
-	}, [theme, initialTheme]);
+	}, [theme, initialTheme, systemTheme]);
 
 	// keep the document theme aligned with system preference when enabled
 	useEffect(() => {
-		if (!system) return;
+		if (!systemTheme) return;
 
 		const darkModeMediaQuery = getDarkModeMediaQuery();
 		if (!darkModeMediaQuery) return;
 		const handleSystemThemeChange = (e: MediaQueryListEvent) => {
-			if (system) {
+			if (systemTheme) {
 				const autoTheme = e.matches ? darkTheme : lightTheme;
-				setDocumentTheme(autoTheme.name);
+				setDocumentTheme(autoTheme.name, true);
 			}
 		};
 
 		// apply the current system theme on mount or when `system` changes
-		if (system) {
+		if (systemTheme) {
 			const autoTheme = darkModeMediaQuery.matches ? darkTheme : lightTheme;
-			setDocumentTheme(autoTheme.name);
+			setDocumentTheme(autoTheme.name, true);
 		}
 
 		// subscribe to OS theme changes
@@ -102,7 +122,7 @@ export function ThemeProvider(props: Readonly<ThemeProviderProps>) {
 		return () => {
 			darkModeMediaQuery.removeEventListener('change', handleSystemThemeChange);
 		};
-	}, [system]);
+	}, [systemTheme]);
 
 	// optionally mirror the active Slice surface color onto the document body
 	useEffect(() => {

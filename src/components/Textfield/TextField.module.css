@@ -34,6 +34,7 @@
 	box-sizing: border-box;
 	outline: none;
 	border: 0;
+	padding: 0;
 	height: 100%;
 	width: var(--tf-input-width);
 	field-sizing: var(--tf-field-size);

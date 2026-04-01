@@ -9,6 +9,7 @@ import { useMicrophone } from './useMicrophone';
 type UseMicrophoneDemoProps = {
 	microphoneDeviceId: string;
 	startMuted: boolean;
+	autoRequest: boolean;
 };
 
 type MicInfo = {
@@ -20,7 +21,7 @@ type MicInfo = {
 };
 
 function UseMicrophoneDemo(props: Readonly<UseMicrophoneDemoProps>) {
-	const { microphoneDeviceId, startMuted } = props;
+	const { microphoneDeviceId, startMuted, autoRequest } = props;
 	const [selectedDeviceId, setSelectedDeviceId] = useState(microphoneDeviceId);
 	const [micInfo, setMicInfo] = useState<MicInfo>({});
 	const {
@@ -38,7 +39,7 @@ function UseMicrophoneDemo(props: Readonly<UseMicrophoneDemoProps>) {
 		toggleMute,
 		refreshMicrophones,
 		setMicrophone,
-	} = useMicrophone(startMuted, selectedDeviceId);
+	} = useMicrophone(startMuted, selectedDeviceId, autoRequest);
 
 	const refreshMicInfo = useCallback(() => {
 		const stream = micStream.current;
@@ -79,8 +80,6 @@ function UseMicrophoneDemo(props: Readonly<UseMicrophoneDemoProps>) {
 		return undefined;
 	}, [microphones, selectedDeviceId]);
 
-	console.log({ isRequesting });
-
 	return (
 		<FlexDiv width={'fill'} height={'fill'} padding={32} gap={24}>
 			<FlexDiv direction={'row'} width={'fill'} gap={24} align={'start'}>
@@ -96,6 +95,9 @@ function UseMicrophoneDemo(props: Readonly<UseMicrophoneDemoProps>) {
 						Requesting mic access:{' '}
 						<ProgressIndicator show={isRequesting} inline />
 						{!isRequesting && <Label>false</Label>}
+					</div>
+					<div>
+						Auto Request: <Label>{String(autoRequest)}</Label>
 					</div>
 					<div>
 						Muted: <Label>{String(muted)}</Label>
@@ -212,6 +214,7 @@ const meta: Meta<typeof UseMicrophoneDemo> = {
 	args: {
 		microphoneDeviceId: '',
 		startMuted: true,
+		autoRequest: true,
 	},
 };
 

@@ -12,6 +12,10 @@ const optionsWPlace: DropDownOption<DropdownValueType>[] = [
 	{ label: '-- select a user', value: { id: 0 } },
 	{ label: 'Jane Doe', value: { id: 1 } },
 	{ label: 'John Doe', value: { id: 2 } },
+	{
+		label: 'A very long name from some one that is probably european',
+		value: { id: 3 },
+	},
 ];
 
 const meta: Meta<typeof DropDown> = {
@@ -24,7 +28,7 @@ const meta: Meta<typeof DropDown> = {
 		selectedIndex: undefined,
 		placeholder: true,
 		validate: true,
-		borderRadius: 4,
+		borderRadius: undefined,
 		valueKey: 'id',
 		selectedValue: { id: 0 },
 		options: optionsWPlace,

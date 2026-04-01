@@ -22,7 +22,6 @@ const meta: Meta<typeof TextField> = {
 		onBlur: fn(),
 		onAction: fn(),
 		onClear: fn(),
-		onValidate: fn(),
 	},
 };
 

@@ -31,7 +31,7 @@ function DropDownComponent<T = string>(props: DropDownProps<T>) {
 		valueKey,
 		options = [],
 		placeholder = true,
-		borderRadius = 4,
+		borderRadius = 8,
 		backgroundColor = 'var(--core-surface-secondary)',
 		bgColor = 'var(--core-surface-secondary)',
 		iconColor = 'var(--core-text-primary)',
@@ -39,8 +39,8 @@ function DropDownComponent<T = string>(props: DropDownProps<T>) {
 		borderWidth,
 		borderSize = 1,
 		borderColor = 'var(--core-outline-primary)',
-		paddingLeft = '8px',
-		paddingRight = '12px',
+		paddingLeft = '10px',
+		paddingRight = '8px',
 		paddingTop = '8px',
 		paddingBottom = '8px',
 		borderStyle = 'box',
@@ -183,9 +183,9 @@ function DropDownComponent<T = string>(props: DropDownProps<T>) {
 	// set border
 	const setBorder = useMemo(() => {
 		if (borderStyle === 'box')
-			return `${setStyle(resolvedBorderWidth)} solid ${setStyle(borderColor)}`;
+			return `${setStyle(resolvedBorderWidth)} solid ${setBorderColor}`;
 		return 'unset';
-	}, [resolvedBorderWidth, borderColor, borderStyle]);
+	}, [resolvedBorderWidth, setBorderColor, borderStyle]);
 
 	// set border bottom
 	const setBorderBottom = useMemo(() => {
@@ -241,8 +241,10 @@ function DropDownComponent<T = string>(props: DropDownProps<T>) {
 			style={{ ...divStyle, ...cssVars }}
 			{...rest}
 		>
-			<div className={`${css.label} ${css[size]}`}>{label}</div>
-			<div className={`${css.face} ${css[size]}`}>{displayText}</div>
+			{label && <div className={`${css.label} ${css[size]}`}>{label}</div>}
+			<div className={`${css.face} ${css[size]}`}>
+				<span className={css.faceText}>{displayText}</span>
+			</div>
 			<div className={css.chevron}>
 				<Icon name="chevron down" size={iconSize} strokeColor={setIconColor} />
 			</div>

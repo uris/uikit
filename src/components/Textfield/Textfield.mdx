@@ -38,7 +38,7 @@ import { RenderSource } from '../../../documentation/_components/RenderSource/Re
             <tbody>
                 <tr><td><code>value</code></td><td><code>string</code></td><td><code>''</code></td><td>Controlled input value.</td></tr>
                 <tr><td><code>name</code></td><td><code>string</code></td><td><code>'input_name'</code></td><td>Name and aria label for the native input.</td></tr>
-                <tr><td><code>label</code></td><td><code>string</code></td><td><code>''</code></td><td>Optional label shown before the field content.</td></tr>
+                <tr><td><code>label</code></td><td><code>string</code></td><td><code>-</code></td><td>Optional label shown before the field content. No label row is rendered when this prop is omitted.</td></tr>
                 <tr><td><code>labelSize</code></td><td><code>{`'xs' | 's' | 'm' | 'l'`}</code></td><td><code>'m'</code></td><td>Typography size for the label.</td></tr>
                 <tr><td><code>textSize</code></td><td><code>{`'xs' | 's' | 'm' | 'l'`}</code></td><td><code>'m'</code></td><td>Typography size for the input text.</td></tr>
                 <tr><td><code>placeholder</code></td><td><code>string</code></td><td><code>'placeholder'</code></td><td>Placeholder text shown when the field is empty.</td></tr>
@@ -46,7 +46,7 @@ import { RenderSource } from '../../../documentation/_components/RenderSource/Re
                 <tr><td><code>editable</code></td><td><code>boolean</code></td><td><code>true</code></td><td>Prevents editing while still rendering the field.</td></tr>
                 <tr><td><code>maxLength</code></td><td><code>number</code></td><td><code>-</code></td><td>Maximum character count.</td></tr>
                 <tr><td><code>size</code></td><td><code>{`{ width?: number | string; height?: number | string }`}</code></td><td><code>{`{ width: '100%', height: 'auto' }`}</code></td><td>Wrapper width and height.</td></tr>
-                <tr><td><code>padding</code></td><td><code>{`string | number`}</code></td><td><code>-</code></td><td>Wrapper padding. Falls back to the component default spacing when omitted.</td></tr>
+                <tr><td><code>padding</code></td><td><code>{`string | number`}</code></td><td><code>'8px 10px'</code></td><td>Wrapper padding. Falls back to the component default spacing when omitted.</td></tr>
                 <tr><td><code>borderRadius</code></td><td><code>{`number | string`}</code></td><td><code>8</code></td><td>Wrapper corner radius.</td></tr>
                 <tr><td><code>textAlign</code></td><td><code>{`'left' | 'center'`}</code></td><td><code>'left'</code></td><td>Input text alignment.</td></tr>
                 <tr><td><code>borderType</code></td><td><code>{`'box' | 'underline' | 'none'`}</code></td><td><code>'box'</code></td><td>Border rendering mode.</td></tr>
@@ -61,8 +61,7 @@ import { RenderSource } from '../../../documentation/_components/RenderSource/Re
                 <tr><td><code>textColorPlaceholder</code></td><td><code>string</code></td><td><code>'var(--core-text-disabled)'</code></td><td>Placeholder color.</td></tr>
                 <tr><td><code>textColorDisabled</code></td><td><code>string</code></td><td><code>'var(--core-text-disabled)'</code></td><td>Disabled text color.</td></tr>
                 <tr><td><code>labelColor</code></td><td><code>string</code></td><td><code>'var(--core-text-primary)'</code></td><td>Label color.</td></tr>
-                <tr><td><code>validate</code></td><td><code>boolean</code></td><td><code>true</code></td><td>Enables the built-in validation pass.</td></tr>
-                <tr><td><code>isValid</code></td><td><code>boolean</code></td><td><code>true</code></td><td>Controlled validity state.</td></tr>
+                <tr><td><code>error</code></td><td><code>boolean</code></td><td><code>false</code></td><td>Marks the field as invalid and switches border/text colors to their error variants.</td></tr>
                 <tr><td><code>inline</code></td><td><code>boolean</code></td><td><code>false</code></td><td>Removes the filled background styling.</td></tr>
                 <tr><td><code>iconLeft</code></td><td><code>{`{ name?: string; size?: number; color?: string }`}</code></td><td><code>null</code></td><td>Optional icon shown before the input.</td></tr>
                 <tr><td><code>clearButton</code></td><td><code>{`{ size?: number } | null`}</code></td><td><code>{`{ size: 20 }`}</code></td><td>Configures the clear control. Set to <code>null</code> to remove it.</td></tr>
@@ -79,17 +78,16 @@ import { RenderSource } from '../../../documentation/_components/RenderSource/Re
                 <tr><td><code>onPaste</code></td><td><code>{`(value: React.ClipboardEvent<HTMLInputElement>) => void`}</code></td><td><code>-</code></td><td>Called for paste events on the input.</td></tr>
                 <tr><td><code>onClear</code></td><td><code>{`() => void`}</code></td><td><code>-</code></td><td>Called after the clear control resets the value.</td></tr>
                 <tr><td><code>onAction</code></td><td><code>{`() => void`}</code></td><td><code>-</code></td><td>Called when the trailing action button is pressed.</td></tr>
-                <tr><td><code>onValidate</code></td><td><code>{`(state: boolean) => void`}</code></td><td><code>-</code></td><td>Called when the internal validation result changes.</td></tr>
                 <tr><td><code>...divAttributes</code></td><td><code>{`HTMLAttributes<HTMLDivElement>`}</code></td><td><code>-</code></td><td>Standard div props passed through to the wrapper element.</td></tr>
             </tbody>
         </table>
 
         ## Notes
-        - Validation currently considers values valid when they have more than 1 character or are empty.
         - Pressing Enter triggers <code>onSubmit</code>, then blurs the input.
         - The clear control only renders its icon while the field is focused and has content.
         - In password mode, the visibility toggle is shown unless <code>noShow</code> is true.
-        - The style API is now flattened. Use the state-specific props directly instead of grouped objects.
+        - Use the <code>error</code> prop to render the error colors; the component no longer performs a built-in validation pass.
+        - The style API is flattened. Use the state-specific props directly instead of grouped objects.
 
         ## Code Examples
         </Unstyled>

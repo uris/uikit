@@ -8,8 +8,7 @@ import React, {
 	useRef,
 	useState,
 } from 'react';
-import { useTheme } from '../../hooks';
-import { useObserveResize } from '../../hooks/useObserveResize/useObserveResize';
+import { useObserveResize, useTheme } from '../../hooks';
 import { useTrackRenders } from '../../hooks/useTrackRenders/useTrackRenders';
 import { pointerPosition } from '../../utils/functions/misc';
 import css from './DraggablePanel.module.css';
@@ -35,13 +34,12 @@ type DraggablePanelBaseProps = {
 	onResizeStart?: (info: Info) => void;
 	containerRef?: React.RefObject<HTMLDivElement | null>;
 	sizeConstraints?: Constraint;
-	dragsRight?: boolean;
 	isClosed?: boolean;
 	resizeHandle?: Partial<ResizeHandle>;
 	borderRight?: any;
 	borderLeft?: any;
 	bgColor?: string;
-	drags?: boolean;
+	drags?: 'left' | 'right' | false;
 	dragHandle?: boolean;
 	dragHandleStyle?: DragHandleProps;
 	disableOnContext?: boolean;
@@ -76,7 +74,7 @@ function resolveConstraints(
 	const initial = normalizeConstraintValue(
 		sizeConstraints.initial,
 		containerWidth,
-		MIN_SIZE,
+		sizeConstraints.initial,
 	);
 	const min = normalizeConstraintValue(
 		sizeConstraints.min,
@@ -89,7 +87,7 @@ function resolveConstraints(
 		initial,
 	);
 	return {
-		initial: min > initial ? min : initial,
+		initial,
 		min,
 		max,
 	};
@@ -100,7 +98,6 @@ export const DraggablePanel = React.memo((props: DraggablePanelProps) => {
 	const {
 		children,
 		sizeConstraints = { initial: 250, min: 250, max: 500 },
-		dragsRight = true,
 		isClosed = true,
 		resizeHandle = {
 			width: 10,
@@ -108,13 +105,13 @@ export const DraggablePanel = React.memo((props: DraggablePanelProps) => {
 			offsetX: true,
 		},
 		borderRight = '1px solid var(--core-outline-primary)',
-		borderLeft = null,
+		borderLeft = '1px solid var(--core-outline-primary)',
 		bgColor = 'transparent',
-		drags = true,
+		drags = 'right',
 		isTouchDevice = false,
-		disableOnContext = true,
+		disableOnContext = false,
 		dragHandle = true,
-		dragHandleStyle,
+		dragHandleStyle = { height: 24, width: 9 },
 		containerRef,
 		onResize = () => null,
 		onResizeStart = () => null,
@@ -132,7 +129,7 @@ export const DraggablePanel = React.memo((props: DraggablePanelProps) => {
 	const containerSize = useObserveResize(containerRef);
 	const panelSize = useObserveResize(div);
 	const [handleHighlight, setHandleHighlight] = useState(false);
-	const [lastWidth, setLastWidth] = useState<number | null>(null);
+	const [lastWidth, setLastWidth] = useState<number | string | null>(null);
 	const [panelClosed, setPanelClosed] = useState<boolean>(isClosed);
 	const [constraints, setConstraints] = useState<Constraint>(() =>
 		resolveConstraints(sizeConstraints),
@@ -249,11 +246,11 @@ export const DraggablePanel = React.memo((props: DraggablePanelProps) => {
 	// convert the current pointer x-position into a new panel width
 	const getNewWidth = useCallback(
 		(clientX: number) => {
-			return dragsRight
+			return drags === 'right'
 				? startWidth.current + clientX - startX.current
 				: startWidth.current - clientX + startX.current;
 		},
-		[dragsRight],
+		[drags],
 	);
 
 	// enforce min and max width constraints during drag
@@ -327,7 +324,7 @@ export const DraggablePanel = React.memo((props: DraggablePanelProps) => {
 
 	// resolve the width transition from the most recent panel size
 	const transition = useMemo(() => {
-		if (lastWidth && lastWidth > 500)
+		if (lastWidth && typeof lastWidth === 'number' && lastWidth > 500)
 			return 'width var(--motion-magnet-duration) var(--motion-magnet)';
 		return 'width var(--motion-water-duration) var(--motion-water)';
 	}, [lastWidth]);
@@ -383,19 +380,30 @@ export const DraggablePanel = React.memo((props: DraggablePanelProps) => {
 
 	// resolve the handle offset based on drag direction and touch mode
 	const leftRightStyle = useMemo(() => {
-		if (dragsRight) {
+		if (drags === 'right') {
 			return { right: isTouchDevice ? -22 : -((gripper.width || 10) / 2) };
 		}
 		return { left: isTouchDevice ? -22 : -((gripper.width || 10) / 2) };
-	}, [dragsRight, isTouchDevice, gripper.width]);
+	}, [drags, isTouchDevice, gripper.width]);
+
+	// normalize initial width to a true CSS value
+	const normalizeWidth = useCallback((width: number | string) => {
+		if (typeof width === 'number') {
+			if (width <= 1 && width >= 0) {
+				return `${width * 100}%`;
+			}
+			return `${width}px`;
+		}
+		return width;
+	}, []);
 
 	// resolve the rendered panel width from drag state and constraints
 	const width = useMemo(() => {
 		if (!drags) return '100%';
 		if (panelClosed) return 0;
 		if (lastWidth) return lastWidth;
-		return constraints.initial;
-	}, [drags, panelClosed, lastWidth, constraints.initial]);
+		return normalizeWidth(constraints.initial);
+	}, [drags, panelClosed, lastWidth, constraints.initial, normalizeWidth]);
 
 	// compose CSS custom properties for the panel background
 	const cssVars = useMemo(() => {
@@ -425,8 +433,8 @@ export const DraggablePanel = React.memo((props: DraggablePanelProps) => {
 				height: '100%',
 				maxWidth: drags ? constraints.max : 'unset',
 				transition: isDragging ? '' : transition,
-				borderRight: closed || !borderRight || !drags ? 'none' : borderRight,
-				borderLeft: closed || !borderLeft || !drags ? 'none' : borderLeft,
+				borderRight: closed || drags !== 'right' ? 'none' : borderRight,
+				borderLeft: closed || drags !== 'left' ? 'none' : borderLeft,
 			}}
 			{...rest}
 		>
@@ -469,6 +477,7 @@ export const DraggablePanel = React.memo((props: DraggablePanelProps) => {
 					}}
 				/>
 			</div>
+
 			<div className={css.content}>{children}</div>
 		</div>
 	);

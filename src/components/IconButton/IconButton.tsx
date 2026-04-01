@@ -98,9 +98,9 @@ export const IconButton = React.memo((props: IconButtonProps) => {
 
 	// resolve the resting background color
 	const bgColorNormal = useMemo(() => {
-		if (on && toggle) return bgColorOn;
+		if (on) return bgColorOn;
 		return bgColor ?? 'var(--core-surface-secondary)';
-	}, [toggle, bgColorOn, bgColor, on]);
+	}, [bgColorOn, bgColor, on]);
 
 	// resolve the hover background color
 	const bgHoverColor = useMemo(() => {
@@ -111,16 +111,16 @@ export const IconButton = React.memo((props: IconButtonProps) => {
 
 	// resolve the label color for toggled and untoggled states
 	const textColor = useMemo(() => {
-		if (toggle && on) return colorOn;
+		if (on) return colorOn;
 		return color ?? 'var(--core-text-primary)';
-	}, [toggle, on, colorOn, color]);
+	}, [on, colorOn, color]);
 
 	// resolve the icon color based on states
 	const setIconColor = useMemo(() => {
-		if (toggle && on) return iconColorOn;
+		if (on) return iconColorOn;
 		if (hovered) return iconColorHover;
 		return iconColor ?? 'var(--core-text-primary)';
-	}, [toggle, on, iconColorOn, iconColor, iconColorHover, hovered]);
+	}, [on, iconColorOn, iconColor, iconColorHover, hovered]);
 
 	const size = useMemo(() => {
 		if (!buttonSize) return frameSize;
@@ -134,11 +134,13 @@ export const IconButton = React.memo((props: IconButtonProps) => {
 	const cssVars = useMemo(() => {
 		return {
 			'--ib-bg-color': bgColorNormal,
-			'--ib-bg-color-hover': bgHoverColor,
-			'--ib-icon-size': `${size ?? 0}px`,
+			'--ib-bg-color-hover': disabled ? bgColorNormal : bgHoverColor,
+			'--ib-icon-size': `${iconSize ?? 0}px`,
+			'--ib-button-size': `${size ?? 0}px`,
 			'--ib-border-radius': round ? '100%' : `${borderRadius ?? 0}px`,
 			'--ib-border': border ? '1px' : 0,
 			'--ib-color': textColor,
+			'--ib-cursor': disabled ? 'default' : 'pointer',
 		} as React.CSSProperties;
 	}, [
 		bgColorNormal,
@@ -147,7 +149,9 @@ export const IconButton = React.memo((props: IconButtonProps) => {
 		border,
 		size,
 		borderRadius,
+		iconSize,
 		round,
+		disabled,
 	]);
 
 	/* START.DEBUG */
@@ -161,8 +165,8 @@ export const IconButton = React.memo((props: IconButtonProps) => {
 			className={`${css.button}${divClass}`}
 			style={{ ...divStyle, ...cssVars }}
 			onClick={(e) => handleClick(e)}
-			onMouseLeave={handleMouseLeave}
-			onMouseEnter={handleMouseEnter}
+			onMouseOutCapture={handleMouseLeave}
+			onMouseOverCapture={handleMouseEnter}
 			transition={transition}
 			variants={variants}
 			initial={initial}
@@ -180,7 +184,7 @@ export const IconButton = React.memo((props: IconButtonProps) => {
 					fillColor={fillColor}
 					disabled={disabled}
 					size={iconSize}
-					toggle={toggleIcon ? isToggled : false}
+					toggle={toggleIcon ? on : false}
 					pointer={true}
 				/>
 			</div>

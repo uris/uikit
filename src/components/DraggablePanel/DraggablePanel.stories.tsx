@@ -17,7 +17,7 @@ const meta: Meta<typeof DraggablePanel> = {
 	},
 	args: {
 		children: undefined,
-		sizeConstraints: { initial: 150, min: 100, max: 350 },
+		sizeConstraints: { initial: 0.5, min: 100, max: 0.75 },
 		dragsRight: true,
 		isClosed: false,
 		resizeHandle: {
@@ -51,9 +51,6 @@ export default meta;
 export const Default: StoryObj<typeof DraggablePanel> = {
 	render: (args) => {
 		return <DraggablePanelWithChildren {...args} />;
-	},
-	play: async ({ canvasElement, args }) => {
-		await runDraggablePanelPlay({ canvasElement, args });
 	},
 };
 

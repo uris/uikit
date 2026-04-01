@@ -133,6 +133,7 @@ export const SliceIcons = {
 		menu: 'menu',
 		more: 'more',
 		sidebar: 'sidebar',
+		keyboard: 'keyboard',
 		x: 'x',
 	},
 } as const;

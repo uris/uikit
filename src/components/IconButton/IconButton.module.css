@@ -5,11 +5,15 @@
 	border-radius: var(--ib-border-radius);
 	border: var(--ib-border) solid var(--core-outline-primary);
 	gap: 6px;
-	cursor: pointer;
+	cursor: var(--ib-cursor);
 	appearance: none;
 	-webkit-appearance: none;
 	background-image: none;
 	outline: none;
+	min-height: var(--ib-button-size);
+	height: var(--ib-button-size);
+	min-width: var(--ib-button-size);
+	width: var(--ib-button-size);
 	&:hover {
 		background: var(--ib-bg-color-hover);
 	}

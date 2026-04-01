@@ -1,0 +1,109 @@
+import {Meta, Unstyled} from '@storybook/addon-docs/blocks';
+import {RenderSource} from '../../../documentation/_components/RenderSource/RenderSource';
+import {FlexDiv} from '../../components/FlexDiv';
+import Notice from '../../../documentation/_components/Notice/Notice';
+
+<Meta title="Stores/Microphone Store" />
+
+<FlexDiv width={"fill"} height={"fill"} align={"center"}>
+    <FlexDiv width={"fill"} maxWidth={760} height={"auto"}>
+        <Unstyled>
+        <Notice>
+            The microphone store does not create or manage microphone access by itself.
+            Bind a live `useMicrophone()` instance into the singleton store with `useSyncMicrophoneStore()`.
+        </Notice>
+
+        # MicrophoneStore
+        Global microphone state helpers built with Zustand. Mirrors a live `useMicrophone()` instance into a module-level singleton store and exposes atomic selector hooks plus imperative actions.
+
+        ## React exports (reactive)
+        <table style={{width: '100%'}}>
+          <colgroup>
+            <col style={{width: '1%'}} />
+            <col style={{width: '28%'}} />
+            <col style={{width: '98%'}} />
+          </colgroup>
+          <thead>
+            <tr>
+              <th className={"left"}>Export</th>
+              <th className={"left"}>Type</th>
+              <th className={"left"}>Description</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td><code>useMicrophoneStore</code></td><td><code>Zustand store hook</code></td><td>Main selector-based store hook.</td></tr>
+            <tr><td><code>useSyncMicrophoneStore</code></td><td><code>{`(microphone: UseMicrophoneReturn | null) => void`}</code></td><td>Binds a live <code>useMicrophone()</code> result into the singleton store.</td></tr>
+            <tr><td><code>useMicStream</code></td><td><code>{`() => RefObject<MediaStream | null>`}</code></td><td>Atomic selector for the live stream ref.</td></tr>
+            <tr><td><code>useMicTrack</code></td><td><code>{`() => RefObject<MediaStreamTrack | null>`}</code></td><td>Atomic selector for the live track ref.</td></tr>
+            <tr><td><code>useMicActive</code></td><td><code>{`() => boolean`}</code></td><td>Atomic selector for whether a live microphone stream is currently active.</td></tr>
+            <tr><td><code>useMicMuted</code></td><td><code>{`() => boolean`}</code></td><td>Atomic selector for mute state.</td></tr>
+            <tr><td><code>useMicSupported</code></td><td><code>{`() => boolean`}</code></td><td>Atomic selector for browser support.</td></tr>
+            <tr><td><code>useMicRequesting</code></td><td><code>{`() => boolean`}</code></td><td>Atomic selector for in-flight microphone requests and switches.</td></tr>
+            <tr><td><code>useMicError</code></td><td><code>{`() => Error | null`}</code></td><td>Atomic selector for the last microphone error.</td></tr>
+            <tr><td><code>useMicrophones</code></td><td><code>{`() => MediaDeviceInfo[]`}</code></td><td>Atomic selector for available input devices.</td></tr>
+            <tr><td><code>useMicOptions</code></td><td><code>{`() => DropDownOption<MicOption>[]`}</code></td><td>Atomic selector for dropdown-ready microphone options.</td></tr>
+            <tr><td><code>useMicrophoneStoreActions</code></td><td><code>{`() => actions`}</code></td><td>Atomic selector for store actions.</td></tr>
+          </tbody>
+        </table>
+
+        ## Imperative exports (non-reactive)
+        <table style={{width: '100%'}}>
+          <colgroup>
+            <col style={{width: '1%'}} />
+            <col style={{width: '28%'}} />
+            <col style={{width: '98%'}} />
+          </colgroup>
+          <thead>
+            <tr>
+              <th className={"left"}>Export</th>
+              <th className={"left"}>Type</th>
+              <th className={"left"}>Description</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td><code>microphoneActions</code></td><td><code>actions</code></td><td>Imperative global actions for non-React code paths.</td></tr>
+            <tr><td><code>getMicrophoneState</code></td><td><code>{`() => MicrophoneStore`}</code></td><td>Imperative snapshot read of the current store state.</td></tr>
+          </tbody>
+        </table>
+
+        ## Example
+        </Unstyled>
+
+        <RenderSource language={"tsx"}>
+        ```
+        import { useMicrophone } from '@apple-pie/slice';
+        import {
+            useMicMuted,
+            useMicActive,
+            useMicTrack,
+            useMicrophoneStoreActions,
+            useSyncMicrophoneStore,
+        } from '@apple-pie/slice/stores/microphone';
+
+        function GlobalMicrophoneProvider() {
+            const microphone = useMicrophone(true, undefined, false);
+            useSyncMicrophoneStore(microphone);
+            return null;
+        }
+
+        function MicrophoneStatus() {
+            const isActive = useMicActive();
+            const muted = useMicMuted();
+            const micTrack = useMicTrack();
+            const actions = useMicrophoneStoreActions();
+
+            return (
+                <div>
+                    <div>Active: {String(isActive)}</div>
+                    <div>Muted: {String(muted)}</div>
+                    <div>Track: {micTrack.current?.readyState ?? 'none'}</div>
+                    <button type="button" onClick={() => void actions.requestMicrophone()}>
+                        Request Microphone
+                    </button>
+                </div>
+            );
+        }
+        ```
+        </RenderSource>
+    </FlexDiv>
+</FlexDiv>

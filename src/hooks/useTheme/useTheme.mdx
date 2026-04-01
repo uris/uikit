@@ -9,6 +9,8 @@ import {FlexDiv} from '../../components/FlexDiv';
         <Unstyled>
         # useTheme
         Main Slice theming hook. Returns the active theme plus helpers and token maps for CSS variables, class names, and typography.
+        In SSR-enabled apps, this hook hydrates against the `initialTheme` passed into `ThemeProvider` before switching over to live DOM observation.
+        It also exposes whether the current theme is still system-derived through `systemTheme`.
 
         ## Signature
         `useTheme()`
@@ -40,9 +42,10 @@ import {FlexDiv} from '../../components/FlexDiv';
             <tr><td><code>colorsClass</code></td><td><code>Record&lt;string, string&gt;</code></td><td><code>colorClass</code></td><td>Color tokens mapped to utility class names.</td></tr>
             <tr><td><code>typeClass</code></td><td><code>Record&lt;string, string&gt;</code></td><td><code>typeCssClasses</code></td><td>Typography tokens mapped to class names.</td></tr>
             <tr><td><code>typeStyle</code></td><td><code>Record&lt;string, React.CSSProperties&gt;</code></td><td><code>typeStyles</code></td><td>Typography tokens mapped to inline style objects.</td></tr>
-            <tr><td><code>set</code></td><td><code>(newTheme: SliceTheme | string) =&gt; void</code></td><td><code>-</code></td><td>Sets theme using a <code>SliceTheme</code> object or name (<code>'lightMode'</code>, <code>'darkMode'</code>, <code>'system'</code>).</td></tr>
-            <tr><td><code>toggle</code></td><td><code>() =&gt; void</code></td><td><code>-</code></td><td>Toggles between light and dark theme names.</td></tr>
+            <tr><td><code>set</code></td><td><code>(newTheme: SliceTheme | string) =&gt; void</code></td><td><code>-</code></td><td>Sets theme using a <code>SliceTheme</code> object or name (<code>'lightMode'</code>, <code>'darkMode'</code>, <code>'system'</code>). Also updates the <code>slice-theme</code> cookie for SSR-aware apps.</td></tr>
+            <tr><td><code>toggle</code></td><td><code>() =&gt; void</code></td><td><code>-</code></td><td>Toggles between light and dark theme names, marks the theme as explicitly selected, and updates the <code>slice-theme</code> cookie.</td></tr>
             <tr><td><code>isDark</code></td><td><code>boolean</code></td><td><code>false</code></td><td><code>true</code> when the active theme name equals Slice dark mode.</td></tr>
+            <tr><td><code>systemTheme</code></td><td><code>boolean</code></td><td><code>false</code></td><td><code>true</code> when the current theme is being derived from <code>prefers-color-scheme</code> rather than an explicit selection.</td></tr>
           </tbody>
         </table>
 
@@ -68,5 +71,14 @@ import {FlexDiv} from '../../components/FlexDiv';
         }
         ```
         </RenderSource>
+
+        <Unstyled>
+        ## SSR Notes
+        - `useTheme()` does not take an `initialTheme` argument.
+        - The startup value comes from `ThemeProvider`.
+        - When using SSR, pass the same server-resolved `initialTheme` into `ThemeProvider` that you wrote onto the root HTML element.
+        - Theme changes triggered through `set()` or `toggle()` also refresh the `slice-theme` cookie for future server renders.
+        - Calling <code>set('system')</code> marks the theme as system-derived, while calling <code>set('lightMode')</code>, <code>set('darkMode')</code>, or <code>toggle()</code> marks it as explicitly selected.
+        </Unstyled>
     </FlexDiv>
 </FlexDiv>

@@ -11,10 +11,10 @@ import {FlexDiv} from '../../components/FlexDiv';
         Requests microphone access, keeps a live microphone stream in refs, and exposes simple controls for muting, switching devices, refreshing available devices, and stopping the stream.
 
         ## Behavior
-        The hook requests microphone access on mount. It also listens for `navigator.mediaDevices` `devicechange` events, refreshes the available microphone list when devices come online or disconnect, and falls back to the default device if the currently selected microphone disappears.
+        By default, the hook requests microphone access on mount. Pass `autoRequest={false}` to delay permission prompting and call `requestMicrophone()` manually when you are ready. It also listens for `navigator.mediaDevices` `devicechange` events, refreshes the available microphone list when devices come online or disconnect, and falls back to the default device if the currently selected microphone disappears.
 
         ## Signature
-        `useMicrophone(startMuted?, microphoneDeviceId?)`
+        `useMicrophone(startMuted?, microphoneDeviceId?, autoRequest?)`
 
         ## Parameters
         <table style={{width: '100%'}}>
@@ -35,6 +35,7 @@ import {FlexDiv} from '../../components/FlexDiv';
           <tbody>
             <tr><td><code>startMuted</code></td><td><code>boolean</code></td><td><code>true</code></td><td>Controls whether the microphone track starts disabled after the stream is acquired.</td></tr>
             <tr><td><code>microphoneDeviceId</code></td><td><code>string</code></td><td><code>undefined</code></td><td>Optional preferred microphone device id. When omitted, the browser chooses the default input.</td></tr>
+            <tr><td><code>autoRequest</code></td><td><code>boolean</code></td><td><code>true</code></td><td>When <code>true</code>, requests microphone access on mount. When <code>false</code>, waits for an explicit call to <code>requestMicrophone()</code>.</td></tr>
           </tbody>
         </table>
 
@@ -55,6 +56,7 @@ import {FlexDiv} from '../../components/FlexDiv';
           <tbody>
             <tr><td><code>micStream</code></td><td><code>RefObject&lt;MediaStream | null&gt;</code></td><td>Live microphone stream ref.</td></tr>
             <tr><td><code>micTrack</code></td><td><code>RefObject&lt;MediaStreamTrack | null&gt;</code></td><td>Live microphone track ref.</td></tr>
+            <tr><td><code>isActive</code></td><td><code>boolean</code></td><td>Whether a live microphone stream is currently active.</td></tr>
             <tr><td><code>microphones</code></td><td><code>MediaDeviceInfo[]</code></td><td>Current list of available audio input devices.</td></tr>
             <tr><td><code>micOptions</code></td><td><code>{`DropDownOption<MicOption>[]`}</code></td><td>Ready-to-use dropdown options built from the current microphone list.</td></tr>
             <tr><td><code>muted</code></td><td><code>boolean</code></td><td>Current mute state of the microphone track.</td></tr>
@@ -75,6 +77,7 @@ import {FlexDiv} from '../../components/FlexDiv';
         - `micStream` and `micTrack` are refs on purpose. They hold live media objects and do not force rerenders when the underlying stream changes.
         - If a preferred device cannot be found during a request, the hook retries against the browser's default microphone.
         - If the active microphone is unplugged or removed, the hook refreshes devices and reconnects to the default input.
+        - When `autoRequest` is `false`, the hook still refreshes the device list on mount without prompting for microphone access.
 
         ## Basic example
         </Unstyled>
@@ -84,16 +87,44 @@ import {FlexDiv} from '../../components/FlexDiv';
         import { useMicrophone } from '@apple-pie/slice';
 
         function MicrophoneStatus() {
-            const { muted, toggleMute, micTrack, micOptions, isRequesting } = useMicrophone(false);
+            const { isActive, muted, toggleMute, micTrack, micOptions, isRequesting } = useMicrophone(false);
 
             return (
                 <div>
                     <div>Requesting: {String(isRequesting)}</div>
+                    <div>Active: {String(isActive)}</div>
                     <div>Track ready: {String(micTrack.current?.readyState === 'live')}</div>
                     <div>Available mics: {micOptions.length}</div>
                     <div>Muted: {String(muted)}</div>
                     <button type="button" onClick={() => toggleMute()}>
                         Toggle Mic
+                    </button>
+                </div>
+            );
+        }
+        ```
+        </RenderSource>
+
+        <RenderSource language={"tsx"}>
+        ```
+        import { useMicrophone } from '@apple-pie/slice';
+
+        function ManualMicrophoneRequest() {
+            const { requestMicrophone, micTrack, isRequesting } = useMicrophone(
+                true,
+                undefined,
+                false,
+            );
+
+            return (
+                <div>
+                    <div>Track ready: {String(micTrack.current?.readyState === 'live')}</div>
+                    <button
+                        type="button"
+                        disabled={isRequesting}
+                        onClick={() => void requestMicrophone()}
+                    >
+                        Request Microphone
                     </button>
                 </div>
             );

@@ -11,15 +11,15 @@ import css from './AudioBubble.module.css';
 import type { AudioBubbleProps } from './_types';
 
 export const AudioBubble = React.memo((props: AudioBubbleProps) => {
-	const theme = useTheme();
-	const lightColor = theme.current.colors['core-text-light'];
+	const { current } = useTheme();
+	const color = current.colors['core-text-primary'];
 	const {
 		audioStream,
 		playing = false,
 		size = 64,
-		backgroundColor = lightColor,
+		backgroundColor = 'var(--core-text-primary)',
 		glow = true,
-		glowColor = addOpacity(lightColor, 0.1),
+		glowColor = addOpacity(color, 0.1),
 		glowSize = 48,
 		glowOffset = 18,
 		minScale = 1,

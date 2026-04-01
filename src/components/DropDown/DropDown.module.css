@@ -16,14 +16,14 @@
 	composes: rowStart from "../../utils/styling/flexBox.module.css";
 	flex: 1;
 	overflow: hidden;
-	display: -webkit-box;
-	white-space: nowrap;
-	-webkit-line-clamp: 1;
-	-webkit-box-orient: vertical;
+}
+
+.faceText {
+	display: block;
+	overflow: hidden;
 	text-overflow: ellipsis;
-	word-break: break-all;
+	white-space: nowrap;
 	color: var(--dd-color);
-	line-height: 1em;
 }
 
 .label {

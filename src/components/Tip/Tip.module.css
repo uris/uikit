@@ -5,6 +5,7 @@
 	border: var(--tooltip-border);
 	border-radius: var(--tooltip-border-radius);
 	background: var(--tooltip-background);
+	white-space: nowrap;
 	z-index: var(--elevation-describe);
 }
 
