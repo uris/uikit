@@ -9,12 +9,18 @@ const items = [
 	{ value: darkTheme.name, icon: 'circle', title: 'Dark theme' },
 ] as any;
 
+// get system theme
+const darkModeMediaQuery = globalThis.matchMedia(
+	'(prefers-color-scheme: dark)',
+);
+const isDark = darkModeMediaQuery.matches;
+
 const preview: Preview = {
 	globalTypes: {
 		theme: {
 			name: 'Theme',
 			description: 'Global theme for components',
-			defaultValue: 'light',
+			defaultValue: isDark ? darkTheme.name : lightTheme.name,
 			toolbar: {
 				icon: 'circlehollow',
 				items,
@@ -22,11 +28,12 @@ const preview: Preview = {
 		},
 	},
 	initialGlobals: {
-		theme: lightTheme.name,
+		theme: isDark ? darkTheme.name : lightTheme.name,
 	},
 	decorators: [
 		(Story, context) => {
 			const theme = context.globals.theme;
+
 			return (
 				<ThemeProvider theme={theme} system={true} global={true}>
 					<Story />
