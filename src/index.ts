@@ -123,6 +123,9 @@ export { Spacer } from './components/Spacer';
 export { Switch } from './components/Switch';
 export type { SwitchProps } from './components/Switch';
 
+export { ToggleButton } from './components/ToggleButton';
+export type { ToggleButtonProps } from './components/ToggleButton';
+
 export { TabBar } from './components/TabBar';
 export type { TabOption, TabBarProps } from './components/TabBar';
 

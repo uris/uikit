@@ -1,0 +1,5 @@
+.toggleButton {
+	composes: rowStart from "../../utils/styling/flexBox.module.css";
+	width: min-content;
+	gap: var(--tb-gap);
+}

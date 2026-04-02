@@ -16,7 +16,8 @@ export const Icon = React.memo((props: IconProps) => {
 		size = 20,
 		stroke = 1.5,
 		strokeColor = theme.current.colors['core-icon-primary'],
-		fillColor = 0.2,
+		fillColor = undefined,
+		fill = false,
 		coverUp = theme.current.colors['core-surface-primary'],
 		toggle = false,
 		pointer = false,
@@ -37,6 +38,14 @@ export const Icon = React.memo((props: IconProps) => {
 		if (disabled) return 'default';
 		return pointer ? 'pointer' : 'inherit';
 	}, [disabled, pointer]);
+
+	// memo fill opacity value
+	const setFillColor = useMemo(() => {
+		if (!fill) return 0;
+		if (fillColor) return fillColor;
+		if (theme.current.name.includes('dark')) return 0.2;
+		return 0.125;
+	}, [fillColor, fill, theme.current.name]);
 
 	// compose CSS custom properties for the icon wrapper
 	const iconStyle = useMemo(() => {
@@ -80,7 +89,7 @@ export const Icon = React.memo((props: IconProps) => {
 			{...rest}
 		>
 			<title />
-			{shape({ stroke, strokeColor, fillColor, coverUp })}
+			{shape({ stroke, strokeColor, fillColor: setFillColor, coverUp })}
 		</svg>
 	);
 });

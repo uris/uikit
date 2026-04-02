@@ -6,6 +6,7 @@ type IconButtonBaseProps = {
 	round?: boolean;
 	frameSize?: number;
 	iconSize?: number;
+	iconFill?: boolean;
 	icon?: string;
 	iconColor?: string;
 	iconColorOn?: string;

@@ -28,6 +28,7 @@ export const IconButton = React.memo((props: IconButtonProps) => {
 		tooltip = undefined,
 		color = undefined,
 		colorOn = undefined,
+		iconFill = false,
 		bgColor = 'var(--core-surface-secondary)',
 		bgColorHover = 'var(--core-outline-primary)',
 		bgColorOn = 'var(--core-outline-primary)',
@@ -184,6 +185,7 @@ export const IconButton = React.memo((props: IconButtonProps) => {
 					fillColor={fillColor}
 					disabled={disabled}
 					size={iconSize}
+					fill={iconFill}
 					toggle={toggleIcon ? on : false}
 					pointer={true}
 				/>

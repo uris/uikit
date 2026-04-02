@@ -90,8 +90,14 @@ export function ThemeProvider(props: Readonly<ThemeProviderProps>) {
 			return;
 		}
 
-		if (initialTheme && !systemTheme) {
-			const newTheme = resolveTheme(theme ?? initialTheme, false);
+		// only seed the DOM from the SSR startup theme when no client theme exists yet
+		if (
+			initialTheme &&
+			!systemTheme &&
+			typeof document !== 'undefined' &&
+			!document.documentElement.dataset.sliceTheme
+		) {
+			const newTheme = resolveTheme(initialTheme, false);
 			if (!newTheme) return;
 			setDocumentTheme(newTheme.name, false);
 		}

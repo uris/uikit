@@ -21,6 +21,131 @@ export interface IconDefinition {
  */
 export const STATIC_ICON_REGISTRY = new Map<string, IconDefinition>([
 	[
+		'speaker',
+		{
+			line: ({ fillColor, strokeColor }) => (
+				<path
+					d="M4.71,7.95v4.13c0,.37.3.66.66.66h3.31c.08,0,.17.03.23.09l4.81,4.21c.22.19.56.04.56-.25V3.15c0-.25-.3-.37-.47-.2l-4.21,4.21c-.06.06-.15.1-.24.1h-3.97c-.37,0-.68.3-.68.68Z"
+					fill={strokeColor}
+					fillOpacity={fillColor}
+					stroke={strokeColor}
+					strokeWidth={1.5}
+				/>
+			),
+		},
+	],
+	[
+		'speaker muted',
+		{
+			line: ({ stroke, strokeColor, fillColor }) => (
+				<>
+					<polygon
+						points="4.82 8.35 9.61 12.51 4.82 12.51 4.82 8.35"
+						fill={strokeColor}
+						fillOpacity={fillColor}
+					/>
+					<polygon
+						points="8.51 7.58 14.51 12.78 14.5 3 14 2.5 8.51 7.58"
+						fill={strokeColor}
+						fillOpacity={fillColor}
+					/>
+					<path
+						d="M9.02,8.02h.34c.29,0,.57-.11.77-.32l3.41-3.41v7.65l1.5,1.3V3.15c0-.42-.25-.79-.64-.95-.39-.16-.83-.07-1.12.22l-4.09,4.09h-1.9l1.73,1.5Z"
+						fill={strokeColor}
+					/>
+					<path
+						d="M9.16,12.11c-.15-.07-.3-.12-.47-.12h-3.22v-3.09l-1.46-1.27c-.02.1-.04.2-.04.31v4.13c0,.78.63,1.41,1.41,1.41h3.16l4.7,4.11c.2.18.46.27.72.27.15,0,.31-.03.45-.1.27-.12.47-.35.57-.62l-5.81-5.04Z"
+						fill={strokeColor}
+					/>
+					<line
+						x1="3.25"
+						y1="5"
+						x2="16.5"
+						y2="16.5"
+						strokeLinecap={'round'}
+						strokeLinejoin={'round'}
+						stroke={strokeColor}
+						strokeWidth={stroke}
+						fill={'none'}
+					/>
+				</>
+			),
+		},
+	],
+	[
+		'laptop',
+		{
+			line: ({ fillColor, strokeColor }) => (
+				<>
+					<rect
+						x="4"
+						y="5"
+						width="12"
+						height="9"
+						rx="1"
+						ry="1"
+						fill={strokeColor}
+						opacity={fillColor}
+					/>
+					<path
+						d="M18,13.25h-1.25v-7.25c0-.96-.79-1.75-1.75-1.75H5c-.96,0-1.75.79-1.75,1.75v7.25h-1.25c-.41,0-.75.34-.75.75s.34.75.75.75h16c.41,0,.75-.34.75-.75s-.34-.75-.75-.75ZM4.75,6c0-.14.11-.25.25-.25h10c.14,0,.25.11.25.25v7.25H4.75v-7.25Z"
+						fill={strokeColor}
+					/>
+				</>
+			),
+		},
+	],
+	[
+		'moon full',
+		{
+			line: ({ strokeColor, fillColor }: IconRenderProps) => (
+				<>
+					<circle
+						cx="10"
+						cy="10"
+						r="6.5"
+						fill={'none'}
+						stroke={strokeColor}
+						strokeWidth={1.5}
+					/>
+					<circle
+						cx="10"
+						cy="10"
+						r="6.5"
+						fill={strokeColor}
+						fillOpacity={fillColor}
+					/>
+				</>
+			),
+		},
+	],
+	[
+		'sun',
+		{
+			line: ({ strokeColor, fillColor }) => (
+				<>
+					<path
+						d="M10,13.25c-1.79,0-3.25-1.46-3.25-3.25s1.46-3.25,3.25-3.25,3.25,1.46,3.25,3.25-1.46,3.25-3.25,3.25Z"
+						fill={strokeColor}
+						fillOpacity={fillColor}
+					/>
+					<path
+						d="M10,5.25c-2.62,0-4.75,2.13-4.75,4.75s2.13,4.75,4.75,4.75,4.75-2.13,4.75-4.75-2.13-4.75-4.75-4.75ZM10,13.25c-1.79,0-3.25-1.46-3.25-3.25s1.46-3.25,3.25-3.25,3.25,1.46,3.25,3.25-1.46,3.25-3.25,3.25Z"
+						fill={strokeColor}
+					/>
+					<circle cx="10" cy="2" r="1" fill={strokeColor} />
+					<circle cx="15.7" cy="4.3" r="1" fill={strokeColor} />
+					<circle cx="18.06" cy="10" r="1" fill={strokeColor} />
+					<circle cx="1.95" cy="10" r="1" fill={strokeColor} />
+					<circle cx="4.3" cy="15.7" r="1" fill={strokeColor} />
+					<circle cx="10" cy="18.05" r="1" fill={strokeColor} />
+					<circle cx="15.7" cy="15.7" r="1" fill={strokeColor} />
+					<circle cx="4.3" cy="4.3" r="1" fill={strokeColor} />
+				</>
+			),
+		},
+	],
+	[
 		'keyboard',
 		{
 			line: ({ strokeColor }) => (
@@ -125,8 +250,13 @@ export const STATIC_ICON_REGISTRY = new Map<string, IconDefinition>([
 	[
 		'mic',
 		{
-			line: ({ strokeColor }) => (
+			line: ({ strokeColor, fillColor }) => (
 				<>
+					<path
+						d="M10.25,11.75c1.65,0,3-1.35,3-3v-4.5c0-1.65-1.35-3-3-3s-3,1.35-3,3v4.5c0,1.65,1.35,3,3,3Z"
+						fill={strokeColor}
+						fillOpacity={fillColor}
+					/>
 					<path
 						d="M10.25,11.75c1.65,0,3-1.35,3-3v-4.5c0-1.65-1.35-3-3-3s-3,1.35-3,3v4.5c0,1.65,1.35,3,3,3ZM8.75,4.25c0-.83.67-1.5,1.5-1.5s1.5.67,1.5,1.5v4.5c0,.83-.67,1.5-1.5,1.5s-1.5-.67-1.5-1.5v-4.5Z"
 						fill={strokeColor}
@@ -1234,11 +1364,13 @@ export const STATIC_ICON_REGISTRY = new Map<string, IconDefinition>([
 	[
 		'share',
 		{
-			line: ({ stroke, strokeColor }: IconRenderProps) => (
+			line: ({ stroke, strokeColor, fillColor }: IconRenderProps) => (
 				<path
 					d="M11 7c-5.063 0-8 4.03-8 9 1.222-1.2 3-3 8-3v3l6-6-6-6v3Z"
 					stroke={strokeColor}
 					strokeWidth={stroke}
+					fill={strokeColor}
+					fillOpacity={fillColor}
 				/>
 			),
 		},
@@ -1592,13 +1724,22 @@ export const STATIC_ICON_REGISTRY = new Map<string, IconDefinition>([
 	[
 		'sparkle',
 		{
-			line: ({ strokeColor }: IconRenderProps) => (
-				<path
-					fillRule="evenodd"
-					clipRule="evenodd"
-					d="M10.5 2h.5a7 7 0 0 0 7 7v2a7 7 0 0 0-7 7H9a7 7 0 0 0-7-7V9a7 7 0 0 0 7-7h1.5ZM10 4.88A8.525 8.525 0 0 0 15.12 10 8.525 8.525 0 0 0 10 15.12 8.525 8.525 0 0 0 4.88 10 8.524 8.524 0 0 0 10 4.88ZM17 4a1 1 0 1 1-2 0 1 1 0 0 1 2 0ZM5 16a1 1 0 1 1-2 0 1 1 0 0 1 2 0Z"
-					fill={strokeColor}
-				/>
+			line: ({ strokeColor, fillColor }: IconRenderProps) => (
+				<>
+					<path
+						d="M10.5 2h.5a7 7 0 0 0 7 7v2a7 7 0 0 0-7 7H9a7 7 0 0 0-7-7V9a7 7 0 0 0 7-7h1.5ZM10 4.88A8.525 8.525 0 0 0 15.12 10 8.525 8.525 0 0 0 10 15.12 8.525 8.525 0 0 0 4.88 10 8.524 8.524 0 0 0 10 4.88Z"
+						fill={strokeColor}
+						fillOpacity={fillColor}
+					/>
+					<path
+						fillRule="evenodd"
+						clipRule="evenodd"
+						d="M10.5 2h.5a7 7 0 0 0 7 7v2a7 7 0 0 0-7 7H9a7 7 0 0 0-7-7V9a7 7 0 0 0 7-7h1.5ZM10 4.88A8.525 8.525 0 0 0 15.12 10 8.525 8.525 0 0 0 10 15.12 8.525 8.525 0 0 0 4.88 10 8.524 8.524 0 0 0 10 4.88ZM17 4a1 1 0 1 1-2 0 1 1 0 0 1 2 0ZM5 16a1 1 0 1 1-2 0 1 1 0 0 1 2 0Z"
+						fill={strokeColor}
+					/>
+					<path d="M17 4a1 1 0 1 1-2 0 1 1 0 0 1 2 0Z" fill={strokeColor} />
+					<path d="M5 16a1 1 0 1 1-2 0 1 1 0 0 1 2 0Z" fill={strokeColor} />
+				</>
 			),
 		},
 	],

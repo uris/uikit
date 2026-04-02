@@ -1,14 +1,16 @@
 // biome-ignore lint/style/useImportType: <explanation>
 import React, { useCallback, useMemo, useState } from 'react';
-import { Icon, SliceIcons, Slider, TextField } from '../../../src';
+import { Icon, IconButton, SliceIcons, Slider, TextField } from '../../../src';
 import css from './IconSampler.module.css';
 interface IconSamplerProps {
 	size?: number;
+	fill?: boolean;
 }
 
 export function IconSampler(props: Readonly<IconSamplerProps>) {
-	const { size = 100 } = props;
+	const { size = 100, fill = false } = props;
 	const [iconSize, setIconSize] = useState<number>(size);
+	const [showFill, setShowFill] = useState<boolean>(fill);
 	const [sizeKey, setSizeKey] = useState<string>(crypto.randomUUID());
 
 	const handleIconSizeChange = useCallback((size: number | string) => {
@@ -45,6 +47,13 @@ export function IconSampler(props: Readonly<IconSamplerProps>) {
 					size={{ width: 75 }}
 					textAlign={'center'}
 				/>
+				<IconButton
+					icon={'moon full'}
+					iconFill={showFill}
+					toggle
+					isToggled={showFill}
+					onClick={() => setShowFill(!showFill)}
+				/>
 			</div>
 			{categories
 				.toSorted((a, b) => a.localeCompare(b))
@@ -71,7 +80,7 @@ export function IconSampler(props: Readonly<IconSamplerProps>) {
 												key={`slice_icon_${icon}`}
 											>
 												<div className={css.icon}>
-													<Icon name={icon} size={iconSize} />
+													<Icon name={icon} size={iconSize} fill={showFill} />
 												</div>
 												<div className={css.label}>{icon}</div>
 											</div>

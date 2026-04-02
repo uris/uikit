@@ -30,6 +30,7 @@ const ButtonComponent = forwardRef<ButtonHandle, ButtonProps>(
 			labelSize = 'm',
 			iconRight = undefined,
 			iconLeft = undefined,
+			iconFill = false,
 			count = props.count === undefined ? undefined : Number(props.count),
 			showDot = undefined,
 			tooltip = undefined,
@@ -354,6 +355,14 @@ const ButtonComponent = forwardRef<ButtonHandle, ButtonProps>(
 			return value;
 		}, []);
 
+		// calc width and memo
+		const setWidth = useMemo(() => {
+			if (playing && lockedWidth && width === 'min-content')
+				return setStyle(lockedWidth);
+			if (width && width !== 'fill') return setStyle(width);
+			return 'min-content';
+		}, [playing, lockedWidth, width, setStyle]);
+
 		// compose the resolved inline styles for the active variant and size
 		const buttonStyle = useMemo(
 			() => ({
@@ -371,18 +380,8 @@ const ButtonComponent = forwardRef<ButtonHandle, ButtonProps>(
 				maxHeight: sizingStyles[size].height,
 				minHeight: sizingStyles[size].height,
 				flex: width === 'fill' ? 1 : 'unset',
-				width:
-					playing && lockedWidth && width === 'min-content'
-						? setStyle(lockedWidth)
-						: width && width !== 'fill'
-							? width
-							: 'min-content',
-				maxWidth:
-					playing && lockedWidth && width === 'min-content'
-						? setStyle(lockedWidth)
-						: width && width !== 'fill'
-							? width
-							: 'min-content',
+				width: setWidth,
+				maxWidth: setWidth,
 				gap: sizingStyles[size].gap,
 				borderWidth: colorStyles[variant].border,
 				borderStyle: 'solid' as const,
@@ -401,9 +400,7 @@ const ButtonComponent = forwardRef<ButtonHandle, ButtonProps>(
 				paddingLeft,
 				sizingStyles,
 				size,
-				playing,
-				lockedWidth,
-				setStyle,
+				setWidth,
 				width,
 			],
 		);
@@ -461,6 +458,7 @@ const ButtonComponent = forwardRef<ButtonHandle, ButtonProps>(
 							size={sizingStyles[size].iconSize}
 							strokeColor={colorStyles[variant].iconColor[btnState]}
 							pointer={btnState !== 'disabled'}
+							fill={iconFill}
 						/>
 					</div>
 				)}
@@ -508,6 +506,7 @@ const ButtonComponent = forwardRef<ButtonHandle, ButtonProps>(
 							size={sizingStyles[size].iconSize}
 							strokeColor={colorStyles[variant].iconColor[btnState]}
 							pointer={btnState !== 'disabled'}
+							fill={iconFill}
 						/>
 					</div>
 				)}

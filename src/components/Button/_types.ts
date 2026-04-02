@@ -11,6 +11,7 @@ type ButtonBaseProps = {
 	label?: string;
 	iconRight?: string;
 	iconLeft?: string;
+	iconFill?: boolean;
 	fill?: boolean;
 	count?: number;
 	showDot?: boolean;

@@ -1,0 +1,107 @@
+import { Meta, Unstyled } from '@storybook/addon-docs/blocks';
+import { FlexDiv } from '../FlexDiv';
+import * as ToggleButtonStories from './ToggleButton.stories';
+import { RenderSource } from '../../../documentation/_components/RenderSource/RenderSource';
+
+<Meta of={ToggleButtonStories} />
+
+<FlexDiv width={"fill"} height={"fill"} align={"center"}>
+    <FlexDiv width={"fill"} maxWidth={760} height={"auto"}>
+        <Unstyled>
+        # ToggleButton
+        A small composition on top of `IconButton` that pairs an icon toggle with an adjacent label.
+        Use it for simple selected/unselected controls or grouped settings toggles where the icon remains the primary visual affordance.
+
+        ## Base element
+        `div`
+
+        ## Interface
+        `ToggleButtonProps`
+
+        ## Props
+        <table style={{ width: '100%' }}>
+          <colgroup>
+            <col style={{ width: '1%' }} />
+            <col style={{ width: '1%' }} />
+            <col style={{ width: '1%' }} />
+            <col style={{ width: '97%' }} />
+          </colgroup>
+          <thead>
+            <tr>
+              <th className={"left"}>Prop</th>
+              <th className={"left"}>Type</th>
+              <th className={"left"}>Default</th>
+              <th>Description</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td><code>children</code></td><td><code>React.ReactNode</code></td><td><code>-</code></td><td>Optional custom label content. Takes precedence over <code>label</code>.</td></tr>
+            <tr><td><code>label</code></td><td><code>string</code></td><td><code>-</code></td><td>Text label rendered next to the icon button.</td></tr>
+            <tr><td><code>textSize</code></td><td><code>{`'s' | 'm' | 'l'`}</code></td><td><code>-</code></td><td>Label text size.</td></tr>
+            <tr><td><code>buttonSize</code></td><td><code>{`'s' | 'm' | 'l' | 'xl'`}</code></td><td><code>'m'</code></td><td>Named size passed through to the composed <code>IconButton</code>.</td></tr>
+            <tr><td><code>icon</code></td><td><code>string</code></td><td><code>-</code></td><td>Icon name for the button portion.</td></tr>
+            <tr><td><code>selected</code></td><td><code>boolean</code></td><td><code>false</code></td><td>Controlled selected state.</td></tr>
+            <tr><td><code>iconColor</code></td><td><code>string</code></td><td><code>'var(--core-text-primary)'</code></td><td>Default icon color while unselected.</td></tr>
+            <tr><td><code>iconColorOn</code></td><td><code>string</code></td><td><code>'var(--core-surface-primary)'</code></td><td>Icon color while selected.</td></tr>
+            <tr><td><code>bgColor</code></td><td><code>string</code></td><td><code>'var(--core-surface-secondary)'</code></td><td>Button background while unselected.</td></tr>
+            <tr><td><code>bgColorOn</code></td><td><code>string</code></td><td><code>'var(--core-link-primary)'</code></td><td>Button background while selected.</td></tr>
+            <tr><td><code>gap</code></td><td><code>number</code></td><td><code>4</code></td><td>Gap between the icon button and label.</td></tr>
+            <tr><td><code>iconSize</code></td><td><code>number</code></td><td><code>20</code></td><td>Icon size passed through to <code>IconButton</code>.</td></tr>
+            <tr><td><code>tooltip</code></td><td><code>string</code></td><td><code>-</code></td><td>Tooltip text shown from the icon button.</td></tr>
+            <tr><td><code>fill</code></td><td><code>boolean</code></td><td><code>false</code></td><td>Enables the icon fill treatment when supported by the chosen icon.</td></tr>
+            <tr><td><code>unselect</code></td><td><code>boolean</code></td><td><code>true</code></td><td>When <code>false</code>, clicking an already-selected toggle does nothing.</td></tr>
+            <tr><td><code>disabled</code></td><td><code>boolean</code></td><td><code>false</code></td><td>Disables the composed icon button.</td></tr>
+          </tbody>
+        </table>
+
+        ## Events
+        <table style={{ width: '100%' }}>
+          <colgroup>
+            <col style={{ width: '1%' }} />
+            <col style={{ width: '99%' }} />
+          </colgroup>
+          <thead>
+            <tr>
+              <th className={"left"}>Event</th>
+              <th className={"left"}>Type</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td><code>onChange</code></td><td><code>{`(state: boolean) => void`}</code></td></tr>
+            <tr><td><code>onSelect</code></td><td><code>{`() => void`}</code></td></tr>
+            <tr><td><code>onToolTip</code></td><td><code>{`(tip: ToolTip | null) => void`}</code></td></tr>
+          </tbody>
+        </table>
+
+        ## Behavior
+        - `ToggleButton` is controlled through `selected`.
+        - Clicking toggles the next state and calls `onChange(nextState)`.
+        - `onSelect()` only fires when the next state becomes `true`.
+        - When `unselect={false}`, an already-selected toggle cannot be turned off by clicking it again.
+        - Visual button behavior such as sizing, hover states, and tooltip rendering comes from the underlying `IconButton`.
+
+        ## Code Example
+        </Unstyled>
+
+        <RenderSource language={"tsx"}>
+        ```
+        import { useState } from 'react';
+        import { ToggleButton } from '@apple-pie/slice';
+
+        export function ThemeToggleExample() {
+            const [selected, setSelected] = useState(false);
+
+            return (
+                <ToggleButton
+                    label="System"
+                    icon="keyboard"
+                    selected={selected}
+                    unselect={false}
+                    onChange={setSelected}
+                />
+            );
+        }
+        ```
+        </RenderSource>
+    </FlexDiv>
+</FlexDiv>

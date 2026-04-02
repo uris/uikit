@@ -10,6 +10,7 @@ type IconBaseProps = {
 	toggle?: boolean;
 	pointer?: boolean;
 	disabled?: boolean;
+	fill?: boolean;
 	onClick?: (e: React.MouseEvent<SVGElement, MouseEvent>) => void;
 };
 
@@ -59,6 +60,8 @@ export const SliceIcons = {
 		videoOff: 'video off',
 		download: 'download',
 		upload: 'upload',
+		speaker: 'speaker',
+		speakerMuted: 'speaker muted',
 	},
 	files: {
 		document: 'document',
@@ -75,6 +78,7 @@ export const SliceIcons = {
 		invoice: 'invoice',
 		payment: 'payment',
 		wallet: 'wallet',
+		laptop: 'laptop',
 	},
 	charts: {
 		barChart: 'bar chart',
@@ -113,6 +117,10 @@ export const SliceIcons = {
 		fontLarger: 'font larger',
 		fontSmaller: 'font smaller',
 		characterBeam: 'character beam',
+	},
+	weather: {
+		sun: 'sun',
+		moonFull: 'moon full',
 	},
 	ai: {
 		sparkle: 'sparkle',
