@@ -18,7 +18,6 @@ const meta: Meta<typeof DraggablePanel> = {
 	args: {
 		children: undefined,
 		sizeConstraints: { initial: 0.5, min: 100, max: 0.75 },
-		dragsRight: true,
 		isClosed: false,
 		resizeHandle: {
 			width: 10,
@@ -37,7 +36,7 @@ const meta: Meta<typeof DraggablePanel> = {
 		borderRight: undefined,
 		borderLeft: undefined,
 		bgColor: undefined,
-		drags: true,
+		drags: "right",
 		isTouchDevice: false,
 		containerRef: undefined,
 		onResize: fn(),
