@@ -11,8 +11,8 @@ export type TabOption = {
 };
 
 export const placeholderOptions: TabOption[] = [
-	{ name: 'Light', value: 'Option 1', icon: 'circle' },
-	{ name: 'Dark', value: 'Option 2', icon: 'target' },
+	{ name: 'Light', value: 'Option 1', icon: 'sun' },
+	{ name: 'Dark', value: 'Option 2', icon: 'moon full' },
 ];
 
 type TabBarBaseProps = {
@@ -27,6 +27,7 @@ type TabBarBaseProps = {
 	closeWidth?: number | string;
 	padding?: number | string;
 	iconSize?: number;
+	iconFill?: boolean;
 	iconGap?: number;
 	tabGap?: number;
 	disabled?: boolean;
@@ -54,6 +55,7 @@ export interface TabOptionProps {
 	iconGap?: number;
 	disabled?: boolean;
 	count?: number;
+	iconFill?: boolean;
 	tabWidth?: 'compact' | 'fill' | number;
 	underline?: boolean;
 	onClick?: (value: number) => void;

@@ -25,6 +25,7 @@ const meta: Meta<typeof TabBar> = {
 		iconSize: 20,
 		iconGap: 4,
 		tabGap: 0,
+		iconFill: true,
 		disabled: false,
 		hasClose: false,
 		closeWidth: 'auto',

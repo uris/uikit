@@ -27,6 +27,7 @@ export const TabBar = React.memo((props: TabBarProps) => {
 		width = '100%',
 		tabWidth = 'fill',
 		padding = 8,
+		iconFill = false,
 		iconSize = 20,
 		iconGap = 8,
 		tabGap = 0,
@@ -133,6 +134,7 @@ export const TabBar = React.memo((props: TabBarProps) => {
 					onKeyDown={handleOptionKeyDown}
 					onToolTip={onToolTip}
 					underline={underline}
+					iconFill={iconFill}
 					tabWidth={tabWidth}
 					buttonRef={(element) => {
 						optionRefs.current[i] = element;
@@ -191,6 +193,7 @@ export const TabBar = React.memo((props: TabBarProps) => {
 						hover={true}
 						icon={'x'}
 						onClick={onClose}
+						iconFill={iconFill}
 					/>
 				</div>
 			)}
@@ -218,6 +221,7 @@ const Option = React.memo(
 			underline = true,
 			tabWidth = 'fill',
 			count = 0,
+			iconFill = false,
 			onKeyDown = () => null,
 			buttonRef,
 		} = props;
@@ -325,7 +329,7 @@ const Option = React.memo(
 			>
 				{icon && (
 					<div className={css.icon}>
-						<Icon name={icon} size={iconSize} strokeColor={strokeColor} />
+						<Icon name={icon} fill={iconFill} size={iconSize} strokeColor={strokeColor} />
 					</div>
 				)}
 				{label}
