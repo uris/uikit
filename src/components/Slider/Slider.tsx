@@ -23,10 +23,15 @@ export const Slider = React.memo((props: SliderProps) => {
 		height = 2,
 		touchHeight = 24,
 		trackHeadSize = 7,
+		step,
+		disabled = false,
+		disabledOpacity = 0.5,
 		cursor = 'default',
-		headColor = 'var(--core-text-primary)',
+		headColor = 'var(--core-text-light)',
 		trackColor = 'var(--core-surface-secondary)',
-		progressColor = 'var(--core-text-primary)',
+		progressColor = 'var(--core-text-tertiary)',
+		trackHeadBorderSize = 1,
+		trackHeadBorderColor = 'var(--core-outline-secondary)',
 		onChange = () => null,
 		onDragChange = () => null,
 		...divAttributes
@@ -66,6 +71,14 @@ export const Slider = React.memo((props: SliderProps) => {
 		},
 		[scaleMax, scaleMin],
 	);
+
+	// set step value for keyboard strokes
+	const stepIncrement = useMemo(() => {
+		if (step) return step;
+		const range = scaleMax - scaleMin;
+		if (range <= 0) return 0;
+		return Math.max(range / 100, 0.01);
+	}, [step, scaleMin, scaleMax]);
 
 	// normalize an absolute value into a 0-1 progress percentage
 	const valueToPercent = useCallback(
@@ -168,6 +181,7 @@ export const Slider = React.memo((props: SliderProps) => {
 	const handleMouseMove = useCallback(
 		(e: MouseEvent | TouchEvent) => {
 			e.preventDefault();
+			if (disabled) return;
 			const el = ref?.current;
 			if (el) {
 				const pos = updateSlider(e); // return new pixel pos and updates head/track
@@ -175,7 +189,7 @@ export const Slider = React.memo((props: SliderProps) => {
 				debouncedOnChange(absProgressRef.current, relativeProgressRef.current); // debounce updates
 			}
 		},
-		[progress, updateSlider, debouncedOnChange],
+		[progress, updateSlider, debouncedOnChange, disabled],
 	);
 
 	// finalize the drag interaction and emit the final slider value
@@ -208,29 +222,22 @@ export const Slider = React.memo((props: SliderProps) => {
 	// support standard slider keyboard controls
 	const handleKeyDown = useCallback(
 		(event: React.KeyboardEvent<HTMLDivElement>) => {
-			const range = scaleMax - scaleMin;
-			if (range <= 0) return;
-			const step =
-				Number.isInteger(scaleMin) && Number.isInteger(scaleMax)
-					? 1
-					: Math.max(range / 100, 0.01);
-			const pageStep = Math.max(step, range / 10);
+			if (disabled) return;
 			let nextValue: number | null = null;
-
 			switch (event.key) {
 				case 'ArrowRight':
 				case 'ArrowUp':
-					nextValue = absProgressRef.current + step;
+					nextValue = absProgressRef.current + stepIncrement;
 					break;
 				case 'ArrowLeft':
 				case 'ArrowDown':
-					nextValue = absProgressRef.current - step;
+					nextValue = absProgressRef.current - stepIncrement;
 					break;
 				case 'PageUp':
-					nextValue = absProgressRef.current + pageStep;
+					nextValue = absProgressRef.current + stepIncrement;
 					break;
 				case 'PageDown':
-					nextValue = absProgressRef.current - pageStep;
+					nextValue = absProgressRef.current - stepIncrement;
 					break;
 				case 'Home':
 					nextValue = scaleMin;
@@ -247,7 +254,14 @@ export const Slider = React.memo((props: SliderProps) => {
 			debouncedOnChange.cancel();
 			commitValue(nextValue, 'change');
 		},
-		[scaleMin, scaleMax, debouncedOnChange, commitValue],
+		[
+			scaleMin,
+			scaleMax,
+			debouncedOnChange,
+			commitValue,
+			stepIncrement,
+			disabled,
+		],
 	);
 
 	// start dragging from the current pointer position and emit the initial value
@@ -255,6 +269,7 @@ export const Slider = React.memo((props: SliderProps) => {
 		(e: MouseEvent | TouchEvent) => {
 			e.preventDefault();
 			e.stopPropagation();
+			if (disabled) return;
 			globalThis.addEventListener('mousemove', handleMouseMove, false);
 			globalThis.addEventListener('touchmove', handleMouseMove, false);
 			globalThis.addEventListener('mouseup', handleMouseUp, false);
@@ -265,17 +280,16 @@ export const Slider = React.memo((props: SliderProps) => {
 				progress(pos);
 				debouncedOnChange.cancel(); // cancel current debounce if any
 				onChange(absProgressRef.current, relativeProgressRef.current); // immediate update
-				onDragChange(absProgressRef.current, relativeProgressRef.current);
 			}
 		},
 		[
 			handleMouseMove,
 			handleMouseUp,
 			onChange,
-			onDragChange,
 			progress,
 			updateSlider,
 			debouncedOnChange,
+			disabled,
 		],
 	);
 
@@ -323,6 +337,12 @@ export const Slider = React.memo((props: SliderProps) => {
 		return `${width ?? 100}px`;
 	}, [width]);
 
+	// const memo track head border
+	const setHeadBorder = useMemo(() => {
+		if (!trackHeadBorderSize || trackHeadBorderSize === 0) return 'unset';
+		return `${trackHeadBorderSize}px solid ${trackHeadBorderColor}`;
+	}, [trackHeadBorderColor, trackHeadBorderSize]);
+
 	// compose CSS custom properties for slider layout and colors
 	const cssVars = useMemo(() => {
 		return {
@@ -338,6 +358,8 @@ export const Slider = React.memo((props: SliderProps) => {
 			'--slider-head-color': trackHeadColor,
 			'--slider-progress-color': progressColor ?? 'var(--core-text-primary)',
 			'--slider-track-color': trackColor ?? 'var(--core-surface-secondary)',
+			'--slider-track-head-border': setHeadBorder,
+			'--slider-opacity': disabled ? disabledOpacity : '1',
 		} as React.CSSProperties;
 	}, [
 		padding,
@@ -349,7 +371,12 @@ export const Slider = React.memo((props: SliderProps) => {
 		trackHeadSize,
 		trackHeadColor,
 		setWidth,
+		setHeadBorder,
+		disabled,
+		disabledOpacity,
 	]);
+
+	console.log('Slider', setHeadBorder);
 
 	/* START.DEBUG */
 	useTrackRenders({ ...props, sizeObserver: size }, 'Slider');

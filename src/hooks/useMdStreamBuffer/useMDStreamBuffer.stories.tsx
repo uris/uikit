@@ -6,16 +6,21 @@ import { TextArea } from '../../components/TextArea';
 import { TextField } from '../../components/Textfield';
 import { useMDStreamBuffer } from './useMdStreamBuffer';
 
-const DEFAULT_MARKDOWN = `##### Streaming markdown
+const DEFAULT_MARKDOWN = `This is an inline select: $$Option 1$$Option 2$$Option 3$$ and this text should appear only after the closing marker is followed by a space.
+
+##### Streaming markdown
 
 This is a **very long piece of bold text**.
 This is a [link](https://example.com).
-This is an image: ![image](https://example.com/image.png)`;
+This is an image: ![image](https://example.com/image.png)
+
+This select should reveal only completed options while streaming.`;
 
 type MDStreamBufferHookDemoProps = {
 	raw: string;
 	chunkSize: number;
 	intervalMs: number;
+	healthyEndMarker: string;
 	includeLinksAndImages: boolean;
 	htmlHandling: 'ignore' | 'strip';
 	simulateStream?: boolean;
@@ -25,6 +30,7 @@ type MDStreamBufferHookRunnerProps = {
 	raw: string;
 	chunkSize: string;
 	intervalMs: string;
+	healthyEndMarker: string;
 	includeLinksAndImages: boolean;
 	htmlHandling: 'ignore' | 'strip';
 	simulateStream: boolean;
@@ -37,6 +43,7 @@ function MDStreamBufferHookRunner(
 		raw,
 		chunkSize,
 		intervalMs,
+		healthyEndMarker,
 		includeLinksAndImages,
 		htmlHandling,
 		simulateStream,
@@ -52,6 +59,7 @@ function MDStreamBufferHookRunner(
 		complete,
 		reset,
 	} = useMDStreamBuffer({
+		healthyEndMarker,
 		includeLinksAndImages,
 		htmlHandling,
 	});
@@ -200,6 +208,7 @@ function MDStreamBufferHookDemo(props: Readonly<MDStreamBufferHookDemoProps>) {
 		raw: sourceMarkdown,
 		chunkSize: initialChunkSize,
 		intervalMs: initialIntervalMs,
+		healthyEndMarker,
 		includeLinksAndImages,
 		htmlHandling,
 		simulateStream = true,
@@ -207,6 +216,7 @@ function MDStreamBufferHookDemo(props: Readonly<MDStreamBufferHookDemoProps>) {
 	const [raw, setRaw] = useState(sourceMarkdown);
 	const [chunkSize, setChunkSize] = useState(String(initialChunkSize));
 	const [intervalMs, setIntervalMs] = useState(String(initialIntervalMs));
+	const [endMarker, setEndMarker] = useState(healthyEndMarker);
 
 	useEffect(() => {
 		setRaw(sourceMarkdown);
@@ -220,10 +230,17 @@ function MDStreamBufferHookDemo(props: Readonly<MDStreamBufferHookDemoProps>) {
 		setIntervalMs(String(initialIntervalMs));
 	}, [initialIntervalMs]);
 
+	useEffect(() => {
+		setEndMarker(healthyEndMarker);
+	}, [healthyEndMarker]);
+
 	return (
 		<FlexDiv absolute width={'fill'} height={'fill'} padding={64} gap={16}>
 			This hook wraps `MdBuffer` for React apps and exposes raw plus healthy
-			stream state without manually instantiating the underlying class.
+			stream state without manually instantiating the underlying class. Inline
+			selects using `$$Option 1$$Option 2$$Option 3$$ ` close only when the last
+			`$$` is followed by whitespace. `healthyEndMarker` is appended only to
+			healthy output and is inserted before optimistic newline closures.
 			<FlexDiv
 				width={'fill'}
 				height={'fit'}
@@ -271,13 +288,22 @@ function MDStreamBufferHookDemo(props: Readonly<MDStreamBufferHookDemoProps>) {
 						size={{ width: 'auto' }}
 						clearButton={null}
 					/>
+					<TextField
+						name={'healthy-end-marker'}
+						label={'Healthy end marker:'}
+						value={endMarker}
+						onChange={setEndMarker}
+						size={{ width: 'auto' }}
+						clearButton={null}
+					/>
 				</FlexDiv>
 			)}
 			<MDStreamBufferHookRunner
-				key={`${includeLinksAndImages}-${htmlHandling}`}
+				key={`${includeLinksAndImages}-${htmlHandling}-${endMarker}`}
 				raw={raw}
 				chunkSize={chunkSize}
 				intervalMs={intervalMs}
+				healthyEndMarker={endMarker}
 				includeLinksAndImages={includeLinksAndImages}
 				htmlHandling={htmlHandling}
 				simulateStream={simulateStream}
@@ -296,6 +322,7 @@ const meta: Meta<typeof MDStreamBufferHookDemo> = {
 		raw: DEFAULT_MARKDOWN,
 		chunkSize: 1,
 		intervalMs: 150,
+		healthyEndMarker: '█',
 		includeLinksAndImages: true,
 		htmlHandling: 'ignore',
 		simulateStream: true,

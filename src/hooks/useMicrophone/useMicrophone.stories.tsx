@@ -4,6 +4,7 @@ import { Button } from '../../components/Button';
 import { FlexDiv } from '../../components/FlexDiv';
 import { Label } from '../../components/Label';
 import { ProgressIndicator } from '../../components/Progress';
+import { Slider } from '../../components/Slider';
 import { useMicrophone } from './useMicrophone';
 
 type UseMicrophoneDemoProps = {
@@ -14,6 +15,7 @@ type UseMicrophoneDemoProps = {
 
 type MicInfo = {
 	streamId?: string;
+	processedStreamId?: string;
 	trackId?: string;
 	deviceId?: string;
 	enabled?: boolean;
@@ -26,7 +28,10 @@ function UseMicrophoneDemo(props: Readonly<UseMicrophoneDemoProps>) {
 	const [micInfo, setMicInfo] = useState<MicInfo>({});
 	const {
 		micStream,
+		processedMicStream,
 		micTrack,
+		currentDeviceId,
+		inputVolume,
 		muted,
 		isSupported,
 		isRequesting,
@@ -37,6 +42,7 @@ function UseMicrophoneDemo(props: Readonly<UseMicrophoneDemoProps>) {
 		muteMic,
 		unmuteMic,
 		toggleMute,
+		setInputVolume,
 		refreshMicrophones,
 		setMicrophone,
 	} = useMicrophone(startMuted, selectedDeviceId, autoRequest);
@@ -46,12 +52,13 @@ function UseMicrophoneDemo(props: Readonly<UseMicrophoneDemoProps>) {
 		const track = micTrack.current;
 		setMicInfo({
 			streamId: stream?.id,
+			processedStreamId: processedMicStream.current?.id,
 			trackId: track?.id,
-			deviceId: track?.getSettings().deviceId,
+			deviceId: currentDeviceId ?? undefined,
 			enabled: track?.enabled,
 			readyState: track?.readyState,
 		});
-	}, [micStream, micTrack]);
+	}, [currentDeviceId, micStream, micTrack, processedMicStream]);
 
 	const refreshDevices = useCallback(async () => {
 		await refreshMicrophones();
@@ -103,7 +110,14 @@ function UseMicrophoneDemo(props: Readonly<UseMicrophoneDemoProps>) {
 						Muted: <Label>{String(muted)}</Label>
 					</div>
 					<div>
+						Input Volume: <Label>{inputVolume.toFixed(2)}</Label>
+					</div>
+					<div>
 						Mic Stream ID: <Label>{micInfo.streamId ?? 'none'}</Label>
+					</div>
+					<div>
+						Processed Stream ID:{' '}
+						<Label>{micInfo.processedStreamId ?? 'none'}</Label>
 					</div>
 					<div>
 						Mic Track ID: <Label>{micInfo.trackId ?? 'none'}</Label>
@@ -161,6 +175,18 @@ function UseMicrophoneDemo(props: Readonly<UseMicrophoneDemoProps>) {
 							refreshMicInfo();
 						}}
 					/>
+					<div>
+						<label htmlFor={'microphone-input-volume'}>Input volume</label>
+						<Slider
+							id={'microphone-input-volume'}
+							value={inputVolume}
+							scaleMin={0}
+							scaleMax={1}
+							step={0.05}
+							width={'100%'}
+							onChange={(value) => setInputVolume(value)}
+						/>
+					</div>
 				</FlexDiv>
 			</FlexDiv>
 			<FlexDiv direction={'row'} wrap gap={8}>

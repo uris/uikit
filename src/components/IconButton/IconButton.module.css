@@ -14,6 +14,8 @@
 	height: var(--ib-button-size);
 	min-width: var(--ib-button-size);
 	width: var(--ib-button-size);
+	user-select: none;
+	-webkit-user-select: none;
 	&:hover {
 		background: var(--ib-bg-color-hover);
 	}

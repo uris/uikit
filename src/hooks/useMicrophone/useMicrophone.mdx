@@ -8,7 +8,7 @@ import {FlexDiv} from '../../components/FlexDiv';
     <FlexDiv width={"fill"} maxWidth={760} height={"auto"}>
         <Unstyled>
         # useMicrophone
-        Requests microphone access, keeps a live microphone stream in refs, and exposes simple controls for muting, switching devices, refreshing available devices, and stopping the stream.
+        Requests microphone access, keeps both the raw microphone stream and a processed microphone stream in refs, and exposes controls for muting, input gain, switching devices, refreshing available devices, and stopping the stream.
 
         ## Behavior
         By default, the hook requests microphone access on mount. Pass `autoRequest={false}` to delay permission prompting and call `requestMicrophone()` manually when you are ready. It also listens for `navigator.mediaDevices` `devicechange` events, refreshes the available microphone list when devices come online or disconnect, and falls back to the default device if the currently selected microphone disappears.
@@ -55,8 +55,11 @@ import {FlexDiv} from '../../components/FlexDiv';
           </thead>
           <tbody>
             <tr><td><code>micStream</code></td><td><code>RefObject&lt;MediaStream | null&gt;</code></td><td>Live microphone stream ref.</td></tr>
+            <tr><td><code>processedMicStream</code></td><td><code>RefObject&lt;MediaStream | null&gt;</code></td><td>Processed microphone stream ref with the current input gain applied. Falls back to the raw stream when Web Audio processing is unavailable.</td></tr>
             <tr><td><code>micTrack</code></td><td><code>RefObject&lt;MediaStreamTrack | null&gt;</code></td><td>Live microphone track ref.</td></tr>
+            <tr><td><code>currentDeviceId</code></td><td><code>string | null</code></td><td>The currently active microphone device id when known.</td></tr>
             <tr><td><code>isActive</code></td><td><code>boolean</code></td><td>Whether a live microphone stream is currently active.</td></tr>
+            <tr><td><code>inputVolume</code></td><td><code>number</code></td><td>Current app-side microphone input volume as a normalized value between <code>0</code> and <code>1</code>.</td></tr>
             <tr><td><code>microphones</code></td><td><code>MediaDeviceInfo[]</code></td><td>Current list of available audio input devices.</td></tr>
             <tr><td><code>micOptions</code></td><td><code>{`DropDownOption<MicOption>[]`}</code></td><td>Ready-to-use dropdown options built from the current microphone list.</td></tr>
             <tr><td><code>muted</code></td><td><code>boolean</code></td><td>Current mute state of the microphone track.</td></tr>
@@ -68,13 +71,15 @@ import {FlexDiv} from '../../components/FlexDiv';
             <tr><td><code>muteMic</code></td><td><code>{`() => boolean`}</code></td><td>Disables the active microphone track.</td></tr>
             <tr><td><code>unmuteMic</code></td><td><code>{`() => boolean`}</code></td><td>Enables the active microphone track.</td></tr>
             <tr><td><code>toggleMute</code></td><td><code>{`() => void`}</code></td><td>Toggles the current microphone mute state.</td></tr>
+            <tr><td><code>setInputVolume</code></td><td><code>{`(value: number) => number`}</code></td><td>Sets the processed microphone input gain using a normalized value between <code>0</code> and <code>1</code> and returns the applied value.</td></tr>
             <tr><td><code>refreshMicrophones</code></td><td><code>{`() => Promise&lt;MediaDeviceInfo[]&gt;`}</code></td><td>Refreshes and returns the available audio input devices.</td></tr>
             <tr><td><code>setMicrophone</code></td><td><code>{`(deviceId: string | DropDownOption<MicOption>) => Promise<void>`}</code></td><td>Switches to a different input device by raw device id or a dropdown option object.</td></tr>
           </tbody>
         </table>
 
         ## Notes
-        - `micStream` and `micTrack` are refs on purpose. They hold live media objects and do not force rerenders when the underlying stream changes.
+        - `micStream`, `processedMicStream`, and `micTrack` are refs on purpose. They hold live media objects and do not force rerenders when the underlying stream changes.
+        - `inputVolume` controls app-side gain through Web Audio. It does not change the system or hardware microphone gain.
         - If a preferred device cannot be found during a request, the hook retries against the browser's default microphone.
         - If the active microphone is unplugged or removed, the hook refreshes devices and reconnects to the default input.
         - When `autoRequest` is `false`, the hook still refreshes the device list on mount without prompting for microphone access.

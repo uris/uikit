@@ -41,9 +41,14 @@ import {RenderSource} from '../../../documentation/_components/RenderSource/Rend
             <tr><td><code>height</code></td><td><code>{`number | string`}</code></td><td><code>2</code></td><td>Visual thickness of the slider track.</td></tr>
             <tr><td><code>touchHeight</code></td><td><code>{`number | string`}</code></td><td><code>24</code></td><td>Interactive hit area height used for dragging.</td></tr>
             <tr><td><code>trackHeadSize</code></td><td><code>{`number | null`}</code></td><td><code>7</code></td><td>Size of the draggable thumb. Set to <code>0</code> or <code>null</code> to visually hide it.</td></tr>
-            <tr><td><code>headColor</code></td><td><code>string</code></td><td><code>var(--core-text-primary)</code></td><td>Thumb color.</td></tr>
+            <tr><td><code>headColor</code></td><td><code>string</code></td><td><code>var(--core-text-light)</code></td><td>Thumb color.</td></tr>
             <tr><td><code>trackColor</code></td><td><code>string</code></td><td><code>var(--core-surface-secondary)</code></td><td>Background track color.</td></tr>
-            <tr><td><code>progressColor</code></td><td><code>string</code></td><td><code>var(--core-text-primary)</code></td><td>Filled progress color.</td></tr>
+            <tr><td><code>progressColor</code></td><td><code>string</code></td><td><code>var(--core-text-tertiary)</code></td><td>Filled progress color.</td></tr>
+            <tr><td><code>trackHeadBorderSize</code></td><td><code>number</code></td><td><code>1</code></td><td>Border width for the draggable thumb.</td></tr>
+            <tr><td><code>trackHeadBorderColor</code></td><td><code>string</code></td><td><code>var(--core-outline-secondary)</code></td><td>Border color for the draggable thumb.</td></tr>
+            <tr><td><code>step</code></td><td><code>number</code></td><td><code>undefined</code></td><td>Optional keyboard increment used by arrow keys, page keys, and other discrete keyboard controls.</td></tr>
+            <tr><td><code>disabled</code></td><td><code>boolean</code></td><td><code>false</code></td><td>Disables pointer and keyboard interaction.</td></tr>
+            <tr><td><code>disabledOpacity</code></td><td><code>number</code></td><td><code>0.5</code></td><td>Opacity applied while the slider is disabled.</td></tr>
             <tr><td><code>cursor</code></td><td><code>{`'default' | 'grab' | 'grabbing' | 'pointer'`}</code></td><td><code>default</code></td><td>Cursor shown while hovering or dragging the control.</td></tr>
             <tr><td><code>...divAttributes</code></td><td><code>{`HTMLAttributes<HTMLDivElement>`}</code></td><td><code>-</code></td><td>Native `div` props pass through (for example `id`, `data-testid`, `className`, `style`, `aria-*`).</td></tr>
           </tbody>
@@ -66,6 +71,8 @@ import {RenderSource} from '../../../documentation/_components/RenderSource/Rend
             <tr><td><code>onDragChange</code></td><td><code>{`(value: number, percent: number) => void`}</code></td></tr>
           </tbody>
         </table>
+
+        `onChange` fires during drag and keyboard changes. `onDragChange` fires when the drag interaction completes, which makes it better suited for deferred commits such as preview sounds or expensive downstream updates.
 
         ## Code Examples
         </Unstyled>

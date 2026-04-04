@@ -26,6 +26,7 @@ function DropDownComponent<T = string>(props: DropDownProps<T>) {
 		size = 'm',
 		width = '100%',
 		height = 'auto',
+		inline = false,
 		selectedIndex,
 		selectedValue,
 		valueKey,
@@ -206,7 +207,7 @@ function DropDownComponent<T = string>(props: DropDownProps<T>) {
 			'--dd-gap': setStyle(gap),
 			'--dd-height': setStyle(height),
 			'--dd-width': setStyle(width),
-			'--dd-margin': '8px',
+			'--dd-margin': inline ? '0 4px' : '0',
 			'--dd-border-radius': setBorderRadius,
 			'--dd-border': setBorder,
 			'--dd-border-bottom': setBorderBottom,
@@ -215,6 +216,7 @@ function DropDownComponent<T = string>(props: DropDownProps<T>) {
 			'--dd-padding': setPadding,
 			'--dd-icon-size': `${iconSize}px`,
 			'--dd-label-color': setLabelColor,
+			'--dd-display': inline ? 'inline-flex' : 'flex',
 		} as React.CSSProperties;
 	}, [
 		gap,
@@ -228,6 +230,7 @@ function DropDownComponent<T = string>(props: DropDownProps<T>) {
 		setPadding,
 		setLabelColor,
 		iconSize,
+		inline,
 	]);
 
 	/* START.DEBUG */
@@ -235,19 +238,19 @@ function DropDownComponent<T = string>(props: DropDownProps<T>) {
 	/* END.DEBUG */
 
 	return (
-		<div
+		<span
 			id={divId}
 			className={`${css.wrapper}${divClass}`}
 			style={{ ...divStyle, ...cssVars }}
 			{...rest}
 		>
-			{label && <div className={`${css.label} ${css[size]}`}>{label}</div>}
-			<div className={`${css.face} ${css[size]}`}>
+			{label && <span className={`${css.label} ${css[size]}`}>{label}</span>}
+			<span className={`${css.face} ${css[size]}`}>
 				<span className={css.faceText}>{displayText}</span>
-			</div>
-			<div className={css.chevron}>
+			</span>
+			<span className={css.chevron}>
 				<Icon name="chevron down" size={iconSize} strokeColor={setIconColor} />
-			</div>
+			</span>
 			<select
 				className={css.select}
 				value={index}
@@ -258,7 +261,7 @@ function DropDownComponent<T = string>(props: DropDownProps<T>) {
 			>
 				{renderedOptions}
 			</select>
-		</div>
+		</span>
 	);
 }
 

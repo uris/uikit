@@ -14,6 +14,7 @@ type ToastBaseProps = {
 	padding?: number | string;
 	radius?: number | string;
 	position?: 'top' | 'bottom';
+	container?: 'window' | 'parent';
 	offset?: number;
 	showDelay?: number;
 	duration?: number | 'Infinite';

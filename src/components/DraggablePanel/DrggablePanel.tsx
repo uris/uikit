@@ -104,8 +104,8 @@ export const DraggablePanel = React.memo((props: DraggablePanelProps) => {
 			color: 'transparent',
 			offsetX: true,
 		},
-		borderRight = '1px solid var(--core-outline-primary)',
-		borderLeft = '1px solid var(--core-outline-primary)',
+		borderRight = '1px solid var(--core-outline-secondary)',
+		borderLeft = '1px solid var(--core-outline-secondary)',
 		bgColor = 'transparent',
 		drags = 'right',
 		isTouchDevice = false,
@@ -322,12 +322,10 @@ export const DraggablePanel = React.memo((props: DraggablePanelProps) => {
 		if (!isOver.current) setHighlight(false);
 	}, [doDrag, onResizeEnd, onResize, setHighlight]);
 
-	// resolve the width transition from the most recent panel size
+	// resolve the width transition
 	const transition = useMemo(() => {
-		if (lastWidth && typeof lastWidth === 'number' && lastWidth > 500)
-			return 'width var(--motion-magnet-duration) var(--motion-magnet)';
 		return 'width var(--motion-water-duration) var(--motion-water)';
-	}, [lastWidth]);
+	}, []);
 
 	// capture the starting drag measurements and attach drag listeners
 	const initDrag = useCallback(
@@ -498,8 +496,8 @@ export const DragHandle = React.memo((props: Readonly<DragHandleProps>) => {
 		height = 6,
 		radius = 100,
 		stroke = 1,
-		color = 'var(--core-surface-primary)',
-		strokeColor = 'var(--core-outline-primary)',
+		color = 'var(--core-surface-primary-tint)',
+		strokeColor = 'var(--core-outline-secondary)',
 	} = props;
 	// compose CSS custom properties for the drag handle dimensions and colors
 	const cssVars = useMemo(() => {

@@ -10,6 +10,7 @@
 	height: auto;
 	min-height: var(--slider-touch-height);
 	cursor: var(--slider-cursor);
+	opacity: var(--slider-opacity);
 	background: transparent;
 }
 
@@ -38,6 +39,7 @@
 	position: absolute;
 	display: var(--slider-head-display);
 	background-color: var(--slider-head-color);
+	border: var(--slider-track-head-border);
 	border-radius: var(--slider-head-radius);
 	max-width: var(--slider-head-width);
 	max-height: var(--slider-head-size);
@@ -54,7 +56,7 @@
 	height: var(--slider-height);
 	min-height: var(--slider-touch-height);
 	background-color: transparent;
-	border-radius: 100px;
+	border-radius: 4px;
 	overflow: visible;
 	outline: none;
 }

@@ -100,6 +100,8 @@ export type CoreColors = {
 	'scroll-bar-dark': string;
 	'scroll-bar-hover-light': string;
 	'scroll-bar-hover-dark': string;
+	'surface-primary-tint-light': string;
+	'surface-primary-tint-dark': string;
 	'surface-shadow-soft-light': string;
 	'surface-shadow-soft-dark': string;
 	'surface-shadow-strong-light': string;
@@ -142,6 +144,7 @@ export type Colors = {
 	'core-surface-coverup-translucent': string;
 	'core-surface-overlay-translucent': string;
 	'core-surface-primary': string;
+	'core-surface-primary-tint': string;
 	'core-surface-secondary': string;
 	'core-surface-special': string;
 	'core-text-dark': string;

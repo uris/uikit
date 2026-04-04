@@ -2,7 +2,7 @@
 	composes: rowBetween from "../../utils/styling/flexBox.module.css";
 	padding: var(--toast-padding) !important;
 	color: var(--toast-color);
-	position: fixed;
+	position: var(--toast-position);
 	border: var(--toast-border);
 	border-radius: var(--toast-border-radius);
 	background: var(--toast-background);
@@ -19,6 +19,7 @@
 	max-height: 20px;
 	min-width: 20px;
 	max-width: 20px;
+	cursor: pointer;
 }
 
 .s {

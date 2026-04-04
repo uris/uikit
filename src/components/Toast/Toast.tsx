@@ -31,6 +31,7 @@ const ToastBase = React.forwardRef<HTMLDivElement, ToastProps>((props, ref) => {
 		border = true,
 		padding,
 		radius = 8,
+		container = 'window',
 		showDelay = 0,
 		duration = 5000,
 		position = 'bottom',
@@ -119,8 +120,9 @@ const ToastBase = React.forwardRef<HTMLDivElement, ToastProps>((props, ref) => {
 			'--toast-color': colorScheme.text,
 			'--toast-border': border ? `1px solid ${colorScheme.border}` : 'unset',
 			'--toast-border-radius': setStyle(radius, 4),
+			'--toast-position': container === 'window' ? 'fixed' : 'absolute',
 		} as React.CSSProperties;
-	}, [padding, border, colorScheme, radius, defaultPadding]);
+	}, [padding, border, colorScheme, radius, defaultPadding, container]);
 
 	// resolve entry and exit variants from the toast position
 	const variants = useMemo(() => {

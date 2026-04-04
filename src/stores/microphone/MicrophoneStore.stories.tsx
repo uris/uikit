@@ -2,16 +2,20 @@ import type { Meta, StoryObj } from '@storybook/react-vite';
 import { Button } from 'src/components/Button';
 import { FlexDiv } from 'src/components/FlexDiv';
 import { Label } from 'src/components/Label';
+import { Slider } from 'src/components/Slider';
 import { useMicrophone } from 'src/hooks/useMicrophone/useMicrophone';
 import {
+	useCurrentMicDeviceId,
 	useMicActive,
 	useMicError,
+	useMicInputVolume,
 	useMicMuted,
 	useMicOptions,
 	useMicRequesting,
 	useMicSupported,
 	useMicTrack,
 	useMicrophoneStoreActions,
+	useProcessedMicStream,
 	useSyncMicrophoneStore,
 } from 'src/stores/microphone';
 
@@ -20,7 +24,10 @@ function MicrophoneStoreDemo() {
 	useSyncMicrophoneStore(microphone);
 
 	const micTrack = useMicTrack();
+	const processedMicStream = useProcessedMicStream();
+	const currentDeviceId = useCurrentMicDeviceId();
 	const isActive = useMicActive();
+	const inputVolume = useMicInputVolume();
 	const muted = useMicMuted();
 	const isSupported = useMicSupported();
 	const isRequesting = useMicRequesting();
@@ -46,7 +53,17 @@ function MicrophoneStoreDemo() {
 				Muted: <Label>{String(muted)}</Label>
 			</div>
 			<div>
+				Input Volume: <Label>{inputVolume.toFixed(2)}</Label>
+			</div>
+			<div>
 				Track ready: <Label>{micTrack.current?.readyState ?? 'none'}</Label>
+			</div>
+			<div>
+				Processed Stream:{' '}
+				<Label>{processedMicStream.current?.id ?? 'none'}</Label>
+			</div>
+			<div>
+				Current Device Id: <Label>{currentDeviceId ?? 'none'}</Label>
 			</div>
 			<div>
 				Microphones: <Label>{String(micOptions.length)}</Label>
@@ -54,6 +71,14 @@ function MicrophoneStoreDemo() {
 			<div>
 				Error: <Label>{error?.message ?? 'none'}</Label>
 			</div>
+			<Slider
+				value={inputVolume}
+				scaleMin={0}
+				scaleMax={1}
+				step={0.05}
+				width={240}
+				onChange={(value) => actions.setInputVolume(value)}
+			/>
 			<FlexDiv direction={'row'} wrap gap={8}>
 				<Button
 					label={'Request Microphone'}

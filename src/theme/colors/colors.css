@@ -103,6 +103,8 @@
 	--scroll-bar-dark: rgba(255, 255, 255, 0.1);
 	--scroll-bar-hover-light: #cdd5df;
 	--scroll-bar-hover-dark: rgba(255, 255, 255, 0.15);
+	--surface-primary-tint-light: #fcfcfc;
+	--surface-primary-tint-dark: #191e24;
 	--surface-shadow-soft-light: 0px 4px 24px #0339491a;
 	--surface-shadow-soft-dark: 0px 4px 24px #0000007a;
 	--surface-shadow-strong-light: 0px 4px 64px #0339491a;
@@ -155,6 +157,7 @@
 		--core-surface-overlay-translucent-light
 	);
 	--core-surface-primary: var(--brand-white-0);
+	--core-surface-primary-tint: var(--surface-primary-tint-light);
 	--core-surface-secondary: var(--brand-grey-50);
 	--core-surface-special: var(--brand-sea-50);
 	--core-text-dark: var(--brand-grey-950);
@@ -233,6 +236,7 @@
 		--core-surface-overlay-translucent-dark
 	);
 	--core-surface-primary: var(--brand-grey-950);
+	--core-surface-primary-tint: var(--surface-primary-tint-dark);
 	--core-surface-secondary: var(--brand-grey-900);
 	--core-surface-special: var(--brand-sky-950);
 	--core-text-dark: var(--brand-grey-950);
@@ -373,6 +377,9 @@
 }
 [data-slice-theme-scope] .core-surface-primary {
 	background: var(--core-surface-primary);
+}
+[data-slice-theme-scope] .core-surface-primary-tint {
+	background: var(--core-surface-primary-tint);
 }
 [data-slice-theme-scope] .core-surface-secondary {
 	background: var(--core-surface-secondary);

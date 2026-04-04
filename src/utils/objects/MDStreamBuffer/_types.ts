@@ -18,6 +18,7 @@ export interface MarkdownAutoCloseRule {
 
 export interface MarkdownStreamBufferOptions {
 	endOfStreamToken?: string;
+	healthyEndMarker?: string;
 	htmlHandling?: 'ignore' | 'strip';
 	includeLinksAndImages?: boolean;
 	onFlush?: (snapshot: MarkdownStreamBufferSnapshot) => void;

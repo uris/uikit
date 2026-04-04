@@ -30,13 +30,13 @@ const meta: Meta<typeof DraggablePanel> = {
 			height: 6,
 			radius: 100,
 			stroke: 1,
-			color: 'var(--core-surface-primary)',
-			strokeColor: 'var(--core-outline-primary)',
+			color: 'var(--core-surface-primary-tint)',
+			strokeColor: 'var(--core-outline-secondary)',
 		},
 		borderRight: undefined,
 		borderLeft: undefined,
 		bgColor: undefined,
-		drags: "right",
+		drags: 'right',
 		isTouchDevice: false,
 		containerRef: undefined,
 		onResize: fn(),
@@ -94,7 +94,7 @@ function DraggablePanelWithChildren(args: Readonly<DraggablePanelProps>) {
 				{...args}
 				containerRef={containerRef}
 				isClosed={closed}
-				bgColor={'var(--core-surface-secondary)'}
+				bgColor={'var(--core-surface-primary-tint)'}
 			/>
 			<FlexDiv width={'auto'} height={'fill'} justify={'start'} padding={24}>
 				<IconButton

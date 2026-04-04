@@ -152,6 +152,7 @@ export const TabBar = React.memo((props: TabBarProps) => {
 			tabWidth,
 			onToolTip,
 			handleOptionClick,
+			iconFill,
 			handleOptionKeyDown,
 		],
 	);
@@ -329,7 +330,12 @@ const Option = React.memo(
 			>
 				{icon && (
 					<div className={css.icon}>
-						<Icon name={icon} fill={iconFill} size={iconSize} strokeColor={strokeColor} />
+						<Icon
+							name={icon}
+							fill={iconFill}
+							size={iconSize}
+							strokeColor={strokeColor}
+						/>
 					</div>
 				)}
 				{label}

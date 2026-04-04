@@ -1,29 +1,37 @@
 .wrapper {
 	composes: rowStart from "../../utils/styling/flexBox.module.css";
-	position: relative;
+	display: var(--dd-display) !important;
 	padding: var(--dd-padding) !important;
+	margin: var(--dd-margin) !important;
+	position: relative;
 	gap: var(--dd-gap);
-	min-width: var(--dd-width);
 	width: var(--dd-width);
 	border-radius: var(--dd-border-radius);
 	background-color: var(--dd-bg-color);
 	border: var(--dd-border);
 	border-bottom: var(--dd-border-bottom);
 	transition: all var(--motion-water-duration) var(--motion-water) 0s;
+	user-select: none;
+	-webkit-user-select: none;
 }
 
 .face {
 	composes: rowStart from "../../utils/styling/flexBox.module.css";
-	flex: 1;
 	overflow: hidden;
+	min-width: 0;
+	flex: 1;
 }
 
 .faceText {
-	display: block;
+	display: -webkit-box;
+	-webkit-line-clamp: 1;
+	-webkit-box-orient: vertical;
+	box-sizing: border-box;
 	overflow: hidden;
 	text-overflow: ellipsis;
-	white-space: nowrap;
+	word-break: break-all;
 	color: var(--dd-color);
+	min-width: 0;
 }
 
 .label {

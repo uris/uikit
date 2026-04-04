@@ -11,6 +11,11 @@ type SliderBaseProps = {
 	headColor?: string;
 	trackColor?: string;
 	progressColor?: string;
+	trackHeadBorderSize?: number;
+	trackHeadBorderColor?: string;
+	step?: number;
+	disabled?: boolean;
+	disabledOpacity?: number;
 	cursor?: 'default' | 'grab' | 'grabbing' | 'pointer';
 	onChange?: (value: number, percent: number) => void;
 	onDragChange?: (value: number, percent: number) => void;

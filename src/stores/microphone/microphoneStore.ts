@@ -20,8 +20,11 @@ const emptyMicTrackRef = {
 function createEmptyState(): MicrophoneStoreState {
 	return {
 		micStream: emptyMicStreamRef,
+		processedMicStream: emptyMicStreamRef,
 		micTrack: emptyMicTrackRef,
+		currentDeviceId: null,
 		isActive: false,
+		inputVolume: 1,
 		muted: true,
 		isSupported: false,
 		isRequesting: false,
@@ -39,8 +42,11 @@ function toStoreState(
 
 	return {
 		micStream: microphone.micStream,
+		processedMicStream: microphone.processedMicStream,
 		micTrack: microphone.micTrack,
+		currentDeviceId: microphone.currentDeviceId,
 		isActive: microphone.isActive,
+		inputVolume: microphone.inputVolume,
 		muted: microphone.muted,
 		isSupported: microphone.isSupported,
 		isRequesting: microphone.isRequesting,
@@ -64,6 +70,7 @@ function createBoundActions(
 		muteMic: () => microphone?.muteMic() ?? false,
 		unmuteMic: () => microphone?.unmuteMic() ?? false,
 		toggleMute: () => microphone?.toggleMute(),
+		setInputVolume: (volume: number) => microphone?.setInputVolume(volume) ?? 1,
 		refreshMicrophones: async () => microphone?.refreshMicrophones() ?? [],
 		setMicrophone: async (deviceId: string | DropDownOption<MicOption>) => {
 			await microphone?.setMicrophone(deviceId);
@@ -110,8 +117,12 @@ export function useSyncMicrophoneStore(microphone: UseMicrophoneReturn | null) {
 	const sync = useMicrophoneStore((state) => state.actions.sync);
 	const hasMicrophone = microphone !== null;
 	const micStream = microphone?.micStream ?? emptyMicStreamRef;
+	const processedMicStream =
+		microphone?.processedMicStream ?? emptyMicStreamRef;
 	const micTrack = microphone?.micTrack ?? emptyMicTrackRef;
+	const currentDeviceId = microphone?.currentDeviceId ?? null;
 	const isActive = microphone?.isActive ?? false;
+	const inputVolume = microphone?.inputVolume ?? 1;
 	const muted = microphone?.muted ?? true;
 	const isSupported = microphone?.isSupported ?? false;
 	const isRequesting = microphone?.isRequesting ?? false;
@@ -123,6 +134,7 @@ export function useSyncMicrophoneStore(microphone: UseMicrophoneReturn | null) {
 	const muteMic = microphone?.muteMic;
 	const unmuteMic = microphone?.unmuteMic;
 	const toggleMute = microphone?.toggleMute;
+	const setInputVolume = microphone?.setInputVolume;
 	const refreshMicrophones = microphone?.refreshMicrophones;
 	const setMicrophone = microphone?.setMicrophone;
 
@@ -134,8 +146,11 @@ export function useSyncMicrophoneStore(microphone: UseMicrophoneReturn | null) {
 
 		sync({
 			micStream,
+			processedMicStream,
 			micTrack,
+			currentDeviceId,
 			isActive,
+			inputVolume,
 			muted,
 			isSupported,
 			isRequesting,
@@ -147,6 +162,7 @@ export function useSyncMicrophoneStore(microphone: UseMicrophoneReturn | null) {
 			muteMic: muteMic ?? (() => false),
 			unmuteMic: unmuteMic ?? (() => false),
 			toggleMute: toggleMute ?? (() => null),
+			setInputVolume: setInputVolume ?? (() => 1),
 			refreshMicrophones: refreshMicrophones ?? (async () => []),
 			setMicrophone: setMicrophone ?? (async () => {}),
 		});
@@ -154,8 +170,11 @@ export function useSyncMicrophoneStore(microphone: UseMicrophoneReturn | null) {
 		sync,
 		hasMicrophone,
 		micStream,
+		processedMicStream,
 		micTrack,
+		currentDeviceId,
 		isActive,
+		inputVolume,
 		muted,
 		isSupported,
 		isRequesting,
@@ -167,6 +186,7 @@ export function useSyncMicrophoneStore(microphone: UseMicrophoneReturn | null) {
 		muteMic,
 		unmuteMic,
 		toggleMute,
+		setInputVolume,
 		refreshMicrophones,
 		setMicrophone,
 	]);
@@ -175,8 +195,14 @@ export function useSyncMicrophoneStore(microphone: UseMicrophoneReturn | null) {
 // atomic hook exports for use in React components
 export const useMicStream = () =>
 	useMicrophoneStore((state) => state.micStream);
+export const useProcessedMicStream = () =>
+	useMicrophoneStore((state) => state.processedMicStream);
 export const useMicTrack = () => useMicrophoneStore((state) => state.micTrack);
+export const useCurrentMicDeviceId = () =>
+	useMicrophoneStore((state) => state.currentDeviceId);
 export const useMicActive = () => useMicrophoneStore((state) => state.isActive);
+export const useMicInputVolume = () =>
+	useMicrophoneStore((state) => state.inputVolume);
 export const useMicMuted = () => useMicrophoneStore((state) => state.muted);
 export const useMicSupported = () =>
 	useMicrophoneStore((state) => state.isSupported);

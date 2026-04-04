@@ -28,6 +28,7 @@ import NoteSection from '../../../../documentation/_components/Notice/Notice';
 			- batches normal updates on `requestAnimationFrame`
 			- commits stable line-based prefixes so only the active tail keeps being reparsed
 			- supports optional link/image handling
+			- supports buffered inline select syntax using `$$option 1$$option 2$$`
 			- supports optional HTML passthrough or best-effort stripping
 			- can auto-complete and clean itself up when an end-of-stream token is received
 
@@ -54,6 +55,7 @@ import NoteSection from '../../../../documentation/_components/Notice/Notice';
 				</thead>
 				<tbody>
 					<tr><td><code>endOfStreamToken</code></td><td><code>string</code></td><td>Optional token that, when received in `append()`, is discarded before the buffer auto-completes, flushes, and resets itself.</td></tr>
+					<tr><td><code>healthyEndMarker</code></td><td><code>string</code></td><td>Optional ephemeral suffix appended to healthy output only. It is never written into <code>raw</code>. If the healthy tail ends with an optimistic newline closure, the marker is inserted before that newline.</td></tr>
 					<tr><td><code>htmlHandling</code></td><td><code>'ignore' | 'strip'</code></td><td>HTML handling mode. `ignore` passes tags through untouched. `strip` removes tag-shaped HTML from the healthy output.</td></tr>
 					<tr><td><code>includeLinksAndImages</code></td><td><code>boolean</code></td><td>When `true`, applies the built-in link and image ambiguity rules.</td></tr>
 					<tr><td><code>onFlush</code></td><td><code>{`(snapshot) => void`}</code></td><td>Called whenever the buffer emits a raw/healthy snapshot.</td></tr>
@@ -138,6 +140,17 @@ import NoteSection from '../../../../documentation/_components/Notice/Notice';
             buffer.complete(); // emits final snapshot
             ```
 			</RenderSource>
+
+			## Inline select buffering
+			`MdBuffer` also understands Slice's inline select marker syntax:
+
+			<RenderSource language={'md'}>
+            ```
+            $$Option 1$$Option 2$$
+            ```
+			</RenderSource>
+
+			Healthy output only emits complete `$$...$$` segments. While a select is still being streamed, incomplete option text stays buffered. The select remains logically open until a completed `$$` boundary is followed by whitespace, a newline, `.`, `!`, or `,`.
 
 			## End of stream token
 			If `endOfStreamToken` is set, `append()` checks for it before normal buffering. The token is removed, the buffer completes, emits its final snapshot, and then resets itself.

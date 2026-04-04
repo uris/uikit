@@ -37,6 +37,8 @@ import {FlexDiv} from '../../components/FlexDiv';
           </tbody>
         </table>
 
+        `options.healthyEndMarker` appends an ephemeral suffix to `healthy` output without changing `raw`. If the buffer has optimistically closed a line-based construct by adding a trailing newline, the marker is inserted before that newline.
+
         ## Returns
         <table style={{width: '100%'}}>
           <colgroup>

@@ -1,0 +1,159 @@
+import {Meta, Unstyled} from '@storybook/addon-docs/blocks';
+import {RenderSource} from '../../../documentation/_components/RenderSource/RenderSource';
+import {FlexDiv} from '../../components/FlexDiv';
+import NoteSection from "../../../documentation/_components/Notice/Notice";
+
+<Meta title="Stores/Volume Store" />
+
+<FlexDiv width={"fill"} height={"fill"} align={"center"}>
+    <FlexDiv width={"fill"} maxWidth={760} height={"auto"}>
+        <Unstyled>
+        <NoteSection>
+            Slice stores use a module-level singleton pattern: each store is created once when the module is loaded, and every import shares the same store instance.
+        </NoteSection>
+
+        # VolumeStore
+        Global media volume state built with Zustand. It tracks the active output volume, mute state, the last non-muted volume, a registry of attached audio/video elements that should be updated together, and an optional dedicated feedback element for short UI sounds.
+        Volume values are normalized numbers between `0` and `1`.
+
+        ## React exports (reactive)
+        React exports are reactive subscriptions for components that should re-render when the selected slice changes.
+        <table style={{width: '100%'}}>
+          <colgroup>
+            <col style={{width: '1%'}} />
+            <col style={{width: '25%'}} />
+            <col style={{width: '98%'}} />
+          </colgroup>
+          <thead>
+            <tr>
+              <th className={"left"}>Export</th>
+              <th className={"left"}>Type</th>
+              <th className={"left"}>Description</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td><code>useVolumeStore</code></td><td><code>Zustand store hook</code></td><td>Main selector-based store hook.</td></tr>
+            <tr><td><code>useVolume</code></td><td><code>{`() => number`}</code></td><td>Atomic selector for the current effective volume as a number between <code>0</code> and <code>1</code>.</td></tr>
+            <tr><td><code>useStoredVolume</code></td><td><code>{`() => number`}</code></td><td>Atomic selector for the last non-muted volume value as a number between <code>0</code> and <code>1</code>.</td></tr>
+            <tr><td><code>useMuted</code></td><td><code>{`() => boolean`}</code></td><td>Atomic selector for mute state.</td></tr>
+            <tr><td><code>useAttachedMedia</code></td><td><code>{`() => Set&lt;AudioElement&gt;`}</code></td><td>Atomic selector for the attached media registry.</td></tr>
+            <tr><td><code>useVolumeActions</code></td><td><code>{`() => actions`}</code></td><td>Atomic selector for store actions.</td></tr>
+          </tbody>
+        </table>
+
+        ## Imperative exports (non-reactive)
+        These helpers read and write the same singleton store outside React.
+        <table style={{width: '100%'}}>
+          <colgroup>
+            <col style={{width: '1%'}} />
+            <col style={{width: '25%'}} />
+            <col style={{width: '98%'}} />
+          </colgroup>
+          <thead>
+            <tr>
+              <th className={"left"}>Export</th>
+              <th className={"left"}>Type</th>
+              <th className={"left"}>Description</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td><code>volumeActions</code></td><td><code>actions</code></td><td>Imperative actions for non-React code paths.</td></tr>
+            <tr><td><code>getVolume</code></td><td><code>{`() => number`}</code></td><td>Read the current effective volume outside React as a number between <code>0</code> and <code>1</code>.</td></tr>
+            <tr><td><code>getStoredVolume</code></td><td><code>{`() => number`}</code></td><td>Read the last non-muted volume outside React as a number between <code>0</code> and <code>1</code>.</td></tr>
+            <tr><td><code>getMuted</code></td><td><code>{`() => boolean`}</code></td><td>Read mute state outside React.</td></tr>
+            <tr><td><code>getAttachedMedia</code></td><td><code>{`() => Set&lt;AudioElement&gt;`}</code></td><td>Read the attached media registry outside React.</td></tr>
+          </tbody>
+        </table>
+
+        ## Actions
+        <table style={{width: '100%'}}>
+          <colgroup>
+            <col style={{width: '1%'}} />
+            <col style={{width: '25%'}} />
+            <col style={{width: '98%'}} />
+          </colgroup>
+          <thead>
+            <tr>
+              <th className={"left"}>Action</th>
+              <th className={"left"}>Type</th>
+              <th className={"left"}>Description</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td><code>attachMedia</code></td><td><code>{`(element: AudioElement | AudioElement[]) => void`}</code></td><td>Registers audio or video elements so future volume changes update them together.</td></tr>
+            <tr><td><code>detachMedia</code></td><td><code>{`(element: AudioElement | AudioElement[]) => void`}</code></td><td>Removes specific media elements from the registry.</td></tr>
+            <tr><td><code>attachFeedbackElement</code></td><td><code>{`(element: AudioElement) => void`}</code></td><td>Registers a dedicated audio element for short feedback sounds and also keeps it in sync with the current store volume.</td></tr>
+            <tr><td><code>detachFeedbackElement</code></td><td><code>{`(element: AudioElement) => void`}</code></td><td>Removes the dedicated feedback element.</td></tr>
+            <tr><td><code>playFeedback</code></td><td><code>{`(volume?: number) => Promise<void>`}</code></td><td>Attempts to play the dedicated feedback element using the provided volume override or the current store volume.</td></tr>
+            <tr><td><code>clearMedia</code></td><td><code>{`() => void`}</code></td><td>Clears the attached media registry.</td></tr>
+            <tr><td><code>setVolume</code></td><td><code>{`(value: number) => void`}</code></td><td>Updates the current volume using a normalized number between <code>0</code> and <code>1</code>. While muted, this updates the stored restore volume without changing output from zero.</td></tr>
+            <tr><td><code>mute</code></td><td><code>{`() => Promise<void>`}</code></td><td>Sets output volume to zero while preserving the previous volume for restore, then plays the feedback element when present.</td></tr>
+            <tr><td><code>unmute</code></td><td><code>{`() => Promise<void>`}</code></td><td>Restores the stored volume, then plays the feedback element when present.</td></tr>
+          </tbody>
+        </table>
+
+        ## Example
+        </Unstyled>
+
+        <RenderSource language={"tsx"}>
+        ```
+        import { useEffect, useMemo } from 'react';
+        import { Slider } from '@apple-pie/slice';
+        import {
+            useMuted,
+            useStoredVolume,
+            useVolume,
+            useVolumeActions,
+        } from '@apple-pie/slice/stores/volume';
+
+        function AudioVolumePanel() {
+            const volume = useVolume();
+            const storedVolume = useStoredVolume();
+            const muted = useMuted();
+            const actions = useVolumeActions();
+            const audioElement = useMemo(() => {
+                if (typeof Audio === 'undefined') return null;
+                return new Audio();
+            }, []);
+            const feedbackElement = useMemo(() => {
+                if (typeof Audio === 'undefined') return null;
+                return new Audio('/audio/beep.mp3');
+            }, []);
+
+            useEffect(() => {
+                if (!audioElement || !feedbackElement) return;
+                actions.attachMedia(audioElement);
+                actions.attachFeedbackElement(feedbackElement);
+                return () => {
+                    actions.detachMedia(audioElement);
+                    actions.detachFeedbackElement(feedbackElement);
+                };
+            }, [actions, audioElement, feedbackElement]);
+
+            return (
+                <div>
+                    <div>Volume: {volume}</div>
+                    <div>Stored: {storedVolume}</div>
+                    <div>Muted: {String(muted)}</div>
+                    <Slider
+                        value={muted ? storedVolume : volume}
+                        scaleMin={0}
+                        scaleMax={1}
+                        step={0.05}
+                        width={'100%'}
+                        onChange={(value) => actions.setVolume(value)}
+                    />
+                    <button type="button" onClick={() => (muted ? actions.unmute() : actions.mute())}>
+                        {muted ? 'Unmute' : 'Mute'}
+                    </button>
+                    <button type="button" onClick={() => void actions.playFeedback()}>
+                        Play Feedback
+                    </button>
+                    <div>Attached Media: {audioElement ? 1 : 0}</div>
+                </div>
+            );
+        }
+        ```
+        </RenderSource>
+    </FlexDiv>
+</FlexDiv>

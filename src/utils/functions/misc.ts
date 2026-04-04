@@ -108,12 +108,13 @@ export function setProps(props: any, mount = false, unmount = false) {
 /**
  * Convert a hex color into an RGB string literal.
  */
-export const hexToRgb = (hex: string | undefined) => {
+export const hexToRgb = (hex: string | undefined, opacity?: number) => {
 	if (!hex) return undefined;
 	const r = Number.parseInt(hex.slice(1, 3), 16);
 	const g = Number.parseInt(hex.slice(3, 5), 16);
 	const b = Number.parseInt(hex.slice(5, 7), 16);
-	return `"rgb(${r}, ${g}, ${b})"`;
+	const a = opacity ?? 1;
+	return `rgba(${r}, ${g}, ${b}, ${a})`;
 };
 
 /**

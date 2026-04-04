@@ -62,6 +62,8 @@ export const SliceIcons = {
 		upload: 'upload',
 		speaker: 'speaker',
 		speakerMuted: 'speaker muted',
+		speakerHigh: 'speaker high',
+		speakerLow: 'speaker low',
 	},
 	files: {
 		document: 'document',
@@ -71,6 +73,7 @@ export const SliceIcons = {
 	people: {
 		people: 'people',
 		person: 'person',
+		talk: 'talk',
 	},
 	business: {
 		briefcase: 'briefcase',
@@ -141,6 +144,7 @@ export const SliceIcons = {
 		menu: 'menu',
 		more: 'more',
 		sidebar: 'sidebar',
+		sidebarSplit: 'sidebar split',
 		keyboard: 'keyboard',
 		x: 'x',
 	},

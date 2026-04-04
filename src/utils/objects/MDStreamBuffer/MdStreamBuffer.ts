@@ -18,6 +18,7 @@ interface TrailingInlineConstruct {
  */
 export class MdBuffer {
 	private readonly endOfStreamToken?: string;
+	private readonly healthyEndMarker?: string;
 	private readonly htmlHandling: 'ignore' | 'strip';
 	private readonly includeLinksAndImages: boolean;
 	private readonly onFlush?: (snapshot: MarkdownStreamBufferSnapshot) => void;
@@ -31,6 +32,7 @@ export class MdBuffer {
 
 	constructor(options?: MarkdownStreamBufferOptions) {
 		this.endOfStreamToken = options?.endOfStreamToken;
+		this.healthyEndMarker = options?.healthyEndMarker;
 		this.htmlHandling = options?.htmlHandling ?? 'ignore';
 		this.includeLinksAndImages = options?.includeLinksAndImages ?? false;
 		this.onFlush = options?.onFlush;
@@ -149,16 +151,89 @@ export class MdBuffer {
 	}
 
 	private buildHealthyOutput() {
-		return `${this.committedRaw}${this.buildHealthyTail(this.activeRaw)}`;
+		const healthyTail = this.buildHealthyTail(this.activeRaw);
+		return `${this.committedRaw}${this.applyHealthyEndMarker(
+			this.activeRaw,
+			healthyTail,
+		)}`;
+	}
+
+	private applyHealthyEndMarker(rawTail: string, healthyTail: string) {
+		if (!this.healthyEndMarker) return healthyTail;
+		if (healthyTail.length === 0) return this.healthyEndMarker;
+		if (healthyTail.endsWith('\n') && !rawTail.endsWith('\n')) {
+			return `${healthyTail.slice(0, -1)}${this.healthyEndMarker}\n`;
+		}
+		return `${healthyTail}${this.healthyEndMarker}`;
 	}
 
 	private buildHealthyTail(value: string) {
 		const withHtmlHandling =
 			this.htmlHandling === 'strip' ? stripHtmlTags(value) : value;
+		const withInlineSelects = this.closeTrailingInlineSelect(withHtmlHandling);
 		const withLinksAndImages = this.includeLinksAndImages
-			? this.closeLinksAndImages(withHtmlHandling)
-			: withHtmlHandling;
+			? this.closeLinksAndImages(withInlineSelects)
+			: withInlineSelects;
 		return this.closeInlineMarkdown(withLinksAndImages);
+	}
+
+	private closeTrailingInlineSelect(value: string) {
+		if (value.length === 0) return value;
+
+		let cursor = 0;
+		let selectStart = -1;
+		let lastCompleteBoundary = -1;
+
+		while (cursor < value.length) {
+			if (isEscaped(value, cursor)) {
+				cursor += 1;
+				continue;
+			}
+
+			if (value[cursor] !== '$') {
+				cursor += 1;
+				continue;
+			}
+
+			const nextCharacter = value[cursor + 1];
+			if (nextCharacter !== '$') {
+				if (cursor === value.length - 1) {
+					if (selectStart === -1) return value.slice(0, -1);
+					return lastCompleteBoundary === -1
+						? value.slice(0, selectStart)
+						: value.slice(0, lastCompleteBoundary);
+				}
+				cursor += 1;
+				continue;
+			}
+
+			if (selectStart === -1) {
+				selectStart = cursor;
+				lastCompleteBoundary = -1;
+				cursor += 2;
+				continue;
+			}
+
+			lastCompleteBoundary = cursor + 2;
+			const postMarkerCharacter = value[cursor + 2];
+			if (postMarkerCharacter === undefined) {
+				return value.slice(0, lastCompleteBoundary);
+			}
+
+			if (/[\s,.!]/.test(postMarkerCharacter)) {
+				selectStart = -1;
+				lastCompleteBoundary = -1;
+				cursor += 2;
+				continue;
+			}
+
+			cursor += 2;
+		}
+
+		if (selectStart === -1) return value;
+		return lastCompleteBoundary === -1
+			? value.slice(0, selectStart)
+			: value.slice(0, lastCompleteBoundary);
 	}
 
 	private closeInlineMarkdown(value: string) {
