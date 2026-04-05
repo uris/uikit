@@ -21,6 +21,7 @@ import {
 	setStyle,
 } from '../../utils/functions/misc';
 import { Icon } from '../Icon';
+import { ProgressIndicator } from '../Progress';
 import css from './Toast.module.css';
 import { type ToastProps, ToastType } from './_types';
 
@@ -37,6 +38,7 @@ const ToastBase = React.forwardRef<HTMLDivElement, ToastProps>((props, ref) => {
 		position = 'bottom',
 		offset = 24,
 		close = true,
+		progress = undefined,
 		type = ToastType.Info,
 		didHide = () => null,
 		...divAttributes
@@ -163,6 +165,12 @@ const ToastBase = React.forwardRef<HTMLDivElement, ToastProps>((props, ref) => {
 		}
 	}, [duration]);
 
+	// memo show progress
+	const showProgress = useMemo(() => {
+		if (progress !== undefined) return progress;
+		return duration === 'Infinite';
+	}, [progress, duration]);
+
 	// resolve the close icon color from the selected toast type
 	const iconColor = useMemo(() => {
 		switch (type) {
@@ -204,6 +212,11 @@ const ToastBase = React.forwardRef<HTMLDivElement, ToastProps>((props, ref) => {
 					exit={'exit'}
 				>
 					<div role={'status'} aria-live={'polite'} className={css.message}>
+						{showProgress && (
+							<div className={css.progress}>
+								<ProgressIndicator show inline color={iconColor} />
+							</div>
+						)}
 						{content}
 					</div>
 					{(duration === 'Infinite' || close) && (

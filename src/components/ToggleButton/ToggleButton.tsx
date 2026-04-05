@@ -14,7 +14,7 @@ export function ToggleButton(props: Readonly<ToggleButtonProps>) {
 		iconColor = 'var(--core-text-primary)',
 		iconColorOn = 'var(--core-surface-primary)',
 		bgColor = 'var(--core-surface-secondary)',
-		bgColorOn = 'var(--core-link-primary)',
+		bgColorOn = 'var(--core-text-special)',
 		iconSize = 20,
 		buttonSize = 'm',
 		tooltip,

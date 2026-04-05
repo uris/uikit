@@ -84,7 +84,6 @@ function adjustMediaVolume(media: Set<AudioElement>, volume: number) {
 }
 
 async function playFeedbackSound(element: AudioElement | null, volume: number) {
-	console.log('playFeedbackSound', element, Number(volume.toFixed(2)));
 	if (element) {
 		const isPlaying =
 			!element.paused && !element.ended && element.readyState > 2;
@@ -93,7 +92,7 @@ async function playFeedbackSound(element: AudioElement | null, volume: number) {
 			element.currentTime = 0; // avoid race between setting time to 0 and immediately playing
 		}
 		element.volume = Number(volume.toFixed(2));
-		await element.play().catch((err) => console.warn(err));
+		await element.play().catch(() => null);
 	}
 }
 

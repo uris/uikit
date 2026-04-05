@@ -339,8 +339,7 @@ export function useMicrophone(
 			setMicrophones(mics);
 			setMicOptions(options);
 			return mics;
-		} catch (error) {
-			console.warn('Error getting microphone devices:', error);
+		} catch {
 			setMicrophones([]);
 			setMicOptions([]);
 			return [];
@@ -363,7 +362,6 @@ export function useMicrophone(
 				setError(
 					err instanceof Error ? err : new Error('Error switching microphone'),
 				);
-				console.warn('Error switching microphone:', err);
 			} finally {
 				setIsRequesting(false);
 			}
@@ -376,8 +374,7 @@ export function useMicrophone(
 		try {
 			if (muted) unmuteMic();
 			else muteMic();
-		} catch (error) {
-			console.warn('Error toggling microphone mute:', error);
+		} catch {
 			return;
 		}
 	}, [muted, unmuteMic, muteMic]);
@@ -399,9 +396,7 @@ export function useMicrophone(
 			.then(() => {
 				if (startMuted) muteMic();
 			})
-			.catch((err) => {
-				console.error('Error accessing microphone:', err);
-			});
+			.catch(() => null);
 		return () => {
 			mountedRef.current = false;
 			stopMicStream();

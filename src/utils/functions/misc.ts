@@ -44,32 +44,11 @@ export function isDarkMode(): boolean {
  */
 export function debug(previous: any, updated: any, name = 'component') {
 	if (process.env.NODE_ENV === 'test') return; // exit if running tests
-	const reasons = [];
 	const props = previous.current.props;
 	const mount = previous.current.mount;
 	const unmount = previous.current.unmount;
 
-	if (mount) {
-		console.log({
-			component: name,
-			'(re)render': true,
-			event: 'Component Mount',
-		});
-	} else if (unmount) {
-		console.log({
-			component: name,
-			'(re)render': false,
-			event: 'Component Unmount',
-		});
-	} else {
-		const reasons = createPropChangeArray(props, updated);
-		console.log({
-			component: name,
-			'(re)render': true,
-			event: 'Props Change',
-			props: reasons,
-		});
-	}
+	if (!mount && !unmount) createPropChangeArray(props, updated);
 	return { props: updated, mount: false, unmount: false };
 }
 
@@ -184,7 +163,6 @@ export const copyToClipboard = async (rawContent: string): Promise<boolean> => {
 		textArea.remove();
 		return true;
 	} catch (error) {
-		console.warn('Unable to copy to clipboard:', error);
 		return false;
 	}
 };

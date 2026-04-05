@@ -64,7 +64,6 @@ function VolumeStoreDemo() {
 					trackHeadSize={16}
 					onChange={(value) => actions.setVolume(value)}
 					onDragChange={(value, _percent) => {
-						console.log('drag change', value);
 						actions.playFeedback(value);
 					}}
 				/>

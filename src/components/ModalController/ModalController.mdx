@@ -1,0 +1,111 @@
+import {Meta, Unstyled} from '@storybook/addon-docs/blocks';
+import {FlexDiv} from '../FlexDiv';
+import * as ModalControllerStories from './ModalController.stories';
+import {RenderSource} from '../../../documentation/_components/RenderSource/RenderSource';
+
+<Meta of={ModalControllerStories} />
+
+<FlexDiv width={"fill"} height={"fill"} align={"center"}>
+    <FlexDiv width={"fill"} maxWidth={760} height={"auto"}>
+        <Unstyled>
+        # ModalController
+        Renders the active global modal from `ModalStore` and places an overlay beneath it.
+
+        Mount one `ModalController` near the app root when using the modal store. The controller owns overlay rendering, enter and exit animation, and optional dragging.
+
+        ## Base element
+        `HTMLDivElement`
+
+        ## Interface
+        `ModalControllerProps`
+
+        ## Props
+        <table style={{width: '100%'}}>
+          <colgroup>
+            <col style={{width: '1%'}} />
+            <col style={{width: '1%'}} />
+            <col style={{width: '1%'}} />
+            <col style={{width: '97%'}} />
+          </colgroup>
+          <thead>
+            <tr>
+              <th className={"left"}>Prop</th>
+              <th className={"left"}>Type</th>
+              <th className={"left"}>Default</th>
+              <th>Description</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td><code>animate</code></td><td><code>string</code></td><td><code>'animate'</code></td><td>Variant key used for the active animation state.</td></tr>
+            <tr><td><code>dragConstraintsRef</code></td><td><code>{`RefObject<HTMLElement | null>`}</code></td><td><code>-</code></td><td>Optional ref used to constrain dragging when the active modal exposes a drag handle.</td></tr>
+            <tr><td><code>draggable</code></td><td><code>boolean</code></td><td><code>true</code></td><td>Enables dragging on the controller wrapper.</td></tr>
+            <tr><td><code>exit</code></td><td><code>string</code></td><td><code>'exit'</code></td><td>Variant key used during unmount.</td></tr>
+            <tr><td><code>initial</code></td><td><code>string</code></td><td><code>'initial'</code></td><td>Variant key used before the modal enters.</td></tr>
+            <tr><td><code>overlayColor</code></td><td><code>string</code></td><td><code>'rgb(0,0,0)'</code></td><td>Background color for the overlay behind the active modal.</td></tr>
+            <tr><td><code>overlayOpacity</code></td><td><code>number</code></td><td><code>0.7</code></td><td>Opacity applied to the overlay.</td></tr>
+            <tr><td><code>transition</code></td><td><code>Transition</code></td><td><code>{`{ ease: 'easeOut', duration: 0.25, delay: 0.1 }`}</code></td><td>Motion transition applied to the controller wrapper.</td></tr>
+            <tr><td><code>variants</code></td><td><code>Variants</code></td><td><code>{`{ initial, animate, exit }`}</code></td><td>Motion variants applied to the controller wrapper.</td></tr>
+          </tbody>
+        </table>
+
+        ## Behavior
+        `ModalController` reads the current modal from the modal store and injects `onResolve`, `onReject`, `onClose`, and `onDragPointerDown` into the rendered modal component.
+
+        ## Code Examples
+        </Unstyled>
+
+        <RenderSource language={"tsx"}>
+```
+import { useRef } from 'react';
+import { Button, FlexDiv, Modal, ModalController } from '@apple-pie/slice';
+import { useModalActions } from '@apple-pie/slice/stores/modal';
+
+export function ModalControllerExample() {
+    const actions = useModalActions();
+    const boundsRef = useRef<HTMLDivElement>(null);
+
+    return (
+        <FlexDiv ref={boundsRef} height={320} justify="center" align="center">
+            <Button
+                onClick={() =>
+                    actions.show({
+                        component: Modal,
+                        props: {
+                            title: 'Confirmation',
+                            children: 'Continue?',
+                        },
+                    })
+                }
+            >
+                Open Modal
+            </Button>
+            <ModalController dragConstraintsRef={boundsRef} />
+        </FlexDiv>
+    );
+}
+```
+        </RenderSource>
+
+        <Unstyled>
+        ## Drag Constraints
+        Use `dragConstraintsRef` to keep the active modal within another element's bounds.
+        </Unstyled>
+
+        <RenderSource language={"tsx"}>
+```
+import { useRef } from 'react';
+import { FlexDiv, ModalController } from '@apple-pie/slice';
+
+export function ConstrainedControllerExample() {
+    const ref = useRef<HTMLDivElement>(null);
+
+    return (
+        <FlexDiv ref={ref} height={320} justify="center" align="center">
+            <ModalController dragConstraintsRef={ref} />
+        </FlexDiv>
+    );
+}
+```
+        </RenderSource>
+    </FlexDiv>
+</FlexDiv>

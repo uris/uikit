@@ -21,10 +21,7 @@ function readLocalStorageValue<T>(key: string, fallback: T): T {
 			return fallback;
 		}
 		return JSON.parse(raw) as T;
-	} catch (error) {
-		console.error(`Error parsing local storage item for key ${key}:`, {
-			error,
-		});
+	} catch {
 		return fallback;
 	}
 }
@@ -41,11 +38,7 @@ export function useLocalStore<T>(key: string, value: T) {
 		if (canUseLocalStorage()) {
 			try {
 				globalThis.localStorage.setItem(key, JSON.stringify(data));
-			} catch (error) {
-				console.error(`Error setting local storage item for key ${key}:`, {
-					error,
-				});
-			}
+			} catch {}
 		}
 		setItem(data);
 	}

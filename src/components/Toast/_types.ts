@@ -20,6 +20,8 @@ type ToastBaseProps = {
 	duration?: number | 'Infinite';
 	close?: boolean;
 	type?: ToastType;
+	progress?: boolean;
+	onShow?: () => void;
 	didHide?: () => void;
 };
 

@@ -12,6 +12,7 @@ const NoteSection = React.memo((props: { children: React.ReactNode }) => {
 			background={'var(--core-surface-secondary)'}
 			border={'1px solid var(--core-outline-primary)'}
 			borderRadius={8}
+			margin={'0 0 24px 0'}
 		>
 			{children}
 		</FlexDiv>

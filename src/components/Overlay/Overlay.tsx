@@ -6,13 +6,18 @@ import { useTrackRenders } from '../../hooks/useTrackRenders/useTrackRenders';
 import css from './Overlay.module.css';
 import type { OverlayProps } from './_types';
 
+const defaultTransition = { ease: 'easeOut', duration: 0.25 };
+
 export const Overlay = React.memo((props: OverlayProps) => {
 	const {
+		children,
+		show = false,
 		type = 'clear',
 		global = false,
 		overlay,
 		color = 'rgb(0,0,0)',
 		opacity = 0,
+		transition = defaultTransition,
 		onClick = () => null,
 		toggleOverlay = () => null,
 		...divAttributes
@@ -20,9 +25,6 @@ export const Overlay = React.memo((props: OverlayProps) => {
 	const { id: divId, className, style, ...rest } = divAttributes;
 	const divStyle = style ?? ({} as React.CSSProperties);
 	const divClass = className ? ` ${className}` : '';
-
-	// derive whether the overlay should render at all
-	const show = !global || (global && overlay);
 
 	// resolve the visual opacity from the configured overlay type
 	const computedOpacity = useMemo(() => {
@@ -65,9 +67,12 @@ export const Overlay = React.memo((props: OverlayProps) => {
 					animate={{ opacity: computedOpacity }}
 					exit={{ opacity: 0 }}
 					onClick={handleClick}
+					transition={transition}
 					onContextMenu={handleContextMenu}
 					{...(rest as any)}
-				/>
+				>
+					{children}
+				</motion.div>
 			)}
 		</AnimatePresence>
 	);

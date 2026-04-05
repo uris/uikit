@@ -22,6 +22,19 @@
 	cursor: pointer;
 }
 
+.message {
+	composes: rowStart from "../../utils/styling/flexBox.module.css";
+	gap: 6px;
+}
+
+.progress {
+	composes: row from "../../utils/styling/flexBox.module.css";
+	min-height: 20px;
+	max-height: 20px;
+	min-width: 20px;
+	max-width: 20px;
+}
+
 .s {
 	composes: body-s-regular from "../../utils/styling/type.module.css";
 }

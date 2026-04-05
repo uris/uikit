@@ -168,7 +168,7 @@
 	--core-text-secondary: var(--brand-grey-700);
 	--core-text-tertiary: var(--brand-grey-600);
 	--core-text-special: var(--brand-sea-500);
-	--core-link-primary: var(--brand-sea-700);
+	--core-link-primary: var(--brand-sea-500);
 	--eor-tag-employee: var(--brand-sky-700);
 	--eor-tag-overdue: var(--product-red-500);
 	--eor-tag-paid: var(--brand-land-700);

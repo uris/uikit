@@ -52,6 +52,47 @@ export default function App() {
 
 `ThemeProvider` is the default theme bootstrap for the library. It sets the active `data-slice-theme` value on the document root, renders a `data-slice-theme-scope` wrapper, and pulls in the packaged theme CSS token files used by components and Storybook. When `global` is enabled, it also applies the active theme's `core-surface-primary` color to the root document element and `document.body` backgrounds. In Safari, this also drives the browser header color.
 
+## Modal System
+
+Slice includes a presentational `Modal`, a `ModalController` for global rendering and overlay management, and an optional Zustand `ModalStore` for imperative `show`, `hide`, and promise-based modal flows.
+
+```tsx
+import { Button, FlexDiv, Modal, ModalController } from '@apple-pie/slice';
+import { useModalActions } from '@apple-pie/slice/stores/modal';
+import { useRef } from 'react';
+
+export function ConfirmExample() {
+	const actions = useModalActions();
+	const boundsRef = useRef<HTMLDivElement>(null);
+
+	const openModal = async () => {
+		try {
+			const result = await actions.modalResponse<'yes' | 'no'>({
+				component: Modal,
+				props: {
+					title: 'Continue?',
+					children: 'Are you sure you want to continue?',
+					actions: [
+						{ id: 'no', label: 'No', value: 'no' },
+						{ id: 'yes', label: 'Yes', value: 'yes', primary: true },
+					],
+				},
+			});
+			console.log(result);
+		} catch (error) {
+			console.error(error);
+		}
+	};
+
+	return (
+		<FlexDiv ref={boundsRef} height={320} justify="center" align="center">
+			<Button onClick={openModal}>Open Modal</Button>
+			<ModalController dragConstraintsRef={boundsRef} />
+		</FlexDiv>
+	);
+}
+```
+
 ## Package Surface
 
 Primary entrypoint:
@@ -85,7 +126,9 @@ Example subpath imports:
 ```ts
 import { Avatar } from '@apple-pie/slice/components/Avatar';
 import { useTheme } from '@apple-pie/slice/hooks/useTheme';
+import { ModalController } from '@apple-pie/slice/components/ModalController';
 import { ThemeProvider } from '@apple-pie/slice/providers/ThemeProvider';
+import { useModalActions } from '@apple-pie/slice/stores/modal';
 import { useUploadsActions } from '@apple-pie/slice/stores/uploads';
 import { lightTheme } from '@apple-pie/slice/theme/themes';
 import { IndexedDB } from '@apple-pie/slice/utils/objects';
@@ -93,12 +136,130 @@ import { IndexedDB } from '@apple-pie/slice/utils/objects';
 
 ## What’s Included
 
-- 30+ React components covering inputs, navigation, overlays, feedback, media, layout, upload, and utility UI
+- 35+ exported React UI components covering input, feedback, modal, overlay, media, layout, and upload flows
 - Theme tokens and presets for colors, corners, elevations, motion, typography, and full light/dark themes
-- React hooks for theme state, resize observation, keyboard shortcuts, local storage, double-click, tooltips, and window helpers
-- Optional Zustand stores for `LocalDB`, `SSE`, `WS`, `tip`, `toast`, `uploads`, and `window`
+- Exported React hooks for theme state, resize observation, keyboard shortcuts, local storage, audio, microphone, tooltips, and window helpers
+- Optional Zustand stores for `LocalDB`, `modal`, `microphone`, `SSE`, `WS`, `tip`, `toast`, `uploads`, `volume`, and `window`
 - Worker-backed uploads via `@apple-pie/slice/workers/uploads`
 - Utility functions plus low-level `IndexedDB`, `SSEConnection`, and `WSConnection` helpers
+
+## Exported Components
+
+Top-level component exports currently include:
+
+- `AudioBubble`
+- `Avatar`
+- `AvatarGroup`
+- `Badge`
+- `Button`
+- `ButtonBar`
+- `Camera`
+- `CheckBox`
+- `Chip`
+- `DivInput`
+- `DoneCheck`
+- `Dot`
+- `DraggablePanel`
+- `DropDown`
+- `ErrorSummary`
+- `FileIcon`
+- `FlexDiv`
+- `Grouper`
+- `Icon`
+- `IconButton`
+- `Label`
+- `Modal`
+- `ModalController`
+- `Overlay`
+- `Pager`
+- `ProgressIndicator`
+- `PromptInput`
+- `RadioButton`
+- `RadioButtonList`
+- `Slider`
+- `Spacer`
+- `Switch`
+- `TabBar`
+- `TextArea`
+- `TextField`
+- `Tip`
+- `Toast`
+- `ToggleButton`
+- `UploadArea`
+
+Supporting exports also include:
+
+- `ThemeProvider`
+- `ToastType`
+- `FileIconNames`
+- `SliceIcons`
+- `LabelBackground`
+
+## Exported Hooks
+
+Top-level hook exports currently include:
+
+- `useAudioRecorder`
+- `useDoubleClick`
+- `useKeyboardShortcuts`
+- `useLastUpdated`
+- `useLocalStore`
+- `useMDStreamBuffer`
+- `useMicrophone`
+- `useObserveResize`
+- `useObserveTheme`
+- `useTheme`
+- `useToolTip`
+- `useWindow`
+
+Type exports alongside hooks include:
+
+- `KeyboardShortcut`
+- `KeyboardShortcuts`
+- `MicOption`
+- `UseMicrophoneReturn`
+- `WindowGeolocation`
+- `WindowGeolocationError`
+- `BreakPoints`
+
+## Exported Stores
+
+Store subpaths currently include:
+
+- `@apple-pie/slice/stores/LocalDB`
+- `@apple-pie/slice/stores/modal`
+- `@apple-pie/slice/stores/microphone`
+- `@apple-pie/slice/stores/SSE`
+- `@apple-pie/slice/stores/WS`
+- `@apple-pie/slice/stores/tip`
+- `@apple-pie/slice/stores/toast`
+- `@apple-pie/slice/stores/uploads`
+- `@apple-pie/slice/stores/volume`
+- `@apple-pie/slice/stores/window`
+
+The shared stores barrel is also available at:
+
+- `@apple-pie/slice/stores`
+
+## Theme Exports
+
+Theme exports currently include:
+
+- `light`
+- `dark`
+- `lightTheme`
+- `darkTheme`
+- `motion`
+- `elevations`
+- `Elevation`
+
+Type exports alongside theme values include:
+
+- `SliceTheme`
+- `Colors`
+- `Corners`
+- `Type`
+- `Elevations`
 
 ## Upload Worker Example
 

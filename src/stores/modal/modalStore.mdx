@@ -1,0 +1,179 @@
+import {Meta, Unstyled} from '@storybook/addon-docs/blocks';
+import {RenderSource} from '../../../documentation/_components/RenderSource/RenderSource';
+import {FlexDiv} from '../../components/FlexDiv';
+import NoteSection from "../../../documentation/_components/Notice/Notice";
+
+<Meta title="Stores/Modal Store" />
+
+<FlexDiv width={"fill"} height={"fill"} align={"center"}>
+    <FlexDiv width={"fill"} maxWidth={760} height={"auto"}>
+        <Unstyled>
+        <NoteSection>
+            Slice stores uses a module-level singleton pattern: each store is created once when the module is loaded - every import of the module shares the same store instance.
+        </NoteSection>
+
+        # ModalStore
+        Global modal orchestration helpers built with Zustand. The store tracks one active modal at a time and supports both immediate show or hide flows and promise-based modal responses.
+
+        ## React exports (reactive)
+        React exports are reactive subscriptions for components updating automatically as state changes.
+        <table style={{width: '100%'}}>
+          <colgroup>
+            <col style={{width: '1%'}} />
+            <col style={{width: '25%'}} />
+            <col style={{width: '98%'}} />
+          </colgroup>
+          <thead>
+            <tr>
+              <th className={"left"}>Export</th>
+              <th className={"left"}>Type</th>
+              <th className={"left"}>Description</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td><code>useModalStore</code></td><td><code>Zustand store hook</code></td><td>Main store hook for selector-based subscriptions.</td></tr>
+            <tr><td><code>useModal</code></td><td><code>{`() => ActiveModal | null`}</code></td><td>Atomic hook selecting only the current active modal.</td></tr>
+            <tr><td><code>useModalActions</code></td><td><code>{`() => actions`}</code></td><td>Hook selecting only modal store actions.</td></tr>
+          </tbody>
+        </table>
+
+        ## Imperative exports (non-reactive)
+        These APIs call the same singleton store instance directly. Use them in utility modules, async services, and event handlers where hooks are not allowed.
+        <table style={{width: '100%'}}>
+          <colgroup>
+            <col style={{width: '1%'}} />
+            <col style={{width: '25%'}} />
+            <col style={{width: '98%'}} />
+          </colgroup>
+          <thead>
+            <tr>
+              <th className={"left"}>Export</th>
+              <th className={"left"}>Type</th>
+              <th className={"left"}>Description</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td><code>modalActions</code></td><td><code>{`{ show, modalResponse, hide, resolve, reject, clear }`}</code></td><td>Imperative actions for non-React code paths.</td></tr>
+            <tr><td><code>getModal</code></td><td><code>{`() => ActiveModal | null`}</code></td><td>Imperative snapshot read from current store state.</td></tr>
+          </tbody>
+        </table>
+
+        ## Actions
+        Use `show()` for fire-and-forget display and `modalResponse()` when the caller should await the result. Explicit button choices should resolve. Dismissal, closing, or clearing should reject.
+
+        <table style={{width: '100%'}}>
+          <colgroup>
+            <col style={{width: '1%'}} />
+            <col style={{width: '25%'}} />
+            <col style={{width: '98%'}} />
+          </colgroup>
+          <thead>
+            <tr>
+              <th className={"left"}>Action</th>
+              <th className={"left"}>Type</th>
+              <th className={"left"}>Description</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td><code>show</code></td><td><code>{`(modal: ModalDescriptor | null) => void`}</code></td><td>Displays a modal without returning a promise.</td></tr>
+            <tr><td><code>modalResponse</code></td><td><code>{`<TResult>(modal: ModalDescriptor) => Promise<TResult | undefined>`}</code></td><td>Displays a modal and resolves with an explicit user choice or rejects when the modal is dismissed.</td></tr>
+            <tr><td><code>hide</code></td><td><code>{`(reason?: unknown) => void`}</code></td><td>Dismisses the active modal and rejects any pending promise.</td></tr>
+            <tr><td><code>resolve</code></td><td><code>{`<TResult>(value?: TResult) => void`}</code></td><td>Resolves the active modal promise and clears the modal.</td></tr>
+            <tr><td><code>reject</code></td><td><code>{`(reason?: unknown) => void`}</code></td><td>Rejects the active modal promise and clears the modal.</td></tr>
+            <tr><td><code>clear</code></td><td><code>{`() => void`}</code></td><td>Hard-clears the active modal and rejects any pending promise.</td></tr>
+          </tbody>
+        </table>
+
+        ## Atomic selectors in React
+        Use focused selectors so components only re-render when their selected slice changes.
+
+        <RenderSource language={"tsx"}>
+        ```
+        import { useModal, useModalActions } from '@apple-pie/slice/stores/modal';
+        import { Button, Modal } from '@apple-pie/slice';
+        
+        function ModalLauncher() {
+            const modal = useModal();
+            const actions = useModalActions();
+        
+            return (
+                <Button
+                    onClick={() =>
+                        actions.show({
+                            component: Modal,
+                            props: {
+                                title: 'Confirmation',
+                                children: 'Continue?',
+                            },
+                        })
+                    }
+                >
+                    {modal ? 'Modal Open' : 'Open Modal'}
+                </Button>
+            );
+        }
+        ```
+        </RenderSource>
+
+        ## Promise-based modal response
+        Use `modalResponse()` when callers should await the user's choice. Handle dismissal with `catch`.
+
+        <RenderSource language={"tsx"}>
+        ```
+        import { useModalActions } from '@apple-pie/slice/stores/modal';
+        import { Modal } from '@apple-pie/slice';
+        
+        function ConfirmButton() {
+            const actions = useModalActions();
+        
+            const handleClick = async () => {
+                try {
+                    const result = await actions.modalResponse<string>({
+                        component: Modal,
+                        props: {
+                            title: 'Delete item?',
+                            children: 'This action cannot be undone.',
+                            actions: [
+                                { id: 'cancel', label: 'Cancel', value: 'cancel' },
+                                { id: 'delete', label: 'Delete', value: 'delete', primary: true },
+                            ],
+                        },
+                    });
+            
+                    console.log(result);
+                } catch (error) {
+                    console.error(error);
+                }
+            };
+        
+            return <button type="button" onClick={handleClick}>Delete</button>;
+        }
+        ```
+        </RenderSource>
+
+        ## Imperative usage outside React
+        These APIs are useful for non-component event handlers and services.
+
+        <RenderSource language={"tsx"}>
+        ```
+        import { Modal } from '@apple-pie/slice';
+        import { modalActions, getModal } from '@apple-pie/slice/stores/modal';
+        
+        export function openSettingsModal() {
+            modalActions.show({
+                component: Modal,
+                props: {
+                    title: 'Settings',
+                    children: 'Configure your preferences.',
+                },
+            });
+        }
+        
+        export function dismissActiveModal() {
+            if (getModal()) modalActions.clear();
+        }
+        ```
+        </RenderSource>
+        </Unstyled>
+    </FlexDiv>
+</FlexDiv>

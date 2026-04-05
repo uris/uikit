@@ -44,7 +44,7 @@ export const Default: StoryObj<typeof RadioButton> = {
 				<RadioButton<RadioValue>
 					{...args}
 					value={value}
-					onChange={(o, s) => console.log(o.value?.name, s)}
+					onChange={args.onChange}
 				/>
 			</FlexDiv>
 		);

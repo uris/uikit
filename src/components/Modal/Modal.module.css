@@ -1,0 +1,113 @@
+.wrapper {
+	position: relative;
+	composes: columnBetween from "../../utils/styling/flexBox.module.css";
+	min-width: var(--modal-min-width);
+	min-height: var(--modal-min-height);
+	max-height: var(--modal-max-height);
+	max-width: var(--modal-max-width);
+	background: var(--modal-background-color);
+	border: var(--modal-border-width) solid var(--modal-border-color);
+	border-radius: var(--modal-border-radius);
+	box-shadow: var(--surface-shadow-soft);
+	overflow: hidden;
+}
+
+.title {
+	composes: rowBetween from "../../utils/styling/flexBox.module.css";
+	width: 100%;
+	padding: var(--modal-padding);
+	gap: 16px;
+	border-bottom: var(--modal-title-border-width) solid
+		var(--modal-title-border-color);
+}
+
+.titleBlock {
+	composes: rowStart from "../../utils/styling/flexBox.module.css";
+	color: var(--modal-title-color);
+	flex: 1;
+	gap: 6px;
+	touch-action: none;
+	user-select: none;
+	-webkit-user-select: none;
+}
+
+.titleIcon {
+	composes: row from "../../utils/styling/flexBox.module.css";
+	height: 20px;
+	width: 20px;
+	min-height: 20px;
+	min-width: 20px;
+	user-select: none;
+	-webkit-user-select: none;
+}
+
+.content {
+	composes: columnStart from "../../utils/styling/flexBox.module.css";
+	width: 100%;
+	flex: 1;
+	padding-right: var(--modal-padding);
+	padding-left: var(--modal-padding);
+	overflow: hidden;
+	overflow-y: auto;
+	&::-webkit-scrollbar {
+		background-color: var(--modal-background);
+		width: 6px;
+	}
+
+	&::-webkit-scrollbar-track {
+		background-color: var(--modal-background);
+		width: 6px;
+	}
+
+	&::-webkit-scrollbar-thumb {
+		background-color: var(--modal-scroll-handle);
+		border-radius: 20px;
+		border: 1px solid var(--modal-background);
+	}
+
+	&::-webkit-scrollbar-thumb:hover {
+		background-color: var(--modal-scroll-handle-hover);
+		border-radius: 20px;
+		border: 1px solid var(--modal-background);
+	}
+}
+
+.actions {
+	composes: rowBetween from "../../utils/styling/flexBox.module.css";
+	width: 100%;
+	padding: var(--modal-padding);
+	user-select: none;
+	-webkit-user-select: none;
+	border-top: var(--modal-actions-border-width) solid
+		var(--modal-actions-border-color);
+}
+
+.leftActions {
+	composes: rowStart from "../../utils/styling/flexBox.module.css";
+	gap: 8px;
+}
+
+.rightActions {
+	composes: rowEnd from "../../utils/styling/flexBox.module.css";
+	gap: 8px;
+}
+
+.xs {
+	composes: body-xs-medium from "../../utils/styling/type.module.css";
+}
+
+.s {
+	composes: body-s-medium from "../../utils/styling/type.module.css";
+}
+
+.m {
+	composes: body-m-medium from "../../utils/styling/type.module.css";
+}
+
+.l {
+	composes: body-l-medium from "../../utils/styling/type.module.css";
+}
+
+.xl {
+	composes: body-xl-medium from "../../utils/styling/type.module.css";
+}

@@ -21,6 +21,7 @@ const meta: Meta<typeof Toast> = {
 		padding: undefined,
 		offset: undefined,
 		position: 'bottom',
+		progress: undefined,
 		size: 'm',
 		close: true,
 		type: ToastType.Info,
@@ -37,7 +38,7 @@ export const Demo: StoryObj<typeof Toast> = {
 		const handleToast = (message?: string | null) => {
 			const notification = {
 				message: message ?? null,
-				duration: 5000,
+				duration: args.duration ?? 5000,
 			};
 			toastActions.push(notification);
 		};

@@ -1,4 +1,5 @@
 export * from './LocalDB';
+export * from './modal';
 export * from './microphone';
 export * from './SSE';
 export * from './toast';

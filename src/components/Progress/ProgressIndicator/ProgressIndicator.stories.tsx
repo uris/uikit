@@ -8,7 +8,8 @@ const meta: Meta<typeof ProgressIndicator> = {
 	title: 'Components/ProgressIndicator',
 	component: ProgressIndicator,
 	args: {
-		size: 20,
+		size: '100%',
+		inset: true,
 		secondsPerSpin: 1,
 		show: true,
 		color: undefined,
@@ -25,7 +26,7 @@ export default meta;
 export const Default: StoryObj<typeof ProgressIndicator> = {
 	render: (args) => {
 		return (
-			<FlexDiv absolute justify={'center'} align={'center'} padding={64}>
+			<FlexDiv absolute justify={'center'} align={'center'} padding={0}>
 				<ProgressIndicator {...args} />
 			</FlexDiv>
 		);

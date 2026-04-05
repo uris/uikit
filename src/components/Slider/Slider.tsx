@@ -105,9 +105,6 @@ export const Slider = React.memo((props: SliderProps) => {
 			if (!ref?.current) return;
 			const sliderWidth = ref.current.getBoundingClientRect().width;
 			const adjustedCurrent = clampValue(current);
-			if (adjustedCurrent !== current) {
-				console.warn('Slider outside range. Adjusted to nearest bound.');
-			}
 			const normalized = valueToPercent(adjustedCurrent);
 			const pixelPos = normalized * sliderWidth;
 			absProgressRef.current = adjustedCurrent; // updated the progress value
@@ -375,8 +372,6 @@ export const Slider = React.memo((props: SliderProps) => {
 		disabled,
 		disabledOpacity,
 	]);
-
-	console.log('Slider', setHeadBorder);
 
 	/* START.DEBUG */
 	useTrackRenders({ ...props, sizeObserver: size }, 'Slider');

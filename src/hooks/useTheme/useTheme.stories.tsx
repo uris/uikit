@@ -6,7 +6,6 @@ import { useTheme } from './useTheme';
 
 function UseThemeDemo() {
 	const theme = useTheme();
-	console.log('Theme colors:', theme.current);
 
 	return (
 		<FlexDiv

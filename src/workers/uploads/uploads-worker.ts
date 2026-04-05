@@ -252,7 +252,6 @@ export class UploadsWorker {
 					upload.error = message;
 					break;
 				default:
-					console.warn(error);
 					upload.error = UploadError.Other;
 					break;
 			}

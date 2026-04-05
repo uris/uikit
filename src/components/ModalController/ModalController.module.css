@@ -1,0 +1,5 @@
+.wrapper {
+	position: absolute;
+	composes: row from "../../utils/styling/flexBox.module.css";
+	z-index: var(--elevation-confirm);
+}

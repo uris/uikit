@@ -91,6 +91,12 @@ export type { GrouperProps } from './components/Grouper';
 export { Overlay } from './components/Overlay';
 export type { OverlayProps } from './components/Overlay';
 
+export { Modal } from './components/Modal';
+export type { ModalAction, ModalProps } from './components/Modal';
+
+export { ModalController } from './components/ModalController';
+export type { ModalControllerProps } from './components/ModalController';
+
 export { FlexDiv, Size, Preset } from './components/FlexDiv';
 export type { FlexDivProps } from './components/FlexDiv';
 

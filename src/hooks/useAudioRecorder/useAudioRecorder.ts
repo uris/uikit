@@ -143,7 +143,6 @@ export function useAudioRecorder(
 			mediaRecorder.start(250);
 			setIsRecording(true);
 		} catch (error) {
-			console.error('Error recording audio:', error);
 			setError(error instanceof Error ? error : new Error('Unknown error'));
 			setIsRecording(false);
 		}
@@ -164,7 +163,6 @@ export function useAudioRecorder(
 				mediaRecorder.stop();
 			});
 		} catch (error) {
-			console.error('Error stopping recording:', error);
 			setError(error instanceof Error ? error : new Error('Unknown error'));
 			setIsRecording(false);
 			return null;

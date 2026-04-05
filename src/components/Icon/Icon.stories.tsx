@@ -19,7 +19,7 @@ const meta: Meta<typeof Icon> = {
 		name: 'home',
 		size: 20,
 		stroke: 1.5,
-		fillColor: 'transparent',
+		fillColor: undefined,
 		strokeColor: undefined,
 		toggle: false,
 		pointer: true,
