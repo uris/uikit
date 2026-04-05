@@ -23,6 +23,7 @@ const BaseModal = <T = string>(props: ModalProps<T>) => {
 		contentSize = 'm',
 		actions,
 		titleIcon,
+		titleIconFill = true,
 		titleBorderColor = 'var(--core-outline-primary)',
 		titleBorderWidth = 0,
 		actionsBorderColor = 'var(--core-outline-primary)',
@@ -108,6 +109,7 @@ const BaseModal = <T = string>(props: ModalProps<T>) => {
 					onClick={(e) => handleAction(action)}
 					round={action.round === true}
 					iconLeft={action.iconLeft}
+					iconRight={action.iconRight}
 					tooltip={action.tooltip}
 					onToolTip={(tip) => onToolTip?.(tip)}
 				/>
@@ -127,7 +129,7 @@ const BaseModal = <T = string>(props: ModalProps<T>) => {
 					<div className={css.titleBlock} onPointerDown={onDragPointerDown}>
 						{titleIcon && (
 							<div className={css.titleIcon}>
-								<Icon name={titleIcon} size={20} />
+								<Icon name={titleIcon} fill={titleIconFill} size={20} />
 							</div>
 						)}
 						{title}

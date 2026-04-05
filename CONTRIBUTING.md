@@ -45,7 +45,9 @@ npm run lint
 - Put Storybook examples in `*.stories.ts(x)` or `documentation/**`.
 - Do not import story files into production source. That can leak story typings into `dist/types`.
 - If you add a new package subpath, update both Rollup entry discovery and `package.json` `exports`.
-- Preserve CSS side effects for imported styles unless you are intentionally redesigning the packaging model.
+- Keep package stylesheet behavior intentional. Public theme and base styles are published through `@apple-pie/slice/styles.css`, which is built from `src/theme.css`.
+- `ThemeProvider` manages theme state and document attributes. It does not bootstrap theme CSS by itself.
+- If you move or rename public CSS files, update `src/theme.css`, the build pipeline, `package.json` `exports`, and public usage docs in the same change.
 
 ## Build and Package Validation
 
@@ -54,7 +56,8 @@ Before opening a PR or publishing:
 1. Run `npm run build`.
 2. Run `npm pack --dry-run`.
 3. Verify the new or changed API appears under `dist/cjs`, `dist/esm`, and `dist/types`.
-4. Verify Storybook files do not appear in `dist/types`.
+4. Verify `dist/styles.css` contains the expected shared theme or component styles when CSS output changed.
+5. Verify Storybook files do not appear in `dist/types`.
 
 Build architecture details: [contributor-docs/build-architecture.md](./contributor-docs/build-architecture.md)
 

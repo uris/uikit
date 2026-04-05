@@ -27,6 +27,7 @@ npm install zustand
 ## Quick Start
 
 ```tsx
+import '@apple-pie/slice/styles.css';
 import { Avatar, Button, ThemeProvider, useTheme } from '@apple-pie/slice';
 
 function ThemeToggle() {
@@ -50,7 +51,15 @@ export default function App() {
 }
 ```
 
-`ThemeProvider` is the default theme bootstrap for the library. It sets the active `data-slice-theme` value on the document root, renders a `data-slice-theme-scope` wrapper, and pulls in the packaged theme CSS token files used by components and Storybook. When `global` is enabled, it also applies the active theme's `core-surface-primary` color to the root document element and `document.body` backgrounds. In Safari, this also drives the browser header color.
+Slice styles are loaded from `@apple-pie/slice/styles.css`.
+
+Slice uses Funnel Sans as its default typeface. Load the font in your app so the theme typography renders correctly.
+
+```css
+@import url("https://fonts.googleapis.com/css2?family=Funnel+Sans:ital,wght@0,300..800;1,300..800&display=swap");
+```
+
+`ThemeProvider` is the default theme bootstrap for the library. It sets the active `data-slice-theme` value on the document root and renders a `data-slice-theme-scope` wrapper. When `global` is enabled, it also applies the active theme's `core-surface-primary` color to the root document element and `document.body` backgrounds. In Safari, this also drives the browser header color.
 
 ## Modal System
 

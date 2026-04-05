@@ -1,7 +1,9 @@
-@import url("https://fonts.googleapis.com/css2?family=Funnel+Sans:ital,wght@0,300..800;1,300..800&display=swap");
+:root {
+	--slice-font-family: "Funnel Sans";
+}
 
 [data-slice-theme-scope] {
-	--font-family: "Funnel Sans";
+	--font-family: var(--slice-font-family, "Funnel Sans");
 	--font-weight-regular: 360;
 	--font-weight-medium: 420;
 	--font-weight-bold: 480;

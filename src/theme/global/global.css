@@ -4,9 +4,9 @@
 	/* remove gaps */
 	margin: 0;
 	padding: 0;
-	/* base medium body font style with pref. for theme google font */
-	font-family: "Funnel Sans", -apple-system, BlinkMacSystemFont, "Segoe UI",
-		Roboto, Helvetica, Arial, sans-serif;
+	/* base medium body font style */
+	font-family: var(--slice-font-family, "Funnel Sans"), -apple-system,
+		BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
 	font-weight: 360;
 	font-size: 15px;
 	line-height: 140%;

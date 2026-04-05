@@ -2,12 +2,6 @@
 
 import type React from 'react';
 import { createContext, useContext, useEffect, useMemo, useState } from 'react';
-import '../theme/colors/colors.css';
-import '../theme/elevations/elevation.css';
-import '../theme/type/type.css';
-import '../theme/breakpoints/custom-media.css';
-import '../theme/motion/motion.css';
-import '../theme/global/global.css';
 import { type SliceTheme, darkTheme, lightTheme } from '../theme';
 
 interface ThemeProviderProps {

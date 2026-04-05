@@ -162,7 +162,13 @@ const rollup = async () => {
 				tsconfig: './tsconfig.rollup.json',
 				exclude: ['documentation/**', '**/*.stories.ts', '**/*.stories.tsx'],
 			}),
-			postcss(),
+			postcss({
+				extract: 'styles.css',
+				inject: false,
+				config: {
+					path: path.resolve('postcss.config.cjs'),
+				},
+			}),
 			svgr({
 				icon: true, // Optimize for icon size
 				svgo: true, // Enable SVGO for optimizing SVGs

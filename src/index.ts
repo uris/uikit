@@ -1,3 +1,5 @@
+import './theme.css';
+
 export type { ToolTip, ToolTipInfo } from './components/sharedTypes';
 export { ToolTipType } from './components/sharedTypes';
 

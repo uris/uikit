@@ -9,7 +9,7 @@ import {RenderSource} from "./_components/RenderSource/RenderSource";
     <FlexDiv width={"fill"} maxWidth={760} height={"auto"}>
         <Unstyled>
             # Quick Start
-            Slice ships with a light and dark theme. To get set up, install Slice, wrap your app with the theme provider and use the included components.
+            Slice ships with a light and dark theme. To get set up, install Slice, import the packaged stylesheet at your app root, wrap your app with the theme provider and use the included components.
             The built in `useTheme` hook also allows you to easily extend the theme to your own components/app.
             
             #### 1. Install Slice and Motion
@@ -20,43 +20,61 @@ $ npm install @apple-pie/slice motion/react
         
 </RenderSource>
         <Unstyled>
-            #### 2. Wrap your app with the theme provider
+            #### 2. Import Slice styles at your app root
+            Import Slice's packaged stylesheet once at your application root so theme tokens and component styles are available before hydration.
+        </Unstyled>
+        <RenderSource language='jsx'>
+        ```
+        import '@apple-pie/slice/styles.css';
+        ```
+        </RenderSource>
+        <Unstyled>
+            Note: Slice uses the "Funnel Sans" Google Font. Import it into your app using a font CSS file:
+        </Unstyled>
+        <RenderSource language='css'>
+        ```
+        @import url("https://fonts.googleapis.com/css2?family=Funnel+Sans:ital,wght@0,300..800;1,300..800&display=swap");
+        ```
+        </RenderSource>
+        <Unstyled>
+            #### 3. Wrap your app with the theme provider
             Wrap your app (or where you plan to use Slice) with Slice's `ThemeProvider`. Set `system` to `true` to have Slice automatically adopt the system color theme (dark / light mode). Set `global` to `true` if you also want Slice to apply the active `core-surface-primary` color to the root document element and `body` backgrounds. In Safari, this also drives the browser header color.
         </Unstyled>
         <RenderSource language='jsx'>
-```
-import { ThemeProvider } from '@apple-pie/slice';
-
-<ThemeProvider system={true} global={true}>
-    <App />
-</ThemeProvider>;
-```
-</RenderSource>
+        ```
+        import '@apple-pie/slice/styles.css';
+        import { ThemeProvider } from '@apple-pie/slice';
+        
+        <ThemeProvider system={true} global={true}>
+            <App />
+        </ThemeProvider>;
+        ```
+                </RenderSource>
+                <Unstyled>
+                    #### 4. Use Slice components.
+                    Use Slice components anywhere inside `<App />`.
+                </Unstyled>
+                <RenderSource language='jsx'>
+        ```
+        import { Avatar } from '@apple-pie/slice';
+        
+        export function UserProfile() {
+            return <Avatar size={32} first={'John'} last={'Appleseed'} />;
+        }
+        ```
+        </RenderSource>
         <Unstyled>
-            #### 3. Use Slice components.
-            Now you can and use Slice components anywhere inside `<App />`.
-        </Unstyled>
-        <RenderSource language='jsx'>
-```
-import { Avatar } from '@apple-pie/slice';
-
-export function UserProfile() {
-    return <Avatar size={32} first={'John'} last={'Appleseed'} />;
-}
-```
-</RenderSource>
-        <Unstyled>
-            #### 4. Using the Slice theme in your own components.
+            #### 5. Using the Slice theme in your own components.
             
             You can use Slice theme tokens directly in your component class names.
         </Unstyled>
         <RenderSource language='jsx'>
-```
-<a className="core-link-primary">
-    class names will be colored as "core-link-primary"
-</a>;
-```
-</RenderSource>
+        ```
+        <a className="core-link-primary">
+            class names will be colored as "core-link-primary"
+        </a>;
+        ```
+        </RenderSource>
         <Unstyled>
             You can also use the `useTheme` hook to grab the current theme and access tokens or values with InteliSense.
         </Unstyled>
@@ -79,7 +97,7 @@ export function MyComponent() {
             There are a few options to styling your own components including using `className` to set styles.
             [Learn more about the useTheme hook](/docs/hooks-usetheme--docs) in the hooks section.
             
-            #### 5. Toggle light / dark modes
+            #### 6. Toggle light / dark modes
             The useTheme hook allows you to toggle or set the current theme.
         </Unstyled>
         <RenderSource language='jsx'>

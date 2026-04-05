@@ -9,7 +9,8 @@ This document describes the current publish pipeline for `@apple-pie/slice` and 
 1. `prebuild`: `rm -rf dist`
 2. Rollup bundle build: `NODE_ENV=production rollup -c --bundleConfigAsCjs`
 3. Type declaration build: `tsc -p tsconfig.build.json`
-4. CSS copy step: `./scripts/copy-css.sh`
+4. Stylesheet finalize step: `node ./scripts/finalize-styles.mjs`
+5. CSS copy step: `./scripts/copy-css.sh`
 
 `npm run build:min` runs the same pipeline with `MINIFY=true`.
 
@@ -63,7 +64,7 @@ Entry naming conventions in output:
 Important plugin behavior:
 
 - `@rollup/plugin-typescript` uses `tsconfig.rollup.json` for transpile-only bundling
-- `rollup-plugin-postcss` turns CSS imports into runtime-injected styles
+- `rollup-plugin-postcss` extracts imported CSS into `dist/{esm,cjs}/styles.css`
 - `@svgr/rollup` handles SVG React imports
 - `@rollup/plugin-url` emits SVG, PNG, JPG, and GIF assets into `dist/**/assets`
 - `rollup-plugin-peer-deps-external` keeps peer deps external
@@ -100,7 +101,29 @@ Important note:
 
 - Story files stay out of the published type tree only if production source files do not import them. If a source file imports a story file, TypeScript will still pull that story into the declaration graph.
 
-## Stage 3: CSS Copy
+## Stage 3: Stylesheet Finalization
+
+Script: `scripts/finalize-styles.mjs`
+
+Rollup extracts CSS for both module formats into:
+
+- `dist/esm/styles.css`
+- `dist/cjs/styles.css`
+
+The finalize step:
+
+- reads the extracted ESM and CJS stylesheets
+- verifies they match when both exist
+- writes the package-level stylesheet to `dist/styles.css`
+- removes the format-specific temporary stylesheet copies
+
+Published consumers import the package stylesheet through:
+
+- `@apple-pie/slice/styles.css`
+
+That export is defined in `package.json` as `./styles.css`.
+
+## Stage 4: CSS Copy
 
 Script: `scripts/copy-css.sh`
 
@@ -111,19 +134,24 @@ Copied files:
 
 ## Theme CSS Bootstrap
 
-`ThemeProvider` in `src/providers/ThemeProvider.tsx` is also a styling entrypoint.
+`src/theme.css` is the package stylesheet entrypoint.
 
-It imports these theme foundation files for side effects:
+It imports these theme foundation files:
 
 - `src/theme/colors/colors.css`
 - `src/theme/elevations/elevation.css`
 - `src/theme/type/type.css`
 - `src/theme/breakpoints/custom-media.css`
 - `src/theme/motion/motion.css`
+- `src/theme/global/global.css`
 
-Those imports are required for theme CSS variables, typography classes, custom media aliases, motion tokens, and elevation tokens to exist at runtime. The provider does not only set `document.documentElement.dataset.sliceTheme`; it also renders a `data-slice-theme-scope` wrapper and ensures the underlying CSS token files are included in the bundle.
+`src/index.ts` imports `src/theme.css`, so the package root bundle participates in stylesheet extraction during the build.
 
-If those imports are removed, theming may appear to "work" from React state while Storybook or consuming apps fail at runtime because the CSS variables and utility classes are missing.
+Those imports are required for theme CSS variables, typography classes, custom media aliases, motion tokens, global body styles, and elevation tokens to exist at runtime.
+
+`ThemeProvider` in `src/providers/ThemeProvider.tsx` manages theme state, document attributes, cookies, and the `data-slice-theme-scope` wrapper. It does not import the theme foundation CSS files.
+
+If the stylesheet entrypoint or those imports are removed, theming may appear to work from React state while consuming apps fail at runtime because the CSS variables and utility classes are missing.
 
 ## Published Package Contract
 
@@ -140,6 +168,9 @@ Top-level fields:
 Published export map:
 
 - `.`
+- `./styles.css`
+- `./css/flexBox.module.css`
+- `./css/type.module.css`
 - `./components/*`
 - `./hooks`
 - `./hooks/*`
@@ -167,6 +198,7 @@ import { useTheme } from '@apple-pie/slice/hooks/useTheme';
 import { ThemeProvider } from '@apple-pie/slice/providers/ThemeProvider';
 import { useUploadsActions } from '@apple-pie/slice/stores/uploads';
 import uploadsWorkerUrl from '@apple-pie/slice/workers/uploads/uploads?url';
+import '@apple-pie/slice/styles.css';
 import { lightTheme } from '@apple-pie/slice/theme/themes';
 import { IndexedDB } from '@apple-pie/slice/utils/objects';
 ```
@@ -207,8 +239,9 @@ For a new provider:
 
 For `ThemeProvider` specifically:
 
-1. Keep the theme CSS side-effect imports in place unless the styling bootstrap is intentionally moved elsewhere.
-2. If you move that bootstrap, update both this document and the README usage guidance.
+1. Keep the provider focused on theme state and document synchronization.
+2. Keep stylesheet bootstrapping in `src/theme.css` unless the public styling entrypoint is intentionally redesigned.
+3. If you move that bootstrap, update this document, `package.json` exports, and the README or quick start usage guidance.
 
 ### Stores
 

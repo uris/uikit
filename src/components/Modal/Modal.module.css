@@ -14,8 +14,8 @@
 
 .title {
 	composes: rowBetween from "../../utils/styling/flexBox.module.css";
+	padding: var(--modal-padding) !important;
 	width: 100%;
-	padding: var(--modal-padding);
 	gap: 16px;
 	border-bottom: var(--modal-title-border-width) solid
 		var(--modal-title-border-color);
@@ -43,10 +43,10 @@
 
 .content {
 	composes: columnStart from "../../utils/styling/flexBox.module.css";
+	padding-right: var(--modal-padding) !important;
+	padding-left: var(--modal-padding) !important;
 	width: 100%;
 	flex: 1;
-	padding-right: var(--modal-padding);
-	padding-left: var(--modal-padding);
 	overflow: hidden;
 	overflow-y: auto;
 	&::-webkit-scrollbar {
@@ -74,8 +74,8 @@
 
 .actions {
 	composes: rowBetween from "../../utils/styling/flexBox.module.css";
+	padding: var(--modal-padding) !important;
 	width: 100%;
-	padding: var(--modal-padding);
 	user-select: none;
 	-webkit-user-select: none;
 	border-top: var(--modal-actions-border-width) solid

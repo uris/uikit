@@ -2,7 +2,7 @@ import type React from 'react';
 import type { Type } from './types';
 
 // base family
-const fontFamily = `"Funnel Sans"`;
+const fontFamily = `var(--slice-font-family, "Funnel Sans")`;
 
 // base weights
 const fontWeights = {

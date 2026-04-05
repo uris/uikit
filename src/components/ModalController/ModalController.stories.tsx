@@ -4,7 +4,7 @@ import { FlexDiv } from 'src/components/FlexDiv/FlexDiv';
 import { ModalController } from 'src/components/ModalController/ModalController';
 import { useModalActions } from '../../stores';
 import { Button } from '../Button';
-import { Modal } from '../Modal/Modal';
+import { Modal } from '../Modal';
 import type { ModalAction, ModalProps } from '../Modal/_types';
 
 type DemoModalType = { modalId: string; data: string };

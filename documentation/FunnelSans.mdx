@@ -1,6 +1,7 @@
 import {Meta, Unstyled} from '@storybook/addon-docs/blocks';
 import {FlexDiv, Spacer} from "../src";
 import {FunnelSans} from "./_components/FunnelSans/FunnelSans";
+import {RenderSource} from "./_components/RenderSource/RenderSource";
 
 <Meta title="Typography/Funnel Sans" />
 
@@ -10,7 +11,7 @@ import {FunnelSans} from "./_components/FunnelSans/FunnelSans";
             # Funnel Sans
             [Funnel Sans](https://fonts.google.com/specimen/Funnel+Sans/about?query=funnel+sans) is a modern, variable weight, sans-serif typefaces with both clarity and character, originally developed by [NORD ID](https://fonts.google.com/?query=NORD%20ID) and [Kristian Möller](https://fonts.google.com/?query=Kristian%20Möller) for Funnel. The typefaces are inspired by the movement and shapes of data points.
 
-            Funnel Sans is a functional yet personal sans-serif, featuring both square and circular shapes in its letterforms. It's legibility and clarity in all sizes, together with it's character, gives experiences a unique and personal touch. 
+            Funnel Sans is a functional yet personal sans-serif, featuring both square and circular shapes in its letterforms. It's legibility and clarity in all sizes, together with it's character, gives experiences a unique and personal touch.
             
             <FunnelSans />
             
@@ -21,6 +22,16 @@ import {FunnelSans} from "./_components/FunnelSans/FunnelSans";
             Funnel Sans is licensed under the [Open Font License](https://scripts.sil.org/cms/scripts/page.php?site_id=nrsi&id=OFL).
             You can use them in your products & projects – print or digital, commercial or otherwise.
             This isn't legal advice, please consider consulting a lawyer and see the full license for all details.
+
+            #### Using a Custom Font
+            Slice typography uses the `--slice-font-family` CSS variable. If your app needs a different font, load it in the app and set that variable at the root. Funnel Sans remains the default.
+            <RenderSource language='css'>
+                ```
+                :root {
+                --slice-font-family: "Inter";
+            }
+                ```
+            </RenderSource>
         </Unstyled>
         <Spacer size={64}/>
     </FlexDiv>
