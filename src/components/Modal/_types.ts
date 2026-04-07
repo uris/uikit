@@ -37,6 +37,9 @@ type ModalBaseProps<T = string> = {
 	actions?: ModalAction<T>[];
 	actionsBorderColor?: string;
 	actionsBorderWidth?: number;
+	autoBorderBottom?: boolean;
+	scrollHandleColor?: string;
+	scrollHandleColorHover?: string;
 	onAction?: (value?: T) => void;
 	onResolve?: (value?: T) => void;
 	onReject?: (value?: Error) => void;

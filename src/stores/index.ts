@@ -6,4 +6,5 @@ export * from './toast';
 export * from './tip';
 export * from './uploads';
 export * from './volume';
+export * from './WebRTC';
 export * from './window';

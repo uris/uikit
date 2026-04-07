@@ -34,7 +34,7 @@ import {Spacer} from '../../components/Spacer';
             </tr>
           </thead>
           <tbody>
-            <tr><td><code>theme</code></td><td><code>SliceTheme</code></td><td><code>lightTheme</code></td><td>Current observed theme from <code>data-slice-theme</code>. On the first render, this hook uses the <code>initialTheme</code> provided by <code>ThemeProvider</code>; it only falls back to <code>lightTheme</code> when no startup theme is available.</td></tr>
+            <tr><td><code>theme</code></td><td><code>SliceTheme</code></td><td><code>darkTheme</code></td><td>Current observed theme from <code>data-slice-theme</code>. On the first render, this hook uses the <code>initialTheme</code> provided by <code>ThemeProvider</code>; it only falls back to <code>darkTheme</code> when no startup theme is available.</td></tr>
           </tbody>
         </table>
 
@@ -53,7 +53,7 @@ import {Spacer} from '../../components/Spacer';
         </RenderSource>
     
         ## SSR Notes
-        This hook reads the startup theme from `ThemeProvider`'s internal context before it begins observing the DOM, which keeps server-rendered and hydrated output aligned. Learn more about [Slice's ThemeServer](/docs/providers-themeserver-ssr--docs).
+        This hook reads the startup theme from `ThemeProvider`'s internal context before it begins observing the DOM, which keeps server-rendered and hydrated output aligned. Pair it with `ThemeProvider` startup props such as `initialTheme` and `initialSystem` when using SSR. Learn more about [Slice's ThemeServer](/docs/providers-themeserver-ssr--docs).
         </Unstyled>
         <Spacer size={64} />
     </FlexDiv>

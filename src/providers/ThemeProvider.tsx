@@ -8,6 +8,7 @@ interface ThemeProviderProps {
 	children?: React.ReactNode;
 	theme?: string;
 	initialTheme?: string;
+	initialSystem?: boolean;
 	system?: boolean;
 	global?: boolean;
 }
@@ -19,7 +20,7 @@ type ThemeContextValue = {
 };
 
 const ThemeContext = createContext<ThemeContextValue>({
-	initialTheme: lightTheme.name,
+	initialTheme: darkTheme.name,
 	systemTheme: true,
 	setSystemTheme: () => undefined,
 });
@@ -57,18 +58,22 @@ function setDocumentTheme(name: string, system: boolean) {
 }
 
 export function ThemeProvider(props: Readonly<ThemeProviderProps>) {
-	const { children, theme, system, global, initialTheme } = props;
-	const [systemTheme, setSystemTheme] = useState<boolean>(system ?? true);
+	const { children, theme, system, global, initialTheme, initialSystem } =
+		props;
+	const [systemTheme, setSystemTheme] = useState<boolean>(
+		system ?? initialSystem ?? true,
+	);
 
 	// keep local system-theme state aligned with controlled provider props
 	useEffect(() => {
-		setSystemTheme(system ?? true);
+		if (system === undefined) return;
+		setSystemTheme(system);
 	}, [system]);
 
 	// memo provider context value
 	const contextValue = useMemo(() => {
 		return {
-			initialTheme: initialTheme ?? lightTheme.name,
+			initialTheme: initialTheme ?? darkTheme.name,
 			systemTheme,
 			setSystemTheme,
 		};

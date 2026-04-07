@@ -1,6 +1,7 @@
 import type { ToastType } from '../../components/Toast';
 
 export type Toast = {
+	notifId?: string;
 	message: string | null;
 	duration?: number | 'Infinite';
 	type?: ToastType;

@@ -26,3 +26,5 @@ export type {
 	UnifiedMessageEvent,
 	WSConnectionOptions,
 } from './WSConnection/WSConnection';
+export { WebRTCConnection } from './WebRTCConnection/WebRTCConnection';
+export type { WebRTCConnectionOptions } from './WebRTCConnection/_types';

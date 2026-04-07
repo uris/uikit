@@ -16,6 +16,8 @@ import Notice from '../../../documentation/_components/Notice/Notice';
         # MicrophoneStore
         Global microphone state helpers built with Zustand. Mirrors a live `useMicrophone()` instance into a module-level singleton store and exposes atomic selector hooks plus imperative actions, including the processed microphone stream and input gain controls.
 
+        The imperative `microphoneActions` export is live. Each call resolves the current store actions at call time, so non-React code can safely call helpers like `microphoneActions.requestMicrophone()` after a `useMicrophone()` instance has been synced into the store.
+
         ## React exports (reactive)
         <table style={{width: '100%'}}>
           <colgroup>
@@ -37,6 +39,7 @@ import Notice from '../../../documentation/_components/Notice/Notice';
             <tr><td><code>useProcessedMicStream</code></td><td><code>{`() => RefObject<MediaStream | null>`}</code></td><td>Atomic selector for the processed microphone stream ref.</td></tr>
             <tr><td><code>useMicTrack</code></td><td><code>{`() => RefObject<MediaStreamTrack | null>`}</code></td><td>Atomic selector for the live track ref.</td></tr>
             <tr><td><code>useCurrentMicDeviceId</code></td><td><code>{`() => string | null`}</code></td><td>Atomic selector for the currently active microphone device id when known.</td></tr>
+            <tr><td><code>useCurrentMicDeviceLabel</code></td><td><code>{`() => string | null`}</code></td><td>Atomic selector for the label of the currently active microphone device when known.</td></tr>
             <tr><td><code>useMicActive</code></td><td><code>{`() => boolean`}</code></td><td>Atomic selector for whether a live microphone stream is currently active.</td></tr>
             <tr><td><code>useMicInputVolume</code></td><td><code>{`() => number`}</code></td><td>Atomic selector for the current processed microphone input volume between <code>0</code> and <code>1</code>.</td></tr>
             <tr><td><code>useMicMuted</code></td><td><code>{`() => boolean`}</code></td><td>Atomic selector for mute state.</td></tr>
@@ -64,10 +67,32 @@ import Notice from '../../../documentation/_components/Notice/Notice';
             </tr>
           </thead>
           <tbody>
-            <tr><td><code>microphoneActions</code></td><td><code>actions</code></td><td>Imperative global actions for non-React code paths.</td></tr>
+            <tr><td><code>microphoneActions</code></td><td><code>actions</code></td><td>Imperative global actions for non-React code paths. This export reads the latest bound store actions each time it is called.</td></tr>
             <tr><td><code>getMicrophoneState</code></td><td><code>{`() => MicrophoneStore`}</code></td><td>Imperative snapshot read of the current store state.</td></tr>
+            <tr><td><code>getCurrentMicDeviceLabel</code></td><td><code>{`() => string | null`}</code></td><td>Imperative helper that returns the currently selected microphone label when available.</td></tr>
           </tbody>
         </table>
+
+        ## Imperative example
+        </Unstyled>
+
+        <RenderSource language={"tsx"}>
+        {`
+        import { microphoneActions } from '@apple-pie/slice/stores/microphone';
+
+        async function requestMicAccess() {
+            const microphone = await microphoneActions.requestMicrophone();
+
+            if (!microphone) {
+                return { success: false, error: 'Failed to access microphone' };
+            }
+
+            return { success: true, data: { microphone } };
+        }
+        `}
+        </RenderSource>
+
+        <Unstyled>
 
         ## Example
         </Unstyled>

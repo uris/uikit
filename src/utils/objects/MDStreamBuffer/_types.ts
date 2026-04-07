@@ -3,6 +3,7 @@ export interface MarkdownStreamBufferSnapshot {
 	healthy: string;
 	reason: 'raf' | 'manual' | 'complete';
 	isComplete: boolean;
+	pendingCharacters: number;
 }
 
 export interface MarkdownAutoCloseRule {
@@ -21,6 +22,7 @@ export interface MarkdownStreamBufferOptions {
 	healthyEndMarker?: string;
 	htmlHandling?: 'ignore' | 'strip';
 	includeLinksAndImages?: boolean;
+	flushDelayMs?: number;
 	onFlush?: (snapshot: MarkdownStreamBufferSnapshot) => void;
 	requestFrame?: (callback: FrameRequestCallback) => number;
 	cancelFrame?: (handle: number) => void;

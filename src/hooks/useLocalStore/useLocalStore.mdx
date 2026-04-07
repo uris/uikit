@@ -9,6 +9,7 @@ import {FlexDiv} from '../../components/FlexDiv';
         <Unstyled>
         # useLocalStore
         Persists a typed value in `localStorage` and keeps React state synchronized with the same key.
+        In SSR-enabled apps, this hook also exposes when the client has hydrated so UI can avoid mismatches between the server fallback value and the browser-stored value.
 
         ## Signature
         `useLocalStore<T>(key, value)`
@@ -54,6 +55,7 @@ import {FlexDiv} from '../../components/FlexDiv';
           <tbody>
             <tr><td><code>item</code></td><td><code>T</code></td><td><code>value</code></td><td>Current state value synced with storage.</td></tr>
             <tr><td><code>updateItem</code></td><td><code>{`(data: T) => void`}</code></td><td><code>-</code></td><td>Writes to storage and updates local state.</td></tr>
+            <tr><td><code>hydrated</code></td><td><code>boolean</code></td><td><code>false</code></td><td><code>true</code> after the hook has re-read the current value from <code>localStorage</code> on the client.</td></tr>
           </tbody>
         </table>
 
@@ -65,7 +67,9 @@ import {FlexDiv} from '../../components/FlexDiv';
         import { useLocalStore } from '@apple-pie/slice';
         
         function ProfileName() {
-            const [name, setName] = useLocalStore<string>('profile-name', 'Jane Doe');
+            const [name, setName, hydrated] = useLocalStore<string>('profile-name', 'Jane Doe');
+
+            if (!hydrated) return null;
         
             return (
                 <div>
@@ -78,5 +82,13 @@ import {FlexDiv} from '../../components/FlexDiv';
         }
         ```
         </RenderSource>
+
+        <Unstyled>
+        ## SSR Notes
+        - The server render uses the provided fallback <code>value</code>.
+        - After hydration, the hook re-reads the stored browser value and flips <code>hydrated</code> to <code>true</code>.
+        - Use <code>hydrated</code> when the rendered UI cannot safely show the fallback value during SSR.
+        - If the value must match on the server and client first paint, use a server-readable source such as cookies instead of <code>localStorage</code>.
+        </Unstyled>
     </FlexDiv>
 </FlexDiv>

@@ -82,11 +82,11 @@ import NoteSection from "../../../documentation/_components/Notice/Notice";
           <tbody>
             <tr><td><code>attachMedia</code></td><td><code>{`(element: AudioElement | AudioElement[]) => void`}</code></td><td>Registers audio or video elements so future volume changes update them together.</td></tr>
             <tr><td><code>detachMedia</code></td><td><code>{`(element: AudioElement | AudioElement[]) => void`}</code></td><td>Removes specific media elements from the registry.</td></tr>
-            <tr><td><code>attachFeedbackElement</code></td><td><code>{`(element: AudioElement) => void`}</code></td><td>Registers a dedicated audio element for short feedback sounds and also keeps it in sync with the current store volume.</td></tr>
+            <tr><td><code>attachFeedbackElement</code></td><td><code>{`(element: AudioElement) => void`}</code></td><td>Registers a dedicated audio element for short feedback sounds.</td></tr>
             <tr><td><code>detachFeedbackElement</code></td><td><code>{`(element: AudioElement) => void`}</code></td><td>Removes the dedicated feedback element.</td></tr>
             <tr><td><code>playFeedback</code></td><td><code>{`(volume?: number) => Promise<void>`}</code></td><td>Attempts to play the dedicated feedback element using the provided volume override or the current store volume.</td></tr>
             <tr><td><code>clearMedia</code></td><td><code>{`() => void`}</code></td><td>Clears the attached media registry.</td></tr>
-            <tr><td><code>setVolume</code></td><td><code>{`(value: number) => void`}</code></td><td>Updates the current volume using a normalized number between <code>0</code> and <code>1</code>. While muted, this updates the stored restore volume without changing output from zero.</td></tr>
+            <tr><td><code>setVolume</code></td><td><code>{`(value: number, options?: { playFeedback?: boolean }) => void`}</code></td><td>Updates the current volume using a normalized number between <code>0</code> and <code>1</code>. While muted, this updates the stored restore volume without changing output from zero. Pass <code>{`{ playFeedback: false }`}</code> to suppress feedback playback for that specific volume change.</td></tr>
             <tr><td><code>mute</code></td><td><code>{`() => Promise<void>`}</code></td><td>Sets output volume to zero while preserving the previous volume for restore, then plays the feedback element when present.</td></tr>
             <tr><td><code>unmute</code></td><td><code>{`() => Promise<void>`}</code></td><td>Restores the stored volume, then plays the feedback element when present.</td></tr>
           </tbody>
@@ -141,7 +141,7 @@ import NoteSection from "../../../documentation/_components/Notice/Notice";
                         scaleMax={1}
                         step={0.05}
                         width={'100%'}
-                        onChange={(value) => actions.setVolume(value)}
+                        onChange={(value) => actions.setVolume(value, { playFeedback: false })}
                     />
                     <button type="button" onClick={() => (muted ? actions.unmute() : actions.mute())}>
                         {muted ? 'Unmute' : 'Mute'}
@@ -155,5 +155,6 @@ import NoteSection from "../../../documentation/_components/Notice/Notice";
         }
         ```
         </RenderSource>
+
     </FlexDiv>
 </FlexDiv>

@@ -2,29 +2,43 @@ export type SliceThemeName = 'lightMode' | 'darkMode';
 
 type ResolveInitialThemeOptions = {
 	theme?: string | null;
-	cookieTheme?: string | null;
+	systemTheme?: boolean;
+	activeTheme?: string | null;
 	fallbackTheme?: SliceThemeName;
 };
 
 function normalizeThemeName(theme?: string | null): SliceThemeName | undefined {
 	if (!theme) return undefined;
-	return theme.includes('dark') ? 'darkMode' : 'lightMode';
+	return theme.includes('lightMode') ? 'lightMode' : 'darkMode';
+}
+
+function resolveSystem(system?: boolean): boolean {
+	if (system === undefined) return true;
+	return system;
 }
 
 /**
  * Resolve the startup Slice theme from an explicit theme value, cookie value,
- * or fallback theme in that order.
+ * or fallback theme in that order. Resolves a system to true if undefined.
  */
-export function resolveInitialTheme(
-	options: ResolveInitialThemeOptions = {},
-): SliceThemeName {
-	const { theme, cookieTheme, fallbackTheme = 'lightMode' } = options;
+export function resolveInitialTheme(options: ResolveInitialThemeOptions = {}): {
+	initialTheme: SliceThemeName;
+	initialSystem: boolean;
+} {
+	const {
+		theme,
+		activeTheme,
+		systemTheme,
+		fallbackTheme = 'darkMode',
+	} = options;
 
-	return (
-		normalizeThemeName(theme) ??
-		normalizeThemeName(cookieTheme) ??
-		fallbackTheme
-	);
+	return {
+		initialTheme:
+			normalizeThemeName(theme) ??
+			normalizeThemeName(activeTheme) ??
+			fallbackTheme,
+		initialSystem: resolveSystem(systemTheme),
+	};
 }
 
 /**
@@ -32,7 +46,7 @@ export function resolveInitialTheme(
  * before client hydration.
  */
 export function getThemeHtmlAttributes(theme?: string | null) {
-	const resolvedTheme = normalizeThemeName(theme) ?? 'lightMode';
+	const resolvedTheme = normalizeThemeName(theme) ?? 'darkMode';
 
 	return {
 		'data-slice-theme': resolvedTheme,

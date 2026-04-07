@@ -26,7 +26,11 @@ export {
 	type WindowGeolocation,
 	type WindowGeolocationError,
 	type MicOption,
+	type UseBindWebRTCOptions,
+	type UseBindWebRTCReturn,
+	type UseMDStreamBufferOptions,
 	type UseMicrophoneReturn,
+	useBindWebRTC,
 	useKeyboardShortcuts,
 	useTheme,
 	useObserveTheme,
@@ -169,6 +173,9 @@ export type { BarButton, ButtonBarProps } from './components/ButtonBar/_types';
 export { Label } from './components/Label';
 export { LabelBackground } from './components/Label';
 export type { LabelProps } from './components/Label';
+
+export { Level } from './components/Level';
+export type { LevelProps } from './components/Level';
 
 export { UploadArea } from './components/UploadArea';
 export type { UploadAreaProps } from './components/UploadArea/_types';

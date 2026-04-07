@@ -17,6 +17,9 @@ export function ThemeTokensPreview() {
 
     return (
         <>
+            <h1>Theme Tokens & Colors</h1>
+            <p>Each theme has an identical set of tokens that reference different color values. Use the tabs to compare token values between light and dark modes.</p>
+
             <TabBar
                 options={[
                     { name: 'Light Theme', value: 'lightMode', icon: 'sun' },
@@ -29,10 +32,7 @@ export function ThemeTokensPreview() {
                     manageTheme.set(option.value==="darkMode"? darkTheme : lightTheme)
                 }}
             />
-
-            <h1>Theme Tokens & Colors</h1>
-            <p>Each theme has an identical set of tokens that reference different color values. Use the tabs to compare token values between light and dark modes.</p>
-
+            
             <h4>Array Colors</h4>
             <p>Array colors represent a range of colors for coded UI states (for example tags). Each array color includes a primary value (usually background) and a label value (usually text/border).</p>
             <ColorTileGroup pattern={"array"} theme={theme} />

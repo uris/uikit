@@ -1,0 +1,143 @@
+import {Meta, Unstyled} from '@storybook/addon-docs/blocks';
+import {RenderSource} from '../../../documentation/_components/RenderSource/RenderSource';
+import {FlexDiv} from '../../components/FlexDiv';
+
+<Meta title="Hooks/useBindWebRTC" />
+
+<FlexDiv width={"fill"} height={"fill"} align={"center"}>
+    <FlexDiv width={"fill"} maxWidth={760} height={"auto"}>
+        <Unstyled>
+        # useBindWebRTC
+        Binds a named `WebRTCConnection` to the microphone and volume stores with an explicit `bind()` / `unbind()` lifecycle. The hook reads the processed microphone stream from the microphone store and the current volume from the volume store, then keeps those values synchronized to one named WebRTC store connection after binding.
+
+        This hook is intentionally a convenience layer. It does not replace the WebRTC store. If you need direct lifecycle or per-connection control, use the store actions directly.
+
+        ## Behavior
+        `useBindWebRTC` does not automatically create a connection on mount. You call `bind()` when you want the connection to be created and initialized.
+
+        When `bind()` succeeds:
+        - the hook creates a new named WebRTC store connection
+        - initializes it with the provided `offerOptions` and `bearerToken`
+        - keeps the outgoing audio stream in sync with the processed microphone store stream
+        - keeps incoming playback volume in sync with the volume store
+
+        When `unbind()` is called, the hook removes the named connection from the WebRTC store.
+
+        ## Signature
+        `useBindWebRTC(options)`
+
+        ## Parameters
+        <table style={{width: '100%'}}>
+          <colgroup>
+              <col style={{width: '1%'}} />
+              <col style={{width: 'auto'}} />
+              <col style={{width: '1%'}} />
+              <col style={{width: '50%'}} />
+          </colgroup>
+          <thead>
+            <tr>
+              <th>Param</th>
+              <th>Type</th>
+              <th>Default</th>
+              <th>Description</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td><code>connectionName</code></td><td><code>string</code></td><td><code>-</code></td><td>Store-level identifier for the WebRTC connection this hook should create and manage.</td></tr>
+            <tr><td><code>connectionUrl</code></td><td><code>string</code></td><td><code>undefined</code></td><td>Connection URL used by the underlying WebRTC connection during initialization.</td></tr>
+            <tr><td><code>offerOptions</code></td><td><code>RTCOfferOptions</code></td><td><code>undefined</code></td><td>Optional offer settings forwarded to <code>RTCPeerConnection.createOffer()</code>.</td></tr>
+            <tr><td><code>bearerToken</code></td><td><code>string</code></td><td><code>undefined</code></td><td>Optional bearer token forwarded during WebRTC initialization.</td></tr>
+            <tr><td><code>audioElement</code></td><td><code>HTMLAudioElement</code></td><td><code>undefined</code></td><td>Optional audio element for remote playback. When omitted, the connection creates one internally.</td></tr>
+            <tr><td><code>autoPlayAudio</code></td><td><code>boolean</code></td><td><code>undefined</code></td><td>Optional autoplay flag for the playback element.</td></tr>
+            <tr><td><code>dataChannels</code></td><td><code>string | string[]</code></td><td><code>undefined</code></td><td>Optional data channel label or labels to create when binding the connection.</td></tr>
+            <tr><td><code>videoTrack</code></td><td><code>MediaStreamTrack | null</code></td><td><code>undefined</code></td><td>Optional local video track sent with the connection.</td></tr>
+            <tr><td><code>onRemoteVideoStream</code></td><td><code>{`(streams: Map<string, MediaStream>) => void`}</code></td><td><code>undefined</code></td><td>Optional callback fired when remote video streams are added.</td></tr>
+            <tr><td><code>onRemoteAudioStream</code></td><td><code>{`(streams: Map<string, MediaStream>) => void`}</code></td><td><code>undefined</code></td><td>Optional callback fired when remote audio tracks are added.</td></tr>
+            <tr><td><code>onDataChannelEvent</code></td><td><code>{`(channel, eventType, eventData) => void`}</code></td><td><code>undefined</code></td><td>Optional callback fired when a managed data channel emits a message, open, close, or error event.</td></tr>
+          </tbody>
+        </table>
+
+        ## Returns
+        <table style={{width: '100%'}}>
+          <colgroup>
+              <col style={{width: '1%'}} />
+              <col style={{width: 'auto'}} />
+              <col style={{width: '50%'}} />
+          </colgroup>
+          <thead>
+            <tr>
+              <th>Return</th>
+              <th>Type</th>
+              <th>Description</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td><code>connection</code></td><td><code>WebRTCConnection | null</code></td><td>The active named WebRTC connection from the store, or <code>null</code> when not currently bound.</td></tr>
+            <tr><td><code>error</code></td><td><code>Error | null</code></td><td>The latest bind or sync error. Errors are surfaced as state instead of being thrown from render.</td></tr>
+            <tr><td><code>bind</code></td><td><code>{`() => Promise&lt;WebRTCConnection | null&gt;`}</code></td><td>Creates and initializes the named WebRTC connection using the current processed microphone stream and current volume from the stores.</td></tr>
+            <tr><td><code>unbind</code></td><td><code>{`() => void`}</code></td><td>Removes the named WebRTC connection if this hook created it.</td></tr>
+            <tr><td><code>bound</code></td><td><code>boolean</code></td><td>Whether this hook currently considers the connection bound and under its control.</td></tr>
+          </tbody>
+        </table>
+
+        ## Notes
+        - `bind()` returns an error state instead of throwing when no processed microphone stream is available.
+        - `bind()` also sets an error when a connection with the same `connectionName` already exists.
+        - After binding, mic stream changes are pushed from the microphone store automatically.
+        - After binding, volume changes are pushed from the volume store automatically.
+        - `unbind()` only removes the connection when this hook created it.
+
+        ## Basic example
+        </Unstyled>
+
+        <RenderSource language={"tsx"}>
+        {`
+import { useEffect } from 'react';
+import { useBindWebRTC } from '@apple-pie/slice';
+
+function CallSession() {
+    const rtc = useBindWebRTC({
+        connectionName: 'call',
+        connectionUrl: '/api/rtc',
+        offerOptions: {
+            offerToReceiveAudio: true,
+            offerToReceiveVideo: true,
+        },
+        bearerToken: 'my-token',
+        dataChannels: ['events'],
+    });
+
+    useEffect(() => {
+        void rtc.bind();
+        return () => {
+            rtc.unbind();
+        };
+    }, [rtc]);
+
+    if (rtc.error) {
+        return <div>Error: {rtc.error.message}</div>;
+    }
+
+    return (
+        <div>
+            <div>Bound: {String(rtc.bound)}</div>
+            <div>Connected: {String(rtc.connection?.connected ?? false)}</div>
+            <div>Audio: {String(rtc.connection?.audioConnected ?? false)}</div>
+            <div>Video: {String(rtc.connection?.videoConnected ?? false)}</div>
+            <div>Data: {String(rtc.connection?.dataConnected ?? false)}</div>
+        </div>
+    );
+}
+`}
+        </RenderSource>
+
+        <Unstyled>
+        ## When To Use The Store Directly
+        Use the WebRTC store directly instead of this hook when:
+        - you want to create a connection without automatically following mic store updates
+        - you want to manage volume manually per connection
+        - you want to attach or update connections from non-React code
+        - you want to reuse an existing connection rather than requiring explicit ownership through `bind()`
+        </Unstyled>
+    </FlexDiv>
+</FlexDiv>

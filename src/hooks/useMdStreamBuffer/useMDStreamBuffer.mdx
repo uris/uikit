@@ -8,10 +8,12 @@ import {FlexDiv} from '../../components/FlexDiv';
     <FlexDiv width={"fill"} maxWidth={760} height={"auto"}>
         <Unstyled>
         # useMDStreamBuffer
-        React hook wrapper around `MdBuffer`. The `MdBuffer` utility transforms partial markdown streams into "healthy" markdown ready for rendering without re-render flickers. The hook manages the buffer lifecycle for you and exposes the current healthy markdown output plus the core buffer actions.
+        React hook wrapper around `MdBuffer`. The `MdBuffer` utility transforms partial markdown streams into "healthy" markdown ready for rendering without re-render flickers and trailing markdown tokens.
+
+        The hook also supports optional upstream pacing. This lets you intentionally slow very fast incoming streams, or break up large chunk streams into smaller updates.
             
-        ## Not a Parser
-        `MdBuffer` is not a markdown to react parser. It simply feeds a parser like [react-marked](https://www.npmjs.com/package/react-markdown) or [marked](https://www.npmjs.com/package/marked) "healthy" markdown for efficient parsing and rendering. See [MdBuffer](/docs/utils-markdown-buffer-class--docs) class for more details.
+        ## Not a Parser!
+        `MdBuffer` is not a markdown to react parser - is is more of a pre-processor. It simply feeds a parser like [react-marked](https://www.npmjs.com/package/react-markdown) or [marked](https://www.npmjs.com/package/marked) "healthy" markdown for efficient parsing and rendering. See [MdBuffer](/docs/utils-markdown-buffer-class--docs) class for more details.
             
         ## Signature
         `useMDStreamBuffer(options?)`
@@ -33,11 +35,34 @@ import {FlexDiv} from '../../components/FlexDiv';
             </tr>
           </thead>
           <tbody>
-            <tr><td><code>options</code></td><td><code>MarkdownStreamBufferOptions</code></td><td><code>{`{}`}</code></td><td>Passed through to the underlying `MdBuffer` when the hook mounts.</td></tr>
+            <tr><td><code>options</code></td><td><code>UseMDStreamBufferOptions</code></td><td><code>{`{}`}</code></td><td>Passed through to the underlying `MdBuffer` when the hook mounts, with optional hook-level pacing controls.</td></tr>
           </tbody>
         </table>
 
-        `options.healthyEndMarker` appends an ephemeral suffix to `healthy` output without changing `raw`. If the buffer has optimistically closed a line-based construct by adding a trailing newline, the marker is inserted before that newline.
+        #### End Marker
+        End markers can be uses to display animated progress cursors. `options.healthyEndMarker` appends an ephemeral suffix to `healthy` output without changing `raw`. If the buffer has optimistically closed a line-based construct by adding a trailing newline, the marker is inserted before that newline.
+
+        Hook-only pacing options:
+        <table style={{width: '100%'}}>
+          <colgroup>
+              <col style={{width: '1%'}} />
+              <col style={{width: 'auto'}} />
+              <col style={{width: '1%'}} />
+              <col style={{width: '50%'}} />
+          </colgroup>
+          <thead>
+            <tr>
+              <th>Option</th>
+              <th>Type</th>
+              <th>Default</th>
+              <th>Description</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td><code>paceDelayMs</code></td><td><code>number</code></td><td><code>undefined</code></td><td>Optional delay between paced releases into the underlying `MdBuffer`.</td></tr>
+            <tr><td><code>paceChunkSize</code></td><td><code>number</code></td><td><code>undefined</code></td><td>Optional maximum number of characters released into `MdBuffer` on each paced step.</td></tr>
+          </tbody>
+        </table>
 
         ## Returns
         <table style={{width: '100%'}}>
@@ -54,9 +79,10 @@ import {FlexDiv} from '../../components/FlexDiv';
             </tr>
           </thead>
           <tbody>
-            <tr><td><code>raw</code></td><td><code>string</code></td><td>Current raw markdown accumulated by the buffer.</td></tr>
+            <tr><td><code>raw</code></td><td><code>string</code></td><td>Current raw markdown that has already been released into the underlying <code>MdBuffer</code>. When pacing is enabled, queued-but-unreleased characters are reflected in <code>pendingCharacters</code>, not yet in <code>raw</code>.</td></tr>
             <tr><td><code>healthy</code></td><td><code>string</code></td><td>Current parser-safe markdown output.</td></tr>
             <tr><td><code>isComplete</code></td><td><code>boolean</code></td><td>Whether the current stream has been completed.</td></tr>
+            <tr><td><code>pendingCharacters</code></td><td><code>number</code></td><td>Total characters still waiting to become visible, including both the hook's pacing queue and the underlying `MdBuffer` pending count.</td></tr>
             <tr><td><code>append</code></td><td><code>{`(value: string) => void`}</code></td><td>Appends the next raw markdown chunk.</td></tr>
             <tr><td><code>flush</code></td><td><code>{`() => MarkdownStreamBufferSnapshot | undefined`}</code></td><td>Forces an immediate flush.</td></tr>
             <tr><td><code>complete</code></td><td><code>{`() => MarkdownStreamBufferSnapshot | undefined`}</code></td><td>Completes the stream and emits the final snapshot.</td></tr>
@@ -75,6 +101,8 @@ import {FlexDiv} from '../../components/FlexDiv';
         function StreamingMarkdown({ chunk }: { chunk: string }) {
             const { healthy, append } = useMDStreamBuffer({
                 includeLinksAndImages: true,
+                paceDelayMs: 40,
+                paceChunkSize: 12,
             });
 
             useEffect(() => {
@@ -86,5 +114,9 @@ import {FlexDiv} from '../../components/FlexDiv';
         }
         ```
         </RenderSource>
+
+        <Unstyled>
+        In the example above, incoming chunks are first queued by the hook and then released into `MdBuffer` every `40ms`, up to `12` characters at a time.
+        </Unstyled>
     </FlexDiv>
 </FlexDiv>

@@ -6,6 +6,7 @@ export {
 	IndexedDB,
 	MdBuffer,
 	SSEConnection,
+	WebRTCConnection,
 	WSConnection,
 } from './objects';
 export type {
@@ -23,5 +24,6 @@ export type {
 	SSEUnifiedCustomMessage,
 	SSEUnifiedMessage,
 	UnifiedMessageEvent,
+	WebRTCConnectionOptions,
 	WSConnectionOptions,
 } from './objects';

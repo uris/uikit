@@ -1,0 +1,212 @@
+import {Meta, Unstyled} from '@storybook/addon-docs/blocks';
+import {RenderSource} from '../../../documentation/_components/RenderSource/RenderSource';
+import {FlexDiv} from '../../components/FlexDiv';
+import NoteSection from '../../../documentation/_components/Notice/Notice';
+
+<Meta title="Stores/WebRTC Store" />
+
+<FlexDiv width={'fill'} height={'fill'} align={'center'}>
+    <FlexDiv width={'fill'} maxWidth={760} height={'auto'}>
+        <Unstyled>
+        <NoteSection>
+            Slice stores use a module-level singleton pattern: each store is created once when the module is loaded, and every import shares the same store instance.
+        </NoteSection>
+
+        # WebRTCStore
+        Global store for managing one or more named `WebRTCConnection` instances with Zustand. The store keeps a simple registry of connections and exposes explicit lifecycle actions for creating, initializing, updating, and removing each connection.
+
+        The store intentionally stays narrow. It does not subscribe to the microphone store or volume store internally. Instead, callers pass the current mic stream and volume level into the store actions when they want to update a connection.
+
+        If you want the microphone store and volume store to be wired automatically, use `useBindWebRTC` instead. The hook is the convenience layer; this store is the explicit lifecycle layer.
+
+        ## Lifecycle
+        Typical usage follows this order:
+
+        1. `addConnection(name, options)`
+        2. `initializeConnection(name, offerOptions?, bearerToken?)`
+        3. `setMicStream(name, stream)` when the processed mic stream changes
+        4. `setVolume(name, volume)` when the app volume changes
+        5. `removeConnection(name)` during cleanup
+
+        If you prefer not to manage those steps yourself, `useBindWebRTC` wraps this same flow and keeps mic stream and volume synchronized from the stores automatically after binding.
+
+        <RenderSource language={'tsx'}>
+        {`
+import { useEffect } from 'react';
+import {
+    useProcessedMicStream,
+} from '@apple-pie/slice/stores/microphone';
+import {
+    useVolume,
+} from '@apple-pie/slice/stores/volume';
+import {
+    useWebRTC,
+    useWebRTCConnected,
+} from '@apple-pie/slice/stores/WebRTC';
+
+function VoiceCall() {
+    const rtc = useWebRTC();
+    const processedMicStream = useProcessedMicStream();
+    const volume = useVolume();
+    const connected = useWebRTCConnected('call');
+
+    useEffect(() => {
+        const stream = processedMicStream.current;
+        if (!stream) return;
+
+        rtc.addConnection('call', {
+            connectionUrl: '/api/rtc',
+            micStream: stream,
+            volume,
+            dataChannels: ['events'],
+        });
+
+        void rtc.initializeConnection('call');
+
+        return () => {
+            rtc.removeConnection('call');
+        };
+    }, [rtc, processedMicStream, volume]);
+
+    useEffect(() => {
+        void rtc.setMicStream('call', processedMicStream.current);
+    }, [rtc, processedMicStream]);
+
+    useEffect(() => {
+        rtc.setVolume('call', volume);
+    }, [rtc, volume]);
+
+    return <div>Connected: {connected ? 'yes' : 'no'}</div>;
+}
+`}
+        </RenderSource>
+
+        ## addConnection
+        `addConnection(name, options)` creates a new `WebRTCConnection`, stores it by name, and returns the created entry. If a connection with the same name already exists, the store closes the old connection before replacing it.
+
+        ### addConnection parameters
+        <table style={{width: '100%'}}>
+          <colgroup>
+            <col style={{width: '20%'}} />
+            <col style={{width: '25%'}} />
+            <col style={{width: '10%'}} />
+            <col style={{width: '45%'}} />
+          </colgroup>
+          <thead>
+            <tr>
+              <th className={'left'}>Parameter</th>
+              <th className={'left'}>Type</th>
+              <th className={'left'}>Required</th>
+              <th className={'left'}>Description</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td><code>name</code></td><td><code>string</code></td><td>Yes</td><td>Store-level identifier for the connection you want to create and later act on.</td></tr>
+            <tr><td><code>options.connectionUrl</code></td><td><code>string</code></td><td>No</td><td>URL used later during <code>initializeConnection</code> when the SDP offer is posted.</td></tr>
+            <tr><td><code>options.micStream</code></td><td><code>MediaStream</code></td><td>Yes*</td><td>Preferred mic source. The first audio track from this stream is used as the outgoing audio track.</td></tr>
+            <tr><td><code>options.micTrack</code></td><td><code>MediaStreamTrack</code></td><td>Yes*</td><td>Alternate mic source when you want to pass a track directly instead of a stream.</td></tr>
+            <tr><td><code>options.videoTrack</code></td><td><code>MediaStreamTrack | null</code></td><td>No</td><td>Optional local camera video track to send with the connection.</td></tr>
+            <tr><td><code>options.volume</code></td><td><code>number</code></td><td>No</td><td>Optional incoming playback volume between <code>0</code> and <code>1</code>. If omitted, the audio element keeps its default browser volume.</td></tr>
+            <tr><td><code>options.audioElement</code></td><td><code>HTMLAudioElement</code></td><td>No</td><td>Optional audio element used for remote playback. If omitted, the connection creates one internally.</td></tr>
+            <tr><td><code>options.autoPlayAudio</code></td><td><code>boolean</code></td><td>No</td><td>Controls whether the internal audio element is set to autoplay.</td></tr>
+            <tr><td><code>options.dataChannels</code></td><td><code>string | string[]</code></td><td>No</td><td>Optional data channel label or labels to create when the connection is created.</td></tr>
+            <tr><td><code>options.onRemoteAudioStream</code></td><td><code>{`(streams: Map<string, MediaStream>) => void`}</code></td><td>No</td><td>Called when remote audio tracks are added to the connection.</td></tr>
+            <tr><td><code>options.onRemoteVideoStream</code></td><td><code>{`(streams: Map<string, MediaStream>) => void`}</code></td><td>No</td><td>Called when remote video streams are added to the connection.</td></tr>
+            <tr><td><code>options.onDataChannelEvent</code></td><td><code>{`(channel, eventType, eventData) => void`}</code></td><td>No</td><td>Called when a managed data channel emits a message, open, close, or error event.</td></tr>
+          </tbody>
+        </table>
+
+        * One of <code>micStream</code> or <code>micTrack</code> must be provided. The connection throws if neither produces an audio track.
+
+        ## initializeConnection
+        `initializeConnection(name, offerOptions?, bearerToken?)` looks up an existing named connection in the store and calls its `initialize` method. This is the step that performs negotiation by creating the offer, waiting for ICE gathering, posting the SDP to `connectionUrl`, and applying the answer.
+
+        ### initializeConnection parameters
+        <table style={{width: '100%'}}>
+          <colgroup>
+            <col style={{width: '20%'}} />
+            <col style={{width: '25%'}} />
+            <col style={{width: '10%'}} />
+            <col style={{width: '45%'}} />
+          </colgroup>
+          <thead>
+            <tr>
+              <th className={'left'}>Parameter</th>
+              <th className={'left'}>Type</th>
+              <th className={'left'}>Required</th>
+              <th className={'left'}>Description</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td><code>name</code></td><td><code>string</code></td><td>Yes</td><td>Store-level identifier for the existing connection to initialize.</td></tr>
+            <tr><td><code>offerOptions</code></td><td><code>RTCOfferOptions</code></td><td>No</td><td>Optional WebRTC offer settings passed through to <code>RTCPeerConnection.createOffer()</code>.</td></tr>
+            <tr><td><code>bearerToken</code></td><td><code>string</code></td><td>No</td><td>Optional bearer token added as an <code>Authorization</code> header when the SDP offer is posted.</td></tr>
+          </tbody>
+        </table>
+
+        ## Other actions
+        <table style={{width: '100%'}}>
+          <colgroup>
+            <col style={{width: '20%'}} />
+            <col style={{width: '30%'}} />
+            <col style={{width: '50%'}} />
+          </colgroup>
+          <thead>
+            <tr>
+              <th className={'left'}>Action</th>
+              <th className={'left'}>Type</th>
+              <th className={'left'}>Description</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td><code>setMicStream</code></td><td><code>{`(name: string, stream: MediaStream | null) => Promise<void>`}</code></td><td>Replaces the outgoing audio source for one existing connection.</td></tr>
+            <tr><td><code>setVolume</code></td><td><code>{`(name: string, volume: number) => void`}</code></td><td>Updates incoming playback volume for one existing connection.</td></tr>
+            <tr><td><code>removeConnection</code></td><td><code>{`(name: string) => void`}</code></td><td>Closes the existing connection first, then removes it from the store.</td></tr>
+          </tbody>
+        </table>
+
+        ## React exports (reactive)
+        <table style={{width: '100%'}}>
+          <colgroup>
+            <col style={{width: '1%'}} />
+            <col style={{width: '25%'}} />
+            <col style={{width: '98%'}} />
+          </colgroup>
+          <thead>
+            <tr>
+              <th className={'left'}>Export</th>
+              <th className={'left'}>Type</th>
+              <th className={'left'}>Description</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td><code>useWebRTCStore</code></td><td><code>Zustand store hook</code></td><td>Main store hook for custom selector usage.</td></tr>
+            <tr><td><code>useWebRTC</code></td><td><code>{`() => actions`}</code></td><td>Atomic selector for the WebRTC store actions.</td></tr>
+            <tr><td><code>useWebRTCConnections</code></td><td><code>{`() => WebRTCStoreConnection[]`}</code></td><td>Reactive list of active named WebRTC connections.</td></tr>
+            <tr><td><code>useWebRTCConnection</code></td><td><code>{`(name: string) => WebRTCStoreConnection | null`}</code></td><td>Reactive lookup for one named WebRTC connection entry.</td></tr>
+            <tr><td><code>useWebRTCConnected</code></td><td><code>{`(name?: string) => boolean`}</code></td><td>Returns whether one named connection is connected, or whether any connection is connected when no name is supplied.</td></tr>
+          </tbody>
+        </table>
+
+        ## Imperative exports (non-reactive)
+        <table style={{width: '100%'}}>
+          <colgroup>
+            <col style={{width: '1%'}} />
+            <col style={{width: '25%'}} />
+            <col style={{width: '98%'}} />
+          </colgroup>
+          <thead>
+            <tr>
+              <th className={'left'}>Export</th>
+              <th className={'left'}>Type</th>
+              <th className={'left'}>Description</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td><code>useWebRTCActions</code></td><td><code>actions</code></td><td>Imperative access to the same singleton WebRTC store actions.</td></tr>
+            <tr><td><code>getWebRTCConnections</code></td><td><code>{`() => WebRTCStoreConnection[]`}</code> or <code>{`(name: string) => WebRTCStoreConnection | null`}</code></td><td>Imperative snapshot read of the current connection registry, or lookup for one named connection.</td></tr>
+          </tbody>
+        </table>
+        </Unstyled>
+    </FlexDiv>
+</FlexDiv>

@@ -27,6 +27,7 @@ import { type ToastProps, ToastType } from './_types';
 
 const ToastBase = React.forwardRef<HTMLDivElement, ToastProps>((props, ref) => {
 	const {
+		notifId,
 		message = null,
 		size = 'm',
 		border = true,
@@ -193,6 +194,7 @@ const ToastBase = React.forwardRef<HTMLDivElement, ToastProps>((props, ref) => {
 		<AnimatePresence onExitComplete={() => didHide()} initial={false}>
 			{ready && (
 				<motion.div
+					key={notifId}
 					ref={ref}
 					id={divId}
 					className={classNames}

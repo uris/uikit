@@ -1,0 +1,156 @@
+import {Meta, Unstyled} from '@storybook/addon-docs/blocks';
+import {RenderSource} from '../../../../documentation/_components/RenderSource/RenderSource';
+import {FlexDiv} from '../../../components/FlexDiv';
+import NoteSection from '../../../../documentation/_components/Notice/Notice';
+
+<Meta title="Utils/WebRTC Connection Class" />
+
+<FlexDiv width={'fill'} height={'fill'} align={'center'}>
+    <FlexDiv width={'fill'} maxWidth={760} height={'auto'}>
+        <Unstyled>
+        <NoteSection>
+            `WebRTCConnection` is the low-level browser utility for one WebRTC session. Use it directly when you want full control over one connection, use the WebRTC store when you want named singleton connections, and use `useBindWebRTC` when you want microphone-store and volume-store wiring handled for you.
+        </NoteSection>
+
+        # WebRTCConnection Class
+        Utility around `RTCPeerConnection` for one connection. It supports:
+        - local audio and optional local video tracks
+        - optional screen sharing
+        - internal remote audio playback through an audio element
+        - data channel creation and messaging
+        - explicit initialization through SDP offer/answer exchange
+        - replacing the outgoing microphone stream after creation
+        - updating incoming playback volume independently of outgoing mic gain
+
+        ## Import
+        <RenderSource language={'tsx'}>
+{`
+import { WebRTCConnection } from '@apple-pie/slice/utils/objects';
+`}
+        </RenderSource>
+
+        ## Constructor options
+        <table style={{width: '100%'}}>
+          <colgroup>
+            <col style={{width: '1%'}} />
+            <col style={{width: '24%'}} />
+            <col style={{width: '98%'}} />
+          </colgroup>
+          <thead>
+            <tr>
+              <th className={'left'}>Option</th>
+              <th className={'left'}>Type</th>
+              <th className={'left'}>Description</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td><code>micStream</code></td><td><code>MediaStream</code></td><td>Preferred outgoing mic source. The first audio track from this stream is used.</td></tr>
+            <tr><td><code>micTrack</code></td><td><code>MediaStreamTrack</code></td><td>Alternate outgoing mic source when you want to pass a track directly.</td></tr>
+            <tr><td><code>connectionUrl</code></td><td><code>string</code></td><td>SDP endpoint used later by <code>initialize()</code>.</td></tr>
+            <tr><td><code>videoTrack</code></td><td><code>MediaStreamTrack | null</code></td><td>Optional local video track to send.</td></tr>
+            <tr><td><code>volume</code></td><td><code>number</code></td><td>Optional incoming playback volume between <code>0</code> and <code>1</code>. If omitted, browser element default volume is preserved.</td></tr>
+            <tr><td><code>audioElement</code></td><td><code>HTMLAudioElement</code></td><td>Optional playback element for remote audio. When omitted, the class creates one internally.</td></tr>
+            <tr><td><code>autoPlayAudio</code></td><td><code>boolean</code></td><td>Controls whether the internal playback element autoplays.</td></tr>
+            <tr><td><code>dataChannels</code></td><td><code>string | string[]</code></td><td>Optional data channel label or labels created during construction.</td></tr>
+            <tr><td><code>onRemoteAudioStream</code></td><td><code>{`(streams: Map<string, MediaStream>) => void`}</code></td><td>Called when remote audio tracks are added.</td></tr>
+            <tr><td><code>onRemoteVideoStream</code></td><td><code>{`(streams: Map<string, MediaStream>) => void`}</code></td><td>Called when remote video streams are added.</td></tr>
+            <tr><td><code>onDataChannelEvent</code></td><td><code>{`(channel, eventType, eventData) => void`}</code></td><td>Called when a managed data channel emits message, open, close, or error events.</td></tr>
+          </tbody>
+        </table>
+
+        One of <code>micStream</code> or <code>micTrack</code> must be provided. The constructor throws if neither produces an audio track.
+
+        ## Basic example
+        <RenderSource language={'tsx'}>
+{`
+const connection = new WebRTCConnection({
+	connectionUrl: '/api/rtc',
+	micStream: processedMicStream.current!,
+	volume: 0.8,
+	dataChannels: ['events'],
+});
+
+await connection.initialize(
+	{
+		offerToReceiveAudio: true,
+		offerToReceiveVideo: true,
+	},
+	'my-token',
+);
+`}
+        </RenderSource>
+
+        ## Status properties
+        <table style={{width: '100%'}}>
+          <colgroup>
+            <col style={{width: '1%'}} />
+            <col style={{width: '24%'}} />
+            <col style={{width: '98%'}} />
+          </colgroup>
+          <thead>
+            <tr>
+              <th className={'left'}>Property</th>
+              <th className={'left'}>Type</th>
+              <th className={'left'}>Description</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td><code>connected</code></td><td><code>boolean</code></td><td>True when the underlying peer connection state is <code>'connected'</code>.</td></tr>
+            <tr><td><code>audioConnected</code></td><td><code>boolean</code></td><td>True when the connection has a live local audio sender track or at least one remote audio track.</td></tr>
+            <tr><td><code>videoConnected</code></td><td><code>boolean</code></td><td>True when the connection has a live local video or screen-share track, or at least one remote video stream.</td></tr>
+            <tr><td><code>dataConnected</code></td><td><code>boolean</code></td><td>True when at least one managed data channel is open.</td></tr>
+          </tbody>
+        </table>
+
+        ## Methods
+        <table style={{width: '100%'}}>
+          <colgroup>
+            <col style={{width: '1%'}} />
+            <col style={{width: '30%'}} />
+            <col style={{width: '98%'}} />
+          </colgroup>
+          <thead>
+            <tr>
+              <th className={'left'}>Method</th>
+              <th className={'left'}>Type</th>
+              <th className={'left'}>Description</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td><code>initialize</code></td><td><code>{`(offerOptions?: RTCOfferOptions, bearerToken?: string) => Promise<void>`}</code></td><td>Creates the offer, waits for ICE gathering, posts SDP to <code>connectionUrl</code>, and applies the remote answer.</td></tr>
+            <tr><td><code>sendMessage</code></td><td><code>{`(channelName: string, data: string | number | boolean | object | null) => void`}</code></td><td>Sends JSON-serialized data through one named data channel.</td></tr>
+            <tr><td><code>setVolume</code></td><td><code>{`(volume: number) => void`}</code></td><td>Updates incoming playback volume only. This does not affect outgoing microphone gain.</td></tr>
+            <tr><td><code>muteAllAudio</code></td><td><code>{`(muted: boolean) => void`}</code></td><td>Mutes or unmutes the remote playback element.</td></tr>
+            <tr><td><code>muteAudioTrack</code></td><td><code>{`(trackId: string, muted: boolean) => void`}</code></td><td>Mutes or unmutes one specific remote audio track.</td></tr>
+            <tr><td><code>setOutgoingAudioStream</code></td><td><code>{`(stream: MediaStream | null) => Promise<void>`}</code></td><td>Replaces the outgoing mic source using the first audio track from a stream.</td></tr>
+            <tr><td><code>replaceAudioTrack</code></td><td><code>{`(track: MediaStreamTrack | null) => Promise<void>`}</code></td><td>Replaces the outgoing audio track directly without rebuilding the connection object.</td></tr>
+            <tr><td><code>startScreenShare</code></td><td><code>{`() => Promise<void>`}</code></td><td>Starts screen share, adds the video track, and renegotiates when needed.</td></tr>
+            <tr><td><code>stopScreenShare</code></td><td><code>{`(stopTrack?: boolean) => Promise<void>`}</code></td><td>Stops screen share, removes the sender, and renegotiates when needed.</td></tr>
+            <tr><td><code>createIncomingAudioSource</code></td><td><code>{`(audioContext: AudioContext) => MediaStreamAudioSourceNode`}</code></td><td>Creates a Web Audio source node from the unified remote audio stream.</td></tr>
+            <tr><td><code>close</code></td><td><code>{`() => void`}</code></td><td>Closes the peer connection and releases local bindings owned by the class.</td></tr>
+          </tbody>
+        </table>
+
+        ## Notes
+        - `initialize()` is separate from construction on purpose. Create the object first, then negotiate when you are ready.
+        - `setVolume()` only affects incoming playback. Outgoing microphone level should come from your microphone processing path.
+        - `setOutgoingAudioStream()` and `replaceAudioTrack()` exist so processed mic streams can change after the connection is created.
+        - The class creates outgoing data channels only. If your peer creates channels from the other side, you would need to extend the current implementation to listen for them.
+        - This class is browser-only and throws when used without a document environment.
+
+        ## Relationship To The Store And Hook
+        Use `WebRTCConnection` directly when you want one low-level connection object.
+
+        Use the WebRTC store when you want:
+        - a named registry of connections
+        - imperative lifecycle from React or non-React code
+        - simple lookup and cleanup by connection id
+
+        Use `useBindWebRTC` when you want:
+        - explicit `bind()` / `unbind()` behavior
+        - automatic microphone-store synchronization
+        - automatic volume-store synchronization
+        - a returned `connection` and `error` state for React integration
+        </Unstyled>
+    </FlexDiv>
+</FlexDiv>

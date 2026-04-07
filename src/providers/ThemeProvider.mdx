@@ -10,7 +10,7 @@ import {RenderSource} from '../../documentation/_components/RenderSource/RenderS
         # ThemeProvider
         Provides Slice theme behavior by writing `data-slice-theme` on `document.documentElement`, rendering a scoped wrapper with `data-slice-theme-scope`, and loading Slice CSS token/type styles.
         When the provider resolves an explicit, initial, or system theme on the client, it also persists a `slice-theme` cookie so SSR helpers can read the same resolved theme on the server for the next request.
-        It also seeds Slice's theme hooks with the server-resolved startup theme through internal context, which keeps `useTheme()` and `useObserveTheme()` aligned during hydration.
+        It also seeds Slice's theme hooks with the server-resolved startup theme and startup system flag through internal context, which keeps `useTheme()` and `useObserveTheme()` aligned during hydration.
         That internal context also tracks whether the active theme is still system-derived, and `useTheme().set(...)` / `useTheme().toggle()` update that flag when switching between `system` and explicitly named themes.
 
         ## Base element
@@ -39,7 +39,8 @@ import {RenderSource} from '../../documentation/_components/RenderSource/RenderS
             <tr><td><code>children</code></td><td><code>React.ReactNode</code></td><td><code>undefined</code></td><td>Content rendered inside the provider.</td></tr>
             <tr><td><code>theme</code></td><td><code>string</code></td><td><code>undefined</code></td><td>Manual theme selector. Values containing <code>'dark'</code> resolve to Slice dark mode, otherwise Slice light mode. When applied, the provider also writes the resolved theme name into the <code>slice-theme</code> cookie.</td></tr>
             <tr><td><code>initialTheme</code></td><td><code>string</code></td><td><code>undefined</code></td><td>For SSR: startup theme value passed from the server. Use the <code>ThemeServer</code> helpers to write the same theme onto the root HTML element during server render, then pass that same value here so the provider and theme hooks hydrate against the same value.</td></tr>
-            <tr><td><code>system</code></td><td><code>boolean</code></td><td><code>undefined</code></td><td>When <code>true</code>, uses `prefers-color-scheme` and updates automatically when the OS theme changes. The resolved light or dark theme is written to <code>slice-theme</code> for future SSR requests.</td></tr>
+            <tr><td><code>initialSystem</code></td><td><code>boolean</code></td><td><code>undefined</code></td><td>For SSR: startup system-mode flag passed from the server. Use this with <code>initialTheme</code> so the provider can distinguish a system-derived startup theme from an explicitly selected one on first hydration. When omitted, Slice defaults startup system mode to <code>true</code>.</td></tr>
+            <tr><td><code>system</code></td><td><code>boolean</code></td><td><code>undefined</code></td><td>Controlled system-mode flag. When <code>true</code>, uses <code>prefers-color-scheme</code> and updates automatically when the OS theme changes. The resolved light or dark theme is written to <code>slice-theme</code> and the mode flag is written to <code>slice-system-theme</code> for future SSR requests.</td></tr>
             <tr><td><code>global</code></td><td><code>boolean</code></td><td><code>undefined</code></td><td>When <code>true</code>, also writes the active theme's <code>core-surface-primary</code> color to the root document element and <code>document.body</code> backgrounds. This is useful for full-page theming, and in Safari it also drives the browser header color.</td></tr>
           </tbody>
         </table>
@@ -99,7 +100,8 @@ import {RenderSource} from '../../documentation/_components/RenderSource/RenderS
         <Unstyled>
         ## SSR Notes
         - `ThemeProvider` is the client runtime piece.
-        - Pass the server-resolved `initialTheme` into the provider when using SSR.
+        - Pass the server-resolved `initialTheme` and `initialSystem` into the provider when using SSR.
+        - If `initialSystem` is omitted, Slice treats the startup theme as system-derived by default.
         - `useTheme()` and `useObserveTheme()` read that startup value from the provider's internal context before switching over to DOM observation.
         - The provider context also keeps a live `systemTheme` flag so consumers can tell whether the current theme came from `prefers-color-scheme` or from an explicit client-side selection.
         </Unstyled>

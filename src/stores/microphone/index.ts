@@ -5,6 +5,7 @@ export {
 	useProcessedMicStream,
 	useMicTrack,
 	useCurrentMicDeviceId,
+	useCurrentMicDeviceLabel,
 	useMicActive,
 	useMicInputVolume,
 	useMicMuted,
@@ -16,6 +17,7 @@ export {
 	useMicrophoneStoreActions,
 	microphoneActions,
 	getMicrophoneState,
+	getCurrentMicDeviceLabel,
 } from './microphoneStore';
 export type {
 	MicrophoneStore,

@@ -21,6 +21,7 @@ export class MdBuffer {
 	private readonly healthyEndMarker?: string;
 	private readonly htmlHandling: 'ignore' | 'strip';
 	private readonly includeLinksAndImages: boolean;
+	private readonly flushDelayMs: number;
 	private readonly onFlush?: (snapshot: MarkdownStreamBufferSnapshot) => void;
 	private readonly requestFrame: (callback: FrameRequestCallback) => number;
 	private readonly cancelFrame: (handle: number) => void;
@@ -28,6 +29,9 @@ export class MdBuffer {
 	private committedRaw = '';
 	private activeRaw = '';
 	private frameHandle: number | null = null;
+	private flushTimer: ReturnType<typeof setTimeout> | null = null;
+	private lastFlushAt = 0;
+	private lastFlushedRawLength = 0;
 	private completeSignal = false;
 
 	constructor(options?: MarkdownStreamBufferOptions) {
@@ -35,6 +39,7 @@ export class MdBuffer {
 		this.healthyEndMarker = options?.healthyEndMarker;
 		this.htmlHandling = options?.htmlHandling ?? 'ignore';
 		this.includeLinksAndImages = options?.includeLinksAndImages ?? false;
+		this.flushDelayMs = Math.max(0, options?.flushDelayMs ?? 0);
 		this.onFlush = options?.onFlush;
 		this.requestFrame = options?.requestFrame ?? getRequestFrame();
 		this.cancelFrame = options?.cancelFrame ?? getCancelFrame();
@@ -58,6 +63,13 @@ export class MdBuffer {
 	}
 
 	/**
+	 * Characters appended since the last emitted snapshot.
+	 */
+	public get pendingCharacters() {
+		return Math.max(0, this.raw.length - this.lastFlushedRawLength);
+	}
+
+	/**
 	 * Append a streamed Markdown token and schedule a frame flush.
 	 */
 	public append(chunk: string) {
@@ -73,11 +85,17 @@ export class MdBuffer {
 	 * Emit the current snapshot immediately.
 	 */
 	public flush(reason: MarkdownStreamBufferSnapshot['reason'] = 'manual') {
+		this.clearScheduledFlush();
+		const raw = this.committedRaw + this.activeRaw;
+		const healthy = this.buildHealthyOutput();
+		this.lastFlushAt = Date.now();
+		this.lastFlushedRawLength = raw.length;
 		const snapshot: MarkdownStreamBufferSnapshot = {
-			raw: this.committedRaw + this.activeRaw,
-			healthy: this.buildHealthyOutput(),
+			raw,
+			healthy,
 			reason,
 			isComplete: this.completeSignal,
+			pendingCharacters: this.pendingCharacters,
 		};
 		this.onFlush?.(snapshot);
 		return snapshot;
@@ -87,10 +105,7 @@ export class MdBuffer {
 	 * Mark the stream as complete and flush one final snapshot.
 	 */
 	public complete() {
-		if (this.frameHandle !== null) {
-			this.cancelFrame(this.frameHandle);
-			this.frameHandle = null;
-		}
+		this.clearScheduledFlush();
 		this.completeSignal = true;
 		return this.flush('complete');
 	}
@@ -99,12 +114,11 @@ export class MdBuffer {
 	 * Clear the buffered state and cancel any pending frame.
 	 */
 	public reset() {
-		if (this.frameHandle !== null) {
-			this.cancelFrame(this.frameHandle);
-			this.frameHandle = null;
-		}
+		this.clearScheduledFlush();
 		this.committedRaw = '';
 		this.activeRaw = '';
+		this.lastFlushAt = 0;
+		this.lastFlushedRawLength = 0;
 		this.completeSignal = false;
 	}
 
@@ -131,11 +145,38 @@ export class MdBuffer {
 	}
 
 	private scheduleFlush() {
-		if (this.frameHandle !== null) return;
+		if (this.frameHandle !== null || this.flushTimer !== null) return;
 		this.frameHandle = this.requestFrame(() => {
 			this.frameHandle = null;
-			this.flush('raf');
+			const remainingDelay = this.getRemainingFlushDelay();
+			if (remainingDelay <= 0) {
+				this.flush('raf');
+				return;
+			}
+
+			this.flushTimer = setTimeout(() => {
+				this.flushTimer = null;
+				this.flush('raf');
+			}, remainingDelay);
 		});
+	}
+
+	private getRemainingFlushDelay() {
+		if (this.flushDelayMs <= 0) return 0;
+		const elapsed = Date.now() - this.lastFlushAt;
+		return Math.max(0, this.flushDelayMs - elapsed);
+	}
+
+	private clearScheduledFlush() {
+		if (this.frameHandle !== null) {
+			this.cancelFrame(this.frameHandle);
+			this.frameHandle = null;
+		}
+
+		if (this.flushTimer !== null) {
+			clearTimeout(this.flushTimer);
+			this.flushTimer = null;
+		}
 	}
 
 	private commitStableLines() {

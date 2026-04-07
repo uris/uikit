@@ -28,10 +28,12 @@ function readLocalStorageValue<T>(key: string, fallback: T): T {
 
 export function useLocalStore<T>(key: string, value: T) {
 	const [item, setItem] = useState<T>(() => readLocalStorageValue(key, value));
+	const [hydrated, setHydrated] = useState(false);
 
 	// rehydrate on prop changes
 	useEffect(() => {
 		setItem(readLocalStorageValue(key, value));
+		setHydrated(true);
 	}, [key, value]);
 
 	function updateItem(data: T) {
@@ -43,5 +45,5 @@ export function useLocalStore<T>(key: string, value: T) {
 		setItem(data);
 	}
 
-	return [item, updateItem] as const;
+	return [item, updateItem, hydrated] as const;
 }

@@ -8,6 +8,7 @@ export enum ToastType {
 }
 
 type ToastBaseProps = {
+	notifId?: string;
 	message?: string | null;
 	size?: 's' | 'm' | 'l';
 	border?: boolean;

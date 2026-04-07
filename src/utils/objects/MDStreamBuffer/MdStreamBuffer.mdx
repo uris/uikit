@@ -26,6 +26,7 @@ import NoteSection from '../../../../documentation/_components/Notice/Notice';
 			- stores the raw markdown stream
 			- emits "healthy" markdown snapshots through `onFlush`
 			- batches normal updates on `requestAnimationFrame`
+			- optionally adds a minimum delay between emitted snapshots for extremely fast streams
 			- commits stable line-based prefixes so only the active tail keeps being reparsed
 			- supports optional link/image handling
 			- supports buffered inline select syntax using `$$option 1$$option 2$$`
@@ -37,6 +38,8 @@ import NoteSection from '../../../../documentation/_components/Notice/Notice';
             `MdBuffer` does not keep reparsing the full stream. When the active tail is healthy and ends on a newline boundary, the buffer promotes a stable prefix internally and only keeps parsing the remaining tail. This keeps parsing streams cheap.
             #### Rendering
             `MdBuffer` use `requestAnimationFrame` to trigger buffer flushes meaning renders will be clamped to a max of 60 per second. Flushing the buffer only happens when the buffer receives new content that has not been flushed.
+            #### Optional slower playback
+            If your stream is still too fast, set `flushDelayMs` to enforce a minimum delay between emitted snapshots. This slows visible output even further without changing the raw buffered content.
             
             
             ## Constructor options
@@ -58,6 +61,7 @@ import NoteSection from '../../../../documentation/_components/Notice/Notice';
 					<tr><td><code>healthyEndMarker</code></td><td><code>string</code></td><td>Optional ephemeral suffix appended to healthy output only. It is never written into <code>raw</code>. If the healthy tail ends with an optimistic newline closure, the marker is inserted before that newline.</td></tr>
 					<tr><td><code>htmlHandling</code></td><td><code>'ignore' | 'strip'</code></td><td>HTML handling mode. `ignore` passes tags through untouched. `strip` removes tag-shaped HTML from the healthy output.</td></tr>
 					<tr><td><code>includeLinksAndImages</code></td><td><code>boolean</code></td><td>When `true`, applies the built-in link and image ambiguity rules.</td></tr>
+					<tr><td><code>flushDelayMs</code></td><td><code>number</code></td><td>Optional minimum delay in milliseconds between emitted snapshots. Use this to intentionally slow very fast stream rendering beyond the normal animation-frame limit.</td></tr>
 					<tr><td><code>onFlush</code></td><td><code>{`(snapshot) => void`}</code></td><td>Called whenever the buffer emits a raw/healthy snapshot.</td></tr>
 					<tr><td><code>requestFrame</code></td><td><code>{`(callback) => number`}</code></td><td>Optional requestAnimationFrame override.</td></tr>
 					<tr><td><code>cancelFrame</code></td><td><code>{`(handle) => void`}</code></td><td>Optional cancelAnimationFrame override.</td></tr>
@@ -85,6 +89,7 @@ import NoteSection from '../../../../documentation/_components/Notice/Notice';
 					<tr><td><code>healthy</code></td><td><code>string</code></td><td>The parser-safe markdown output derived from the current raw buffer.</td></tr>
 					<tr><td><code>reason</code></td><td><code>'raf' | 'manual' | 'complete'</code></td><td>Why the snapshot was emitted.</td></tr>
 					<tr><td><code>isComplete</code></td><td><code>boolean</code></td><td>True after the buffer has been completed.</td></tr>
+					<tr><td><code>pendingCharacters</code></td><td><code>number</code></td><td>How many appended characters were waiting to be emitted before this snapshot. After a flush snapshot, this is <code>0</code>.</td></tr>
 				</tbody>
 			</table>
 
@@ -174,6 +179,37 @@ import NoteSection from '../../../../documentation/_components/Notice/Notice';
 			<RenderSource language={'tsx'}>
             ```
             buffer.dispose();
+            ```
+			</RenderSource>
+
+			## Slowing fast streams
+			If incoming chunks arrive too quickly, `flushDelayMs` can slow the visible render cadence:
+
+			<RenderSource language={'tsx'}>
+            ```
+            const buffer = new MdBuffer({
+                flushDelayMs: 48,
+                onFlush: ({ healthy }) => {
+                    console.log(healthy);
+                },
+            });
+            ```
+			</RenderSource>
+
+			## Detecting when the delayed queue has drained
+			Use `pendingCharacters` to tell whether appended content is still waiting to be emitted. This is useful when the upstream stream has ended but you want to wait until the delayed buffer finishes flushing before resetting UI state.
+
+			<RenderSource language={'tsx'}>
+            ```
+            const { healthy, pendingCharacters, append } = useMDStreamBuffer({
+                flushDelayMs: 60,
+            });
+
+            const streamEnded = true;
+
+            if (streamEnded && pendingCharacters === 0) {
+                // safe to reset
+            }
             ```
 			</RenderSource>
 		</Unstyled>

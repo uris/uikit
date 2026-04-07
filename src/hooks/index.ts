@@ -10,6 +10,12 @@ export {
 export { useLastUpdated } from './useLastUpdated/useLastUpdated';
 export { useLocalStore } from './useLocalStore/useLocalStore';
 export { useMDStreamBuffer } from './useMdStreamBuffer/useMdStreamBuffer';
+export type { UseMDStreamBufferOptions } from './useMdStreamBuffer/useMdStreamBuffer';
+export {
+	useBindWebRTC,
+	type UseBindWebRTCOptions,
+	type UseBindWebRTCReturn,
+} from './useBindWebRTC/useBindWebRTC';
 export { useMicrophone } from './useMicrophone/useMicrophone';
 export type {
 	MicOption,
