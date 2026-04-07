@@ -29,5 +29,5 @@ jobs:
             fi
 
             cd ~/projects/uikit
-            docker-compose up -d --build
+            docker-compose up -d --build uikit
             docker image prune -f
