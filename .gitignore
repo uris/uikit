@@ -66,8 +66,8 @@ web_modules/
 # Optional REPL history
 .node_repl_history
 
-# Output of 'npm pack' at the repo root
-pack/*.tgz
+# Local package tarballs and related pack output
+pack/
 
 # Yarn Integrity file
 .yarn-integrity
