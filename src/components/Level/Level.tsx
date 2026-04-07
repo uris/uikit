@@ -1,7 +1,7 @@
 import React, { useEffect, useMemo, useRef, useState } from 'react';
 import { AudioVisualizer, type AudioVisualizerOptions } from '../../utils';
 import { setStyle } from '../../utils/functions/misc';
-import css from './Level.Module.css';
+import css from './Level.module.css';
 import type { LevelProps } from './_types';
 
 function BaseLevel(props: Readonly<LevelProps>) {
