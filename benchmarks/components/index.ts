@@ -5,6 +5,7 @@
 
 export { avatarBenchmarkConfig } from './Avatar.bench';
 export { avatarGroupBenchmarkConfig } from './AvatarGroup.bench';
+export { audioBubbleBenchmarkConfig } from './AudioBubble.bench';
 export { badgeBenchmarkConfig } from './Badge.bench';
 export { cameraBenchmarkConfig } from './Camera.bench';
 export { checkBoxBenchmarkConfig } from './CheckBox.bench';
@@ -19,6 +20,9 @@ export { flexDivBenchmarkConfig } from './FlexDiv.bench';
 export { grouperBenchmarkConfig } from './Grouper.bench';
 export { iconBenchmarkConfig } from './Icon.bench';
 export { iconButtonBenchmarkConfig } from './IconButton.bench';
+export { levelBenchmarkConfig } from './Level.bench';
+export { modalBenchmarkConfig } from './Modal.bench';
+export { modalControllerBenchmarkConfig } from './ModalController.bench';
 export { overlayBenchmarkConfig } from './Overlay.bench';
 export { pagerBenchmarkConfig } from './Pager.bench';
 export { promptInputBenchmarkConfig } from './PromptInput.bench';
@@ -33,6 +37,8 @@ export { textAreaBenchmarkConfig } from './TextArea.bench';
 export { textfieldBenchmarkConfig } from './Textfield.bench';
 export { tipBenchmarkConfig } from './Tip.bench';
 export { toastBenchmarkConfig } from './Toast.bench';
+export { toggleButtonBenchmarkConfig } from './ToggleButton.bench';
+export { uploadAreaBenchmarkConfig } from './UploadArea.bench';
 export { buttonBenchmarkConfig } from './Button.bench';
 export { buttonBarBenchmarkConfig } from './ButtonBar.bench';
 export { chipBenchmarkConfig } from './Chip.bench';

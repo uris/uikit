@@ -8,6 +8,7 @@ import {
 	Avatar,
 	AvatarGroup,
 	Badge,
+	AudioBubble,
 	Camera,
 	CheckBox,
 	DivInput,
@@ -20,6 +21,9 @@ import {
 	Grouper,
 	Icon,
 	IconButton,
+	Level,
+	Modal,
+	ModalController,
 	Overlay,
 	Pager,
 	ProgressIndicator,
@@ -33,6 +37,8 @@ import {
 	TextField,
 	Tip,
 	Toast,
+	ToggleButton,
+	UploadArea,
 	Button,
 	ButtonBar,
 	Chip,
@@ -145,6 +151,34 @@ export const badgeConfig: ComponentBenchmarkConfig = {
 			name: 'Memory',
 			type: 'memory',
 			fn: () => measureMemoryDelta(<Badge count={42} />, 10),
+		},
+	],
+};
+
+export const audioBubbleConfig: ComponentBenchmarkConfig = {
+	componentName: 'AudioBubble',
+	tests: [
+		{
+			name: 'Mount Time',
+			type: 'mount',
+			fn: () => measureMountTime(<AudioBubble size={64} playing={false} />, 50),
+		},
+		{
+			name: 'Re-render',
+			type: 'rerender',
+			fn: () =>
+				measureRerenderTime(
+					<AudioBubble size={64} playing={false} />,
+					(container) => {
+						container.rerender(<AudioBubble size={72} playing={false} glow={false} />);
+					},
+					50,
+				),
+		},
+		{
+			name: 'Memory',
+			type: 'memory',
+			fn: () => measureMemoryDelta(<AudioBubble size={64} />, 10),
 		},
 	],
 };
@@ -277,6 +311,226 @@ export const flexDivConfig: ComponentBenchmarkConfig = {
 						);
 					},
 					50,
+				),
+		},
+	],
+};
+
+export const levelConfig: ComponentBenchmarkConfig = {
+	componentName: 'Level',
+	tests: [
+		{
+			name: 'Mount Time',
+			type: 'mount',
+			fn: () => measureMountTime(<Level width={120} height={6} playing={false} />, 50),
+		},
+		{
+			name: 'Re-render',
+			type: 'rerender',
+			fn: () =>
+				measureRerenderTime(
+					<Level width={120} height={6} playing={false} />,
+					(container) => {
+						container.rerender(
+							<Level width={140} height={8} playing={false} maxIntensity={8} />,
+						);
+					},
+					50,
+				),
+		},
+		{
+			name: 'Memory',
+			type: 'memory',
+			fn: () => measureMemoryDelta(<Level width={120} height={6} />, 10),
+		},
+	],
+};
+
+export const modalConfig: ComponentBenchmarkConfig = {
+	componentName: 'Modal',
+	tests: [
+		{
+			name: 'Mount Time',
+			type: 'mount',
+			fn: () =>
+				measureMountTime(
+					<Modal
+						title="Benchmark Modal"
+						actions={[{ id: 'confirm', label: 'Confirm', primary: true }]}
+					>
+						<div>Modal body content</div>
+					</Modal>,
+					50,
+				),
+		},
+		{
+			name: 'Re-render',
+			type: 'rerender',
+			fn: () =>
+				measureRerenderTime(
+					<Modal
+						title="Benchmark Modal"
+						actions={[{ id: 'confirm', label: 'Confirm', primary: true }]}
+					>
+						<div>Modal body content</div>
+					</Modal>,
+					(container) => {
+						container.rerender(
+							<Modal
+								title="Updated Modal"
+								actions={[
+									{ id: 'cancel', label: 'Cancel' },
+									{ id: 'confirm', label: 'Confirm', primary: true },
+								]}
+							>
+								<div>Updated modal body content</div>
+							</Modal>,
+						);
+					},
+					50,
+				),
+		},
+		{
+			name: 'Memory',
+			type: 'memory',
+			fn: () =>
+				measureMemoryDelta(
+					<Modal title="Benchmark Modal">
+						<div>Modal body content</div>
+					</Modal>,
+					10,
+				),
+		},
+	],
+};
+
+export const modalControllerConfig: ComponentBenchmarkConfig = {
+	componentName: 'ModalController',
+	tests: [
+		{
+			name: 'Mount Time',
+			type: 'mount',
+			fn: () => measureMountTime(<ModalController draggable={false} />, 50),
+		},
+		{
+			name: 'Re-render',
+			type: 'rerender',
+			fn: () =>
+				measureRerenderTime(
+					<ModalController draggable={false} overlayOpacity={0.5} />,
+					(container) => {
+						container.rerender(
+							<ModalController draggable={true} overlayOpacity={0.8} />,
+						);
+					},
+					50,
+				),
+		},
+		{
+			name: 'Memory',
+			type: 'memory',
+			fn: () => measureMemoryDelta(<ModalController draggable={false} />, 10),
+		},
+	],
+};
+
+export const toggleButtonConfig: ComponentBenchmarkConfig = {
+	componentName: 'ToggleButton',
+	tests: [
+		{
+			name: 'Mount Time',
+			type: 'mount',
+			fn: () =>
+				measureMountTime(
+					<ToggleButton label="Toggle" icon="check" selected={false} />,
+					50,
+				),
+		},
+		{
+			name: 'Re-render',
+			type: 'rerender',
+			fn: () =>
+				measureRerenderTime(
+					<ToggleButton label="Toggle" icon="check" selected={false} />,
+					(container) => {
+						container.rerender(
+							<ToggleButton label="Toggle On" icon="check" selected={true} />,
+						);
+					},
+					50,
+				),
+		},
+		{
+			name: 'Event Response',
+			type: 'event',
+			fn: () =>
+				measureEventResponseTime(
+					<ToggleButton label="Toggle" icon="check" onChange={() => {}} />,
+					(container) => {
+						const button = container.container.querySelector('button');
+						if (button) fireEvent.click(button);
+					},
+					50,
+				),
+		},
+		{
+			name: 'Memory',
+			type: 'memory',
+			fn: () =>
+				measureMemoryDelta(
+					<ToggleButton label="Toggle" icon="check" selected={false} />,
+					10,
+				),
+		},
+	],
+};
+
+export const uploadAreaConfig: ComponentBenchmarkConfig = {
+	componentName: 'UploadArea',
+	tests: [
+		{
+			name: 'Mount Time',
+			type: 'mount',
+			fn: () =>
+				measureMountTime(
+					<UploadArea
+						title="Upload Files"
+						message="Drop files here"
+						showProgress={false}
+					/>,
+					50,
+				),
+		},
+		{
+			name: 'Re-render',
+			type: 'rerender',
+			fn: () =>
+				measureRerenderTime(
+					<UploadArea
+						title="Upload Files"
+						message="Drop files here"
+						showProgress={false}
+					/>,
+					(container) => {
+						container.rerender(
+							<UploadArea
+								title="Upload Images"
+								message="Click to upload"
+								multiple={false}
+								showProgress={false}
+							/>,
+						);
+					},
+					50,
+				),
+		},
+		{
+			name: 'Memory',
+			type: 'memory',
+			fn: () =>
+				measureMemoryDelta(
+					<UploadArea title="Upload Files" message="Drop files here" />,
+					10,
 				),
 		},
 	],
@@ -1395,6 +1649,7 @@ export const toastConfig: ComponentBenchmarkConfig = {
 export const allBenchmarkConfigs = [
 	avatarConfig,
 	avatarGroupConfig,
+	audioBubbleConfig,
 	badgeConfig,
 	cameraConfig,
 	checkBoxConfig,
@@ -1409,6 +1664,9 @@ export const allBenchmarkConfigs = [
 	grouperConfig,
 	iconConfig,
 	iconButtonConfig,
+	levelConfig,
+	modalConfig,
+	modalControllerConfig,
 	promptInputConfig,
 	overlayConfig,
 	pagerConfig,
@@ -1427,4 +1685,6 @@ export const allBenchmarkConfigs = [
 	buttonBarConfig,
 	chipConfig,
 	labelConfig,
+	toggleButtonConfig,
+	uploadAreaConfig,
 ];
