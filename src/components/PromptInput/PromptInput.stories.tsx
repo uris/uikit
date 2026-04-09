@@ -13,6 +13,8 @@ const meta: Meta<typeof PromptInput> = {
 	title: 'Components/PromptInput',
 	component: PromptInput,
 	args: {
+		width: '100%',
+		maxWidth: 720,
 		value: '',
 		attachments: [],
 		working: false,

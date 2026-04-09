@@ -29,7 +29,9 @@
 	z-index: 0;
 	height: auto;
 	max-height: var(--prompt-max-height);
-	width: 100%;
+	width: var(--prompt-width);
+	max-width: var(--prompt-max-width);
+	min-width: var(--prompt-min-width);
 	border-radius: var(--prompt-border-radius);
 	overflow: hidden;
 	padding: var(--prompt-border-width) !important;

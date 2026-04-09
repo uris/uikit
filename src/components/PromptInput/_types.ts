@@ -7,6 +7,9 @@ type BasePromptProps = {
 	value?: string;
 	maxHeight?: string | number;
 	working?: boolean;
+	width?: string | number;
+	maxWidth?: string | number;
+	minWidth?: string | number;
 	borderStyle?: 'solid' | 'gradient' | 'none';
 	borderWidth?: number;
 	borderColor?: string | number;
@@ -17,13 +20,14 @@ type BasePromptProps = {
 	placeholderWorking?: string;
 	focused?: boolean;
 	submitClears?: boolean;
-	submitEnablesStop?: boolean;
 	enterSubmits?: boolean;
 	sendButton?: boolean;
 	attachButton?: boolean;
 	stopEnabled?: boolean;
 	maxLength?: number;
 	toolbarGap?: number;
+	attachmentsDisabled?: boolean;
+	submitWorking?: boolean;
 	textSize?: 's' | 'm' | 'l';
 	onChange?: (value: string | undefined, attachments?: FileItem[]) => void;
 	onSubmit?: (value: string | undefined, attachments?: FileItem[]) => void;

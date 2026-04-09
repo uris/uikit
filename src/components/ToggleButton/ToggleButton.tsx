@@ -22,6 +22,7 @@ export function ToggleButton(props: Readonly<ToggleButtonProps>) {
 		unselect = true,
 		fill = false,
 		disabled = false,
+		border = false,
 		onChange,
 		onSelect,
 		onToolTip,
@@ -60,6 +61,7 @@ export function ToggleButton(props: Readonly<ToggleButtonProps>) {
 					iconFill={fill}
 					disabled={disabled}
 					onToolTip={onToolTip}
+					border={border}
 				/>
 			)}
 			{(children || label) && (

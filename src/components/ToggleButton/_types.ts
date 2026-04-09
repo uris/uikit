@@ -17,6 +17,7 @@ export interface ToggleButtonProps {
 	onSelect?: () => void;
 	onToolTip?: (tip: ToolTip | null) => void;
 	gap?: number;
+	border?: boolean;
 	iconSize?: number;
 	tooltip?: string;
 	fill?: boolean;

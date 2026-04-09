@@ -8,6 +8,7 @@ import React, {
 	useState,
 } from 'react';
 import { useTheme } from '../../hooks';
+import { setStyle } from '../../utils/functions/misc';
 import { Button } from '../Button';
 import { type FileItem, FileList } from '../FileList';
 import css from './PromptInput.module.css';
@@ -19,8 +20,13 @@ const PromptInputBase = React.forwardRef<HTMLDivElement, PromptProps>(
 			children,
 			attachments = [],
 			value = '',
+			width = '100%',
+			maxWidth,
+			minWidth,
 			working = false,
 			maxHeight,
+			attachmentsDisabled = false,
+			submitWorking = false,
 			borderStyle = 'gradient',
 			borderColor,
 			borderColorOn,
@@ -31,7 +37,6 @@ const PromptInputBase = React.forwardRef<HTMLDivElement, PromptProps>(
 			placeholder = 'Ask me anything ...',
 			placeholderWorking = 'Working ...',
 			submitClears = true,
-			submitEnablesStop = true,
 			enterSubmits = true,
 			attachButton = true,
 			sendButton = true,
@@ -48,8 +53,6 @@ const PromptInputBase = React.forwardRef<HTMLDivElement, PromptProps>(
 		} = props;
 		const { isDark } = useTheme();
 		const [isFocused, setIsFocused] = useState<boolean>(focused ?? false);
-		const [isWorking, setIsWorking] = useState<boolean>(working ?? false);
-		const [isStopEnabled, setIsStopEnabled] = useState<boolean>(stopEnabled);
 		const [textValue, setTextValue] = useState<string | undefined>(value);
 		const textAreaRef = useRef<HTMLTextAreaElement>(null);
 
@@ -88,30 +91,26 @@ const PromptInputBase = React.forwardRef<HTMLDivElement, PromptProps>(
 
 		// submit the current prompt when not already working or stopping
 		const handleSubmit = useCallback(() => {
-			if (isWorking || isStopEnabled) return;
+			if (stopEnabled) return;
+			if (working && submitWorking) return;
 			const currentValue = textAreaRef.current?.value;
 			if (currentValue) {
 				onSubmit?.(currentValue, attachments);
-				setIsWorking(true);
 				if (submitClears) setTextValue('');
-
-				if (submitEnablesStop) setIsStopEnabled(true);
 				handleBlur();
 			}
 		}, [
+			stopEnabled,
 			submitClears,
 			onSubmit,
 			handleBlur,
-			submitEnablesStop,
-			isWorking,
-			isStopEnabled,
 			attachments,
+			working,
+			submitWorking,
 		]);
 
-		// stop the current run and return focus to the textarea
+		// emit stop event keeping focus on the textarea
 		const handleStop = useCallback(() => {
-			setIsWorking(false);
-			setIsStopEnabled(false);
 			onStop?.();
 			handleFocus();
 		}, [onStop, handleFocus]);
@@ -121,11 +120,10 @@ const PromptInputBase = React.forwardRef<HTMLDivElement, PromptProps>(
 			(e: React.KeyboardEvent<HTMLTextAreaElement>) => {
 				if (e.key === 'Enter' && enterSubmits) {
 					e.preventDefault();
-					if (isWorking) return;
 					handleSubmit();
 				}
 			},
-			[handleSubmit, isWorking, enterSubmits],
+			[handleSubmit, enterSubmits],
 		);
 
 		// route the send button to submit or stop based on the current state
@@ -133,10 +131,9 @@ const PromptInputBase = React.forwardRef<HTMLDivElement, PromptProps>(
 			(e: React.MouseEvent<HTMLButtonElement>) => {
 				e.preventDefault();
 				e.stopPropagation();
-				if (isWorking && !isStopEnabled) return;
-				isStopEnabled ? handleStop() : handleSubmit();
+				stopEnabled ? handleStop() : handleSubmit();
 			},
-			[handleSubmit, handleStop, isStopEnabled, isWorking],
+			[handleSubmit, handleStop, stopEnabled],
 		);
 
 		// keep the attach button from stealing wrapper click behavior
@@ -152,10 +149,9 @@ const PromptInputBase = React.forwardRef<HTMLDivElement, PromptProps>(
 		const handleClickButtonBar = useCallback(
 			(e: React.MouseEvent<HTMLDivElement>) => {
 				e.preventDefault();
-				if (isWorking) return;
 				handleFocus();
 			},
-			[handleFocus, isWorking],
+			[handleFocus],
 		);
 
 		// resolve the outer border treatment from style, focus, and working state
@@ -164,12 +160,12 @@ const PromptInputBase = React.forwardRef<HTMLDivElement, PromptProps>(
 				const radial = isDark
 					? 'var(--conic-gradient-dark)'
 					: 'var(--conic-gradient-light)';
-				if (isWorking && borderAnimate) return radial;
+				if (working && borderAnimate) return radial;
 				if (isFocused) return borderColorOn ?? radial;
 				return borderColor ?? radial;
 			}
 			if (borderStyle === 'solid') {
-				if (isWorking) return borderColorOn ?? 'var(--core-outline-special)';
+				if (working) return borderColorOn ?? 'var(--core-outline-special)';
 				if (isFocused) return borderColorOn ?? 'var(--core-outline-special)';
 				return borderColor ?? 'transparent';
 			}
@@ -179,35 +175,36 @@ const PromptInputBase = React.forwardRef<HTMLDivElement, PromptProps>(
 			isFocused,
 			borderColorOn,
 			borderColor,
-			isWorking,
+			working,
 			borderAnimate,
 			isDark,
 		]);
 
 		// resolve the placeholder text from the current working state
 		const setPlaceholder = useMemo(() => {
-			if (isWorking && placeholderWorking) return placeholderWorking;
+			if (working && placeholderWorking) return placeholderWorking;
 			return placeholder;
-		}, [isWorking, placeholder, placeholderWorking]);
+		}, [working, placeholder, placeholderWorking]);
 
 		// resolve the send button icon color from working and content state
 		const setSendIconColor = useMemo(() => {
-			if (isStopEnabled || isWorking) return 'var(--core-text-primary)';
+			if (stopEnabled) return 'var(--core-text-primary)';
 			if (textValue !== '') return 'var(--core-text-light)';
 			return 'var(--core-text-disabled)';
-		}, [textValue, isWorking, isStopEnabled]);
+		}, [textValue, stopEnabled]);
 
 		// resolve the send button state from content and stop mode
 		const sendButtonState = useMemo(() => {
-			if (isStopEnabled) return 'normal';
-			return textValue === '' && !isWorking ? 'disabled' : 'normal';
-		}, [textValue, isStopEnabled, isWorking]);
+			if (working && submitWorking) return 'normal';
+			if (stopEnabled) return 'normal';
+			return textValue === '' ? 'disabled' : 'normal';
+		}, [textValue, stopEnabled, working, submitWorking]);
 
 		// resolve the attach button state while work is in progress
 		const attachState = useMemo(() => {
-			if (!isWorking) return 'normal';
+			if (!attachmentsDisabled) return 'normal';
 			return 'disabled';
-		}, [isWorking]);
+		}, [attachmentsDisabled]);
 
 		// sync focus requests from the controlled prop
 		useEffect(() => {
@@ -221,33 +218,31 @@ const PromptInputBase = React.forwardRef<HTMLDivElement, PromptProps>(
 			if (currentValue !== value) setTextValue(value);
 		}, [value]);
 
-		// sync the local working state from the controlled prop
-		useEffect(() => {
-			if (working !== undefined) setIsWorking(working);
-		}, [working]);
-
-		// sync stop-mode availability from the controlled prop
-		useEffect(() => setIsStopEnabled(stopEnabled), [stopEnabled]);
-
 		// compose CSS custom properties for border treatment and sizing
 		const cssVars = useMemo(() => {
 			return {
+				'--prompt-width': setStyle(width),
+				'--prompt-min-width': setStyle(minWidth, 'unset'),
+				'--prompt-max-width': setStyle(maxWidth, 'unset'),
 				'--prompt-border-color': setBorderColor,
 				'--prompt-max-height': maxHeight ? `${maxHeight}px` : 'unset',
 				'--prompt-border-width': borderWidth ? `${borderWidth}px` : '0',
-				'--prompt-state': isWorking && borderAnimate ? 'running' : 'paused',
+				'--prompt-state': working && borderAnimate ? 'running' : 'paused',
 				'--prompt-border-radius': borderRadius ? `${borderRadius}px` : '8px',
 				'--prompt-inner-border-radius': borderRadius
 					? `${borderRadius - 1}px`
 					: '7px',
 			} as React.CSSProperties;
 		}, [
-			isWorking,
+			working,
 			borderAnimate,
 			setBorderColor,
 			borderWidth,
 			borderRadius,
 			maxHeight,
+			width,
+			maxWidth,
+			minWidth,
 		]);
 
 		return (
@@ -300,13 +295,13 @@ const PromptInputBase = React.forwardRef<HTMLDivElement, PromptProps>(
 								<Button
 									round
 									label={undefined}
-									variant={isStopEnabled ? 'outline' : 'solid'}
-									iconLeft={isStopEnabled ? 'stop' : 'arrow up'}
-									iconSize={isStopEnabled ? 16 : 20}
+									variant={stopEnabled ? 'outline' : 'solid'}
+									iconLeft={stopEnabled ? 'stop' : 'arrow up'}
+									iconSize={stopEnabled ? 16 : 20}
 									state={sendButtonState}
 									bgColorDisabled={'var(--core-outline-primary)'}
-									progress={!isStopEnabled}
-									working={!isStopEnabled && isWorking}
+									progress={!stopEnabled}
+									working={submitWorking && working}
 									onMouseDown={handleClickSend}
 									iconColor={setSendIconColor}
 								/>

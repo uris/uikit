@@ -47,7 +47,6 @@ export const Default: StoryObj<typeof ModalController> = {
 
 function ModalControllerDemo() {
 	const modalResponse = useModalActions().modalResponse;
-	const ref = useRef<HTMLDivElement>(null);
 
 	// await the modal response value
 	const showAsyncModalClick = async () => {
@@ -63,11 +62,11 @@ function ModalControllerDemo() {
 	};
 
 	return (
-		<FlexDiv absolute justify={'center'} align={'center'} ref={ref}>
+		<FlexDiv absolute justify={'center'} align={'center'}>
 			<Button iconRight={'arrow right'} onClick={showAsyncModalClick}>
 				Continue
 			</Button>
-			<ModalController dragConstraintsRef={ref} draggable={true} />
+			<ModalController draggable={true} />
 		</FlexDiv>
 	);
 }
