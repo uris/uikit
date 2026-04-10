@@ -47,6 +47,9 @@ import { RenderSource } from '../../../documentation/_components/RenderSource/Re
                 <tr><td><code>tabWidth</code></td><td><code>{`'compact' | 'fill' | number`}</code></td><td><code>'fill'</code></td><td>Controls each tab width. Use <code>'compact'</code> for content-sized tabs, <code>'fill'</code> to distribute tabs, or a number for a fixed pixel width.</td></tr>
                 <tr><td><code>closeWidth</code></td><td><code>{`number | string`}</code></td><td><code>'auto'</code></td><td>Width reserved for the optional close action area.</td></tr>
                 <tr><td><code>padding</code></td><td><code>{`number | string`}</code></td><td><code>8</code></td><td>Horizontal and vertical tab padding.</td></tr>
+                <tr><td><code>justify</code></td><td><code>{`'start' | 'center' | 'end'`}</code></td><td><code>'start'</code></td><td>Controls horizontal alignment of the rendered tab options inside the bar.</td></tr>
+                <tr><td><code>borderColor</code></td><td><code>string</code></td><td><code>'var(--core-outline-secondary)'</code></td><td>Color used for the bottom bar border and the selected-tab underline.</td></tr>
+                <tr><td><code>textSize</code></td><td><code>{`'xs' | 's' | 'm' | 'l' | 'xl'`}</code></td><td><code>'m'</code></td><td>Typography size token applied to each tab label.</td></tr>
                 <tr><td><code>iconSize</code></td><td><code>number</code></td><td><code>20</code></td><td>Icon size for tab icons and the close button.</td></tr>
                 <tr><td><code>iconGap</code></td><td><code>number</code></td><td><code>8</code></td><td>Gap between the icon and tab label.</td></tr>
                 <tr><td><code>tabGap</code></td><td><code>number</code></td><td><code>0</code></td><td>Gap between rendered tab options.</td></tr>
@@ -115,6 +118,9 @@ export function FixedWidthTabBarExample() {
     return (
         <TabBar
             tabWidth={200}
+            justify="center"
+            borderColor="var(--core-outline-primary)"
+            textSize="l"
             options={[
                 { name: 'Light', value: 'light', icon: 'circle' },
                 { name: 'Dark', value: 'dark', icon: 'target' },

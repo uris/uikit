@@ -72,8 +72,14 @@ function VolumeStoreDemo() {
 						label={muted ? 'Unmute' : 'Mute'}
 						onClick={() => (muted ? actions.unmute() : actions.mute())}
 					/>
-					<Button label={'Set 25%'} onClick={() => actions.setVolume(0.25)} />
-					<Button label={'Set 75%'} onClick={() => actions.setVolume(0.75)} />
+					<Button
+						label={'Set 25%'}
+						onClick={() => actions.setVolume(0.25, { playFeedback: true })}
+					/>
+					<Button
+						label={'Set 75%'}
+						onClick={() => actions.setVolume(0.75, { playFeedback: true })}
+					/>
 				</FlexDiv>
 				<span>Attached Media Elements: {audioElement ? '1' : '0'}</span>
 			</FlexDiv>

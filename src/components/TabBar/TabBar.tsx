@@ -119,7 +119,6 @@ export const TabBar = React.memo((props: TabBarProps) => {
 	);
 
 	// derive the rendered tab options from the options list
-	// biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
 	const renderedOptions = useMemo(
 		() =>
 			options.map((option: TabOption, i: number) => (
@@ -161,6 +160,7 @@ export const TabBar = React.memo((props: TabBarProps) => {
 			handleOptionClick,
 			iconFill,
 			handleOptionKeyDown,
+			borderColor,
 			textSize,
 		],
 	);

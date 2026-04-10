@@ -80,12 +80,16 @@ import {RenderSource} from '../../../documentation/_components/RenderSource/Rend
           <tbody>
             <tr><td><code>onChange</code></td><td><code>{`(value: string | undefined, attachments?: FileItem[]) => void`}</code></td><td>Fires whenever textarea content changes.</td></tr>
             <tr><td><code>onSubmit</code></td><td><code>{`(value: string | undefined, attachments?: FileItem[]) => void`}</code></td><td>Fires when user submits the prompt (Enter or send button).</td></tr>
-            <tr><td><code>onBlur</code></td><td><code>{`(value: string | undefined, attachments?: FileItem[]) => void`}</code></td><td>Fires when input loses focus.</td></tr>
+            <tr><td><code>onBlur</code></td><td><code>{`(value: string | undefined, attachments?: FileItem[]) => void`}</code></td><td>Fires when input loses focus. When <code>submitClears</code> is enabled and a submit succeeds, the blur callback receives the cleared value.</td></tr>
             <tr><td><code>onFocus</code></td><td><code>{`(value: string | undefined, attachments?: FileItem[]) => void`}</code></td><td>Fires when input receives focus.</td></tr>
             <tr><td><code>onStop</code></td><td><code>{`() => void`}</code></td><td>Fires when stop action is triggered during working state.</td></tr>
             <tr><td><code>onAttachmentsChange</code></td><td><code>{`(attachments: FileItem[]) => void`}</code></td><td>Fires when files are removed from the attachment list.</td></tr>
           </tbody>
         </table>
+
+        ## Notes
+        - `onSubmit` fires before `submitClears` resets the local textarea value.
+        - When `submitClears` is `true`, the component also emits `onChange('', attachments)` so controlled parents can clear their external value immediately.
 
         ## Code Examples
         </Unstyled>

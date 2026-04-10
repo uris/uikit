@@ -38,7 +38,7 @@ type TabBarBaseProps = {
 	onClose?: () => void;
 	justify?: 'start' | 'center' | 'end';
 	borderColor?: string;
-	textSize?: 'xs' | 's' | 'm' | 'l';
+	textSize?: 'xs' | 's' | 'm' | 'l' | 'xl';
 };
 
 export type TabBarProps = Omit<
@@ -69,5 +69,5 @@ export interface TabOptionProps {
 	onToolTip?: (tip: ToolTip | null) => void;
 	buttonRef?: (element: HTMLButtonElement | null) => void;
 	borderColor?: string;
-	textSize?: 'xs' | 's' | 'm' | 'l';
+	textSize?: 'xs' | 's' | 'm' | 'l' | 'xl';
 }

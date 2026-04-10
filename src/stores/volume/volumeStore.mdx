@@ -86,11 +86,14 @@ import NoteSection from "../../../documentation/_components/Notice/Notice";
             <tr><td><code>detachFeedbackElement</code></td><td><code>{`(element: AudioElement) => void`}</code></td><td>Removes the dedicated feedback element.</td></tr>
             <tr><td><code>playFeedback</code></td><td><code>{`(volume?: number) => Promise<void>`}</code></td><td>Attempts to play the dedicated feedback element using the provided volume override or the current store volume.</td></tr>
             <tr><td><code>clearMedia</code></td><td><code>{`() => void`}</code></td><td>Clears the attached media registry.</td></tr>
-            <tr><td><code>setVolume</code></td><td><code>{`(value: number, options?: { playFeedback?: boolean }) => void`}</code></td><td>Updates the current volume using a normalized number between <code>0</code> and <code>1</code>. While muted, this updates the stored restore volume without changing output from zero. Pass <code>{`{ playFeedback: false }`}</code> to suppress feedback playback for that specific volume change.</td></tr>
+            <tr><td><code>setVolume</code></td><td><code>{`(value: number, options?: { playFeedback?: boolean }) => Promise<void>`}</code></td><td>Updates the current volume using a normalized number between <code>0</code> and <code>1</code>. While muted, this updates the stored restore volume without changing output from zero. Feedback playback is now opt-in and only runs when you pass <code>{`{ playFeedback: true }`}</code>.</td></tr>
             <tr><td><code>mute</code></td><td><code>{`() => Promise<void>`}</code></td><td>Sets output volume to zero while preserving the previous volume for restore, then plays the feedback element when present.</td></tr>
             <tr><td><code>unmute</code></td><td><code>{`() => Promise<void>`}</code></td><td>Restores the stored volume, then plays the feedback element when present.</td></tr>
           </tbody>
         </table>
+
+        ## Notes
+        - `setVolume()` no longer plays the feedback sound by default. Existing callers that relied on automatic beeps must now pass <code>{`{ playFeedback: true }`}</code>.
 
         ## Example
         </Unstyled>

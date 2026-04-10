@@ -13,6 +13,14 @@ const meta: Meta<typeof TabBar> = {
 			control: { type: 'radio' },
 			options: ['fill', 'compact'],
 		},
+		justify: {
+			control: { type: 'radio' },
+			options: ['start', 'center', 'end'],
+		},
+		textSize: {
+			control: { type: 'radio' },
+			options: ['xs', 's', 'm', 'l', 'xl'],
+		},
 	},
 	args: {
 		options: placeholderOptions,
@@ -30,6 +38,9 @@ const meta: Meta<typeof TabBar> = {
 		hasClose: false,
 		closeWidth: 'auto',
 		tabWidth: 'fill',
+		justify: 'start',
+		borderColor: 'var(--core-outline-secondary)',
+		textSize: 'm',
 		onChange: fn(),
 		onTabChange: fn(),
 		onClose: fn(),
