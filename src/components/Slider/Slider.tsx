@@ -7,9 +7,9 @@ import React, {
 	useRef,
 	useState,
 } from 'react';
-import { useObserveResize } from '../../hooks/useObserveResize/useObserveResize';
+import { useObserveResize } from '../../hooks';
 import { useTrackRenders } from '../../hooks/useTrackRenders/useTrackRenders';
-import { debounce } from '../../utils/functions/debounce';
+import { debounce } from '../../utils';
 import { pointerPosition } from '../../utils/functions/misc';
 import css from './Slider.module.css';
 import type { SliderProps } from './_types';

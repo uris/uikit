@@ -24,7 +24,7 @@ export const useVolumeStore = create<VolumeStore>((set, get) => ({
 		detachFeedbackElement: (element: AudioElement) => {
 			set({ feedbackElement: null });
 		},
-		setVolume: (volume: number, options?: { playFeedback?: boolean }) => {
+		setVolume: async (volume: number, options?: { playFeedback?: boolean }) => {
 			const muted = get().muted;
 			const currentVolume = muted ? 0 : volume;
 			const attachedMedia = get().elements;
@@ -34,8 +34,8 @@ export const useVolumeStore = create<VolumeStore>((set, get) => ({
 				adjustMediaVolume(attachedMedia, currentVolume);
 			}
 			set({ volume: currentVolume, storedVolume: newStored });
-			if (!muted && (options?.playFeedback ?? true)) {
-				void playFeedbackSound(feedbackElement, currentVolume);
+			if (!muted && feedbackElement && options?.playFeedback === true) {
+				await playFeedbackSound(feedbackElement, currentVolume);
 			}
 		},
 		playFeedback: async (volume?: number) => {

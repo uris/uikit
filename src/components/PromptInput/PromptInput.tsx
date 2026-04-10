@@ -64,11 +64,19 @@ const PromptInputBase = React.forwardRef<HTMLDivElement, PromptProps>(
 		}, [onFocus, attachments]);
 
 		// blur the textarea and report the current prompt state
-		const handleBlur = useCallback(() => {
-			setIsFocused(false);
-			textAreaRef.current?.blur();
-			onBlur?.(textAreaRef.current?.value, attachments);
-		}, [onBlur, attachments]);
+		const handleBlur = useCallback(
+			(valueOverride?: string) => {
+				setIsFocused(false);
+				textAreaRef.current?.blur();
+				onBlur?.(valueOverride ?? textAreaRef.current?.value, attachments);
+			},
+			[onBlur, attachments],
+		);
+
+		// bridge the native blur event to the internal blur reporter
+		const handleTextAreaBlur = useCallback(() => {
+			handleBlur();
+		}, [handleBlur]);
 
 		// forward attachment updates and keep the parent prompt state in sync
 		const handleAttachmentsChange = useCallback(
@@ -96,12 +104,17 @@ const PromptInputBase = React.forwardRef<HTMLDivElement, PromptProps>(
 			const currentValue = textAreaRef.current?.value;
 			if (currentValue) {
 				onSubmit?.(currentValue, attachments);
-				if (submitClears) setTextValue('');
-				handleBlur();
+				if (submitClears) {
+					setTextValue('');
+					onChange?.('', attachments);
+					if (textAreaRef.current) textAreaRef.current.value = '';
+				}
+				handleBlur(submitClears ? '' : currentValue);
 			}
 		}, [
 			stopEnabled,
 			submitClears,
+			onChange,
 			onSubmit,
 			handleBlur,
 			attachments,
@@ -214,8 +227,7 @@ const PromptInputBase = React.forwardRef<HTMLDivElement, PromptProps>(
 
 		// sync the textarea value from the controlled prop
 		useEffect(() => {
-			const currentValue = textAreaRef.current?.value;
-			if (currentValue !== value) setTextValue(value);
+			setTextValue(value);
 		}, [value]);
 
 		// compose CSS custom properties for border treatment and sizing
@@ -270,7 +282,7 @@ const PromptInputBase = React.forwardRef<HTMLDivElement, PromptProps>(
 						onChange={handleChange}
 						placeholder={setPlaceholder}
 						onFocus={handleFocus}
-						onBlur={handleBlur}
+						onBlur={handleTextAreaBlur}
 						onKeyDown={handleKeyDown}
 						maxLength={maxLength}
 						rows={1}

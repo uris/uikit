@@ -1,7 +1,8 @@
 .wrapper {
 	composes: rowStart from "../../utils/styling/flexBox.module.css";
+	justify-content: var(--tab-bar-justify) !important;
 	gap: var(--tab-bar-gap);
-	border-bottom: var(--tab-bar-border-bottom) solid var(--core-outline-primary);
+	border-bottom: var(--tab-bar-border-bottom) solid var(--tab-bar-border-color);
 	height: var(--tab-bar-height);
 	width: var(--tab-bar-width);
 	cursor: pointer;
@@ -9,7 +10,6 @@
 
 .option {
 	composes: row from "../../utils/styling/flexBox.module.css";
-	composes: body-m-regular from "../../utils/styling/type.module.css";
 	gap: var(--tab-bar-option-gap);
 	color: var(--tab-bar-option-color);
 	padding: var(--tab-bar-option-padding) !important;
@@ -44,4 +44,28 @@
 	padding: var(--tab-bar-close-padding) !important;
 	border-left: 1px solid var(--core-outline-primary);
 	width: min-content;
+}
+
+.xs {
+	composes: body-xs-regular from "../../utils/styling/type.module.css";
+}
+
+.s {
+	composes: body-s-regular from "../../utils/styling/type.module.css";
+}
+
+.m {
+	composes: body-m-regular from "../../utils/styling/type.module.css";
+}
+
+.l {
+	composes: body-l-regular from "../../utils/styling/type.module.css";
+}
+
+.xl {
+	composes: body-xl-regular from "../../utils/styling/type.module.css";
+}
+
+.selected {
+	font-weight: 520 !important;
 }

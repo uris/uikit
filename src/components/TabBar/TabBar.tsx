@@ -9,6 +9,7 @@ import React, {
 } from 'react';
 import { useTheme } from '../../hooks';
 import { useTrackRenders } from '../../hooks/useTrackRenders/useTrackRenders';
+import { setStyle } from '../../utils/functions/misc';
 import { Badge } from '../Badge';
 import { Icon } from '../Icon';
 import { IconButton } from '../IconButton';
@@ -35,6 +36,9 @@ export const TabBar = React.memo((props: TabBarProps) => {
 		hasClose = false,
 		closeWidth = 'auto',
 		selectedValue = null,
+		justify = 'start',
+		borderColor = 'var(--core-outline-secondary)',
+		textSize = 'm',
 		onChange = () => null,
 		onTabChange = () => null,
 		onClose = () => null,
@@ -115,6 +119,7 @@ export const TabBar = React.memo((props: TabBarProps) => {
 	);
 
 	// derive the rendered tab options from the options list
+	// biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
 	const renderedOptions = useMemo(
 		() =>
 			options.map((option: TabOption, i: number) => (
@@ -136,6 +141,8 @@ export const TabBar = React.memo((props: TabBarProps) => {
 					underline={underline}
 					iconFill={iconFill}
 					tabWidth={tabWidth}
+					textSize={textSize}
+					borderColor={borderColor}
 					buttonRef={(element) => {
 						optionRefs.current[i] = element;
 					}}
@@ -154,14 +161,9 @@ export const TabBar = React.memo((props: TabBarProps) => {
 			handleOptionClick,
 			iconFill,
 			handleOptionKeyDown,
+			textSize,
 		],
 	);
-
-	// normalize dimension values before applying them as CSS
-	const setStyle = useCallback((value: string | number) => {
-		if (typeof value === 'string') return value;
-		return `${value}px`;
-	}, []);
 
 	// compose CSS custom properties for tab bar layout and close control spacing
 	const cssVars = useMemo(() => {
@@ -170,10 +172,21 @@ export const TabBar = React.memo((props: TabBarProps) => {
 			'--tab-bar-height': `${setStyle(height)}px`,
 			'--tab-bar-width': setStyle(width),
 			'--tab-bar-border-bottom': `${border ? '1px' : '0'}`,
+			'--tab-bar-border-color': borderColor,
+			'--tab-bar-justify': justify,
 			'--tab-bar-close-width': `${closeWidth}px`,
-			'--tab-bar-close-padding': padding ? `${padding}px` : '8px',
+			'--tab-bar-close-padding': setStyle(padding, '8px'),
 		} as React.CSSProperties;
-	}, [tabGap, height, width, border, setStyle, closeWidth, padding]);
+	}, [
+		tabGap,
+		height,
+		width,
+		border,
+		closeWidth,
+		padding,
+		borderColor,
+		justify,
+	]);
 
 	return (
 		<div
@@ -221,8 +234,10 @@ const Option = React.memo(
 			showToolTip = null,
 			underline = true,
 			tabWidth = 'fill',
+			borderColor = 'var(--core-outline-secondary)',
 			count = 0,
 			iconFill = false,
+			textSize = 'm',
 			onKeyDown = () => null,
 			buttonRef,
 		} = props;
@@ -288,7 +303,8 @@ const Option = React.memo(
 		const cssVars = useMemo(() => {
 			return {
 				'--tab-bar-option-border': setUnderline,
-				'--tab-bar-option-padding': `${padding}px`,
+				'--tab-bar-option-border-color': borderColor,
+				'--tab-bar-option-padding': setStyle(padding, '8px'),
 				'--tab-bar-option-icon-size': `${iconSize}px`,
 				'--tab-bar-option-cursor': disabled ? 'default' : 'pointer',
 				'--tab-bar-option-gap': `${iconGap ?? 0}px`,
@@ -305,6 +321,7 @@ const Option = React.memo(
 			setTabFlex,
 			setTabWidth,
 			setUnderline,
+			borderColor,
 		]);
 
 		/* START.DEBUG */
@@ -314,7 +331,7 @@ const Option = React.memo(
 		return (
 			<button
 				type="button"
-				className={css.option}
+				className={`${css.option} ${css[textSize]} ${selected ? css.selected : ''}`}
 				style={cssVars}
 				ref={(element) => {
 					ref.current = element;
@@ -356,7 +373,10 @@ const Option = React.memo(
 			prevProps.iconSize === nextProps.iconSize &&
 			prevProps.count === nextProps.count &&
 			prevProps.label === nextProps.label &&
-			prevProps.icon === nextProps.icon
+			prevProps.icon === nextProps.icon &&
+			prevProps.borderColor === nextProps.borderColor &&
+			prevProps.textSize === nextProps.textSize &&
+			prevProps.padding === nextProps.padding
 		);
 	},
 );
