@@ -35,6 +35,7 @@ export const TextArea = React.memo((props: TextAreaProps) => {
 		textSize = 'm',
 		disabled = false,
 		submitClears = true,
+		maxLength = undefined,
 		onChange = () => null,
 		onFocus = () => null,
 		onBlur = () => null,
@@ -201,6 +202,7 @@ export const TextArea = React.memo((props: TextAreaProps) => {
 				value={text}
 				placeholder={placeholder}
 				rows={rows}
+				maxLength={maxLength}
 				disabled={disabled}
 				onChange={(e) => handleChange(e.target.value)}
 				onInput={() => handleResize()}

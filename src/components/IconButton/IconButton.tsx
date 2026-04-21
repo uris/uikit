@@ -15,6 +15,7 @@ import { Icon } from '../Icon';
 import { ToolTipType } from '../sharedTypes';
 import type { ToolTip } from '../sharedTypes';
 import css from './IconButton.module.css';
+import { resolveVariants } from './_animation';
 import type { IconButtonProps } from './_types';
 
 export const IconButton = React.memo((props: IconButtonProps) => {
@@ -50,6 +51,8 @@ export const IconButton = React.memo((props: IconButtonProps) => {
 		disabled = false,
 		showDot = false,
 		buttonSize = 'm',
+		presetAnimations,
+		customAnimations,
 		onClick = () => null,
 		onToolTip = () => null,
 		...divAttributes
@@ -178,7 +181,13 @@ export const IconButton = React.memo((props: IconButtonProps) => {
 			ref={ref}
 			{...(rest as any)}
 		>
-			<div className={css.icon} style={{ opacity: disabled ? 0.3 : 1 }}>
+			<motion.div
+				className={css.icon}
+				style={{ opacity: disabled ? 0.3 : 1 }}
+				variants={resolveVariants(presetAnimations, customAnimations)}
+				initial={isToggled ? 'animate' : 'initial'}
+				animate={on ? 'animate' : 'exit'}
+			>
 				<Icon
 					name={icon}
 					strokeColor={setIconColor}
@@ -189,7 +198,7 @@ export const IconButton = React.memo((props: IconButtonProps) => {
 					toggle={toggleIcon ? on : false}
 					pointer={true}
 				/>
-			</div>
+			</motion.div>
 			{label && <div className={css.label}>{label}</div>}
 			<Dot show={showDot} />
 			{count !== 0 && (

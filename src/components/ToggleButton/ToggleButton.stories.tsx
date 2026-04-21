@@ -3,6 +3,7 @@ import { useState } from 'react';
 import { FlexDiv } from 'src/components/FlexDiv';
 import { SliceIcons } from 'src/components/Icon/_types';
 import { fn } from 'storybook/test';
+import { AnimationPreset } from '../IconButton/_types';
 import { ToggleButton } from './ToggleButton';
 
 const categories = Object.values(SliceIcons);
@@ -22,6 +23,7 @@ const meta: Meta<typeof ToggleButton> = {
 		textSize: 'm',
 		buttonSize: 'm',
 		icon: 'sun',
+		iconOn: 'x',
 		fill: true,
 		selected: false,
 		iconColor: 'var(--core-text-primary)',
@@ -33,6 +35,7 @@ const meta: Meta<typeof ToggleButton> = {
 		gap: 4,
 		unselect: true,
 		disabled: false,
+		presetAnimations: AnimationPreset.Rotate,
 		onChange: fn(),
 		onSelect: fn(),
 		onToolTip: fn(),

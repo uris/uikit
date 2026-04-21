@@ -29,6 +29,7 @@ type ChipBaseProps = {
 	paddingTop?: number;
 	paddingTops?: number;
 	paddingSides?: number;
+	variant?: 'button' | 'normal';
 	onToolTip?: (tip: ToolTip | null) => void;
 	onClick?: (e: React.MouseEvent<HTMLDivElement> | undefined) => void;
 };

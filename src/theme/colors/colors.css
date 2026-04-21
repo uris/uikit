@@ -168,6 +168,7 @@
 	--core-text-secondary: var(--brand-grey-700);
 	--core-text-tertiary: var(--brand-grey-600);
 	--core-text-special: var(--brand-sea-500);
+	--core-text-accent: var(--brand-sky-500);
 	--core-link-primary: var(--brand-sea-500);
 	--eor-tag-employee: var(--brand-sky-700);
 	--eor-tag-overdue: var(--product-red-500);
@@ -247,6 +248,7 @@
 	--core-text-secondary: var(--brand-grey-200);
 	--core-text-tertiary: var(--brand-grey-400);
 	--core-text-special: var(--brand-sky-300);
+	--core-text-accent: var(--brand-sky-300);
 	--core-link-primary: var(--brand-sky-300);
 	--eor-tag-employee: var(--brand-sky-700);
 	--eor-tag-overdue: var(--product-red-400);
@@ -407,6 +409,9 @@
 }
 [data-slice-theme-scope] .core-text-special {
 	color: var(--core-text-special);
+}
+[data-slice-theme-scope] .core-text-accent {
+	color: var(--core-text-accent);
 }
 [data-slice-theme-scope] .core-text-tertiary {
 	color: var(--core-text-tertiary);

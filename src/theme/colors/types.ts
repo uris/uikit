@@ -154,6 +154,7 @@ export type Colors = {
 	'core-text-primary': string;
 	'core-text-secondary': string;
 	'core-text-special': string;
+	'core-text-accent': string;
 	'core-text-tertiary': string;
 	'core-link-primary': string;
 	'eor-tag-employee': string;

@@ -10,6 +10,7 @@ export function ToggleButton(props: Readonly<ToggleButtonProps>) {
 		label,
 		textSize,
 		icon,
+		iconOn,
 		selected = false,
 		iconColor = 'var(--core-text-primary)',
 		iconColorOn = 'var(--core-surface-primary)',
@@ -27,6 +28,8 @@ export function ToggleButton(props: Readonly<ToggleButtonProps>) {
 		onSelect,
 		onToolTip,
 		children,
+		presetAnimations,
+		customAnimations,
 	} = props;
 
 	const handleClick = () => {
@@ -47,7 +50,7 @@ export function ToggleButton(props: Readonly<ToggleButtonProps>) {
 		<div className={css.toggleButton} style={cssVars}>
 			{icon && (
 				<IconButton
-					icon={icon}
+					icon={selected && iconOn ? iconOn : icon}
 					buttonSize={buttonSize}
 					tooltip={tooltip}
 					toggle={!selected}
@@ -62,6 +65,8 @@ export function ToggleButton(props: Readonly<ToggleButtonProps>) {
 					disabled={disabled}
 					onToolTip={onToolTip}
 					border={border}
+					presetAnimations={presetAnimations}
+					customAnimations={customAnimations}
 				/>
 			)}
 			{(children || label) && (

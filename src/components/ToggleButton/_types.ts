@@ -1,4 +1,5 @@
 import type React from 'react';
+import type { AnimationPreset, ButtonAnimation } from '../IconButton';
 import type { ToolTip } from '../sharedTypes';
 
 export interface ToggleButtonProps {
@@ -8,6 +9,8 @@ export interface ToggleButtonProps {
 	buttonSize?: 's' | 'm' | 'l' | 'xl';
 	frameSize?: number;
 	icon?: string;
+	iconOn?: string;
+	iconTwo?: string;
 	selected?: boolean;
 	iconColor?: string;
 	iconColorOn?: string;
@@ -23,4 +26,6 @@ export interface ToggleButtonProps {
 	fill?: boolean;
 	unselect?: boolean;
 	disabled?: boolean;
+	presetAnimations?: AnimationPreset;
+	customAnimations?: ButtonAnimation;
 }

@@ -103,6 +103,8 @@ export const SliceIcons = {
 		google: 'google',
 		googleMono: 'google mono',
 		linkedin: 'linkedin',
+		github: 'github',
+		npm: 'npm',
 	},
 	edit: {
 		edit: 'edit',

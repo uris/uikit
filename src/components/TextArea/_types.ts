@@ -22,6 +22,7 @@ type TextAreaBaseProps = {
 	textSize?: 'xs' | 's' | 'm' | 'l';
 	disabled?: boolean;
 	submitClears?: boolean;
+	maxLength?: number;
 	onChange?: (value: string) => void;
 	onSubmit?: (value: string) => void;
 	onFocus?: (value: string) => void;

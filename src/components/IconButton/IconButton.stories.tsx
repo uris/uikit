@@ -1,9 +1,21 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { FlexDiv } from 'src/components/FlexDiv';
 import { SliceIcons } from 'src/components/Icon/_types';
-import { IconButton } from 'src/components/IconButton';
+import {
+	AnimationType,
+	type ButtonAnimation,
+	IconButton,
+} from 'src/components/IconButton';
 import { runIconButtonPlay } from 'src/components/playHelpers';
 import { fn } from 'storybook/test';
+
+const customAnimation: ButtonAnimation = {
+	animation: [{ type: AnimationType.Rotate, value: { off: 0, on: 135 } }],
+	transition: {
+		on: { duration: 0.25, ease: 'linear' },
+		off: { duration: 0.25, ease: 'easeInOut' },
+	},
+};
 
 const categories = Object.values(SliceIcons);
 const icons = categories.flatMap((category) => Object.values(category));
@@ -36,12 +48,14 @@ const meta: Meta<typeof IconButton> = {
 		label: undefined,
 		hover: true,
 		count: 0,
-		toggle: false,
+		toggle: true,
 		toggleIcon: false,
 		isToggled: false,
 		disabled: false,
 		showDot: false,
 		border: false,
+		presetAnimations: undefined,
+		customAnimations: undefined,
 		onClick: fn(),
 		onToolTip: fn(),
 	},
@@ -54,6 +68,16 @@ export const Default: StoryObj<typeof IconButton> = {
 		return (
 			<FlexDiv absolute justify={'center'} align={'center'} padding={64}>
 				<IconButton {...args} />
+			</FlexDiv>
+		);
+	},
+};
+
+export const Animated: StoryObj<typeof IconButton> = {
+	render: (args) => {
+		return (
+			<FlexDiv absolute justify={'center'} align={'center'} padding={64}>
+				<IconButton {...args} customAnimations={customAnimation} />
 			</FlexDiv>
 		);
 	},

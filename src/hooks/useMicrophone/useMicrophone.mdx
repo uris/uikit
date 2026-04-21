@@ -61,7 +61,7 @@ import {FlexDiv} from '../../components/FlexDiv';
             <tr><td><code>isActive</code></td><td><code>boolean</code></td><td>Whether a live microphone stream is currently active.</td></tr>
             <tr><td><code>inputVolume</code></td><td><code>number</code></td><td>Current app-side microphone input volume as a normalized value between <code>0</code> and <code>1</code>.</td></tr>
             <tr><td><code>microphones</code></td><td><code>MediaDeviceInfo[]</code></td><td>Current list of available audio input devices.</td></tr>
-            <tr><td><code>micOptions</code></td><td><code>{`DropDownOption<MicOption>[]`}</code></td><td>Ready-to-use dropdown options built from the current microphone list.</td></tr>
+            <tr><td><code>micOptions</code></td><td><code>{`DropDownOption<MicOption>[]`}</code></td><td>Ready-to-use dropdown options built from the current microphone list. Browsers that hide device labels before permission is granted now return an empty array instead of placeholder empty options.</td></tr>
             <tr><td><code>muted</code></td><td><code>boolean</code></td><td>Current mute state of the microphone track.</td></tr>
             <tr><td><code>isSupported</code></td><td><code>boolean</code></td><td>Whether the current browser supports microphone capture.</td></tr>
             <tr><td><code>isRequesting</code></td><td><code>boolean</code></td><td>Whether the hook is currently requesting microphone access, switching microphones, or recovering from a removed device.</td></tr>
@@ -83,6 +83,7 @@ import {FlexDiv} from '../../components/FlexDiv';
         - If a preferred device cannot be found during a request, the hook retries against the browser's default microphone.
         - If the active microphone is unplugged or removed, the hook refreshes devices and reconnects to the default input.
         - When `autoRequest` is `false`, the hook still refreshes the device list on mount without prompting for microphone access.
+        - Chrome may expose placeholder `audioinput` entries before permission is granted. The hook now suppresses those unlabeled placeholders and refreshes the list again immediately after a successful connection so `micOptions` stays aligned with the real devices.
 
         ## Basic example
         </Unstyled>

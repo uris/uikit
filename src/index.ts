@@ -57,8 +57,18 @@ export type { AvatarGroupProps, AvatarInfo } from './components/AvatarGroup';
 export { Badge } from './components/Badge';
 export type { BadgeProps } from './components/Badge';
 
-export { IconButton } from './components/IconButton';
-export type { IconButtonProps } from './components/IconButton';
+export {
+	IconButton,
+	AnimationPreset,
+	AnimationType,
+} from './components/IconButton';
+export type {
+	IconButtonProps,
+	AnimationValue,
+	MotionValue,
+	TransitionValue,
+	ButtonAnimation,
+} from './components/IconButton';
 
 export { Camera } from './components/Camera';
 export type {

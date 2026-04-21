@@ -39,6 +39,8 @@ type ButtonBaseProps = {
 	destructive?: boolean;
 	paddingRight?: number;
 	paddingLeft?: number;
+	link?: string;
+	target?: '_blank' | '_self' | '_parent' | '_top';
 	onToolTip?: (tip: ToolTip | null) => void;
 	onClick?: (
 		e: React.MouseEvent<HTMLButtonElement, MouseEvent> | undefined,

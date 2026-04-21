@@ -10,6 +10,7 @@ import type { ChipProps } from './_types';
 
 export const Chip = React.memo((props: ChipProps) => {
 	const {
+		variant = 'normal',
 		children,
 		label,
 		icon,
@@ -20,18 +21,26 @@ export const Chip = React.memo((props: ChipProps) => {
 		iconPosition = 'left',
 		labelSize = 'm',
 		labelColor = 'var(--core-text-primary)',
-		labelColorHover = 'var(--core-text-special)',
+		labelColorHover = variant === 'normal'
+			? labelColor
+			: 'var(--core-text-special)',
 		iconColor = 'var(--core-text-primary)',
-		iconColorHover = 'var(--core-text-special)',
+		iconColorHover = variant === 'normal'
+			? iconColor
+			: 'var(--core-text-special)',
 		backgroundColor,
 		backgroundColorHover,
 		borderWidth,
 		borderSize = 1,
 		borderColor = 'var(--core-text-primary)',
-		borderColorHover = 'var(--core-text-special)',
+		borderColorHover = variant === 'normal'
+			? borderColor
+			: 'var(--core-text-special)',
 		borderColorDisabled = 'var(--core-text-disabled)',
 		bgColor = 'transparent',
-		bgColorHover = 'var(--core-surface-secondary)',
+		bgColorHover = variant === 'normal'
+			? bgColor
+			: 'var(--core-surface-secondary)',
 		borderRadius = 8,
 		paddingTop,
 		paddingTops = 8,
@@ -71,24 +80,24 @@ export const Chip = React.memo((props: ChipProps) => {
 					};
 					onToolTip(tip);
 				}
-				setIsHovered(true);
+				if (variant === 'button') setIsHovered(true);
 			} else {
 				onToolTip(null);
 				setIsHovered(false);
 			}
 		},
-		[tooltip, onToolTip],
+		[tooltip, variant, onToolTip],
 	);
 
 	// resolve chip padding adjusting for side icon is on
 	const padding = useMemo(() => {
-		if (!icon) return `${resolvedPaddingTop}px ${paddingSides}px`;
+		if (!label || !icon) return `${resolvedPaddingTop}px ${paddingSides}px`;
 		const paddingLeft =
 			iconPosition === 'right' ? paddingSides - 4 : paddingSides;
 		const paddingRight =
 			iconPosition === 'right' ? paddingSides : paddingSides - 4;
 		return `${resolvedPaddingTop}px ${paddingLeft}px ${resolvedPaddingTop}px ${paddingRight}px`;
-	}, [icon, iconPosition, resolvedPaddingTop, paddingSides]);
+	}, [icon, iconPosition, resolvedPaddingTop, paddingSides, label]);
 
 	// resolve the current icon color from theme and interaction state
 	const computedIconColor = useMemo(() => {
@@ -118,7 +127,8 @@ export const Chip = React.memo((props: ChipProps) => {
 			'--ui-chip-label-color-hover': disabled
 				? 'var(--core-text-disabled)'
 				: labelColorHover,
-			'--ui-chip-cursor': disabled ? 'default' : 'pointer',
+			'--ui-chip-cursor':
+				disabled || variant === 'normal' ? 'default' : 'pointer',
 		} as React.CSSProperties;
 	}, [
 		padding,
@@ -133,6 +143,7 @@ export const Chip = React.memo((props: ChipProps) => {
 		gap,
 		borderRadius,
 		disabled,
+		variant,
 	]);
 
 	/* START.DEBUG */
@@ -155,7 +166,9 @@ export const Chip = React.memo((props: ChipProps) => {
 					<Icon name={icon} size={iconSize} strokeColor={computedIconColor} />
 				</div>
 			)}
-			<div className={css[labelSize]}>{children ?? label}</div>
+			{(children || label) && (
+				<div className={css[labelSize]}>{children ?? label}</div>
+			)}
 			{icon && iconPosition === 'right' && (
 				<div className={css.icon}>
 					<Icon name={icon} size={iconSize} strokeColor={computedIconColor} />

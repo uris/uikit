@@ -59,6 +59,8 @@ const ButtonComponent = forwardRef<ButtonHandle, ButtonProps>(
 			duration = undefined,
 			trigger = false,
 			destructive = false,
+			link,
+			target = '_self',
 			onClick = () => null,
 			onToolTip = () => null,
 			...divAttributes
@@ -94,10 +96,22 @@ const ButtonComponent = forwardRef<ButtonHandle, ButtonProps>(
 					lockCurrentWidth();
 					setPlaying(true);
 				} else {
+					if (link && globalThis.window !== undefined) {
+						globalThis.window.open(link, target);
+					}
 					onClick(e);
 				}
 			},
-			[onToolTip, btnState, progress, duration, lockCurrentWidth, onClick],
+			[
+				onToolTip,
+				btnState,
+				progress,
+				duration,
+				lockCurrentWidth,
+				onClick,
+				link,
+				target,
+			],
 		);
 
 		// sync the visual button state from the controlled prop

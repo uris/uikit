@@ -134,7 +134,10 @@ export const DraggablePanel = React.memo((props: DraggablePanelProps) => {
 	const [constraints, setConstraints] = useState<Constraint>(() =>
 		resolveConstraints(sizeConstraints),
 	);
-	const [contWidth, setContWidth] = useState<number | undefined>(undefined);
+	const [contWidth, setContWidth] = useState<number | undefined>(
+		resolveInitContWidth(),
+	);
+	const [mounted, setMounted] = useState<boolean>(false);
 	const timer = useRef<any>(null);
 	const closed = panelSize.width <= 1;
 
@@ -143,6 +146,13 @@ export const DraggablePanel = React.memo((props: DraggablePanelProps) => {
 	const divWidth = useRef<number>(0);
 	const divHeight = useRef<number>(0);
 	const deltaWidth = useRef<number>(0);
+
+	// resolve the initial size of the container to window or ref
+	function resolveInitContWidth() {
+		if (containerRef?.current) return containerRef.current.offsetWidth;
+		if (globalThis.window !== undefined) return window.innerWidth;
+		return undefined;
+	}
 
 	// fall back to the window width when no container ref is provided
 	const handleWindowResize = useCallback(() => {
@@ -376,6 +386,9 @@ export const DraggablePanel = React.memo((props: DraggablePanelProps) => {
 		};
 	}, [drags, initDrag]);
 
+	// set mounted for SSR width calc
+	useEffect(() => setMounted(true), []);
+
 	// resolve the handle offset based on drag direction and touch mode
 	const leftRightStyle = useMemo(() => {
 		if (drags === 'right') {
@@ -384,16 +397,21 @@ export const DraggablePanel = React.memo((props: DraggablePanelProps) => {
 		return { left: isTouchDevice ? -22 : -((gripper.width || 10) / 2) };
 	}, [drags, isTouchDevice, gripper.width]);
 
-	// normalize initial width to a true CSS value
-	const normalizeWidth = useCallback((width: number | string) => {
-		if (typeof width === 'number') {
-			if (width <= 1 && width >= 0) {
-				return `${width * 100}%`;
+	// normalize the initial width to a true CSS value
+	const normalizeWidth = useCallback(
+		(width: number | string) => {
+			if (!mounted) return '0px';
+			if (typeof width === 'number') {
+				if (width <= 1 && width >= 0) {
+					if (contWidth) return `${contWidth * width}px`;
+					return 0;
+				}
+				return `${width}px`;
 			}
-			return `${width}px`;
-		}
-		return width;
-	}, []);
+			return width;
+		},
+		[contWidth, mounted],
+	);
 
 	// resolve the rendered panel width from drag state and constraints
 	const width = useMemo(() => {
@@ -444,7 +462,7 @@ export const DraggablePanel = React.memo((props: DraggablePanelProps) => {
 					display: closed || !drags ? 'none' : 'flex',
 					alignItems: 'center',
 					justifyContent: 'center',
-					zIndex: 1,
+					zIndex: 'var(--elevation-overlay)',
 					top: 0,
 					...leftRightStyle,
 					bottom: 0,

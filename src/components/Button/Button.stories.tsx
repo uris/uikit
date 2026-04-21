@@ -45,6 +45,8 @@ const meta: Meta<typeof Button> = {
 		duration: undefined,
 		trigger: false,
 		destructive: false,
+		link: undefined,
+		target: undefined,
 		onClick: fn(),
 		onToolTip: fn(),
 	},
