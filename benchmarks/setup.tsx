@@ -69,3 +69,35 @@ if (!globalThis.matchMedia) {
 		dispatchEvent: () => false,
 	})) as typeof globalThis.matchMedia;
 }
+
+// Mock media element methods used by Audio/Video benchmarks in jsdom.
+if (typeof HTMLMediaElement !== 'undefined') {
+	Object.defineProperty(HTMLMediaElement.prototype, 'play', {
+		configurable: true,
+		writable: true,
+		value: vi.fn().mockResolvedValue(undefined),
+	});
+
+	Object.defineProperty(HTMLMediaElement.prototype, 'pause', {
+		configurable: true,
+		writable: true,
+		value: vi.fn(),
+	});
+}
+
+// Mock fullscreen APIs used by media components in jsdom.
+if (typeof HTMLElement !== 'undefined') {
+	Object.defineProperty(HTMLElement.prototype, 'requestFullscreen', {
+		configurable: true,
+		writable: true,
+		value: vi.fn().mockResolvedValue(undefined),
+	});
+}
+
+if (!document.exitFullscreen) {
+	Object.defineProperty(document, 'exitFullscreen', {
+		configurable: true,
+		writable: true,
+		value: vi.fn().mockResolvedValue(undefined),
+	});
+}

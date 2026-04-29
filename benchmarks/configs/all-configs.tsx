@@ -39,6 +39,7 @@ import {
 	Toast,
 	ToggleButton,
 	UploadArea,
+	Video,
 	Button,
 	ButtonBar,
 	Chip,
@@ -530,6 +531,71 @@ export const uploadAreaConfig: ComponentBenchmarkConfig = {
 			fn: () =>
 				measureMemoryDelta(
 					<UploadArea title="Upload Files" message="Drop files here" />,
+					10,
+				),
+		},
+	],
+};
+
+export const videoConfig: ComponentBenchmarkConfig = {
+	componentName: 'Video',
+	tests: [
+		{
+			name: 'Mount Time',
+			type: 'mount',
+			fn: () =>
+				measureMountTime(
+					<Video
+						src="https://example.com/video.mp4"
+						width={320}
+						height={180}
+						controls="simple"
+						muted
+					/>,
+					25,
+				),
+		},
+		{
+			name: 'Re-render',
+			type: 'rerender',
+			fn: () =>
+				measureRerenderTime(
+					<Video
+						src="https://example.com/video.mp4"
+						width={320}
+						height={180}
+						controls="simple"
+						muted
+						playing={false}
+					/>,
+					(container) => {
+						container.rerender(
+							<Video
+								src="https://example.com/video.mp4"
+								width={360}
+								height={200}
+								controls="simple"
+								muted={false}
+								playing={true}
+								objectFit="cover"
+							/>,
+						);
+					},
+					25,
+				),
+		},
+		{
+			name: 'Memory',
+			type: 'memory',
+			fn: () =>
+				measureMemoryDelta(
+					<Video
+						src="https://example.com/video.mp4"
+						width={320}
+						height={180}
+						controls="none"
+						muted
+					/>,
 					10,
 				),
 		},
@@ -1687,4 +1753,5 @@ export const allBenchmarkConfigs = [
 	labelConfig,
 	toggleButtonConfig,
 	uploadAreaConfig,
+	videoConfig,
 ];

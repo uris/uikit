@@ -64,6 +64,10 @@ export const SliceIcons = {
 		speakerMuted: 'speaker muted',
 		speakerHigh: 'speaker high',
 		speakerLow: 'speaker low',
+		play: 'play',
+		playCircle: 'play circle',
+		pause: 'pause',
+		pauseCircle: 'pause circle',
 	},
 	files: {
 		document: 'document',
@@ -149,5 +153,6 @@ export const SliceIcons = {
 		sidebarSplit: 'sidebar split',
 		keyboard: 'keyboard',
 		x: 'x',
+		fullscreen: 'fullscreen',
 	},
 } as const;

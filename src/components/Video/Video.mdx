@@ -1,0 +1,181 @@
+import {Meta, Unstyled} from '@storybook/addon-docs/blocks';
+import {FlexDiv} from '../FlexDiv';
+import * as VideoStories from './Video.stories';
+import {RenderSource} from '../../../documentation/_components/RenderSource/RenderSource';
+
+<Meta of={VideoStories} />
+
+<FlexDiv width={"fill"} height={"fill"} align={"center"}>
+    <FlexDiv width={"fill"} maxWidth={760} height={"auto"}>
+        <Unstyled>
+        # Video
+        Renders an HTML video element with optional built-in controls, custom controls, progress scrubbing, volume control, and an imperative ref API for playback actions.
+
+        ## Base element
+        `HTMLDivElement`
+
+        ## Interface
+        `VideoProps`
+
+        ## Ref Interface
+        `VideoElement`
+
+        ## Props
+        <table style={{width: '100%'}}>
+          <colgroup>
+            <col style={{width: '1%'}} />
+            <col style={{width: '1%'}} />
+            <col style={{width: '1%'}} />
+            <col style={{width: '97%'}} />
+          </colgroup>
+          <thead>
+            <tr>
+              <th className={"left"}>Prop</th>
+              <th className={"left"}>Type</th>
+              <th className={"left"}>Default</th>
+              <th>Description</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td><code>src</code></td><td><code>string</code></td><td><code>undefined</code></td><td>Video source URL.</td></tr>
+            <tr><td><code>playing</code></td><td><code>boolean</code></td><td><code>undefined</code></td><td>When provided, explicitly plays or pauses the video.</td></tr>
+            <tr><td><code>loop</code></td><td><code>boolean</code></td><td><code>false</code></td><td>Loops the media when playback reaches the end.</td></tr>
+            <tr><td><code>muted</code></td><td><code>boolean</code></td><td><code>true</code></td><td>Initial muted state and external mute control value.</td></tr>
+            <tr><td><code>volume</code></td><td><code>number</code></td><td><code>1</code></td><td>Video volume from <code>0</code> to <code>1</code>.</td></tr>
+            <tr><td><code>playsInline</code></td><td><code>boolean</code></td><td><code>true</code></td><td>Keeps playback inline on supported mobile browsers instead of forcing native fullscreen playback.</td></tr>
+            <tr><td><code>playRate</code></td><td><code>number</code></td><td><code>1</code></td><td>Playback speed. Values are clamped internally between <code>0.5</code> and <code>3</code>.</td></tr>
+            <tr><td><code>controls</code></td><td><code>{`'default' | 'simple' | 'custom' | 'none'`}</code></td><td><code>'simple'</code></td><td>Selects native browser controls, built-in slice controls, caller-supplied custom controls, or no controls.</td></tr>
+            <tr><td><code>customControls</code></td><td><code>CustomVideoControls</code></td><td><code>{`{ play: false, progress: true, volume: true, fullscreen: true }`}</code></td><td>Toggles which built-in simple controls are rendered.</td></tr>
+            <tr><td><code>poster</code></td><td><code>string</code></td><td><code>undefined</code></td><td>Poster image shown before playback starts.</td></tr>
+            <tr><td><code>captionsSrc</code></td><td><code>string</code></td><td><code>undefined</code></td><td>Optional captions track source passed to the rendered <code>&lt;track&gt;</code> element.</td></tr>
+            <tr><td><code>width</code></td><td><code>{`number | string`}</code></td><td><code>'100%'</code></td><td>Outer width of the component.</td></tr>
+            <tr><td><code>height</code></td><td><code>{`number | string`}</code></td><td><code>'auto'</code></td><td>Outer height of the component.</td></tr>
+            <tr><td><code>borderRadius</code></td><td><code>{`number | string`}</code></td><td><code>undefined</code></td><td>Border radius applied to the video wrapper.</td></tr>
+            <tr><td><code>borderSize</code></td><td><code>{`number | string`}</code></td><td><code>undefined</code></td><td>Border width applied to the wrapper.</td></tr>
+            <tr><td><code>borderColor</code></td><td><code>string</code></td><td><code>undefined</code></td><td>Border color applied to the wrapper.</td></tr>
+            <tr><td><code>backgroundColor</code></td><td><code>string</code></td><td><code>undefined</code></td><td>Background color behind the video content.</td></tr>
+            <tr><td><code>objectFit</code></td><td><code>{`'fill' | 'contain' | 'cover' | 'none' | 'scale-down'`}</code></td><td><code>'contain'</code></td><td>How the video content should scale within its bounds.</td></tr>
+            <tr><td><code>children</code></td><td><code>ReactNode</code></td><td><code>undefined</code></td><td>Custom controls content rendered when <code>controls="custom"</code>.</td></tr>
+            <tr><td><code>...divAttributes</code></td><td><code>{`HTMLAttributes<HTMLDivElement>`}</code></td><td><code>-</code></td><td>Native <code>div</code> props pass through to the wrapper (for example <code>id</code>, <code>data-testid</code>, <code>className</code>, <code>style</code>, <code>aria-*</code>).</td></tr>
+          </tbody>
+        </table>
+
+        ## Events
+        <table style={{width: '100%'}}>
+          <colgroup>
+            <col style={{width: '1%'}} />
+            <col style={{width: '1%'}} />
+            <col style={{width: '98%'}} />
+          </colgroup>
+          <thead>
+            <tr>
+              <th className={"left"}>Event</th>
+              <th className={"left"}>Type</th>
+              <th>Description</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td><code>onPlay</code></td><td><code>{`() => void`}</code></td><td>Fires when playback starts.</td></tr>
+            <tr><td><code>onPause</code></td><td><code>{`() => void`}</code></td><td>Fires when playback pauses.</td></tr>
+            <tr><td><code>onEnd</code></td><td><code>{`() => void`}</code></td><td>Fires when playback reaches the end.</td></tr>
+            <tr><td><code>onProgress</code></td><td><code>{`(progress: number) => void`}</code></td><td>Fires during playback time updates with progress normalized from <code>0</code> to <code>1</code>.</td></tr>
+            <tr><td><code>onLoadProgress</code></td><td><code>{`(progress: number) => void`}</code></td><td>Fires as media buffering advances, normalized from <code>0</code> to <code>1</code>.</td></tr>
+            <tr><td><code>onPlaybackRateChange</code></td><td><code>{`(rate: number) => void`}</code></td><td>Fires when the underlying video playback rate changes.</td></tr>
+            <tr><td><code>onCanPlayThrough</code></td><td><code>{`() => void`}</code></td><td>Fires when the browser estimates the media can play through without interruption.</td></tr>
+            <tr><td><code>onPlayStateChange</code></td><td><code>{`(state: PlayState) => void`}</code></td><td>Fires normalized playback states: <code>'playing'</code>, <code>'paused'</code>, <code>'stopped'</code>, or <code>'ended'</code>.</td></tr>
+            <tr><td><code>onLoadMetaData</code></td><td><code>{`(duration: number) => void`}</code></td><td>Fires when metadata loads and provides the media duration in seconds.</td></tr>
+            <tr><td><code>onLoadedFrameData</code></td><td><code>{`() => void`}</code></td><td>Fires when the current frame data has loaded. Useful for controller-level ready states before revealing the video.</td></tr>
+            <tr><td><code>onFullScreenChange</code></td><td><code>{`(fullScreen: boolean) => void`}</code></td><td>Fires from the browser fullscreen change event for both programmatic and user-driven entry or exit.</td></tr>
+            <tr><td><code>onVolumeChange</code></td><td><code>{`(volume: number) => void`}</code></td><td>Fires when volume is updated through the component API or built-in controls.</td></tr>
+          </tbody>
+        </table>
+
+        ## Imperative Ref Methods
+        <table style={{width: '100%'}}>
+          <colgroup>
+            <col style={{width: '1%'}} />
+            <col style={{width: '1%'}} />
+            <col style={{width: '98%'}} />
+          </colgroup>
+          <thead>
+            <tr>
+              <th className={"left"}>Method</th>
+              <th className={"left"}>Type</th>
+              <th>Description</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td><code>play</code></td><td><code>{`() => Promise<void>`}</code></td><td>Starts playback.</td></tr>
+            <tr><td><code>stop</code></td><td><code>{`() => Promise<void>`}</code></td><td>Pauses playback.</td></tr>
+            <tr><td><code>restart</code></td><td><code>{`() => Promise<void>`}</code></td><td>Seeks to the start and resumes playback.</td></tr>
+            <tr><td><code>setVolume</code></td><td><code>{`(volume: number) => void`}</code></td><td>Sets the media volume from <code>0</code> to <code>1</code>.</td></tr>
+            <tr><td><code>mute</code></td><td><code>{`(mute: boolean) => void`}</code></td><td>Explicitly mutes or unmutes the video.</td></tr>
+            <tr><td><code>fullscreen</code></td><td><code>{`(state: boolean) => void`}</code></td><td>Requests or exits browser fullscreen for this video element.</td></tr>
+            <tr><td><code>playbackRate</code></td><td><code>{`(rate: number) => void`}</code></td><td>Sets playback speed. Values are clamped internally between <code>0.5</code> and <code>3</code>.</td></tr>
+            <tr><td><code>videoElement</code></td><td><code>HTMLVideoElement | undefined</code></td><td>Getter that exposes the underlying native <code>HTMLVideoElement</code>.</td></tr>
+          </tbody>
+        </table>
+
+        ## Code Examples
+        </Unstyled>
+
+        <RenderSource language={"tsx"}>
+```
+import { useRef } from 'react';
+import { Video, type VideoElement } from '@apple-pie/slice';
+
+export function VideoExample() {
+    const videoRef = useRef<VideoElement>(null);
+
+    return (
+        <Video
+            ref={videoRef}
+            src="https://example.com/video.mp4"
+            controls="simple"
+            width="100%"
+            height="auto"
+            muted={false}
+            customControls={{
+                play: true,
+                progress: true,
+                volume: true,
+                fullscreen: true,
+            }}
+            onPlayStateChange={(state) => console.log('state', state)}
+            onFullScreenChange={(fullScreen) => console.log('fullscreen', fullScreen)}
+            onVolumeChange={(volume) => console.log('volume', volume)}
+            style={{ maxWidth: 720 }}
+        />
+    );
+}
+```
+        </RenderSource>
+
+        <RenderSource language={"tsx"}>
+```
+import { useRef } from 'react';
+import { Button, Video, type VideoElement } from '@apple-pie/slice';
+
+export function VideoRefExample() {
+    const videoRef = useRef<VideoElement>(null);
+
+    return (
+        <>
+            <Button onClick={() => videoRef.current?.play?.()}>Play</Button>
+            <Button onClick={() => videoRef.current?.stop?.()}>Pause</Button>
+            <Button onClick={() => videoRef.current?.restart?.()}>Restart</Button>
+            <Button onClick={() => videoRef.current?.fullscreen?.(true)}>Fullscreen</Button>
+
+            <Video
+                ref={videoRef}
+                src="https://example.com/video.mp4"
+                controls="none"
+                muted
+            />
+        </>
+    );
+}
+```
+        </RenderSource>
+    </FlexDiv>
+</FlexDiv>

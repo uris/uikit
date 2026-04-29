@@ -39,6 +39,7 @@ export { tipBenchmarkConfig } from './Tip.bench';
 export { toastBenchmarkConfig } from './Toast.bench';
 export { toggleButtonBenchmarkConfig } from './ToggleButton.bench';
 export { uploadAreaBenchmarkConfig } from './UploadArea.bench';
+export { videoBenchmarkConfig } from './Video.bench';
 export { buttonBenchmarkConfig } from './Button.bench';
 export { buttonBarBenchmarkConfig } from './ButtonBar.bench';
 export { chipBenchmarkConfig } from './Chip.bench';

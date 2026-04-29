@@ -8,3 +8,4 @@ export * from './uploads';
 export * from './volume';
 export * from './WebRTC';
 export * from './window';
+export * from './video';

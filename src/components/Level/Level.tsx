@@ -1,3 +1,5 @@
+'use client';
+
 import React, { useEffect, useMemo, useRef, useState } from 'react';
 import { AudioVisualizer, type AudioVisualizerOptions } from '../../utils';
 import { setStyle } from '../../utils/functions/misc';

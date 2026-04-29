@@ -55,6 +55,12 @@
 		box-shadow: 0 0 0 50px var(--core-button-disabled) inset !important;
 		-webkit-text-fill-color: var(--core-text-primary);
 	}
+	&:-webkit-autofill::placeholder {
+		color: var(--tf-placeholder-color);
+	}
+	&:-webkit-autofill::backdrop {
+		color: transparent;
+	}
 }
 
 .showPassword {

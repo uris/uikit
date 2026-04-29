@@ -197,3 +197,14 @@ export {
 	textTypes,
 	allTypes,
 } from './components/UploadArea/_types';
+
+export { Video } from './components/Video';
+export type {
+	CustomVideoControls,
+	PlayState,
+	VideoElement,
+	VideoProps,
+} from './components/Video';
+
+export { VideoController } from './components/VideoController';
+export type { VideoControllerProps } from './components/VideoController';

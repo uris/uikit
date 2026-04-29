@@ -1,3 +1,5 @@
+'use client';
+
 import type React from 'react';
 import { useMemo } from 'react';
 import { IconButton } from '../IconButton';
@@ -14,7 +16,9 @@ export function ToggleButton(props: Readonly<ToggleButtonProps>) {
 		selected = false,
 		iconColor = 'var(--core-text-primary)',
 		iconColorOn = 'var(--core-surface-primary)',
+		iconColorHover = 'var(--core-text-primary)',
 		bgColor = 'var(--core-surface-secondary)',
+		bgColorHover = 'var(--core-surface-secondary)',
 		bgColorOn = 'var(--core-text-special)',
 		iconSize = 20,
 		buttonSize = 'm',
@@ -56,9 +60,11 @@ export function ToggleButton(props: Readonly<ToggleButtonProps>) {
 					toggle={!selected}
 					isToggled={selected}
 					bgColorOn={bgColorOn}
+					bgColorHover={bgColorHover}
 					bgColor={bgColor}
 					iconColor={iconColor}
 					iconColorOn={iconColorOn}
+					iconColorHover={iconColorHover}
 					onClick={handleClick}
 					iconSize={iconSize}
 					iconFill={fill}

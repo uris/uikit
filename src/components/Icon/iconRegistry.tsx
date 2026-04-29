@@ -21,6 +21,87 @@ export interface IconDefinition {
  */
 export const STATIC_ICON_REGISTRY = new Map<string, IconDefinition>([
 	[
+		'fullscreen',
+		{
+			line: ({ strokeColor }) => (
+				<>
+					<polygon
+						points="9.53 8.47 5.31 4.25 8.5 4.25 8.5 2.75 2.75 2.75 2.75 8.5 4.25 8.5 4.25 5.31 8.47 9.53 9.53 8.47"
+						fill={strokeColor}
+					/>
+					<polygon
+						points="15.75 11.5 15.75 14.69 11.47 10.41 10.41 11.47 14.69 15.75 11.5 15.75 11.5 17.25 17.25 17.25 17.25 11.5 15.75 11.5"
+						fill={strokeColor}
+					/>
+				</>
+			),
+		},
+	],
+	[
+		'pause',
+		{
+			line: ({ strokeColor }) => (
+				<>
+					<rect x="6.62" y="6.25" width="2" height="7.5" fill={strokeColor} />
+					<rect x="11.38" y="6.25" width="2" height="7.5" fill={strokeColor} />
+				</>
+			),
+		},
+	],
+	[
+		'pause circle',
+		{
+			line: ({ strokeColor, fillColor }) => (
+				<>
+					<path
+						d="M10,2.5c4.14,0,7.5,3.36,7.5,7.5s-3.36,7.5-7.5,7.5-7.5-3.36-7.5-7.5,3.36-7.5,7.5-7.5"
+						fill={strokeColor}
+						fillOpacity={fillColor}
+					/>
+					<path
+						d="M10,2.5c4.14,0,7.5,3.36,7.5,7.5s-3.36,7.5-7.5,7.5-7.5-3.36-7.5-7.5,3.36-7.5,7.5-7.5M10,1C5.03,1,1,5.03,1,10s4.03,9,9,9,9-4.03,9-9S14.97,1,10,1h0Z"
+						fill={strokeColor}
+					/>
+					<rect x="6.62" y="6.25" width="2" height="7.5" fill={strokeColor} />
+					<rect x="11.38" y="6.25" width="2" height="7.5" fill={strokeColor} />
+				</>
+			),
+		},
+	],
+	[
+		'play',
+		{
+			line: ({ strokeColor }) => (
+				<polygon
+					points="15.4 10 7.3 5.62 7.3 14.38 15.4 10"
+					fill={strokeColor}
+				/>
+			),
+		},
+	],
+	[
+		'play circle',
+		{
+			line: ({ strokeColor, fillColor }) => (
+				<>
+					<path
+						d="M10,2.5c4.14,0,7.5,3.36,7.5,7.5s-3.36,7.5-7.5,7.5-7.5-3.36-7.5-7.5,3.36-7.5,7.5-7.5"
+						fill={strokeColor}
+						fillOpacity={fillColor}
+					/>
+					<path
+						d="M10,2.5c4.14,0,7.5,3.36,7.5,7.5s-3.36,7.5-7.5,7.5-7.5-3.36-7.5-7.5,3.36-7.5,7.5-7.5M10,1C5.03,1,1,5.03,1,10s4.03,9,9,9,9-4.03,9-9S14.97,1,10,1h0Z"
+						fill={strokeColor}
+					/>
+					<polygon
+						points="15.4 10 7.3 5.62 7.3 14.38 15.4 10"
+						fill={strokeColor}
+					/>
+				</>
+			),
+		},
+	],
+	[
 		'npm',
 		{
 			line: ({ strokeColor }) => (

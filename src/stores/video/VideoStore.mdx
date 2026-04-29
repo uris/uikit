@@ -1,0 +1,164 @@
+import {Meta, Unstyled} from '@storybook/addon-docs/blocks';
+import {RenderSource} from '../../../documentation/_components/RenderSource/RenderSource';
+import {FlexDiv} from '../../components/FlexDiv';
+import NoteSection from "../../../documentation/_components/Notice/Notice";
+
+<Meta title="Stores/Video Store" />
+
+<FlexDiv width={"fill"} height={"fill"} align={"center"}>
+    <FlexDiv width={"fill"} maxWidth={760} height={"auto"}>
+        <Unstyled>
+        <NoteSection>
+            Slice stores use a module-level singleton pattern: each store is created once when the module is loaded, and every import of the module shares the same store instance.
+        </NoteSection>
+
+        # VideoStore
+        Global video orchestration helpers built with Zustand. The store tracks one active video descriptor at a time and is intended to work with `VideoController`.
+
+        ## React exports (reactive)
+        React exports are reactive subscriptions for components updating automatically as state changes.
+        <table style={{width: '100%'}}>
+          <colgroup>
+            <col style={{width: '1%'}} />
+            <col style={{width: '25%'}} />
+            <col style={{width: '98%'}} />
+          </colgroup>
+          <thead>
+            <tr>
+              <th className={"left"}>Export</th>
+              <th className={"left"}>Type</th>
+              <th className={"left"}>Description</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td><code>useVideoStore</code></td><td><code>Zustand store hook</code></td><td>Main store hook for selector-based subscriptions.</td></tr>
+            <tr><td><code>useVideo</code></td><td><code>{`() => VideoDescriptor | null`}</code></td><td>Atomic hook selecting only the current active video descriptor.</td></tr>
+            <tr><td><code>useVideoActions</code></td><td><code>{`() => actions`}</code></td><td>Hook selecting only video store actions.</td></tr>
+          </tbody>
+        </table>
+
+        ## Imperative exports (non-reactive)
+        These APIs call the same singleton store instance directly. Use them in utility modules, async services, and event handlers where hooks are not allowed.
+        <table style={{width: '100%'}}>
+          <colgroup>
+            <col style={{width: '1%'}} />
+            <col style={{width: '25%'}} />
+            <col style={{width: '98%'}} />
+          </colgroup>
+          <thead>
+            <tr>
+              <th className={"left"}>Export</th>
+              <th className={"left"}>Type</th>
+              <th className={"left"}>Description</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td><code>videoActions</code></td><td><code>{`{ show, clear }`}</code></td><td>Imperative actions for non-React code paths.</td></tr>
+            <tr><td><code>getVideo</code></td><td><code>{`() => VideoDescriptor | null`}</code></td><td>Imperative snapshot read from current store state.</td></tr>
+          </tbody>
+        </table>
+
+        ## Actions
+        Use `show()` to display a video descriptor and `clear()` to dismiss it.
+
+        <table style={{width: '100%'}}>
+          <colgroup>
+            <col style={{width: '1%'}} />
+            <col style={{width: '25%'}} />
+            <col style={{width: '98%'}} />
+          </colgroup>
+          <thead>
+            <tr>
+              <th className={"left"}>Action</th>
+              <th className={"left"}>Type</th>
+              <th className={"left"}>Description</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td><code>show</code></td><td><code>{`(video: VideoDescriptor | null) => void`}</code></td><td>Displays a video descriptor or clears the current one by passing <code>null</code>.</td></tr>
+            <tr><td><code>clear</code></td><td><code>{`() => void`}</code></td><td>Clears the active video descriptor.</td></tr>
+          </tbody>
+        </table>
+
+        ## VideoDescriptor
+        Each descriptor describes which video component should be rendered by `VideoController` and which props should be passed to it.
+
+        <table style={{width: '100%'}}>
+          <colgroup>
+            <col style={{width: '1%'}} />
+            <col style={{width: '25%'}} />
+            <col style={{width: '98%'}} />
+          </colgroup>
+          <thead>
+            <tr>
+              <th className={"left"}>Field</th>
+              <th className={"left"}>Type</th>
+              <th className={"left"}>Description</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td><code>id</code></td><td><code>string</code></td><td>Optional identifier for the active descriptor.</td></tr>
+            <tr><td><code>component</code></td><td><code>{`React.ComponentType<VideoProps>`}</code></td><td>The video component to render, typically `Video`.</td></tr>
+            <tr><td><code>props</code></td><td><code>VideoProps</code></td><td>Props forwarded to the rendered video component.</td></tr>
+          </tbody>
+        </table>
+
+        ## Atomic selectors in React
+        Use focused selectors so components only re-render when their selected slice changes.
+
+        <RenderSource language={"tsx"}>
+        ```
+        import { Button, Video } from '@apple-pie/slice';
+        import { useVideo, useVideoActions } from '@apple-pie/slice/stores/video';
+
+        function VideoLauncher() {
+            const activeVideo = useVideo();
+            const actions = useVideoActions();
+
+            return (
+                <Button
+                    onClick={() =>
+                        actions.show({
+                            component: Video,
+                            props: {
+                                src: 'https://example.com/video.mp4',
+                                controls: 'simple',
+                                muted: false,
+                            },
+                        })
+                    }
+                >
+                    {activeVideo ? 'Video Open' : 'Open Video'}
+                </Button>
+            );
+        }
+        ```
+        </RenderSource>
+
+        ## Imperative usage outside React
+        These APIs are useful for non-component event handlers and services.
+
+        <RenderSource language={"tsx"}>
+        ```
+        import { Video } from '@apple-pie/slice';
+        import { videoActions, getVideo } from '@apple-pie/slice/stores/video';
+
+        export function openIntroVideo() {
+            videoActions.show({
+                component: Video,
+                props: {
+                    src: 'https://example.com/video.mp4',
+                    controls: 'simple',
+                    muted: false,
+                },
+            });
+        }
+
+        export function dismissActiveVideo() {
+            if (getVideo()) videoActions.clear();
+        }
+        ```
+        </RenderSource>
+        </Unstyled>
+    </FlexDiv>
+</FlexDiv>
